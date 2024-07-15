@@ -50,6 +50,7 @@
 <script src="../js/app/x_admin.js"></script> 
 <script src="../js/app/x_booter.js"></script> 
 <script>
+	
 // JSSHOP.loadScript(" + usrlang + ".js", donada,"js");
 </script>
 <?php

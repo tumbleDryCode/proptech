@@ -2,7 +2,6 @@
 /* Material Icons */
 @font-face {
   font-family: 'Material Icons';
-// src: url('../fonts/materialicons/mio.woff2') format('woff2');
   src: url('../fonts/materialicons/mi.ttf') format('truetype');
 /*
   font-style: normal;
@@ -81,47 +80,7 @@
 }
 
 
-
-
-.gradient-text {
-	/*
-			     
-			    
-				 
-				 
  
-    background-size: 100%;
-    -moz-background-clip: text;
-
-	  background-color: #f3ec78;
-   color: #000000; 
-
-	    background-image: conic-gradient(#f3ec78, #af4261);	
-       background-image: linear-gradient(#f3ec78, #af4261);
-	
-
-    background-size: 100%;
-           background-image: linear-gradient(#f3ec78, #af4261);
-		background: -webkit-linear-gradient(#DEDEDE, #0000DE);					 		
-
-	  -webkit-text-fill-color: transparent;
-  
- 			   -moz-text-fill-color: transparent;	
-
-			   		-webkit-background-clip: text;
-	*/
-	
-
-	/*
-	
-
-  background: -webkit-linear-gradient(#DEDEDE, #0000DE);
-*/
-
-
- 
-
-}
 /* Text inputs */
 .cls_input_tarea {
   overflow:visible;
@@ -276,8 +235,3 @@ input[type=checkbox]:not(:disabled).tabbed:focus ~ .lever::before {
   background-color: #949494;
 }
 
-
-
-
-
- 

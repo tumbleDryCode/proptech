@@ -1664,3 +1664,18 @@ max-width: 98%;
 .slider.closed {
 	max-height: 0;
 }
+
+.icnRndnUser {
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+ 
+	-khtml-border-radius: 50%;
+ 
+  min-width:46px;
+  min-height:46px;
+  max-height:48px;
+  max-width:48px;
+}

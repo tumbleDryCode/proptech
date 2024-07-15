@@ -209,7 +209,7 @@ doWinLoad();
         <!--	HYML footer start  -->
 		<?php include("include/html_footer.php");?>
         <!--	HYML footer end  -->
-
+ 
 <script src="js/tinymce/tinymce.min.js"></script>
 <script src="js/tinymce/init-tinymce.min.js"></script>
 <script laguage="javascript" type="text/javascript">

@@ -18,7 +18,9 @@ class DumDatabase {
     public function __construct()
     {
 	global $docroot,$dumdb,$dumhost,$con;
-    $con = mysqli_connect("titan","incasa","casain","developers");
+    // $con = mysqli_connect("localhost","incasa","casain","developers");
+    $con = mysqli_connect("titan","developers","casain","developers");
+
         try
         {
 

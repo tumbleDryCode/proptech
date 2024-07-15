@@ -1,2775 +1,5827 @@
-	if (!window.JSSHOP) {
-		var JSSHOP = new Object();
-	}
-	if (!window.JSSHOP.ajax) {
-		JSSHOP.ajax = new Object();
-	}
-	if (!window.JSSHOP.hookloader) {
-		 JSSHOP.hookloader = new Object();
-	}
-	if (!window.JSSHOP.jndroid) {
-		JSSHOP.jndroid = new Object();
-	}
-	if (!window.JSSHOP.shared) {
-		 JSSHOP.shared = new Object();
-	}
-	if (!window.JSSHOP.ui) {
-		JSSHOP.ui = new Object();
-	}
-
-	if (!window.JSSHOP.shop) {
-		JSSHOP.shop = new Object();
-	}
-
-
-	   
-			var intervals = [];
-	 
-			function clear(i){
-				return function(){
-					clearInterval(intervals[i]);
-				}
-			}
-			function restart(i, fn, ts){ //Start AND restart
-				return function(){
-					clear(i)();
-					// increase(i)();
-					intervals[i] = setInterval(fn, ts);
-				}
-			}
-	   
-	function ntoast(tstrt) {
-	JSSHOP.ui.popAndFillLbox(tstrt);
-	}
-
-
-	function scrollToElement(id) {
-
-		var elem = document.getElementById(id);
-		var x = 0;
-		var y = 0;
-
-		while (elem != null) {
-			x += elem.offsetLeft;
-			y += elem.offsetTop;
-			elem = elem.offsetParent;
-		}
-		if(isJApp == "no") {
-		window.scrollTo(0,y);
-		} else {
-		  // app.getWVScrollPoint(0,y);
-		  // window.scrollTo(0,y);
-		}
-	}
+if (!window.JSSHOP) {
+    var JSSHOP = new Object();
+}
+if (!window.JSSHOP.ajax) {
+    JSSHOP.ajax = new Object();
+}
+if (!window.JSSHOP.hookloader) {
+     JSSHOP.hookloader = new Object();
+}
+if (!window.JSSHOP.jndroid) {
+    JSSHOP.jndroid = new Object();
+}
+if (!window.JSSHOP.shared) {
+     JSSHOP.shared = new Object();
+}
+if (!window.JSSHOP.ui) {
+    JSSHOP.ui = new Object();
+}
 
 
 
-	function getViewportHeight() {
-		if (window.innerHeight!=window.undefined) return window.innerHeight;
-		if (document.compatMode=='CSS1Compat') return document.documentElement.clientHeight;
-		if (document.body) return document.body.clientHeight;
-		return window.undefined;
-	}
-
-	function getViewportWidth() {
-		var offset = 17;
-		if (window.innerWidth!=window.undefined) return window.innerWidth;
-		if (document.compatMode=='CSS1Compat') return document.documentElement.clientWidth;
-		if (document.body) return document.body.clientWidth;
-		return offset;
-	}
+if (!window.JSSHOP.ads) {
+    JSSHOP.ads = new Object();
+}
 
 
-	function getScrollTop() {
-		if (self.pageYOffset) // all except Explorer
-		{
-			return self.pageYOffset;
-		}
-		else if (document.documentElement && document.documentElement.scrollTop)
-			// Explorer 6 Strict
-		{
-			return document.documentElement.scrollTop;
-		}
-		else if (document.body) // all other Explorers
-		{
-			return document.body.scrollTop;
-		}
-	}
-
-
-
-
-	JSSHOP.shared.getAppReq = function(thefield) {
-		try {
-		app.doDB(document.getElementById(thefield).value)
-		} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getAppReq");
-		}
-	};
-	
-	
-	JSSHOP.shared.getUPrmObj = function(tUMPtArr) {	
-	
-
+if (!window.JSSHOP.shop) {
+    JSSHOP.shop = new Object();
+}
 
  
-    rFullObj = {};
-		rFullObj["xclude"] = [];
-    for(var itmi = 0; itmi < tUMPtArr.length; itmi++) {
-		
-	tOlmiu = tUMPtArr[itmi];
-		  rrarObj = {};       	
-	tLkarr = tOlmiu.lks;
+   
+        var intervals = [];
+ 
+        function clear(i){
+            return function(){
+                clearInterval(intervals[i]);
+            }
+        }
+        function restart(i, fn, ts){ //Start AND restart
+            return function(){
+                clear(i)();
+                // increase(i)();
+                intervals[i] = setInterval(fn, ts);
+            }
+        }
+   
+function ntoast(tstrt) {
+JSSHOP.ui.popAndFillLbox(tstrt);
+}
 
-	rFullObj[tOlmiu.nm] = [];
-    for(iqtmi = 0; iqtmi < tLkarr.length; iqtmi++) {
-		try {
 
-	
-		ttlkas = tLkarr[iqtmi];
-    
-		if(ttlkas.indexOf("-") != -1) {
-		tmttlkas = ttlkas.substring(0, ttlkas.indexOf("-"));
-		} else {
-		tmttlkas = ttlkas;
-		}
-		console.log("tmttlkas: " + tmttlkas);
-		tLffObj = {};
-		tLffObj = currMLinksObj[tmttlkas];
-		console.log("tLffObj: " + JSON.stringify(tLffObj));		
-        if(rrarObj[tLffObj.lki]) {
-		} else {
-		rrarObj[tLffObj.lki] = [];
-		}
-		if(tLffObj.nm == tLffObj.pa) {
-		} else {
-  
-	             if(rrarObj[tLffObj.pa]) {
-					rrarObj[tLffObj.pa].push(tLffObj.lki);
-								 rFullObj["xclude"].push(tLffObj.lki);
-				} else {
-					rrarObj[tLffObj.pa] = [];
-					rrarObj[tLffObj.pa].push(tLffObj.lki);
-									 rFullObj["xclude"].push(tLffObj.lki);
-			
-				}
 
-		}
-	} catch (e) {
-		console.log("getUPrmObj: " + e + " " + arguments);
-	}
-	}
- 	
-   if(rFullObj[tOlmiu.nm]) {
- rFullObj[tOlmiu.nm].push(rrarObj);
- } else {
- rFullObj[tOlmiu.nm] = [];
- rFullObj[tOlmiu.nm].push(rrarObj);
- }
- 
- 
- 			// rFullObj[tLffObj.uty].push(rrarObj);
 
-	}
-	return  rFullObj;
-	
-	};
-	
-	
-	
-	
-	
-	
-	
-var getAllPerms = function () {
-   tLCtn = "";
-   tLCtn = [];
-   tCVarr = [];
-   tClnPrmsStr = "";
- lci = 0;
- 
-   for (var [key,val] of Object.entries(svftObj["mmenu"])) {
-   // for(lci = 0; lci < tLCtn.length; lci++)  {
- 
-	   tClnPrmsStr += key + ":";
-    if(currMLinksObj[key]["lks"]) {
-	      tChldarr = currMLinksObj[key]["lks"];	
-   for(lcci = 0; lcci < tChldarr.length; lcci++)  {
-	   
- 
-				tClnVStr = "";
- 
-			tPIisR = tChldarr[lcci];
- 
-			
-			tClnPrmsStr += tPIisR + ",";
-			}
-			}
-			tClnPrmsStr += "|";
-			}
-    tClnRPrmsStr = tClnPrmsStr.replace(/\,\|/gi,"|");
-    if (tClnRPrmsStr != null && tClnRPrmsStr.length > 0 && tClnRPrmsStr.charAt(tClnRPrmsStr.length - 1) == "|") {
-        tClnRPrmsStr = tClnRPrmsStr.substring(0, tClnRPrmsStr.length - 1);
+
+function scrollToElement(id) {
+
+    var elem = document.getElementById(id);
+    var x = 0;
+    var y = 0;
+
+    while (elem != null) {
+        x += elem.offsetLeft;
+        y += elem.offsetTop;
+        elem = elem.offsetParent;
     }
-   console.log("tClnRPrmsStr: " + tClnRPrmsStr.length + " : " + tClnRPrmsStr);
-   return tClnRPrmsStr;
-};
-
-
-
-
-	JSSHOP.shared.parseUPrmStr = function(tUPCstr) {
-tPsUarr = [];
-tPsUSarr = [];
-if(tUPCstr.indexOf("|") != -1){
-tPsUSarr = tUPCstr.split("|");
-} else {
-tPsUSarr.push(tUPCstr);
-}
-
-for(ipsdi = 0; ipsdi < tPsUSarr.length; ipsdi++) {
-	tUTpsi = tPsUSarr[ipsdi];
-	tLnjkObjr = {};
-			tUspaArr = [];
-	if(tUTpsi.indexOf(":") != -1) {
-		tUspa = tUTpsi.split(":");
-		tUspaO = tUspa[0];
-		tLnjkObjr.nm = tUspaO;
-		if(tUspa[1]) {
-
-		tUspaL = tUspa[1];
-		if(tUspaL.indexOf(",") != -1) {
-		tUspaArr = tUspaL.split(",");
-		}else {
-		tUspaArr.push(tUspaL);
-		}
-
-		}
-				tLnjkObjr["lks"] = [];
-		tLnjkObjr["lks"] = tUspaArr;
-		tPsUarr.push(tLnjkObjr);
-	}
-}
-console.log("tPsUarr: " + JSON.stringify(tPsUarr));
-
-	
-return tPsUarr;
-};
-
-
-	JSSHOP.shared.getQryVar = function(theUrlString, theVar) {
-		try {
-	  strQVal = null;
-	  var query = theUrlString;
-	  var vars = query.split("&");
-	  for (var i=0;i<vars.length;i++) {
-		var pair = vars[i].split("=");
-		if(pair[0] == theVar) {
-		  strQVal =  pair[1];
-		}
-	  }
-	  return strQVal;
-		} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getQryVar");
-			return "NotGood";
-		}
-	};
-
-
-
-	JSSHOP.shared.getElemDUrl = function(theElem) {
-	try {
-	if(theElem.getAttribute("data-ison") != null) {
-	tDb = "";
-	tDison = theElem.getAttribute("data-ison");
-	tDa = tDison.replace(/:/gi,"&");
-	tDb = tDa.replace(/;/gi,"=");
-	tDb += "&v=" + theElem.value + "&n=" + theElem.name;
-	return tDb;
+	if(isJApp == "no") {
+	window.scrollTo(0,y);
 	} else {
-	return null;
+      // app.getWVScrollPoint(0,y);
+      window.scrollTo(0,y);
 	}
-	} catch(e) {
-	JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.getElemDUrl");
+}
+
+
+
+function getViewportHeight() {
+	if (window.innerHeight!=window.undefined) return window.innerHeight;
+	if (document.compatMode=='CSS1Compat') return document.documentElement.clientHeight;
+	if (document.body) return document.body.clientHeight;
+	return window.undefined;
+}
+
+function getViewportWidth() {
+	var offset = 17;
+	if (window.innerWidth!=window.undefined) return window.innerWidth;
+	if (document.compatMode=='CSS1Compat') return document.documentElement.clientWidth;
+	if (document.body) return document.body.clientWidth;
+	return offset;
+}
+
+
+function getScrollTop() {
+    // if(isJApp == "yes") {
+        // app.doscrllVwToTop();
+        // theScrollY = app.doWVScrollY();
+        // console.log("getScrollTop: " + theScrollY);
+        // theScreenH = window.innerHeight;
+        //return Math.round(theScreenH - theScrollY);
+       //  return Math.round(theScrollY  - (theScreenH / 2) );
+        // return Math.round((theScrollY / 2) - theScreenH);
+       //  } else {
+	if (self.pageYOffset) // all except Explorer
+	{
+		return self.pageYOffset;
 	}
-	};
-
-
-
-
-
-	JSSHOP.shared.nodesToString = function(node) {
-		if (typeof node === "string") {
-			node = document.getElementById(node);
-		}
-
-		var arrayOfText = [];
-				var tmpUstring = "";
-	function walkTheDOM(node, func) {
-		func(node);
-		node = node.firstChild;
-		while (node) {
-			walkTheDOM(node, func);
-			node = node.nextSibling;
-		}
+	else if (document.documentElement && document.documentElement.scrollTop)
+		// Explorer 6 Strict
+	{
+		return document.documentElement.scrollTop;
 	}
+	else if (document.body) // all other Explorers
+	{
+		return document.body.scrollTop;
+	}
+     //    }
+}
 
-		function pushVal(currentNode) {
-				tmpNID = "";
-			tmpNVal = "";
+var loadPlaceLink = function(a, b, c) {
+    if (b.indexOf("data") != -1) {
+       //  JSSHOP.cookies.setCookie("cuid",cid,"90","","","");
+        document.location.href = "index.html?pid=aa-edit-place&tpid=" + cid;
+    } else {
+        alert("loadPlaceLink = false: " + b);
+    }
+};
 
-			if(currentNode.nodeType === 1) {
-			if((currentNode.id) || (currentNode.name)) {
-				if(currentNode.id){
-					  tmpNID = currentNode.id;
-				} else {
-				tmpNID = currentNode.name;			
-				}      
-				tNodeName = currentNode.nodeName.toUpperCase();
-				switch(tNodeName) {
-				case "INPUT":
-			tmpNVal = currentNode.value;
-			break;
-				case "TEXTAREA":
-			tmpNVal = currentNode.value;
-			break;
-				case "SELECT":
-			tmpNVal = currentNode.value;
-			break;
-			default:
-			if(currentNode.firstChild.nodeValue) {
-			tmpNVal = currentNode.firstChild.nodeValue;
-			}
-			}
-			tmpUstring += "&" + tmpNID.trim() + "=" + tmpNVal.trim();		}		
-	//		tmpUstring += "&" + escape(JSSHOP.shared.trim(tmpNID)) + "=" + escape(JSSHOP.shared.trim(tmpNVal));		}		
-			}
+JSSHOP.shared.setOGtags = function() {
+    try {
+        var tOGurl = "https://recamby.com";
+        var tOGtitle = "Recamby.com";
+        var tOGdesc = "Recamby.com";
+        var tOGimg = "https://recamby.com/imgs/ogimg.jpg";
+        var tOGtype = "website";
+        var tOGsite_name = "Recamby.com";
+        /*
+        var tOGapp_id = "123456789";
+        var tOGadmins = "123456789";
+        var tOGlocale = "en_US";
+        var tOGvideo = "https://recamby.com";
+        var tOGaudio = "https://recamby.com";
+        var tOGdeterminer = "the";
+        var tOGupdated_time = "2017-01-01T00:00:00+00:00";
+        var tOGpublished_time = "2017-01-01T00:00:00+00:00";
+        var tOGauthor = "Recamby.com";
+        var tOGsection = "Recamby.com";
+        var tOGtags = "Recamby.com";
+        */
+        switch(pid) {
+            case "aa-show-place":
 
-		}
-		walkTheDOM(node, pushVal);
-		return tmpUstring;
-	};
+            tCdescStr = c_desc.value;
+            if((tCdescStr == "ns") || (tCdescStr == "5")){
+                tCdescStr = c_name.value + "  " + stxt[559] + " " + c_location.value + ". " ;
+            }
+            tClogoimg = c_logoimg.value;
+             if(tClogoimg.indexOf("noQvalue") > -1) {
+                tClogoimg = "https://recamby.com/images/logo_og.png";
+            } else if(tClogoimg.indexOf("http") > -1) {
+                tClogoimg = c_logoimg.value;
+            } else {
+                tClogoimg = "https://recamby.com/images/slogos/" + c_logoimg.value;
+            }
+
+
+                tOGtitle = c_name.value;
+                tOGdesc = tCdescStr;
+                tOGimg = tClogoimg;
+                break;
+            case "aa-show-item":
+                tShareMsgUrl = "https://recamby.com/index.html?pid=" + tmpMsgVal;
+                tShareMsgImg = i_img.value;
+                tShareMsgTtl = i_title.value;
+                tShareMsgDsc = i_desc.value;
+                tOGtitle = tShareMsgTtl;
+                tOGdesc = tShareMsgDsc;
+                tOGimg = tShareMsgImg;
+                break;
+                default:
+                tOGtitle = "Recamby.com";
+                tOGdesc = "Recamby.com";
+                tOGimg = "https://recamby.com/imgs/ogimg.jpg";
+                break;
+        }
+        
+        /*
+        document.getElementById("ogsite_name").content = tOGsite_name;
+        document.getElementById("ogapp_id").content = tOGapp_id;
+        document.getElementById("ogadmins").content = tOGadmins;    
+        document.getElementById("oglocale").content = tOGlocale;
+        document.getElementById("ogvideo").content = tOGvideo;
+        document.getElementById("ogaudio").content = tOGaudio;
+        document.getElementById("ogdeterminer").content = tOGdeterminer;
+        document.getElementById("ogupdated_time").content = tOGupdated_time;
+        document.getElementById("ogpublished_time").content = tOGpublished_time;
+        document.getElementById("ogauthor").content = tOGauthor;
+        document.getElementById("ogsection").content = tOGsection;
+        document.getElementById("ogtags").content = tOGtags;
+        */
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.setOGtags: " + e);
+    }
+
+};
+JSSHOP.shared.getCatTitle = function(theTPartID) {
+    try {
+        tCatTitle = " ";
+        tCatTitle = "";
+        if (theTPartID == "0") {
+            tCatTitle = stxt[1];
+        } else {
+            tCatTitle = stxt[1] + " > " + stxt[theTPartID];
+        }
+        return tCatTitle;
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getCatTitle");
+        return "NotGood";
+    }
+};
+
+JSSHOP.shared.getPlaceELink = function() {
+    try {
+        tPTXT = " ";
+        tPTXT = "";
+        // close the lbox
+ 
+        tPTXT += "<div class=\"collection-item txtSmall txtClrHdr\" style=\"text-align:left\">" + c_name.value + "</div>";
+    tUrlEncdn = encodeURIComponent(currPlaceObj.c_name);
+    tPTXT += "<div class=\"collection-item txtClrHdr\" style=\"text-align:left\">" + stxt[555] + " <a class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrHdr txtBold\" href=\"index.html?pid=aa-contactus&cid=" + currPlaceObj._id + "&tpnm=" + tUrlEncdn  + "\">" + stxt[86] + " ListID: " + currPlaceObj._id + "</a></div><hr>";
+
+    // tRtGMSIstr += "<div class=\"collection-item txtSmall txtClrHdr\" style=\"text-align:left\">" + stxt[556] + "</div>";
+    // tRtGMSIstr += " <div tid=\"dv_c_page\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><a class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrHdr txtBold\" href=\"index.html?pid=aa-contactus&cid=" + cid + "&tpnm=" + tUrlEncdn  + "\">" + stxt[86] + " ListID: " + cid + "</a></div>";
+
+        if((quid == 0) || (quid == "noQvalue")){
+            tPTXT += "<div class=\"collection-item txtClrHdr\" style=\"text-align:left\">" + stxt[724] + "</div>";
+   
+            tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\">" + stxt[725] + "</div>";
+            tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\"><a href=\"index.html?pid=login\">Login</a></div>";
+            JSSHOP.ui.popAndFillLbox(tPTXT);
+
+            } else {
+                if(currPlaceObj.c_uid == quid) {
+                    document.location.href = "index.html?pid=aa-edit-place&tpid=" + cid;
+                    return;
+                }  else {
+                if(currPlaceObj.c_uid  == "5") {
+                    if(u_socauthtype.value == "5") {
+                        tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\">" + stxt[724] + ".</div>";
+                        tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\">" + stxt[713] + ". " + stxt[717] + ": " + u_email.value + " " + stxt[718] + ".</div>";
+                        tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\"><a href=\"javascript:JSSHOP.shared.doMMailer('emailconf');\">" + stxt[720] + "</a></div>";
+                        tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\">" + stxt[719] + ".</div>";
+  
+                    } else {
+                        tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\">" + stxt[724] + "</div>";
+                        tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\"><a href=\"javascript:procNuUIitem('qco', 'c_uid'," + currPlaceObj._id + "," + quid + ",'loadPlaceLink');\">" + stxt[722] + "</a></div>";
+                        tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrRed\">" + stxt[721] + "</div>";
+
+                    }
+                    } else {
+  
+                    tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\">" + stxt[723] + "</div>";
+                       
+                    }
+                    if(isJApp == "ayes") {
+
+tOldHref = document.location.href;
+        if(tOldHref.indexOf("recamby.com") != -1) {
+            tnewHref = "https://www.recamby.com/clean.html";
+     
+        } else {
+            tnewHref = "https://titan/recamby/clean.html";
+        }
+        tcloseBstr  = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrRed crsrPointer\" style=\"float:right\"><i class=\"menu-material-icons txtBold txtClrRed\" alt=\"close\" title=\"close\" value=\"close\">&#xe5cd;</i></div>";
+        tAPTXT = tcloseBstr + tPTXT;
+        tInnerHSTR = LZString.compressToEncodedURIComponent(tAPTXT);
+        app.setPagePopUp(tnewHref,tInnerHSTR);                 
+       } else {
+                    JSSHOP.ui.popAndFillLbox(tPTXT);
+                    }
+                }
+            }
+     
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getPlaceLink");
+        alert(e);
+    }
+};
+
+
+JSSHOP.shared.isMobile = function() {
+    try {
+        if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.isMobile");
+        return false;
+    }
+};
+
+
+JSSHOP.shared.doNuDwEL = function() {
+xae = document.getElementsByTagName("ti");
+var iint = 0;
+while(iint < xae.length) {
+nuDW(xae[iint]);
+iint++;
+}
+};
+
+JSSHOP.shared.doLogout = function() {
+JSSHOP.cookies.deleteCookie('quid','','');
+JSSHOP.cookies.deleteCookie('cuid','','');
+document.location.href='index.html?lgo=y&cid=0';
+};
+
+
+
+JSSHOP.shared.strToObj = function(url) {
+// alert(url);
+    try {
 	 
+        var request = {};
+        var arr = [];
+        var pairs = url.split('&');
+        for (var i = 0; i < pairs.length; i++) {
+          var pair = pairs[i].split('=');
+
+          //check we have an array here - add array numeric indexes so the key elem[] is not identical.
+          if(JSSHOP.shared.endsWith(decodeURIComponent(pair[0]), '[]') ) {
+              var arrName = decodeURIComponent(pair[0]).substring(0, decodeURIComponent(pair[0]).length - 2);
+              if(!(arrName in arr)) {
+                  arr.push(arrName);
+                  arr[arrName] = [];
+              }
+
+              arr[arrName].push(decodeURIComponent(pair[1]));
+              request[arrName] = arr[arrName];
+          } else {
+            request[pair[0]] = pair[1];
+
+            // request[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+          }
+        }
+        return request;
+    } catch (e) {
+	alert("JSSHOP.shared.strToObj: " + e);
+       //  JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.urlToArray");
+        return "noQvalue";
+    }
+
+    };
 
 
 
 
 
-/* 
-* fills a form drop down with a  name-value pair json obj
-* tObjN - the json obj
-* tFelem - the drop down element
-* tSlctVal - the default selected value
-* tDefkey - addition default option. i.e. Select One:..
-* tDefVal - addition default option value. i.e. noQvalue
+
+JSSHOP.shared.getAppReq = function(thefield) {
+    try {
+	app.doDB(document.getElementById(thefield).value)
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getAppReq");
+    }
+};
+
+JSSHOP.shared.encode_utf8 = function(tEstt) {
+try {
+  return unescape(encodeURIComponent(tEstt));
+    } catch (e) {
+  JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.encode_utf8");
+  return tEstt;
+    }
+};
+
+JSSHOP.shared.decode_utf8 = function(tdstt) {
+try {
+  return decodeURIComponent(tdstt);
+    } catch (e) {
+        // JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.decode_utf8");
+  return removeDiacritics(tdstt);
+    }
+};
+
+
+/*
+* !!!!to delete duplicated
+
+JSSHOP.shared.getAppReq = function(thefield) {
+    try {
+	app.doDB(document.getElementById(thefield).value)
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getAppReq");
+    }
+};
+
+*/
+JSSHOP.shared.convertTo24Hour = function(thettHr) {
+ // this function will convert 12 hour time to 24 hour time
+ // it will take a string as its only argument
+ // example input is '12:30am' or '12:30pm' or '9 am' or '9 pm' or '9:00 pm'
+    // example output is 24 hour time '09:00' or '21:00'
+    try {  
+    console.log("convertTo24Hour: " + thettHr);
+    var atime = thettHr.toLowerCase();
+    console.log("convertTo24Hour: " + atime);
+    // replace all "; am" with " am" and all "; pm" with " pm"
+    ahbtime = atime.replace(/; am/g, " am");
+    aibtime = ahbtime.replace(/; pm/g, " pm");
+    if(aibtime.indexOf(";") != -1) {
+        adtime = ahbtime.split(";");
+        aHrtime = adtime[0];
+    } else {
+        aHrtime = aibtime;
+    }
+
+    ahourtime = aHrtime.replace(/[^0-9]/g, "");
+    if(aibtime.indexOf("am") != -1) {
+    if(ahourtime == "12") {
+    ahourtime = "00";
+    }
+    } else {
+    if(ahourtime != "12") {
+    ahourtime = Math.round(ahourtime) + 12;
+    }
+    }
+    // if hourtime is less than 4 characters add a 0 to the beginning
+    if(ahourtime.length < 1) {
+    ahourtime = "0" + ahourtime + ":00";
+    } else {
+    ahourtime = ahourtime + ":00";
+    }
+    // add a colon between the hours and minutes
+    return ahourtime;
+} catch (e) {
+    JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.convertTo24Hour");
+    return "NotGood";
+}
+};
+ 
+
+
+JSSHOP.shared.getQryVar = function(theUrlString, theVar) {
+    try {
+  strQVal = null;
+  var query = theUrlString;
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+    var pair = vars[i].split("=");
+    if(pair[0] == theVar) {
+      strQVal =  pair[1];
+    }
+  }
+  return strQVal;
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getQryVar");
+        return "NotGood";
+    }
+};
+
+
+
+JSSHOP.shared.getElemDUrl = function(theElem) {
+try {
+if(theElem.getAttribute("data-ison") != null) {
+tDb = "";
+tDison = theElem.getAttribute("data-ison");
+tDa = tDison.replace(/:/gi,"&");
+tDb = tDa.replace(/;/gi,"=");
+tDb += "&v=" + theElem.value + "&n=" + theElem.name;
+return tDb;
+} else {
+return null;
+}
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.getElemDUrl");
+}
+};
+
+JSSHOP.shared.doMMeconf = function(temmA, temmB, temmC) {
+try {
+    JSSHOP.ui.popAndFillLbox(temmB);
+    // alert("doMMeconf: " + temmA + " : " + temmB + " : " + temmC);
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.doMMeconf");
+}
+};
+
+JSSHOP.shared.doMMailer = function(tMMtype) {
+    tEmfrom = "web@recamby.com";
+    tEmto = "";
+    tEmsubj = "";
+    tEmbody = "";
+    tFootr = stxt[716];  
+    tMMurl = "_p/rss/mtest.php?";
+try {
+    switch(tMMtype) {
+    case "remove":
+    tAConfurl = "https://recamby.com/?pid=cnf&ct=r&cf=" + document.getElementById("u_email").value + "&dd=" + JSSHOP.shared.getFrmFieldVal("quser", "_id", 0);
+    // url encode tConfurl
+    tConfurl= encodeURIComponent(tAConfurl);
+    // tConfurl = JSSHOP.shared.encode_utf8(tAConfurl);
+    tEmto = document.getElementById("u_email").value;
+    tEmsubj = "Recamby.com - " + stxt[815];
+    tAEmbody = stxt[824] + "<br>" + tConfurl + "<br><br>" + stxt[716] + "<br>" + "https://recamby.com";
+    // url encode tembody
+    tEmbody = JSSHOP.shared.encode_utf8(tAEmbody);
+    tMMurl += "mt=" + tMMtype + "&sndt=" + tEmto + "&snds=" + tEmsubj + "&sndw=" + tEmbody;
+    JSSHOP.ajax.doNuAjaxPipe("dvMMailer", tMMurl, JSSHOP.shared.doMMeconf);
+    break;
+    case "emailconf":
+        tcidstr = "";
+        if(currPlaceObj._id) {
+        tcidstr = "&cid=" + currPlaceObj._id;
+        } else {
+        tcidstr = "&cid=" + JSSHOP.shared.getFrmFieldVal("qco", "_id", 0);
+        }
+    tAConfurl = "https://recamby.com/?pid=cnf&ct=e&cf=" + document.getElementById("u_dadded").value + "&dd=" + quid + tcidstr;
+    // url encode tConfurl
+    tConfurl= encodeURIComponent(tAConfurl);
+    // tConfurl = JSSHOP.shared.encode_utf8(tAConfurl);
+    tEmto = document.getElementById("u_email").value;
+    tEmsubj = "Recamby.com - " + stxt[713];
+    tAEmbody = stxt[715] + "<br><a href=\"" + tConfurl + "\">" + tConfurl + "</a><br><br>" + stxt[716] + "<br>" + "https://recamby.com";
+    // url encode tembody
+    tEmbody = JSSHOP.shared.encode_utf8(tAEmbody);
+    tMMurl += "mt=" + tMMtype + "&sndt=" + tEmto + "&snds=" + tEmsubj + "&sndw=" + tEmbody;
+    JSSHOP.ajax.doNuAjaxPipe("dvMMailer", tMMurl, JSSHOP.shared.doMMeconf);
+    break;
+    case "preview":
+    document.getElementById("dvMMailer").innerHTML = "<div class=\"txtBold txtClrHdr\">Preview...</div>";
+    break;
+    default:
+        break;
+     }
+
+ 
+ 
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.doMMailer");
+}
+};
+
+
+JSSHOP.shared.nodesToString = function(node) {
+    if (typeof node === "string") {
+        node = document.getElementById(node);
+    }
+
+    var arrayOfText = [];
+            var tmpUstring = "";
+function walkTheDOM(node, func) {
+    func(node);
+    node = node.firstChild;
+    while (node) {
+        walkTheDOM(node, func);
+        node = node.nextSibling;
+    }
+}
+
+    function pushVal(currentNode) {
+            tmpNID = "";
+		tmpNVal = "";
+
+  		if(currentNode.nodeType === 1) {
+ 		if((currentNode.id) || (currentNode.name)) {
+       		if(currentNode.id){
+                  tmpNID = currentNode.id;
+			} else {
+			tmpNID = currentNode.name;			
+			}      
+            tNodeName = currentNode.nodeName.toUpperCase();
+            switch(tNodeName) {
+            case "INPUT":
+		tmpNVal = currentNode.value;
+		break;
+            case "TEXTAREA":
+		tmpNVal = currentNode.value;
+		break;
+            case "SELECT":
+		tmpNVal = currentNode.value;
+		break;
+		default:
+		if(currentNode.firstChild.nodeValue) {
+		tmpNVal = currentNode.firstChild.nodeValue;
+		}
+		}
+		 tmpUstring += "&" + tmpNID.trim() + "=" + tmpNVal.trim();		
+    }		
+//		tmpUstring += "&" + escape(JSSHOP.shared.trim(tmpNID)) + "=" + escape(JSSHOP.shared.trim(tmpNVal));		}		
+		}
+
+    }
+    walkTheDOM(node, pushVal);
+    return tmpUstring;
+};
+
+    
+        JSSHOP.shared.getOptIndex = function(selection, indexVal) {
+                    theOptIndex = 0;
+         
+                        for(var i = 0; i < selection.length; i++) {
+                             currIndexVal = selection.options[i].value;
+                            if(currIndexVal == indexVal) {
+                                theOptIndex = i;
+                                break;
+                            }
+         
+                    }
+                    return theOptIndex;
+        };
+    
+        JSSHOP.shared.setCurrSelectOpt = function(theObj, indexVal) {
+                    theIndexVal = "noQvalue";
+                    var selection = theObj;
+                    if(selection) {
+                        for(var i = 0; i < selection.length; i++) {
+                            var currIndexVal = selection.options[i].value;
+                            if(currIndexVal == indexVal) {
+                                theIndexVal = currIndexVal;
+                                selection.selectedIndex = i;
+                                break;
+                            }
+                        }
+                    }
+                    return theIndexVal;
+                };
+    
+    
+        JSSHOP.shared.getCurrSelectTxt = function(theObj) {
+                    var theSelIndex = theObj.selectedIndex;
+                    var theString = theObj.options[theSelIndex].text;
+                    var theVal = theObj.options[theSelIndex].value;
+                    // alert(theString +  " : " + theVal);
+                    return theString;
+                };
+    
+    
+        JSSHOP.shared.getCurrSelectOpt = function(theObj) {
+            tREtSOval = "noQvalue";
+            try {
+                var theSelIndex = theObj.selectedIndex;
+                var theString = theObj.options[theSelIndex].text;
+                var tREtSOval = theObj.options[theSelIndex].value;
+            } catch(e) {
+            JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getCurrSelectOpt");
+            return tREtSOval;
+            }
+    
+                    // alert(theString +  " : " + theVal);
+                    return tREtSOval;
+                };
+
+
+                JSSHOP.shared.addCurrSlctObj = function(tObjN, tFelem, tSlctVal, tDefkey, tDefVal) {
+                    if(tDefVal == "noQvalue") {
+                    } else {
+                    JSSHOP.shared.addCurrSelectOpt(tFelem, tDefkey, tDefVal, "selected");	
+                    }
+                    for (var [key,val] of Object.entries(tObjN)) {
+                    if(key == tSlctVal) {
+                    // JSSHOP.shared.addCurrSelectOpt(tFelem, key, val, "");
+                    JSSHOP.shared.addCurrSelectOpt(tFelem, key, val, "selected");
+                    } else {
+                    JSSHOP.shared.addCurrSelectOpt(tFelem, key, val, "");
+                    }
+                    }
+                    };
+
+                    
+        JSSHOP.shared.addCurrSelectOpt = function(theObj, theVal, theText, theCssClsn) {
+            if(theCssClsn == "selected") {
+         theObj.options[theObj.options.length] = new Option(theText, theVal, true, true);
+
+            } else {
+            theObj.options[theObj.options.length] = new Option(theText, theVal, true);
+            }
+        };
+
+JSSHOP.shared.addOptAtIndex = function(theObj, theIndex, theVal, theText, theCssClsn) {
+            theOpt = document.createElement("OPTION");
+        theOpt.innerText = theText;
+        theOpt.value = theVal;
+        theOpt.className = theCssClsn;
+            theObj.options.add(theOpt, theObj.options[theIndex]);
+            // set as selected
+            theObj.options[theIndex].selected = true;
+        };
+
+JSSHOP.shared.addOptAtVal = function(theObj, theIVal, theVal, theText, theCssClsn) {
+            selection = null;
+        selection = theObj;
+        tmpVhasV = "no";
+            if(theIVal == "noQvalue") {
+                JSSHOP.shared.addOptAtIndex(theObj, theObj.options.length, theVal, theText, theCssClsn);
+            } else {
+                for(var i = 0; i < selection.length; i++) {
+                tmpVhasV = "no";
+                    currIndexVal = selection.options[i].value;
+                    if(currIndexVal == theIVal) {
+                 tmpVhasV = "yes";
+                     JSSHOP.shared.addOptAtIndex(theObj, i+1, theVal, theText, theCssClsn);
+                    }
+ 
+                }
+            if(tmpVhasV == "no") {
+                // JSSHOP.shared.addOptAtIndex(theObj, theObj.options.length, theVal, theText, theCssClsn);
+            }
+        }
+        };
+JSSHOP.shared.removeOptions = function(selectbox)
+{
+    var iop;
+    for(iop = selectbox.options.length - 1 ; iop >= 0 ; iop--)
+    {
+        selectbox.remove(iop);
+    }
+};
+
+
+
+/*
+* validation method using data-ison attr in element 
+* to validate it (form fields)
+* parsing values delmited  by : 
+* data-ison="y:3:22"
+*/ 
+
+
+JSSHOP.shared.valVOarr = function(theVOarr, theErrDiv) {
+
+    strVldErr = "<b>Oooops..</b>";
+document.getElementById(theErrDiv).innerHTML = "";
+    iint = 0;
+    isValid = true;
+    isFValid = true;
+    len = theVOarr.length;
+    
+    while (iint < len) {
+	  isFValid = true;
+        ts = null;
+        ts = theVOarr[iint];
+theVB = null;
+theVB = document.getElementById(ts.fid);
+// alert(theVB.nodeName.toUpperCase());
+if(theVB.nodeName.toUpperCase() === "DIV") {
+
+theVBval = theVB.innerText;
+} else {
+theVBval = theVB.value;
+}
+if(document.getElementById(ts.lid)) {
+// document.getElementById(ts.lid).innerHTML = ts.ltxt;
+}
+if(ts.fvr !== "noQvalue") {
+ttest = ts.fvr;
+
+
+
+if(ts.fda == false) {
+if(theVBval == ts.fdv) {
+alert("shr: " + ts.fda);
+    isValid = false;
+	isFValid = false;
+}
+}
+if(!ttest.test(theVBval)) {
+alert("no ttest: " + theVBval);
+    isValid = false;
+	isFValid = false;
+}
+
+
+
+if(isFValid === false) {
+strVldErr += "<br>" + ts.fve;
+}
+
+
+
+
+}
+iint++;
+}
+
+if(isValid == false) {
+strVldErr += "<br>" + ts.fve;
+theEdiv = document.createElement("div");
+theEdiv.className = "cls-error-form";
+theEdiv.innerHTML = strVldErr;
+document.getElementById(theErrDiv).appendChild(theEdiv);
+}
+
+
+return isValid;
+};
+
+
+JSSHOP.shared.valFieldVals = function(theArrElem) {
+// n = null default do nada
+// v = validate
+isFullyVal = true;
+actType = "n";
+try {
+var len = theArrElem.length;
+var iint = 0;
+while (iint < len) {
+
+if(document.getElementById(theArrElem[iint])) {
+theElem = document.getElementById(theArrElem[iint]);
+if(theElem.getAttribute("data-ison") != null) {
+tDison = theElem.getAttribute("data-ison");
+if(tDison.indexOf(":") != -1) {
+tmpTDivars = tDison.split(":");
+actType = tmpTDivars[0];
+if(actType == "v") {
+veType = tmpTDivars[1];
+veMinLen = tmpTDivars[2];
+veMaxLength = tmpTDivars[3]; 
+veDefVal = tmpTDivars[4];
+veLblElID = tmpTDivars[5];
+veAlertStr = tmpTDivars[6]; 
+veDefTtl = tmpTDivars[7];
+veDefCls = tmpTDivars[8];
+
+
+// v:s:5:8:49:lbl_u_pass:2:49:clsFrmInpLabel
+
+
+document.getElementById(veLblElID).className = veDefCls;
+document.getElementById(veLblElID).innerHTML = stxt[veDefTtl];
+theElVal = theElem.value;
+if(theElVal.length < veMinLen) {
+isFullyVal = false;
+if(veDefVal == "null")  {
+} else {
+theElem.value = stxt[veDefVal];
+}
+theElem.focus();
+document.getElementById(veLblElID).className = "txtBold txtClrRed";
+document.getElementById(veLblElID).innerHTML = stxt[veAlertStr];
+}
+} 
+}
+}
+}
+
+iint++;
+}
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.valFieldVals");
+return false;
+}
+return isFullyVal;
+};
+
+
+
+JSSHOP.shared.initFrmComps = function(theFCmpArr) {
+    iint = 0;
+     tAstr = "";
+    len = theFCmpArr.length;
+    while (iint < len) {
+
+        ts = theFCmpArr[iint];
+
+theB = null;
+theB = document.getElementById(ts.fid);
+
+if(ts.fcl !== "noQvalue") {
+JSSHOP.ui.addEvent(theB,"click",ts.fcl);
+}
+if(ts.lid !== "noQvalue") {
+tlid = ts.lid;
+try {
+// document.getElementById(tlid).className = "txtSmall txtBold txtClrDDlg";
+document.getElementById(tlid).innerText = ts.ltxt;
+
+JSSHOP.ui.setLblHighlight(theB,ts.fdv,document.getElementById(tlid),ts.ltxt);
+} catch(e) {
+
+tAstr += e + " :: " +  JSON.stringify(ts) + "<br>";
+// alert("JSSHOP.shared.initFrmComps: "  + e + " :: " +  JSON.stringify(ts));
+}
+
+} else {
+
+}
+
+
+
+if(ts.fdv !== "noQvalue") {
+ 
+if(ts.fty == "button") {
+theB.style.color = "#ffffff";
+} else {
+JSSHOP.ui.setDefFval(theB, ts.fdv, ts.fda);
+}
+
+}
+
+if(ts.fda !== "noQvalue") {
+
+}
+ 
+	  iint++;
+    }
+
+// alert(tAstr);
+};
+
+
+JSSHOP.shared.setMakeStuff = function(tSMSMID, tSMSMN, tSMSMDW) {
+
+
+JSSHOP.ui.closeLbox();
+if(currPUrlObj["make"] == tSMSMN) {
+tFKMOST = JSON.stringify(currCModelsObj);
+if(tFKMOST.indexOf("id") != -1) {
+// JSSHOP.shared.doModelsPop("inpModels", JSON.stringify(currCModelsObj), "nada");
+console.log("setMakeStuff: " + "currCModelsObj.id");
+} else {
+console.log("setMakeStuff: " + "currCModelsObj.no-id");
+// JSSHOP.ajax.doNuAjaxPipe("inpModels", "misc/m" + tSMSMID + ".txt", JSSHOP.shared.doModelsPop);
+// JSSHOP.ajax.doNuAjaxPipe("inpModels", "misc/m" + tSMSMID + ".txt", JSSHOP.shared.doModelsPop);
+
+}
+JSSHOP.shared.doPartsWords(50,"noQvalue");
+} else {
+    JSSHOP.ads.clearAllPrtsPrefCC();
+currPUrlObj["mk"] = tSMSMID;
+currPUrlObj["make"] = tSMSMN;
+currPUrlObj.series = "";
+currPUrlObj.md = "";
+currPUrlObj.model = "";
+currPUrlObj.si = "";
+currPUrlObj.y = "";
+currPUrlObj.yf = "";
+currPUrlObj.yt = "";
+
+console.log("setMakeStuff: " + "make !== tSMSMN");
+// JSSHOP.ajax.doNuAjaxPipe("inpModels", "misc/m" + tSMSMID + ".txt", JSSHOP.shared.doModelsPop);
+JSSHOP.shared.doPartsWords(50,"noQvalue");
+// eindex('aa-show-make','make=' + tSMSMN + '&mk=' + tSMSMID + '&pid=aa-show-make&q=' + tSMSMN);
+}
+JSSHOP.shared.doModelsPip();
+};
+
+JSSHOP.shared.doYearsPop = function() {
+tPYS = "<div  class=\"collection\">";
+for (i = 0; i < arrAllYears.length; i++) {
+tJSMstr = "currPUrlObj.y= '" +  arrAllYears[i] + "';JSSHOP.ui.closeLbox();"
+tJSMstr += "JSSHOP.shared.doPartsWords(50,'noQvalue');";
+tPYS += "<div class=\"collection-item crsrPointer\" onclick=\"javascript:" + tJSMstr + "\">" + arrAllYears[i] + "</div>";
+// tPYS += "<div>" + arrAllYears[i] + "</div>";
+}
+tPYS += "</div>";
+// alert(tPYS);
+JSSHOP.ui.popAndFillLbox(tPYS);
+};
+
+
+JSSHOP.shared.doMakesPop = function(tMCBBstr) {
+// tPYS = btnClosePop;
+tPYS = "";
+trArr = [];
+tPYS += "<div class=\"txtBold txtClrHdr\">";
+for (i = 0; i < 5; i++) {
+    tLpdIDstr = currPMakesArr[Math.floor(Math.random() * currPMakesArr.length)];
+    tLpdSplit = tLpdIDstr.split(":");
+    tLpdID = tLpdSplit[0];
+    tLpdName = tLpdSplit[1];
+    tLpdmgMStr = imgPLicon.src = "images/mlogos/" + tLpdName.toLowerCase().replace(" ", "-") + "-logo.png";
+ tPYS += "<img src=\"" + tLpdmgMStr + "\" style=\"max-width:30px;max-height:30px;\"></img>";   
+trArr.push();
+}
+tPYS += "</div>";
+
+tPYS += "<div class=\"txtBold txtClrHdr\">" + stxt[82] + " " + stxt[102] + ":</div>";
+
+console.log("doMakesPop.trArr: " + JSON.stringify(trArr));
+
+
+tPYS += "<div class=\"collection\">";
+
+tMkObj = objAllMakes;
+for(var gkey in tMkObj) {
+		if(tMkObj[gkey].n) {
+		 TMPnOBJ = tMkObj[gkey];
+		 tSSv = TMPnOBJ.n;
+		 tSSI =  TMPnOBJ.id;
+ 		  tPYS += "<div class=\"collection-item crsrPointer\" onclick=\"javascript:JSSHOP.shared.setMakeStuff('" + tSSI + "','" + tSSv + "','" + tMCBBstr + "');JSSHOP.ads.clearAllPrtsPrefCC();JSSHOP.ads.setPrtsPrefCC('mk','" + tSSI + "');\">" + tSSv + "</div>";
+		  }
+}
+tPYS += "</div>";
+// alert(tPYS);
+JSSHOP.ui.popAndFillLbox(tPYS);
+};
+
+
+
+JSSHOP.shared.doModelsLoad = function(ttPPInp, ttPPObj, toPPbju) {
+currCModelsObj = JSON.parse(ttPPObj);
+};
+
+
+
+JSSHOP.shared.doModelsPip = function() {
+tSMSMID = currPUrlObj["mk"];
+ttCMOS = JSON.stringify(currCModelsObj);
+if(ttCMOS.indexOf("id") !== -1) {
+if(currCModelsObj.pi == tSMSMID) {
+
+console.log("doModelsPip is same : " + "currCModelsObj.id");
+JSSHOP.shared.doModelsPop("inpModels", JSON.stringify(currCModelsObj), "nada");
+} else {
+console.log("doModelsPip is diff : " + "currCModelsObj.id");
+JSSHOP.ajax.doNuAjaxPipe("inpModels", "misc/m" + tSMSMID + ".txt", JSSHOP.shared.doModelsPop);
+}
+} else {
+console.log("doModelsPip : " + "currCModelsObj.no-id");
+JSSHOP.ajax.doNuAjaxPipe("inpModels", "misc/m" + tSMSMID + ".txt", JSSHOP.shared.doModelsPop);
+}
+};
+
+
+
+
+JSSHOP.shared.doModelsPop = function(ttPPInp, ttPPObj, toPPbju) {
+// alert("doModelsPop : " + ttPPObj);
+console.log("doModelsPop : " + ttPPObj);
+tLastN = "";
+tTName = "";
+tMdlName = "";
+currtMSstrS = "";
+currSeriesArr = "";
+currSeriesArr = [];
+currCModelsObj = JSON.parse(ttPPObj);
+for(var gkey in currCModelsObj) {
+TMPnOBJ = currCModelsObj[gkey];
+if(TMPnOBJ.n) {
+tSSv = TMPnOBJ.n;
+if(tSSv.indexOf(" ") != -1) {
+
+tSpS = tSSv.split(" ");
+tTName = tSpS[0];
+tMdlName = tSSv.substring(tSSv.indexOf(" "), tSSv.length);
+// replace all special chars except . and -  and space in tMdlName
+tMdlName = tMdlName.replace(/[^a-zA-Z0-9-.\s]/g, "");
+
+ 
+} else {
+tTName = tSSv;
+tMdlName = TMPnOBJ.yf + " " + TMPnOBJ.yt;
+}
+gkey = TMPnOBJ.id;
+tSSI =  TMPnOBJ.id;
+tprtyN = tSSv;
+tsiN = tSSv.replace("(","[");
+tsiN = tsiN.replace(")","]");
+if(tSSv.indexOf("(") != -1) {
+tprtyN = tSSv.replace("(","&nbsp;&nbsp;&nbsp;<span class=\"txtClrGrey\">[&nbsp;");
+}
+if(tprtyN.indexOf(")") != -1) {
+tprtyN = tprtyN.replace(")","&nbsp;]</span>");
+}
+tInpStr = TMPnOBJ.id + "::" + TMPnOBJ.n;
+// tJSMstr = "inpImpModels.value = '" +  tInpStr + "';inpModels.value='" + tsiN + "';inpModels.focus();JSSHOP.ui.closeLbox();";	  
+tJSMstr = "currPUrlObj.si = '" +  tSSI + "';currPUrlObj.series='" + tTName + "';";
+tJSMstr += "currPUrlObj.md = '" +  tSSI + "';currPUrlObj.model='" + tMdlName + "';";
+tJSMstr += "JSSHOP.ui.closeLbox();";
+
+
+
+tJSMstr += "JSSHOP.shared.doPartsWords(50,'noQvalue');";
+tJSMstr += "inpTParts.focus();scrollToElement('dvHdr');window.scrollTo(0,0);";
+tJSMstr += "JSSHOP.ads.setPrtsPrefCC('series','" + tTName + "');";
+tJSMstr += "JSSHOP.ads.setPrtsPrefCC('md','" + tSSI + "');";
+tJSMstr += "JSSHOP.ads.setPrtsPrefCC('model','" + tMdlName + "');";
+tJSMstr += "JSSHOP.ads.setPrtsPrefCC('si','" + tSSI + "');";
+
+/*
+
+
 */
 
-JSSHOP.shared.addCurrSlctObj = function(tObjN, tFelem, tSlctVal, tDefkey, tDefVal) {
-if(tDefVal == "noQvalue") {
+if(tTName == tLastN) {
+currtMSstrS += "<div onclick=\"javascript:" + tJSMstr + "\" class=\"collection-item crsrPointer\">" + tprtyN + "<br> <span class=\"txtSmall txtBold txtClrDlg\">" + TMPnOBJ.yf + "  -&gt; ";
+if(TMPnOBJ.yt == "0") {
 } else {
-JSSHOP.shared.addCurrSelectOpt(tFelem, tDefkey, tDefVal, "selected");	
+    currSeriesArr.push(tTName);
+currtMSstrS += " " + TMPnOBJ.yt;
 }
-for (var [key,val] of Object.entries(tObjN)) {
-if(key == tSlctVal) {
-// JSSHOP.shared.addCurrSelectOpt(tFelem, key, val, "");
-JSSHOP.shared.addCurrSelectOpt(tFelem, key, val, "selected");
+currtMSstrS += "</span></div>"
+
+
 } else {
-JSSHOP.shared.addCurrSelectOpt(tFelem, key, val, "");
+currtMSstrS += "</div>"
+ 
+tJSstr = "JSSHOP.ui.tglPrefModule('dvTglMD" + gkey + "','dvMD" + gkey + "','tglMD" + gkey + "');";
+currtMSstrS += "<div class=\"crsrPointer\" onclick=\"javascript:" + tJSstr + "\"><table style=\"width: 95%\" class=\"collection\">";
+currtMSstrS += "<tr><td><strong>&nbsp;" + tTName + "</strong></td>";
+currtMSstrS += "<td><div id=\"dvTglMD" + gkey + "\" class=\"icnbtn crsrPointer\" nowrap=\"nowrap\" style=\"float:right\">";
+currtMSstrS += "<i class=\"small-material-icons\" title=\"expand_more\">&#xe5cf;</i></div></td></tr></table></div>";
+
+
+if(currPUrlObj.part) {
+tJSMstr += "JSSHOP.shared.doPartsSearch('inpTParts');";
+} 
+currtMSstrS += "<div style=\"display:none;visibility:hidden\" class=\"collection\" id=\'dvMD" + gkey + "'\">";
+currtMSstrS += "<div onclick=\"javascript:" + tJSMstr + "\" class=\"collection-item crsrPointer\">" + tprtyN + "<br> <span class=\"txtSmall txtBold txtClrDlg\">" + TMPnOBJ.yf + "  -&gt; ";
+if(TMPnOBJ.yt == "0") {
+} else {
+currtMSstrS += " " + TMPnOBJ.yt;
+}
+
+currtMSstrS += "</span></div>";
+
+}
+tLastN = tTName;
 }
 }
+/* check if lightbox_content is empty
+tLBCinnerhtml = document.getElementById("lightbox_content").innerHTML;
+if(tLBCinnerhtml.indexOf("setMakeStuff") != -1) {
+    document.getElementById("lightbox_content").innerHTML = currtMSstrS;
+} else {}
+*/
+
+tPYS = "<br><div class=\"bkgdClrNrml\"  style=\"text-align:center;margin:6px;\">";
+// create a div string with the current make name
+tPYS += "<div class=\"txtSMall txtBold txtClrTtl\">" + currPUrlObj.make + "</div>";
+tPYS += "<div style=\"float:left\"><img src=\"images/mlogos/" + currPUrlObj.make.toLowerCase().replace(" ", "-") + "-logo.png\" style=\"max-width:30px;max-height:30px;\"></img></div>";
+
+tPYS += "<div class=\"txtBold txtClrHdr\">" + stxt[82] + " " + stxt[103] + ":</div>";
+
+for (i = 0; i < 3; i++) {
+    tLpdIDstr = currSeriesArr[Math.floor(Math.random() * currSeriesArr.length)];
+
+  tPYS += " <span class=\"txtSmall txtClrTtl\">" + tLpdIDstr + "</span> ";   
+ 
+}
+tPYS += "...";
+
+// create a div string with style float right with the curren make image logo
+
+// 
+tPYS += "</div>";
+JSSHOP.ui.popAndFillLbox(tPYS + currtMSstrS);
+
+// alert(currtMSstrS);
+};
+
+function doNill() {
+    tNill = "nill";
+// alert("doNill");
+}
+
+JSSHOP.shared.doPartsPop = function() {
+tCatArrStr = "";
+
+tCatArrStr += "<div class=\"crsrPointer\"><table style=\"width: 100%\" class=\"bigtable bkgdClrNrml brdrClrHdr txtBold txtBig\">";
+tCatArrStr += "<tr><td><strong>&nbsp;" + stxt[512] + "</strong></td></tr></table></div>";
+
+
+
+/*
+
+
+tEPobj = currPartsObj;
+tPPobj = tEPobj.pcats;
+for(var gkey in tPPobj) {
+tCatArrStr +=  "<br>";
+
+
+tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPC" + gkey + "','dvPC" + gkey + "','tglPrts" + gkey + "');";
+tCatArrStr += "<div class=\"crsrPointer\" onclick=\"javascript:" + tJSstr + "\"><table style=\"width: 100%\" class=\"collection txtBold txtBig\">";
+tCatArrStr += "<tr><td><strong>&nbsp;" + tPPobj[gkey] + "</strong></td>";
+tCatArrStr += "<td><div id=dvTglPC" + gkey + " class=\"icnbtn crsrPointer\" nowrap=\"nowrap\" style=\"float:right\">";
+tCatArrStr += "<i class=\"small-material-icons\" title=\"expand_more\">&#xe5cf;</i></div></td></tr></table></div>";
+
+// javascript:JSSHOP.ui.tglPrefModule('dvTglPCpc1','dvPCpc1','tglPrtspc1')
+
+
+
+
+
+if(tEPobj.pprts[gkey].pts){
+tCatArrStr += "<div style=\"display:none;visibility:hidden\" class=\"collection\" id=\"dvPC" + gkey + "\">";
+tCatPtsobj = tEPobj.pprts[gkey].pts;
+for(var pcgkey in tCatPtsobj) {
+tCatArrStr += "<div onclick=\"javascript:setShpPartCatID('" + tCatPtsobj[pcgkey].id + "','" + tCatPtsobj[pcgkey].pi + "','" + tCatPtsobj[pcgkey].n + "');\" class=\"collection-item crsrPointer\">" + tCatPtsobj[pcgkey].id + " : " + tCatPtsobj[pcgkey].n + "</div>";
+}
+tCatArrStr += "</div>";
+}
+}
+*/
+
+
+tEPobj = currPartsObj;
+tPPobj = tEPobj.pcats;
+
+ 
+
+
+
+for(var gkey in tPPobj) {
+// tCatArrStr +=  "<br>";
+tDynMunuObj = null;
+tDynMunuObj = "";
+tDynMunuObj = {};
+tDynMunuObj._id = gkey;
+tDynMunuObj.cat_rtype = "5";
+tDynMunuObj.cat_uid = "1";
+tDynMunuObj.cat_coid = "0";
+tDynMunuObj.cat_pid = "0";
+tDynMunuObj.cat_title = tPPobj[gkey];
+tDynMunuObj.cat_desc = tPPobj[gkey];
+tDynMunuObj.cat_vala = "1";
+tDynMunuObj.cat_valb = "10001";
+tDynMunuObj.cat_dadded = "10001";
+currDynMenuArr.push(tDynMunuObj);
+currPPrtCatArr.push(gkey + ":" + tPPobj[gkey]);
+tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPC" + gkey + "','dvPC" + gkey + "','tglPrts" + gkey + "');";
+
+tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\" class=\"crsrPointer\" onclick=\"javascript:" + tJSstr + "\"><table  class=\"collection\"  cellpadding=\"0px\" cellspacing=\"0px\">";
+tCatArrStr += "<tr><td><img src=\"images/misc/" + gkey + ".gif\" class=\"icnsmlbtn\"></td>";
+tCatArrStr += "<td class=\"txtBold\" style=\"word-wrap:break-word;word-break: break-word;text-align: left;width:100%\">&nbsp;" + tPPobj[gkey] + "</td>";
+
+tCatArrStr += "<td><div id=\"dvTglPC" + gkey + "\" class=\"icnbtn crsrPointer\"  style=\"float:right\">";
+tCatArrStr += "<i class=\"small-material-icons\" title=\"expand_more \">&#xe5cf;</i></div></td></tr></table></div>";
+
+// javascript:JSSHOP.ui.tglPrefModule('dvTglPCpc1','dvPCpc1','tglPrtspc1')
+
+
+
+
+
+if(tEPobj.pprts[gkey].pts){
+tCatArrStr += "<div style=\"display:none;visibility:hidden;word-wrap:break-word;word-break: break-word;\" class=\"collection\" id=\"dvPC" + gkey + "\">";
+
+
+
+
+tCatPtsobj = tEPobj.pprts[gkey].pts;
+for(var pcgkey in tCatPtsobj) {
+
+// currCstmQstr += " " + tCatPtsobj[pcgkey].n;
+tmpFPSstr = "&part=" + tCatPtsobj[pcgkey].n + "&prti=" + tCatPtsobj[pcgkey].pi + "&q=" + encodeURIComponent(currCstmQstr + " " + tCatPtsobj[pcgkey].n);
+ 
+// tUtoL = tCatUStr + "&part=" + tCatPtsobj[pcgkey].n + "&prti=" + tCatPtsobj[pcgkey].pi + "&pid=aa-show-part&q=" + currCstmQstr + " " + encodeURIComponent(tCatPtsobj[pcgkey].n);
+tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\"><a  class=\"collection-item\" href=\"javascript:document.location.href=JSSHOP.shared.doPartDynL('" + tCatPtsobj[pcgkey].id + "','" + tCatPtsobj[pcgkey].n + "');\" class=\"collection-item crsrPointer\">" + tCatPtsobj[pcgkey].id + " : " + tCatPtsobj[pcgkey].n + "</a></div>";
+// tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\" onclick=\"javascript:eindex('aa-show-part','" + tUtoL + "');\" class=\"collection-item crsrPointer\">" + tCatPtsobj[pcgkey].id + " : " + tCatPtsobj[pcgkey].n + "</div>";
+}
+}
+tCatArrStr += "</div>";
+}
+
+
+
+JSSHOP.ui.popAndFillLbox(tCatArrStr);
 };
 
 
 
 
-	JSSHOP.shared.getOptIndex = function(selection, indexVal) {
-				theOptIndex = 0;
-	 
-					for(var i = 0; i < selection.length; i++) {
-						 currIndexVal = selection.options[i].value;
-						if(currIndexVal == indexVal) {
-							theOptIndex = i;
-							break;
-						}
-	 
-				}
-				return theOptIndex;
-	};
 
-	JSSHOP.shared.setCurrSelectOpt = function(theObj, indexVal) {
-				theIndexVal = "noQvalue";
-				var selection = theObj;
-				if(selection) {
-					for(var i = 0; i < selection.length; i++) {
-						var currIndexVal = selection.options[i].value;
-						if(currIndexVal == indexVal) {
-							theIndexVal = currIndexVal;
-							selection.selectedIndex = i;
-							break;
-						}
-					}
-				}
-				return theIndexVal;
-			};
 
 
-	JSSHOP.shared.getCurrSelectTxt = function(theObj) {
-				var theSelIndex = theObj.selectedIndex;
-				var theString = theObj.options[theSelIndex].text;
-				var theVal = theObj.options[theSelIndex].value;
-				// alert(theString +  " : " + theVal);
-				return theString;
-			};
 
 
-	JSSHOP.shared.getCurrSelectOpt = function(theObj) {
-		tREtSOval = "noQvalue";
-		try {
-			var theSelIndex = theObj.selectedIndex;
-			var theString = theObj.options[theSelIndex].text;
-			var tREtSOval = theObj.options[theSelIndex].value;
-		} catch(e) {
-		JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getCurrSelectOpt");
-		return tREtSOval;
-		}
 
-				// alert(theString +  " : " + theVal);
-				return tREtSOval;
-			};
+JSSHOP.shared.getMakesTbl = function() {
+tPYS = "<div  class=\"collection\"  style=\"text-align:center; line-height:30px;word-break:break-word;\">";
+tMkObj = objAllMakes;
+// ttRstr = [];
+for(var gkey in tMkObj) {
+		if(tMkObj[gkey].n) {
+		 TMPnOBJ = tMkObj[gkey];
+		 tSSv = TMPnOBJ.n;
+		 tSSI =  TMPnOBJ.id;
+          
+ 		  // tPYS += "<a class=\"txtClrHdr txtSmall txtBold txtDecorNone\" href=\"index.html?mk=" + tSSI + "&make=" + tSSv + "&pid=aa-show-make&q=" + encodeURIComponent(tSSv) + "\">" + tSSv + "</a>&nbsp; &nbsp; ";
+ 		  //  tPYS += "<a class=\"txtClrHdr txtSmall txtBold txtDecorNone\" href=\"index.html?mk=" + tSSI + "&make=" + tSSv + "&pid=aa-show-make&q=" + encodeURIComponent(tSSv) + "\">" + tSSv + "</a>&nbsp; &nbsp; ";
+		  //  tPYS += "<a class=\"txtClrHdr txtSmall txtBold txtDecorNone\" href=\"javascript:JSSHOP.ads.clearAllPrtsPrefCC();eindex('aa-show-make','make=" + tSSv + "&mk=" + tSSI + "&pid=aa-show-make&q=" + removeDiacritics(stxt[101]) + " " + tSSv + "')\";>" + tSSv + "</a>&nbsp; &nbsp; ";
+		  //  tPYS += "<a class=\"txtClrHdr txtSmall txtBold txtDecorNone\" href=\"javascript:JSSHOP.ads.clearAllPrtsPrefCC();scrollToElement('dvPartsList');eindex('aa-show-make','make=" + tSSv + "&mk=" + tSSI + "&pid=aa-show-make&q=" + removeDiacritics(stxt[101]) + " " + tSSv + "');\">" + tSSv + "</a>&nbsp; &nbsp; ";
+           tPYS += "<a class=\"txtClrHdr txtSmall txtBold txtDecorNone\" href=\"javascript:JSSHOP.shared.setMakeStuff('" + tSSI + "','" + tSSv + "','noQvalue');JSSHOP.ads.clearAllPrtsPrefCC();JSSHOP.ads.setPrtsPrefCC('mk','" + tSSI + "');\">" + tSSv + "</a>&nbsp; &nbsp; ";
+           // ttRstr.push(tSSI+":"+tSSv);
+		  }
 
-	JSSHOP.shared.addCurrSelectOpt = function(theObj, theVal, theText, theCssClsn) {
-		        if(theCssClsn == "selected") {
-			 theObj.options[theObj.options.length] = new Option(theText, theVal, true, true);
-
-				} else {
-				theObj.options[theObj.options.length] = new Option(theText, theVal);
-				}
-			};
-
-	JSSHOP.shared.addOptAtIndex = function(theObj, theIndex, theVal, theText, theCssClsn) {
-				theOpt = document.createElement("OPTION");
-			theOpt.innerText = theText;
-			theOpt.value = theVal;
-			theOpt.className = theCssClsn;
-				theObj.options.add(theOpt, theObj.options[theIndex]);
-			};
-
-	JSSHOP.shared.addOptAtVal = function(theObj, theIVal, theVal, theText, theCssClsn) {
-				selection = null;
-			selection = theObj;
-			tmpVhasV = "no";
-				if(theIVal == "noQvalue") {
-					JSSHOP.shared.addOptAtIndex(theObj, theObj.options.length, theVal, theText, theCssClsn);
-				} else {
-					for(var i = 0; i < selection.length; i++) {
-					tmpVhasV = "no";
-						currIndexVal = selection.options[i].value;
-						if(currIndexVal == theIVal) {
-					 tmpVhasV = "yes";
-						 JSSHOP.shared.addOptAtIndex(theObj, i+1, theVal, theText, theCssClsn);
-						}
-	 
-					}
-				if(tmpVhasV == "no") {
-					// JSSHOP.shared.addOptAtIndex(theObj, theObj.options.length, theVal, theText, theCssClsn);
-				}
-			}
-			};
-	JSSHOP.shared.removeOptions = function(selectbox)
-	{
-		var iop;
-		for(iop = selectbox.options.length - 1 ; iop >= 0 ; iop--)
-		{
-			selectbox.remove(iop);
-		}
-	};
-
-
-
-	/*
-	* validation method using data-ison attr in element 
-	* to validate it (form fields)
-	* parsing values delmited  by : 
-	* data-ison="y:3:22"
-	*/ 
-
-
-	JSSHOP.shared.valVOarr = function(theVOarr, theErrDiv) {
-
-		strVldErr = "<b>Oooops..</b>";
-		document.getElementById(theErrDiv).innerHTML = "";
-		weiint = 0;
-		isValid = true;
-		isFValid = true;
-		lween = theVOarr.length;
-		
-		while (weiint < lween) {
-		  isFValid = true;
-		  ttest = "";
-			ts = null;
-			ts = theVOarr[weiint];
-	theVB = null;
-			theVBval = "";
-	theVB = document.getElementById(ts.fid);
-	// alert(theVB.nodeName.toUpperCase());
-	if(theVB.nodeName.toUpperCase() === "DIV") {
-	theVBval = theVB.innerText;
-	}  else if(theVB.nodeName.toUpperCase() == "SELECT") {
-	theVBval = JSSHOP.shared.getCurrSelectOpt(theVB);			      
-	 } else {
-	theVBval = theVB.value;
-	}
-	tFEDvrID = "tDvEr"+ts.fid;
-	if(tFEDvrID.indexOf("email") != -1) {
-		theVBval = theVBval.replace(" ", "");
-		theVBval = theVBval.replace(" ", "");
-		theVB.value = theVBval;
-	}
-	if(document.getElementById(tFEDvrID)) {	
-	ttRWEED = document.getElementById(tFEDvrID);
-	ttRWEED.remove();
-	}
-	
-	if(ts.fvr !== "noQvalue") {
-	ttest = ts.fvr;
-
-	if(ts.fda == "false") {
-		    console.log("valVOarr.fda false: " + theVB.id + " : "  + theVBval + " : " + theVB.nodeName +  " : " + isValid);
-
-	if(theVBval == ts.fdv) {
-
-	// alert("shr: " + ts.fda);
-		isValid = false;
-		isFValid = false;
-		console.log("valVOarr.fda false and theVBval == ts.fdv): " + theVB.id + " : "  + theVBval + " : " + theVB.nodeName +  " : " + isValid);
-
-	} else {
-			if(ttest.test(theVBval)) {
-
-		 console.log("valVOarr.fda isGOOD: " + theVB.id + " : "  + theVBval + " : " + theVB.nodeName +  " : " + isValid);
-
-	} else {
-				isValid = false;
-		isFValid = false;
-		 console.log("valVOarr.fda notest: " + theVB.id + " : "  + theVBval + " : " + theVB.nodeName +  " : " + isValid);
-
-	}
-	}
-	
-	} else {
-		
-			if(ttest.test(theVBval)) {
-
-		 console.log("valVOarr.fda true: " + theVB.id + " : "  + theVBval + " : " + theVB.nodeName +  " : " + isValid);
-
-	} else {
-				isValid = false;
-		isFValid = false;
-		 console.log("valVOarr.fda true notest: " + theVB.id + " : "  + theVBval + " : " + theVB.nodeName +  " : " + isValid);
-
-	}
-	
-
-		// 	alert("fda == true: " + ts.fda);
-	}
-	
-	
-
-    console.log("valVOarr: " + theVB.id + " : "  + theVBval + " : " + theVB.nodeName +  " : " + isValid);
-
-	if(isFValid === false) {
-	theTdiv = document.createElement("div");
-	strVldErr = ts.fve;
-	theEdiv = document.createElement("div");
-	// theEdiv.className = "maxWidth80pct";
-	theEdiv.id = "tDvEr" + ts.fid;	
-	
-tAlrtStr = "<div class=\"alert alert-danger\" role=\"alert\">";
-tAlrtStr += "<div class=\"txtSmall txtVlrHdr\">" + strVldErr;
-tAlrtStr += "<button type=\"button\" class=\"btn close txtBig txtBold\" data-dismiss=\"alert\" aria-label=\"Close\">";
-tAlrtStr += "<span aria-hidden=\"true\">&times;</span></button><div></div>";
-
-
-	theEdiv.innerHTML = tAlrtStr;
-	theTdiv.appendChild(theEdiv);
-	theVB.parentNode.appendChild(theTdiv);
-	theVB.className = theVB.className + " brdrClrRed";
-	scrollTo(theTdiv);
-	}  
-
-
-
-
-	}
-	weiint++;
-			theVBval = "";
-	}
-
- 
-
-	return isValid;
-	};
-
-
-	JSSHOP.shared.valFieldVals = function(theArrElem) {
-	// n = null default do nada
-	// v = validate
-	isFullyVal = true;
-	actType = "n";
-	try {
-	var len = theArrElem.length;
-	var iint = 0;
-	while (iint < len) {
-
-	if(document.getElementById(theArrElem[iint])) {
-	theElem = document.getElementById(theArrElem[iint]);
-	if(theElem.getAttribute("data-ison") != null) {
-	tDison = theElem.getAttribute("data-ison");
-	if(tDison.indexOf(":") != -1) {
-	tmpTDivars = tDison.split(":");
-	actType = tmpTDivars[0];
-	if(actType == "v") {
-	veType = tmpTDivars[1];
-	veMinLen = tmpTDivars[2];
-	veMaxLength = tmpTDivars[3]; 
-	veDefVal = tmpTDivars[4];
-	veLblElID = tmpTDivars[5];
-	veAlertStr = tmpTDivars[6]; 
-	veDefTtl = tmpTDivars[7];
-	veDefCls = tmpTDivars[8];
-
-
-	// v:s:5:8:49:lbl_u_pass:2:49:clsFrmInpLabel
-
-
-	document.getElementById(veLblElID).className = veDefCls;
-	document.getElementById(veLblElID).innerHTML = stxt[veDefTtl];
-	theElVal = theElem.value;
-	if(theElVal.length < veMinLen) {
-	isFullyVal = false;
-	if(veDefVal == "null")  {
-	} else {
-	theElem.value = stxt[veDefVal];
-	}
-	theElem.focus();
-	document.getElementById(veLblElID).className = "txtBold txtClrRed";
-	document.getElementById(veLblElID).innerHTML = stxt[veAlertStr];
-	}
-	} 
-	}
-	}
-	}
-
-	iint++;
-	}
-	} catch(e) {
-	JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.valFieldVals");
-	return false;
-	}
-	return isFullyVal;
-	};
-
-
-
-	JSSHOP.shared.initFrmComps = function(theFCmpArr) {
-		iint = 0;
-		 tAstr = "";
-		len = theFCmpArr.length;
-		while (iint < len) {
-
-			ts = theFCmpArr[iint];
-
-	theB = null;
-	theB = document.getElementById(ts.fid);
-
-	if(ts.fcl !== "noQvalue") {
-	JSSHOP.ui.addEvent(theB,"click",ts.fcl);
-	}
-	if(ts.lid !== "noQvalue") {
-	tlid = ts.lid;
-	try {
-	// document.getElementById(tlid).className = "txtSmall txtBold txtClrDDlg";
-	document.getElementById(tlid).innerText = ts.ltxt;
-
-	JSSHOP.ui.setLblHighlight(theB,ts.fdv,document.getElementById(tlid),ts.ltxt);
-	} catch(e) {
-
-	tAstr += e + " :: " +  JSON.stringify(ts) + "<br>";
-	// alert("JSSHOP.shared.initFrmComps: "  + e + " :: " +  JSON.stringify(ts));
-	}
-
-	} else {
-
-	}
-
-
-
-	if(ts.fdv !== "noQvalue") {
-	 
-	if(ts.fty == "button") {
-	theB.style.color = "#ffffff";
-	} else {
-	JSSHOP.ui.setDefFval(theB, ts.fdv, ts.fda);
-	}
-
-	}
-
-	if(ts.fda !== "noQvalue") {
-
-	}
-	 
-		  iint++;
-		}
-
-	// alert(tAstr);
-	};
-
-
-	JSSHOP.shared.setFieldVal = function(theField, theVal) {
-		try {
-		  document.getElementById(theField).value = theVal;
-		} catch(e) {
-		JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.setFieldVal");
-		}
-	};
-
-
-	JSSHOP.shared.getFieldVal = function(theField, theVal) {
-		try {
-		  return document.getElementById(theField).value;
-		} catch(e) {
-		JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getFieldVal");
-		return theVal;
-		}
-	};
-
-	JSSHOP.shared.setFrmFieldVal = function(theForm, theField, theVal) {
-		try {
-		  document[theForm][theField].value = theVal;
-		} catch(e) {
-		JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.setFrmFieldVal");
-		}
-	};
-
-	JSSHOP.shared.getNUFieldVal = function(theField, theVal) {
-		try {
-			tAE = theField;
-			tNN = theField.nodeName.toUpperCase();
-			if((tNN == "DIV") || (tNN == "SPAN")){
-			fv = tAE.innerHTML;		
-			} else if(tNN == "SELECT") {
-			fv = JSSHOP.shared.getCurrSelectOpt(theField);			      
-			} else {
-			fv = theField.value;
-			}
-		  return fv;
-		} catch(e) {
-			fv = "error: " + theVal;
-		JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getNUFieldVal");
-		return theVal;
-		}
-	};
-
-	JSSHOP.shared.getFrmFieldVal = function(theForm, theField, theVal) {
-		fv = theVal;
-		try {
-			
-		  return  document[theForm][theField].value;
-		} catch(e) {
-			fv = "error: " + theVal;
-		JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getFrmFieldVal");
-		return theVal;
-		}
-	};
-
-
-
-
-
-
-
-	JSSHOP.shared.sort = function(data, theIndex, theOrder) {
-	  var i, j;
-	  var currentValue;
-	  var currentObj;
-	  var compareObj;
-	  var compareValue;
-		
-		if(theOrder == "sortAsc") {
-	// this is where the order comparison is done:	
-	// while(j >=0 && compareValue > currentValue) {
-
-	  for(i=1; i<data.length;i++) {
-		currentObj = data[i];
-		currentValue = currentObj[theIndex];
-
-		j= i-1;
-		
-		compareObj = data[j];
-		compareValue = compareObj[theIndex];  
-		// if theIndex is _id then we need to convert to int
-		if(theIndex == "_id") {
-		compareValue = parseInt(compareValue);
-		currentValue = parseInt(currentValue);
-		}
-		while(j >=0 && compareValue > currentValue) {
-		  data[j+1] = data[j];
-		  j--;
-		  if (j >=0) {
-			compareObj = data[j];
-			compareValue = compareObj[theIndex];
-		  }        
-		}
-		data[j+1] = currentObj;
-	  }
-	  
-		} else {
-		
-
-	  for(i=1; i<data.length;i++) {
-		currentObj = data[i];
-		currentValue = currentObj[theIndex];
-		j= i-1;
-		compareObj = data[j];
-		compareValue = compareObj[theIndex];  
-		if(theIndex == "_id") {
-			compareValue = parseInt(compareValue);
-			currentValue = parseInt(currentValue);
-			}
-
-		while(j >=0 && compareValue < currentValue) {
-		  data[j+1] = data[j];
-		  j--;
-		  if (j >=0) {
-			compareObj = data[j];
-			compareValue = compareObj[theIndex];
-		  }        
-		}
-		data[j+1] = currentObj;
-	  }
-	  
-		
-		}
-	  
-	  return data;
-	   }
-
-	 
-
-
-
-	 
-
-
-	JSSHOP.shared.setArrVals = function(theMarr, theAIndx, theArr) {
-		  tmpVpar =  null;
-		  tmpVpar = [];
-		  tmpSobj = null;
-		  tmpSobj = {};
-			var len = theArr.length;
-			var iint = 0;
-
-			  while (iint < len) {
-			ts = theArr[iint];
-		  tmpSobj = null;
-		  tmpSobj = {};
-			for (var gkey in ts) {
-			  if(theMarr[theAIndx][gkey]) {
-			theMarr[theAIndx][gkey] = ts[gkey];
-			}
-			}
-			iint++;
-			}
-		   return theMarr;
-	};
-
-	JSSHOP.shared.getKNVParr = function(theArr) {
-		  tmpVpar =  null;
-		  tmpVpar = [];
-		  tmpSobj = null;
-		  tmpSobj = {};
-			var len = theArr.length;
-			var iint = 0;
-
-			  while (iint < len) {
-			ts = theArr[iint];
-
-		  tmpSobj = null;
-		  tmpSobj = {};
-			for (var gkey in ts) {
-			  tmpSobj["t"] = gkey;
-			tmpSobj["v"] = ts[gkey];
-			tmpVpar.push(tmpSobj);
-			}
-			iint++;
-			}
-		   return tmpVpar;
-	};
-
-
-	JSSHOP.shared.setDynFrmVals = function(oFormElement, dPrfx) {
-	 
-			var oField, sFieldType, nFile, sSearch;
-			try {
-		  tmpVpar =  null;
-		  tmpVpar = [];
-		  tmpSobj = {};
-		  var allNs = "";
-			for (var nItem = 0; nItem < oFormElement.elements.length; nItem++) {
-				oField = oFormElement.elements[nItem];
-				if (!oField.getAttribute("name")) {
-					continue;
-				}
-			tmpSobj = null;
-			tmpSobj = {};
-				sFieldType = oField.nodeName.toUpperCase() === "INPUT" ? oField.getAttribute("type").toUpperCase() : "TEXT";
-				if (sFieldType === "FILE") {
-					for (nFile = 0; nFile < oField.files.length; sSearch += "&" + escape(oField.name) + "=" + escape(oField.files[nFile++].name));
-				} else if ((sFieldType !== "RADIO" && sFieldType !== "CHECKBOX") || oField.checked) {
-				fn = oField.name;
-			fv = oField.value;
-			fnode = dPrfx + fn;
-
-			if(dPrfx == "clear") {
-			oField.value = "";
-			} else {
-				if(document.getElementById(fnode)) {
-
-
-
-	 
-
-
-			if((dPrfx == "dyn_") || (document.getElementById(fnode).nodeName.toUpperCase() == "DIV")){
-			document.getElementById(fnode).innerHTML = fv;
-			} else {
-			allNs += fnode + ",";
-			// alert(fnode + " ;; " + fv);
-			JSSHOP.shared.setFieldVal(fnode, fv);
-			}		
-				}
-	 
-			}
-
-			}
-			}
-	} catch(e) {
-	alert("setDynFrmVals: " + e);
-	}
-	 // alert(allNs);
-	};
-
-	JSSHOP.shared.getDynFrmVals = function(oFormElement, dPrfx) {
-	 
-			var oField, sFieldType, nFile, sSearch;
-		  tmpVpar =  null;
-		  tmpVpar = [];
-		  tmpSobj = null;
-		  tmpSobj = {};
-			for (var nItem = 0; nItem < oFormElement.elements.length; nItem++) {
-				oField = oFormElement.elements[nItem];
-				if (!oField.getAttribute("name")) {
-					continue;
-				}
-			tmpSobj = null;
-			tmpSobj = {};
-				sFieldType = oField.nodeName.toUpperCase() === "INPUT" ? oField.getAttribute("type").toUpperCase() : "TEXT";
-				if (sFieldType === "FILE") {
-					for (nFile = 0; nFile < oField.files.length; sSearch += "&" + escape(oField.name) + "=" + escape(oField.files[nFile++].name));
-				} else if ((sFieldType !== "RADIO" && sFieldType !== "CHECKBOX") || oField.checked) {
-				fn = oField.name;
-			fnode = dPrfx + fn;
-				if(document.getElementById(fnode)) {
-			tNN = document.getElementById(fnode).nodeName.toUpperCase();
-			if((tNN == "DIV") || (tNN == "SPAN")){
-			fv = document.getElementById(fnode).innerHTML;		
-			} else if(tNN == "SELECT") {
-			fv = JSSHOP.shared.getCurrSelectOpt(document.getElementById(fnode));			      
-			} else {
-			fv = document.getElementById(fnode).value;
-			}
-			oField.value = fv;
-				} else {
-			fv = oField.value;
-			}
-			if(fv.indexOf("&") != -1) {
-			// alert("FV/");
-			tmpSobj[fn] = fv.replace("&", "-");
-			// tmpSobj[fn] = escape(encodeURIComponent(fv));
-			// alert("FV/: " + tmpSobj[fn]);
-			} else {
-			tmpSobj[fn] = fv;
-			}
-			// if(fv.length > 0) {
-			// tmpSobj["t"] = fn;
-			// tmpSobj["v"] = fv;
-			tmpVpar.push(tmpSobj);
-			// }
-				}
-			}
-			 //alert("getDynFormVals: " + JSON.stringify(tmpVpar));
-			return tmpVpar;
-	};
-
-
-
-	JSSHOP.shared.getFrmVals = function(oFormElement, oHdrStr) {
-
-
-			var oField, sFieldType, nFile, sSearch;
-		  tmpVpar =  null;
-		  tmpVpar = [];
-		  tmpSobj = {};
-			for (var nItem = 0; nItem < oFormElement.elements.length; nItem++) {
-		try {          
-				oField = oFormElement.elements[nItem];
-				if (!oField.getAttribute("name")) {
-					continue;
-				}
-			tmpSobj = null;
-			  tmpSobj = {};
-			 
-				sFieldType = oField.nodeName.toUpperCase() === "INPUT" ? oField.getAttribute("type").toUpperCase() : "TEXT";
-				if (sFieldType === "FILE") {
-					for (nFile = 0; nFile < oField.files.length; sSearch += "&" + escape(oField.name) + "=" + escape(oField.files[nFile++].name));
-				} else if ((sFieldType !== "RADIO" && sFieldType !== "CHECKBOX") || oField.checked) {
-	 
-			fva = oField.value;
-			if(fva.length >= 0) {
-		
-			fvb = fva.replace("\"", " ");
-			fvv = fva.replace("'", " ");
-				fn = escape(oField.name);
-			fv = fvv;
-
-			
-			tmpSobj["t"] = fn;
-			tmpSobj["v"] = fv;
-			tmpVpar.push(tmpSobj);
-			}
-				}
-
-
-			} catch (e) {
-			alert(e + " : " + oField.getAttribute("name"));
-			// JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.doAjaxSbmt");
-			  }
-
-
-			}
-			// alert("getFormVals: " + JSON.stringify(tmpVpar));
-			return tmpVpar;
-	};
-
-
-
-	JSSHOP.shared.setDynFieldVals = function(theResp, thePrefx) {
-
-	if(theResp) {
-	var len = theResp.length;
-	 
-	var arrToFill = theResp;
-	 
-	 
-	var iint = 0;
-
-	for(var gkey in theResp) {
-	try {
-
-	fnode = thePrefx + gkey;
-	if(document.getElementById(fnode)) {
-	tRKv = theResp[gkey];
-	if(tRKv.indexOf("%3A") != -1) {
-	retQkey = unescape(decodeURIComponent(tRKv));
-	} else {
-	retQkey = theResp[gkey];
-	}
-	document.getElementById(fnode).value = retQkey;
-	}
-	} catch(e) {
-	}
-	iint++;
-	}
-	}
-	};
-
-
-	JSSHOP.shared.setFrmVals = function(theForm, theResp, theTmpCB) {
-	// alert("setFrmVals ; " + JSON.stringify(theResp));
-
-	try {
-	if(theResp) {
-	// var arrToFill = theResp;
-	var len = theResp.length;
-	var iint = 0;
-
-	for(var gkey in theResp) {
-	if(document[theForm][gkey]) {
-	document[theForm][gkey].value = theResp[gkey];
-	// alert(JSON.stringify(theResp[gkey]));
-	}
-	}
-	 
-	theTmpCB();
-	 
-	}
-	} catch(e) {
-	console.log("JSSHOP.shared.setFrmVals: " + e);
-
-	}
-	};
-
-
-
-
-
-	/*
-	* will try to use this later as seen on the qmsm form in index.html
-	* basically renders a web input form according to attributes in the actual forms fields
-	* JSSHOP.shared.rndrDynFrmVals(document["qmsgs"], "tmp_");
-	* save button still has to be added
-	*/
-	 
-	JSSHOP.shared.rndrDynFrmVals = function(oFormElement, dPrfx, tFAllowed, tSavBtnObj) {
-	 
-			var oField, sFieldType, nFile, sSearch;
-		  tmpVstr =  "";
-			tmpFval = "";
-			tmpFid = "noQvalue";
-		  tmpLid = "noQvalue";
-		  retRndrObj = null;
-		  retRndrObj = {};
-		  rndrFFObjArr = null;
-		  rndrFFObjArr = [];  
-			for (var nItem = 0; nItem < oFormElement.elements.length; nItem++) {
-				oField = oFormElement.elements[nItem];
-		  tFNstr = oField.getAttribute("name");
-		  if(tFAllowed == "noQvalue" || tFAllowed.indexOf(tFNstr) != -1) {
-
-
-				tmpVstr += "<div>";
-
-				if (!oField.getAttribute("data-flbl")) {
-
-					continue;
-				} else {
-			tmpFlbl = oField.getAttribute("data-flbl");
-			}
-				if (oField.getAttribute("data-fid")) {
-				atmpFid = oField.getAttribute("data-fid");
-				if(atmpFid.indexOf("tmp_") != -1) {
-				tmpFid = atmpFid + oField.getAttribute("name");
-				} else {
-				tmpFid = atmpFid;
-				
-				}
-				tmpLid = "lbl_" + tmpFid;
-				} 
-				tmpVstr += "<span id=\"" + tmpLid + "\" style=\"min-width: 80%\">" + tmpFlbl + "</span>&nbsp;&nbsp;<br>";
-				if (oField.getAttribute("data-fval")) {
-				atmpFval = oField.getAttribute("data-fval");
-				if(atmpFval.indexOf("thisval") != -1) {
-				tmpFval = oField.getAttribute("value");
-				} else {
-				tmpFval = atmpFval;
-				}
-				} 
-
-				if (oField.getAttribute("data-ftype")) {
-				  switch(oField.getAttribute("data-ftype")) {
-				case "span":
-				tmpVstr += "<span  id=\"" + tmpFid + "\" style=\"min-width: 80%\">" + tmpFval + "</span>";
-				break;
-				case "tinput":
-				tmpVstr += "<input value=\"" + tmpFval + "\" id=\"" + tmpFid + "\" style=\"min-width: 80%\"></input>";
-				break;
-				case "tarea":
-				tmpVstr += "<textarea id=\"" + tmpFid + "\" style=\"min-width: 80%\">" + tmpFval + "</textarea>";
-				break;
-				default:
-				break;
-				}
-				} 
-
-
-
-
-
-	atfuh = null;
-	atfuh = nCurrFFieldOb();
-	atfuh.fid = tmpFid;
-	atfuh.fdv = tmpFval;
-	atfuh.lid = tmpLid; 
-	atfuh.ltxt = tmpFlbl; 
-	rndrFFObjArr.push(atfuh);
-
-	tmpVstr += "</div>";
-	}
-	 }
-	if(tSavBtnObj !== "noQvalue"){
-
-	rndrFFObjArr.push(tSavBtnObj);
-	tmpVstr += "<div align=\"center\"><button id=\"" + tSavBtnObj.fid + "\" class=\"cls_button cls_button-medium\"><ti data-ison=\"" + stxt[21] + "\" data-desc=\"btn_save\">" + stxt[21] + "</ti></button></div>";
-	}
-	retRndrObj["rndrStr"] = tmpVstr;
-	retRndrObj["rndrFobj"] = rndrFFObjArr;
-	return retRndrObj;
-	};
-
-
-
-	JSSHOP.shared.getTblHdrs = function(tHHdrArr) {
-			tHdrStr = "";
-		for(iha = 0; iha < tHHdrArr.length; iha++) {
-		    tHlnkObj = tHHdrArr[iha];
-			if((tHlnkObj.ulnk) && (tHlnkObj.ulnk == "noQvalue")) {
-			 tHdrStr += "<th style=\"text-align: left\"><a class=\"txtBold txtClrHdr\">" + tHlnkObj.nm + "</a></th>";	
-			} else {
-			tHdrStr += "<th style=\"text-align: left\"><a href=\"javascript:rnderFItems('" + tHlnkObj.fld + "');\" class=\"txtBold txtClrHdr\">" + tHlnkObj.nm + "</a></th>";	
-			}
-		}
-			return tHdrStr;
-	};
-
-	JSSHOP.shared.getSrtdArr = function(tSortArr, tSrtIdx) {
-	hasr = "n";
-	fullstr = "";
-	var arrToFill = "";
-	var tmpSordr = "sortAsc";
-	if(currSortIdx[tSrtIdx]) {
-	if(currSortIdx[tSrtIdx] == "sortAsc") {
-	tmpSordr = "sortDesc";
-	currSortIdx[tSrtIdx] = "sortDesc";
-	} else {
-	tmpSordr = "sortAsc";
-	currSortIdx[tSrtIdx] = "sortAsc";
-	}
-	} else {
-	tmpSordr = "sortAsc";
-	currSortIdx[tSrtIdx] = "sortAsc";
-	}
-	currSortIdx[tSrtIdx] = tmpSordr;
-	return(JSSHOP.shared.sort(tSortArr, tSrtIdx, tmpSordr));
-	};
-
-
-
-
-	JSSHOP.shared.utf8_encode = function( argString ) {
-		// http://kevin.vanzonneveld.net
-		// +   original by: Webtoolkit.info (http://www.webtoolkit.info/)
-		// +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-		// +   improved by: sowberry
-		// +    tweaked by: Jack
-		// +   bugfixed by: Onno Marsman
-		// +   improved by: Yves Sucaet
-		// +   bugfixed by: Onno Marsman
-		// +   bugfixed by: Ulrich
-		// *     example 1: utf8_encode('Kevin van Zonneveld');
-		// *     returns 1: 'Kevin van Zonneveld'
-
-		var string = (argString+''); // .replace(/\r\n/g, "\n").replace(/\r/g, "\n");
-
-		var utftext = "";
-		var start, end;
-		var stringl = 0;
-
-		start = end = 0;
-		stringl = string.length;
-		for (var n = 0; n < stringl; n++) {
-			var c1 = string.charCodeAt(n);
-			var enc = null;
-
-			if (c1 < 128) {
-				end++;
-			} else if (c1 > 127 && c1 < 2048) {
-				enc = String.fromCharCode((c1 >> 6) | 192) + String.fromCharCode((c1 & 63) | 128);
-			} else {
-				enc = String.fromCharCode((c1 >> 12) | 224) + String.fromCharCode(((c1 >> 6) & 63) | 128) + String.fromCharCode((c1 & 63) | 128);
-			}
-			if (enc !== null) {
-				if (end > start) {
-					utftext += string.substring(start, end);
-				}
-				utftext += enc;
-				start = end = n+1;
-			}
-		}
-
-		if (end > start) {
-			utftext += string.substring(start, string.length);
-		}
-
-		return utftext;
-	};
-
-
-
-
-
-	// some shared user preferences functions
-	// sets prefs by passing the checkbox, the preference array name, 
-	// the preference key, selected and unselected values.
-	JSSHOP.shared.setChckbxPref = function(tChckbx, tPrefArr, tPrefKey, tVsel, tVunsel) {
-		try {
-		if(tChckbx.checked) {
-		JSSHOP.user.setCkiePrfKV(tPrefArr,tPrefKey,tVsel);
-		} else {
-		JSSHOP.user.setCkiePrfKV(tPrefArr,tPrefKey,tVunsel);
-		}
-		} catch (e) {
-		alert(e);
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.setChckbxPref");
-		}
-	};
-
-	// end of shared funtions
-
-
-
-
-	//   ---- AJAX functions
-
-
-	JSSHOP.ajax.fnishGeneric = function(strRet, prvdr, action, ukey, id, cbElem, cbElemHTML) {
-		try {
-			document.getElementById(cbElem).innerHTML = cbElemHTML;
-		} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.fnishGeneric");
-		}
-	};
-
-
-	JSSHOP.ajax.procAjaxRet = function(strRet, prvdr, action, ukey, id, msg, cbElem, cbElemHTML) {
-		try {
-		switch (action) {
-			case "parseU":
-				JSSHOP.ajax.fnishGeneric(strRet, prvdr, action, ukey, id, cbElem, cbElemHTML);
-				break;
-			default:
-				JSSHOP.ajax.fnishGeneric(strRet, prvdr, action, ukey, id, cbElem, cbElemHTML);
-				break;
-		}
-		} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.procAjaxRet");
-		}
-	};
-
-
-	JSSHOP.ajax.procRet = function(strRet, arrFelemnts) {
-		try {
-
-			if(arrFelemnts[0]["name"]) {
-			if(arrFelemnts[0]["name"].toLowerCase() == "aaction") {
-			tmpAVal = arrFelemnts[0]["value"];
-		switch(tmpAVal) {
-			case "CViewEditAdminSettings":
-			JSSHOP.ui.popAndFillLbox("new: " + JSON.stringify(arrFelemnts) + " <br> " + strRet);
-				break;
-			default:
-				JSSHOP.ajax.fnishGeneric(strRet, prvdr, action, ukey, id, cbElem, cbElemHTML);
-				break;
-		}
-		}
-		}
-		} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.procRet");
-		}
-	};
-
-	JSSHOP.ajax.createXMLHTTPObject = function() {
-		var xmlhttp = false;
-	var XMLHttpFactories = [
-		function() {
-			return new XMLHttpRequest()
-		},
-		function() {
-			return new ActiveXObject("Msxml2.XMLHTTP")
-		},
-		function() {
-			return new ActiveXObject("Msxml3.XMLHTTP")
-		},
-		function() {
-			return new ActiveXObject("Microsoft.XMLHTTP")
-		}
-	];
-		for (var i = 0; i < XMLHttpFactories.length; i++) {
-			try {
-				xmlhttp = XMLHttpFactories[i]();
-			} catch (e) {
-				continue;
-			}
-			break;
-		}
-		return xmlhttp;
-	};
-
-	 
-	JSSHOP.ajax.doNuResponse = function(tmpArrDRS) {
-	 //alert("doNuResponse: " + tmpArrDRS.cb + " : " + tmpArrDRS.rs);
-	// JSSHOP.ui.popAndFillLbox("doNuResponse: " + tmpArrDRS.cb + " : " + tmpArrDRS.rs);
-	tmpNArrDRS = null;
-	tmpNArrDRS = {};
-	tmpNArrDRS = tmpArrDRS;
-
-	if(tmpArrDRS.st == "nofile") {
-	JSSHOP.ajax.doResponseSave(tmpArrDRS);
-	} else {
-	if(tmpArrDRS.lz == "y") { 
-	strTmpDAS = tmpArrDRS.rs;
-	strTmpDS = strTmpDAS.replace("\"", "");
-	tmpDFEUStr = LZString.decompressFromEncodedURIComponent(strTmpDS);
-	tmpNArrDRS.rs = tmpDFEUStr;
-	// alert("tmpDFEUStr: " + tmpDFEUStr);	
-	}  
-
-	if(tmpArrDRS.ls == "n") {
-	} else {
-
-	tLSStr = getNuLclStrg(tmpArrDRS.ls, tmpArrDRS.cb, "noQvalue");
-	if(tLSStr == "noQvalue") {
-	setNuLclStrg("localStorage", tmpArrDRS.cb, tmpArrDRS.rs);
-	}
-	 
-	}
-
-	}
-
-
-	theRespCB = window[tmpArrDRS.cb];
-	theRespCB(tmpNArrDRS);
-
-
-	};
-
-
-	JSSHOP.ajax.doResponseSave = function(tmpsArrDRS) {
-	// alert("doResponseSave: " + tmpsArrDRS.cb  + " : " + tmpsArrDRS.fn + " : " + tmpsArrDRS.rs );
-	if(tmpsArrDRS.lz == "y") { 
-	JSSHOP.shared.setFrmFieldVal("qconn", "rs",  LZString.compressToEncodedURIComponent(tmpsArrDRS.rs));
-	} else {
-	JSSHOP.shared.setFrmFieldVal("qconn", "rs", tmpsArrDRS.rs.replace(/\\(.)/mg, "$1"));
-	}	
-	JSSHOP.shared.setFrmFieldVal("qconn", "fn", tmpsArrDRS.fn);
-	JSSHOP.shared.setFrmFieldVal("qconn", "fc", "save");
-	document["qconn"].submit();
-
-	};
-
-
-
-	JSSHOP.ajax.doRespConstruct = function(tmpDRCArr, tmpRCstr) {
-	try {
-
-	console.log("doRespConstruct: " + tmpDRCArr.cb + " : " + tmpRCstr);
-	tmpNDRCArr = null;
-	tmpNDRCArr = {};
-	tmpNDRCArr = tmpDRCArr;
-	aRespArr = null;
-	aRespArr = {};
-			 // alert("doRespConstruct.tmpRCstr: " + " : " + tmpRCstr);	
-
-			  aRespArr = JSON.parse(tmpRCstr);
-			  tmpNDRCArr.st = "error";
-	 
-			tmpNDRCArr.rs = "noQvalue";
-	 
-	 
-			tmpNDRCArr.rs = JSON.stringify(aRespArr.data);
-			// alert(JSON.stringify("tmpNDRCArr.rs: " + tmpNDRCArr.rs));
-			JSSHOP.ajax.doNuResponse(tmpNDRCArr);
-
-		} catch(e) {
-			alert("doRespConstruct: " + e);
-			}
-	};
-
-	 
-
-
-	JSSHOP.ajax.doNurAjaxPipe = function(theAxObj) {
-		// alert("doNurAjaxPipe: " + theAxObj.q);
-	// going to stop spinner here
-	hasLclStrg = "n";
-
-	aRespArr = null;
-	aRespArr = {};
-	tmpQstr = "";
-	tmpFRSstr = "";
-	tmpQstr += "fc=" + theAxObj.fc + "&";
-	tmpQstr += "ts=" + theAxObj.ts + "&";
-	tmpQstr += "fn=" + theAxObj.fn + "&";
-	tmpQstr += "lz=" + theAxObj.lz + "&";
-	tmpQstr += "rs=" + theAxObj.rs + "&";
-	tmpQstr += "q=" + JSSHOP.shared.utf8_encode(theAxObj.q);
-
-	pUrl = theAxObj.ur + tmpQstr;
-var oReq = new XMLHttpRequest();
-		  //  var oReq = JSSHOP.ajax.createXMLHTTPObject();
-		 //  oReq.setRequestHeader("connection", "close");
-		 tUTA = JSSHOP.shared.urlToArray(pUrl);
-
-	 
-		   if(oReq == false) {
-			
-				theCB(theNAxObj);
-		  } else {
-
-			oReq.onreadystatechange = function() {
-				if (oReq.readyState == 4) {
-				 // alert("oReq.readyState == 4: " + oReq.responseText);
-					JSSHOP.ajax.doRespConstruct(theAxObj, oReq.responseText);
-				
-				}  
-			}
-			oReq.onerror = function() {
-		  // theNAxObj.st = "error";
-			// theNAxObj.rs = "error: " + oReq;
-			console.log("doNurAjaxPipe.error: " + oReq);
-			// alert("yikes, we have a connection problem..." + oReq.responseText);
-			}
-			oReq.open("GET", pUrl, true);
-			picr = oReq.send(null);
-		   }
-	};
-
-
-
-	// prepare the request 
-	JSSHOP.ajax.doRequestPrep = function(tmppArrDRP) {
-    try {
-	tmppNArrDRP = null;
-	tmppNArrDRP = {};
-	tmppNArrDRP = tmppArrDRP;
-
-	if(tmppArrDRP.ls == "n") {
-	// alert("tmppArrDRP.ls ==  no");
-	JSSHOP.ajax.doNurAjaxPipe(tmppArrDRP);
-	} else {
-	tLSStr = getNuLclStrg(tmppArrDRP.ls, tmppArrDRP.cb, "noQvalue");
-	if(tLSStr == "noQvalue") {
-	// alert("tLSStr ==  noQvalue");
-	JSSHOP.ajax.doNurAjaxPipe(tmppArrDRP);
-	} else {
-	tmppNArrDRP.rs =  tLSStr;
-	tmppNArrDRP.st = "saved";
-	// alert("getNuLclStrg: " + tLSStr);
-	// alert("tmppNArrDRP.st = saved");
-
-	JSSHOP.ajax.doNuResponse(tmppNArrDRP);
-	}  // tLSStr not noQvalue
-	} // ls is not "n";
-} catch(e) {
-alert("doRequestPrep: " + e);
 }
-	};
+tPYS += "</div>";
+// tPYS += "<br>" + JSON.stringify();
+// alert(tPYS);
+return tPYS;
+};
 
 
 
-	JSSHOP.ajax.doAjaxPipe = function(pUrl,tmpCB) {
-		try {
-		   JSSHOP.ajax.doNuAjaxPipe(null,pUrl,tmpCB);
-			} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.doAjaxPipe");
-			  }
-	};
+JSSHOP.shared.getSeriesLnks = function() {
+currtMSstrS = ""; 
+tLastN = "";
+tTName = "";
+tHasMcount = 0;
+for(var gkey in currCModelsObj) {
 
-	JSSHOP.ajax.prepAjaxSbmt = function(tmpBtn, oFormElement,tmpCB) {
-		try {
-		   tmpBtn.className="cls_button cls_button-medium cls_button-disabled";
-		   tmpBtn.disabled=true;
-		   JSSHOP.ajax.doAjaxSbmt(oFormElement,tmpCB);
-			} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.prepAjaxSbmt");
-				}
-	};
-
-	JSSHOP.ajax.prepAjaxPipe = function(tmpBtn,pUrl,tmpCB) {
-		try {
-		  if(tmpBtn != null) {
-		   // tmpBtn.className="cls_button cls_button-medium cls_button-disabled";
-		   tmpBtn.disabled=true;
-		 }
-		   JSSHOP.ajax.doNuAjaxPipe(tmpBtn,pUrl,tmpCB);
-			} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.prepAjaxPipe");
-			  }
-	};
-
-	JSSHOP.ajax.doAjaxSbmt = function(oFormElement,tmpCB) {
-		try {
-		if (!oFormElement.action) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.doAjaxSbmt: !! No form action set !!");
-			return;
-		}
-		var oReq = new XMLHttpRequest();
-		// var oReq = JSSHOP.ajax.createXMLHTTPObject();
-			var oField, sFieldType, nFile, sSearch;
-			for (var nItem = 0; nItem < oFormElement.elements.length; nItem++) {
-				oField = oFormElement.elements[nItem];
-				if (!oField.getAttribute("name")) {
-					continue;
-				}
-				sFieldType = oField.nodeName.toUpperCase() === "INPUT" ? oField.getAttribute("type").toUpperCase() : "TEXT";
-				if (sFieldType === "FILE") {
-					for (nFile = 0; nFile < oField.files.length; sSearch += "&" + escape(oField.name) + "=" + escape(oField.files[nFile++].name));
-				} else if ((sFieldType !== "RADIO" && sFieldType !== "CHECKBOX") || oField.checked) {
-					sSearch += "&" + escape(oField.name) + "=" + escape(oField.value);
-				}
-			}
-			oReq.onreadystatechange = function() {
-				if (oReq.readyState == 4) {
-				   tmpCB(oReq.responseText,oFormElement.elements);
-				}
-			}
-			oReq.open(oFormElement.method, oFormElement.action + "?" + sSearch, true);
-			oReq.send(null);
-			} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.doAjaxSbmt");
-			  }
-	};
-
-
-	/*
-	* hookloader functions
-	*/
-
-	JSSHOP.hookloader.hooks = {};
-	JSSHOP.hookloader.register = function(name, callback) {
-		if('undefined' == typeof(JSSHOP.hookloader.hooks[name]))
-		JSSHOP.hookloader.hooks[name] = [];
-		JSSHOP.hookloader.hooks[name].push(callback);
-	  };
-
-	JSSHOP.hookloader.call = function(name, arguments) {
-		if('undefined' != typeof(JSSHOP.hookloader.hooks[name]))
-		  for(i = 0; i < JSSHOP.hookloader.hooks[name].length; ++i)
-			if( true != JSSHOP.hookloader.hooks[name][i]( arguments )) { break; }
-	};
+TMPnOBJ = currCModelsObj[gkey];
+if(TMPnOBJ.n) {
+tSSv = TMPnOBJ.n;
+if(tSSv.indexOf(" ") != -1) {
+tSpS = tSSv.split(" ");
+ttTName = tSpS[0];
+} else {
+ttTName = tSSv;
+}
+// taeTName = JSSHOP.shared.decode_utf8(ttTName);
+// taTName = decodeURIComponent(ttTName);
+ttRemSlName = ttTName.replace("/", " - ");
+tTName = removeDiacritics(ttRemSlName);
+tSSI =  TMPnOBJ.id;
+if(tTName == tLastN) {
+tHasMcount++;
+} else {
+if(tHasMcount == 0) {
+currtMSstrS += "&nbsp; . &nbsp;<a href=\"index.html?make=" + currMakeName + "&mk=" + currMakeID +  "&series=" + tTName + "&si=" + TMPnOBJ.id + "&model=" + TMPnOBJ.n + "&md=" + TMPnOBJ.id + "&pid=aa-show-model&q=" + currCstmQstr + "\" class=\"txtSmall txtBold\">" + tTName + "</a>";
+} else {
+// currtMSstrS += "&nbsp; . &nbsp;<a href=\"javascript:eindex('aa-show-series','make=" + currMakeName + "&mk=" + currMakeID +  "&series=" + tTName + "&si=" + TMPnOBJ.id + "&pid=aa-show-series&q=" +  currCstmQstr+ "')\">" + tTName + "</a>";
+currtMSstrS += "&nbsp; . &nbsp;<a href=\"index.html?make=" + currMakeName + "&mk=" + currMakeID +  "&series=" + tTName + "&si=" + TMPnOBJ.id + "&model=" + TMPnOBJ.n + "&md=" + TMPnOBJ.id + "&pid=aa-show-series&q=" + currCstmQstr + "\" class=\"txtSmall txtBold\">" + tTName + "</a>";
+}
+// currtMSstrS += "<a href=\"index.html?make=" + currMakeName + "&mk=" + currMakeID +  "&series=" + tTName + "&si=" + TMPnOBJ.id + "&pid=aa-show-series\">" + tTName + "</a><br>";
+}
+tLastN = tTName;
+}
+}
+return currtMSstrS;
+};
 
 
 
 
-	/*
-
-	JSSHOP.ui.rndrDataTbl = function(tmpRndrObj) {
-	tmpDTHdrsArr = tmpRndrObj.hdrsArr;
-	tmpDTResArr = tmpRndrObj.resArr; 
-	frstr = "";
-	frstr += "<table class=\"striped\"  style=\"width: 100%;\"  cell-padding=\"15px\" cellspacing=\"0px\"><tr>";
-	ihdrLen = tmpDTHdrsArr.length;
-	iresLen = tmpDTResArr.length;
-	ihdrInc = 0;
-	iresInc = 0;
-	while(ihdrInc < ihdrLen) {
-	ihdrObj = tmpDTHdrsArr[ihdrInc];
-	frstr += "<td><a id=\"aFld_" + theAQB + "_cp_symbol\" href=\"javascript:showMList('" + theAQB + "','cp_symbol','sortDesc');\" class=\"txtBig txtDecorNone\">Pair</a></td>";
-	ihdrInc++;
-	}
-
-	frstr += "</tr>";
-
-
-	while(iresInc < iresLen) {
-	ihdrInc = 0;
-	iresObj = tmpDTResArr[iresInc];
-	frstr += "<tr>";
-	while(ihdrInc < ihdrLen) {
-	ihdrObj = tmpDTHdrsArr[ihdrInc];
-	frstr += "<td>" + iresObj[ihdrObj.cn] + "</td>";
-	ihdrInc++;
-	}
-	frstr += "</tr>";
-	iresInc++;
-	}
 
 
 
-	frstr += "</table>";
-	console.log("rndrDataTbl: " + frstr);
-	// return frstr;
 
-	};
+function fillMakesBox() {
+    document.getElementById("dvMks").innerHTML = JSSHOP.shared.getMakesTbl();
+}
+    
+JSSHOP.shared.setMakesBox = function() {
+    tIMtglbObj = JSSHOP.ui.nTglBxOb();
+    tIMtglbObj["ttl"] = stxt[82] + " " + stxt[102]; // the toggle box title
+    tIMtglbObj["dvid"] = "dvMks"; // the toggle box div id
+    tIMtglbObj["cntntFnc"] =  "fillMakesBox";
+    tIMtglbObj["content"] = "noQvalue"; // the toggle that goes in above toggle div
+    tIMtglbObj["btn"] = "btnTglMMi" // the toogle btn id
+    tIMtglbObj["pref"] = "tglMksMI"; // the toogle pref id saved in cookie
+    tIMtglbObj["tbtmpCB"] = "noQvalue"; // null function as callback
+    tIMtglbObj["icn"] = "&#xe3ec;"; // the icon
+    tIMtglbObj["pnid"] = "dvMakesBox"; // the parent node, will just return text if noQvalue
+    tIMtglbObj["appnd"] = "y"; // append or fill above parent node
+    tIMtglbObj["cut"] = 200; // the parent node, will just return text if noQvalue
+    tIMtglbObj["clsmaintbl"] = "txtClrHdr slmtable brdrDarkBlue"; // main table class
+    tIMtglbObj["clstitletd"] = ""; // title box class
+    tIMtglbObj["clsttltxt"] = "txtSmall txtBold txtClrDrkGrn"; // title box text class
+    JSSHOP.ui.doTglBox(tIMtglbObj);
+    };
 
-	*/
 
-	JSSHOP.ui.getCurrPgIcn = function(tmpCPIcn) {
-	 return "<span class=\"cls-icn-wrap\"><i class=\"nav-material-icons coll-menu-item\">&#" + tmpCPIcn + "</i></span>";
-	}
-	JSSHOP.ui.showShareBox = function(tmpMsgType, tmpMsgVal){
-	try {
-	JSSHOP.ui.popAndFillLbox(tmpMsgType + " :: " + tmpMsgVal);
-	} catch(e) {
-	alert("no JSSHOP.ui.showShareBox: " + e);
-	}
-	};
-	var doneMMupload = function(thetheAAdiv, theAAresp, theAAarr) {
-		try {
-			// alert("doneMMupload: " + theAAresp);
-			document.getElementById("m_dadded").value = JSSHOP.getUnixTimeStamp();
-			getPropImgs();
-		} catch(e) {
-		alert("no doneMMupload: " + e);
-		}
-	};
+
+JSSHOP.shared.doModelTbl = function(ttInp, ttObj, tobju) {
+if(pid == "aa-show-part") {
+tSMTTstr = stxt[83] + " " + stxt[105] + ":";
+} else {
+tSMTTstr = stxt[82] + " " + stxt[103] + ":";
+}
+currtMSstrS = "<table style=\"margin: 0 auto;text-align:left;width: 100%;\" class=\"rtable brdrClrNrml\"><tr><td class=\"txtBold\">" + tSMTTstr +  "</td></tr>";
+currtMSstrS += "<tr><td></td></tr><tr><td>";
+currtMSstrS += "<table style=\"margin: 0 auto;text-align:left;width: 100%;\" class=\"txtSmall txtClrHdr\" align=\"center\"><tr><td>" + stxt[103] + "&nbsp;</td><td>ID  &nbsp;</td><td>From  &nbsp;</td><td>To  &nbsp;</td></tr>";
+tMkObj = JSON.parse(ttObj);
+currCModelsObj = null;
+tLastN = "";
+tTName = "";
+tModIdstr = "";
+tImcnt = 0;
+currCModelsObj = JSON.parse(ttObj);
+console.log("JSSHOP.shared.doModelTbl.currCModelsObj: " + JSON.stringify(currCModelsObj));
+for(var gkey in currCModelsObj) {
+TMPnOBJ = currCModelsObj[gkey];
+if(TMPnOBJ.n) {
+tSSv = TMPnOBJ.n;
+if(tSSv.indexOf(" ") != -1) {
+tSpS = tSSv.split(" ");
+tTName = tSpS[0];
+} else {
+tTName = tSSv;
+}
+if(TMPnOBJ.yt == "0") {
+ttimeMTo = "...";
+} else {
+ttimeMTo = TMPnOBJ.yt;
+}
+tSSI =  TMPnOBJ.id;
+if(tTName == tLastN) {
+// if(tTName == inpSeries.value) {
+// currtMSstrS += "<br><a href=\"javascript:eindex('aa-show-model','make=" +  currUrlArr.make + "&mk=" + currMakeID +  "&series=" + currUrlArr.series + "&si=" + currUrlArr.si + "&model=" + TMPnOBJ.n + "&md=" + TMPnOBJ.id + "&yf=" + TMPnOBJ.yf + "&yt=" + TMPnOBJ.ty + "&pid=aa-show-model&q=" + currCstmQstr + "')\">" + TMPnOBJ.n + " (" + TMPnOBJ.yf + " - " + TMPnOBJ.yt + ")</a>";
+tAModlName = TMPnOBJ.n;
+tBModlName = TMPnOBJ.n;
+if(tAModlName.indexOf("(") != -1) {
+tAModIdstr = tAModlName.substring(tAModlName.indexOf("(") + 1, tAModlName.length - 1);
+tModIdstr = tAModIdstr.replace("/", "-");
+
+tCModlName = tAModlName.substring(0, tAModlName.indexOf("("));
+tDModlName = tCModlName.replace(currUrlArr.series + " ", ""); 
+// tBModlName = tDModlName.replace("/", "-");
+}
+tBModlName = tBModlName.replace(/\//i, "-");
+
+if(tBModlName == ""){
+tBModlName = tAModlName.replace(/\//i, "-");
+}
+if(tModIdstr == ""){
+tModIdstr = tBModlName;
+}
+tModQstr =   encodeURIComponent(currUrlArr.make + " " + currUrlArr.series);
+
+// tModQstr =   encodeURIComponent(currUrlArr.make + " " + currUrlArr.series + " " + tBModlName);
+currtMSstrS += "<tr>";
+currtMSstrS += "<td><a href=\"index.html?make=" + currUrlArr.make + "&mk=" + currMakeID +  "&series=" + currUrlArr.series + "&si=" + currUrlArr.si + "&model=" + tModIdstr + "&md=" + TMPnOBJ.id + "&pid=aa-show-model&q=" + tModQstr + "\">" + tBModlName + "</a></td>";
+currtMSstrS += "<td><a href=\"index.html?make=" + currUrlArr.make + "&mk=" + currMakeID +  "&series=" + currUrlArr.series + "&si=" + currUrlArr.si + "&model=" + tModIdstr + "&md=" + TMPnOBJ.id + "&pid=aa-show-model&q=" + tModQstr + "\">" + tModIdstr + "</a></td>";
+
+
+currtMSstrS += "<td>" + TMPnOBJ.yf + "</td>";
+currtMSstrS += "<td>" + ttimeMTo + "</td>";
+currtMSstrS += "</tr>";
+tImcnt++;
+}
+tLastN = tTName;
+}
+}
+currtMSstrS += "</table></td></tr></table>";
+// dvModelsList.innerHTML = currtMSstrS;
+if(tImcnt == 0) {
+document.getElementById(ttInp).innerHTML = "NOOOOOOOOOOOOOOOOOOOOO";
+alert("JSSHOP.shared.doModelTbl: " + JSON.stringify(TMPnOBJ));
  
-	var finishMMupload = function(theMMum) {
-	try {
-
-		console.log("finishMMupload: " + theMMum);
-		image = null;
-		image = new Image();
-		
-		if(document.location.href.indexOf('admin/') != -1) {
-			image.src = "property/s_thumb" + theMMum;
-		  } else {
-			image.src = "admin/property/s_thumb" + theMMum;
-		}			
-
-		// document.getElementById("dvProdImgs").appendChild(image);
-		document.getElementById("m_file").value = theMMum;
-		document.getElementById("m_file_thumb").value = "s_thumb" + theMMum;
-		document.getElementById("m_vala").value = "1000000001";
-		tmpFarr = null;
-		tmpFobj = null;
-		tmpFobj = {};
-		tmpFobj["knvp"] =  JSSHOP.shared.getFrmVals(document["qmedia"], "nada");
-		oi = getNuDBFnvp("qmedia", 6, null, tmpFobj);
-		doQComm(oi["rq"], null, "doneMMupload"); 
-		// document.getElementById("dvProdImgs").innerHTML = "<img src=\"images/misc/s_thumb" + theMMum + "\" />";
-		// JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_media", theMMum);
-	} catch(e) {
-	alert("finishMMupload: " + e);
-	}
-	};
-
-
-
-	var doMediaBtnSetup = function(tmpMBtnId, tmpMBtnPrfx, tmpMBtnCB, tmpMBtnFldr) {
-	try {
-	ttbtn = document.getElementById(tmpMBtnId);
-	if((isJApp !== "no") && (isPhP == "no")) { 
-	JSSHOP.ui.addEvent(ttbtn, "click", function() { JSSHOP.jndroid.doPagePopUp("logipal/media_chooser.html", "noQvalue");return false; });
-	// app.setQIMeta(doQIMeta());
-	} else {
-	currMediaBtnPrfx = tmpMBtnPrfx;
-	currMediaBtnCB = tmpMBtnCB;
-	currMediaFldr = tmpMBtnFldr;
-	JSSHOP.loadScript("js/app/sau.js", JSSHOP.checkLoader,"js");
-	}
-	} catch(e) {
-	alert(e);
-	}
-	};
-
-	var doMsgMediaSetup = function() {
-	try {
  
-	doMediaBtnSetup("mmuploadBtn", "mm", "finishMMupload", tmpMediaFldr);
-	} catch(e) {
-	alert("doMsgMediaSetup: " + e);
-	}
-	};
-
-
-
-	JSSHOP.ui.doMsgThread = function(a,theResp,c) {
-	// alert("doMsgThread :" + theResp);
-	annewel = document.createElement('div');
-
-	tfullstr = "";
-	var tarrToFill = null;
-	tarrToFill = [];
-	tarrToFill = JSON.parse(theResp);
-	var tlen = tarrToFill.length;
-	var tiint = 0;
-	var tpcid = 0;
-	ttstr = "";
-	while(tiint < tlen) {
-	thasr = "n";
-	tts = tarrToFill[tiint];
-	ttstr = "<div style=\"min-height: 45px;margin:15px;margin-bottom:18px;\"  class=\"rtable bkgdClrTtl slmtblpadding\">";
-	ttmpdate = new Date(tts.ms_dadded * 1000);
-	ttmpdstr = "<b>" + ("0" + ttmpdate.getDate()).slice(-2) + "</b>/" + ("0" + (ttmpdate.getMonth() + 1)).slice(-2);
-	ttstr += "<span class=\"txtClrHdr\"  style=\"margin-left: 17px\">" + ttmpdstr + " - " + quid + "</span><br>";
-	ttstr += "<span class=\"txtClrHdr\"  style=\"margin-left: 17px\">" + tts.ms_matter + "</span>";
-	ttstr += "<span><a href=\"javascript:JSSHOP.ui.showReplyMsgBox('nada','" + tts.ms_threadid + "','" + c + "');\">" + tts.ms_viewed + "</a></span>";
-	ttstr += "</div>";
-	annewel = document.createElement('div');
-	annewel.innerHTML = ttstr;
-	// 
-	tDStr = "dvMsgT" + tts.ms_threadid;
-	// tmpTDQI.innerHTML = "";
-	if(currUrlArr.threadid){
-	thasr = "y";
-	tatmpTDQI = document.getElementById("includedContent");
-	} else {
-	if(document.getElementById(tDStr)) {
-	tatmpTDQI = document.getElementById(tDStr);
-	thasr = "y";
-	}
-	}
-	if(thasr == "y") {
-	tatmpTDQI.appendChild(annewel);
-	}
-	tiint++;
-	}
-	if(tarrToFill[0]) {
-
-	} else {
-	// ttstr = "<a href=\"index.html?pid=aa-add-shop\">" + stxt[1] + "</a>";
-	}
-	};
-
-
-	JSSHOP.ui.doMsgList = function(a,theResp,ttcb) {
-	 
-	console.log("doMsgList: " + theResp);
-	hasr = "n";
-	fullstr = "";
-	var arrToFill = null;
-	arrToFill = [];
-	arrToFill = JSON.parse(theResp);
-	var len = arrToFill.length;
-	var iint = 0;
-	var pcid = 0;
-	tstr = "";
-	while(iint < len) {
-	ts = arrToFill[iint];
-	tstr += "<div id=\"dvMsgT" + ts._id + "\" style=\"min-height: 45px;margin:15px;margin-bottom:18px;\" class=\"rtable bkgdClrNrml slmtblpadding\">";
-	tmpdate = new Date(ts.msg_dadded * 1000);
-	tmpdstr = "<b>" + ("0" + tmpdate.getDate()).slice(-2) + "</b>/" + ("0" + (tmpdate.getMonth() + 1)).slice(-2);
-	tstr += "<span class=\"txtClrHdr\" style=\"margin-left: 7px;\">" + tmpdstr + " : " + quid;
-	if(ts.msg_to == quid ||ts.msg_from == quid || ts.msg_cartid == cartID  ) {
-	tstr += "<a href=\"javascript:JSSHOP.ui.showReplyMsgBox('nada','" + ts._id + "','" + ttcb + "');\">" + ts.msg_status + "</a>";
-	} else {
-	tstr += " - " + ts.msg_status;
-	}
-	tstr += "</span><br>";
-	tstr += "<div class=\"txtClrHdr\" style=\"margin-left: 7px\"><span><a href=\"index.html?pid=aa-show-messages&threadid=" + ts._id + "&cid=" + cid + "\"><b>" + ts.msg_subject + "</b></a></span><br>" + ts.msg_matter + "</div>";
-	if(ts.msg_media.indexOf(".") != -1) {
-	tstr += "<div class=\"txtClrHdr\" style=\"margin-left: 7px\"><span><a href=\"index.html?pid=aa-show-messages&threadid=" + ts._id + "&cid=" + cid + "\"><img src=\"images/msgimgs/s_thumb" + ts.msg_media + "\" class=\"icndbtn\"></a></span></div>";
-
-	}
-
-	tstr += "</div>";
-	iint++;
-	}
-	 
-	if(arrToFill[0]) {
-	} else {
-	}
-	// tstr += "<a href=\"javascript:JSSHOP.ui.showMsgBox('product','" + ts._id + "','" + ttcb + "');\">" + stxt[700] + "</a>";
-
-	return tstr;
-	// document.getElementById("includedContent").innerHTML = tstr;
-	};
-
-
-
-
-
-
-	function showAReplyMsgSave(tamsg, tbmsg, tcmsg){
-	try {
-	JSSHOP.ui.doMsgThread(tamsg, JSON.stringify(JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qmsg"], "tmp_"))), "doNada");
-	// JSSHOP.ui.popAndFillLbox(tamsg + tbmsg + tcmsg);
-	} catch(e) {
-	alert("no showReplyMsgSave: " + e);
-	}
-	}
-
-	function showReplyMsgSave(tamsg, tbmsg, tcmsg){
-	try {
-	// JSSHOP.ui.popAndFillLbox(tamsg + tbmsg + tcmsg);
-
-	procNuUIitem("qmsgs","msg_dmodified",tamsg,JSSHOP.getUnixTimeStamp(),tamsg);
-	 
-	} catch(e) {
-	alert("no showReplyMsgSave: " + e);
-	}
-	}
-	 
-	JSSHOP.ui.doReplyMsgSave = function(tmpMsgType, tmpMsgVal, tTrmsCB){
-	try {
-	alert("JSSHOP.ui.doReplyMsgSave: " + tmpMsgType + " .." + tmpMsgVal)
-	JSSHOP.shared.setFrmFieldVal("qmsg","ms_threadid", tmpMsgVal);
-	JSSHOP.shared.setFrmFieldVal("qmsg", "ms_from", cartID);
-	JSSHOP.shared.setFrmFieldVal("qmsg", "ms_dadded", JSSHOP.getUnixTimeStamp()); 
-
-	JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_dmodified", JSSHOP.getUnixTimeStamp()); 
-	JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_modifiedby", cartID); 
-
-
-	// JSSHOP.shared.setDynFrmVals(document["qmsg"], "tmp_");
-	tmpDOs = null;
-	tmpDOs = {};
-	tmpDOs["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qmsg"], "tmp_"));
-	oi = getNuDBFnvp("qmsg",6,null,tmpDOs);
-	doQComm(oi["rq"], tTrmsCB, "showReplyMsgSave");
-
-
-	// alert(oi["rq"]);
-	// JSSHOP.ui.popAndFillLbox("Thank you!<b>" + oi["rq"]);
-	} catch(e) {
-	alert("no JSSHOP.ui.doReplyMsgSave: " + e);
-	}
-	};
-
-	JSSHOP.ui.showReplyMsgBox = function(tmpMsgType, tmpMsgVal, theTcb){
-	try {
-
-	tfsb = nCurrFFieldOb();
-	tfsb.fid = "btnMsgsave";
-	tfsb.fty = "button";
-	tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){JSSHOP.ui.doReplyMsgSave(tmpMsgType, tmpMsgVal, theTcb)}) };
-
-	tAllowedStr = "ms_subjectms_matter";
-	if(quid == "0") {
-	// tAllowedStr += "msg_fromsg_emailmsg_fromsg_tel";
-	}
-	msgFObj =  JSSHOP.shared.rndrDynFrmVals(document["qmsg"], "tmp_", tAllowedStr, tfsb);
-	retRndrObj["rndrStr"] = tmpVstr;
-	retRndrObj["rndrFobj"] = rndrFFObjArr;
-	JSSHOP.ui.popAndFillLbox("OK<br>" + msgFObj.rndrStr);
-	setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj)", 500);
-	} catch(e) {
-	alert("no JSSHOP.ui.showMsgBox: " + e);
-	}
-	};
-
-	function showMsgSave(tamsg, tbmsg, tcmsg){
-	JSSHOP.ui.popAndFillLbox(tamsg + tbmsg + tcmsg);
-	}
-	 
-	JSSHOP.ui.doMsgSave = function(tmpMsgType, tmpMsgVal, tempCB){
-	tmpmtid = Math.random().toString(36).slice(2);
-	JSSHOP.shared.setFrmFieldVal("qmsgs","msg_threadid", tmpmtid);
-	JSSHOP.shared.setFrmFieldVal("qmsgs","msg_userid", quid);
-	// JSSHOP.shared.setFrmFieldVal("qmsgs","msg_cartid", cartID);
-	JSSHOP.shared.setFrmFieldVal("qmsgs","msg_prodid", itemid);
-	JSSHOP.shared.setFrmFieldVal("qmsgs","msg_dmodified", JSSHOP.getUnixTimeStamp()); 
-	// JSSHOP.shared.setFrmFieldVal("qmsgs","msg_to", JSSHOP.shared.getFrmFieldVal("qco","c_uid",0));
-	JSSHOP.shared.setFrmFieldVal("qmsgs","msg_dadded", JSSHOP.getUnixTimeStamp()); 
-	// JSSHOP.shared.setDynFrmVals(document["qmsgs"], "tmp_");
-	tmpDOs = null;
-	tmpDOs = {};
-	tmpDOs["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qmsgs"], "tmp_"));
-	oi = getNuDBFnvp("qmsgs",6,null,tmpDOs);
-	doQComm(oi["rq"], null, tempCB);
-	// alert(oi["rq"]);
-	// JSSHOP.ui.popAndFillLbox("Thank you!<b>" + oi["rq"]);
-	};
-
-
-
-	JSSHOP.ui.showNuMsgBox = function(tmpMsgToID, tmpMsgType, tmpMsgVal,atmpCB){
-	try {
-
-	JSSHOP.shared.setFrmFieldVal("qmsgs","msg_from", quid);
-	JSSHOP.shared.setFrmFieldVal("qmsgs","msg_to", tmpMsgToID);
-	tfsb = nCurrFFieldOb();
-	tfsb.fid = "btnMsgsave";
-	tfsb.fty = "button";
-	tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){JSSHOP.ui.doMsgSave(tmpMsgType, tmpMsgVal, atmpCB)}) };
-
-
-	tsbstr = "<div id=\"mmprogressBar\"></div>"; 
-	tsbstr += "<div id=\"mmprogressOuter\"></div>"; 
-	tsbstr += "<div id=\"mmmsgBox\"></div>"; 
-	tsbstr += "<div id=\"mmdragbox\"></div>"; 
-	tsbstr += "<div id=\"dvUploadBtn\" onclick=\"JSSHOP.shared.setFrmFieldVal('qmsgs', 'msg_dadded', JSSHOP.getUnixTimeStamp());\"  style=\"display:block;visibility:visible;margin-right:10px\"><button id=\"mmuploadBtn\" class=\"cls_button cls_button-small\"><ti data-ison=\"" + stxt[70] + "\" data-desc=\"btn_save\">Add</ti></button></div>";
-	 
-
-
-
-	tAllowedStr = "msg_subjectmsg_matter";
-	if(quid == "0") {
-	tAllowedStr += "msg_fromsg_emailmsg_fromsg_tel";
-	}
-	msgFObj =  JSSHOP.shared.rndrDynFrmVals(document["qmsgs"], "tmp_", tAllowedStr, tfsb);
-	retRndrObj["rndrStr"] = tmpVstr;
-	retRndrObj["rndrFobj"] = rndrFFObjArr;
-	JSSHOP.ui.popAndFillLbox("OK<br>" + msgFObj.rndrStr + "<br>" + tsbstr);
-	setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj);doMsgMediaSetup();", 500);
-
-
-
-	// JSSHOP.ui.popAndFillLbox(JSSHOP.shared.rndrDynFrmVals(document["qmsgs"], "tmp_"));
-	} catch(e) {
-	alert("no JSSHOP.ui.showNuMsgBox: " + e);
-	}
-	};
-
-	JSSHOP.ui.showMsgBox = function(tmpMsgType, tmpMsgVal,atmpCB){
-	try {
-
-
-
-	JSSHOP.ui.showNuMsgBox(0, tmpMsgType, tmpMsgVal,atmpCB);
-
-	// JSSHOP.ui.popAndFillLbox(JSSHOP.shared.rndrDynFrmVals(document["qmsgs"], "tmp_"));
-	} catch(e) {
-	alert("no JSSHOP.ui.showMsgBox: " + e);
-	}
-	};
-
-
-
-
-
-	JSSHOP.ui.showPopHelp = function(tmpHlpKey){
-	try {
-	tmpHlpD = document.createElement('div');
-	if(hlpT[tmpHlpKey] && hlpC[tmpHlpKey]){
-	tmpHlpD.innerHTML = "<b>" + hlpT[tmpHlpKey] + "</b><br><br>" + hlpC[tmpHlpKey];
-	} else {
-	tmpHlpD.innerHTML = hlpT["default"] + " key: "  + tmpHlpKey;
-	}
-	JSSHOP.ui.popAndAppendLbox(tmpHlpD,"y");
-	} catch(e) {
-	alert("no JSSHOP.ui.showPopHelp: " + e);
-	}
-	 
-	};
-
-
-
-
-	JSSHOP.ui.showNPopHelp = function(){
-	try {
-
-	tmpHlpD = document.createElement('div');
-	if(hlpT[currHlpKey] && hlpC[currHlpKey]){
-	tmpHlpD.innerHTML = "<b>" + hlpT[currHlpKey] + "</b><br><br>" + hlpC[currHlpKey];
-	} else {
-	tmpHlpD.innerHTML = hlpT["default"] + " key: "  + currHlpKey;
-	}
-	JSSHOP.ui.popAndAppendLbox(tmpHlpD,"y");
-	} catch(e) {
-	alert("no showPopHelp: " + e);
-	}
-	 
-	};
-
-
-
-	JSSHOP.ui.setNPopHelp = function(thePath){
-	 try {
-	setTimeout("JSSHOP.ui.showNPopHelp()", 700);
-	} catch(e) {
-	alert("no setPopHelp : " + e);
-	}
-	};
-
-	var currHlpKey = "page";
-
-	JSSHOP.ui.getPopHelp = function(tmpHlpStr){
-	if(tmpHlpStr == "page") {
-	tmpHlpStr = pid;
-	}
-	try {
-	tmpv = hlpT.defval;
-	JSSHOP.ui.showPopHelp(tmpHlpStr);
-	} catch(e) {
-	// alert("no getPopHelp : " + e);
-	currHlpKey = tmpHlpStr;
-	tmpGetHCO = "js/" + jscssprefix + "helpstrings_" + usrlang + ".js?"; // help-arr url
-	JSSHOP.loadScript(tmpGetHCO, JSSHOP.ui.setNPopHelp,"js");
-	}
-	 
-	};
-
-
-	JSSHOP.ui.textAreaAdjust = function(theTarea){
-	currH = theTarea.scrollHeight;
-	theTarea.style.height = "1px";
-	theTarea.style.height = "auto";
-	theTarea.style.height = (25 + theTarea.scrollHeight);
-	};
-
-
-	JSSHOP.ui.setTinnerHTML = function(theElemId, theInnerHtml){
-	if(theInnerHtml == "loading") { // just set the loading image
-	theInnerHtml = "<img src=\"images/misc/loading.gif\">";
-	}
-	try {
-	document.getElementById(theElemId).innerHTML = theInnerHtml;
-	} catch(e) {
-	JSSHOP.logJSerror(e, arguments, "setTinnerHTML");
-	alert("setTinnerHTML: " + theElemId + " :: " + theInnerHtml + " :: " + e);
-	}
-	};
-
-
-
-	JSSHOP.ui.showHideElement = function(theEID, showHide) {
-		try {
-			theElement = document.getElementById(theEID);
-			if (showHide == "show") {
-				theElement.style.visibility = "visible";
-				theElement.style.display = "block";
-			} else {
-				theElement.style.visibility = "hidden";
-				theElement.style.display = "none";
-			}
-		} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.showHideElement");
-		}
-	};
-
-	JSSHOP.ui.setCname = function(theEID, newCname) {
-		try {
-			theElement = document.getElementById(theEID);
-	 
-				theElement.className =  newCname;
+} else {
+document.getElementById("includedContent").innerHTML = currtMSstrS;
+}
+// console.log(currtMSstrS);
+};
+
+
+
+/*
+* setting activity and favorites in cookies
+* using nAtvtyObj
+*/
+JSSHOP.shared.doAtvtyDefCB = function(theTmpAtvtyObj) {
+};
+
+
+JSSHOP.shared.nAtvtyObj = function() {
+aTmpAtvtyOb = null;
+aTmpAtvtyOb = {};
+aTmpAtvtyOb["_id"] = "noQvalue"; // internal id
+aTmpAtvtyOb["atype"] = "noQvalue"; // internal type
+aTmpAtvtyOb["aid"] = "1"; // internal id
+aTmpAtvtyOb["ttl"] = "noQvalue"; // title
+aTmpAtvtyOb["ur"] = "noQvalue"; // url
+aTmpAtvtyOb["imic"] = "noQvalue" // image
+aTmpAtvtyOb["cckie"] = "noQvalue"; // the cookie it is saved to
+aTmpAtvtyOb["daCB"] = "JSSHOP.ui.doAtvtyDefCB"; // null function as callback
+aTmpAtvtyOb["icn"] = "&#eoph;"; // the icon
+aTmpAtvtyOb["pnid"] = "noQvalue"; // the parent node, will just return text if noQvalue
+aTmpAtvtyOb["garr"] = "currRcntFavsArr"; // the global array it will be working with
+aTmpAtvtyOb["gstr"] = "currRcntFavsStr"; // the global str it will be working with
+return aTmpAtvtyOb;
+};
  
-		} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.toggleCname");
-		}
-	};
-		JSSHOP.ui.toggleNuCname = function(theEID, oldCname, newCname) {
-		try {
-			theElement = document.getElementById(theEID);
-			if (theEID.className == oldCname) {
-				theElement.className =  newCname;
-			}  
-		} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.toggleCname");
-		}
-	};
-	JSSHOP.ui.toggleCname = function(theEID, oldCname, newCname) {
-		try {
-			theElement = document.getElementById(theEID);
-			if (theEID.className == oldCname) {
-				theElement.className =  newCname;
-			} else {
-				theElement.className =  oldCname;
-			}
-		} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.toggleCname");
-		}
-	};
-	
-	JSSHOP.ui.toggleVisibility = function(rowname) {
-		try {
-			theRow = document.getElementById(rowname);
-			if(theRow.style.display == "none") {
-				theRow.style.display = "block";
-				theRow.style.visibility = "visible";
-			} else {
-				theRow.style.display = "none";
-				theRow.style.visibility = "hidden";
-			}
-		} catch (e) {
-		JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.toggleVisibility");
-		}
-	};
-
-	JSSHOP.ui.toggleMnuVisibility = function(rowname) {
-	 
-		try {
-			theRow = document.getElementById(rowname);    
-			 
-			if((theRow.style.display == "block") || (theRow.style.display == "inline-block")) {
-											  gmnu = document.getElementById("dvMnuT").innerHTML;
-												document.getElementById("dvMnuT").innerHTML = "";
-							 document.getElementById("mnuT").innerHTML = gmnu;
-
-				theRow.style.display = "none";
-				theRow.style.visibility = "hidden";
-
-			} else {
-									 gmnu = document.getElementById("mnuT").innerHTML;
-								document.getElementById("mnuT").innerHTML = "";
-							 document.getElementById("dvMnuT").innerHTML = gmnu;
-				theRow.style.display = "block";
-				theRow.style.visibility = "visible";
-	 
-
-			}
-		
-		} catch (e) {
-		JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.toggleVisibility");
-		}
-	};
 
 
-	JSSHOP.ui.toggleModule = function(linkElem, tglElemID, showMore, showLess) {
-		try {
-			caption = document.getElementById(linkElem).innerHTML;
-			JSSHOP.ui.toggleVisibility(tglElemID);
-			if (showMore === "noQvalue") { // dont change inner HTML
-			} else {
-				if (caption === showMore) {
-					document.getElementById(linkElem).innerHTML = showLess;
-				} else {
-					document.getElementById(linkElem).innerHTML = showMore;
-				}
-			}
-		} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.toggleModule");
-		}
-	};
+JSSHOP.shared.doAtvty = function(tAtvtyObj) {
+theTfavUrl = tAtvtyObj.ur;
+theTCkie = tAtvtyObj.cckie;
 
-	JSSHOP.ui.toggleLMenu = function() {
-		JSSHOP.ui.toggleNuModule('dvLMenuTgl','tdLMenu');
-		// JSSHOP.ui.toggleVisibility('tdXCMoreBtn');
-		JSSHOP.user.setCkiePrfDispVal('prfsSHOPuser','TGL_MLM','tdLMenu');
-		// JSSHOP.ui.toggleCname("tdXCMoreBtn", "onlySmallScreen", "onlyWideScreen");
-		/*	the above function doesnt work but this does. why?	*/
-		if(tdXCMoreBtn.className == "onlySmallScreen") {
-			tdXCMoreBtn.className="onlyWideScreen";
-		} else {
-			tdXCMoreBtn.className="onlySmallScreen";
-		}
-
-	};
-	
-	JSSHOP.ui.toggleNuModule = function(linkElem, tglElemID) {
-		try {
-			caption = document.getElementById(linkElem).innerHTML;
+if(window[tAtvtyObj["gstr"]].length > 5) {
+window[tAtvtyObj["garr"]] = JSON.parse(window[tAtvtyObj["gstr"]]);
+currFavsIdstr = "";
+tii = 0;
+} else {
+window[tAtvtyObj["gstr"]] = LZString.decompressFromEncodedURIComponent(JSSHOP.cookies.getCookie(tAtvtyObj.cckie));
+}
  
-			JSSHOP.ui.toggleVisibility(tglElemID);
-	   
-				if (caption.indexOf("more") != -1) {
-					document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" title=\"expand_less\">&#xe5cb</i>";
-				} else {
-					document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" title=\"expand_more\">&#xe5cc</i>";
-				}
-	 
-		} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.toggleNuModule");
-		}
-	};
+if(window[tAtvtyObj["gstr"]].length > 5) {
+tii = 0;
+if(window[tAtvtyObj["garr"]].length > 0) {
+while(tii < window[tAtvtyObj["garr"]].length) {
+currFavsIdstr += window[tAtvtyObj["garr"]][tii]._id + "::";
+tii++;
+}
+}
+}
 
-	JSSHOP.ui.tglPrefPopMod = function(thePPMod, linkElem, tglElemID, tglPrefKey) {
-		try {	} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.tglPrefModule");
-		}
-			caption = document.getElementById(linkElem).innerHTML;
-		  tmpPrvVal = "show";
-			JSSHOP.ui.toggleVisibility(tglElemID);
-	   
-				if (caption.indexOf("more") != -1) {
-					// document.getElementById(thePPMod).style.position = "relative";
-					document.getElementById(thePPMod).style.position = "fixed";
-					 console.log("currPopMPosT[thePPMod] " + currPopMPosT[thePPMod]);
-					 console.log("currPopMPosL[thePPMod] " + currPopMPosL[thePPMod]);
+
+if(JSSHOP.cookies.getCookie(theTCkie) !== null) {
+if(window[tAtvtyObj["gstr"]].indexOf(tAtvtyObj["_id"]) != -1) {
+tii = 0;
+nTmpArr = [];
+if(window[tAtvtyObj["garr"]].length) {
+while(tii < window[tAtvtyObj["garr"]].length) {
+if(window[tAtvtyObj["garr"]][tii]._id == tAtvtyObj["_id"]) {
+// alert("a match");
+if(document.getElementById(tAtvtyObj.pnid)) { // this is fix for this boolean function add or remove
+nTmpArr = removeArrElement(window[tAtvtyObj["garr"]], tii); // in some cases you just want to add
+} else {
+nTmpArr = window[tAtvtyObj["garr"]]; // in some cases you just want to add and not toggle
+}
+window[tAtvtyObj["gstr"]]  = JSON.stringify(nTmpArr);
+window[tAtvtyObj["garr"]] = null;
+window[tAtvtyObj["garr"]] = JSON.parse(window[tAtvtyObj["gstr"]]);
+
+}
+tii++;
+}
+
+} // tAtvtyObj["garr"].length
+// removeArrElement(currRcntFavsArr, 0);
+if(document.getElementById(tAtvtyObj["pnid"])) {
+document.getElementById(tAtvtyObj["pnid"]).className = "material-icons txtClrHdr";
+}
+
+} else { // if(tAtvtyObj["gstr"].indexOf(tAtvtyObj["_id"])
+currFavsObj = null;
+currFavsObj = {};
+window[tAtvtyObj["garr"]].push(tAtvtyObj);
+// currRcntFavsArr.push(currFavsObj);
+window[tAtvtyObj["gstr"]] = JSON.stringify(window[tAtvtyObj["garr"]]);
+if(document.getElementById(tAtvtyObj.pnid)) {
+document.getElementById(tAtvtyObj["pnid"]).className = "material-icons txtClrRed";
+}
+} // end else if(document.getElementById(tAtvtyObj.pnid))
+} // if(JSSHOP.cookies.getCookie(theTCkie)
+
+// alert("doRF: " + currRcntFavsStr);
+JSSHOP.cookies.setCookie(tAtvtyObj["cckie"],LZString.compressToEncodedURIComponent(window[tAtvtyObj["gstr"]]),"30","","","");
+};
  
-					  // 
-					  document.getElementById(thePPMod).style.top = currPopMPosT[thePPMod];
-					  document.getElementById(thePPMod).style.left = currPopMPosL[thePPMod];
-					  document.getElementById(thePPMod).style.bottom = "";
-
-					document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" title=\"expand_less\">&#xe5ce;</i>";
-				} else {
-					
-					currPopMPosT[thePPMod] = document.getElementById(thePPMod).style.top;
-					currPopMPosL[thePPMod] = document.getElementById(thePPMod).style.left;
-					 document.getElementById(thePPMod).style.bottom = "";
-					document.getElementById(thePPMod).style.left = "";
-					 document.getElementById(thePPMod).style.top = "";
-					 document.getElementById(thePPMod).style.position = "relative";
-
-					tmpPrvVal = "hide";
-					document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" title=\"expand_more\">&#xe5cf;</i>";
-				}
-	JSSHOP.user.setCkiePrfKV('prfsSHOPuser',tglPrefKey,tmpPrvVal);
-	 
-	
-	};
-
-	JSSHOP.ui.tglPrefModule = function(linkElem, tglElemID, tglPrefKey) {
-		try {
-			caption = document.getElementById(linkElem).innerHTML;
-		  tmpPrvVal = "show";
-			JSSHOP.ui.toggleVisibility(tglElemID);
-	   
-				if (caption.indexOf("more") != -1) {
-				
-					document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" title=\"expand_less\">&#xe5ce;</i>";
-				} else {
-				tmpPrvVal = "hide";
-					document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" title=\"expand_more\">&#xe5cf;</i>";
-				}
-	JSSHOP.user.setCkiePrfKV('prfsSHOPuser',tglPrefKey,tmpPrvVal);
-	 
-		} catch (e) {
-			JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.tglPrefModule");
-		}
-	};
-
-
-	JSSHOP.ui.setCBBClickEnd = function(theElem, theID, theCBclss, theCB) {
-	 
-		  theElem.className = theCBclss;
-		  JSSHOP.stopIntervalEvent(trgr_bclck[theID]);
-		  theCB();
-		  return;
-	};
-
-
-	 
-	JSSHOP.ui.setNuCBBClickClr = function(theElem, theCclss, theCBclss, theCB, theNBCDelay) {
-		try {
-				strJobThread = JSSHOP.getUnixTimeStamp();
-			//  theMElem = document.getElementById(theElem);
-				theElem.className = theCclss;
-				if (theElem.getAttribute("data-dblclick") == null) { // preventing double clicks
-				theElem.setAttribute("data-dblclick", 1);
-				setTimeout(function () {
-				if (theElem.getAttribute("data-dblclick") == 1) {
-			JSSHOP.startIntervalEvent(trgr_bclck[strJobThread], function() { JSSHOP.ui.setCBBClickEnd(theElem, strJobThread, theCBclss, theCB);}, theNBCDelay);
-				}
-				theElem.removeAttribute("data-dblclick");
-				}, 250);
-				} else {
-				theElem.removeAttribute("data-dblclick");
-				}
-		} catch(e) {
-				JSSHOP.startIntervalEvent(trgr_bclck[strJobThread], function() { JSSHOP.ui.setCBBClickEnd(theElem, strJobThread, theCBclss, theCB);}, theNBCDelay);
-
-			// alert(e);
-			 JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.setCBBClickClr");
-		}
-	};
-
-	 
-	JSSHOP.ui.setCBBClickClr = function(theElem, theCclss, theCBclss, theCB) {
-	JSSHOP.ui.setNuCBBClickClr(theElem, theCclss, theCBclss, theCB, 380); 
-	};
-
-	JSSHOP.ui.setNuSaveBtnEnd = function(theObj,theCB) {
-	stopNuSpin(theObj.id);
-	document.getElementById(theObj.id).disabled=false;
-	JSSHOP.ui.setNuCBBClickClr(theObj,'cls_button-save bkgdClrDGreen txtClrWhite','cls_button-save', theCB, 380);
-	};
-
-
-	JSSHOP.ui.setNuSaveBtnClick = function(theObj,theCB,theBtnH) {
-	theObj.innerHTML = "";
-	theObj.disabled=true;
-	doNuSpinSet(theObj.id, "small", null, theBtnH);
-	JSSHOP.ui.setNuCBBClickClr(theObj,'icnbtn crsrPointer brdrClrHdr txtClrGrey','icnbtn crsrPointer', theCB, 380);
-	};
-
-	JSSHOP.ui.setSaveBtnClick = function(theObj,theCB) {
-	theObj.innerHTML = "";
-	theObj.disabled=true;
-	doSpinSet(theObj.id, "small", null);
-	JSSHOP.ui.setNuCBBClickClr(theObj,'cls_button-save txtClrGrey','cls_button-save', theCB, 410);
-	};
-
-
-
-
-	JSSHOP.ui.doDefBtn = function(tmpTxt, tmpCallback) {
-	tmpRd = "<div class=\"crsrPointer\"><div onclick=\"javascript:JSSHOP.ui.setCBBClickClr(this,'slmtable brdrClrNrml','slmtable brdrClrHdr', function(){" + tmpCallback + "});\" class=\"txtBig slmtable brdrClrHdr\">";
-	tmpRd += tmpTxt + "</div></div>";
-	return tmpRd;
-	};
-
-	JSSHOP.ui.doDefCBBCC = function(theObj,b,dcb) {
-	// JSSHOP.ui.setCBBClickClr(document.getElementById(theObj),'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr clsDummy', function() { dcb });
-	JSSHOP.ui.setCBBClickClr(document.getElementById(theObj),'txtClrHdr','clsDummy', function() { dcb });
-
-	};
 
 
 
 
 
-	
-	JSSHOP.ui.doAutoComp = function(inp, arr) {
-		tdvACres = document.getElementById("dvACres");
-		if(tdvACres.className == "slider closed") {
-			tdvACres.classList.toggle('closed');
-		}
-
-		 
-
-	/*the autocomplete function takes two arguments,
-	the text field element and an array of possible autocompleted values:*/
-	var currentFocus;
-	/*execute a function when someone writes in the text field:*/
-	inp.addEventListener("input", function(e) {
-		tdvACres = document.getElementById("dvACres");
-		// tdvACres.classList.toggle('closed');
-		tdvACres.innerHTML = "";
-		var strFhtml = "";
-		var a, b, i, val = this.value;
-		/*close any already open lists of autocompleted values*/
-		closeAllLists();
-		if (!val) { return false;}
-		currentFocus = -1;
-		/*create a DIV element that will contain the items (values):*/
-		a = document.createElement("DIV");
-		a.setAttribute("id", this.id + "autocomplete-list");
-		a.setAttribute("class", "autocomplete-items");
-		/*append the DIV element as a child of the autocomplete container:*/
-		this.parentNode.appendChild(a);
-
-		/*for each item in the array...*/
-		for (i = 0; i < arr.length; i++) {
-		  /*check if the item starts with the same letters as the text field value:*/
-		  if((arr[i].toUpperCase().indexOf(val.toUpperCase()) != -1) && (val.length > 1)){
-
-		  // if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-			/*create a DIV element for each matching element:*/
-	
-			/*make the matching letters bold:*/
-			strFhtml += arr[i];
-			b = document.createElement("DIV");
-			// b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-			// b.innerHTML += arr[i].substr(val.length);
-			/*insert a input field that will hold the current array item's value:*/
-			// b.innerHTML += "<input type='hidden' value='" + i + "'>";
-			/*execute a function when someone clicks on the item value (DIV element):*/
-				b.addEventListener("click", function(e) {
-
-				/*insert the value for the autocomplete text field:*/
-   
-	  
-   
-		 
-				/*close the list of autocompleted values,
-				(or any other open lists of autocompleted values:*/
-				closeAllLists();
-			
-			});
-	
-		
-		  }
 
 
-		}
-		tmpDVAC = document.createElement("DIV");
-		 tmpDVAC.innerHTML = "";
-		 tmpHdrStr = "";
-		 for(i = 0; i < currACTblCnt; i++) {
-			tmpHdrStr += "<th></th>";
-		 }
-		tTHstr = "<tr>" + tmpHdrStr + "</tr>";
 
-		tmpDVAC.innerHTML = getTblSortStr(tTHstr, strFhtml);
-		// b.innerHTML = strFhtml;
-		// a.appendChild(tmpDVAC);
-		tdvACres = document.getElementById("dvACres");
-		tdvACres.innerHTML = "";
-		// tdvACres.classList.toggle('closed');
-		tdvACres.appendChild(tmpDVAC);
-	});
-	/*execute a function presses a key on the keyboard:*/
-	inp.addEventListener("keydown", function(e) {
-		var x = document.getElementById(this.id + "autocomplete-list");
-		if (x) x = x.getElementsByTagName("div");
-		if (e.keyCode == 40) {
-		  /*If the arrow DOWN key is pressed,
-		  increase the currentFocus variable:*/
-		  currentFocus++;
-		  /*and and make the current item more visible:*/
-		  addActive(x);
-		} else if (e.keyCode == 38) { //up
-		  /*If the arrow UP key is pressed,
-		  decrease the currentFocus variable:*/
-		  currentFocus--;
-		  /*and and make the current item more visible:*/
-		  addActive(x);
-		} else if (e.keyCode == 13) {
-			alert("enter pressed");
-		  /*If the ENTER key is pressed, prevent the form from being submitted,*/
-		  e.preventDefault();
-		  if (currentFocus > -1) {
-			/*and simulate a click on the "active" item:*/
-			if (x) x[currentFocus].click();
-		  }
-		}
-	});
-	function addActive(x) {
-	  /*a function to classify an item as "active":*/
-	  if (!x) return false;
-	  /*start by removing the "active" class on all items:*/
-	  removeActive(x);
-	  if (currentFocus >= x.length) currentFocus = 0;
-	  if (currentFocus < 0) currentFocus = (x.length - 1);
-	  /*add class "autocomplete-active":*/
-	  x[currentFocus].classList.add("autocomplete-active");
-	}
-	function removeActive(x) {
-	  /*a function to remove the "active" class from all autocomplete items:*/
-	  for (var i = 0; i < x.length; i++) {
-		x[i].classList.remove("autocomplete-active");
-	  }
-	}
-	function closeAllLists(elmnt) {
-	  /*close all autocomplete lists in the document,
-	  except the one passed as an argument:*/
-	  var x = document.getElementsByClassName("autocomplete-items");
-	  for (var i = 0; i < x.length; i++) {
-		if (elmnt != x[i] && elmnt != inp) {
-		x[i].parentNode.removeChild(x[i]);
-	  }
-	}
-  }
-  /*execute a function when someone clicks in the document:*/
-  document.addEventListener("click", function (e) {
-	  closeAllLists(e.target);
-	  
-	  // tdvACres = document.getElementById("dvACres");
-	  // tdvACres.className = "slider closed";
-	   // tdvACres.innerHTML = "";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+JSSHOP.shared.doPartsInpAC = function(tPinpID, theTIPobj) {
+	mprtinp = document.getElementById(tPinpID);
+tCatArrStr = "";
+// currPartsObj = null;
+tPrtMkObj = null;
+console.log("theTIPobj: " + JSON.stringify(theTIPobj));
+tPrtMkObj = theTIPobj.pprts;
+
+
+//  alert(tPrtMkObj.pn);
+  /*the autocomplete function takes two arguments,
+  the text field element and an array of possible autocompleted values:*/
+  var currenPtFocus;
+  /*execute a function when someone writes in the text field:*/
+  mprtinp.addEventListener("keyup", function(e) {
+      var a, b, i, val = this.innerText;
+      /*close any already open lists of autocompleted values*/
+      closeAllLists();
+      if (!val) { return false;}
+      currenPtFocus = -1;
+      /*create a DIV element that will contain the items (values):*/
+      a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      /*append the DIV element as a child of the autocomplete container:*/
+      this.parentNode.appendChild(a);
+      /*for each item in the array...*/
+ 
+
+for(var gpkey in tPrtMkObj) {
+
+
+tACPObj = {};
+tPEPobj = currPartsObj;
+if(tPrtMkObj[gpkey].pts){
+tCatPtsobj = tPrtMkObj[gpkey].pts;
+for(var pcgkey in tCatPtsobj) {
+ 
+
+       // for (i = 0; i < arr.length; i++) {
+
+
+
+        /*check if the item starts with the same letters as the text field value:*/
+
+ 
+
+		 TMPnOBJ = tCatPtsobj[pcgkey];
+		 tSSv = tCatPtsobj[pcgkey].n;
+		tSSaN =  TMPnOBJ.n;
+		 tSStN = tSSaN;
+		if((tSSv.toUpperCase().indexOf(val.toUpperCase()) != -1) && (val.length > 1)){
+		  //  if(tSSv.substr(0, val.length).toUpperCase() == val.toUpperCase()){
+		  
+		 tSSI =  TMPnOBJ.id;
+		 tSSfN = tSSaN;
+		 tSSppcat = TMPnOBJ.pi;
+		 tSSfstr = 
+          /*create a DIV element for each matching element:*/
+          b = document.createElement("DIV");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + tSSfN.substr(0, val.length) + "</strong>";
+          b.innerHTML += tSSfN.substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          b.innerHTML += "<input type='hidden' value='" + tSSI + "::" + tSSfN + "::" + tSSppcat + "'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+              b.addEventListener("click", function(e) {
+              /*insert the value for the autocomplete text field:*/
+		  tInpStr = this.getElementsByTagName("input")[0].value;
+		  tInpSplit = tInpStr.split("::");
+
+		  // tmpFPSstr = tUtoL + "&part=" + tInpSplit[1] + "&prti=" + tInpSplit[2] + "&q=" + encodeURIComponent(currUrlArr.make + " " + currUrlArr.series + " " + tInpSplit[1]);
+
+		  // document.getElementById("inpImpParts").value = this.getElementsByTagName("input")[0].value;	  
+             //  mprtinp.value = tInpSplit[1];
+			mprtinp.innerText = tInpSplit[1];
+			mprtinp.focus();
+			currPUrlObj.prti = tInpSplit[0];
+			currPUrlObj.part = tInpSplit[1];
+
+
+/*
+var len = currMenuArr.length;
+var iint = 0;
+ 
+while(iint < len) {
+ts = currMenuArr[iint];
+if(ts.cat_vala == tInpSplit[2]) { // add only main categories to list
+JSSHOP.shared.setFieldVal("i_coid", ts.cat_coid); 
+JSSHOP.shared.setFieldVal("i_catid", ts._id);
+// JSSHOP.shared.setFieldVal("i_cat_vala", tInpSplit[2]);
+} 
+iint++;
+} 
+
+tmpDOs = null;
+tmpDOs = {};
+tmpDOs["ws"] = "where cat_uid=? and cat_vala=?";
+tmpDOs["wa"] = [quid,tInpSplit[2]];
+tmpDOs["l"] = 25;
+oi = getNuDBFnvp("qcat",5,null,tmpDOs);
+doQComm(oi["rq"], null, "setItemCatID");
+alert(oi["rq"]);
+*/
+
+              // document.getElementById("i_title").value = tInpSplit[1];
+		  // alert("tSSppcat :: " + tInpSplit[2]);
+
+              /*close the list of autocompleted values,
+              (or any other open lists of autocompleted values:*/
+              closeAllLists();
+			 JSSHOP.shared.doPartsSearch('inpTParts');
+          });
+          a.appendChild(b);
+	     }
+        }
+	 } // end of if tt[gpkey].n
+
+     }
   });
 
-  };
-
-	JSSHOP.ui.popLmenu = function() {
-	try {
-	timerID = setInterval("JSFX.MakeFloatingLayer.animate()", 30);
-	setTimeout('clearInterval(timerID)', 2000);
-	} catch(e) {
-	JSSHOP.logJSerror(e, arguments, "JSSHOP.popLmenu");
-	}
-	};
-
-	JSSHOP.ui.deleteRow = function(r) {
-	try {
-		tmpTRowI = r.parentNode.parentNode.rowIndex;
-		// document.getElementById("myTable").deleteRow(tmpTRowI);
-		r.parentNode.parentNode.deleteRow(tmpTRowI);	
-	} catch(e) {
-	JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.deleteRow");
-	}
-	};
 
 
-	JSSHOP.ui.popAndAppendLbox = function(theFill, clearLB) {
-	try {
-	tmpLbox = document.getElementById('lightbox');
-	tmpLCbox = document.getElementById('lightbox_content');
-	tmpLbox.style.display='inline';
-
-	if(clearLB == "y"){
-	tmpLCbox.innerHTML = "";
-	}
-	tmpLCbox.appendChild(theFill);
-	tmpVheight = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight;
-	if(tmpLCbox.clientHeight >= tmpVheight) {
-	tmpLbox.style.position="absolute";
-	newel = document.createElement('div');
-	newel.innerHTML = "New Inserted";
-	tmpLCbox.appendChild(newel);
-	tmpLbox.style.height = tmpLCbox.clientHeight + 180;
-	}
-	tmpLCbox.style.display='block';
-	tmpLCbox.style.position="relative";
-	stop = getScrollTop();
-	// tmpLCbox.style.top=stop+"px";
-	scrollToElement("dvHdr");
-	window.scrollTo(0,0);
-	tmpLCbox.style.top="5px";
-
-	} catch(e) {
-	JSSHOP.logJSerror(e, arguments, "JSSHOP.popAndAppendLbox");
-	}
-	};
-
-	JSSHOP.ui.popAndFillLbox = function(theFill) {
- 
-	JSSHOP.ui.popNuFillLbox(theFill, 5);
- 
-	}
-	
-	JSSHOP.ui.popNurFillLbox = function(theFill, theTofst) {	
-	 tModI = document.getElementById('lightbox_content');
-
-	const myModal = new bootstrap.Modal(tModI, { keyboard: false });
-	myModal.show();
-	}
-	
-	
-	
-	JSSHOP.ui.popNuFillLbox = function(theFill, theTofst) {
-	// spinner.stop();
-	try {
-	tmpLbox = document.getElementById('lightbox');
-	tmpLCbox = document.getElementById('lightbox_content');
-	tmpLbox.style.display="inline";
-	if(theFill == "noQvalue") {
-	} else if(theFill == "spin") {
-	} else if(theFill == "dbug") {
-	tmpLCbox.innerHTML= "<div style=\"overflow:auto;min-height: 231px; min-width: 368px\"  contenteditable=\"true\">" + currDBUGstr + "</div>";
-	// tmpLCbox.className = "lightbox_table";
-	} else {
-	tmpLCbox.innerHTML=theFill;
-	}
-	tmpLCbox.style.position="absolute";
-	tmpVheight = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight;
-		tmpLbox.style.height = tmpVheight;	
-	if(tmpLCbox.clientHeight >= tmpVheight) {
-	 tmpLbox.style.position="absolute";
-	newel = document.createElement('div');
-	newel.innerHTML = "New Inserted";
-	tmpLCbox.appendChild(newel);
-	tmpLbox.style.height = tmpLCbox.clientHeight + 180;
-	} 
-	tmpLCbox.style.display='block';
- 
-
-	stop = getScrollTop() + 10;
-	tmpLCbox.style.top=stop+"px";
-	// scrollToElement("dvHdr");
-	// window.scrollTo(0,0);
-	// tmpLCbox.style.top="5px";
-	if(getViewportWidth() > 500) {}
-	iMdl = Math.round((getViewportWidth() - tmpLCbox.clientWidth) / 2);
-	tmpLCbox.style.left=iMdl+"px";
-
-	// tmpLCbox.style.position="fixed";
-	} catch(e) {
-	alert(e);
-	}
-	};
-
- 
-function actvDropdown(theDDID) {
- // alert("theDDID: " + theDDID.getAttribute("data-inum"));
-// const dropdownToggleEl = document.getElementById(theDDID);
-// const dropdownEl = new bootstrap.Dropdown(dropdownToggleEl);
-// dropdownEl.show();
-/**/
-tDDinumt = 5000;
-if(theDDID.getAttribute("data-pa")) {
-	tDDinumt = theDDID.getAttribute("data-pa");
-	 console.log("dropdownList.-pa" + tDDinumt);
+ mprtinp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+        increase the currenPtFocus variable:*/
+        currenPtFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) { //up
+        /*If the arrow UP key is pressed,
+        decrease the currenPtFocus variable:*/
+        currenPtFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currenPtFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currenPtFocus].click();
+        }
+      }
+	  if(e.key === "Enter") {
+		JSSHOP.shared.doPartsSearch('inpTParts');
+	  }
+  });
+  function addActive(x) {
+    /*a function to classify an item as "active":*/
+    if (!x) return false;
+    /*start by removing the "active" class on all items:*/
+    removeActive(x);
+    if (currenPtFocus >= x.length) currenPtFocus = 0;
+    if (currenPtFocus < 0) currenPtFocus = (x.length - 1);
+    /*add class "autocomplete-active":*/
+    x[currenPtFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    /*a function to remove the "active" class from all autocomplete items:*/
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+  function closeAllLists(elmnt) {
+    /*close all autocomplete lists in the document,
+    except the one passed as an argument:*/
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != mprtinp) {
+      x[i].parentNode.removeChild(x[i]);
+    }
+  }
 }
-
-const dropdownElementList = document.querySelectorAll('.dropdown-toggle')
-const dropdownList = [...dropdownElementList].map(dropdownToggleEl => new bootstrap.Dropdown(dropdownToggleEl));
-//console.log("dropdownList" + JSON.stringify(dropdownList));
-for(idli = 0; idli < dropdownList.length; idli++) {
-	if(tDDinumt == idli) {
-	} else {
-		  dropdownList[idli].hide();
-	}
-	//
-
-
+if((arrUprefs["prfsSHOPuser"][0].mk) && (arrUprefs["prfsSHOPuser"][0].mk != "null") && (arrUprefs["prfsSHOPuser"][0].mk != "noQvalue")) {
+    console.log("doPartsInpAC: " + arrUprefs["prfsSHOPuser"][0].mk);
+tMakeId = arrUprefs["prfsSHOPuser"][0].mk;
+// alert("mk: " +arrUprefs["prfsSHOPuser"][0].mk);
+tMkPrfx = "m" + tMakeId;
+tMkNme = objAllMakes[tMkPrfx].n;
+// JSSHOP.shared.setMakeStuff(tMakeId,tMkNme,'noQvalue');
 }
- console.log("dropdownList" + theDDID);
- dropdownList[theDDID.getAttribute("data-inum")].show();
-
-}
-
-
-JSSHOP.ui.getDDHLitem = function(tmpSUid, tmpSUMicn, SEWtitle, Sewhref, SintHdrInc) {
-
-	tmpSLIE = document.createElement("li");
-	// tmpSLIE.appendChild(tmpSUMicn); 	
-	tmpSLIE.className="list-group-item";
-	tmpSAE = document.createElement('a');
-	swlinkText = document.createTextNode(SEWtitle);
-	tmpSAE.title = SEWtitle;
-	tmpSAE.href =  Sewhref;
-	
-		tSVtBtn = document.createElement("button");
-	tSVtBtn.className = "btn brn-sm btn-link";	
-	tSVtBtn.innerText = SEWtitle;	
-	tSVtSBtn = document.createElement("button");
-	tSVtSBtn.addEventListener("mouseenter", function(e) {
-          actvDropdown(this);
-		 
-          });
-    tSVtSBtn.className = "btn brn-lg dropdown-toggle dropdown-toggle-split";	
-	tSVtSBtn.setAttribute("data-bs-toggle","dropdown");
-	tSVtSBtn.setAttribute("aria-expanded","false");	
-	tSVtSBtn.setAttribute("data-ison", SintHdrInc);
-	tSVtSBtn.setAttribute("data-pa", SintHdrInc - 1);
-    tSVtSBtn.setAttribute("data-inum", SintHdrInc);
-	tSVtSBtn.value = " ";	
-		  
-	tmpSAE.appendChild(swlinkText);
-	tmpSLIE.appendChild(tmpSAE);
-	tmpSLIE.appendChild(tSVtSBtn);
-	return tmpSLIE;
-	
-};
-JSSHOP.ui.getDDLitem = function(tmpSUid, tmpSUMicn, SEWtitle, Sewhref, SintHdrInc) {
-
-	tmpSLIE = document.createElement("li");
-	// tmpSLIE.appendChild(tmpSUMicn); 	
-	tmpSLIE.className="list-group-item";
-	tmpSAE = document.createElement('a');
-	swlinkText = document.createTextNode(SEWtitle);
-	tmpSAE.title = SEWtitle;
-	tmpSAE.href =  Sewhref;
-	tmpSAE.appendChild(swlinkText);
-	tmpSLIE.appendChild(tmpSAE);
-	return tmpSLIE;
-	
+ 
 };
 
-JSSHOP.ui.getDDHdr = function(tmpUid, tmpUMicn, EWtitle, ewhref, intHdrInc) {
 
-	tmpUMiel = document.createElement("i");
-	if(tmpUMicn.indexOf("&#") != -1) {
-		if(isJavaFx == "yes") {
-			   tmpUMiel.className = "menu-material-icons coll-menu-item";
 
+
+
+JSSHOP.shared.doPartsSearch = function(theTPSDiv) {
+
+
+ttTPSDiv = document.getElementById(theTPSDiv);
+ttTPSDVal = ttTPSDiv.value;
+tQstrFstr = "";
+ttArrStr = document.getElementById("inpImpTParts").value;
+if(document.getElementById(theTPSDiv).innerText) {
+ttTPSDVal = document.getElementById(theTPSDiv).innerText;
+}
+ttArrVal = JSON.parse(ttArrStr);
+
+
+if(ttArrVal[0]) {
+for(iihy=0; iihy<ttArrVal.length;iihy++) {
+    if(ttArrVal[iihy] == "null") {
+
+    } else {
+        tQstrFstr += ttArrVal[iihy] + " ";
+    }
+
+}
+}
+
+tQstrFstr += ttTPSDVal;
+currPUrlObj.pid = "aa-show-psearch";
+pid = "aa-show-psearch";
+tCatUStr = JSSHOP.shared.objToUrl(currPUrlObj);
+ 
+
+if((tQstrFstr.length < 2)|| (ttTPSDVal == "currPUrlObj.part")) {
+} else {
+if(currPUrlObj.prti == "007") {
+currPUrlObj.part = ttTPSDVal;
+}
+tCUARR = currUrlArr;
+tCUARR.q = tQstrFstr;
+tCUARR.pid = "aa-show-part";
+tCUARR.pq = ttTPSDVal;
+// tCatUStr = JSSHOP.shared.objToUrl(tCUARR);
+ document.location.href = "index.html?" + tCatUStr;
+}
+
+if(currPUrlObj.prti) {
+// tpDynL = JSSHOP.shared.doPartDynL(currPUrlObj.prti, currPUrlObj.part);
+ document.location.href = JSSHOP.shared.doPartDynL(currPUrlObj.prti, currPUrlObj.part);
+} else {
+
+// tpDynL = JSSHOP.shared.doPartDynL("007",ttTPSDVal);
+ document.location.href = JSSHOP.shared.doPartDynL("007",ttTPSDVal);
+}
+ 
+
+
+};
+
+ 
+JSSHOP.shared.setListing = function() {
+if((quid == 0) || (quid == "noQvalue")){
+document.location.href="index.html?pid=login";
+} else {
+tPurlArr = currUrlArr;
+if(tPurlArr.cid) {
+tPurlArr.cid = cuid;
+}
+tPurlArr.pid = "aa-edit-parts-category";
+tStrUA = JSSHOP.shared.objToUrl(tPurlArr);
+tUb = "index.html?" + tStrUA.replace("&=undefined&region", "region");
+tUb += "&cuid=" + cuid;
+
+// tUb += "&prtpi=" + cuid;
+
+document.location.href = tUb;
+
+}
+};
+
+JSSHOP.shared.doPartsWords = function(tDPWRIdx, theTPrtKN) {
+tSarrVStr = "";
+tSarrWodStr = "";
+tArrPSrchLst = [];
+ihy = 6;
+console.log("JSSHOP.shared.doPartsWords: " + theTPrtKN);
+
+
+if(pid == "aa-edit-svs-categories") {
+    tPYS = "<div class=\"slmtable brdrClrHdr txtBold txtClrHdr crsrPointer\"  onclick=\"javascript:JSSHOP.ui.setNuCBBClickClr(this,'txtBold txtClrRed',this.className, function() { JSSHOP.admin.doSvsMakesPop('noQvalue'); }, 300); \" style=\"text-align:center;\">";
+    for (i = 0; i < 5; i++) {
+        tLpdIDstr = currPMakesArr[Math.floor(Math.random() * currPMakesArr.length)];
+        tLpdSplit = tLpdIDstr.split(":");
+        tLpdID = tLpdSplit[0];
+        tLpdName = tLpdSplit[1];
+        tLpdmgMStr = imgPLicon.src = "images/mlogos/" + tLpdName.toLowerCase().replace(" ", "-") + "-logo.png";
+     tPYS += "<img src=\"" + tLpdmgMStr + "\" style=\"max-width:30px;max-height:30px;\"></img>";   
+    }
+    tPYS += "...";
+    tPYS += "<div class=\"txtBold txtClrHdr\">" + stxt[82] + " " + stxt[102] + "s</div>";
+    tChdrStr = c_header.value;
+    tCsplyStr = "";
+    if(tChdrStr.indexOf("1000") != -1) {
+        tPYS += "<div class=\"txtBold txtClrHdr\">Supports All makes</div>";
+    } else { // not 1000
+
+    if(tChdrStr.indexOf(":") != -1) {
+        tChdrSplit = tChdrStr.split(":");   
+        tCsplyLen = tChdrSplit.length;
+        tCinci = 0;
+
+        while(tCinci < tCsplyLen) {
+            if(tChdrSplit[tCinci] > 0) {
+            // get make name from tChdrSplit[tCinci]
+            tMknamed = objAllMakes["m" + tChdrSplit[tCinci]]["n"];
+            tCsplyStr += tMknamed + " ";
+            tCinci++;
+            } else {
+            tCsplyStr += tChdrSplit[tCinci] + " ";
+            tCinci++;
+            }
+        }
+        tPYS += "<div class=\"txtBold txtClrHdr\">" + tCsplyStr + "</div>";
+    } else { // not :
+        tCsplyStr += tChdrStr + " ";
+        tPYS += "<div class=\"txtBold txtClrHdr\">no: " + tCsplyStr + "</div>";
+    }
+} // end else if(tChdrStr.indexOf("1000") != -1)
+
+    tPYS += "</div>";
+    // alert("tPYS: " + tPYS);
+         document.getElementById("dvDoPSWrds").innerHTML = tPYS;
+        // inpImpTParts.value = JSON.stringify(tArrPSrchLst);
+        
+      
+
+return;
+}  
+
+
+
+
+if(tDPWRIdx == 50) {
+
+if(currPUrlObj.make) {
+tSarrVStr += currPUrlObj.make + " ";
+tSarrWodStr += "<div class=\"rtable txtSmall brdrClrDlg\" style=\"margin:7px;\"><span class=\"txtSmall txtBold txtClrHdr txtDecorNone\"><a href=\"javascript:JSSHOP.shared.doMakesPop('noQvalue');\"  class=\"txtSmall txtClrGrey\">" + currPUrlObj.make + "</a></span> <div style=\"float:right\"  class=\"txtSmall txtBold txtClrRed\"><a href=\"javascript:JSSHOP.shared.doPartsWords(" + ihy + ",'mk');\"  class=\"txtSmall txtDecorNone txtClrRed txtBold\">X</a></div></div>";
+tArrPSrchLst.push(currPUrlObj.make);
+}
+if((currPUrlObj.series) && (currPUrlObj.series != "null"))  {
+tSarrVStr += currPUrlObj.series + " ";
+tSarrWodStr += "<div class=\"rtable txtSmall brdrClrDlg\" style=\"margin:7px;\"><span class=\"txtSmall txtBold txtClrHdr txtDecorNone\"><a href=\"javascript:JSSHOP.shared.doModelsPip();\"  class=\"txtSmall txtClrGrey\">" + currPUrlObj.series + "</a></span> <div style=\"float:right\"  class=\"txtSmall txtBold txtClrRed\"><a href=\"javascript:JSSHOP.shared.doPartsWords(" + ihy + ",'si');\"  class=\"txtSmall txtDecorNone txtClrRed txtBold\">X</a></div></div>";
+tArrPSrchLst.push(currPUrlObj.series);
+}
+if((currPUrlObj.model) && (currPUrlObj.model != "null")) {
+// alert("WORDSmodel: " + currPUrlObj.model);
+tAcleanMstr = currPUrlObj.model;
+
+tBcleanMstr = tAcleanMstr.replace(currPUrlObj.series, "");
+tcleanMstr = tAcleanMstr;
+tArrPSrchLst.push(tcleanMstr);
+tSarrVStr += tcleanMstr + " ";
+tSarrWodStr += "<div class=\"rtable txtSmall brdrClrDlg\" style=\"margin:7px;\"><span class=\"txtSmall txtBold txtClrHdr txtDecorNone\" style=\"min-width:90%\"><a href=\"javascript:JSSHOP.shared.doModelsPip();\"  class=\"txtSmall txtClrGrey\">" + tcleanMstr + "</a></span> <div style=\"float:right\"  class=\"txtSmall txtBold txtClrRed\"><a href=\"javascript:JSSHOP.shared.doPartsWords(" + ihy + ",'md');\"  class=\"txtSmall txtDecorNone txtClrRed txtBold\">X</a></div></div>";
+
+tfMIdstr = "m" + currPUrlObj.md;
+if(currCModelsObj[tfMIdstr]) {
+tMPMObj = currCModelsObj[tfMIdstr];
+ 
+tSarrWodStr += "<div class=\"rtable txtSmall brdrClrDlg\" style=\"margin:7px;\"><span class=\"txtSmall txtBold txtClrHdr txtDecorNone\"><a href=\"javascript:JSSHOP.shared.doModelsPip();\"  class=\"txtSmall txtClrGrey\">" + tMPMObj.yf + " .." + tMPMObj.yt + "</a></span></div>";
+}
+
+}
+if(currPUrlObj.part) {
+/*
+if(inpTParts.innerText) {
+inpTParts.innerText = currPUrlObj.part;
+} else {
+inpTParts.value = currPUrlObj.part;
+}
+*/
+if(document.getElementById("inpTParts")) {
+inpTParts.innerHTML = "";
+inpTParts.innerText = currPUrlObj.part;
+
+tArrPSrchLst.push(currPUrlObj.part);
+tSarrVStr += currPUrlObj.part;
+if(pid == "aa-edit-parts-category") {
+} else {
+tSarrWodStr += "<div class=\"rtable txtSmall brdrClrDlg\" style=\"margin:7px;\"><span class=\"txtSmall txtBold txtClrHdr txtDecorNone\">" + currPUrlObj.part + "</span> <div style=\"float:right\"   class=\"txtSmall txtClrRed slmtable bckgdClrDlg\"><a href=\"javascript:JSSHOP.shared.doPartsWords(" + ihy + ",'prti');\"  class=\"txtSmall txtClrRed\">X</a></div></div>";
+}
+}
+
+
+}
+
+
+if((currPUrlObj.y) && (currPUrlObj.y != "null")){
+tArrPSrchLst.push(currPUrlObj.y);
+tSarrVStr += currPUrlObj.y;
+tSarrWodStr += "<div class=\"rtable txtSmall brdrClrDlg\" style=\"margin:7px;\"><span class=\"txtSmall txtBold txtClrHdr txtDecorNone\">" + currPUrlObj.y + "</span> <a href=\"javascript:JSSHOP.shared.doPartsWords(" + ihy + ",'y');\"  class=\"txtSmall txtClrGrey\">X</a></div>";
+}
+
+// tSarrWodStr += "<br>";
+if(pid == "index_main") {
+} else {
+} // pid not main
+
+if(currPUrlObj.make) {
+if((currPUrlObj.series) && (currPUrlObj.series != "null")) {
+    if(2 > 1) { // sneaky trick to hide the model link
+// if((currPUrlObj.model)  && (currPUrlObj.model != "null")) {
+if((currPUrlObj.part)  && (currPUrlObj.part != "null")) {
+if(currPUrlObj.part == "007") {
+tMCBBstr = "noQvalue";
+// tSarrWodStr += "<div class=\"rtable txtSmall brdrClrRed\" style=\"margin:7px;\"><i class=\"menu-material-icons txtBold txtClrRed\" title=\"add_alert\">&#xe003;</i><a class=\"menu-material-icons txtSmall txtBold\" href=\"javascript:JSSHOP.shared.doPartsPop();\">" + stxt[82] + " " + stxt[101] + "</a></div>";
+
+// create div with 5 random parts categories and icon
+tPYS = "<div class=\"slmtable brdrClrRed crsrPointer\"  onclick=\"javascript:doInpTFocus();\" style=\"text-align:center;\">";
+tPYS += "<div class=\"txtBold txtClrHdr crsrPointer\">" + stxt[82] + " " + stxt[101] + "</div>";
+for(i = 0; i < 3; i++) {
+tLpdIDstr = currPPrtCatArr[Math.floor(Math.random() * currPPrtCatArr.length)];
+tFlnSlit = tLpdIDstr.split(":");
+tLpdID = tFlnSlit[0];
+tLpdName = tFlnSlit[1];
+tPYS += tLpdName + " ";
+}
+tPYS += "</div>";
+tSarrWodStr += tPYS;
+
+}
+} else { // part
+tMCBBstr = "noQvalue";
+// tSarrWodStr += "<div class=\"rtable txtSmall brdrClrRed\" style=\"margin:7px;\"><i class=\"menu-material-icons txtBold txtClrRed\" title=\"add_alert\">&#xe003;</i>";
+// tSarrWodStr += "<a style=\"vertical-align:super;padding-left:12px;\" class=\"menu-material-icons txtSmall txtBold\" href=\"javascript:JSSHOP.shared.doInpT();\">" + stxt[82] + " " + stxt[101] + "</a></div>";
+tPYS = "<div class=\"slmtable brdrClrRed crsrPointer\"  onclick=\"javascript:scrollToElement('dvPartsMain');doInpTFocus();\" style=\"text-align:center;\">";
+tPYS += "<div class=\"txtBold txtClrHdr crsrPointer\">" + stxt[82] + " " + stxt[101] + "</div>";
+tPYS += "<div class=\"txtSmall txtClrTtl crsrPointer\">";
+
+tFlRanSTr = "";
+
+// select 3 unique random indexes from the array currPPrtCatArr
+
+
+tFPCArInt = 0;
+for(i = 0; i < 30; i++) {
+tRanNum = Math.random() * currPPrtCatArr.length;
+tLpdIDstr = currPPrtCatArr[Math.floor(tRanNum)];
+if(tFlRanSTr.indexOf(tLpdIDstr) != -1) {
+tdds = "noQvalue";
+} else {
+tFPCArInt++;
+
+tFlRanSTr += tLpdIDstr + " ";
+if(tFlRanSTr.indexOf(":") != -1) {
+tFlnSlit = tLpdIDstr.split(":");
+tLpdID = tFlnSlit[0];
+tLpdName = tFlnSlit[1];
+tPYS += tLpdName + " ";
+if(tFPCArInt > 2) {
+    i = 30;
+}
+}
+
+}
+}
+tPYS += "<div>" + JSSHOP.ads.getPPlgIcnStr(4, "slmtable icndbtn brdrClrTtl", "doNada") + "</div>";
+tPYS += "</div>"; // end txtSmall txtClrTtl
+tPYS += "</div>"; // end slmtable
+if(pid == "aa-edit-parts-category") {
+} else {
+tSarrWodStr += tPYS;
+}
+
+if(document.getElementById("dvPartsMain")) {
+if(dvPartsMain.style.display == "block") {
+} else {
+JSSHOP.ui.toggleNuModule('dvTglPSmain','dvPartsMain');
+}
+}
+
+}
+} else { // model
+tMCBBstr = "noQvalue";
+// tSarrWodStr += "<div class=\"rtable txtSmall brdrClrRed\" style=\"margin:7px;\"><i class=\"menu-material-icons txtBold txtClrRed\" title=\"add_alert\">&#xe003;</i>";
+// tSarrWodStr += "<a style=\"vertical-align:super;padding-left:12px;\" class=\"menu-material-icons txtSmall txtBold\" href=\"javascript:JSSHOP.shared.doModelsPip();\">" + stxt[82] + " " + stxt[103] + "</a></div>";
+}
+} else { // series
+tMCBBstr = "noQvalue";
+// tSarrWodStr += "<div class=\"rtable txtSmall brdrClrRed\" style=\"margin:7px;\"><i class=\"menu-material-icons txtBold txtClrRed\" title=\"add_alert\">&#xe003;</i>";
+// tSarrWodStr += "<a style=\"vertical-align:super;padding-left:12px;\" class=\"menu-material-icons txtSmall txtBold\" href=\"javascript:JSSHOP.shared.setMakeStuff('" + currPUrlObj.mk + "','" + currPUrlObj.make + "','" + tMCBBstr + "');\">" + stxt[82] + " " + stxt[107] + "</a></div>";
+// tSarrWodStr += "<a style=\"vertical-align:super;padding-left:12px;\" class=\"menu-material-icons txtSmall txtBold\" href=\"javascript:JSSHOP.shared.doModelsPip();\">" + stxt[82] + " " + stxt[107] + "</a></div>";
+tPYS = "<div class=\"slmtable brdrClrRed crsrPointer\"  onclick=\"javascript:JSSHOP.ui.setNuCBBClickClr(this,'txtBold txtClrRed',this.className, function() { JSSHOP.shared.doModelsPip(); }, 300); \" style=\"text-align:center;\">";
+tPYS += "<div class=\"txtBold txtClrHdr crsrPointer\">" + stxt[82] + " " + stxt[107] + "</div>";
+
+if(currSeriesArr.length > 0) {
+for (i = 0; i < 5; i++) {
+tLpdIDstr = currSeriesArr[Math.floor(Math.random() * currSeriesArr.length)];
+tPYS += tLpdIDstr + " ";
+}
+}
+tPYS += "</div>";
+tSarrWodStr += tPYS;
+}
+
+ 
+} else { // make
+
+    
+    if(JSSHOP.ads.getPrtsPrefCC("mk") == "noQvalue") {
+ 
+ 
+tPYS = "<div class=\"slmtable brdrClrRed txtBold txtClrHdr crsrPointer\"  onclick=\"javascript:JSSHOP.ui.setNuCBBClickClr(this,'txtBold txtClrRed',this.className, function() { JSSHOP.shared.doMakesPop('noQvalue'); }, 300); \" style=\"text-align:center;\">";
+for (i = 0; i < 5; i++) {
+    tLpdIDstr = currPMakesArr[Math.floor(Math.random() * currPMakesArr.length)];
+    tLpdSplit = tLpdIDstr.split(":");
+    tLpdID = tLpdSplit[0];
+    tLpdName = tLpdSplit[1];
+    tLpdmgMStr = imgPLicon.src = "images/mlogos/" + tLpdName.toLowerCase().replace(" ", "-") + "-logo.png";
+ tPYS += "<img src=\"" + tLpdmgMStr + "\" style=\"max-width:30px;max-height:30px;\"></img>";   
+}
+tPYS += "...";
+tPYS += "<div class=\"txtBold txtClrHdr\">" + stxt[82] + " " + stxt[102] + "</div>";
+tPYS += "</div>";
+
+
+
+tSarrWodStr += tPYS;
+
+    } else {
+        currPUrlObj.mk = JSSHOP.ads.getPrtsPrefCC("mk");
+        if(JSSHOP.ads.getPrtsPrefCC("make") == "noQvalue") {
+            currPUrlObj.make = objAllMakes["m" + JSSHOP.ads.getPrtsPrefCC("mk")]["n"];
+        } else {
+            currPUrlObj.make = JSSHOP.ads.getPrtsPrefCC("make");
+        }
+        if(JSSHOP.ads.getPrtsPrefCC("series") == "noQvalue") {
+  
+            currPUrlObj.series = null;
+        } else {
+  
+            currPUrlObj.series = JSSHOP.ads.getPrtsPrefCC("series");
+        }
+
+        if(JSSHOP.ads.getPrtsPrefCC("si") == "noQvalue") {
+            currPUrlObj.si = null;
+ 
+        } else {
+            currPUrlObj.si = JSSHOP.ads.getPrtsPrefCC("si");
+ 
+        }
+        if(JSSHOP.ads.getPrtsPrefCC("md") == "noQvalue") {
+            currPUrlObj.md = null;
+  
+        } else {
+            currPUrlObj.md = JSSHOP.ads.getPrtsPrefCC("md");
+        
+        }
+        if(JSSHOP.ads.getPrtsPrefCC("model") == "noQvalue") {
+     
+            currPUrlObj.model = null;
+        } else {
+ 
+            currPUrlObj.model = JSSHOP.ads.getPrtsPrefCC("model");
+        }
+        if(JSSHOP.ads.getPrtsPrefCC("y") == "noQvalue") {
+            currPUrlObj.y = null;
+        } else {
+            currPUrlObj.y = JSSHOP.ads.getPrtsPrefCC("y");
+        }
+        if(JSSHOP.ads.getPrtsPrefCC("part") == "noQvalue") {
+            currPUrlObj.part = null;
+        } else {
+            currPUrlObj.part = JSSHOP.ads.getPrtsPrefCC("part");
+        }
+        if(JSSHOP.ads.getPrtsPrefCC("prti") == "noQvalue") {
+            currPUrlObj.prti = null;
+        } else {
+            currPUrlObj.prti = JSSHOP.ads.getPrtsPrefCC("prti");
+        }
+
+JSSHOP.shared.doPartsWords(50, "noQvalue");
+    }
+
+
+}
+
+if(currPUrlObj.prti) {
+// alert("have.prti");
+if(currPUrlObj.y) {
+} else { // year
+tMCBBstr = "noQvalue";
+// tSarrWodStr += "<div class=\"rtable txtSmall brdrClrRed\" style=\"margin:7px;\"><i class=\"menu-material-icons txtBold txtClrRed\" title=\"add_alert\">&#xe003;</i>";
+// tSarrWodStr += "<a style=\"vertical-align:super;padding-left:12px;\" class=\"menu-material-icons txtSmall txtBold\" href=\"javascript:JSSHOP.shared.doYearsPop();\">" + stxt[82] + " " + stxt[104] + "</a></div>";
+}
+}
+
+if(document.getElementById("dvDoPSWrds")) {
+dvDoPSWrds.innerHTML = tSarrWodStr;
+inpImpTParts.value = JSON.stringify(tArrPSrchLst);
+
+}
+
+
+
+
+
+} else { // tDPWRIdx !== 50
+
+switch(theTPrtKN) {
+case "mk":
+    currSeriesArr = "";
+    currSeriesArr = [];
+JSSHOP.ads.clearPrtsPrefCC("mk");
+JSSHOP.ads.clearPrtsPrefCC("make");
+JSSHOP.ads.clearPrtsPrefCC("model");
+JSSHOP.ads.clearPrtsPrefCC("md");
+JSSHOP.ads.clearPrtsPrefCC("series");
+JSSHOP.ads.clearPrtsPrefCC("si");
+currPUrlObj["mk"] = null;
+currPUrlObj["make"] = null;
+currUrlArr["mk"] = "";
+currUrlArr["make"] = "";
+currPUrlObj["si"] = null;
+currPUrlObj["series"] = null;
+currUrlArr["si"] = "";
+currUrlArr["series"] = "";
+currPUrlObj["md"] = null;
+currPUrlObj["model"] = null;
+currUrlArr["md"] = "";
+currUrlArr["model"] = "";
+currUrlArr["y"] = "";
+break;
+case "si":
+    JSSHOP.ads.clearPrtsPrefCC("si");
+    JSSHOP.ads.clearPrtsPrefCC("series");
+currPUrlObj["si"] = null;
+currPUrlObj["series"] = null;
+currUrlArr["si"] = "";
+currUrlArr["series"] = "";
+currPUrlObj["md"] = null;
+currPUrlObj["model"] = null;
+currUrlArr["md"] = "";
+currUrlArr["model"] = "";
+currUrlArr["y"] = "";
+break;
+case "md":
+JSSHOP.ads.clearPrtsPrefCC("md");
+JSSHOP.ads.clearPrtsPrefCC("model");
+currPUrlObj["md"] = null;
+currPUrlObj["model"] = null;
+currUrlArr["md"] = "";
+currUrlArr["model"] = "";
+currUrlArr["y"] = "";
+break;
+case "prti":
+    JSSHOP.ads.clearPrtsPrefCC("prti");
+    JSSHOP.ads.clearPrtsPrefCC("part");
+currPUrlObj["prti"] = null;
+currPUrlObj["part"] = null;
+currUrlArr["prti"] = "";
+currUrlArr["part"] = "";
+inpTParts.value = "";
+break;
+case "y":
+currPUrlObj["y"] = null;
+currPUrlObj["y"] = null;
+currUrlArr["y"] = "";
+currUrlArr["y"] = "";
+inpTParts.value = "";
+break;
+default:
+break;
+}
+JSSHOP.shared.doPartsWords(50, "noQvalue");
+// ttArrPSrchLst = removeArrElement(JSON.parse(inpImpTParts.value), tDPWRIdx);
+// tArrPSrchLst = ttArrPSrchLst;
+}
+
+};
+
+
+
+JSSHOP.shared.doPartDynL = function(ttPIDstr, ttPISTNstr) {
+    // setPrtsPrefCC
+JSSHOP.ads.setPrtsPrefCC("prti", ttPIDstr);
+JSSHOP.ads.setPrtsPrefCC("part", ttPISTNstr);
+currPUrlObj.prti = ttPIDstr;
+currPUrlObj.part = ttPISTNstr;
+tQparr = [];
+tNLstr = "";
+if(currPUrlObj.make) {
+tQparr.push(currPUrlObj.make);
+}
+if(currPUrlObj.series) {
+tQparr.push(currPUrlObj.series);
+}
+if(currPUrlObj.model) {
+    if(currPUrlObj.model.indexOf("null") != -1) {
+        currPUrlObj["model"] = null;
+    } else {
+        tQparr.push(currPUrlObj.model);
+    }
+
+    }
+tQparr.push(ttPISTNstr);
+
+tmpACstmStr = tQparr.join(" ");
+// remove any special characters from currCstmQstr exlude "-"
+tmpBCstmStr = tmpACstmStr.replace(/[^a-zA-Z0-9- ]/g, "");
+// remove duplicate words from currCstmQstr
+tmpCCstmStr = tmpBCstmStr.replace(/\b(\w+)\s+\1\b/g, '$1');
+tmpDCstmStr = tmpCCstmStr.replace(/null/g, "");
+
+
+currCstmQstr = encodeURIComponent(tmpDCstmStr);
+
+console.log("doPartDynL.currCstmQstr: " + currCstmQstr);
+tccUtoL = "index.html?st=main&region=noQvalue&pid=aa-show-psearch&" + JSSHOP.shared.objToUrl(currPUrlObj);
+tccUtoL += "&q=" + currCstmQstr.replace(/null/g, "");
+// alert("doPartDynL: " + tccUtoL);
+return tccUtoL;
+};
+
+
+
+
+JSSHOP.shared.fnshPartsList = function() {
+setTimeout("JSSHOP.shared.fnishPartsList()", 500);
+}
+JSSHOP.shared.fnishPartsList = function() { 
+JSSHOP.shared.doPartsWords(50,"noQvalue");
+JSSHOP.shared.doPartsInpAC("inpTParts", currPartsObj);
+if(arrUprefs["prfsSHOPuser"][0].tglPartsMain) {
+if(arrUprefs["prfsSHOPuser"][0].tglPartsMain == "show") {
+JSSHOP.ui.toggleNuModule('dvTglPSmain','dvPartsMain');
+}
+}
+document.getElementById("inpTParts")
+    .addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (e.keyCode == 13) {
+        JSSHOP.shared.doPartsSearch('inpTParts');    }
+});
+};
+
+
+
+setPartsBox = function() {
+    console.log("setPartsBox: " + pid + " " + JSON.stringify(currPartsObj) + " " + pid.indexOf("-edit-"));
+
+tTmpPartsL = JSSHOP.shared.doPartsList("noQvalue");
+document.getElementById("dvTBPList").innerHTML = tTmpPartsL;
+JSSHOP.shared.fnshPartsList();
+};
+
+JSSHOP.shared.setCurPrtsObj = function(aw, bw,cw) {
+currPartsObj = null;
+currPartsObj = JSON.parse(bw);
+if(aw == "menu") {
+    doNuMMenuLd("doMnuFnsh");
+}
+};
+
+JSSHOP.shared.getPartsBox = function(aw, bw,cw) {
+    console.log("getPartsBox: " + aw + " " + bw + " " + cw);
+
+   
+// includedContent.innerHTML = "";
+// alert("getPartsBox: " + cw);
+tCatArrStr = "";
+currPartsObj = null;
+ 
+currPartsObj = JSON.parse(bw);
+boolShwPrtsB = "no";
+
+
+switch(pid) {
+case "aa-show-makes":
+case "aa-show-make":
+case "aa-show-model":
+case "aa-show-part":
+case "aa-show-series":
+case "aa-show-shop":
+case "aa-show-search":
+case "aa-show-psearch": 
+case "aa-show-msearch":
+case "aa-show-place":
+case "index_main":
+case "aa-edit-parts-category":
+case "aa-edit-category":
+// case "aa-show-item":
+case "aa-edit-item":   
+case "aa-show-category":
+boolShwPrtsB = "maybe";
+break;
+default:
+bkjh = "jhkjh";
+break;
+}
+
+console.log("getPartsBox.boolShwPrtsB: " + boolShwPrtsB + " " + pid + " " + JSON.stringify(cw));
+if(boolShwPrtsB == "maybe") {
+if(dvPartsList.innerHTML == "") {
+    boolShwPrtsB = "yes";
+}
+if(pid.indexOf("edit") != -1) {
+ if(document.getElementById("btnTglBPrtsL")) {
+    boolShwPrtsB = "yes";
+}
+}
+// ** WILL REFRESH THE PARTS LIST
+boolShwPrtsB = "yes";
+}
+if(c_category.value == "101") {
+    // boolShwPrtsB = "no";
+    }
+if(boolShwPrtsB == "yes") {
+dvPartsList.innerHTML = "";
+tIMtglbObj = null;
+tIMtglbObj = "";
+tIMtglbObj = JSSHOP.ui.nTglBxOb();
+ 
+tIMtglbObj["ttl"] = stxt[112]; // the toggle box title
+tIMtglbObj["dvid"] = "dvTBPList"; // the toggle box div id
+tIMtglbObj["cntntFnc"] = "setPartsBox";
+tIMtglbObj["content"] = "noQvalue"; // the toggle that goes in above toggle div
+tIMtglbObj["btn"] = "btnTglBPrtsL" // the toogle btn id
+tIMtglbObj["pref"] = "tglBPrtsL"; // the toogle pref id saved in cookie
+tIMtglbObj["tbtmpCB"] = "noQvalue"; // null function as callback
+tIMtglbObj["icn"] = "&#xe8b6;"; //<img src=\"images/misc/parts_w.gif\" style=\"vertical-align: middle; max-width: 27px; max-height: 27px;\" class=\"icnsmlbtn\">;"; // the icon
+tIMtglbObj["pnid"] = "dvPartsList"; // the parent node, will just return text if noQvalue
+tIMtglbObj["appnd"] = "y"; // append to parent node, will just return text if noQvalue
+// tIMtglbObj["clsmaintbl"] = "slmtable brdrClrRed bkgdClrWhite"; // main table class
+tIMtglbObj["clsmaintbl"] = "gradient-pop bkgdClrWhite"; // main table class
+
+tIMtglbObj["clstitletd"] = "txtBold txtClrHdr"; // title box class
+tIMtglbObj["clsttltxt"] = "txtSmall txtBold"; // title box text class
+
+JSSHOP.ui.doTglBox(tIMtglbObj);
+}
+if(dvMMainParts.style.display == "block") {
+} else {
+    JSSHOP.ui.showHideElement('dvMMainParts','show');
+}
+ 
+// JSSHOP.shared.doPartsList(document.getElementById("dvPartsList"));
+};
+
+
+var doInpTFocus = function() {
+    tINTcstr = inpTParts.innerHTML;
+    if(tINTcstr.indexOf("Ex:") != -1) {
+        inpTParts.innerHTML = "";
+    }
+    if(dvPartsMain.style.display == "block") {
+       JSSHOP.ui.setNuCBBClickClr(dvPartsMain,'rtable brdrClrRed txtBold mrgin10',dvPartsMain.className, function() { void(0); }, 300);
+
+    } else {
+        JSSHOP.ui.toggleNuModule('dvTglPSmain','dvPartsMain');
+        JSSHOP.ui.setNuCBBClickClr(dvPartsMain,'rtable brdrClrRed txtBold mrgin10',dvPartsMain.className, function() { void(0); }, 300);
+    }
+};
+
+
+
+JSSHOP.shared.doPartsList = function(theTPDiv) {
+tCatArrStr = "";
+tCurrUmake = "";
+tCurrUseries = "";
+tCurrUmodel = "";
+tCurrUpart = "";
+tCurrUyear = "";
+tImpVstr = "";
+currDynMenuArr = null;
+currDynMenuArr = "";
+currDynMenuArr = [];
+
+// tUtoL = "index.html?make=" + currUrlArr.make + "&mk=" + currUrlArr.mk + "&si=" + currUrlArr.si  + "&series=" + currUrlArr.series + "&md=" + currUrlArr.md  + "&model=" + currUrlArr.model + "&region=noQvalue&pid=aa-show-part" 
+// tUtoL = "index.html?&region=noQvalue&pid=aa-show-part&" + JSSHOP.shared.objToUrl(currPUrlObj);
+
+// tCatUStr = JSSHOP.shared.objToUrl(currUrlArr);
+mbrdrCls = "rtable brdrClrHdr"; 
+if(theTPDiv == "noQvalue") {
+mbrdrCls = "";
+}
+tPSBstr = "<table style=\"margin: 0 auto;width:90%\" align=\"center\" class=\"txtClrHdr" + mbrdrCls + "\">";
+tPSBstr += "<tr><td>";
+tPSBstr += "<div  class=\"slmtable bkgdClrNrml\" id=\"dvDoPSWrds\" style=\"margin: 0 auto;text-align:left\"></div>";
+
+tPSBstr += "<input type=\"hidden\" id=\"inpImpTParts\" value=\"\">";
+tPSBstr += "</td></tr>";
+
+tPSBstr += "<tr><td>";
+ 
+tPSBstr += "<div style=\"min-height:20px;\" class=\"txtSmall txtBold txtClrRed\">";
+if(JSSHOP.ads.getPrtsPrefCC("mk") == "noQvalue") {
+tPSBstr += stxt[110] // Please select the make and model before searching your part
+}  
+
+tPSBstr += "<br>" + stxt[111]; // Enter your part name or select from the list below for better results.";
+tPSBstr += "</div>";
+ 
+// tPSBstr += "<div name=\"mod_i_title\"  id=\"mod_i_title\"  style=\"min-height:20px;\" contenteditable=\"true\"  class=\"cls_input_tarea\"></div>";
+
+tPSBstr += "</td></tr>";
+
+tPSBstr += "<tr><td>&nbsp;</td></tr>";
+ 
+
+
+
+
+tPSBstr += "<tr><td>";
+
+
+tPSBstr += "<table style=\"margin: 0 auto;\" width=\"98%\" align=\"center\"><tr>";
+
+tPSBstr += "<td style=\"width:100%\">";
+// set the div placeholder str
+tdITPplhldr = "<span class=\"txtSmall txtClrGrey\">Ex: Alternador</span>";
+// check if mobile
+if(JSSHOP.shared.isMobile()) {
+    tPSBstr += "<div name=\"inpTParts\"  id=\"inpTParts\"  class=\"form-control brdrClrRed bkgdClrNrml\" style=\"min-height:20px;\" contenteditable=\"true\"  placeholder=\"Parts\" value=\"\" onfocus=\"javascript:this.scrollIntoView({behavior: 'smooth', block: 'start'});doInpTFocus();\"  spellckeck=\"false\" data-ms-editor=\"false\">" + tdITPplhldr + "</div>";
+} else {
+    tPSBstr += "<div name=\"inpTParts\"  id=\"inpTParts\"  class=\"form-control brdrClrRed bkgdClrNrml\" style=\"min-height:20px;\" contenteditable=\"true\"  placeholder=\"Parts\" value=\"\" onfocus=\"javascript:doInpTFocus();\"  spellckeck=\"false\" data-ms-editor=\"false\">" + tdITPplhldr + "</div>";
+}
+
+ 
+// tPSBstr += "<input spellckeck=\"false\" autocomplete=\"off\" name=\"inpTParts\" id=\"inpTParts\" class=\"cls_nuinput_text brdrNone txtSmall\" style=\"width:100%\" placeholder=\"\">
+
+tPSBstr += "</td>";
+tPSBstr += "<td valign=\"top\">&nbsp;&nbsp; &nbsp;</td>";
+tPSBstr += "<td valign=\"top\"><button class=\"brdrNone crsrPointer bkgdClrWhite\" onclick=\"javascript:inpTParts.value='';if(inpTParts.innerText)inpTParts.innerText='';JSSHOP.shared.closePartsList();JSSHOP.shared.doPartsWords(6,'prti');\"><i class=\"material-icons txtBigger txtClrDlg\" title=\"delete\">&#xe14c;</i></button></td>";
+
+tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPSmain','dvPartsMain','tglPartsMain');";
+
+// tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPSmain','dvPCmain','tglPrtsMain');";
+tPSBstr += "<td valign=\"top\" style=\"max-height: 42px\"></td>";
+
+tPSBstr += "</tr>";
+tPSBstr += "</table>";
+ 
+tPSBstr += "</td></tr>";
+
+tPSBstr += "<tr><td>&nbsp;</td></tr>";
+
+tPSBstr += "<tr><td valign=\"top\">";
+// <button id="btnPSearch" class="form-control"><ti data-ison="stxt[78]" data-desc="btn_search" onclick="javascript:qlDoNuPlSearch('tmp_qv','dvPSList',qlShowPlacesRes);">Search</ti></button>
+// tPSBstr += "<button class=\"form-control cls_hoover slmtable txtSmall bkgdClrRed crsrPonter txtClrWhite brdrClrHdr\" onclick=\"javascript:JSSHOP.shared.doPartsSearch('inpTParts')\">";
+ tPSBstr += "<button class=\"cls_button cls_button-medium\" onclick=\"javascript:JSSHOP.shared.doPartsSearch('inpTParts')\">";
+
+tPSBstr += "<i class=\"nav-material-icons coll-menu-item txtClrWhite\" title=\"search\" style=\"vertical-align:center\">&#xe8b6;</i>&nbsp;<span data-ison=\"\" data-desc=\"btn_search\"  style=\"vertical-align:center\" class=\"txtBold txtClrWhite\">" + stxt[78] + "</span></button></td></tr>";
+tPSBstr += "<tr><td>";
+
+
+if(currUrlArr.prti != null) {
+
+    // tmpDvOLStr = "<div><a href=\"javascript:JSSHOP.ads.doPgLnkMedia('ebay',30);\">Ebay</a> | <a href=\"javascript:JSSHOP.ads.doPgLnkMedia('ggl',30);\")\">Google</a></div>";
+   //  tPSBstr += tmpDvOLStr;
+// shout out stuff here!!! 
+// tPSBstr += "&nbsp; &nbsp; &nbsp;<img class=\"slmtable icndbtn brdrCldrDlg txtClrHdr\" style=\"margin-top: 5px;font-size:16px;margin-right:6px;\" alt=\"speaker\" title=\"speaker\" src=\"images/misc/shout_out.gif\"></img>  <a href=\"javascript:JSSHOP.shared.setListing();\" class=\"txtDecorNone\">List this Item</a>";
+}
+tPSBstr += "</td></tr>";
+tPSBstr += "<tr><td>&nbsp;</td></tr>";
+tPSBstr += "<tr><td><div class=\"crsrPointer txtBold txtClrRed bkgdClrNrml\" nowrap=\"nowrap\" onclick=\"javascript:" + tJSstr + "\">Lista de Pe\u00e7as";
+tPSBstr += "<div id=\"dvTglPSmain\" style=\"float:right\"><i class=\"material-icons txtClrDlg\" title=\"expand_more\">&#xe5cf;</i></div></div></td></tr>";
+
+
+tPSBstr += "<tr><td id=\"dvPartsMain\" style=\"visibility:hidden;display:none\" class=\"bkgdClrWhite\">";
+
+
+
+
+
+tEPobj = currPartsObj;
+tPPobj = tEPobj.pcats;
+
+tCatArrStr += tPSBstr;
+
+
+thePPBrdrClr = "brdrClrRed";
+thePPTextClr = "txtClrRed";
+
+
+
+for(var gkey in tPPobj) {
+
+// tCatArrStr +=  "<br>";
+tDynMunuObj = null;
+tDynMunuObj = "";
+tDynMunuObj = {};
+tDynMunuObj._id = gkey;
+tDynMunuObj.cat_rtype = "5";
+tDynMunuObj.cat_uid = "1";
+tDynMunuObj.cat_coid = "0";
+tDynMunuObj.cat_pid = "0";
+tDynMunuObj.cat_title = tPPobj[gkey];
+tDynMunuObj.cat_desc = tPPobj[gkey];
+tDynMunuObj.cat_vala = "1";
+tDynMunuObj.cat_valb = "10001";
+tDynMunuObj.cat_dadded = "10001";
+currDynMenuArr.push(tDynMunuObj);
+currPPrtCatArr.push(gkey + ":" + tPPobj[gkey]);
+tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPC" + gkey + "','dvPC" + gkey + "','tglPrts" + gkey + "');";
+
+tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\" class=\"crsrPointer\" onclick=\"javascript:" + tJSstr + "\"><table  class=\"collection\"  cellpadding=\"0px\" cellspacing=\"0px\">";
+tCatArrStr += "<tr><td><img src=\"images/misc/" + gkey + ".gif\" class=\"slmtable " + thePPBrdrClr + "\" style=\"max-width:30px;margin:0px;\"></td>";
+tCatArrStr += "<td class=\"txtSmall txtBold " + thePPTextClr + "\" style=\"word-wrap:break-word;word-break: break-word;text-align: left;width:100%\">&nbsp;" + tPPobj[gkey] + "</td>";
+
+tCatArrStr += "<td><div id=\"dvTglPC" + gkey + "\" class=\"icnbtn crsrPointer\"  style=\"float:right\">";
+tCatArrStr += "<i class=\"small-material-icons\" title=\"expand_more \">&#xe5cf;</i></div></td></tr></table></div>";
+
+// javascript:JSSHOP.ui.tglPrefModule('dvTglPCpc1','dvPCpc1','tglPrtspc1')
+
+
+
+
+
+if(tEPobj.pprts[gkey].pts){
+tCatArrStr += "<div style=\"display:none;visibility:hidden;word-wrap:break-word;word-break: break-word;\" class=\"collection\" id=\"dvPC" + gkey + "\">";
+
+
+
+
+tCatPtsobj = tEPobj.pprts[gkey].pts;
+for(var pcgkey in tCatPtsobj) {
+
+// currCstmQstr += " " + tCatPtsobj[pcgkey].n;
+tmpFPSstr = "&part=" + tCatPtsobj[pcgkey].n + "&prti=" + tCatPtsobj[pcgkey].pi + "&q=" + encodeURIComponent(currCstmQstr + " " + tCatPtsobj[pcgkey].n);
+ 
+// tUtoL = tCatUStr + "&part=" + tCatPtsobj[pcgkey].n + "&prti=" + tCatPtsobj[pcgkey].pi + "&pid=aa-show-part&q=" + currCstmQstr + " " + encodeURIComponent(tCatPtsobj[pcgkey].n);
+tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\"><a  class=\"collection-item\" href=\"javascript:document.location.href=JSSHOP.shared.doPartDynL('" + tCatPtsobj[pcgkey].id + "','" + tCatPtsobj[pcgkey].n + "');JSSHOP.ads.setPrtsPrefCC('part','" + tCatPtsobj[pcgkey].n + "');JSSHOP.ads.setPrtsPrefCC('prti','" +  + tCatPtsobj[pcgkey].id + "');\" class=\"collection-item crsrPointer\">" + tCatPtsobj[pcgkey].id + " : " + tCatPtsobj[pcgkey].n + "</a></div>";
+// tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\" onclick=\"javascript:eindex('aa-show-part','" + tUtoL + "');\" class=\"collection-item crsrPointer\">" + tCatPtsobj[pcgkey].id + " : " + tCatPtsobj[pcgkey].n + "</div>";
+}
+tCatArrStr += "</div>";
+}
+
+if(thePPBrdrClr == "brdrClrRed") {
+thePPBrdrClr = "brdrClrHdr";
+thePPTextClr = "txtClrHdr";
+} else {
+thePPBrdrClr = "brdrClrRed";
+thePPTextClr = "txtClrRed";
+}
+ 
+} // end for gkey in tPPobj
+
+if(cid == 0) {
+// alert("cid: " + cid);
+currMenuArr = currDynMenuArr;
+// doProdCatTreeLoad();
+// doMainTreeLoad();
+//  doCatTreeLoad();
+// doShopMnuLd("nada",JSON.stringify(currDynMenuArr),null);
+
+} else {
+// doShopMnuLd("nada",JSON.stringify(currMenuArr),null);
+}
+tCatArrStr += "</td></tr></table>";
+if(theTPDiv == "noQvalue") {
+return tCatArrStr;
+} else {
+theTPDiv.innerHTML = tCatArrStr;
+// fnshPartsList();
+} // end theTPDiv is not noQvalue
+// return tCatArrStr;
+// JSSHOP.ui.popAndFillLbox(tCatArrStr);
+};
+
+
+
+JSSHOP.shared.closePartsList = function() {
+
+    /*close all autocomplete lists in the document,
+    except the one passed as an argument:*/
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+
+      x[i].parentNode.removeChild(x[i]);
+
+  }
+};
+ 
+JSSHOP.shared.setPrtSvsPnl = function(tmpPSLdvId, tmpPSLfnc) {  
+    try {
+    // div ids dvGetLLnk dvGetSvcsLnk dvGetPLnk
+    if(document.getElementById("includedShops")) {
+        document.getElementById("includedShops").innerHTML = "";
+        }
+    tISPSame = "no";
+    tDefClsName = "slmtable bkgdClrWhite brdrClrDlg txtBold txtClrBSLnks crsrPointer";
+    tBounceClsName = "rtable bkgdClrWhite brdrClrRed txtBold txtClrRed";
+    tActvClsName = "slmtable bkgdClrWhite brdrClrRed txtBold txtClrRed crsrPointer";
+    tmpDvIDarr = ["dvGetLLnk", "dvGetSvcsLnk", "dvGetPLnk"];
+    for (var i = 0; i < tmpDvIDarr.length; i++) {
+        // set each to class txtClrGrey
+        document.getElementById(tmpDvIDarr[i]).className = tDefClsName;
+    }
+    tPspstr = JSSHOP.ads.getPrtsPrefCC("psvcpnl");
+    if(tPspstr == "noQvalue") {
+        JSSHOP.ads.setPrtsPrefCC("psvcpnl", tmpPSLdvId);
+    } else {
+        if(tPspstr == tmpPSLdvId) {
+
+            tISPSame = "yes";
+           // JSSHOP.ads.setPrtsPrefCC("psvcpnl", "noQvalue");
+        } else {
+            JSSHOP.ads.setPrtsPrefCC("psvcpnl", tmpPSLdvId);
+
+        }
+    }
+
+    JSSHOP.ui.setNuCBBClickClr(document.getElementById(tmpPSLdvId),tBounceClsName,tActvClsName, tmpPSLfnc, 300);
+} catch(e) {
+    alert("setPrtSvsPnl: " + e);
+}
+};
+JSSHOP.shared.doPartsLinks = function() {
+	try {
+imgPLicon.src = "./images/transparent.gif";
+tMakeN = "";
+tMakeID = "";
+tSerN = "";
+tSerID = "";
+tModelN = "";
+tModelID = ""; 
+tPartN = "";
+tPartID = "";
+tLinkIstr = "";
+tQLCstmQstr = "&q=";
+tLinkPHstr = "index.html?";
+acurrCstmQstr = "";
+tLinkPAstr = "";
+if((currUrlArr.mk != null) && (currUrlArr.make != null)){
+tMakeID = currUrlArr.mk;
+tMakeN = currUrlArr.make;
+acurrCstmQstr = tMakeN;
+tQLCstmQstr += tMakeN + " ";
+tLinkPIDstr = "pid=aa-show-make";
+tLinkPAstr += "&make=" + tMakeN + "&mk=" + tMakeID;
+imgPLicon.src = "images/mlogos/" + tMakeN.toLowerCase().replace(" ", "-") + "-logo.png";
+// tLinkIstr += "<a href=\"javascript:eindex('aa-show-make','make=" + tMakeN + "&mk=" + tMakeID + "&pid=aa-show-make&q=" + acurrCstmQstr + "')\";>" + tMakeN + "</a>";
+tLinkIstr += "<a href=\"" + tLinkPHstr + tLinkPIDstr + tLinkPAstr + tQLCstmQstr + "\";>" + tMakeN + "</a>";
+} 
+
+
+if((currUrlArr.si != null) && (currUrlArr.series != "null")){
+tSerID = currUrlArr.si;
+tCURAstr = currUrlArr.series;
+tCOUAstr = currUrlArr.series;
+if(tCURAstr.indexOf("(") != -1) {
+tCOUAstr = tCURAstr.substring(0, tCURAstr.indexOf("("));
+} 
+tSerN = tCOUAstr.replace(tMakeN + " ", "");
+acurrCstmQstr += " " + tSerN;
+tQLCstmQstr += tSerN + " ";
+tLinkPIDstr = "pid=aa-show-series";
+tLinkPAstr += "&series=" + tSerN + "&si=" + tSerID;
+
+// tLinkIstr += "&nbsp; &nbsp; &nbsp;<a href=\"javascript:eindex('aa-show-series','make=" + tMakeN + "&mk=" + tMakeID +  "&series=" + tSerN + "&si=" + tSerID + "&pid=aa-show-series&q=" + currCstmQstr + "')\">" + tSerN + "</a>";
+tLinkIstr += "&nbsp; &nbsp; &nbsp;<a href=\"" + tLinkPHstr + tLinkPIDstr + tLinkPAstr + tQLCstmQstr + "\">" + tSerN + "</a>";
+
+}
+
+if((currUrlArr.model) && (currUrlArr.model != "null" )) {
+tModelID = currUrlArr.md;
+tModelN = currUrlArr.model;
+tModelN = tModelN.replace(/[^a-zA-Z0-9- ]/g, "");
+tQLCstmQstr += tModelN + " ";
+tLinkPIDstr = "pid=aa-show-model";
+tLinkPAstr += "&model=" + tModelN + "&md=" + tModelID;
+// tLinkIstr += "&nbsp; &nbsp; &nbsp;<a href=\"javascript:eindex('aa-show-model','make=" + tMakeN + "&mk=" + tMakeID +  "&series=" + tSerN + "&si=" + tSerID + "&model=" + tModelN + "&md=" + tModelID + "&pid=aa-show-model&q=" + acurrCstmQstr + "')\">" + tModelN.replace(tSerN + " ", "") + "</a>";
+tLinkIstr += "&nbsp; &nbsp; &nbsp;<a href=\"" + tLinkPHstr + tLinkPIDstr + tLinkPAstr + tQLCstmQstr + "\">" + tModelN + "</a>";
+
+} 
+
+if((currUrlArr.prti)  && (currUrlArr.part)) {
+tPartID = currUrlArr.prti;
+tPartN = currUrlArr.part;
+// acurrCstmQstr += " " + tPartN;
+// tLinkIstr += "&nbsp; &nbsp; &nbsp;<a href=\"javascript:eindex('aa-show-part','make=" + tMakeN + "&mk=" + tMakeID +  "&series=" + tSerN + "&si=" + tSerID + "&model=" + tModelN + "&md=" + tModelID + "&part=" + tPartN + "&prti=" + tPartID + "&pid=aa-show-part&q=" + acurrCstmQstr + "')\">" + tPartN + "</a>";
+tLinkPIDstr = "pid=aa-show-part";
+tQLCstmQstr += tPartN + " ";
+tLinkPAstr += "&part=" + tPartN + "&prti=" + tPartID + tQLCstmQstr;
+tLinkIstr += "&nbsp; &nbsp; &nbsp;<a href=\"" + tLinkPHstr + tLinkPIDstr +  tLinkPAstr + "\">" + tPartN + "</a>";
+
+// tLinkIstr += "<br><br><a href=\"javascript:eindex('aa-show-video', 'pid=aa-show-video&make=" + tMakeN + "&mk=" + tMakeID +  "&series=" + tSerN + "&si=" + tSerID + "&model=" + tModelN + "&md=" + tModelID + "&part=" + tPartN + "&prti=" + tPartID + "&q=" + acurrCstmQstr + "');\">" + stxt[88] + " " + tMakeN + " " + tSerN + " " + tPartN + "</a><br>";
+} else if(currUrlArr.pq) {
+tPartID = "007";
+tPartN = currUrlArr.pq;
+currUrlArr.part = currUrlArr.pq;
+currUrlArr.prti = "007";
+acurrCstmQstr += " " + tPartN;
+// tLinkIstr += "&nbsp; &nbsp; &nbsp;<a href=\"javascript:eindex('aa-show-part','make=" + tMakeN + "&mk=" + tMakeID +  "&series=" + tSerN + "&si=" + tSerID + "&model=" + tModelN + "&md=" + tModelID + "&part=" + tPartN + "&prti=" + tPartID + "&pid=aa-show-part&q=" + acurrCstmQstr + "')\">" + tPartN + "</a>";
+
+
+tQLCstmQstr += tPartN;
+tLinkPAstr += "&part=" + tPartN + "&prti=" + tPartID + tQLCstmQstr;
+
+
+// tLinkIstr += "&nbsp; &nbsp; &nbsp;<b>*</b><a href=\"" + tLinkPAstr + "\">" + tPartN + "</a>";
+// tLinkIstr += "<br><a href=\"javascript:eindex('aa-show-video', 'pid=aa-show-video&make=" + tMakeN + "&mk=" + tMakeID +  "&series=" + tSerN + "&si=" + tSerID + "&model=" + tModelN + "&md=" + tModelID + "&part=" + tPartN + "&prti=" + tPartID + "&q=" + acurrCstmQstr + "');\">" + stxt[88] + " " + tMakeN + " " + tSerN + " " + tPartN + "</a><br>";
+
+}
+tcurrCstmQstr = acurrCstmQstr.replace("/", "-");
+ttcurrCstmQstr = removeDiacritics(tcurrCstmQstr);
+// tmpCleanCCQStr = ttcurrCstmQstr.replace(/^[a-z\d\-_\s]+$/i, "");
+// tcurrCstmQstr = encodeURIComponent(acurrCstmQstr);
+// replace all duplicate words in ttcurrCstmQstr
+ 
+
+ttcurrCstmQstr = ttcurrCstmQstr.replace(/[^a-zA-Z0-9\s\-]/g, '');
+ttcurrCstmQstr = ttcurrCstmQstr.replace(/(\b\S+\b)(?=.*?\1)/g, "");
+if(pid == "aa-show-part") {
+currCstmQstr = ttcurrCstmQstr;
+} else {
+currCstmQstr = ttcurrCstmQstr;
+}
+if(tLinkIstr.length < 3) {
+    // console.log("doPartsLinks.tLinkIstr.length < 3");
+// setTimeout("JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')", 1500);
+// tLinkIstr = "...";
+} else {
+document.getElementById("dvPartLinks").innerHTML = tLinkIstr;
+}
+
+document.getElementById("dvAPartsList").innerHTML = "";
+document.getElementById("dvPartsList").innerHTML = "";
+document.getElementById("dvASvsList").innerHTML = "";
+
+// this needs to be checked (currPartsObj), if it is null, then do the ajax call to get the parts list
+ if(pid.indexOf("edit") != -1) {
+    if(c_category.value == "202") {
+    JSSHOP.ajax.doNuAjaxPipe("inpParts", "misc/x_cp_" + usrlang + ".txt", JSSHOP.admin.getAddPartsBox);
+    } else {
+    JSSHOP.ajax.doNuAjaxPipe("inpParts", "misc/x_cp_" + usrlang + ".txt", JSSHOP.admin.getAddSvcBox);
+    }
+ } else {
+JSSHOP.ajax.doNuAjaxPipe("inpParts", "misc/x_cp_" + usrlang + ".txt", JSSHOP.shared.getPartsBox);
+ }
+// return tLinkIstr;
+	} catch(e) {
+alert(e);
+JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.doPartsLinks: " + e);
+	}
+};
+
+
+JSSHOP.shared.setFieldVal = function(theField, theVal) {
+	try {
+      document.getElementById(theField).value = theVal;
+	} catch(e) {
+	JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.setFieldVal");
+	}
+};
+
+
+JSSHOP.shared.getFieldVal = function(theField, theVal) {
+	try {
+      return document.getElementById(theField).value;
+	} catch(e) {
+	JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getFieldVal");
+	return theVal;
+	}
+};
+
+JSSHOP.shared.setFrmFieldVal = function(theForm, theField, theVal) {
+	try {	} catch(e) {
+	JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.setFrmFieldVal");
+	}
+      document[theForm][theField].value = theVal;
+
+};
+
+JSSHOP.shared.getFrmFieldVal = function(theForm, theField, theVal) {
+	try {
+      return document[theForm][theField].value;
+	} catch(e) {
+	JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getFrmFieldVal");
+	return theVal;
+	}
+};
+
+
+
+
+
+
+
+JSSHOP.shared.sort = function(data, theIndex, theOrder) {
+  var i, j;
+  var currentValue;
+  var currentObj;
+  var compareObj;
+  var compareValue;
+    
+	if(theOrder == "sortAsc") {
+// this is where the order comparison is done:	
+// while(j >=0 && compareValue > currentValue) {
+
+  for(i=1; i<data.length;i++) {
+    currentObj = data[i];
+    currentValue = currentObj[theIndex];
+    j= i-1;
+    compareObj = data[j];
+    compareValue = compareObj[theIndex];  
+    while(j >=0 && compareValue > currentValue) {
+      data[j+1] = data[j];
+      j--;
+      if (j >=0) {
+        compareObj = data[j];
+        compareValue = compareObj[theIndex];
+      }        
+    }
+    data[j+1] = currentObj;
+  }
+  
+	} else {
+	
+	
+  for(i=1; i<data.length;i++) {
+    currentObj = data[i];
+    currentValue = currentObj[theIndex];
+    j= i-1;
+    compareObj = data[j];
+    compareValue = compareObj[theIndex];  
+    while(j >=0 && compareValue < currentValue) {
+      data[j+1] = data[j];
+      j--;
+      if (j >=0) {
+        compareObj = data[j];
+        compareValue = compareObj[theIndex];
+      }        
+    }
+    data[j+1] = currentObj;
+  }
+  
+	
+    }
+  
+  return data;
+   }
+
+ 
+
+
+
+ 
+
+
+JSSHOP.shared.setArrVals = function(theMarr, theAIndx, theArr) {
+	  tmpVpar =  null;
+	  tmpVpar = [];
+	  tmpSobj = null;
+	  tmpSobj = {};
+        var len = theArr.length;
+        var iint = 0;
+
+    	  while (iint < len) {
+        ts = theArr[iint];
+ 	  tmpSobj = null;
+	  tmpSobj = {};
+        for (var gkey in ts) {
+          if(theMarr[theAIndx][gkey]) {
+	    theMarr[theAIndx][gkey] = ts[gkey];
+	    }
+        }
+        iint++;
+        }
+       return theMarr;
+};
+
+JSSHOP.shared.getKNVParr = function(theArr) {
+	  tmpVpar =  null;
+	  tmpVpar = [];
+	  tmpSobj = null;
+	  tmpSobj = {};
+        var len = theArr.length;
+        var iint = 0;
+
+    	  while (iint < len) {
+        ts = theArr[iint];
+
+ 	  tmpSobj = null;
+	  tmpSobj = {};
+        for (var gkey in ts) {
+          tmpSobj["t"] = gkey;
+	    tmpSobj["v"] = ts[gkey];
+	    tmpVpar.push(tmpSobj);
+        }
+        iint++;
+        }
+       return tmpVpar;
+};
+
+
+JSSHOP.shared.setDynFrmVals = function(oFormElement, dPrfx) {
+ 
+        var oField, sFieldType, nFile, sSearch;
+	  tmpVpar =  null;
+	  tmpVpar = [];
+	  tmpSobj = {};
+	  var allNs = "";
+        for (var nItem = 0; nItem < oFormElement.elements.length; nItem++) {
+            oField = oFormElement.elements[nItem];
+            if (!oField.getAttribute("name")) {
+                continue;
+            }
+	  	tmpSobj = null;
+       	tmpSobj = {};
+            sFieldType = oField.nodeName.toUpperCase() === "INPUT" ? oField.getAttribute("type").toUpperCase() : "TEXT";
+            if (sFieldType === "FILE") {
+                for (nFile = 0; nFile < oField.files.length; sSearch += "&" + escape(oField.name) + "=" + escape(oField.files[nFile++].name));
+            } else if ((sFieldType !== "RADIO" && sFieldType !== "CHECKBOX") || oField.checked) {
+            fn = oField.name;
+		fv = oField.value;
+		fnode = dPrfx + fn;
+
+		if(dPrfx == "clear") {
+		oField.value = "";
 		} else {
-			
-				tmpUMiel.className = "nav-material-icons coll-menu-item";
+            if(document.getElementById(fnode)) {
+
+
+
+ 
+
+
+		if((dPrfx == "dyn_") || (document.getElementById(fnode).nodeName.toUpperCase() == "DIV")){
+		document.getElementById(fnode).innerHTML = fv;
+		} else {
+		allNs += fnode + ",";
+		// alert(fnode + " ;; " + fv);
+		JSSHOP.shared.setFieldVal(fnode, fv);
+		}		
+            }
+ 
 		}
 
-    tmpUMiel.innerHTML = tmpUMicn;
-	} else {
-	tmpUMiel.className = tmpUMicn + "  coll-menu-item";
-	}
-	console.log("tmpUMicn: " + tmpUMicn + " : " + tmpUMiel.className);
-	tVIElSpn = document.createElement("span");	
-	tVIElSpn.className = "cls-icn-wrap";	
-	tVIElSpn.appendChild(tmpUMiel);
-	
-    tmpAE = document.createElement('a');
-	wlinkText = document.createTextNode(EWtitle);
-	tmpAE.title = EWtitle;
-	tmpAE.href =  ewhref;
-	tmpAE.appendChild(wlinkText);
-	tmpAE.className = "btn brn-sm collection-item";		
-	
-	 
-	tVtBtn = document.createElement("button");
-	tVtBtn.className = "btn brn-sm btn-link";	
-	tVtBtn.innerText = EWtitle;	
-	tVtSBtn = document.createElement("button");
-	tVtSBtn.addEventListener("mouseenter", function(e) {
-          actvDropdown(this);
-		 
-          });
+		}
+        }
+ // alert(allNs);
+};
 
-	tVtSBtn.className = "btn brn-lg dropdown-toggle dropdown-toggle-split";	
-	tVtSBtn.setAttribute("data-bs-toggle","dropdown");
-	tVtSBtn.setAttribute("aria-expanded","false");	
-	tVtSBtn.setAttribute("data-inum", intHdrInc);
-	tVtBtn.value = " ";	
+JSSHOP.shared.getFrmObj = function(oFormElement) {
+ 
+        var oField, sFieldType, nFile, sSearch;
+	  tmpVpar =  null;
+	  tmpVpar = [];
+	  tmpSobj = null;
+	  tmpSobj = {};
+        for (var nItem = 0; nItem < oFormElement.elements.length; nItem++) {
+            oField = oFormElement.elements[nItem];
+            if (!oField.getAttribute("name")) {
+                continue;
+            }
+	  	// tmpSobj = null;
+       	// tmpSobj = {};
+            sFieldType = oField.nodeName.toUpperCase() === "INPUT" ? oField.getAttribute("type").toUpperCase() : "TEXT";
+            if (sFieldType === "FILE") {
+                for (nFile = 0; nFile < oField.files.length; sSearch += "&" + escape(oField.name) + "=" + escape(oField.files[nFile++].name));
+            } else if ((sFieldType !== "RADIO" && sFieldType !== "CHECKBOX") || oField.checked) {
+            fn = oField.name;
+		fnode =  fn;
+            if(document.getElementById(fnode)) {
+		tNN = document.getElementById(fnode).nodeName.toUpperCase();
+		if((tNN == "DIV") || (tNN == "SPAN")){
+		fv = document.getElementById(fnode).innerText;		
+		} else if(tNN == "SELECT") {
+		fv = JSSHOP.shared.getCurrSelectOpt(document.getElementById(fnode));			      
+		} else {
+		fv = document.getElementById(fnode).value;
+		}
+		oField.value = fv;
+            } else {
+		fv = oField.value;
+		}
+		if(fv.indexOf("/") != -1) {
+            tmpSobj[fn] = fv;
+		// alert("FV/");
+		// tmpSobj[fn] = fv.replace("/", " ");
+		// tmpSobj[fn] = escape(encodeURIComponent(fv));
+		// alert("FV/: " + tmpSobj[fn]);
+		} else {
+		 tmpSobj[fn] = fv;
+		}
+        // sanatize the fv for sql injection
+        // fv = fv.replace(/[^a-zA-Z0-9\s\-]/g, '');
+        // fv = fv.replace(/(\b\S+\b)(?=.*?\1)/g, "");
+        // escape the fv for sql insertion
+
+ 
+		// if(fv.length > 0) {
+		// tmpSobj["t"] = fn;
+		// tmpSobj["v"] = fv;
+		// tmpVpar.push(tmpSobj);
+		// }
+            }
+        }
+		 // alert("getDynFormVals: " + JSON.stringify(tmpVpar));
+		return tmpSobj;
+};
+
+JSSHOP.shared.getDynFrmVals = function(oFormElement, dPrfx) {
+ 
+    var oField, sFieldType, nFile, sSearch;
+  tmpVpar =  null;
+  tmpVpar = [];
+  tmpSobj = null;
+  tmpSobj = {};
+    for (var nItem = 0; nItem < oFormElement.elements.length; nItem++) {
+        oField = oFormElement.elements[nItem];
+        if (!oField.getAttribute("name")) {
+            continue;
+        }
+      tmpSobj = null;
+       tmpSobj = {};
+        sFieldType = oField.nodeName.toUpperCase() === "INPUT" ? oField.getAttribute("type").toUpperCase() : "TEXT";
+        if (sFieldType === "FILE") {
+            for (nFile = 0; nFile < oField.files.length; sSearch += "&" + escape(oField.name) + "=" + escape(oField.files[nFile++].name));
+        } else if ((sFieldType !== "RADIO" && sFieldType !== "CHECKBOX") || oField.checked) {
+        fn = oField.name;
+    fnode = dPrfx + fn;
+        if(document.getElementById(fnode)) {
+    tNN = document.getElementById(fnode).nodeName.toUpperCase();
+    if((tNN == "DIV") || (tNN == "SPAN")){
+    fv = document.getElementById(fnode).innerText;		
+    } else if(tNN == "SELECT") {
+    fv = JSSHOP.shared.getCurrSelectOpt(document.getElementById(fnode));			      
+    } else {
+    fv = document.getElementById(fnode).value;
+    }
+    oField.value = fv;
+        } else {
+    fv = oField.value;
+    }
+    if(fv.indexOf("/") != -1) {
+        tmpSobj[fn] = fv;
+    // alert("FV/");
+    // tmpSobj[fn] = fv.replace("/", " ");
+    // tmpSobj[fn] = escape(encodeURIComponent(fv));
+    // alert("FV/: " + tmpSobj[fn]);
+    } else {
+     tmpSobj[fn] = fv;
+    }
+    // sanatize the fv for sql injection
+    // fv = fv.replace(/[^a-zA-Z0-9\s\-]/g, '');
+    // fv = fv.replace(/(\b\S+\b)(?=.*?\1)/g, "");
+    // escape the fv for sql insertion
+
+
+    // if(fv.length > 0) {
+    // tmpSobj["t"] = fn;
+    // tmpSobj["v"] = fv;
+    tmpVpar.push(tmpSobj);
+    // }
+        }
+    }
+     // alert("getDynFormVals: " + JSON.stringify(tmpVpar));
+    return tmpVpar;
+};
+
+
+JSSHOP.shared.getFrmVals = function(oFormElement, oHdrStr) {
+
+
+        var oField, sFieldType, nFile, sSearch;
+	  tmpVpar =  null;
+	  tmpVpar = [];
+	  tmpSobj = {};
+        for (var nItem = 0; nItem < oFormElement.elements.length; nItem++) {
+  	try {          
+            oField = oFormElement.elements[nItem];
+            if (!oField.getAttribute("name")) {
+                continue;
+            }
+	  	tmpSobj = null;
+       	  tmpSobj = {};
+		 
+            sFieldType = oField.nodeName.toUpperCase() === "INPUT" ? oField.getAttribute("type").toUpperCase() : "TEXT";
+            if (sFieldType === "FILE") {
+                for (nFile = 0; nFile < oField.files.length; sSearch += "&" + escape(oField.name) + "=" + escape(oField.files[nFile++].name));
+            } else if ((sFieldType !== "RADIO" && sFieldType !== "CHECKBOX") || oField.checked) {
+ 
+		fva = oField.value;
+		if(fva.length >= 0) {
 	
-    tmpLTI = document.createElement('li');
-	tmpLTI.className = "collection-item btn-group";
-	tmpLTI.appendChild(tVIElSpn);	
-	tmpLTI.appendChild(tmpAE);	
-	tmpLTI.appendChild(tVtSBtn);	
-    return tmpLTI;
+		fvb = fva.replace("\"", " ");
+		fvv = fva.replace("'", " ");
+            fn = escape(oField.name);
+		fv = fvv;
+
+		
+		tmpSobj["t"] = fn;
+		tmpSobj["v"] = fv;
+		tmpVpar.push(tmpSobj);
+		}
+            }
+
+
+        } catch (e) {
+		alert(e + " : " + oField.getAttribute("name"));
+        // JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.doAjaxSbmt");
+    	  }
+
+
+        }
+		// alert("getFormVals: " + JSON.stringify(tmpVpar));
+		return tmpVpar;
+};
+
+
+
+JSSHOP.shared.setDynFieldVals = function(theResp, thePrefx) {
+
+if(theResp) {
+var len = theResp.length;
+ 
+// var arrToFill = theResp;
+ 
+ 
+var iint = 0;
+
+for(var gkey in theResp) {
+try {
+
+fnode = thePrefx + gkey;
+if(document.getElementById(fnode)) {
+tRKv = theResp[gkey];
+if(tRKv.indexOf("%3A") != -1) {
+    if(tRKv.indexOf("http") != -1) {
+        retQkey = theResp[gkey];
+    } else {
+       retQkey = theResp[gkey];
+//  retQkey = unescape(decodeURIComponent(tRKv));
+}
+} else {
+retQkey = theResp[gkey];
+}
+if(document.getElementById(fnode).nodeName.toUpperCase() == "DIV"){
+document.getElementById(fnode).innerHTML = retQkey;
+} else {
+document.getElementById(fnode).value = retQkey;
+}
+}
+} catch(e) {
+}
+iint++;
+}
+}
+};
+
+
+JSSHOP.shared.setFrmVals = function(theForm, theResp, theTmpCB) {
+// alert("setFrmVals ; " + JSON.stringify(theResp));
+if(theResp) {
+// var arrToFill = theResp;
+var len = theResp.length;
+var iint = 0;
+
+for(var gkey in theResp) {
+try {
+if(document[theForm][gkey]) {
+document[theForm][gkey].value = theResp[gkey];
+// alert(JSON.stringify(theResp[gkey]));
+}
+} catch(e) {
+}
+}
+ 
+theTmpCB();
+ 
+}
+};
+
+
+
+
+
+/*
+* will try to use this later as seen on the qmsm form in index.html
+* basically renders a web input form according to attributes in the actual forms fields
+* JSSHOP.shared.rndrDynFrmVals(document["qmsgs"], "tmp_");
+* save button still has to be added
+*/
+ 
+JSSHOP.shared.rndrDynFrmVals = function(oFormElement, dPrfx, tFAllowed, tSavBtnObj) {
+ 
+        var oField, sFieldType, nFile, sSearch;
+	  tmpVstr =  "";
+        tmpFval = "";
+        tmpFid = "noQvalue";
+	  tmpLid = "noQvalue";
+	  retRndrObj = null;
+	  retRndrObj = {};
+ 	  rndrFFObjArr = null;
+	  rndrFFObjArr = [];  
+		tmpFlbl = "...";
+        for (var nItem = 0; nItem < oFormElement.elements.length; nItem++) {
+            oField = oFormElement.elements[nItem];
+	  tFNstr = oField.getAttribute("name");
+	  if(tFAllowed == "noQvalue" || tFAllowed.indexOf(tFNstr) != -1) {
+
+
+			tmpVstr += "<div>";
+			tmpVstr += "<span style=\"min-width: 80%\" ";
+            if (oField.getAttribute("data-flbl")) {
+			ttmpFlbl = "...";
+		ttmpFlbl = oField.getAttribute("data-flbl");
+			if(ttmpFlbl.indexOf("stxt") != -1) {
+		     tmpFlbl = eval(ttmpFlbl);
+
+			// tmpFlbl = ttmpFlbl;
+			} else {
+			tmpFlbl = eval(ttmpFlbl);
+			
+			}
+ 			tmpVstr += "data-flbl=\"" + tmpFlbl + "\" ";
+
+		}
+            if (oField.getAttribute("data-fid")) {
+ 			atmpFid = oField.getAttribute("data-fid");
+			if(atmpFid.indexOf("tmp_") != -1) {
+			tmpFid = atmpFid + oField.getAttribute("name");
+			} else {
+			tmpFid = atmpFid;
+			}
+			tmpLid = "lbl_" + tmpFid;
+			tmpVstr += "id=\"" + tmpLid + "\">";
+            } 
+			tmpVstr += tmpFlbl + "</span>&nbsp;&nbsp;<br>";
+
+			// tmpVstr += "<span id=\"" + tmpLid + "\" style=\"min-width: 80%\">" + tmpFlbl + "</span>&nbsp;&nbsp;<br>";
+            if (oField.getAttribute("data-fval")) {
+ 			atmpFval = oField.getAttribute("data-fval");
+			if(atmpFval.indexOf("thisval") != -1) {
+			tmpFval = oField.getAttribute("value");
+			} else {
+			tmpFval = atmpFval;
+			}
+            } 
+
+            if (oField.getAttribute("data-ftype")) {
+              switch(oField.getAttribute("data-ftype")) {
+			case "span":
+			tmpVstr += "<span  id=\"" + tmpFid + "\" style=\"min-width: 80%\">" + tmpFval + "</span>";
+			break;
+			case "tinput":
+			tmpVstr += "<input value=\"" + tmpFval + "\" id=\"" + tmpFid + "\" style=\"min-width: 80%\" class=\"form-control\"></input>";
+			break;
+			case "tarea":
+			tmpVstr += "<textarea id=\"" + tmpFid + "\" style=\"min-width: 80%;min-height:300px\" class=\"form-control\">" + tmpFval + "</textarea>";
+			break;
+            case "tselect":
+            tmpVstr += "<select id=\"" + tmpFid + "\" style=\"min-width: 80%\" class=\"form-control\">" + tmpFval + "</select>";
+            break;
+            case "tbutton":
+            tmpVstr += "<button id=\"" + tmpFid + "\" class=\"cls_button cls_button-medium\">" + tmpFval + "</button>";
+            break;
+            case "tdivarea":
+            tmpVstr += "<div id=\"" + tmpFid + "\" style=\"min-width: 80%;min-height:100px;\" contenteditable=\"true\" spellckeck=\"false\" data-ms-editor=\"false\" class=\"form-control\">" + tmpFval + "</div>";
+            break;
+            case "tdiv":
+            tmpVstr += "<div id=\"" + tmpFid + "\" style=\"min-width: 80%\" contenteditable=\"true\" spellckeck=\"false\" data-ms-editor=\"false\" class=\"form-control\">" + tmpFval + "</div>";
+            break;
+			default:
+			break;
+			}
+            } 
+
+
+
+
+
+atfuh = null;
+atfuh = nCurrFFieldOb();
+atfuh.fid = tmpFid;
+atfuh.fdv = tmpFval;
+atfuh.lid = tmpLid; 
+atfuh.ltxt = tmpFlbl; 
+rndrFFObjArr.push(atfuh);
+
+tmpVstr += "</div>";
+}
+ }
+if(tSavBtnObj !== "noQvalue"){
+rndrFFObjArr.push(tSavBtnObj);
+tmpVstr += "<div align=\"center\"><button id=\"" + tSavBtnObj.fid + "\" class=\"cls_button cls_button-medium\"><ti data-ison=\"" + tSavBtnObj.ltxt + "\" data-desc=\"btn_save\">" + eval(tSavBtnObj.ltxt) + "</ti></button></div>";
+}
+retRndrObj["rndrStr"] = tmpVstr;
+retRndrObj["rndrFobj"] = rndrFFObjArr;
+return retRndrObj;
+};
+
+
+JSSHOP.shared.getTblHdrs = function(tHHdrArr) {
+    tHdrStr = "";
+for(iha = 0; iha < tHHdrArr.length; iha++) {
+    tHlnkObj = tHHdrArr[iha];
+    if((tHlnkObj.ulnk) && (tHlnkObj.ulnk == "noQvalue")) {
+     tHdrStr += "<th style=\"text-align: left\"><a class=\"txtBold txtClrHdr\">" + tHlnkObj.nm + "</a></th>";	
+    } else {
+    tHdrStr += "<th style=\"text-align: left\"><a href=\"javascript:rnderFItems('" + tHlnkObj.fld + "');\" class=\"txtBold txtClrHdr\">" + tHlnkObj.nm + "</a></th>";	
+    }
+}
+    return tHdrStr;
+};
+JSSHOP.shared.getNuTblHdrs = function(tHHdrArr, THHdrCB) {
+    tHdrStr = "";
+  
+for(iha = 0; iha < tHHdrArr.length; iha++) {
+    tdefcls = "txtBold txtClrHdr";
+    tHlnkObj = tHHdrArr[iha];
+    if((tHlnkObj.ulnk) && (tHlnkObj.ulnk == "noQvalue")) {
+     tHdrStr += "<th style=\"text-align: left\"><a class=\"txtBold txtClrHdr\">" + tHlnkObj.nm + "</a></th>";	
+    } else {
+        if((pid.indexOf("psearch") != -1) || (pid.indexOf("main") != -1)) {
+                if(currSortObj["psearch"]["sindex"] == tHlnkObj.fld) {
+                tdefcls = "txtBold txtClrRed";
+                }
+        } else {
+                if(currSortObj["msearch"]["sindex"] == tHlnkObj.fld) {
+                tdefcls = "txtBold txtClrRed";
+                }
+        }
+
+    tHdrStr += "<th style=\"text-align: left\"><a href=\"javascript:rnderFItems('" + tHlnkObj.fld + "');\" class=\"" + tdefcls + "\">" + tHlnkObj.nm + "</a></th>";	
+    }
+}
+    return tHdrStr;
+};
+
+
+JSSHOP.shared.getNuTblSortStr = function(theTBhdr, theTBbdy, theTCls) {
+    strFhtml = "<div class=\"tabler txtBold txtClrBlack\"  style=\"margin: 0 auto;min-width:90%;max-width:98%\">";
+    strFhtml += theTBhdr;
+    strFhtml += theTBbdy + "</div>";
+    return strFhtml;
+};
+
+JSSHOP.shared.getNurTblHdrs = function(tHHdrArr, THHdrCB) {
+    tHdrStr = "<div class=\"prodRowBox slmtable brdrClrRed gradient-color txtClrWhite\" style=\"min-height: 20px;\">";
+    tHdrStr += "<table><tr><td>";
+    tHdrStr += "<i class=\"small-material-icons txtClrWhite\" style=\"margin-right:6px;\" alt=\"list\" title=\"list\">&#xe164;</i></td><td><b><span class=\"txtClrWhite\">" + stxt[403] + ":</span></b></td><td><span class=\"txtClrGrey txtSmall\">..</span></td></tr></table>";
+for(iha = 0; iha < tHHdrArr.length; iha++) {
+    tAdefcls = "slmtable bkgdClrWhite txtSmall txtBold txtClrHdr crsrPointer txtDecorNone brdrClrHdr";
+
+    tHlnkObj = tHHdrArr[iha];
+    if((tHlnkObj.ulnk) && (tHlnkObj.ulnk == "noQvalue")) {
+     tHdrStr += "<div  style=\"text-align: left; margin:2px;padding;2px;float:left;padding-right:5px;\" class=\"slmtable bkgdClrWhite txtSmall txtBold txtClrRed crsrPointer\"><a class=\"txtBold txtClrHdr txtDecorNone\">" + tHlnkObj.nm + "</a></div>";	
+    } else {
+        if((pid.indexOf("psearch") != -1) || (pid.indexOf("main") != -1)) {
+            if(currSortObj["psearch"]["sindex"] == tHlnkObj.fld) {
+                tAdefcls = "slmtable bkgdClrNrml txtSmall txtBold txtClrRed crsrPointer txtDecorNone brdrClrHdr";
+                
+            
+            }
+    } else {
+            if(currSortObj["msearch"]["sindex"] == tHlnkObj.fld) {
+                tAdefcls = "slmtable bkgdClrNrml txtSmall txtBold txtClrRed crsrPointer txtDecorNone brdrClrHdr";
+            }
+    }
+    if(tHlnkObj.fld == "cccd") {
+        tAdefcls = "slmtable bkgdClrNrml txtSmall txtBold txtClrRed crsrPointer txtDecorNone gradient-pop";
+
+    }
+   //  tHdrStr += "<div style=\"float: left; text-align: left; margin:2px;padding;2px;float:left;padding-right:5px;\" class=\"slmtable bkgdClrWhite txtSmall txtBold txtClrHdr crsrPointer txtDecorNone brdrClrHdr\" onclick=\"javascript:if(currBtnSort != null)currBtnSort.className='slmtable bkgdClrWhite txtSmall txtBold txtClrHdr crsrPointer txtDecorNone brdrClrHdr';this.className='slmtable bkgdClrWhite txtSmall txtBold txtClrRed crsrPointer txtDecorNone brdrClrHdr';currBtnSort=this;" + THHdrCB + "('" + tHlnkObj.fld + "');\" >" + tHlnkObj.nm + "</div>";	
+     tHdrStr += "<div id=\"btnSort_" +  tHlnkObj.fld + "\" style=\"float: left; text-align: left; margin:2px;padding;2px;float:left;padding-right:5px;\" class=\"" + tAdefcls + "\" onclick=\"javascript:if(currBtnSort != null)currBtnSort.className='slmtable bkgdClrWhite txtSmall txtBold txtClrHdr crsrPointer txtDecorNone brdrClrHdr';this.className='slmtable bkgdClrWhite txtSmall txtBold txtClrRed crsrPointer txtDecorNone brdrClrHdr';currBtnSort=this;" + THHdrCB + "('" + tHlnkObj.fld + "');\" >" + tHlnkObj.nm + "</div>";	
+   }
+}
+tHdrStr += "<div class=\"clearfix\"></div>";
+    tHdrStr += "</div>";
+    return tHdrStr;
+};
+
+JSSHOP.shared.getSrtdArr = function(tSortArr, tSrtIdx) {
+hasr = "n";
+fullstr = "";
+var arrToFill = "";
+var tmpSordr = "sortAsc";
+if(currSortIdx[tSrtIdx]) {
+if(currSortIdx[tSrtIdx] == "sortAsc") {
+tmpSordr = "sortDesc";
+currSortIdx[tSrtIdx] = "sortDesc";
+} else {
+tmpSordr = "sortAsc";
+currSortIdx[tSrtIdx] = "sortAsc";
+}
+} else {
+tmpSordr = "sortAsc";
+currSortIdx[tSrtIdx] = "sortAsc";
+}
+currSortIdx[tSrtIdx] = tmpSordr;
+return(JSSHOP.shared.sort(tSortArr, tSrtIdx, tmpSordr));
+};
+
+
+JSSHOP.shared.utf8_encode = function( argString ) {
+    // http://kevin.vanzonneveld.net
+    // +   original by: Webtoolkit.info (http://www.webtoolkit.info/)
+    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +   improved by: sowberry
+    // +    tweaked by: Jack
+    // +   bugfixed by: Onno Marsman
+    // +   improved by: Yves Sucaet
+    // +   bugfixed by: Onno Marsman
+    // +   bugfixed by: Ulrich
+    // *     example 1: utf8_encode('Kevin van Zonneveld');
+    // *     returns 1: 'Kevin van Zonneveld'
+
+    var string = (argString+''); // .replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+    var utftext = "";
+    var start, end;
+    var stringl = 0;
+
+    start = end = 0;
+    stringl = string.length;
+    for (var n = 0; n < stringl; n++) {
+        var c1 = string.charCodeAt(n);
+        var enc = null;
+
+        if (c1 < 128) {
+            end++;
+        } else if (c1 > 127 && c1 < 2048) {
+            enc = String.fromCharCode((c1 >> 6) | 192) + String.fromCharCode((c1 & 63) | 128);
+        } else {
+            enc = String.fromCharCode((c1 >> 12) | 224) + String.fromCharCode(((c1 >> 6) & 63) | 128) + String.fromCharCode((c1 & 63) | 128);
+        }
+        if (enc !== null) {
+            if (end > start) {
+                utftext += string.substring(start, end);
+            }
+            utftext += enc;
+            start = end = n+1;
+        }
+    }
+
+    if (end > start) {
+        utftext += string.substring(start, string.length);
+    }
+
+    return utftext;
+};
+
+
+
+
+
+// some shared user preferences functions
+// sets prefs by passing the checkbox, the preference array name, 
+// the preference key, selected and unselected values.
+JSSHOP.shared.setChckbxPref = function(tChckbx, tPrefArr, tPrefKey, tVsel, tVunsel) {
+	try {
+    if(tChckbx.checked) {
+    JSSHOP.user.setCkiePrfKV(tPrefArr,tPrefKey,tVsel);
+    } else {
+    JSSHOP.user.setCkiePrfKV(tPrefArr,tPrefKey,tVunsel);
+    }
+    } catch (e) {
+	alert(e);
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.setChckbxPref");
+    }
+};
+
+// end of shared funtions
+
+
+
+
+//   ---- AJAX functions
+
+
+JSSHOP.ajax.fnishGeneric = function(strRet, prvdr, action, ukey, id, cbElem, cbElemHTML) {
+    try {
+        document.getElementById(cbElem).innerHTML = cbElemHTML;
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.fnishGeneric");
+    }
+};
+
+
+JSSHOP.ajax.procAjaxRet = function(strRet, prvdr, action, ukey, id, msg, cbElem, cbElemHTML) {
+    try {
+    switch (action) {
+        case "parseU":
+            JSSHOP.ajax.fnishGeneric(strRet, prvdr, action, ukey, id, cbElem, cbElemHTML);
+            break;
+        default:
+            JSSHOP.ajax.fnishGeneric(strRet, prvdr, action, ukey, id, cbElem, cbElemHTML);
+            break;
+    }
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.procAjaxRet");
+    }
+};
+
+
+JSSHOP.ajax.procRet = function(strRet, arrFelemnts) {
+    try {
+
+        if(arrFelemnts[0]["name"]) {
+        if(arrFelemnts[0]["name"].toLowerCase() == "aaction") {
+        tmpAVal = arrFelemnts[0]["value"];
+    switch(tmpAVal) {
+        case "CViewEditAdminSettings":
+		JSSHOP.ui.popAndFillLbox("new: " + JSON.stringify(arrFelemnts) + " <br> " + strRet);
+            break;
+        default:
+            JSSHOP.ajax.fnishGeneric(strRet, prvdr, action, ukey, id, cbElem, cbElemHTML);
+            break;
+    }
+    }
+    }
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.procRet");
+    }
+};
+
+JSSHOP.ajax.createXMLHTTPObject = function() {
+    var xmlhttp = false;
+var XMLHttpFactories = [
+    function() {
+        return new XMLHttpRequest()
+    },
+    function() {
+        return new ActiveXObject("Msxml2.XMLHTTP")
+    },
+    function() {
+        return new ActiveXObject("Msxml3.XMLHTTP")
+    },
+    function() {
+        return new ActiveXObject("Microsoft.XMLHTTP")
+    }
+];
+    for (var i = 0; i < XMLHttpFactories.length; i++) {
+        try {
+            xmlhttp = XMLHttpFactories[i]();
+        } catch (e) {
+            continue;
+        }
+        break;
+    }
+    return xmlhttp;
+};
+
+ 
+JSSHOP.ajax.doNuResponse = function(tmpArrDRS) {
+// alert("doNuResponse: " + tmpArrDRS.cb + " : " + tmpArrDRS.rs);
+// JSSHOP.ui.popAndFillLbox("doNuResponse: " + tmpArrDRS.cb + " : " + tmpArrDRS.rs);
+tmpNArrDRS = null;
+tmpNArrDRS = {};
+tmpNArrDRS = tmpArrDRS;
+
+if(tmpArrDRS.st == "nofile") {
+JSSHOP.ajax.doResponseSave(tmpArrDRS);
+} else {
+if(tmpArrDRS.lz == "y") { 
+strTmpDAS = tmpArrDRS.rs;
+strTmpDS = strTmpDAS.replace("\"", "");
+tmpDFEUStr = LZString.decompressFromEncodedURIComponent(strTmpDS);
+tmpNArrDRS.rs = tmpDFEUStr;
+// alert("tmpDFEUStr: " + tmpDFEUStr);	
+}  
+
+if(tmpArrDRS.ls == "n") {
+} else {
+
+tLSStr = getNuLclStrg(tmpArrDRS.ls, tmpArrDRS.cb, "noQvalue");
+if(tLSStr == "noQvalue") {
+setNuLclStrg("localStorage", tmpArrDRS.cb, tmpArrDRS.rs);
+}
+ 
+}
+
+}
+
+
+theRespCB = window[tmpArrDRS.cb];
+theRespCB(tmpNArrDRS);
+
+
+};
+
+
+JSSHOP.ajax.doResponseSave = function(tmpsArrDRS) {
+// alert("doResponseSave: " + tmpsArrDRS.cb  + " : " + tmpsArrDRS.fn + " : " + tmpsArrDRS.rs );
+if(tmpsArrDRS.lz == "y") { 
+JSSHOP.shared.setFrmFieldVal("qconn", "rs",  LZString.compressToEncodedURIComponent(tmpsArrDRS.rs));
+} else {
+JSSHOP.shared.setFrmFieldVal("qconn", "rs", tmpsArrDRS.rs.replace(/\\(.)/mg, "$1"));
+}	
+JSSHOP.shared.setFrmFieldVal("qconn", "fn", tmpsArrDRS.fn);
+JSSHOP.shared.setFrmFieldVal("qconn", "fc", "save");
+document["qconn"].submit();
+
+};
+
+
+
+JSSHOP.ajax.doRespConstruct = function(tmpDRCArr, tmpRCstr) {
+try {
+
+// alert("doRespConstruct: " + tmpDRCArr.cb + " : " + tmpRCstr);
+tmpNDRCArr = null;
+tmpNDRCArr = {};
+tmpNDRCArr = tmpDRCArr;
+aRespArr = null;
+aRespArr = {};
+          aRespArr = JSON.parse(tmpRCstr);
+          tmpNDRCArr.st = "error";
+ 
+	    tmpNDRCArr.rs = "noQvalue";
+ 
+ 	     // alert("aRespArr.data: " + " : " + aRespArr.data);	
+ 
+	    tmpNDRCArr.rs = JSON.stringify(aRespArr.data);
+		// alert(JSON.stringify("tmpNDRCArr.rs: " + tmpNDRCArr.rs));
+	    JSSHOP.ajax.doNuResponse(tmpNDRCArr);
+} catch(e) {
+console.log("doRespConstruct: " + e + " :: " + tmpRCstr);
+alert("doRespConstruct: " + e + " :: " + tmpRCstr);
+}
+ 
+};
+
+ 
+
+
+JSSHOP.ajax.doNurAjaxPipe = function(theAxObj) {
+console.log("doNurAjaxPipe: " + theAxObj.cb + " : " + theAxObj.q);
+// going to stop spinner here
+hasLclStrg = "n";
+
+aRespArr = null;
+aRespArr = {};
+tmpQstr = "";
+tmpFRSstr = "";
+tmpQstr += "fc=" + theAxObj.fc + "&";
+tmpQstr += "ts=" + theAxObj.ts + "&";
+tmpQstr += "fn=" + theAxObj.fn + "&";
+tmpQstr += "lz=" + theAxObj.lz + "&";
+tmpQstr += "rs=" + theAxObj.rs + "&";
+tmpQstr += "q=" + JSSHOP.shared.utf8_encode(theAxObj.q);
+
+pUrl = theAxObj.ur + tmpQstr;
+pUrl = pUrl.replace("index.php", "");
+cpUrl = pUrl.replace("admin/", "");
+pUrl = cpUrl;
+       var oReq = JSSHOP.ajax.createXMLHTTPObject();
+	 //  oReq.setRequestHeader("Content-Type", "text/html; charset=iso-8859-2");
+	 tUTA = JSSHOP.shared.urlToArray(pUrl);
+
+ 
+	   if(oReq == false) {
+		
+            theCB(theNAxObj);
+	  } else {
+
+        oReq.onreadystatechange = function() {
+            if (oReq.readyState == 4) {
+			//  alert("oReq.readyState == 4: " + oReq.responseText);
+                JSSHOP.ajax.doRespConstruct(theAxObj, oReq.responseText);
+			
+            }  
+        }
+        oReq.onerror = function() {
+	  // theNAxObj.st = "error";
+        // theNAxObj.rs = "error: " + oReq;
+        alert("yikes, we have a connection problem..." + oReq);
+        }
+        apUrl = pUrl.replace("index.php", "");
+        bUrl = apUrl.replace("admin/", "");
+        pUrl = bUrl;
+
+        oReq.open("GET", pUrl, true);
+ 	  oReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=ISO-8859-1');
+
+        picr = oReq.send(null);
+	   }
+};
+
+
+
+// prepare the request 
+JSSHOP.ajax.doRequestPrep = function(tmppArrDRP) {
+
+tmppNArrDRP = null;
+tmppNArrDRP = {};
+tmppNArrDRP = tmppArrDRP;
+
+if(tmppArrDRP.ls == "n") {
+// alert("tmppArrDRP.ls ==  no");
+JSSHOP.ajax.doNurAjaxPipe(tmppArrDRP);
+} else {
+tLSStr = getNuLclStrg(tmppArrDRP.ls, tmppArrDRP.cb, "noQvalue");
+if(tLSStr == "noQvalue") {
+// alert("tLSStr ==  noQvalue");
+JSSHOP.ajax.doNurAjaxPipe(tmppArrDRP);
+} else {
+tmppNArrDRP.rs =  tLSStr;
+tmppNArrDRP.st = "saved";
+// alert("getNuLclStrg: " + tLSStr);
+// alert("tmppNArrDRP.st = saved");
+
+JSSHOP.ajax.doNuResponse(tmppNArrDRP);
+}  // tLSStr not noQvalue
+} // ls is not "n";
+
+}; 
+
+JSSHOP.ajax.doGenAjaxPost = function(tNameValArr, tUrl, tMethdType, tCB) {
+try {
+    var formData = new FormData(document.forms.do);
+    for (var i = 0; i < tNameValArr.length; i++) {
+        formData.append(tNameValArr[i].t, tNameValArr[i].v);
+        if(document.getElementById(tNameValArr[i].t)) {
+            document.getElementById(tNameValArr[i].t).value = tNameValArr[i].v;
+        }
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.open(tMethdType, tUrl, true);
+    xhr.onreadystatechange = function() {
+					 
+        console.log("doNuAjaxPost: " + xhr.responseText);
+
+}
+
+
+xhr.onload = function(e) {
+currVRPCLIresp = xhr.responseText;
+ 
+tCB(currVRPCLIresp);
+
+};
+
+xhr.onerror = function(e) {
+
+JSSHOP.ui.popAndFillLbox("doGenAjaxPost.ERROR: <br>" + e);
+};
+xhr.send(formData);
+if (xhr.status != 200) {
+return '';
+} else {
+    JSSHOP.ui.popAndFillLbox("doGenAjaxPost.status: " + xhr.responseText);
+
+// return xhr.responseText;
+
+}
+} catch(e) {
+    alert("doGenAjaxPost: " + e);
+}
+};
+
+
+JSSHOP.ajax.doNuAjaxPost = function() {
+	try {
+        dPOfname.value = JSSHOP.getUnixTimeStamp() + ".jpg";
+	chunks = [];
+    var formData;
+	chunks.push(fldChallArray.value);
+	taDyno.value = fldChallArray.value;
+	  formData = new FormData(document.forms.frmDyno);
+
+	  formData.append("dPOcycles", dPOcycles.value);
+	  formData.append("dPOtimeout", dPOtimeout.value);
+	  formData.append("dPOsearch", dPOsearch.value);
+	  formData.append("dPOheu", dPOheu.value);
+	  formData.append("dPOfname", dPOfname.value);	
+	  formData.append("dPOcb", "doPlanSave");	
+ 
+	var blob = new Blob(chunks, { 'type' : 'text/html' });
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', '_p/file_img64upload.php?' + JSSHOP.getUnixTimeStamp(), true);
+	xhr.overrideMimeType("text/plain");
+			xhr.onreadystatechange = function() {
+					 
+					console.log("doNuAjaxPost: " + xhr.responseText);
+		  
+			}
+
+
+	xhr.onload = function(e) {
+	currVRPCLIresp = xhr.responseText;
+    if(currVRPCLIresp.indexOf("success") != -1) {
+        finishMPupload(dPOfname.value);
+    }
+    console.log("doNuAjaxPost.resp: " + currVRPCLIresp);
+
+	};
+
+	xhr.onerror = function(e) {
+ 
+	JSSHOP.ui.popAndFillLbox("doNuAjaxPost.ERROR: <br>" + e);
+	};
+	xhr.send(formData);
+	  if (xhr.status != 200) {
+	return '';
+	} else {
+					console.log("doNuAjaxPost: " + xhr.responseText);
+
+	 // return xhr.responseText;
+
+	}
+	} catch(e) {
+ 
+        console.log("doNuAjaxPost.ERROR: " + e);
+	}
+	}
+
+
+
+JSSHOP.ajax.xdoNuAjaxPipe = function(theElem,apUrl,tmpCB) {
+
+    cpUrl = pUrl.replace("index.php", "");
+      apUrl = cpUrl.replace("admin/", "");
+
+    try {
+       var oReq = JSSHOP.ajax.createXMLHTTPObject();
+	 tUTA = JSSHOP.shared.urlToArray(cpUrl);
+	   if(oReq == false) {
+               tmpCB(theElem,"Error",tUTA);
+
+	  } else {
+
+        oReq.onreadystatechange = function() {
+            if (oReq.readyState == 4) {
+ 			//  return oReq.responseText;
+		  if(theElem == "give") {  } 
+ 
+ 
+               tmpCB(theElem,oReq.responseText,tUTA);
+
+		  
+            }  
+        }
+        oReq.onerror = function() {
+             alert("yikes, we have a connection problem...");
+ 
+        }
+        bpUrl = apUrl.replace("index.php", "");
+        cpUrl = bpUrl.replace("admin/", "");
+        oReq.open("GET", cpUrl, true);
+  	  oReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded;charset=ISO-8859-1');
+        picr = oReq.send(null);
+	   }
+        } catch (e) { 
+		alert("doNuAjaxPipe: " + e);
+               tmpCB(theElem,"Error: " + e,tUTA);
+    	  }
+};
+
+JSSHOP.ajax.doAjaxPipe = function(pUrl,tmpCB) {
+    try {
+       JSSHOP.ajax.doNuAjaxPipe(null,pUrl,tmpCB);
+        } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.doAjaxPipe");
+    	  }
+};
+
+JSSHOP.ajax.prepAjaxSbmt = function(tmpBtn, oFormElement,tmpCB) {
+	try {
+       tmpBtn.className="cls_button cls_button-medium cls_button-disabled";
+       tmpBtn.disabled=true;
+       JSSHOP.ajax.doAjaxSbmt(oFormElement,tmpCB);
+        } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.prepAjaxSbmt");
+    		}
+};
+
+JSSHOP.ajax.prepAjaxPipe = function(tmpBtn,pUrl,tmpCB) {
+	try {
+	  if(tmpBtn != null) {
+       // tmpBtn.className="cls_button cls_button-medium cls_button-disabled";
+       tmpBtn.disabled=true;
+	 }
+       JSSHOP.ajax.doNuAjaxPipe(tmpBtn,pUrl,tmpCB);
+        } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.prepAjaxPipe");
+    	  }
+};
+
+JSSHOP.ajax.doAjaxSbmt = function(oFormElement,tmpCB) {
+	try {
+    if (!oFormElement.action) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.doAjaxSbmt: !! No form action set !!");
+        return;
+    }
+    var oReq = JSSHOP.ajax.createXMLHTTPObject();
+        var oField, sFieldType, nFile, sSearch;
+        for (var nItem = 0; nItem < oFormElement.elements.length; nItem++) {
+            oField = oFormElement.elements[nItem];
+            if (!oField.getAttribute("name")) {
+                continue;
+            }
+            sFieldType = oField.nodeName.toUpperCase() === "INPUT" ? oField.getAttribute("type").toUpperCase() : "TEXT";
+            if (sFieldType === "FILE") {
+                for (nFile = 0; nFile < oField.files.length; sSearch += "&" + escape(oField.name) + "=" + escape(oField.files[nFile++].name));
+            } else if ((sFieldType !== "RADIO" && sFieldType !== "CHECKBOX") || oField.checked) {
+                sSearch += "&" + escape(oField.name) + "=" + escape(oField.value);
+            }
+        }
+        oReq.onreadystatechange = function() {
+            if (oReq.readyState == 4) {
+               tmpCB(oReq.responseText,oFormElement.elements);
+            }
+        }
+        oReq.open(oFormElement.method, oFormElement.action + "?" + sSearch, true);
+        oReq.send(null);
+        } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ajax.doAjaxSbmt");
+    	  }
+};
+
+
+
+JSSHOP.ajax.mDynfnishCntLoad = function(a, b) {
+    console.log("JSSHOP.ajax.mDynfnishCntLoad: " + a + " : " + b);
+scrollToElement("dvHdr");
+window.scrollTo(0,0);
+setTimeout("mfnishCntLoad()", 500);
+};
+
+JSSHOP.ajax.finishDynCntLoad = function(a,b,c) {
+try {
+      
+ajxspinner.stop();
+// spinner.stop();
+document.getElementById(a).innerHTML = b;
+// document.getElementById("dvSpinnerIcn").innerHTML = "<a href=\"javascript:JSSHOP.ui.doDefCBBCC('ahHomeIcon', null, document.location.href='index.html?&cid=' + cid);\"><i class=\"material-icons\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"home\" title=\"home\">&#59530;</i></a>";
+// doWinResizeE(); // all things changed on window resize
+// setTimeout("mfnishCntLoad()", 500);
+if(content == "noQvalue") {
+JSSHOP.loadScript("js/app/" + jscssprefix + "x_" + pid + ".js", JSSHOP.ajax.mDynfnishCntLoad,"js");
+} else {
+alert("finishDynCntLoad: " + content);
+
+JSSHOP.loadScript("js/app/" + jscssprefix + "x_content.js", JSSHOP.ajax.mDynfnishCntLoad,"js");
+
+}
+} catch(e) {
+    alert("JSSHOP.ajax.mDynfnishCntLoad.error: " + a + " : " + e);
+    }
+}; 
+
+
+JSSHOP.ajax.doDynMainContent = function() {
+try {
+// alert("JSSHOP.ajax.doDynMainContent: " + content)
+if(content == "noQvalue") {
+
+// spinTextDiv.innerHTML = " ... "; 
+fCa = getFArr();
+// this should be fixed. authentication.
+if((pid.indexOf("edit-") != -1)  && ((quid == 0) || (quid == "noQvalue"))) {
+// page requires user login
+ JSSHOP.loadScript("js/app/" + jscssprefix + "x_login.js", JSSHOP.checkLoader,"js");
+ JSSHOP.ajax.doNuAjaxPipe("includedContent", "tplates/login.html", JSSHOP.ajax.finishDynCntLoad);
+
+} else {
+if(pid == "aa-contactus") {
+// currIContent = "no";
+}
+if(currIContent == "y") {
+JSSHOP.ajax.doNuAjaxPipe("includedContent", "tplates/" + pid + ".html", JSSHOP.ajax.finishDynCntLoad);
+} else {
+finishCntLoad("lightbox_content","loading...","nada");
+}
+}
+
+} else {
+alert("includedContent: " + content )
+JSSHOP.ajax.doNuAjaxPipe("includedContent", "content/" + content + ".html", JSSHOP.ajax.finishDynCntLoad);
+}
+} catch(e) {
+alert("JSSHOP.ajax.doDynMainContent: "  + e);
+}
+
+};
+
+/*
+JSSHOP.ajax.doAjaxGVals = function(tDlMStr, tDlMUstr) {
+content = "noQvalue";
+currUrlArr = null;
+currUrlArr = "";
+currUrlArr = {};
+pid = "index_main";
+currUrlArr = "";
+currUrlArr = "";
+currUrlArr = {};
+try {
+
+
+if(tDlMStr == pid) {
+tDlMObj = JSSHOP.shared.urlToArray(document.location.href); 
+} else if(tDlMStr == "noQvalue") {
+tDlMObj = JSSHOP.shared.urlToArray(document.location.href); 
+} else {
+tDlMObj = JSSHOP.shared.strToObj(tDlMUstr); 
+
+}
+for(var aRsRgkey in tDlMObj) {
+dcdedRk = decodeURIComponent(tDlMObj[aRsRgkey]);
+$aRsRgkey = dcdedRk;
+window[aRsRgkey] = dcdedRk;
+currUrlArr[aRsRgkey] = dcdedRk;
+// currUrlArr[aRsRgkey] = decodeURIComponent(JSSHOP.shared.encode_utf8(tDlMObj[aRsRgkey]));
+}
+ 
+if(tDlMObj.pid) {
+pid = tDlMObj.pid;
+}
+if(tDlMObj.content) {
+alert("content: " + content);
+content = tDlMObj.content;
+currUrlArr["content"] = content;
+}
+
+if(currUrlArr.mk){
+currPUrlObj.mk = currUrlArr.mk;
+currPUrlObj.make = currUrlArr.make;
+}
+if(currUrlArr.si){
+currPUrlObj.si = currUrlArr.si;
+currPUrlObj.series = currUrlArr.series;
+}
+if(currUrlArr.md){
+currPUrlObj.md = currUrlArr.md;
+currPUrlObj.model = currUrlArr.model;
+} else {
+if(currUrlArr.si){
+currPUrlObj.md = currUrlArr.si;
+currPUrlObj.model = currUrlArr.series;
+}
+}
+if(currUrlArr.prti){
+currPUrlObj.prti = currUrlArr.prti;
+currPUrlObj.part = currUrlArr.part;
+}
+if(currUrlArr.y){
+currPUrlObj.y = currUrlArr.y;
+}
+switch(tDlMStr) {
+case "aa-add-trip-pickup":
+currUrlArr.ttid = undefined;
+delete currUrlArr["ttid"];
+currUrlArr.ttype = "pickup";
+pid = "aa-add-trip";
+break;
+case "aa-edit-trip":
+pid = "aa-edit-trip";
+break;
+case "aa-edit-trips":
+pid = "aa-edit-trips";
+break;
+default:
+break;
+}
+JSSHOP.ajax.doDynMainContent();
+} catch(e) {
+alert("JSSHOP.ajax.doAjaxGVals: " + e);
+}
+}
+*/
+ 
+
+function eindex(tDlMStr, tDlMUstr) {
+try {
+    imgPLicon.src = "images/trans.gif";
+    dvPartLicon.innerHTML = "";
+    dvPartLinks.innerHTML = "";
+// 	includedContent.innerHTML = "";
+/*
+currTglBxsObj = null;
+currTglBxsObj = "";
+currTglBxsObj = {};
+*/
+doNuSpinSet("includedContent", "ajx", null, "noQvalue");
+if((pid.indexOf("edit-") != -1)  && ((quid == 0) || (quid == "noQvalue"))) {
+document.location.href = "index.html?pid=login&cid=" + cid;
+    //document.getElementById("ifrmDynCtt").src = "eindex.html?pid=login&cid=" + cid;
+// currIsAjaxed = "y";
+} else {
+currIsAjaxed = "y";
+document.getElementById("ifrmDynCtt").src = "eindex.html?" + tDlMUstr;
+if(isJApp == "yes") {
+    app.doscrllVwToTop();
+}
+}
+} catch(e) {
+alert("eindex: " + e);
+}
+}
+
+ 
+
+
+
+/*
+* hookloader functions
+*/
+
+JSSHOP.hookloader.hooks = {};
+JSSHOP.hookloader.register = function(name, callback) {
+    if('undefined' == typeof(JSSHOP.hookloader.hooks[name]))
+    JSSHOP.hookloader.hooks[name] = [];
+    JSSHOP.hookloader.hooks[name].push(callback);
+  };
+
+JSSHOP.hookloader.call = function(name, arguments) {
+    if('undefined' != typeof(JSSHOP.hookloader.hooks[name]))
+      for(i = 0; i < JSSHOP.hookloader.hooks[name].length; ++i)
+        if( true != JSSHOP.hookloader.hooks[name][i]( arguments )) { break; }
+};
+
+
+
+function JSSuiSetRecntBx() {
+tSPPatvRstr = JSSHOP.ui.getAtvtyRndr(currRcntActArr, "y", 5);
+document.getElementById("dvTglRcnt").innerHTML = tSPPatvRstr;
+}
+
+
+
+
+// ui functions
+
+JSSHOP.ui.doEditorKeys = function(tKeyTipe) {
+    try {
+    switch(tKeyTipe) {
+        case "bold":
+            document.execCommand('bold',false,null);
+            break;
+        case "italic":
+            document.execCommand('italic',false,null);
+            break;
+        case "underline":
+            document.execCommand('underline',false,null);
+            break;
+        case "insertunorderedlist":
+            alert("insertunorderedlist");
+            document.execCommand('insertUnorderedList',false,null);
+            break;
+        case "insertorderedlist":
+            document.execCommand('insertOrderedList',false,null);
+            break;
+        case "indent":
+            document.execCommand('indent',false,null);
+            break;
+        case "outdent":
+            document.execCommand('outdent',false,null);
+            break;
+        case "createlink":
+            document.execCommand('createlink',true,"harold");
+            break;
+        case "unlink":
+            document.execCommand('unlink',false,null);
+            break;
+        case "insertimage":
+            document.execCommand('insertimage',true,null);
+            break;
+        case "justifyleft":
+            document.execCommand('justifyleft',false,null);
+            break;
+        case "justifycenter":
+            document.execCommand('justifycenter',false,null);
+            break;
+        case "justifyright":
+            document.execCommand('justifyright',false,null);
+            break;
+        case "justifyfull":
+            document.execCommand('justifyfull',false,null);
+            break;
+        case "undo":
+            document.execCommand('undo',false,null);
+            break;
+        case "redo":
+            document.execCommand('redo',false,null);
+            break;
+        default:
+            break;
+    }
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.doEditorKeys");
+    }
+};
+
+	
+JSSHOP.ui.doAutoComp = function(inp, arr) {
+    tdvACres = document.getElementById("dvACres");
+    if(tdvACres.className == "slider closed") {
+        tdvACres.classList.toggle('closed');
+    }
+
+     
+
+/*the autocomplete function takes two arguments,
+the text field element and an array of possible autocompleted values:*/
+var currentFocus;
+/*execute a function when someone writes in the text field:*/
+inp.addEventListener("input", function(e) {
+    tdvACres = document.getElementById("dvACres");
+    // tdvACres.classList.toggle('closed');
+    tdvACres.innerHTML = "";
+    var strFhtml = "";
+    var a, b, i, val = this.value;
+    /*close any already open lists of autocompleted values*/
+    closeAllLists();
+    if (!val) { return false;}
+    currentFocus = -1;
+    /*create a DIV element that will contain the items (values):*/
+    a = document.createElement("DIV");
+    a.setAttribute("id", this.id + "autocomplete-list");
+    a.setAttribute("class", "autocomplete-items");
+    /*append the DIV element as a child of the autocomplete container:*/
+    this.parentNode.appendChild(a);
+
+    /*for each item in the array...*/
+    for (i = 0; i < arr.length; i++) {
+      /*check if the item starts with the same letters as the text field value:*/
+      if((arr[i].toUpperCase().indexOf(val.toUpperCase()) != -1) && (val.length > 1)){
+
+      // if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+        /*create a DIV element for each matching element:*/
+
+        /*make the matching letters bold:*/
+        strFhtml += arr[i];
+        b = document.createElement("DIV");
+        // b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+        // b.innerHTML += arr[i].substr(val.length);
+        /*insert a input field that will hold the current array item's value:*/
+        // b.innerHTML += "<input type='hidden' value='" + i + "'>";
+        /*execute a function when someone clicks on the item value (DIV element):*/
+            b.addEventListener("click", function(e) {
+
+            /*insert the value for the autocomplete text field:*/
+
+  
+
+     
+            /*close the list of autocompleted values,
+            (or any other open lists of autocompleted values:*/
+            closeAllLists();
+        
+        });
+
+    
+      }
+
+
+    }
+    tmpDVAC = document.createElement("DIV");
+     tmpDVAC.innerHTML = "";
+     tmpHdrStr = "";
+     for(i = 0; i < currACTblCnt; i++) {
+        tmpHdrStr += "<th></th>";
+     }
+    tTHstr = "<tr>" + tmpHdrStr + "</tr>";
+
+    tmpDVAC.innerHTML = getTblSortStr(tTHstr, strFhtml);
+    // b.innerHTML = strFhtml;
+    // a.appendChild(tmpDVAC);
+    tdvACres = document.getElementById("dvACres");
+    tdvACres.innerHTML = "";
+    // tdvACres.classList.toggle('closed');
+    tdvACres.appendChild(tmpDVAC);
+});
+/*execute a function presses a key on the keyboard:*/
+inp.addEventListener("keydown", function(e) {
+    var x = document.getElementById(this.id + "autocomplete-list");
+    if (x) x = x.getElementsByTagName("div");
+    if (e.keyCode == 40) {
+      /*If the arrow DOWN key is pressed,
+      increase the currentFocus variable:*/
+      currentFocus++;
+      /*and and make the current item more visible:*/
+      addActive(x);
+    } else if (e.keyCode == 38) { //up
+      /*If the arrow UP key is pressed,
+      decrease the currentFocus variable:*/
+      currentFocus--;
+      /*and and make the current item more visible:*/
+      addActive(x);
+    } else if (e.keyCode == 13) {
+        alert("enter pressed");
+      /*If the ENTER key is pressed, prevent the form from being submitted,*/
+      e.preventDefault();
+      if (currentFocus > -1) {
+        /*and simulate a click on the "active" item:*/
+        if (x) x[currentFocus].click();
+      }
+    }
+});
+function addActive(x) {
+  /*a function to classify an item as "active":*/
+  if (!x) return false;
+  /*start by removing the "active" class on all items:*/
+  removeActive(x);
+  if (currentFocus >= x.length) currentFocus = 0;
+  if (currentFocus < 0) currentFocus = (x.length - 1);
+  /*add class "autocomplete-active":*/
+  x[currentFocus].classList.add("autocomplete-active");
+}
+function removeActive(x) {
+  /*a function to remove the "active" class from all autocomplete items:*/
+  for (var i = 0; i < x.length; i++) {
+    x[i].classList.remove("autocomplete-active");
+  }
+}
+function closeAllLists(elmnt) {
+  /*close all autocomplete lists in the document,
+  except the one passed as an argument:*/
+  var x = document.getElementsByClassName("autocomplete-items");
+  for (var i = 0; i < x.length; i++) {
+    if (elmnt != x[i] && elmnt != inp) {
+    x[i].parentNode.removeChild(x[i]);
+  }
+}
+}
+/*execute a function when someone clicks in the document:*/
+document.addEventListener("click", function (e) {
+  closeAllLists(e.target);
+  
+  // tdvACres = document.getElementById("dvACres");
+  // tdvACres.className = "slider closed";
+   // tdvACres.innerHTML = "";
+});
+
+};
+
+JSSHOP.ui.doRecntBox = function() {
+tIMLStglbObj = null;
+tIMLStglbObj = "";
+tIMLStglbObj = JSSHOP.ui.nTglBxOb();
+tIMLStglbObj["ttl"] = stxt[301]; // the toggle box title
+tIMLStglbObj["dvid"] = "dvTglRcnt"; // the toggle box div id
+tIMLStglbObj["cntntFnc"] =  "JSSuiSetRecntBx";
+tIMLStglbObj["content"] = "noQvalue"; // the toggle that goes in above toggle div
+tIMLStglbObj["btn"] = "btnTglRctPP" // the toogle btn id
+tIMLStglbObj["pref"] = "tglRctPP"; // the toogle pref id saved in cookie
+tIMLStglbObj["tbtmpCB"] = "doNada"; // null function as callback
+tIMLStglbObj["icn"] = "&#xe3ec;"; // the icon
+tIMLStglbObj["pnid"] = "includedContent"; // the parent node, will just return text if noQvalue
+tIMLStglbObj["appnd"] = "y"; // the parent node, will just return text if noQvalue
+tIMLStglbObj["clsmaintbl"] = "txtClrHdr slmtable brdrDarkBlue"; // main table class
+tIMLStglbObj["clstitletd"] = ""; // title box class
+tIMLStglbObj["clsttltxt"] = "txtSmall txtBold txtClrDrkGrn"; // title box text class
+
+JSSHOP.ui.doTglBox(tIMLStglbObj);
+}
+
+
+JSSHOP.ui.fnishNewsO = function(fnaw, fnbw,fncw) {
+// alert("fnishNewsO");
+tStrFinalNLogo = "<a href=\"https://news.google.com\" target=\"_blank\" class=\"txtDecorNone\">";
+tStrFinalNLogo += "<img src=\"images/misc/gnews.jpg\" style=\"height: 22px; width: 100px; border-width: 0px\"></a>"; 
+
+tIMLStglbObj = null;
+tIMLStglbObj = "";
+tIMLStglbObj = JSSHOP.ui.nTglBxOb();
+tIMLStglbObj["ttl"] = stxt[200]; // the toggle box title
+tIMLStglbObj["dvid"] = "dvNMnews"; // the toggle box div id
+tIMLStglbObj["content"] = parseRssData("includedContent", fnbw, "doNada"); // the toggle that goes in above toggle div
+tIMLStglbObj["btn"] = "btnTglNwsMk" // the toogle btn id
+tIMLStglbObj["pref"] = "tglNwsMk"; // the toogle pref id saved in cookie
+tIMLStglbObj["tbtmpCB"] = "doNada"; // null function as callback
+tIMLStglbObj["icn"] = "&#xe3ec;"; // the icon
+tIMLStglbObj["pnid"] = "includedContent"; // the parent node, will just return text if noQvalue
+tIMLStglbObj["appnd"] = "y"; // the parent node, will just return text if noQvalue
+tIMLStglbObj["cut"] = 300;
+JSSHOP.ui.doTglBox(tIMLStglbObj);
+
+};
+
+
+function JSSUIsetZipBox() {
+tSPPatvRstr = JSSHOP.ui.getRegionsList();
+document.getElementById("dvTglZip").innerHTML = JSSHOP.ui.getRegionsList();
+}
+
+JSSHOP.ui.getZipCodeBox = function() {
+tIMLStglbObj = null;
+tIMLStglbObj = "";
+tIMLStglbObj = JSSHOP.ui.nTglBxOb();
+tIMLStglbObj["ttl"] = stxt[301]; // the toggle box title
+tIMLStglbObj["dvid"] = "dvTglZip"; // the toggle box div id 
+tIMLStglbObj["cntntFnc"] =  "JSSUIsetZipBox";
+tIMLStglbObj["content"] = "noQvalue"; // the toggle that goes in above toggle div
+tIMLStglbObj["btn"] = "btnTglZip" // the toogle btn id
+tIMLStglbObj["pref"] = "tglZip"; // the toogle pref id saved in cookie
+tIMLStglbObj["tbtmpCB"] = "doNada"; // null function as callback
+tIMLStglbObj["icn"] = "&#xe3ec;"; // the icon
+tIMLStglbObj["pnid"] = "includedContent"; // the parent node, will just return text if noQvalue
+tIMLStglbObj["appnd"] = "y"; // the parent node, will just return text if noQvalue
+tIMLStglbObj["clsmaintbl"] = "txtClrHdr slmtable brdrDarkBlue"; // main table class
+tIMLStglbObj["clstitletd"] = ""; // title box class
+tIMLStglbObj["clsttltxt"] = "txtSmall txtBold txtClrDrkGrn"; // title box text class
+JSSHOP.ui.doTglBox(tIMLStglbObj);
+};
+
+JSSHOP.ui.getNuLocList = function(tVala, tValb, tValc) {
+    tLocArr = null;
+    tLocArr = "";
+    tLocArr = [];
+    // tValb = [{"c_location":"","c_zp":"0","c_loc_lat":"39.4625786","c_loc_lng":"-8.5910331"},{"c_location":"0 PortugaleteBiscaySpain","c_zp":"48","c_loc_lat":"43.3177934","c_loc_lng":"-3.0971674"},{"c_location":"0 PortugaleteBizkaiaSpain","c_zp":"48","c_loc_lat":"43.3223702","c_loc_lng":"-3.1057987"},{"c_location":"22,-8","c_zp":"16","c_loc_lat":"37.1688931","c_loc_lng":"-8.7430359"},{"c_location":"646Av. Santiago","c_zp":"45","c_loc_lat":"40.9601421","c_loc_lng":"-8.6796949"},{"c_location":"9AAlverca do Ribatejo","c_zp":"19","c_loc_lat":"38.898395","c_loc_lng":"-9.1247837"},{"c_location":"? 048 Horta","c_zp":"99","c_loc_lat":"38.5348336","c_loc_lng":"-28.7330341"},{"c_location":"A dos Cunhados","c_zp":"25","c_loc_lat":"39.1479313","c_loc_lng":"-9.3643533"},{"c_location":"AA","c_zp":"25","c_loc_lat":"39.420899","c_loc_lng":"-9.2443483"},{"c_location":"Abacao","c_zp":"0","c_loc_lat":"41.4100117","c_loc_lng":"-8.3600599"},{"c_location":"Abade de Neiva","c_zp":"47","c_loc_lat":"41.5528746","c_loc_lng":"-8.716339"}];
+    tLocArr = JSON.parse(tValb);
+    tLocStr = "";
+    // create a div with a text field using tValb as the array for auto complete
+    tLocStr += "<div class=\"crsrPointer\"><table style=\"width: 100%\" class=\"bigtable bkgdClrNrml brdrClrHdr txtBold txtBig\">";
+    tLocStr += "<tr><td><strong>&nbsp;" + stxt[512] + "</strong></td></tr></table></div>";
+    tLocStr += "<div class=\"collection\">";
+    tLocStr += "<input type=\"text\" id=\"txtLoc\" class=\"txtSmall txtClrHdr\" placeholder=\"" + stxt[513] + "\" onkeyup=\"javascript:JSSHOP.ui.doAutoComplete('txtLoc','dvLoc','" + tValb + "');\" />";
+    tLocStr += "<div id=\"dvLoc\" class=\"collection-item\"></div>";
+    tLocStr += "</div>";
+
+    // return tLocStr;
+    document.getElementById("includedContent").innerHTML = tLocStr;
+
+};
+ 
+JSSHOP.ui.getRegionsList = function() {
+tCatArrStr = "";
+tRegionsArr = currRegionsObj[usrlang];
+tCatArrStr += "<div class=\"crsrPointer\"><table style=\"width: 100%\" class=\"bigtable bkgdClrNrml brdrClrHdr txtBold txtBig\">";
+tCatArrStr += "<tr><td><strong>&nbsp;" + stxt[512] + "</strong></td></tr></table></div>";
+tepIinc = 0;
+tCatArrStr +=  "<br>";
+while(tepIinc < tRegionsArr.length) {
+tswrAl = tRegionsArr[tepIinc];
+tswrAspll = tswrAl.split("::");
+tswph = tswrAspll[0];
+tswttl = tswrAspll[1];
+tCatArrStr += "<div onclick=\"javascript:eindex('aa-show-search','pid=aa-show-search&st=zip&sw=" + tswph + "');javascript:JSSHOP.ui.closePopMenus();\" class=\"collection-item crsrPointer\">" + tswttl  + "</div>";
+tepIinc++;
+}
+tCatArrStr += "</div>";
+return tCatArrStr;
+};
+
+JSSHOP.ui.getRegionsList2 = function() {
+};
+
+
+
+JSSHOP.ui.getPartsPage = function() {
+    document.getElementById('includedShops').innerHTML='';
+    window['sw']=null;
+    currUrlArr.sw=null;
+    JSSHOP.shared.setPrtSvsPnl('dvGetPLnk', function() {eindex('aa-show-psearch','pid=aa-show-psearch&st=main')});
+};
+
+JSSHOP.ui.getSvsPage = function() {
+document.getElementById('includedShops').innerHTML='';
+window['sw']=null;
+currUrlArr.sw=null;
+JSSHOP.shared.setPrtSvsPnl('dvGetSvcsLnk', function() {JSSHOP.ui.doDefCBBCC('dvMMGetSvcsLnk', null, eindex('aa-show-msearch','pid=aa-show-msearch&amp;st=main'));});    
+};
+
+JSSHOP.ui.getAtvtyRndr = function(atvtyArr, atvtyTTgl, atvtyCount) {
+strRFHtml = "";
+tmpImfstr = "";
+
+tfi = 0;
+fCount = 20;
+if(atvtyArr.length) {
+if(atvtyCount > 0) {
+fCount = atvtyCount;
+}
+if(fCount > atvtyArr.length) {
+fCount = atvtyArr.length;
+}
+while(tfi < fCount) {
+tmpImfstr = "";
+
+
+theTfavId = atvtyArr[tfi]._id;
+theTfavTtl = atvtyArr[tfi].ttl;
+theTfavUrl = atvtyArr[tfi].ur;
+theITimgVal = atvtyArr[tfi].imic
+theIimgVal = "images/misc/example_thumb.png";
+/*
+
+aTmpAtvtyOb = null;
+aTmpAtvtyOb = {};
+aTmpAtvtyOb["_id"] = "noQvalue"; // internal id
+aTmpAtvtyOb["atype"] = "noQvalue"; // internal type
+aTmpAtvtyOb["aid"] = "1"; // internal id
+aTmpAtvtyOb["ttl"] = "noQvalue"; // title
+aTmpAtvtyOb["ur"] = "noQvalue"; // url
+aTmpAtvtyOb["imic"] = "noQvalue" // image
+aTmpAtvtyOb["cckie"] = "noQvalue"; // the cookie it is saved to
+aTmpAtvtyOb["daCB"] = "JSSHOP.ui.doAtvtyDefCB"; // null function as callback
+aTmpAtvtyOb["icn"] = "&#eoph;"; // the icon
+aTmpAtvtyOb["pnid"] = "noQvalue"; // the parent node, will just return text if noQvalue
+aTmpAtvtyOb["garr"] = "currRcntFavsArr"; // the global array it will be working with
+aTmpAtvtyOb["gstr"] = "currRcntFavsStr"; // the global str it will be working with
+*/
+
+if((theITimgVal) && (theITimgVal.length > 3)){
+if(theITimgVal == "noQvalue") {
+} else {
+theIimgVal = theITimgVal;
+}
+} 
+
+tmpImfstr = "<img class=\"icnsmlbtn\" src=\"" + theIimgVal + "\" align=\"absmiddle\">";
+
+// strRFHtml += theTfavId + " :: " + theTfavUrl + " :: " + theTfavTtl + " :: " + theIimgVal + "<br>"; 
+strRFHtml += "<div>";
+if(atvtyTTgl == "y") {
+currFTclr = "small-material-icons txtClrRed";
+strRFHtml += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + theTfavUrl + "','" +  theTfavTtl + "','" + theITimgVal + "','" + theTfavId + "','btnDynFavs" + theTfavId + "');\"><i id=\"btnDynFavs" + theTfavId + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"recent_actors\" value=\"recent_actors\" style=\"font-size:12px;\">&#xe03f;</i></span>";
+}
+strRFHtml += tmpImfstr + " <a class=\"txtDecorNone txtSmall txtClrHdr\" href=\"" + theTfavUrl + "\">" + theTfavTtl + "</a>";
+strRFHtml += "</div>";
+tfi++;
+}
+} else {
+strRFHtml += "No Favorites";
+
+ 
+}
+return strRFHtml;
+}
+
+JSSHOP.ui.doAlertBox = function(atype, attl, acntnt, abtArr) {
+
+    // atype: warning, error, success, info
+    // warning e002 (triangle)
+    // error e000 (!)
+    // success e834 (check box)
+    // info e88e (info)
+    // abtArr: [0] = btn1, [1] = btn2, [2] = btn3
+    // btnObj: [0] = btnTxt, [1] = btnCB, [2] = btnCls
+    tDABicnStr = "";
+    tDABicnClsStr = "";
+    tDABTtlClsStr = "";
+    tDABCntClsStr = "";
+    switch(atype) {
+        case "warning":
+            tDABicnStr = "&#xe002;";
+            tDABicnClsStr = "txtClrHdr";
+            tDABTtlClsStr = "txtClrHdr";
+            tDABCntClsStr = "txtClrHdr txtSmall";
+            break;
+        case "error":
+            tDABicnStr = "&#xe000;";
+            tDABicnClsStr = "txtClrRed";
+            tDABTtlClsStr = "txtClrRed";
+            tDABCntClsStr = "txtClrHdr txtSmall";
+            break;
+        case "success":
+            tDABicnStr = "&#xe834;";
+            tDABicnClsStr = "txtClrNrml";
+            tDABTtlClsStr = "txtClrNrml";
+            tDABCntClsStr = "txtClrNrml";
+            break;
+        case "info":
+            tDABicnStr = "&#xe88e;";
+            tDABicnClsStr = "txtClrHdr";
+            tDABTtlClsStr = "txtClrHdr";
+            tDABCntClsStr = "txtClrHdr txtSmall";
+            break;
+        default:
+            tDABicnStr = "&#xe88e;";
+            tDABicnClsStr = "txtClrHdr";
+            tDABTtlClsStr = "txtClrHdr";
+            tDABCntClsStr = "txtClrHdr txtSmall";
+            break;
+    }
+
+    
+    tDABStr = "<div style=\"float:left;\"><table><tr><td><i class=\"material-icons " + tDABicnClsStr + "\" style=\"font-size: 24px;\">" + tDABicnStr + "</i>";
+    tDABStr += "</td><td><span class=\"txtClrHdr txtBold " + tDABTtlClsStr + "\" style=\"font-size: 18px;verticle-align:middle;padding-bottom:8px;\">" + attl + "</span>";
+    tDABStr += "</td></tr></table></div>";
+    
+    tDABStr += "<div class=\"bkgdClrWhite\" style=\"width: 100%;\">";
+    tDABStr += "<table style=\"width: 100%\" class=\"bkgdClrWhite\">";
+    tDABStr += "<tr><td>"
+
+
+
+    tDABStr += "</td></tr>";
+    tDABStr += "<tr><td class=\"txtClrHdr " + tDABCntClsStr + "\">" + acntnt + "</td></tr>";
+    tDABStr += "<tr><td style=\"text-align:center;\">";
+    if(abtArr == "noQvalue") {
+        tsBtnOCB = "JSSHOP.ui.closeLbox()";
+        tsBtnOCls = "cls_button cls_button-small cls_button-disabled";
+        tsBtnOTxt = "OK";
+        tDABStr += "<button class=\"" + tsBtnOCls + "\" onclick=\"" + tsBtnOCB + "\">" + tsBtnOTxt + "</button>";
+        } else {
+
+    for(var i = 0; i < abtArr.length; i++) {  
+        tsBtnObj = abtArr[i];
+        tsBtnOCB = tsBtnObj.cb;
+        tsBtnOCls = tsBtnObj.cls;
+        tsBtnOTxt = tsBtnObj.txt;
+        if(tsBtnOCB == "noQvalue") {
+            tsBtnOCB = "JSSHOP.ui.closeLbox()";
+        }
+        if(tsBtnOTxt == "noQvalue") {
+            tsBtnOTxt = "OK";
+        }
+        if(tsBtnOCls == "noQvalue") {
+            tsBtnOCls = "cls_button cls_button-small cls_button-disabled";
+        }
+        tDABStr += "<button class=\"" + tsBtnOCls + "\" onclick=\"" + tsBtnOCB + "\">" + tsBtnOTxt + "</button>";
+      }
+    }
+    tDABStr += "</td></tr>";
+    tDABStr += "</table>";
+    tDABStr += "</div>";
+    // return tDABStr;
+    JSSHOP.ui.popAndFillLbox(tDABStr);
+
+};
+
+JSSHOP.ui.doTglDefCT = function(ttmpTDDiv, ttmpTDu, ttmpTDcb) {
+JSSHOP.ajax.doNuAjaxPipe(ttmpTDDiv, ttmpTDu, ttmpTDcb);
+};
+
+JSSHOP.ui.doTglDefCB = function(theTglBoxObj) {
+};
+
+JSSHOP.ui.nTglBxOb = function() {
+
+aTmpTglBxOb = null;
+aTmpTglBxOb = {};
+aTmpTglBxOb["ttl"] = "noQvalue"; // the toggle box title
+aTmpTglBxOb["dvid"] = "noQvalue"; // the toggle box div id
+aTmpTglBxOb["cntntFnc"] = function() { alert("nTglBxOb default cntntFnc"); } // default function called to retrieve the content
+aTmpTglBxOb["content"] = "noQvalue"; // the toggle that goes in above toggle div
+aTmpTglBxOb["btn"] = "noQvalue" // the toogle btn id
+aTmpTglBxOb["pref"] = "..."; // the toogle pref id saved in cookie
+aTmpTglBxOb["tbtmpCB"] = "JSSHOP.ui.doTglDefCB"; // null function as callback
+aTmpTglBxOb["icn"] = "&#eoph;"; // the icon
+aTmpTglBxOb["cut"] = 0; // will cut the html if greater than 0
+aTmpTglBxOb["pnid"] = "noQvalue"; // the parent node(div) id, will just return text if noQvalue
+aTmpTglBxOb["appnd"] = "y"; // append to pnid, will pnid.innerHTML = text if noQvalue
+aTmpTglBxOb["clsmaintbl"] = "txtClrHdr rtable brdrClrHdr"; // main table class
+aTmpTglBxOb["clstitletd"] = "slmtable brdrClrHdr"; // title box class
+aTmpTglBxOb["clsttltxt"] = "txtSmall txtBold"; // title box text class
+
+
+return aTmpTglBxOb;
+};
+
+
+JSSHOP.ui.doTglTitle = function(theTglBoxObj) {
+    try {
+
+    console.log("doTglTitle: " + theTglBoxObj.ttl);
+    tTglBtnIDStr = theTglBoxObj.btn;
+    tTglTtlStr = theTglBoxObj.ttl;
+    tTglDivIDStr = theTglBoxObj.dvid;
+    switch(tTglDivIDStr) {
+        case "dvTglRcnt":
+            tTglTtlStr = "btnTglRctPP";
+            break;
+        case "dvNMnews":
+            tTglTtlStr = "btnTglNwsMk";
+            break;
+        case "dvTglZip":
+            tTglTtlStr = "btnTglZip";
+            break;
+        default:
+            break;
+
+    }
+   
+    tTBxTtlDv = document.getElementById(theTglBoxObj.dvid + "Ttl");
+    tTBxTtlDv.innerHTML = theTglBoxObj.ttl;  
+  } catch(e) {
+        alert("doTglTitle: " + e);
+    }
+};
+
+JSSHOP.ui.getMorBxStr = function(theMrBxType) {
+     tMorebSTr = "";
+    switch(pid) {
+        case "aa-show-search":
+            tMorebSTr = "<div class=\"collection-item crsrPointer\" onclick=\"javascript:JSSHOP.ui.doMoreBox('aa-show-search');\">More</div>";
+            break;
+        case "aa-edit-svs-category":
+            tMorebSTr = doNuCollsLoad("links");
+            tMorebSTr += currMenuTStr;
+            // tMorebSTr = "<div class=\"collection-item crsrPointer\" onclick=\"javascript:JSSHOP.ui.doMoreBox('aa-show-search');\">More</div>";
+            break;
+            default:
+            // tMorebSTr = "<div class=\"collection-item crsrPointer\" onclick=\"javascript:JSSHOP.ui.doMoreBox('aa-show-search');\">More</div>";
+            tMorebSTr = doNuCollsLoad("noQvalue");
+            break;
+    }
+    return tMorebSTr;
+};
+
+JSSHOP.ui.doTglBox = function(theTglBoxObj) {
+try {} catch(e) {
+    alert("tbtmpCB: " + aTmpTglBxOb.tbtmpCB + " :: " + e);
+     }
+currTglBxsObj[theTglBoxObj.dvid] = theTglBoxObj;
+var tUTlPrefs = "hide";
+uTlPrefs = arrUprefs["prfsSHOPuser"][0];
+if(uTlPrefs[theTglBoxObj.pref]) {
+console.log("pref: " + theTglBoxObj.pref + " y:: "+ uTlPrefs[theTglBoxObj.pref])
+tUTlPrefs = uTlPrefs[theTglBoxObj.pref];
+}
+tTBXCnt = theTglBoxObj.content;
+if(theTglBoxObj.btn  == "btnTglBPrtsL") {
+    tPSBstr = "<table style=\"margin: 0 auto;width:90%\" align=\"center\" class=\"" + theTglBoxObj["clsmaintbl"] + "\">";
+
+} else if(theTglBoxObj.btn  == "btnTglLGGPm") {
+    tPSBstr = "<table style=\"margin: 0 auto;width:90%\" align=\"center\" class=\"" + theTglBoxObj["clsmaintbl"] + "\">";
+
+} else {
+    tPSBstr = "<table style=\"margin: 0 auto;width:90%\" align=\"center\" class=\"" + theTglBoxObj["clsmaintbl"] + "\">";
+
+}
+tPSBstr += "<tr><td>";
+tPSBstr += "<table style=\"margin: 0 auto;max-width:98%\" align=\"center\"><tr>";
+
+// tPSBstr += "<table style=\"margin: 0 auto;max-width:98%\" align=\"center\" class=\"" + theTglBoxObj["clstitletd"] + "\"><tr>";
+tPSBstr += "<td>";
+tPSBstr += "<div id=\"" + theTglBoxObj.dvid + "Icn\">"; 
+tPSBstr += "<i class=\"menu-material-icons coll-menu-item\" title=\"" + theTglBoxObj.ttl + "\">" + theTglBoxObj.icn + "</i>";
+tPSBstr += "</div>";
+tPSBstr += "</td>";
+tPSBstr += "<td style=\"width:100%\" class=\"crsrPointer\"   onclick=\"javascript:JSSHOP.ui.tglTBPrefModule('" + theTglBoxObj.dvid + "');\">";
+tPSBstr += "<div class=\"" + theTglBoxObj["clsttltxt"] + "\" style=\"vertical-align:super;padding-left:12px;padding-bottom:12px;margin-bottom:12px;\" id=\"" + theTglBoxObj.dvid + "Ttl\">"; 
+tPSBstr += theTglBoxObj.ttl;
+tPSBstr += "</div></td>";
+tPSBstr += "<td valign=\"top\" style=\"max-height: 42px\">&nbsp;&nbsp; &nbsp;</td>";
+
+if(theTglBoxObj.btn == "noQvalue") { // dont show the toggle button
+} else { 
+tJSstr = "JSSHOP.ui.tglTBPrefModule('" + theTglBoxObj.dvid + "');";
+tPSBstr += "<td valign=\"top\" style=\"max-height: 42px\"><div id=\"" + theTglBoxObj.btn + "\" class=\"icnbtn crsrPointer\" nowrap=\"nowrap\" style=\"float:right\"  onclick=\"javascript:" + tJSstr + "\">";
+tPSBstr += "<i class=\"material-icons txtClrDlg\" title=\"expand_more\">&#xe5cf;</i></div></td>";
+}
+tPSBstr += "</tr>";
+tPSBstr += "</table>";
+
+
+tPSBstr += "</td></tr>";
+
+
+tPSBstr += "<tr><td>";
+ // plug goes here
+if(currUrlArr.prti != null) {
+// tPSBstr += "&nbsp; &nbsp; &nbsp;<a href=\"javascript:JSSHOP.ui.showMsgBox('product','" + currUrlArr.prti + "','JSSHOP.shared.doYearsPop');\" class=\"txtDecorNone\"><img class=\"slmtable icndbtn brdrCldrDlg txtClrHdr\" style=\"float: right;margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"speaker\" title=\"speaker\" src=\"images/misc/shout_out.gif\"></img></a>";
+}
+ 
+tPSBstr += "</td></tr><tr>";
+
+tPSBstr += "<td id=\"" + theTglBoxObj.dvid + "\" style=\"visibility:hidden;display:none\">"; 
+
+
+/*
+if(tUTlPrefs == "show") {
+if(tTBXCnt == "noQvalue") { 
+alert("haveTglFnc: " + theTglBoxObj.cntntFnc);
+ttbcf = theTglBoxObj.cntntFnc;
+setTimeout(ttbcf(), 800);
+
+// ttbcf();
+ 
+} else {
+if((theTglBoxObj.cut > 0) && (tTBXCnt.length > theTglBoxObj.cut)) {
+ntTBXCnt = new CutString(tTBXCnt,theTglBoxObj.cut);
+newCutString = ntTBXCnt.cut() + "<a href=\"javascript:JSSHOP.ui.showHideElement('" + theTglBoxObj.dvid + "','hide');JSSHOP.ui.showHideElement('m" + theTglBoxObj.dvid + "','show');\">" + stxt[62].toLowerCase() + "...</a>";
+newCutString += "<td id=\"m" + theTglBoxObj.dvid + "\" style=\"visibility:hidden;display:none\">"; 
+newCutString += tTBXCnt;
+newCutString += "</td>";
+
+} else {
+newCutString = tTBXCnt;
+}
+tPSBstr += newCutString;
+}
+}
+
+*/
+
+tPSBstr += "<td id=\"m" + theTglBoxObj.dvid + "\" style=\"visibility:hidden;display:none\">"; 
+tPSBstr += tTBXCnt;
+tPSBstr += "</td>";
+
+tPSBstr += "</td></tr></table>";
+// tPSBstr += "<div>&nbsp;  &nbsp;  &nbsp;  </div>";
+
+if(uTlPrefs[theTglBoxObj.pref]) {
+if(uTlPrefs[theTglBoxObj.pref] == "show") {
+    if(theTglBoxObj.btn == "noQvalue") { // dont show the toggle button
+        setTimeout("JSSHOP.ui.toggleModule(aTmpTglBxOb.dvid)", 800);
+    } else {
+// setTimeout("JSSHOP.ui.toggleModule(aTmpTglBxOb.dvid)", 800);
+// JSSHOP.ui.toggleNuModule(aTmpTglBxOb.btn,aTmpTglBxOb.dvid);
+setTimeout("JSSHOP.ui.toggleNuModule('" + theTglBoxObj.btn + "','" + theTglBoxObj.dvid + "')", 1300);
+}
+// ttbcf = theTglBoxObj.cntntFnc;
+// ctnwf = window[theTglBoxObj.tbtmpCB];
+setTimeout(ctnwf = window[theTglBoxObj.cntntFnc], 1300);
+}
+} else { // will defaault to showing it
+if(theTglBoxObj.btn == "noQvalue") { // dont show the toggle button
+setTimeout("JSSHOP.ui.toggleModule(aTmpTglBxOb.dvid)", 800);
+} else {
+setTimeout("JSSHOP.ui.toggleNuModule('" + theTglBoxObj.btn + "','" + theTglBoxObj.dvid + "')", 800);
+}
+setTimeout(ctnwf = window[theTglBoxObj.cntntFnc], 1300);
+// setTimeout("JSSHOP.ui.toggleTBModule(currTglBoxObj[theTglBoxObj.dvid])", 2000);
+}
+if(theTglBoxObj.pnid == "noQvalue") {
+return tPSBstr;
+} else {
+ttAdv = document.getElementById(theTglBoxObj.pnid);
+if(theTglBoxObj["appnd"] == "noQvalue") {
+ttAdv.innerHTML = tPSBstr;
+} else {
+ttbdav = document.createElement('div');
+// alert("tPSBstr: " + tPSBstr);
+ttbdav.innerHTML = tPSBstr;
+ttAdv.appendChild(ttbdav);
+}
+setTimeout(JSSHOP.ui.doTglTitle(theTglBoxObj), 800);
+
+}
+
+
+
+
+
+if(theTglBoxObj["tbtmpCB"] == "noQvalue") {
+} else {
+pmwf = window[theTglBoxObj.tbtmpCB];
+// pmwf();
+}
+
+// return tCatArrStr;
+// JSSHOP.ui.popAndFillLbox(tCatArrStr);
+};
+
+
+
+JSSHOP.ui.doShare = function(tmpSsite, tmpASurl, tmpSttl, tmpSdsc, tmpSimg) {
+try {
+     tmpEncSurl = encodeURIComponent(tmpASurl);
+    tmpEncSttl = encodeURIComponent(tmpSttl);
+    tmpEncSdsc = encodeURIComponent(tmpSdsc);
+    tmpEncSimg = encodeURIComponent(tmpSimg);
+
+    tmpSurl = tmpASurl;
+    switch(tmpSsite) {
+        case "facebook":
+            tSurl = "https://www.facebook.com/sharer/sharer.php?u=" + tmpSurl;
+            break;
+        case "twitter":
+            tSurl = "https://twitter.com/intent/tweet?text=" + tmpSttl + "&url=" + tmpSurl;
+            break;
+        case "linkedin":
+            tSurl = "https://www.linkedin.com/shareArticle?mini=true&url=" + tmpEncSurl + "&title=" + tmpEncSttl + "&summary=" + tmpEncSdsc + "&source=LinkedIn";
+            break;
+        case "whatsapp":
+            tSurl = "https://api.whatsapp.com/send?text=" + tmpSttl + " " + tmpSurl;
+             break;
+        case "pinterest":
+            tSurl = "https://pinterest.com/pin/create/button/?url=" + tmpSurl + "&media=" + tmpSimg + "&description=" + tmpSttl;
+            break;
+            case "instagram":
+            tSurl = "https://www.instagram.com/pin/create/button/?url=" + tmpSurl + "&media=" + tmpSimg + "&description=" + tmpSttl;
+            break;
+        case "email":
+            tSurl = "mailto:?subject=" + tmpSttl + "&body=" + tmpSdsc + " " + tmpSurl;
+            break;
+            case "sms":
+            tSurl = "sms:?body=" + tmpSttl + " " + tmpSurl;
+            break;
+        default:
+            break;
+    }
+    JSSHOP.ui.closeLbox();
+   //  document.location.href = tmpSurl;
+    window.open(tSurl, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+} catch(e) {
+alert("no JSSHOP.ui.doShare: " + e);
+}
+};
+
+
+
+JSSHOP.ui.showShareBox = function(tmpMsgType, tmpMsgVal){
+try {
+    tShareMsgSTr = "";
+    tShareMsgUrl = "";
+    tShareMsgImg = "";
+    tShareMsgTtl = "";
+    tShareMsgDsc = "";
+
+    
+    switch(tmpMsgType) {
+        case "product":
+            tShareMsgSTr = stxt[72] + " " + stxt[19];
+            tShareMsgUrl = "https://recamby.com/index.html?ditemid=" + tmpMsgVal;
+            tShareMsgImg = "https://recamby.com/images/pimgs/" + i_img.value;
+            tShareThmbImg = "images/pimgs/s_thumb" + i_img.value;
+            tShareMsgTtl = i_title.value;
+            tShareMsgDsc = i_desc.value;
+            break;
+            case "property":
+                tmpPrpObj = currShopsArr[tmpMsgVal];
+                tShareMsgSTr = stxt[72] + " " + stxt[19];
+                tShareMsgUrl = "https://recamby.com/index.html?ditemid=" + tmpMsgVal;
+                tShareMsgImg = "https://recamby.com/images/pimgs/" + tmpPrpObj.pimage;
+                tShareThmbImg = "admin/property/s_thumb" + tmpPrpObj.pimage;
+                tShareMsgTtl = tmpPrpObj.ptitle;
+                tShareMsgDsc = tmpPrpObj.pcontent;
+                break;
+        case "category":
+            tShareMsgSTr = "Category";
+            tShareMsgUrl = "https://recamny.com/index.html?cid=" + tmpMsgVal;
+            tShareMsgImg = "https://recamny.com/images/pimgs/s_thumb" + i_img.value;
+            tShareMsgTtl = "1Place4Ads Category";
+            tShareMsgDsc = "Check out this category on 1Place4Ads";
+            break;
+        case "company":
+            tCdescStr = c_desc.value;
+if((tCdescStr == "ns") || (tCdescStr == "5")){
+    tCdescStr = c_name.value + "  " + stxt[559] + " " + c_location.value + ". " ;
+}
+tClogoimg = c_logoimg.value;
+ if(tClogoimg.indexOf(".") != -1) {
+ if(tClogoimg.indexOf("http") != -1) {
+    tClogoimg = c_logoimg.value;
+    tShareThmbImg = tClogoimg;
+} else {
+    tClogoimg = "https://recamby.com/images/slogos/" + c_logoimg.value;
+    tShareThmbImg = "https://recamby.com/images/slogos/s_thumb" + c_logoimg.value;
+}  
+} else {
+    tClogoimg = "https://recamby.com/images/logo_og.png";
+    tShareThmbImg = "https://recamby.com/images/logo_og.png";
+}         
+
+            tShareMsgSTr = stxt[72];
+            tShareMsgUrl = "https://recamby.com/index.html?dcid=" + tmpMsgVal;
+            tShareMsgImg = tClogoimg;
+            tShareMsgTtl = c_name.value;
+            tShareMsgDsc = tCdescStr;
+            break;           
+            default:
+            break;
+    }
+    tShareMsgSTr += " :: " + tmpMsgVal;
+    tShareSIteArr = ["facebook","whatsapp","twitter","linkedin","pinterest","email","sms"];
+ 
+    tShareMsgStr = "<div class=\"collection\">";
+    tShareMsgStr += "<div class=\"\">";
+
+
+    /*
+    tShareMsgStr += "<div><table><tbody><tr><td><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></td><td><span class=\"txtSMall txtBold\">" + stxt[72] + "</span></td></tr></tbody></table></div>";
+    */
+    tShareMsgStr += "<div style=\"padding:7px;\"><table><tbody><tr><td><i class=\"material-icons txtClrDlg\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></td><td>&nbsp;<span class=\"txtSmall txtBold\">" + stxt[72] + "</span></td></tr></tbody></table></div>";
+    tShareMsgStr += "<table style=\"width: 100%\" class=\"bigtable bkgdClrNrml brdrClrHdr txtBold txtBig\">";
+    tShareMsgStr += "<tr><td>";
+    tShareMsgStr += "<div class=\"txtClrHdr\" style=\"padding:10px;\"><img src=\"" + tShareThmbImg + "\" class=\"icndbtn\"></div>"; 
+    tShareMsgStr += "</td><td>"; 
+    tShareMsgStr += "<div class=\"txtClrHdr\">" + tShareMsgTtl + "</div>";
+    tShareMsgStr += "<div class=\"txtSmall txtClrGrey\">" + tShareMsgDsc + "</div>";
+    tShareMsgStr += "</td></tr>";
+    tShareMsgStr += "</table>";
+    tShareMsgStr += "</div>";
+    
+    tShareMsgStr += "<div class=\"collection-item\">";
+    tShareMsgStr += "<div class=\"txtClrHdr txtBold\">" + stxt[141] + "</div>";
+    tShareMsgStr += "<div class=\"txtClrHdr\">";
+    for(var i = 0; i < tShareSIteArr.length; i++) {
+          tShareMsgStr += "<a href=\"javascript:JSSHOP.ui.doShare('" + tShareSIteArr[i] + "','" + tShareMsgUrl + "','" + tShareMsgTtl + "','" + tShareMsgDsc + "','" + tShareMsgImg + "');\" class=\"\">" + tShareSIteArr[i] + "</a> &nbsp; ";
+    }
+    tShareMsgStr += "</div>";
+
+    tShareMsgStr += "</div>";
+    tShareMsgStr += "</div>";
+    JSSHOP.ui.popAndFillLbox(tShareMsgStr);
+// JSSHOP.ui.popAndFillLbox(tmpMsgType + " :: " + tmpMsgVal);
+} catch(e) {
+alert("no JSSHOP.ui.showShareBox: " + e);
+}
+};
+
+var finishMMupload = function(theMMum) {
+try {
+
+
+    image = null;
+    image = new Image();
+    image.src = "images/msgimgs/s_thumb" + theMMum;
+   	document.getElementById("mmprogressBar").appendChild(image);
+	JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_media", theMMum);
+} catch(e) {
+alert(e);
+}
+};
+
+
+  
+
+var doMediaBtnSetup = function(tmpMBtnId, tmpMBtnPrfx, tmpMBtnCB, tmpMBtnFldr) {
+try {
+ttbtn = document.getElementById(tmpMBtnId);
+if(isJApp == "yes")  { 
+  // alert("doMediaBtnSetup JAPP: " + tmpMBtnId + " :: " + tmpMBtnPrfx + " :: " + tmpMBtnCB + " :: " + tmpMBtnFldr);  
+  JSSHOP.ui.addEvent(ttbtn, "click", function() { JSSHOP.jndroid.doPagePopUp("media_chooser.html", "noQvalue");return false; });
+
+// JSSHOP.ui.addEvent(ttbtn, "click", function() { JSSHOP.jndroid.openBrowser();return false; });
+// app.setQIMeta(doQIMeta());
+} else {
+     
+currMediaBtnPrfx = tmpMBtnPrfx;
+currMediaBtnCB = tmpMBtnCB;
+currMediaFldr = tmpMBtnFldr;
+JSSHOP.loadScript("js/app/sau.js", JSSHOP.checkLoader,"js");
+}
+} catch(e) {
+alert(e);
+}
+};
+
+var doMsgMediaSetup = function() {
+try {
+doMediaBtnSetup("mmuploadBtn", "mm", "finishMMupload", "msgimgs");
+} catch(e) {
+alert("doMsgMediaSetup: " + e);
+}
+};
+
+
+
+JSSHOP.ui.doMsgThread = function(a,theResp,c) {
+    console.log("doMsgThread: " + theResp);
+// alert("doMsgThread :" + theResp);
+annewel = document.createElement('div');
+
+tfullstr = "";
+var tarrToFill = null;
+tarrToFill = [];
+tarrToFill = JSON.parse(theResp);
+var tlen = tarrToFill.length;
+var tiint = 0;
+var tpcid = 0;
+ttstr = "";
+while(tiint < tlen) {
+thasr = "n";
+tts = tarrToFill[tiint];
+ttstr = "<div style=\"min-height: 45px;margin:15px;margin-bottom:18px;\"  class=\"rtable bkgdClrTtl slmtblpadding\">";
+ttmpdate = new Date(tts.ms_dadded * 1000);
+ttmpdstr = "<b>" + ("0" + ttmpdate.getDate()).slice(-2) + "</b>/" + ("0" + (ttmpdate.getMonth() + 1)).slice(-2);
+ttstr += "<span class=\"txtClrHdr\"  style=\"margin-left: 17px\">" + ttmpdstr + " - " + quid + "</span><br>";
+ttstr += "<span class=\"txtClrHdr\"  style=\"margin-left: 17px\">" + tts.ms_matter + "</span>";
+ttstr += "<span><a href=\"javascript:JSSHOP.ui.showReplyMsgBox('nada','" + tts.ms_threadid + "','" + c + "');\">" + tts.ms_viewed + "</a></span>";
+ttstr += "</div>";
+annewel = document.createElement('div');
+annewel.innerHTML = ttstr;
+// 
+tDStr = "dvMsgT" + tts.ms_threadid;
+// tmpTDQI.innerHTML = "";
+if(currUrlArr.threadid){
+thasr = "y";
+tatmpTDQI = document.getElementById("includedContent");
+} else {
+if(document.getElementById(tDStr)) {
+tatmpTDQI = document.getElementById(tDStr);
+thasr = "y";
+}
+}
+if(thasr == "y") {
+tatmpTDQI.appendChild(annewel);
+}
+tiint++;
+}
+if(tarrToFill[0]) {
+
+} else {
+    /*
+    ttstr = "<div style=\"min-height: 45px;margin:15px;margin-bottom:18px;\"  class=\"rtable bkgdClrTtl slmtblpadding\">";
+    ttmpdate = new Date();
+    ttmpdstr = "<b>" + ("0" + ttmpdate.getDate()).slice(-2) + "</b>/" + ("0" + (ttmpdate.getMonth() + 1)).slice(-2);
+    ttstr += "<span class=\"txtClrHdr\"  style=\"margin-left: 17px\">" + ttmpdstr + " - " + quid + "</span><br>";
+    ttstr += "<span class=\"txtClrHdr\"  style=\"margin-left: 17px\">Here is your message list</span>";
+    ttstr += "<span><a href=\"javascript:JSSHOP.ui.showReplyMsgBox('nada','" + tts.ms_threadid + "','" + c + "');\">" + tts.ms_viewed + "</a></span>";
+    ttstr += "</div>";
+ // ttstr = "<a href=\"index.html?pid=aa-add-shop\">" + stxt[1] + "</a>";
+ tatmpTDQI = document.getElementById("includedContent");
+    tatmpTDQI.innerHTML = ttstr;
+    */
+}
+
+
+};
+
+
+JSSHOP.ui.doMsgList = function(a,theResp,ttcb) {
+ 
+
+hasr = "n";
+fullstr = "";
+var arrToFill = null;
+arrToFill = [];
+arrToFill = JSON.parse(theResp);
+var len = arrToFill.length;
+var iint = 0;
+var pcid = 0;
+tstr = "";
+while(iint < len) {
+ts = arrToFill[iint];
+tstr += "<div id=\"dvMsgT" + ts._id + "\" style=\"min-height: 45px;margin:15px;margin-bottom:18px;\" class=\"rtable bkgdClrNrml slmtblpadding\">";
+tmpdate = new Date(ts.msg_dadded * 1000);
+tmpdstr = "<b>" + ("0" + tmpdate.getDate()).slice(-2) + "</b>/" + ("0" + (tmpdate.getMonth() + 1)).slice(-2);
+tstr += "<span class=\"txtClrHdr\" style=\"margin-left: 7px;\">" + tmpdstr + " : " + quid;
+if(ts.msg_to == quid ||ts.msg_from == quid || ts.msg_cartid == cartID  ) {
+tstr += "<a href=\"javascript:JSSHOP.ui.showReplyMsgBox('nada','" + ts._id + "','" + ttcb + "');\">" + ts.msg_status + "</a>";
+} else {
+tstr += " - " + ts.msg_status;
+}
+tstr += "</span><br>";
+tstr += "<div class=\"txtClrHdr\" style=\"margin-left: 7px\"><span><a href=\"index.html?pid=aa-show-messages&threadid=" + ts._id + "&cid=" + cid + "\"><b>" + ts.msg_subject + "</b></a></span><br>" + ts.msg_matter + "</div>";
+if(ts.msg_media.indexOf(".") != -1) {
+tstr += "<div class=\"txtClrHdr\" style=\"margin-left: 7px\"><span><a href=\"index.html?pid=aa-show-messages&threadid=" + ts._id + "&cid=" + cid + "\"><img src=\"images/msgimgs/s_thumb" + ts.msg_media + "\" class=\"icndbtn\"></a></span></div>";
+
+}
+
+tstr += "</div>";
+iint++;
+}
+ 
+if(arrToFill[0]) {
+} else {
+}
+// tstr += "<a href=\"javascript:JSSHOP.ui.showMsgBox('product','" + ts._id + "','" + ttcb + "');\">" + stxt[700] + "</a>";
+
+return tstr;
+// document.getElementById("includedContent").innerHTML = tstr;
+};
+
+
+
+
+
+
+function showAReplyMsgSave(tamsg, tbmsg, tcmsg){
+try {
+JSSHOP.ui.doMsgThread(tamsg, JSON.stringify(JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qmsg"], "tmp_"))), "doNada");
+// JSSHOP.ui.popAndFillLbox(tamsg + tbmsg + tcmsg);
+} catch(e) {
+alert("no showReplyMsgSave: " + e);
+}
+}
+
+function showReplyMsgSave(tamsg, tbmsg, tcmsg){
+try {
+// JSSHOP.ui.popAndFillLbox(tamsg + tbmsg + tcmsg);
+
+procNuUIitem("qmsgs","msg_dmodified",tamsg,JSSHOP.getUnixTimeStamp(),tamsg);
+ 
+} catch(e) {
+alert("no showReplyMsgSave: " + e);
+}
+}
+ 
+JSSHOP.ui.doReplyMsgSave = function(tmpMsgType, tmpMsgVal, tTrmsCB){
+try {
+alert("JSSHOP.ui.doReplyMsgSave: " + tmpMsgType + " .." + tmpMsgVal)
+JSSHOP.shared.setFrmFieldVal("qmsg","ms_threadid", tmpMsgVal);
+JSSHOP.shared.setFrmFieldVal("qmsg", "ms_from", cartID);
+JSSHOP.shared.setFrmFieldVal("qmsg", "ms_dadded", JSSHOP.getUnixTimeStamp()); 
+
+JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_dmodified", JSSHOP.getUnixTimeStamp()); 
+JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_modifiedby", cartID); 
+
+
+// JSSHOP.shared.setDynFrmVals(document["qmsg"], "tmp_");
+tmpDOs = null;
+tmpDOs = {};
+tmpDOs["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qmsg"], "tmp_"));
+oi = getNuDBFnvp("qmsg",6,null,tmpDOs);
+doQComm(oi["rq"], tTrmsCB, "showReplyMsgSave");
+
+
+// alert(oi["rq"]);
+// JSSHOP.ui.popAndFillLbox("Thank you!<b>" + oi["rq"]);
+} catch(e) {
+alert("no JSSHOP.ui.doReplyMsgSave: " + e);
+}
+};
+
+JSSHOP.ui.showReplyMsgBox = function(tmpMsgType, tmpMsgVal, theTcb){
+try {
+} catch(e) {
+    alert("no JSSHOP.ui.showMsgBox: " + e);
+    }
+tfsb = nCurrFFieldOb();
+tfsb.fid = "btnMsgsave";
+tfsb.fty = "button";
+tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){JSSHOP.ui.doReplyMsgSave(tmpMsgType, tmpMsgVal, theTcb)}) };
+
+tAllowedStr = "ms_matter";
+if(quid == "0") {
+// tAllowedStr += "msg_fromsg_emailmsg_fromsg_tel";
+}
+msgFObj =  JSSHOP.shared.rndrDynFrmVals(document["qmsg"], "tmp_", tAllowedStr, tfsb);
+retRndrObj["rndrStr"] = tmpVstr;
+retRndrObj["rndrFobj"] = rndrFFObjArr;
+JSSHOP.ui.popAndFillLbox("OK<br>" + msgFObj.rndrStr);
+setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj)", 500);
+
+};
+
+function showMsgSave(tamsg, tbmsg, tcmsg){
+JSSHOP.ui.popAndFillLbox(tamsg + tbmsg + tcmsg);
+}
+ 
+JSSHOP.ui.doMsgSave = function(tmpMsgType, tmpMsgVal, tempCB){
+    console.log("doMsgSave: " + tmpMsgType + " :: " + tmpMsgVal + " :: " + tempCB);
+tmpmtid = Math.random().toString(36).slice(2);
+JSSHOP.shared.setFrmFieldVal("qmsgs","msg_threadid", tmpmtid);
+JSSHOP.shared.setFrmFieldVal("qmsgs","msg_userid", quid);
+// JSSHOP.shared.setFrmFieldVal("qmsgs","msg_cartid", cartID);
+JSSHOP.shared.setFrmFieldVal("qmsgs","msg_prodid", itemid);
+JSSHOP.shared.setFrmFieldVal("qmsgs","msg_dmodified", JSSHOP.getUnixTimeStamp()); 
+JSSHOP.shared.setFrmFieldVal("qmsgs","msg_to", c_uid.value);
+JSSHOP.shared.setFrmFieldVal("qmsgs","msg_dadded", JSSHOP.getUnixTimeStamp()); 
+// JSSHOP.shared.setDynFrmVals(document["qmsgs"], "tmp_");
+tmpDOs = null;
+tmpDOs = {};
+tmpDOs["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qmsgs"], "tmp_"));
+oi = getNuDBFnvp("qmsgs",6,null,tmpDOs);
+doQComm(oi["rq"], null, tempCB);
+// alert(oi["rq"]);
+// JSSHOP.ui.popAndFillLbox("Thank you!<b>" + oi["rq"]);
+};
+
+var nTmpMsgBxOb = function() {
+tAllowedStr = "msg_subjectmsg_matter";
+if(quid == "0") {
+tAllowedStr += "msg_frommsg_emailmsg_tel";
+}
+aTmpMsgBxOb = null;
+aTmpMsgBxOb = {};
+aTmpMsgBxOb["m_type"] = "product"; // interna� msg type
+aTmpMsgBxOb["m_val"] = "1"; // internal msg token
+aTmpMsgBxOb["m_strAll"] = tAllowedStr; // message form values to render
+aTmpMsgBxOb["m_useAnx"] = "noAnx"; // add image upload btn
+aTmpMsgBxOb["m_tmpCB"] = "doNada"; // null function as cllback
+return aTmpMsgBxOb;
+};
+
+JSSHOP.ui.showMsgBox = function(tmpMsgType, tmpMsgVal,atmpCB){
+try {
+    ttMBox = null;
+    ttMBox = "";
+ttMBox = nTmpMsgBxOb();
+ttMBox["m_val"] = tmpMsgVal;
+ttMBox["m_tmpCB"] = atmpCB;
+ttMBox["m_type"] = tmpMsgType;
+JSSHOP.ui.showNuMsgBox(ttMBox);
+} catch(e) {
+alert("no JSSHOP.ui.showMsgBox: " + e);
+}
+};
+ 
+JSSHOP.ui.showNuMsgBox = function(ttMsgBxObj){
+
+tmpMsgType = ttMsgBxObj["m_type"];
+tmpMsgVal = ttMsgBxObj["m_val"];
+theTStrAllwd = ttMsgBxObj["m_strAll"];
+boolDoAnx = ttMsgBxObj["m_useAnx"];
+atmpCB = ttMsgBxObj["m_tmpCB"];
+tMsgBxHdrSTr = "";
+tMsgBxFtrSTr = "";
+try {
+tfsb = nCurrFFieldOb();
+tfsb.fid = "btnMsgsave";
+tfsb.fty = "button";
+tfsb.ltxt = "stxt[70]";
+tsbstr = "";
+tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){JSSHOP.ui.doMsgSave(tmpMsgType, tmpMsgVal, atmpCB)}) };
+if((boolDoAnx == "y") || (boolDoAnx == "yes")) {
+tsbstr = "<div id=\"mmprogressBar\"></div>"; 
+tsbstr += "<div id=\"mmprogressOuter\"></div>"; 
+tsbstr += "<div id=\"mmmsgBox\"></div>"; 
+tsbstr += "<div id=\"mmdragbox\"></div>"; 
+tsbstr += "<div id=\"dvUploadBtn\" onclick=\"JSSHOP.shared.setFrmFieldVal('qmsgs', 'msg_dadded', JSSHOP.getUnixTimeStamp());\"  style=\"display:block;visibility:visible;margin-right:10px\"><button id=\"mmuploadBtn\" class=\"cls_button cls_button-small\"><ti data-ison=\"" + stxt[70] + "\" data-desc=\"btn_save\">Add</ti></button></div>";
+} 
+
+tAllowedStr = theTStrAllwd;
+
+msgFObj =  JSSHOP.shared.rndrDynFrmVals(document["qmsgs"], "tmp_", tAllowedStr, tfsb);
+retRndrObj["rndrStr"] = tmpVstr;
+retRndrObj["rndrFobj"] = rndrFFObjArr;
+tMsgBxHdrSTr = "New Message";
+switch(tmpMsgType) {
+case "uproperty":
+atMpPrpObj = currShopsArr[tmpMsgVal];
+tMsgBxHdrSTr = "<table><tr><td><img src=\"images/user/s_thumb" + atMpPrpObj.u_icon + "\" class=\"icnRndnUser\"></td><td>" + atMpPrpObj.u_fullname + "</td></tr></table>";
+tMsgBxHdrSTr += "<div id=\"dvMsgUlinks\"></div>";
+tMsgBxHdrSTr += "<table style=\"margin:0 auto\"><tr><td><img src=\"admin/property/s_thumb" + atMpPrpObj.pimage + "\" class=\"icnmedbtn\"></td><td>" + atMpPrpObj.ptitle + "</td></tr></table>";
+// tMsgBxHdrSTr = atMpPrpObj.ptitle;
+
+break;
+case "product":
+tMsgBxHdrSTr = stxt[570];
+break;
+case "user":
+tMsgBxHdrSTr = "User Message";
+break;
+case "order":
+tMsgBxHdrSTr = "Order Message";
+break;
+default:
+break;
+}
+JSSHOP.ui.popAndFillLbox(tMsgBxHdrSTr + "<br>" + msgFObj.rndrStr + "<br>" + tsbstr);
+if((boolDoAnx == "y") || (boolDoAnx == "yes")) {
+setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj);doMsgMediaSetup();", 500);
+} else {
+setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj);", 500);
+}
+if(tmpMsgType == "uproperty") {
+    atMpPrpObj = currShopsArr[tmpMsgVal];
+    setTimeout("doUMsglinks(atMpPrpObj.uid, 'dvMsgUlinks');", 1500);
+}
+// JSSHOP.ui.popAndFillLbox(JSSHOP.shared.rndrDynFrmVals(document["qmsgs"], "tmp_"));
+} catch(e) {
+alert("no JSSHOP.ui.showMsgBox: " + e);
+}
+};
+
+
+
+
+
+JSSHOP.ui.showPopHelp = function(tmpHlpKey){
+try {
+tmppHlpD = "";
+if(hlpT[tmpHlpKey] && hlpC[tmpHlpKey]){
+    tmppHlpD += "<b>" + hlpT[tmpHlpKey] + "</b><br><br>";
+    for(ioi = 0; ioi < hlpC[tmpHlpKey].length; ioi++) {
+    tmppHlpD += hlpC[tmpHlpKey][ioi] + "<br><br>";
+    }
+} else {
+tmppHlpD = hlpT["default"] + " key: "  + tmpHlpKey;
+}
+JSSHOP.ui.popAndFillLbox(tmppHlpD);
+} catch(e) {
+alert("no JSSHOP.ui.showPopHelp: " + e);
+}
  
 };
 
 
-JSSHOP.ui.doGmxSend = function(thePLoad) {
-	// https://mail.google.com/mail/?extsrc=mailto&url=mailto%3A%3Fto%3Dsomeguy%40gmail.com%26bcc%3Dmyattorney%40gmail.com%2Cbuzzfeed%40gmail.com%26subject%3DHi%2520There%26body%3Dbody%2520goes%2520here
+
+
+JSSHOP.ui.showNPopHelp = function(){
+try {
+    tmpAHlpD = "";
+ if(hlpT[currHlpKey] && hlpC[currHlpKey]){
+tmpAHlpD += "<b>" + hlpT[currHlpKey] + "</b><br><br>";
+for(ioi = 0; ioi < hlpC[currHlpKey].length; ioi++) {
+tmpAHlpD += hlpC[currHlpKey][ioi] + "<br><br>";
+}
+} else {
+tmpAHlpD = hlpT["default"] + " key: "  + currHlpKey;
+}
+JSSHOP.ui.popAndFillLbox(tmpAHlpD);
+} catch(e) {
+alert("no showPopHelp: " + e);
+}
+ 
 };
 
+
+
+JSSHOP.ui.setNPopHelp = function(thePath){
+ try {
+setTimeout("JSSHOP.ui.showNPopHelp()", 700);
+} catch(e) {
+alert("no setPopHelp : " + e);
+}
+};
+
+var currHlpKey = "page";
+
+JSSHOP.ui.getPopHelp = function(tmpHlpStr){
+    currHlpKey = tmpHlpStr;
+try {
+tmpv = hlpT.defval;
+JSSHOP.ui.showPopHelp(tmpHlpStr);
+} catch(e) {
+    JSSHOP.ui.popAndFillLbox("loading");
+// alert("no getPopHelp : " + e);
+currHlpKey = tmpHlpStr;
+tmpGetHCO = "js/app/" + jscssprefix + "helpstrings_" + usrlang + ".js?"; // help-arr url
+JSSHOP.loadScript(tmpGetHCO, JSSHOP.ui.setNPopHelp,"js");
+}
+ 
+};
+
+
+JSSHOP.ui.textAreaAdjust = function(theTarea){
+currH = theTarea.scrollHeight;
+theTarea.style.height = "1px";
+theTarea.style.height = "auto";
+theTarea.style.height = (25 + theTarea.scrollHeight);
+};
+
+
+JSSHOP.ui.setTinnerHTML = function(theElemId, theInnerHtml){
+if(theInnerHtml == "loading") { // just set the loading image
+theInnerHtml = "<img src=\"images/misc/loading.gif\">";
+}
+try {
+document.getElementById(theElemId).innerHTML = theInnerHtml;
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, "setTinnerHTML");
+alert("setTinnerHTML: " + theElemId + " :: " + theInnerHtml + " :: " + e);
+}
+};
+
+
+
+JSSHOP.ui.showHideElement = function(theEID, showHide) {
+    try {
+        theElement = document.getElementById(theEID);
+        if (showHide == "show") {
+            theElement.style.visibility = "visible";
+            theElement.style.display = "block";
+        } else {
+            theElement.style.visibility = "hidden";
+            theElement.style.display = "none";
+        }
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.showHideElement");
+    }
+};
+
+JSSHOP.ui.toggleDivSlide = function(rowname) {
+// make rowname div slide up and down depending on its current state
+    try {
+        theRow = document.getElementById(rowname);
+         
+        if (!theRow.style.height || theRow.style.height === '0px') {
+            theRow.style.height = window.getComputedStyle(theRow).height;
+        } else {
+            theRow.style.height = '0px';
+        }
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.toggleDivSlide");
+    }
+};
+
+JSSHOP.ui.toggleVisibility = function(rowname) {
+    try { 
+        theRow = document.getElementById(rowname);
+     
+        if(theRow.style.display == "none") {
+            tRCn = "";
+            tRCn = theRow.className;
+            if(tRCn.indexOf("brdrClrHdr") != -1) {
+            theRow.className = tRCn.replace("brdrClrHdr", "brdrClrDlg");
+            }
+            theRow.style.display = "block";
+            theRow.style.visibility = "visible";
+             theRow.className = "slmtable txtBold";
+             setTimeout("document.getElementById('" + rowname + "').className = '" + tRCn + "'", 100);
+           // JSSHOP.ui.setNuCBBClickClr(theRow,  'txtSmall', tRCn, doNill, 500);
+        } else {
+            theRow.className = "slmtable txtSmall";
+
+            // setTimeout("JSSHOP.ui.showHideElement('" + rowname + "','hide');document.getElementById('" + rowname + "').className = '" + tRCn + "'", 500);
+             setTimeout("JSSHOP.ui.showHideElement('" + rowname + "','hide');document.getElementById('" + rowname + "').className = '" + tRCn + "'", 100);
+
+           //  theRow.style.display = "none";
+           //  theRow.style.visibility = "hidden";
+          //   JSSHOP.ui.setNuCBBClickClr(theRow,  'txtSmall', tRCn, doNill, 500);
+
+        }
+      } catch (e) {
+ 
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.toggleVisibility");
+        }
+   
+};
+
+JSSHOP.ui.toggleMnuVisibility = function(rowname) {
+ 
+    try {
+        theRow = document.getElementById(rowname);    
+         
+        if((theRow.style.display == "block") || (theRow.style.display == "inline-block")) {
+                                          gmnu = document.getElementById("dvMnuT").innerHTML;
+                                          	document.getElementById("dvMnuT").innerHTML = "";
+                 		 document.getElementById("mnuT").innerHTML = gmnu;
+
+            theRow.style.display = "none";
+            theRow.style.visibility = "hidden";
+
+        } else {
+                                 gmnu = document.getElementById("mnuT").innerHTML;
+                            document.getElementById("mnuT").innerHTML = "";
+                 		 document.getElementById("dvMnuT").innerHTML = gmnu;
+            theRow.style.display = "block";
+            theRow.style.visibility = "visible";
+ 
+
+        }
+	
+    } catch (e) {
+    JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.toggleVisibility");
+    }
+};
+
+
+JSSHOP.ui.toggleModule = function(linkElem, tglElemID, showMore, showLess) {
+    try {
+        caption = document.getElementById(linkElem).innerHTML;
+        JSSHOP.ui.toggleVisibility(tglElemID);
+        if (showMore === "noQvalue") { // dont change inner HTML
+        } else {
+            if (caption === showMore) {
+                document.getElementById(linkElem).innerHTML = showLess;
+            } else {
+                document.getElementById(linkElem).innerHTML = showMore;
+            }
+        }
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.toggleModule");
+    }
+};
+
+
+
+
+
+
+
+JSSHOP.ui.toggleNuModule = function(linkElem, tglElemID) {
+    try {  
+        caption = document.getElementById(linkElem).innerHTML;
+ 
+        JSSHOP.ui.toggleVisibility(tglElemID);
+   
+            if (caption.indexOf("more") != -1) {
+                document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" alt=\"btn_show_less\">&#xe5ce;</i>";
+            } else {
+                document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" alt=\"btn_show_more\">&#xe5cf;</i>";
+            }
+ 
+  } catch (e) {
+		alert(e + " : " + linkElem + " : " + tglElemID);
+      //   JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.toggleNuModule");
+    }
+};
+
+JSSHOP.ui.tglPrefModule = function(linkElem, tglElemID, tglPrefKey) {
+    try {
+        caption = document.getElementById(linkElem).innerHTML;
+ 	  tmpPrvVal = "show";
+        JSSHOP.ui.toggleVisibility(tglElemID);
+   
+            if (caption.indexOf("more") != -1) {
+			
+                document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" title=\"expand_less\">&#xe5ce;</i>";
+            } else {
+ 	  		tmpPrvVal = "hide";
+                document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" title=\"expand_more\">&#xe5cf;</i>";
+            }
+JSSHOP.user.setCkiePrfKV('prfsSHOPuser',tglPrefKey,tmpPrvVal);
+ 
+    } catch (e) {
+	alert(e);
+        // JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.tglPrefModule");
+    }
+};
+
+JSSHOP.ui.tglTBPrefModule = function(tvmpTglBxid) {
+    try {
+
+         tTBxOBjFTM = currTglBxsObj[tvmpTglBxid]; 
+         linkElem = tTBxOBjFTM.btn;
+		tglElemID = tvmpTglBxid;
+		tglPrefKey = tTBxOBjFTM.pref; 
+        caption = document.getElementById(linkElem).innerHTML;
+ 	  tmpPrvVal = "show";
+        JSSHOP.ui.toggleVisibility(tglElemID);
+   
+            if (caption.indexOf("more") != -1) {
+                tTBxCntntstr = document.getElementById(tvmpTglBxid).innerHTML;
+                if(tTBxCntntstr.length < 10) {
+			  tglElCB = window[tTBxOBjFTM.cntntFnc];
+				tglElCB();  
+                }
+                document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" title=\"expand_less\">&#xe5ce;</i>";
+                if(tvmpTglBxid == "dvTBPList") {
+                    if(dvPartsMain.style.display == "block") {
+                    } else {
+                    JSSHOP.ui.toggleNuModule('dvTglPSmain','dvPartsMain');
+                    }
+                }
+            } else {
+ 	  		tmpPrvVal = "hide";
+                document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" title=\"expand_more\">&#xe5cf;</i>";
+
+            }
+JSSHOP.user.setCkiePrfKV('prfsSHOPuser',tglPrefKey,tmpPrvVal);
+ 
+    } catch (e) {
+	alert(e);
+        // JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.tglPrefModule");
+    }
+};
+
+
+
+
+
+JSSHOP.ui.setCBBClickEnd = function(theElem, theID, theCBclss, theCB) {
+ 
+      theElem.className = theCBclss;
+      JSSHOP.stopIntervalEvent(trgr_bclck[theID]);
+      theCB();
+      return;
+};
+
+
+ 
+JSSHOP.ui.setNuCBBClickClr = function(theElem, theCclss, theCBclss, theCB, theNBCDelay) {
+    try {
+    		strJobThread = JSSHOP.getUnixTimeStamp();
+   		//  theMElem = document.getElementById(theElem);
+    		theElem.className = theCclss;
+            if (theElem.getAttribute("data-dblclick") == null) { // preventing double clicks
+            theElem.setAttribute("data-dblclick", 1);
+            setTimeout(function () {
+            if (theElem.getAttribute("data-dblclick") == 1) {
+		JSSHOP.startIntervalEvent(trgr_bclck[strJobThread], function() { JSSHOP.ui.setCBBClickEnd(theElem, strJobThread, theCBclss, theCB);}, theNBCDelay);
+            }
+            theElem.removeAttribute("data-dblclick");
+            }, 250);
+            } else {
+            theElem.removeAttribute("data-dblclick");
+            }
+    } catch(e) {
+    		JSSHOP.startIntervalEvent(trgr_bclck[strJobThread], function() { JSSHOP.ui.setCBBClickEnd(theElem, strJobThread, theCBclss, theCB);}, theNBCDelay);
+
+		// alert(e);
+         JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.setCBBClickClr");
+    }
+};
+
+ 
+JSSHOP.ui.setCBBClickClr = function(theElem, theCclss, theCBclss, theCB) {
+JSSHOP.ui.setNuCBBClickClr(theElem, theCclss, theCBclss, theCB, 380); 
+};
+
+JSSHOP.ui.setNuSaveBtnEnd = function(theObj,theCB) {
+stopNuSpin(theObj.id);
+document.getElementById(theObj.id).disabled=false;
+JSSHOP.ui.setNuCBBClickClr(theObj,'cls_button-save bkgdClrDGreen txtClrWhite','cls_button-save', theCB, 380);
+};
+
+
+JSSHOP.ui.setNuSaveBtnClick = function(theObj,theCB,theBtnH) {
+theObj.innerHTML = "";
+theObj.disabled=true;
+doNuSpinSet(theObj.id, "small", null, theBtnH);
+JSSHOP.ui.setNuCBBClickClr(theObj,'icnbtn crsrPointer brdrClrHdr txtClrGrey','icnbtn crsrPointer', theCB, 380);
+};
+
+JSSHOP.ui.setSaveBtnClick = function(theObj,theCB) {
+theObj.innerHTML = "";
+theObj.disabled=true;
+doSpinSet(theObj.id, "small", null);
+JSSHOP.ui.setNuCBBClickClr(theObj,'cls_button-save txtClrGrey','cls_button-save', theCB, 410);
+};
+
+
+
+
+JSSHOP.ui.doDefBtn = function(tmpTxt, tmpCallback) {
+tmpRd = "<div class=\"crsrPointer\"><div onclick=\"javascript:JSSHOP.ui.setCBBClickClr(this,'slmtable brdrClrNrml','slmtable brdrClrHdr', function(){" + tmpCallback + "});\" class=\"txtBig slmtable brdrClrHdr\">";
+tmpRd += tmpTxt + "</div></div>";
+return tmpRd;
+};
+
+JSSHOP.ui.doDefCBBCC = function(theObj,b,dcb) {
+// JSSHOP.ui.setCBBClickClr(document.getElementById(theObj),'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr clsDummy', function() { dcb });
+JSSHOP.ui.setCBBClickClr(document.getElementById(theObj),'txtClrHdr','clsDummy', function() { dcb });
+
+};
+
+JSSHOP.ui.popLmenu = function() {
+try {
+timerID = setInterval("JSFX.MakeFloatingLayer.animate()", 30);
+setTimeout('clearInterval(timerID)', 2000);
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, "JSSHOP.popLmenu");
+}
+};
+
+JSSHOP.ui.deleteRow = function(r) {
+try {
+    tmpTRowI = r.parentNode.parentNode.rowIndex;
+    // document.getElementById("myTable").deleteRow(tmpTRowI);
+    r.parentNode.parentNode.deleteRow(tmpTRowI);	
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.deleteRow");
+}
+};
+
+
+JSSHOP.ui.popAndAppendLbox = function(theFill, clearLB) {
+try {
+tmpLbox = document.getElementById('lightbox');
+tmpLCbox = document.getElementById('lightbox_content');
+tmpLbox.style.display='inline';
+
+if(clearLB == "y"){
+tmpLCbox.innerHTML = "";
+}
+tmpLCbox.appendChild(theFill);
+tmpVheight = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight;
+if(tmpLCbox.clientHeight >= tmpVheight) {
+tmpLbox.style.position="absolute";
+newel = document.createElement('div');
+newel.innerHTML = "New Inserted";
+tmpLCbox.appendChild(newel);
+tmpLbox.style.height = tmpLCbox.clientHeight + 180;
+}
+tmpLCbox.style.display='block';
+tmpLCbox.style.position="relative";
+stop = getScrollTop();
+// tmpLCbox.style.top=stop+"px";
+scrollToElement("dvHdr");
+window.scrollTo(0,0);
+tmpLCbox.style.top="5px";
+
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, "JSSHOP.popAndAppendLbox");
+}
+};
+
+
+
+
 JSSHOP.ui.popAndLoadLbox = function(thePLoad) {
-	JSSHOP.ui.popAndFillLbox(thePLoad);
-	/*
 tmpLabox = document.getElementById("lightbox");
 tmpLabox.style.display="inline";
 tmpaVheight = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight;
@@ -2780,355 +5832,392 @@ newelaq.innerHTML = "-";
 thePLoad.appendChild(newelaq);
 tmpLabox.style.height = thePLoad.clientHeight + 180;
 }
-*/
+
+}
+JSSHOP.ui.popAFImgUrl = function(theImgUrl) {
+tIUrlStr = "<img src=\"" + theImgUrl + "\" width=\"100%\">";
+JSSHOP.ui.popAndFillLbox(tIUrlStr);
+};
+ 
+JSSHOP.ui.popAndFillLbox = function(theFill) {
+JSSHOP.ui.popNuFillLbox(theFill, 5);
+}
+JSSHOP.ui.popNuFillLbox = function(theFill, theTofst) {
+    tcloseBstr  = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrRed crsrPointer\" style=\"float:right\"><i class=\"menu-material-icons txtBold txtClrRed\" alt=\"close\" title=\"close\" value=\"close\">&#xe5cd;</i></div>";
+
+try {
+
+ 
+
+tmpLbox = document.getElementById('lightbox');
+tmpLCbox = document.getElementById('lightbox_content');
+tmpLbox.style.display="inline";
+if(theFill == "noQvalue") {
+} else if(theFill == "dbug") {
+tmpLCbox.innerHTML= "<div style=\"overflow:auto;min-height: 231px; min-width: 368px\"  contenteditable=\"true\">" + currDBUGstr + "</div>";
+// tmpLCbox.className = "lightbox_table";
+} else if(theFill == "loading") {
+    doNuSpinSet("lightbox_content", "big", null, "...");
+// tmpLCbox.innerHTML= "<img src=\"images/misc/loading.gif\">";
+} else {
+
+tmpLCbox.innerHTML= tcloseBstr +  theFill;
+
+}
+tmpLCbox.style.position="absolute";
+tmpVheight = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight;
+if(tmpLCbox.clientHeight >= tmpVheight) {
+// tmpLbox.style.position="absolute";
+newel = document.createElement('div');
+newel.innerHTML = "-";
+tmpLCbox.appendChild(newel);
+// append a clear div to tmpLCbox
+tclrdv = document.createElement('div');
+tclrdv.style.clear="both";
+tmpLCbox.appendChild(tclrdv);
+
+ 
+
+tmpLbox.style.height = tmpLCbox.clientHeight + 180;
+}
+tmpLCbox.style.display='block';
+
+// stop = window.pageYOffset + 30;
+stop = getScrollTop() + 30;
+tmpLCbox.style.top=stop+"px";
+
+// window.scrollTo(0,0);
+// tmpLCbox.style.height="100%";
+// tmpLCbox.style.top="5px";
+if(getViewportWidth() > 500) {}
+iMdl = Math.round((getViewportWidth() - tmpLCbox.clientWidth) / 2);
+tmpLCbox.style.left=iMdl+"px";
+
+// tmpLCbox.style.position="fixed";
+} catch(e) {
+    alert("JSSHOP.ui.popNuFillLbox: " + e);
+    }
+    if(isJApp == "yes") {
+        app.doscrllVwToTop();
+        // app.getWVScrollY();
+        } 
+};
+
+
+ 
+
+
+JSSHOP.ui.popLbox = function() {
+try {
+document.getElementById('lightbox').style.display='inline';
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, "JSSHOP.popLbox");
+}
+};
+
+JSSHOP.ui.closeLbox = function() {
+
+    if(isJApp == "ayes") {
+        app_dlg.getEpMDcom(60,"close");
+    } else {
+document.getElementById('lightbox').style.display='none';
+document.getElementById('lightbox_content').style.top='-800px';
+document.getElementById('lightbox_content').style.display='none';
 }
 
-
-	JSSHOP.ui.tglGridRow = function(theMnDiv, theOldCls, theNewCls) {
-	pTglDiv = document.getElementById(theMnDiv);
-
-	if(document.getElementsByClassName(theOldCls)) {
-	pTglElmnts = document.getElementsByClassName(theOldCls);
-	tNowCls = theNewCls;
-
-	} else {
-	pTglElmnts = document.getElementsByClassName(theNewCls);
-	tNowCls = theOldCls;
-	 
-	}
-
-
-		for (var iDDs = 0; iDDs < pTglElmnts.length; iDDs++) {
-		try {
-		pTglElmnts[iDDs].className = "";
-	 
-		pTglElmnts[iDDs].className = "rtable";
-		pTglElmnts[iDDs].className = tNowCls;
-		} catch(e) {
-		console.log("JSSHOP.ui.tglGridRow: " + e + " :: " +  pTglElmnts[iDDs])
-		}
-		} 
-
-	};
-
-	JSSHOP.ui.popFScreenDiv = function(thePDiv) {
-
-	if (
-		document.fullscreenElement ||
-		document.webkitFullscreenElement ||
-		document.mozFullScreenElement ||
-		document.msFullscreenElement
-	  ) {
-		if (document.exitFullscreen) {
-		 thePDiv.className = "donada";
-		  document.exitFullscreen();
-		} else if (document.mozCancelFullScreen) {
-		  document.mozCancelFullScreen();
-		} else if (document.webkitExitFullscreen) {
-		  document.webkitExitFullscreen();
-		} else if (document.msExitFullscreen) {
-		  document.msExitFullscreen();
-		}
-
-	  } else {
-		 thePDiv.className = "overScroll";
-		if (thePDiv.requestFullscreen) {
-		  thePDiv.requestFullscreen();
-		} else if (thePDiv.mozRequestFullScreen) {
-		  thePDiv.mozRequestFullScreen();
-		} else if (thePDiv.webkitRequestFullscreen) {
-		  thePDiv.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-		} else if (thePDiv.msRequestFullscreen) {
-		  thePDiv.msRequestFullscreen();
-		}
-	  }
-
-	};
-
-	document.addEventListener('fullscreenchange', exitHandler);
-	document.addEventListener('webkitfullscreenchange', exitHandler);
-	document.addEventListener('mozfullscreenchange', exitHandler);
-	document.addEventListener('MSFullscreenChange', exitHandler);
-	
-	function exitHandler() {
-		if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
-			console.log("this is not fullscreen");
-			closeDBbox();
-			JSSHOP.ui.showHideElement("dv-xss-container", "hide");
-		} else {
-			console.log("this fullscreen");
-			
-			}
-		 
-
-		}
-	
-
-	JSSHOP.ui.popLboxDiv = function(thePDiv) {
-	// spinner.stop();
-	try {
-
-	currLBoxDiv = document.getElementById(thePDiv);
-	if(currLBoxDiv.parentNode) {
-	currLBoxPar = currLBoxDiv.parentNode;
-	}
-	currLBoxDiv = "";
-	currLBoxPar = currLBoxDiv.innerHTML;
-
-	tmpLbox = document.getElementById('lightbox');
-	tmpLCbox = document.getElementById(thePDiv);
-	tmpLbox.style.display="inline";
-	 
-	tmpLCbox.style.position="absolute";
-	tmpVheight = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight;
-	if(tmpLCbox.clientHeight >= tmpVheight) {
-	// tmpLbox.style.position="absolute";
-	cwel = document.createElement('div');
-	acfullResp = "<span onclick=\"JSSHOP.ui.closeLbox();\" style=\"float:right\">Close</span>";
-	cwel.innerHTML = acfullResp;
-	tmpLCbox.appendChild(cwel);
-	newel = document.createElement('div');
-	newel.className = "bkgdClrWhite";
-
-	newel.innerHTML = "New Inserted";
-
-	tmpLCbox.appendChild(newel);
-	tmpLbox.style.height = tmpLCbox.clientHeight + 180;
-	}
-	tmpLCbox.style.display='block';
-	 
-
-	stop = getScrollTop() + 10;
-	tmpLCbox.style.top=stop+"px";
-	// scrollToElement("dvHdr");
-	// window.scrollTo(0,0);
-	// tmpLCbox.style.top="5px";
-	if(getViewportWidth() > 500) {}
-	iMdl = Math.round((getViewportWidth() - tmpLCbox.clientWidth) / 2);
-	tmpLCbox.style.left=iMdl+"px";
-
-	// tmpLCbox.style.position="fixed";
-	} catch(e) {
-	alert("JSSHOP.ui.popLboxDiv.ERROR: " + e);
-	}
-	};
-
-
-
-	JSSHOP.ui.popNurLboxDiv = function(thePDiv) {
-		// spinner.stop();
-		try {
-	
-		currLBoxDiv = document.getElementById(thePDiv);
-
-		currLBoxPar = currLBoxDiv.parentNode;
-		currLBoxPID = currLBoxPar.id;
-		JSSHOP.ui.toggleVisibility(currLBoxPID);
-	
-			// add a click event listener to currLBoxPar to hide currLBoxDiv and currLBoxPar
-
-		tmpLbox = currLBoxPar;
-		tmpLCbox = document.getElementById(thePDiv);
-		tmpLbox.style.display="inline";
-		 
-		tmpLCbox.style.position="absolute";
-		tmpVheight = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight;
-		if(tmpLCbox.clientHeight >= tmpVheight) {
-		// tmpLbox.style.position="absolute";
-
-		// create a function to remove all event listeners from the currLBoxPar
-		
-
-
-		newel = document.createElement('div');
-		newel.className = "bkgdClrWhite";
-	
-		newel.innerHTML = "New Inserted";
-	
-		// tmpLCbox.appendChild(newel);
-		tmpLbox.style.height = tmpLCbox.clientHeight + 180;
-		}
+};
  
-		tmpLCbox.style.display='block';
+JSSHOP.ui.closePopMenus = function() {
+try {
+document.getElementById('lightbox').style.display='none';
+// document.getElementById('mmDdown').style.display='none';
+// document.getElementById('mmDdown').style.visibility='hidden';
+// document.getElementById('dvMnuT').style.display='none';
+// document.getElementById('dvMnuT').style.visibility='hidden';
+document.getElementById('lightbox_content').style.top='-800px';
+document.getElementById('lightbox_content').style.display='none';
+document.getElementById('dvSandMap').style.top='-800px';
+document.getElementById('dvSandMap').style.display='none';
 
-		currLBoxPar.addEventListener("click", function(e) {
-			if(e.target !== this) {
-				// if its cwel also remove the event listener
-	 
-				return;
-			}
-			// alert("clicked on currLBoxPar");
+} catch(e) {
+    alert("no closePopMenus: " + e);
+JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.closePopMenus");
+}
+};
 
-			// JSSHOP.ui.toggleVisibility(currLBoxDiv.id);
-			JSSHOP.ui.showHideElement(currLBoxPar.id, "hide");
-						currLBoxPar.removeEventListener("click", arguments.callee, true);
+JSSHOP.ui.setfaction = function(fname, sumbmitbool, alertstring)
+{
+try {
+if(alertstring != null){
+if((confirm(alertstring)) && (sumbmitbool)) {
+document[fname].submit();
+} else {
+alertstring = "";
+}
+}
+if(sumbmitbool) {
+document[fname].submit();
+}
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, "JSSHOP.setfaction");
+}
+};
 
-			// remove the event listener
-		}, true);
+
+JSSHOP.ui.setTopTip = function(tmpTipStr) {
+try {
+strTip = "<img src=\"images/checked_g.gif\" class=\"clsToolTipImage\">";
+strTip += "&nbsp;<span class=\"txtSmall txtClrDlg\">" + tmpTipStr + "</span>";
+return strTip;
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, "JSSHOP.setfaction");
+return " - ";
+}
+};
+ 
+JSSHOP.ui.setLblHighlight = function(theTmpFld,theTmpFldTxt,theTmpLbl,theTmpLblTxt) {
+
+try {
+/*
+var fvTFI = theTmpFld.id;
+sFieldType = theTmpFld.nodeName.toUpperCase() === "INPUT" ? theTmpFld.getAttribute("type").toUpperCase() : "TEXT";
+if ((sFieldType !== "RADIO" || sFieldType !== "CHECKBOX") || (theB.nodeName.toUpperCase() === "DIV")) {
+JSSHOP.ui.addEvent(theTmpFld, "focus", function() {  theTmpLbl.className = "txtClrHdr";ax = theTmpFld.value;theTmpFld.value = '';theTmpFld.value=ax;  theTmpFld.selectionStart = theTmpFld.selectionEnd = 10000;});
+} else {
+
+}
+*/
+JSSHOP.ui.addEvent(theTmpFld, "focus", function() {  theTmpLbl.className = "txtClrHdr";});
+
+JSSHOP.ui.addEvent(theTmpFld, "blur", function() {  theTmpLbl.className = "txtClrDDlg";return false; });
+// JSSHOP.ui.addEvent(theTmpfld, "blur", function() { theTmpLbl.className = 'txtClrDlg' });
+
+} catch(e) {
+alert("JSSHOP.ui.setLblHighlight: " + e + " :: " + theTmpLblTxt);
+// JSSHOP.logJSerror(e, arguments, "JSSHOP.setLblHighlight");
+}
+};
+
+
+
+JSSHOP.ui.doInpDVFocusEv = function(theElem, theDefText) {
+try {
+if(theElem.value==theDefText) {
+theElem.value = "";
+}
+theElem.style.color="#000000";
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, doInputFocusEv);
+}
+};
+ 
+JSSHOP.ui.doInpDVBlurEv = function(theElem, theDefText) {
+try {
+if(theElem.value == ""){
+theElem.value=theDefText;
+}
+theElem.style.color="#999966";
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, "doInputBlurEv");
+}
+};
+
+
+
+JSSHOP.ui.doDivDVFocusEv = function(theElem, theDefText) {
+try {
+if(theElem.innerText==theDefText){
+theElem.innerText="";
+}
+theElem.style.color="#000000";
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, doDivFocusEv);
+}
+};
+ 
+JSSHOP.ui.doDivDVBlurEv = function(theElem, theDefText) {
+try {
+if(theElem.innerText.length < 3){
+theElem.innerText=theDefText;
+}
+theElem.style.color="#999966";
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, "doDivBlurEv");
+}
+};
+
+
+JSSHOP.ui.doClassSet = function(theElem, theDefClass) {
+try {
+theElem.className=theDefClass;
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, "doClassSet");
+}
+};
+
+JSSHOP.ui.setDefFval = function(theTmpfld, theTmpFVal, theTmpFill) {
+try {
+console.log("setDefFval: " + theTmpfld + " :: " + theTmpFVal + " :: " + theTmpFill);
+if(theTmpfld.nodeName.toUpperCase() === "DIV") {
+if(theTmpFill !== "noQvalue") {
+JSSHOP.ui.doDivDVBlurEv(theTmpfld,theTmpFVal);
+}
+JSSHOP.ui.addEvent(theTmpfld, "focus", function() { JSSHOP.ui.doDivDVFocusEv(theTmpfld,theTmpFVal) });
+JSSHOP.ui.addEvent(theTmpfld, "blur", function() { JSSHOP.ui.doDivDVBlurEv(theTmpfld,theTmpFVal) });
+} else {
+if(theTmpFill !== "noQvalue") {
+JSSHOP.ui.doInpDVBlurEv(theTmpfld,theTmpFVal);
+}
+JSSHOP.ui.addEvent(theTmpfld, "focus", function() { JSSHOP.ui.doInpDVFocusEv(theTmpfld,theTmpFVal) });
+JSSHOP.ui.addEvent(theTmpfld, "blur", function() { JSSHOP.ui.doInpDVBlurEv(theTmpfld,theTmpFVal) });
+}
+} catch(e) {
+    console.log("JSSHOP.ui.setDefFval.ERROR: " +  theTmpfld + " :: " + e);
+JSSHOP.logJSerror(e, arguments, "JSSHOP.setDefFval");
+return " - ";
+}
+};
+
+
+/* Event Functions */
+
+// Add an event to the obj given
+// event_name refers to the event trigger, without the "on", like click or mouseover
+// func_name refers to the function callback when event is triggered
+JSSHOP.ui.addEvent = function(obj,event_name,func_name){
+try {
+	if (obj.attachEvent){
+		obj.attachEvent("on"+event_name, func_name);
+	}else if(obj.addEventListener){
+		obj.addEventListener(event_name,func_name,true);
+	}else{
+		obj["on"+event_name] = func_name;
+	}
+} catch(e) {
+ alert("JSSHOP.ui.addEvent: " + func_name );
+}
+};
+
+// Removes an event from the object
+JSSHOP.ui.removeEvent = function(obj,event_name,func_name){
+	if (obj.detachEvent){
+		obj.detachEvent("on"+event_name,func_name);
+	}else if(obj.removeEventListener){
+		obj.removeEventListener(event_name,func_name,true);
+	}else{
+		obj["on"+event_name] = null;
+	}
+};
+
+// Stop an event from bubbling up the event DOM
+JSSHOP.ui.stopEvent = function(evt){
+	evt || window.event;
+	if (evt.stopPropagation){
+		evt.stopPropagation();
+		evt.preventDefault();
+	}else if(typeof evt.cancelBubble != "undefined"){
+		evt.cancelBubble = true;
+		evt.returnValue = false;
+	}
+	return false;
+};
 
  
-		 
-	
-		stop = getScrollTop() + 10;
-		tmpLCbox.style.top="60px";
-		// scrollToElement("dvHdr");
-		// window.scrollTo(0,0);
-		// tmpLCbox.style.top="5px";
-		if(getViewportWidth() > 500) {}
-		iMdl = Math.round((getViewportWidth() - tmpLCbox.clientWidth) / 2);
-		tmpLCbox.style.left=iMdl+"px";
-	
-		// tmpLCbox.style.position="fixed";
-		} catch(e) {
-		alert("JSSHOP.ui.popNuLboxDiv.ERROR: " + e);
-		}
-		};
-	
 
-	JSSHOP.ui.popNuLboxDiv = function(thePDiv) {
-		// spinner.stop();
-		try {
-	
-		currLBoxDiv = document.getElementById(thePDiv);
+JSSHOP.ui.createLfButton = function(label, container) {
+    var btn = L.DomUtil.create('div', '', container);
+    btn.setAttribute('type', 'button');
+    btn.setAttribute('class', 'slmtable  gradient-color txtClrWhite');
+    btn.innerHTML = label;
+    return btn;
+};
 
-		currLBoxPar = currLBoxDiv.parentNode;
+JSSHOP.ui.setMapMrkrs = function(tMrkrArr) {
+    console.log("setMapMrkrs: " + tMrkrArr.length);
+    for (var i = 0; i < tMrkrArr.length; i++) {
+    var tMrkr = tMrkrArr[i];
+    tMrkr.addTo(map);
+    }
+};
 
-		tmpLbox = currLBoxPar;
-		tmpLCbox = document.getElementById(thePDiv);
-		tmpLbox.style.display="inline";
-		 
-		tmpLCbox.style.position="absolute";
-		tmpVheight = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight;
-		if(tmpLCbox.clientHeight >= tmpVheight) {
-		// tmpLbox.style.position="absolute";
-		cwel = document.createElement('div');
-		acfullResp = "<span onclick=\"JSSHOP.ui.closeLbox();\" style=\"float:right\">Close</span>";
-		cwel.innerHTML = acfullResp;
-		tmpLCbox.appendChild(cwel);
-		newel = document.createElement('div');
-		newel.className = "bkgdClrWhite";
-	
-		newel.innerHTML = "New Inserted";
-	
-		tmpLCbox.appendChild(newel);
-		tmpLbox.style.height = tmpLCbox.clientHeight + 180;
-		}
-		tmpLCbox.style.display='block';
-		 
-	
-		stop = getScrollTop() + 10;
-		tmpLCbox.style.top="60px";
-		// scrollToElement("dvHdr");
-		// window.scrollTo(0,0);
-		// tmpLCbox.style.top="5px";
-		if(getViewportWidth() > 500) {}
-		iMdl = Math.round((getViewportWidth() - tmpLCbox.clientWidth) / 2);
-		tmpLCbox.style.left=iMdl+"px";
-	
-		// tmpLCbox.style.position="fixed";
-		} catch(e) {
-		alert("JSSHOP.ui.popNuLboxDiv.ERROR: " + e);
-		}
-		};
+JSSHOP.ui.doGenMap = function(ttLatStr, ttLngStr) {
+    try {
+iti = 0; 
 
-	JSSHOP.ui.createLfButton = function(label, container) {
-		var btn = L.DomUtil.create('button', '', container);
-		btn.setAttribute('type', 'button');
-		btn.innerHTML = label;
-		return btn;
-	};
+xaCstr = document.getElementById('map').innerHTML;
+  if(xaCstr.length > 4){
+    /*
+    map.eachLayer(function (layer) {
+          map.removeLayer(layer);
+        console.log("Layer: " + layer);
+     
+    });
+    */
+/*
+    funcLayer = new L.TileLayer.Functional(function (view) {
+        var url = 'http://localhost:80/tiles/{z}/{y}/{x}.png'
+          .replace('{z}', view.zoom)
+          .replace('{x}', view.tile.row)
+          .replace('{y}', view.tile.column)
+          .replace('{s}', view.subdomain);
+        return url;
+      }   ,{
+        subdomains: '1234'
+      }  ).addTo(map);
+      */
+ console.log("Map Already Exists");
+ // map.setView(new L.LatLng( ttLatStr,  ttLngStr),14);
+return "OK";
+ // currNavIcon = L.marker([ttLatStr, ttLngStr], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:dropMrkr(o);">DROP</a></span>').addTo(map);
+ // JSSHOP.ui.setMapMrkrs(currMapMrkrArr);
+ // map.flyTo([ttLatStr, ttLngStr]);
+  } else {
+/*
+destNum = Math.floor(Math.random() * 300);
+tRAObj = xradars[destNum];
+var tDestLat = tRAObj.lat;
+var tDestLng = tRAObj.lng;
+*/
 
-	JSSHOP.ui.setMapMrkrs = function(tMrkrArr) {
-		for (var i = 0; i < tMrkrArr.length; i++) {
-		var tMrkr = tMrkrArr[i];
-		tMrkr.addTo(map);
-		}
-	};
-
-	JSSHOP.ui.doGenMap = function(ttLatStr, ttLngStr) {
-		try {
-	iti = 0; 
-	
-	xaCstr = document.getElementById('map').innerHTML;
-      if(xaCstr.length > 4){
-		map.eachLayer(function (layer) {
-			  map.removeLayer(layer);
-			console.log("Layer: " + layer);
-		 
-		});
-		funcLayer = new L.TileLayer.Functional(function (view) {
-			var url = 'http://localhost:80/tiles/{z}/{y}/{x}.png'
-			  .replace('{z}', view.zoom)
-			  .replace('{x}', view.tile.row)
-			  .replace('{y}', view.tile.column)
-			  .replace('{s}', view.subdomain);
-			return url;
-		  } /* ,{
-			subdomains: '1234'
-		  }*/ ).addTo(map);
-	 console.log("Map Already Exists");
- 	map.setView(new L.LatLng( ttLatStr,  ttLngStr),18);
-	return "OK";
-	 // currNavIcon = L.marker([ttLatStr, ttLngStr], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:dropMrkr(o);">DROP</a></span>').addTo(map);
-	 // JSSHOP.ui.setMapMrkrs(currMapMrkrArr);
-	 // map.flyTo([ttLatStr, ttLngStr]);
-      } else {
-	/*
-	destNum = Math.floor(Math.random() * 300);
-	tRAObj = xradars[destNum];
-	var tDestLat = tRAObj.lat;
-	var tDestLng = tRAObj.lng;
-	*/
-
-		var LeafIcon = L.Icon.extend({
-			options: {
-	 
-				iconSize:     [26, 26],
-	 
-				iconAnchor:   [-1, -1],
-	 
-				popupAnchor:  [-3, -16]
-			}
-		});
+    var LeafIcon = L.Icon.extend({
+        options: {
+ 
+            iconSize:     [26, 26],
+ 
+            iconAnchor:   [-1, -1],
+ 
+            popupAnchor:  [-3, -16]
+        }
+    });
 
 
 
 
 
-		var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			maxZoom: 18,
-			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-		});
+    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    });
 
-funcLayer = new L.TileLayer.Functional(function (view) {
-	      var url = 'http://localhost:80/tiles/{z}/{y}/{x}.png'
-	        .replace('{z}', view.zoom)
-	        .replace('{x}', view.tile.row)
-	        .replace('{y}', view.tile.column)
-	        .replace('{s}', view.subdomain);
-	      return url;
-	    } /* ,{
-	      subdomains: '1234'
-	    }*/ );
+ 
 
+    var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+        maxZoom: 18,
+        subdomains:['mt0','mt1','mt2','mt3'],
+         attribution: '&copy; <a href="http://www.google.com/maps">Google Maps</a>'
 
-		var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
-			maxZoom: 18,
-			subdomains:['mt0','mt1','mt2','mt3'],
-			 attribution: '&copy; <a href="http://www.google.com/maps">Google Maps</a>'
-	
-		});
-		var mqi = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
-			maxZoom: 18,
-			subdomains:['mt0','mt1','mt2','mt3'],
-			 attribution: '&copy; <a href="http://www.google.com/maps">Google Maps</a>'
-		});
+    });
+    var mqi = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+        maxZoom: 18,
+        subdomains:['mt0','mt1','mt2','mt3'],
+         attribution: '&copy; <a href="http://www.google.com/maps">Google Maps</a>'
+    });
 
-	/* not includinf these for now
+/* not includinf these for now
 
 
-	// var     mqi = L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png", {subdomains: ['otile1','otile2','otile3','otile4'], attribution: '&copy; <a href="http://www.mapquest.org/">MapQuest</a>'});
-		// var mqi = L.tileLayer(mbUrl, {id: 'mapbox/satellite-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr});
+// var     mqi = L.tileLayer("http://{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png", {subdomains: ['otile1','otile2','otile3','otile4'], attribution: '&copy; <a href="http://www.mapquest.org/">MapQuest</a>'});
+    // var mqi = L.tileLayer(mbUrl, {id: 'mapbox/satellite-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr});
 
 
 
@@ -3136,1499 +6225,4477 @@ funcLayer = new L.TileLayer.Functional(function (view) {
 
 
 
-	var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
-		maxZoom: 20,
-		subdomains:['mt0','mt1','mt2','mt3'],
-		 attribution: '&copy; <a href="http://www.google.com/maps">Google Maps</a>'
+var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3'],
+     attribution: '&copy; <a href="http://www.google.com/maps">Google Maps</a>'
 
-	});
-		// map = L.map('map').setView([qlogc_lat.value, qlogc_lng.value], 12);
+});
+    // map = L.map('map').setView([qlogc_lat.value, qlogc_lng.value], 12);
 
-	*/
-	
+*/
+
 corner1 = L.latLng(41, -9),
 corner2 = L.latLng(36, -7),
 themaxbounds = L.latLngBounds(corner1, corner2);
 
-	// generate-tiles bounds=--10,42.8,-6,36.6 minzoom=14 maxzoom=14 tilesdir=d:\www\htdocs\logipal\leaflet\tiles
-	map = L.map('map', {
-		center: [ttLatStr, ttLngStr],
-		minZoom: 6,
-		maxZoom: 18,
-		zoomControl: true,
-		preferCanvas: false,
-		// maxBounds: themaxbounds,
-		zoomAnimation:false,
-		fullscreenControl: true,
-	  fullscreenControlOptions: {
-		position: 'topleft',
-		content: '<img src="js/leaflet/images/full_screen.gif" width="95%" height="95%">'
-	  },
-		layers: [osm]
-	});
+// generate-tiles bounds=--10,42.8,-6,36.6 minzoom=14 maxzoom=14 tilesdir=d:\www\htdocs\logipal\leaflet\tiles
+map = L.map('map', {
+    center: [ttLatStr, ttLngStr],
+    minZoom: 6,
+    maxZoom: 18,
+    zoomControl: true,
+    preferCanvas: false,
+    // maxBounds: themaxbounds,
+    zoomAnimation:false,
+    fullscreenControl: true,
+  fullscreenControlOptions: {
+    position: 'topleft',
+    content: '<img src="js/leaflet/images/full_screen.gif" width="95%" height="95%">'
+  },
+    layers: [osm]
+});
 
-	map.setView(new L.LatLng( ttLatStr,  ttLngStr),20);
-
-
-	
-
-		var baseMaps = {
-				'OpenStreetMap': osm,	
-			'Logipal': funcLayer,
-			'Goodle Satellite': mqi,
-			"Street": googleStreets
-	
-
-	/*		
-			'Goodle Streets': googleStreets,
-			'Goodle Satellite': mqi,
-			'Goodle Hybrid': googleHybrid,
-	*/
-		};
-	/*
-		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-		}).addTo(map);
-	*/
-
-		bounds = L.latLngBounds() // Instantiate LatLngBounds object
-	 
-
-
-	 layerControl = L.control.layers(baseMaps).addTo(map);
+map.setView(new L.LatLng( ttLatStr,  ttLngStr),14);
 
 
 
 
+    var baseMaps = {
+            'OpenStreetMap': osm,	
+        'Goodle Satellite': mqi,
+        "Street": googleStreets
 
 
- 
-    // routeControl.hide();
-	var helloPopup = L.popup().setContent('Hello World!');
-	var popup = L.popup({closeOnClick: false, autoClose: false, closeButton: true, autoPan: false });
-	popup.className = "brdrClrHdr";
-
-
-	L.easyButton('<img src="js/leaflet/images/full_screen.gif" width="22px">', function(btn, map){
-		
-	//  popup.options.offset = e.target.options.icon.options.popupAnchor;
-	   map.setView(new L.LatLng( ttLatStr,  ttLngStr),16);
-
-
-
-
-	 
-
-	}).addTo(map);
-
-
-	 L.easyButton('<img src="js/leaflet/images/chat.gif" width="22px">', function(btn, map){
-		popup.setContent(dvMnuT.innerHTML).setLatLng(map.getCenter()).addTo(map);
-		// alert(qlogc_lat.value + " :: " + qlogc_lng.value);
-	}).addTo(map);
-
-
-	//   var routeArray = new Array();
-	//   routeArray = routeControl.getWaypoints();
-
-	//   alert(JSON.stringify(routeArray));
-
-
-
-	 // map.flyTo([ttLatStr, ttLngStr]);
-
-		var container = L.DomUtil.create('div'),
-			startBtn = JSSHOP.ui.createLfButton('Start from this location', container),
-			destBtn = JSSHOP.ui.createLfButton('Go to this location', container);
-
-	/**/
-	map.on('contextmenu', function(e) {
-			currStartLat = e.latlng.lat;
-			currStartLng = e.latlng.lng;
-			console.log(getTileURL(e.latlng.lat, e.latlng.lng, map.getZoom()))
-			// alert('f: ' + e.latlng.lat + ", " + e.latlng.lng);
-		L.popup()
-			.setContent(container)
-			.setLatLng(e.latlng)
-			.openOn(map);
-	});
-
-	L.DomEvent.on(startBtn, 'click', function(e) {
-			alert('f: ' + JSON.stringify(e));
-			var tInpT = document.getElementById('inpStrtLoc');
-			// tInpT.value = currStartLat + ", " + currStartLng;
-			tInpT.focus();
-			// routeControl.selectInputText(tInpT);
-			routeControl.spliceWaypoints(0, 1, new L.LatLng(currStartLat, currStartLng));
-			map.closePopup();
-		});
-
-	   L.DomEvent.on(destBtn, 'click', function(e) {
-			routeControl.spliceWaypoints(routeControl.getWaypoints().length - 1, 1,  new L.LatLng(currStartLat, currStartLng));
-			map.closePopup();
-		});
-
-
-
-
-			// var tInpT = document.getElementById('inpStrtLoc');
-			// tInpT.value = qlogc_lat.value + ", " + qlogc_lng.value;
-			// tInpT.focus();
-			// routeControl.selectInputText(tInpT);
-			// routeControl.spliceWaypoints(0, 1, new L.LatLng(qlogc_lat.value, qlogc_lng.value));
-
-
-
-	var mtImDSStr = "leaflet/images/tr6.gif";
-	var mredIcon = new LeafIcon({iconUrl: mtImDSStr});
-
-	 
-
-	var options = {
-							icon: mredIcon
-						};
-
-
-						// JSSHOP.ui.setMapMrkrs(currMapMrkrArr);
-					// 	currNavIcon = L.marker([qlogc_lat.value, qlogc_lng.value], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:dropMrkr(o);">DROP</a></span>').addTo(map);
-				 
-	 
-						return "OK";
-	// currNavIcon = L.marker([qlogc_lat.value, qlogc_lng.value]).addTo(map);
-       //    setTimeout("dupe()", 1000);
-	// JSSHOP.loadScript("js/vrp/wasm-vrpcli.js", JSSHOP.checkLoader,"module");
-	  }// end of else container not null
-		} catch(e) {
- 
-			return "ERR" + e
-	}
-	};
-	 
-	JSSHOP.ui.popLboxMap = function(tLocLat, tLocLng, thePLMFunc) {
-	// spinner.stop();
-	try {
-		currMapLatStr = tLocLat;
-		currMapLngStr = tLocLng;
-		// currMapMrkrArr = new Array();
-		// currMapMrkrArr.push([tLocLat, tLocLng]);
-
-	
-
-	  
-	  
-	tmpLbox = document.getElementById('lightbox');
-	tmpLCbox = document.getElementById('dvSandMap');
-	tmpLbox.style.display="inline";
-
-	tmpLCbox.style.position="absolute";
-	tmpVheight = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight;
-	if(tmpLCbox.clientHeight >= tmpVheight) {
-	// tmpLbox.style.position="absolute";
-	newel = document.createElement('div');
-	newel.innerHTML = "New Inserted";
-	tmpLCbox.appendChild(newel);
-	tmpLbox.style.height = tmpLCbox.clientHeight + 180;
-	}
-	tmpLCbox.style.display='block';
-	 
-
-	stop = getScrollTop() + 10;
-	tmpLCbox.style.top=stop+"px";
-	// scrollToElement("dvHdr");
-	// window.scrollTo(0,0);
-	// tmpLCbox.style.top="5px";
-	if(getViewportWidth() > 500) {}
-	iMdl = Math.round((getViewportWidth() - tmpLCbox.clientWidth) / 2);
-	tmpLCbox.style.left=iMdl+"px";
- 
-		tDGMretStr = JSSHOP.ui.doGenMap(tLocLat, tLocLng);
-		if(tDGMretStr == "OK") {
-			tDGMF = window[thePLMFunc];
-			tDGMF();
-		} else {
-			alert("Error: " + tDGMretStr);
-		}
-	// tmpLCbox.style.position="fixed";
-	tmpLCbox.width=tmpLCbox.width + 2;
-	setTimeout(function () {
-		window.dispatchEvent(new Event('resize'));
-	}, 1000);
-	} catch(e) {
-	alert("popLboxMap: " + e);
-	}
-	};
-
-
-
-
-
-
-
-
-	if (typeof(Number.prototype.toRad) === "undefined") {
-		Number.prototype.toRad = function() {
-		  return this * Math.PI / 180;
-		}
-	  }
-	function getTileURL(lat, lon, zoom) {
-
-		var xtile = parseInt(Math.floor( (lon + 180) / 360 * (1<<zoom) ));
-		var ytile = parseInt(Math.floor( (1 - Math.log(Math.tan(lat.toRad()) + 1 / Math.cos(lat.toRad())) / Math.PI) / 2 * (1<<zoom) ));
-		return "" + zoom + "/" + xtile + "/" + ytile;
-	}
-
-
-
-	JSSHOP.ui.popLbox = function() {
-	try {
-	document.getElementById('lightbox').style.display='inline';
-	} catch(e) {
-	JSSHOP.logJSerror(e, arguments, "JSSHOP.popLbox");
-	}
-	};
-	
-	JSSHOP.ui.closePopMenus = function() {
-try {
-document.getElementById('lightbox').style.display='none';
-document.getElementById('lightbox_content').style.top='-800px';
-document.getElementById('lightbox_content').style.display='none';
-/*
-document.getElementById('mmDdown').style.display='none';
-document.getElementById('mmDdown').style.visibility='hidden';
-document.getElementById('dvMnuT').style.display='none';
-document.getElementById('dvMnuT').style.visibility='hidden';
-if(document.getElementById('dvSandMap')) {
-document.getElementById('dvSandMap').style.display='none';
+/*		
+        'Goodle Streets': googleStreets,
+        'Goodle Satellite': mqi,
+        'Goodle Hybrid': googleHybrid,
 */
+    };
+/*
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+*/
+
+    bounds = L.latLngBounds() // Instantiate LatLngBounds object
+ 
+
+
+ layerControl = L.control.layers(baseMaps).addTo(map);
+
+
+
+
+
+
+
+// routeControl.hide();
+var helloPopup = L.popup().setContent('Hello World!');
+var popup = L.popup({closeOnClick: false, autoClose: false, closeButton: true, autoPan: false });
+popup.className = "brdrClrHdr";
+
+
+ 
+ 
+
+//   var routeArray = new Array();
+//   routeArray = routeControl.getWaypoints();
+
+//   alert(JSON.stringify(routeArray));
+
+
+
+ // map.flyTo([ttLatStr, ttLngStr]);
+
+    var container = L.DomUtil.create('div'),
+        startBtn = JSSHOP.ui.createLfButton('Set', container);
+        container.appendChild(document.createElement('br'));
+        // destBtn = JSSHOP.ui.createLfButton('Set', container);
+
+/**/
+map.on('contextmenu', function(e) {
+        currStartLat = e.latlng.lat;
+        currStartLng = e.latlng.lng;
+        // console.log(getTileURL(e.latlng.lat, e.latlng.lng, map.getZoom()))
+        // alert('f: ' + e.latlng.lat + ", " + e.latlng.lng);
+    L.popup()
+        .setContent(container)
+        .setLatLng(e.latlng)
+        .openOn(map);
+});
+
+L.DomEvent.on(startBtn, 'click', function(e) {
+        alert('f: ' + JSON.stringify(e));
+        var tInpT = document.getElementById('inpStrtLoc');
+        // tInpT.value = currStartLat + ", " + currStartLng;
+        tInpT.focus();
+        // routeControl.selectInputText(tInpT);
+        routeControl.spliceWaypoints(0, 1, new L.LatLng(currStartLat, currStartLng));
+        map.closePopup();
+    });
+
+   L.DomEvent.on(destBtn, 'click', function(e) {
+        routeControl.spliceWaypoints(routeControl.getWaypoints().length - 1, 1,  new L.LatLng(currStartLat, currStartLng));
+        map.closePopup();
+    });
+
+
+
+
+        // var tInpT = document.getElementById('inpStrtLoc');
+        // tInpT.value = qlogc_lat.value + ", " + qlogc_lng.value;
+        // tInpT.focus();
+        // routeControl.selectInputText(tInpT);
+        // routeControl.spliceWaypoints(0, 1, new L.LatLng(qlogc_lat.value, qlogc_lng.value));
+
+
+
+var mtImDSStr = "leaflet/images/tr6.gif";
+var mredIcon = new LeafIcon({iconUrl: mtImDSStr});
+
+ 
+
+var options = {
+                        icon: mredIcon
+                    };
+
+
+                    // JSSHOP.ui.setMapMrkrs(currMapMrkrArr);
+                // 	currNavIcon = L.marker([qlogc_lat.value, qlogc_lng.value], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:dropMrkr(o);">DROP</a></span>').addTo(map);
+             
+ 
+                    return "OK";
+// currNavIcon = L.marker([qlogc_lat.value, qlogc_lng.value]).addTo(map);
+   //    setTimeout("dupe()", 1000);
+// JSSHOP.loadScript("js/vrp/wasm-vrpcli.js", JSSHOP.checkLoader,"module");
+  }// end of else container not null
+    } catch(e) {
+
+        return "ERR" + e
+}
+};
+ 
+JSSHOP.ui.popLboxMap = function(tLocLat, tLocLng, thePLMFunc) {
+// spinner.stop();
+try {
+    currMapLatStr = tLocLat;
+    currMapLngStr = tLocLng;
+    // currMapMrkrArr = new Array();
+    // currMapMrkrArr.push([tLocLat, tLocLng]);
+
+
+
+  
+  
+tmpLbox = document.getElementById('lightbox');
+tmpLCbox = document.getElementById('dvSandMap');
+tmpLbox.style.display="inline";
+
+tmpLCbox.style.position="absolute";
+tmpVheight = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight;
+if(tmpLCbox.clientHeight >= tmpVheight) {
+// tmpLbox.style.position="absolute";
+newel = document.createElement('div');
+newel.innerHTML = "New Inserted";
+tmpLCbox.appendChild(newel);
+tmpLbox.style.height = tmpLCbox.clientHeight + 180;
+}
+tmpLCbox.style.display='block';
+ 
+
+stop = getScrollTop() + 10;
+tmpLCbox.style.top=stop+"px";
+// scrollToElement("dvHdr");
+// window.scrollTo(0,0);
+// tmpLCbox.style.top="5px";
+if(getViewportWidth() > 500) {}
+iMdl = Math.round((getViewportWidth() - tmpLCbox.clientWidth) / 2);
+tmpLCbox.style.left=iMdl+"px";
+
+    tDGMretStr = JSSHOP.ui.doGenMap(tLocLat, tLocLng);
+    if(tDGMretStr == "OK") {
+        // tDGMF = window[thePLMFunc];
+        // tDGMF();
+    } else {
+        alert("Error: " + tDGMretStr);
+    }
+// tmpLCbox.style.position="fixed";
+tmpLCbox.width=tmpLCbox.width + 2;
+setTimeout(function () {
+    window.dispatchEvent(new Event('resize'));
+}, 1000);
 } catch(e) {
-	// alert("closePopMenus: " + e);
-JSSHOP.logJSerror(e, arguments, "JSSHOP.closePopMenus");
+alert("popLboxMap: " + e);
 }
 };
 
 
 
-	JSSHOP.ui.closeLbox = function() {
+
+
+
+
+
+if (typeof(Number.prototype.toRad) === "undefined") {
+    Number.prototype.toRad = function() {
+      return this * Math.PI / 180;
+    }
+  }
+
+  
+JSSHOP.ui.stringToColour = function(str) {
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    var colour = '#';
+    for (var i = 0; i < 3; i++) {
+      var value = (hash >> (i * 8)) & 0xFF;
+      colour += ('00' + value.toString(16)).substr(-2);
+    }
+       return colour;
+  };
+
+
  
-	document.getElementById('lightbox').style.display='none';
-	document.getElementById('lightbox_content').style.top='-800px';
-	document.getElementById('lightbox_content').style.display='none';
-	if(document.getElementById("dvSandMap")) {
- 	document.getElementById('dvSandMap').style.top='-800px';
-	document.getElementById('dvSandMap').style.display='none';
-	}
 
-	};
-	 
-	JSSHOP.ui.setAppFAction = function(tSAFASTr, tSAFBQstr, tSAFBCBFunc) {
-  // alert("setAppFAction: " + tSAFBQstr);
-  console.log("setAppFAction: " + tSAFBQstr);
-	};
+/*
+* shop funcitions
+*/
 
 
-	JSSHOP.ui.getAppFAction = function(tSAFAActSTr, tSAFAQstr)
-	{
-	try {	
-		JSSHOP.ajax.doNuAjaxPipe(null, "app.php?action=" + tSAFAActSTr + "&q=" + tSAFAQstr, JSSHOP.ui.setAppFAction);
+
+
+
+
+
+JSSHOP.shop.setCurrItemArr = function(tmpIarr) {
+currItemArr = null;
+currItemArr = tmpIarr;
+};
+JSSHOP.shop.getCurrItemArr = function() {
+return currItemArr;
+};
+JSSHOP.shop.setCurrItemsArr = function(tmpIarr) {
+currItemsArr = null;
+currItemsArr = tmpIarr;
+};
+JSSHOP.shop.getCurrItemsArr = function() {
+return currItemsArr;
+};
+JSSHOP.shop.setCurrMItemsArr = function(tmpIarr) {
+currMItemsArr = null;
+currMItemsArr = tmpIarr;
+};
+JSSHOP.shop.getCurrMItemsArr = function() {
+return currMItemsArr;
+};
+JSSHOP.shop.getCurrIArrIndex = function(tIint) {
+// alert("getCurrIArrIndex " + JSON.stringify(currItemsArr[tIint]));
+return currItemsArr[tIint];
+};
+JSSHOP.shop.getCurrMIArrIndex = function(tIint) {
+// alert("getCurrMIArrIndex " + JSON.stringify(currMItemsArr[tIint]));
+return currMItemsArr[tIint];
+};
+
+var setPopCartIArr = function(theObj,b,iei) {
+currCartIArr = null;
+currCartIArr = [];
+currCartIArr = JSON.parse(b);
+JSSHOP.shop.doCartAddPop();
+setCartIArr("y", b, "n");
+// JSSHOP.ui.setCBBClickClr(document.getElementById(theObj),'cls_button cls_button-medium brdrClrDlg txtClrHdr','cls_button cls_button-xxsmall bkgdClrNrml brdrClrDlg txtClrHdr', function(){JSSHOP.shop.doCartAddPop()});
+
+// JSSHOP.ui.setCBBClickClr(document.getElementById(theObj),'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr bkgdClrWhite', function(){window.scrollTo(0,0);JSSHOP.ui.setCBBClickClr(document.getElementById('ahCartIcon'),'cls_button cls_button-medium brdrClrDlg txtClrHdr','clsDummy', function(){void(0)})});
+};
+
+var xdoAddFnsh = function(theObj,b,iei) {
+
+    tmpDOs = null;
+    tmpDOs = {};
+    tmpDOs["ws"] = "where ci_uid=? and ci_coid=? and ci_cartqty >? and ci_rtype=? and ci_cartid=?";
+    tmpDOs["wa"] = [quid,cid,0,5,cartID]; 
+    oi = getNuDBFnvp("qcartitem",5,null,tmpDOs);
+    doQComm(oi["rq"], null, "setPopCartIArr");
+
+
+// JSSHOP.ui.setCBBClickClr(document.getElementById(theObj),'cls_button cls_button-medium brdrClrDlg txtClrHdr','cls_button cls_button-xxsmall bkgdClrNrml brdrClrDlg txtClrHdr', function(){JSSHOP.shop.doCartAddPop()});
+
+// JSSHOP.ui.setCBBClickClr(document.getElementById(theObj),'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr bkgdClrWhite', function(){window.scrollTo(0,0);JSSHOP.ui.setCBBClickClr(document.getElementById('ahCartIcon'),'cls_button cls_button-medium brdrClrDlg txtClrHdr','clsDummy', function(){void(0)})});
+};
+
+var xrenderCartPop = function(theObj,b, iei) {
+JSSHOP.ui.popAndFillLbox("loading...");
+tmpDOs = null;
+tmpDOs = {};
+
+tmpQtInt = 6;
+if(b.indexOf("_id") != -1) {
+// alert(b);
+var arrToFill = null;
+arrToFill = JSON.parse(b);
+ts = arrToFill[0];
+JSSHOP.shared.setFrmFieldVal("qcartitem", "_id", ts._id);
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_cartqty", Math.round(ts.ci_cartqty) + 1);
+tmpDOs["ws"] = "where ci_uid=? and ci_coid=? and ci_pid=?";
+tmpDOs["wa"] = [quid,cid,strRecID];
+tmpQtInt = 7;
+} else {
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_cartqty", 1);
+}
+tmpDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qcartitem"], "nada");
+// alert("renderCartPop: " + oi["rq"]);
+oi = getNuDBFnvp("qcartitem",tmpQtInt,theObj,tmpDOs);
+doQComm(oi["rq"], theObj, "xdoAddFnsh");
+};
+
+JSSHOP.shop.doQIadd = function(thePrdsArna, theObj,theId, iei){
+try {
+tmpVindex = iei;
+tsa = {};
+tsa = currProdsArr[thePrdsArna][iei];
+// alert("JSSHOP.shop.doQIadd"  + thePrdsArna + ":: " + iei + ":: " + JSON.stringify(currProdsArr[thePrdsArna][iei]));
+ 
+strRecID = tsa._id;
+strRecType = 51;
+
+var today = new Date().getTime();
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_uid", quid);
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_cartid", cartID);
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_coid", cid);
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_catid", tsa.i_catid);
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_pid", strRecID);
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_title", tsa.i_title);
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_price_a", tsa.i_price_a);
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_price_b", tsa.i_price_b);
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_dimen_n", tsa.i_dimen_n);
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_dimen_v", tsa.i_dimen_v);
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_img", tsa.i_img);
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_vala", tsa.i_vala);
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_valb", catid);
+JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_dadded", today);
+
+
+tmpDOs = null;
+tmpDOs = {};
+tmpDOs["ws"] = "where ci_uid=? and ci_coid=? and ci_pid=?";
+tmpDOs["wa"] = [quid,cid,strRecID];
+oi = getNuDBFnvp("qcartitem",5,null,tmpDOs);
+// alert(oi["rq"]);
+doQComm(oi["rq"], theObj, "xrenderCartPop");
 } catch(e) {
- 
-	console.log("getAppFAction.Error: " + e);
-	JSSHOP.logJSerror(e, arguments, "JSSHOP.setAppFAction");
-	}
-
-	};
-
-
-	JSSHOP.ui.setfaction = function(fname, sumbmitbool, alertstring)
-	{
-	try {
-	if(alertstring != null){
-	if((confirm(alertstring)) && (sumbmitbool)) {
-	document[fname].submit();
-	} else {
-	alertstring = "";
-	}
-	}
-	if(sumbmitbool) {
-	document[fname].submit();
-	}
-	} catch(e) {
-	JSSHOP.logJSerror(e, arguments, "JSSHOP.setfaction");
-	}
-	};
-
-
-	JSSHOP.ui.setTopTip = function(tmpTipStr) {
-	try {
-	strTip = "<img src=\"images/checked_g.gif\" class=\"clsToolTipImage\">";
-	strTip += "&nbsp;<span class=\"txtSmall txtClrDlg\">" + tmpTipStr + "</span>";
-	return strTip;
-	} catch(e) {
-	JSSHOP.logJSerror(e, arguments, "JSSHOP.setfaction");
-	return " - ";
-	}
-	};
-	 
-	JSSHOP.ui.setLblHighlight = function(theTmpFld,theTmpFldTxt,theTmpLbl,theTmpLblTxt) {
-
-	try {
-	/*
-	var fvTFI = theTmpFld.id;
-	sFieldType = theTmpFld.nodeName.toUpperCase() === "INPUT" ? theTmpFld.getAttribute("type").toUpperCase() : "TEXT";
-	if ((sFieldType !== "RADIO" || sFieldType !== "CHECKBOX") || (theB.nodeName.toUpperCase() === "DIV")) {
-	JSSHOP.ui.addEvent(theTmpFld, "focus", function() {  theTmpLbl.className = "txtClrHdr";ax = theTmpFld.value;theTmpFld.value = '';theTmpFld.value=ax;  theTmpFld.selectionStart = theTmpFld.selectionEnd = 10000;});
-	} else {
-
-	}
-	*/
-		
-	JSSHOP.ui.addEvent(theTmpFld, "focus", function() {  theTmpLbl.className = "txtClrDDlg";if(document.getElementById("tDvEr"+theTmpFld.id))JSSHOP.ui.fadeOutEffect("tDvEr"+theTmpFld.id);});
-	JSSHOP.ui.addEvent(theTmpFld, "blur", function() {  theTmpLbl.className = "txtClrHdr";return false; });
-	// JSSHOP.ui.addEvent(theTmpfld, "blur", function() { theTmpLbl.className = 'txtClrDlg' });
-
-	} catch(e) {
-	alert("JSSHOP.ui.setLblHighlight: " + e + " :: " + theTmpLblTxt);
-	// JSSHOP.logJSerror(e, arguments, "JSSHOP.setLblHighlight");
-	}
-	};
-
-
-
-	JSSHOP.ui.doInpDVFocusEv = function(theElem, theDefText) {
-	try {
-	if(theElem.value==theDefText) {
-	theElem.value = "";
-	}
-	theElem.style.color="#000000";
-	} catch(e) {
-	JSSHOP.logJSerror(e, arguments, doInputFocusEv);
-	}
-	};
-	 
-	JSSHOP.ui.doInpDVBlurEv = function(theElem, theDefText) {
-	try {
-	if(theElem.value == ""){
-	theElem.value=theDefText;
-	}
-	theElem.style.color="#999966";
-	} catch(e) {
-	JSSHOP.logJSerror(e, arguments, "doInputBlurEv");
-	}
-	};
-
-
-
-	JSSHOP.ui.doDivDVFocusEv = function(theElem, theDefText) {
-	try {
-	if(theElem.innerText==theDefText){
-	theElem.innerText="";
-	}
-	theElem.style.color="#000000";
-	} catch(e) {
-	JSSHOP.logJSerror(e, arguments, doDivFocusEv);
-	}
-	};
-	 
-	JSSHOP.ui.doDivDVBlurEv = function(theElem, theDefText) {
-	try {
-	if(theElem.innerText.length < 3){
-	theElem.innerText=theDefText;
-	}
-	theElem.style.color="#999966";
-	} catch(e) {
-	JSSHOP.logJSerror(e, arguments, "doDivBlurEv");
-	}
-	};
-
-
-	JSSHOP.ui.doClassSet = function(theElem, theDefClass) {
-	try {
-	theElem.className=theDefClass;
-	} catch(e) {
-	JSSHOP.logJSerror(e, arguments, "doClassSet");
-	}
-	};
-
-	JSSHOP.ui.setDefFval = function(theTmpfld, theTmpFVal, theTmpFill) {
-	try {
-
-	if(theTmpfld.nodeName.toUpperCase() === "DIV") {
-	if(theTmpFill !== "noQvalue") {
-	JSSHOP.ui.doDivDVBlurEv(theTmpfld,theTmpFVal);
-	}
-	JSSHOP.ui.addEvent(theTmpfld, "focus", function() { JSSHOP.ui.doDivDVFocusEv(theTmpfld,theTmpFVal) });
-	JSSHOP.ui.addEvent(theTmpfld, "blur", function() { JSSHOP.ui.doDivDVBlurEv(theTmpfld,theTmpFVal) });
-	} else {
-	if(theTmpFill !== "noQvalue") {
-	JSSHOP.ui.doInpDVBlurEv(theTmpfld,theTmpFVal);
-	}
-	JSSHOP.ui.addEvent(theTmpfld, "focus", function() { JSSHOP.ui.doInpDVFocusEv(theTmpfld,theTmpFVal) });
-	JSSHOP.ui.addEvent(theTmpfld, "blur", function() { JSSHOP.ui.doInpDVBlurEv(theTmpfld,theTmpFVal) });
-	}
-	} catch(e) {
-	JSSHOP.logJSerror(e, arguments, "JSSHOP.setDefFval");
-	return " - ";
-	}
-	};
-
-
-	/* Event Functions */
-
-	// Add an event to the obj given
-	// event_name refers to the event trigger, without the "on", like click or mouseover
-	// func_name refers to the function callback when event is triggered
-	JSSHOP.ui.addEvent = function(obj,event_name,func_name){
-	try {
-		if (obj.attachEvent){
-			obj.attachEvent("on"+event_name, func_name);
-		}else if(obj.addEventListener){
-			obj.addEventListener(event_name,func_name,true);
-		}else{
-			obj["on"+event_name] = func_name;
-		}
-	} catch(e) {
-	alert("JSSHOP.ui.addEvent: " + func_name );
-	}
-	};
-
-	// Removes an event from the object
-	JSSHOP.ui.removeEvent = function(obj,event_name,func_name){
-		if (obj.detachEvent){
-			obj.detachEvent("on"+event_name,func_name);
-		}else if(obj.removeEventListener){
-			obj.removeEventListener(event_name,func_name,true);
-		}else{
-			obj["on"+event_name] = null;
-		}
-	};
-
-	// Stop an event from bubbling up the event DOM
-	JSSHOP.ui.stopEvent = function(evt){
-		evt || window.event;
-		if (evt.stopPropagation){
-			evt.stopPropagation();
-			evt.preventDefault();
-		}else if(typeof evt.cancelBubble != "undefined"){
-			evt.cancelBubble = true;
-			evt.returnValue = false;
-		}
-		return false;
-	};
-
-
-
-
-
-
-
-	JSSHOP.ui.fadeOutEffect = function (tFOElmID) {
-    var fadeTarget = document.getElementById(tFOElmID);
-    var fadeEffect = setInterval(function () {
-        if (!fadeTarget.style.opacity) {
-            fadeTarget.style.opacity = 1;
-        }
-        if (fadeTarget.style.opacity > 0) {
-            fadeTarget.style.opacity -= 0.1;
-        } else {
-            clearInterval(fadeEffect);
-			fadeTarget.remove();
-			// pFN = fadeTarget.parentNode;
-			// pFN.removeChild(fadeTarget);
-			// fadeTarget.outerHTML = "";
-        }
-    }, 400);
+alert(e);
+}
 };
 
 
 
-//drag functions
-JSSHOP.ui.dragElement =  function(elmnt) {
-	var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-	if (document.getElementById(elmnt.id + "hdr")) {
-	  // if present, the header is where you move the DIV from:
-	  document.getElementById(elmnt.id + "hdr").onmousedown = dragMouseDown;
+
+JSSHOP.shop.doItemShowPop = function() {
+    loadNuJSModal("tplates/aa-mod-show-item.html?tt=" + JSSHOP.getUnixTimeStamp(), "trans");
+};
+
+
+
+ 
+
+
+JSSHOP.shop.doCartAddPop = function() {
+
+JSSHOP.ui.popAndFillLbox(JSSHOP.shop.renderNuCartItems("n", "y", 60));
+};
+
+JSSHOP.shop.doCAshow = function(thePrdsArna, theObj) {
+JSSHOP.ui.setCBBClickClr(document.getElementById(theObj),'crsrPointer icndbtn slmtable bkgdClrTtl brdrClrHdr txtClrHdr fltrImgInvClr','crsrPointer icndbtn', function(){void(0)});
+    JSSHOP.shared.setFrmVals("qitem",tmpVitemArr[tmpVindex],function() {doCartAddPop()});
+};
+
+JSSHOP.shop.doIshow = function(thePrdsArna, iei) {
+     // alert("JSSHOP.shop.doIshow "  + thePrdsArna + ":: " + iei + ":: " + JSON.stringify(currProdsArr[thePrdsArna][iei]));
+    JSSHOP.shop.setCurrItemArr(currProdsArr[thePrdsArna][iei]);
+    JSSHOP.shared.setFrmVals("qitem", currProdsArr[thePrdsArna][iei], function () {
+        JSSHOP.shop.doItemShowPop();
+    });
+};
+
+
+JSSHOP.shop.getIShowstr = function (thePrdsArna, rid, tmprhtml) {
+    strTret = "<div onclick=\"JSSHOP.ui.setCBBClickClr(this,'crsrPointer brdrClrHdr','crsrPointer brdrNone', function(){JSSHOP.shop.doIshow('" + thePrdsArna + "'," + rid + ");});\" class=\"crsrPointer brdrNone\">";
+    strTret += tmprhtml + "</div>";
+    return strTret;
+};
+
+
+
+JSSHOP.shop.getPrdPriceStr = function(thePrdsArna, prcInt, prcID, prcA, prcB){
+ 
+	 // retStrPrHtml +=  "<img src=\"images/cart_r.gif\" class=\"crsrPointer icndbtn\"  id=\"tdCI" + thePrdsArna  + prcID + "\" onclick=\"javascript:JSSHOP.shop.doQIadd('" + thePrdsArna + "',this.id," + prcID + "," + prcInt + ");\">";
+
+ 
+		try {
+ 	na = prcA - prcB;
+	nd = Math.round((na / prcA) * 100);
+	retStrPrHtml = "";
+        retStrPrHtml =  prcB +   " \u20AC"; // unicode ? is 
+	 // retStrPrHtml =  "<br><span class=\"txtBig txtClrDlg\">" + prcB + "</span>";
+	//  retStrPrHtml +=  "<img src=\"images/cart_r.gif\" class=\"crsrPointer icndbtn\"  id=\"tdCI" + thePrdsArna + prcID + "\" onclick=\"javascript:JSSHOP.shop.doQIadd('" + thePrdsArna + "',this.id," + prcID + "," + prcInt + ");\">";
+
+
+		return retStrPrHtml;
+		} catch(e) {
+		return retStrPrHtml;
+		}
+};
+
+JSSHOP.shop.getPrdImgStr = function(tTAnme, tmpVala){
+
+		retIstrI = "images/misc/example_thumb.png";
+		try {
+		tmpValb = tmpVala;
+ 		if((tmpValb.indexOf("lcl-") != -1) || (tmpValb.indexOf("rem-") != -1)) {
+		tmpVala = tmpValb.substring(4, tmpValb.length);
+		}
+ 		if(tmpVala.indexOf(".") != -1) {
+		if((tTAnme == "prodpg") || (tTAnme == "modItem")) {
+		retIstrI = "images/pimgs/" + tmpVala;	
+		} else {
+		retIstrI = "images/pimgs/s_thumb" + tmpVala;	
+		}  
+		}
+		if(isPhP == "no") {
+
+ 		if(tmpVala.indexOf(".gif") != -1) {
+
+		if(tTAnme == "prdmedia") {
+		tmpEstr = app.doThmbStr(tmpVala);
+		document.getElementById("fldChallArray").value = tmpEstr;
+		fullIstr = document.getElementById("fldChallArray").value;
+		retIstrI = "data:image/jpeg;base64, " + fullIstr;
+            } else {
+		tmpEstr = app.doGifStr(tmpVala);
+		document.getElementById("fldChallArray").value = tmpEstr;
+		fullIstr = document.getElementById("fldChallArray").value;
+		retIstrI = "data:image/gif;base64, " + fullIstr;
+		}
+
+		} else if(tmpVala.indexOf(".mp4") != -1) {
+
+		if(tTAnme == "prdmedia") {
+		tmpEstr = app.doThmbStr(tmpVala);
+		document.getElementById("fldChallArray").value = tmpEstr;
+		fullIstr = document.getElementById("fldChallArray").value;
+		retIstrI = "data:image/jpeg;base64, " + fullIstr;
+
+            } else {
+ 
+		tmpEstr = app.doGifStr(tmpVala);
+		document.getElementById("fldChallArray").value = tmpEstr;
+		fullIstr = document.getElementById("fldChallArray").value;
+		retIstrI = "data:video/mp4;base64, " + fullIstr;
+		}
+
+		} else {
+		tmpEstr = app.doThmbStr(tmpVala);
+		document.getElementById("fldChallArray").value = tmpEstr;
+		fullIstr = document.getElementById("fldChallArray").value;
+		retIstrI = "data:image/jpeg;base64, " + fullIstr;
+		}
+
+		}
+		return retIstrI;
+		} catch(e) {
+		return retIstrI;
+		}
+};
+
+
+
+
+JSSHOP.shop.setPrdImg = function(tsCatArrNm, tCIL) {
+try {
+ 
+if(ntImgCtr[tsCatArrNm] >= tCIL){
+clear(tsCatArrNm)();
+// currPgTitle = "c" + JSSHOP.getUnixTimeStamp();
+// document.title = currPgTitle; 
+} else {
+ass = null;
+ass = currProdsArr[tsCatArrNm][ntImgCtr[tsCatArrNm]];
+
+    image = null;
+    image = new Image();
+    image.src = JSSHOP.shop.getPrdImgStr(tsCatArrNm, ass.i_img);
+
+    image.onload = function() {
+        if(document.getElementById(tsCatArrNm + ass._id)) {
+	if(document.getElementById(tsCatArrNm + ass._id).src == image.src) {
+	// do nothing if its the example img
 	} else {
-	  // otherwise, move the DIV from anywhere inside the DIV:
-	  elmnt.onmousedown = dragMouseDown;
+       document.getElementById(tsCatArrNm + ass._id).src = image.src;
 	}
+	   } else { 
+	   // alert(tsCatArrNm + ass._id);
+	   }
+	ntImgCtr[tsCatArrNm] = ntImgCtr[tsCatArrNm] + 1;
+	// currPgTitle = JSSHOP.getUnixTimeStamp();
+	// document.title = currPgTitle; 
+    }
+    image.onerror = function() {
+	   ntImgCtr[tsCatArrNm] = ntImgCtr[tsCatArrNm] + 1;
+    }
+
+
+// document.getElementById(tsCatArrNm + ass._id).src = JSSHOP.shop.getPrdImgStr(tsCatArrNm, ass.i_img);
+
+}
+
+} catch(e) {
+// alert("ntImgCtr[tsCatArrNm]: " + ntImgCtr[tsCatArrNm] + " :: tsCatArrNm: " + tsCatArrNm + " :: " + "tCIL: " + tCIL);
+ntImgCtr[tsCatArrNm] = ntImgCtr[tsCatArrNm] + 1;
+// alert(e);
+// clear(tsCatArrNm)();
+}
+};
+ 
+ 
+
+
+
+JSSHOP.shop.setCatPrdImgs = function(tCatArrNm) {
+try {
+ 
+ntImgCtr[tCatArrNm] = 0;
+restart(tCatArrNm, function() { JSSHOP.shop.setPrdImg(tCatArrNm, currProdsArr[tCatArrNm].length) }, currImgSleep)();
+// JSSHOP.startNuIntrvlEvnt(tCatArrNm,  function() { JSSHOP.shop.setPrdImg(tCatArrNm, currProdsArr[tCatArrNm].length) }, currImgSleep);
+} catch(e) {
+alert("setCatPrdImgs " + e);
+}
+};
+
+JSSHOP.shop.rndrPrdMedia = function(aa,bb,cc) {
+// alert(bb);
+try {
+if(bb.indexOf("_id") != -1) {
+// tmpRPMArr  = JSON.parse(bb);
+
+}
+} catch(e) {
+alert("rndrPrdMedia " + e);
+}
+};
+
+
+JSSHOP.shop.getPrdMedia = function(tmpCatId,tmpIid,tmpGPMCB) {
+ 
+try {
+    tmpDOs = null;
+    tmpDOs = {};
+    // tmpDOs["ws"] = "where m_coid=? and  m_catid=? and m_pid=? and m_rtype=?";
+    // tmpDOs["wa"] = [cid,tmpCatId,tmpIid,"5"];
+    tmpDOs["ws"] = "where m_coid=? and m_pid=?";
+    tmpDOs["wa"] = [cid,tmpIid];
+    oi = getNuDBFnvp("qmedia", 5, null, tmpDOs);
+    doQComm(oi["rq"], null,tmpGPMCB); 
+} catch(e) {
+alert("JSSHOP.shop.getPrdMedia: " + e);
+}
+};
+ 
+
+
+
+/* 
+* this function takes an items array and returns 
+* the html for displaying those items
+*/
+
+JSSHOP.shop.getPrdsFullStr = function(thePrdsArna, thePrdsArr, thePrdsClss, thePrdsElem, thePrdsCB){
+ 
+
+currProdsArr[thePrdsArna] = thePrdsArr;
+// alert("getPrdsFullStr: " + JSON.stringify(thePrdsArr));
+
+  try {
+var upRefs = arrUprefs["prfsSHOPuser"][0].scv;
+} catch(e) {
+var upRefs = "r";
+}
+
+try {
+var upPrixRef = arrUprefs["prfsSHOPuser"][0].scp;
+} catch(e) {
+var upPrixRef = "u";
+}
+
+
+strUCPID = "";
+strUCPTtl = "";
+strCatID = "";
+strCatName = "";
+strHtml = "";
+strMLinks = "";
+strImgDsct = "";
+
+var len = thePrdsArr.length;
+ 
+tstr = "";
+iint = 0;
+
+// product-grid
+strHtml += "<div><ol class=\"float\" style=\"list-style:none;\">";
+ 
+ts = null;
+
+while(iint < len) {
+// ts = null;
+try {
+ts = thePrdsArr[iint];
+if(ts._id) {
+strImgDsct = "";
+      subTIdesc = ts.i_desc;
+
+
+	if((thePrdsArna == "prodpg") || (pid == "aa-show-item")){
+	subIdesc = subTIdesc;
+      strImgDsct += "<div><img onclick=\"document.location.href = this.src\" id=\"" + thePrdsArna +  ts._id + "\" src=\"images/misc/trans.gif\" class=\"activator prodBigImage crsrPointer\"></div>";
+	} else {
+	subIdesc = subTIdesc.substring(0, 15);
+      // strImgDsct += "<a href=\"index.html?pid=aa-show-item&itemid=" + ts._id + "&cid=" + ts.i_coid + "&catid=" + ts.i_catid + "\">";
+      strImgDsct += "<a href=\"javascript:eindex('aa-show-item','pid=aa-show-item&itemid=" + ts._id + "&cid=" + ts.i_coid + "&catid=" + ts.i_catid + "');\">";
+	if(upRefs == "r") {
+      strImgDsct += "<img id=\"" + thePrdsArna +  ts._id + "\" src=\"images/misc/example_thumb.png\" class=\"prodRowImage\">";
+	} else {	
+      strImgDsct += "<img id=\"" + thePrdsArna +  ts._id + "\" src=\"images/misc/example_thumb.png\" class=\"prodImage\">";
+	}
+      strImgDsct += "</a>";
+	}
+   
+
+	if((thePrdsArna == "prodpg") && (pid == "aa-show-item")){
+ 	strHtml += "<li  class=\"prodBigBox\">";
+ 	} else {
+	if(upRefs == "r") {
+ 	 strHtml += "<li  class=\"prodRowBox\" style=\"width:100%;\">";
+ 
+
+ 	} else {
+	strHtml += "<li class=\"prodBox float-item\" style=\"\">";
+	}
+	}
+
+
+      // strHtml += "<a class=\"txtDecorNone\"  href=\"index.html?pid=aa-show-item&itemid=" + ts._id + "&cid=" + ts.i_coid + "&catid=" + ts.i_catid + "\">";
+    // eindex
+   strHtml += "<a class=\"txtDecorNone\"  href=\"javascript:eindex('aa-show-item','pid=aa-show-item&itemid=" + ts._id + "&cid=" + ts.i_coid + "&catid=" + ts.i_catid + "');\">";
+   if(thePrdsArna == "prodpg") {
+	strHtml += "<div class=\"txtBold\" style=\"padding: 3px;\">";
+    } else {
+     strHtml += "<div class=\"txtSmall txtBold\" style=\"max-height:70px;overflow:hidden;word-wrap:break-word;word-break: break-word;\">";
+    }
+	strHtml += ts.i_title;
+	strHtml += "</div></a>";
+	strHtml +=  strImgDsct;
+
+
+
+
+
+
+
+
+
+	if(thePrdsArna == "prodpg") {
+
+
+ 
+
+
+
+	strHtml += "<div id=\"dvPrdMedia\"></div>";
+
+	strHtml +=  "<div class=\"txtSmall txtClrHdr\" style=\"padding:6px;\">";
+	strHtml +=  subIdesc;
+	strHtml +=  "</div>";
+
+	}
+
+
+
+ 
+ 	
+
+
+
+ 	strPriceHtml =  JSSHOP.shop.getPrdPriceStr(thePrdsArna, iint, ts._id, ts.i_price_a, ts.i_price_b);
+
+	 strHtml += "<span class=\"txtBold txtClrDrkGrn\"  style=\"margin: 15px;float:right;\">" + strPriceHtml + "</span>";
+
+ /* no cart for now 
+	strHtml += "<div  id=\"tdCI" + ts._id + "\" onclick=\"javascript:JSSHOP.shop.doQIadd('" + thePrdsArna + "',this.id,'" + ts._id + "','" + iint + "');\" class=\"cls_button cls_button-xxsmall bkgdClrNrml brdrClrDlg txtClrHdr\">";
+	strHtml += "<i class=\"material-icons\" alt=\"add cart\" title=\"add\" value=\"shopping_cart\">&#xe8cc;</i>";
+	strHtml += "<i class=\"material-icons\" alt=\"add cart\" title=\"add\" value=\"add\">&#xe145;</i>"; 
+         // <img src=\"images/cart_r.gif\" class=\"icnsmlbtn brdrClrWhite crsrPointer\">";
+	strHtml += "</div>";
+    */
+	currFTclr = "material-icons txtClrTtl";
+	tmpUFavstr = "index.html?pid=aa-show-item&itemid=" + ts._id + "&cid=" + ts.i_coid + "&catid=" + ts.i_catid;
+    tmpUFstr = "javascript:eindex('aa-show-item','pid=aa-show-item&itemid=" + ts._id + "&cid=" + ts.i_coid + "&catid=" + ts.i_catid + "');";
+	if(currFavsIdstr.indexOf(ts._id + "::") != -1) {
+	currFTclr = "material-icons txtClrRed";
+	}
+	strHtml += "<div><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tmpUFavstr + "','" +  ts.i_title + "','" + ts.i_img + "','" + ts._id + "','btnFavs" + ts._id + "');\"><i id=\"btnFavs" + ts._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
+	 strHtml += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\"  onclick=\"JSSHOP.ui.showShareBox('product'," + ts._id + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></span>";
+    if(thePrdsArna == "prodpg") {
+	strHtml += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\"  onclick=\"JSSHOP.ui.showMsgBox('product', ts._id,'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
+    }
+ 
+	strHtml += "</div>";
+ 
+	strHtml += "<input type=\"hidden\" id=\"prd" + 5 + iint + "\" value=\"\">";
+    strHtml += "<div class=\"clearfix\"></div>";
+	strHtml += "</li>";
+ 
+	}
+ 
+} catch(e) {
+// strHtml += e + "<br>";
+}
+iint++;
+}
+strHtml += "</ol>"
+
+strHtml += "<div>";
+
+return strHtml;
+};
+
+
+JSSHOP.shop.loadCatChunk = function (theCurrPage) {
+    console.log("loadCatChunk: " + theCurrPage);
+    // document.getElementById("includedContent").innerHTML = "";
+    try {
+    currPgIndex = theCurrPage-1;
+    tmpJSsrtd = null;
+    tmpJSsrtd =  currEbyPrdsArr.slice(currPgIndex * currProdsPPg, (currPgIndex * currProdsPPg) + currProdsPPg);
+    raresp = JSSHOP.ads.getEAdsFullStr(tmpJSsrtd, "part", "doEAdsOnPart");
+    trrDiv = document.createElement("div");
+    // trrDiv.innerHTML = raresp;
+    console.log("loadCatChunk.raresp: " + raresp);
+    // console.log("doEAdsOnPart: " + inpMakes.value + " " + inpModels.value + " " + inpParts.value);
+     // document.getElementById("includedContent").innerHTML = tBoxStr;
+    //  create a new div element
+    // and add three javascript links as child elements
+    tmpDvOLStr = "<div><a href=\"javascript:JSSHOP.ads.doPgLnkMedia('ebay',30);\">Ebay</a> | <a href=\"javascript:JSSHOP.ads.doPgLnkMedia('ggl',30);\")\">Google</a></div>";
+    tmpDvPartOpts = document.createElement("div");
+    tmpDvPartOpts.innerHTML = tmpDvOLStr;
+    // document.getElementById("includedContent").appendChild(tmpDvPartOpts);
+     
+     // document.getElementById("dvEBSearchRes").appendChild(trrDiv);
+     document.getElementById("dvEBSearchRes").innerHTML = raresp;
+
+      
+        var swiper = new Swiper('.swiper', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            createElements: true,
+            height: 300,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            } ,
+            navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+            },
+            renderBullet: function (index, className) {
+                return '<span class="' + className + '">' + (index + 1) + '</span>';
+              },
+        });
+    } catch(e) {
+        // alert("loadCatChunk: " + e);
+        console.log("loadCatChunk.ERROR: " + e);
+       //  JSSHOP.logJSerror(e, arguments, "loadCatChunk" + " " + e);
+    }
+
+};
+ 
+// to delete. will try shared.getGenPagination
+
+JSSHOP.shop.getDefaultPageNav = function(currentPage, nrOfPages) {
+
+
+try {
+// https://gist.github.com/kottenator/9d936eb3e4e3c3e02598
+var delta = 1,range = [];
+pgnString = "<ol class=\"pagination\">";
+startPg = (currentPage - delta) > 0 ? currentPage - delta : 1;
+endPg = (currentPage + delta + 2) > nrOfPages ? nrOfPages : currentPage + delta + 2; 
+
+for(ika = startPg; ika < endPg; ika++) {
+range.push(ika);
+}  
+range.push(endPg);
+
+		if(startPg - 2 > 0) {
+		currPAlink = "javascript:scrollToElement('dvHdr');JSSHOP.shop.loadCatChunk(" + 1 + ")";
+	      pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">1</a></li>";
+		}
+
+		if(startPg - 1 > 0) {
+		currPAlink = "javascript:scrollToElement('dvHdr');JSSHOP.shop.loadCatChunk(" + (startPg - 1) + ")";
+		if(startPg - 1 == 1) {
+	      pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">1</a></li>";
+		} else {
+	      pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">...</a></li>";
+		}
+		}	
+ 
+		for(idd = 0; idd < range.length; idd++) {
+ 
+		currPAlink = "javascript:scrollToElement('dvHdr');JSSHOP.shop.loadCatChunk(" + range[idd] + ")";
+ 		if(range[idd] == currentPage + 1) {
+	      pgnString += "<li class=\"page\"><b>" + range[idd] + "</b></li>";
+		} else {
+	      pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">" + range[idd] + "</a></li>";
+		}
+
+        	} // end of for idd
+
+		if(endPg + 1 <= nrOfPages) {
+		currPAlink = "javascript:scrollToElement('dvHdr');JSSHOP.shop.loadCatChunk(" + (endPg + 1) + ")";
+		if(endPg + 1 == nrOfPages) {
+	      pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">" + nrOfPages + "</a></li>";
+		} else {
+	      pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">...</a></li>";
+		}
+		}		
+
+
+ 		if(endPg + 2 <= nrOfPages) {
+		currPAlink = "javascript:scrollToElement('dvHdr');JSSHOP.shop.loadCatChunk(" + nrOfPages + ")";
+	      pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">" + nrOfPages + "</a></li>";
+		}	
+            pgnString += "</ol>";
+    		return pgnString;
+
+} catch(e) {
+alert(e);
+}
+};
+
+ 
+
+
+
+JSSHOP.shop.renderNuCartItems = function(tmpJustTotals, tmpUseCloseLnk, tmpNumCItems) {
+ 
+    tstr = "";
+    iint = 0;
+    ppint = 1;
+	 cartTtl = 0;
+ 	cartIttls = 0;
+		ttCAA = currCartIArr[0];
+	// ttCAA = JSON.parse(arrAllForms.qcartitem.v[0]);
+    len = currCartIArr.length;
+    if(len > tmpNumCItems) {
+    len = tmpNumCItems;
+    }
+    var strOnlyTtls = "";
+    strHtml = "<div class=\"txtSmall txtBold mintwofh highZ tatCross\">"; 
+    if(tmpUseCloseLnk == "y") {
+    strHtml += "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrRed crsrPointer\" style=\"float:right\">Close</div>";
+    }
+    strHtml += "<div class=\"txtClrHdr bkdgClrDlg txtBold\" style=\"margin-bottom: 15px;\">";
+    strHtml += "<i class=\"material-icons\"  style=\"margin-top: 5px;font-size:14px;\"  alt=\"shopping_cart\" title=\"shopping_cart\">&#xe8cc;</i> Cart Preview</a></div>";
+
+    if (currCartIArr.length) {
+       strHtml += "<div onclick=\"javascript:document.location.href='index.html?pid=aa-show-cart&cid=" + cid + "&ppid=" + ppid + "'\" class=\"rtable txtClrHdr bkdgClrDlg txtBold crsrPointer\" style=\"margin-bottom: 18px;max-width: 65%; margin: 0 auto;text-align: center\">Go To Cart/Checkout -></div>";
+   }
+            strHtml += "<div style=\"padding-top: 8px; margin: 8px; border-bottom: 1px dashed #D1D5D1;\">"; 
+	      strHtml += "</div>";
+
+	ts = null;
+    while (iint < len) {
+        ts = currCartIArr[iint];
+        strRecID = ts._id;
+        strRecType = 50;
+
+
+
+
+
+        if (ts._id > 0) {
+ 
+
+	na = ts.ci_price_a - ts.ci_price_b;
+	nd = Math.round((na / ts.ci_price_a) * 100);
+	strPriceHtml = "";
+
+      tmpTttl = ts.ci_price_b * ts.ci_cartqty;
+	cartTtl = cartTtl + tmpTttl;
+
+ 	cartIttls = Math.round(ts.ci_cartqty) + cartIttls;
+
+
+		if(ts.ci_img) {
+		 tmpIstrI = JSSHOP.shop.getPrdImgStr("prdmedia", ts.ci_img);
+		}
+
+
+            strTTHtml = "";
+            strTTHtml += "<div style=\"max-width:78%\">";
+ 		//   strTTHtml += "<a class=\"txtDecorNone\" href=\"index.html?pid=aa-show-item&itemid=" + ts.ci_pid + "&cid=" + ts.ci_coid + "&catid=" + ts.ci_catid + "\">";
+        strTTHtml += "<a class=\"txtDecorNone\" href=\"javascript:eindex('aa-show-item','pid=aa-show-item&itemid=" + ts.ci_pid + "&cid=" + ts.ci_coid + "&catid=" + ts.ci_catid + "');\">";
+       strTTHtml += "<img src=\"" + tmpIstrI + "\" class=\"slmtable brdrClrDlg icndbtn\" style=\"align: center;text-align:center;margin:6px;\" align=\"absmiddle\">" +  ts.ci_title;
+            strTTHtml += "<span class=\"txtstriked txtBig txtClrGrey\">" + ts.ci_price_b + "</span></a>";
+            strTTHtml += "</div>";
+
+	      strOnlyTtls += strTTHtml;
+            strHtml +=  strTTHtml;
   
-	function dragMouseDown(e) {
-	  e = e || window.event;
-	  e.preventDefault();
-	  // get the mouse cursor position at startup:
-	  pos3 = e.clientX;
-	  pos4 = e.clientY;
-	  document.onmouseup = closeDragElement;
-	  // call a function whenever the cursor moves:
-	  document.onmousemove = elementDrag;
+
+
+
+
+            strHtml += "<div style=\"align: right;text-align:right\">";
+            strHtml += "<span onclick=\"javascript:JSSHOP.ui.doDefCBBCC('ahCartIcon', null, document.location.href='index.html?pid=aa-show-cart&cid=' + cid + '&ppid=' + ppid);\" class=\"crsrPointer\"><span class=\"txtBig txtClrDlg txtBold\">x" + ts.ci_cartqty + " = " + tmpTttl + "</span></span>";
+             strHtml += "</div>";
+
+
+     
+
+            strHtml += "<div style=\"padding-top: 8px; margin: 8px; border-bottom: 1px dashed #D1D5D1;\">"; 
+	      strHtml += "</div>";
+
+ 
+
+ 
+
+
+ 
+            strHtml += "<input type=\"hidden\" id=\"prd" + 5 + iint + "\" value=\"\">";
+
+ 
+            strHtml += "<input type=\"hidden\" name=\"item_name_" + ppint + "\" value=\"" +  ts.ci_title + "\">";
+            strHtml += "<input type=\"hidden\" name=\"item_number_" + ppint + "\" value=\"" +  ts._id + "\">";
+            strHtml += "<input type=\"hidden\" name=\"quantity_" + ppint + "\" value=\"" + ts.ci_cartqty + "\">";
+            strHtml += "<input type=\"hidden\" name=\"amount_" + ppint + "\" value=\"" + ts.ci_price_b + "\">";
+
+        }
+            strTTHtml = "";
+	  ppint++;
+        iint++;
+    }
+    if (currCartIArr.length) {
+ 
+      strHtml += "<div style=\"text-align: right\">Total:<b>" + cartTtl.toFixed(2) + "</b></div>"; 
+      strHtml += "<div onclick=\"javascript:document.location.href='index.html?pid=aa-show-cart&cid=" + cid + "&ppid=" + ppid + "'\" class=\"rtable txtClrHdr bkdgClrDlg txtBold crsrPointer\" style=\"margin-bottom: 18px;max-width: 65%; margin: 0 auto;text-align: center\">Go To Cart/Checkout -></div>";
+
+   } else {
+      strHtml += "<div>" + stxt[34] + "</div>";
+ 	strHtml += "<div class=\"collection-item txtSmall txtBold\">Recent:<br>" + currRcntActHstr + "</div>";
+
+    }
+
+    strHtml += "</div>";
+
+	if(tmpJustTotals == "y") {
+	strHtml = cartIttls + "::" + cartTtl.toFixed(2);
 	}
+	if(tmpJustTotals == "m") {
+	strHtml = strOnlyTtls;
+	}
+
+return strHtml;
+ 
+
+
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+*
+* ads formatted output
+*/
+
+JSSHOP.ads.getPPlgIcnStr = function(tPPICnt, tPPIClass, tPPICB) {
+    tNPPICnt = 4;
+    tMaxPPI = 12;
+    tNPPIClass = "material-icons txtClrTtl";
+    tPPICB = "doNada";
+ // create an array of 12 beginning with "p1" and ending with "p12"
+  tPPICarr = ["p1","p2","p3","p4","p5","p6","p7","p8","p9","p10","p11","p12"];
+    tPPICstr = "";
+    tFPCArInt = 0;
+
+    tFlRanSTr = "";
+    tPYS = "";
+    // select 3 unique random indexes from the array currPPrtCatArr
+    
+    
+    tFPCArInt = 0;
+    for(i = 0; i < 30; i++) {
+    tRanNum = Math.random() * tPPICarr.length;
+    tLpdIDstr = tPPICarr[Math.floor(tRanNum)];
+    if(tFlRanSTr.indexOf(tLpdIDstr) != -1) {
+    tdds = "noQvalue";
+    } else {
+    tFPCArInt++;
+    
+    tFlRanSTr += tLpdIDstr + " ";
+    // tFlRanSTr += new img tag with tLpdIDstr as src and tPPIClass as class
+    tPPICstr = "<img src=\"images/pimgs/" + tLpdIDstr + ".jpg\" class=\"" + tPPIClass + "\" onclick=\"" + tPPICB + "\" style=\"max-width:30px\">";
+ 
+    tPYS += tPPICstr + " ";
+    if(tFPCArInt > tPPICnt) {
+        i = 30;
+    }
+    }
+    }
+    return tPYS;
+};
+
+JSSHOP.ads.doLocalShops = function(tLSlimit, tLSorder, tLtr, tDLScb){
+    tmpDOs = null;
+    tmpDOs = {};
+    tmpDOs["l"] = tLSlimit;
+    tmpDOs["o"] = tLSorder;
+    tCntryAb = "ES";
+    tMCstr = "%pieza%";
+    tUtdzip = 50;
+    tLSCatID = 101;
+    if(currUrlArr.make) {
+        tMCstr = "%" + currUrlArr.make + "%";
+        }
+        if(usrlang == "pt_pt") {
+            tccode = 351;
+        
+        } else {
+            tccode = 34;
+        // tmpDOs["ws"] = "where c_ccode=? and c_email like ?";
+        // tmpDOs["wa"] = [usrcc,'%@%'];
+        
+        }
+
+        if(usrlang == "pt_pt") {
+            tCntryAb = "PT";
+        }
+        if(pid.indexOf("psearch") != -1) {
+            tLSCatID = 202;
+        }  
+
+            
+
+if(JSSHOP.ads.getPrtsPrefCC("qloc") == "noQvalue") {
+
+tmpDOs["ws"] = "where c_ccode=? and c_rtype = ? and c_category = ?";
+tmpDOs["wa"] = [tccode,5,tLSCatID];
+tmpDOs["l"] = 10;
+tmpDOs["o"] = "c_revs desc";
+
+
+} else {
+    
+    tUtdzip = JSSHOP.ads.getPrtsPrefCC("qloc");
+    if(tUtdzip.indexOf("|") != -1) {
+        tstrLat = msw.split("|")[0];
+                    tstrLng = msw.split("|")[1];
+                    // convert tstrLat to float and tstrLng to float
+                    tfloatLat = parseFloat(tstrLat);
+                    tfloatLong = parseFloat(tstrLng);
+            
+                    // get a 20km radius from the lat lng
+                    tmpDOs["ws"] = "where c_rtype=? and c_ccode =?  and c_category = ? and c_loc_lat > ? and c_loc_lat < ? and c_loc_lng > ? and c_loc_lng < ?";
+                    tmpDOs["wa"] = [5,tccode,tLSCatID,tfloatLat - 0.1,tfloatLat + 0.3,tfloatLong - 0.1,tfloatLong + 0.3];
+                    tmpDOs["l"] = 100;
+                    tmpDOs["o"] = "c_tel asc";
+    } else {
+    tsUbdzip = tUtdzip.substring(0, 2);
+    tmpDOs["ws"] = "where c_ccode=? and c_rtype = ? and c_category = ? and (c_zipcode like ? or c_zipcode = ?)";
+tmpDOs["wa"] = [tccode,5,tLSCatID,tzsw,tUtdzip];
+tmpDOs["l"] = 100;
+tmpDOs["o"] = "c_location asc";
+
+
+    }
+    
+ 
+}
+
+
+
+oi = getNuDBFnvp("qco", 5, null, tmpDOs);
+console.log("doLocalShops: " + oi["rq"]);
+
+doQComm(oi["rq"], null, tDLScb);
+};
+
+JSSHOP.ads.getLocalShops = function(theElem, theSrchResp, marble){
+console.log("getLocalShops: " + theSrchResp);
+tmpTDQI = document.getElementById("tdNuSearchRes");
+tStrHtml = "";
+tmpTDQI.innerHTML = "";
+if(theSrchResp.indexOf("_id") != -1) {
+
+tStrHtml =  JSSHOP.ads.doNuGenericRes("shops", theSrchResp, marble);
+console.log("getLocalShops.tStrHtml: " + tStrHtml);
+
+} else { // response has no items
+tStrHtml = "<div class=\"txtBold txtClrHdr\">Search returned 0 results</div>";
+}
+tHdrStrHtml = "<div class=\"txtSmall txtBold txtClrDlg\" style=\"text-align:left\">Local...</div>";
+
+newel = document.createElement('div');
+tCCStrHtml = "<div class=\"rtable brdrClrHdr\" style=\"max-width:90%;margin: 0 auto\" align=\"center\">" + tHdrStrHtml + tStrHtml + "</div>";
+newel.innerHTML = tCCStrHtml;
+tmpTDQI.insertBefore(newel, tmpTDQI.firstChild);
+
+// tmpTDQI.appendChild(newel);
+
+};
+
+
+
+
+
+function setShopsUp(tssuVa, tssuVb, tssuVv) {
+    try {
+    console.log("setShopsUp: " + tssuVa + " " + tssuVb + " " + tssuVv);
+tMResStr = "<br><a href=\"javascript:JSSHOP.ui.popAndFillLbox(JSSHOP.ui.getRegionsList());\">"  + stxt[81] + "</a>";
+document.getElementById("tdNuSearchRes").innerHTML = "";
+ttSdiv = document.createElement("div");
+// ttSdiv.id = "dvLSshops";
+// ttSdiv.className = "slmtable brdrClrDlg";
+// ttSdiv.style = "width: 100%;";
+tGenSjopSTr = "noQvalue";
+tGenSjopSTr = JSSHOP.ads.doNuGenericRes("shops", tssuVb, tssuVv);
+console.log("setShopsUp.tGenSjopSTr: " + tGenSjopSTr);
+ttSdiv.innerHTML = tGenSjopSTr;
+if(document.getElementById("dvLSshops")) {
+hehar = document.getElementById("dvLSshops").appendChild(ttSdiv);
+
+if(hehar) {
+if(currShopsArr.length > 0) {
+    if(JSSHOP.ads.getPrtsPrefCC("qloc") == "noQvalue") {
+    } else {
+    JSSHOP.ui.toggleVisibility("dvTglSFldTbl");
+    }
+JSSHOP.ads.setEboxUp("doEBAdsFill");
+}
+//  JSSHOP.ads.doGenMapShow();
+if(pid.indexOf("psearch") != -1) {
+   //  JSSHOP.ads.setShpItmsUp("doShpItmsFill");
+
+currBtnSort = document.getElementById("btnSort_" + currSortObj["psearch"]["sindex"]);
+} else {
+currBtnSort = document.getElementById("btnSort_" + currSortObj["msearch"]["sindex"]);
+}
+if(JSSHOP.ads.getPrtsPrefCC("qloc") == "noQvalue") {
+ //   JSSHOP.ui.toggleNuModule('dvTglCoSrch','dvTglSFldTbl');
+}
+} 
+}  
+} catch(e) {
+    console.log("setShopsUp.ERROR: " + e);
+// JSSHOP.logJSerror(e, arguments, "setShopsUp: " + e);
+}
+// document.getElementById("includedContent").insertBefore(ttSdiv, document.getElementById("includedContent").firstChild);
+// document.getElementById("dvLSshops").innerHTML = JSSHOP.ads.doGenericRes("shops", tssuVb, tssuVv) + tMResStr;
+}
+
+function doLSshopsBx() {
+JSSHOP.ads.doLocalShops(3, 'RAND()', 'noQvalue', 'setShopsUp');
+};
+JSSHOP.ads.setNuShopsUp = function(tQFunct) {
+    try {
+    if(pid == "aa-show-psearch") {
+        tmpLSIcn = "<img src=\"images/misc/parts_w.gif\" style=\"vertical-align: middle; max-width: 27px; max-height: 27px;\" class=\"icnsmlbtn\"></img>";
+
+        if(JSSHOP.ads.getPrtsPrefCC("part") == "noQvalue") {
+            ttTforBx = stxt[113];
+        } else {
+            ttTforBx = stxt[113] + " " + stxt[118] + " " + JSSHOP.ads.getPrtsPrefCC("part");
+        }
+
+    } else {
+        tmpLSIcn = "<img src=\"images/misc/mec2_w.gif\" style=\"vertical-align: middle; max-width: 27px; max-height: 27px;\" class=\"icnsmlbtn\"></img>";
+        if(JSSHOP.ads.getPrtsPrefCC("part") == "noQvalue") {
+        ttTforBx = stxt[114];
+        } else {
+        ttTforBx = stxt[114] + " " + stxt[119] + " " + JSSHOP.ads.getPrtsPrefCC("part");
+        }
+
+    }
+    if(JSSHOP.ads.getPrtsPrefCC("mk") == "noQvalue") {
+    } else {
+       tMkPrfx = "m" + JSSHOP.ads.getPrtsPrefCC("mk");
+        tMkNme = objAllMakes[tMkPrfx].n;
+    ttTforBx += " - " + tMkNme;
+    }
+    
+tIMLStglbObj = JSSHOP.ui.nTglBxOb();
+
+
+tIMLStglbObj["ttl"] = ttTforBx; // the toggle box title
+tIMLStglbObj["dvid"] = "dvLSshops"; // the toggle box div id
+tIMLStglbObj["cntntFnc"] =  tQFunct;
+tIMLStglbObj["content"] = "noQvalue"; // the toggle that goes in above toggle div
+tIMLStglbObj["btn"] = "btnTglLSMi" // the toogle btn id
+tIMLStglbObj["pref"] = "tglLSMI"; // the toogle pref id saved in cookie
+tIMLStglbObj["tbtmpCB"] = "noQvalue"; // null function as callback
+tIMLStglbObj["icn"] = tmpLSIcn; // the icon
+tIMLStglbObj["pnid"] = "dvPSList"; // the parent node, will just return text if noQvalue
+tIMLStglbObj["appnd"] = "y"; // the parent node, will just return text if noQvalue
+tIMLStglbObj["cut"] = 200; // the parent node, will just return text if noQvalue
+tIMLStglbObj["clsmaintbl"] = "txtClrHdr slmtable bkgdClrNrml"; // main table class
+tIMLStglbObj["clstitletd"] = "txtBold txtClrDGreen"; // title box class
+tIMLStglbObj["clsttltxt"] = "txtSmall txtBold txtClrDrkGrn"; // title box text class
+JSSHOP.ui.doTglBox(tIMLStglbObj);
+} catch(e) {
+    alert("setNuShopsUp: " + e);
+// JSSHOP.logJSerror(e, arguments, "setNuShopsUp: " + e);
+}
+};
+
+
+JSSHOP.ads.doGenericPlug = function(tPtype, tPresQty, tPtDiv) {
+console.log("JSSHOP.ads.doGenericPlug: " + tPtype + " " + tPresQty + " " + tPtDiv);
+try {
+
+    // imgPLicon.src = "logoicon.png"; 
+fretPlugStr = "...";
+retPlugStr = "...";
+tcanShowPlug = "yes";
+switch(pid) {
+case "index_main":
+tFpharr = [];
+tFpharr.push(stxt[89]);
+tFpharr.push(stxt[90]);
+tFpharr.push(stxt[91]);
+ppshfled = shuffle(tFpharr);
+ppslectted = ppshfled.slice(0, 1);
+retPlugStr += ppslectted.join(" ");
+if(currPPrtCatArr.length < 3) {
+// no parts
+} else {
+pshfled = shuffle(currPPrtCatArr);
+pslectted = pshfled.slice(0, tPresQty);
+// retPlugStr += pslectted.join(" ");
+}
+shfled = shuffle(currPMakesArr);
+slectted = shfled.slice(0, tPresQty);
+for(iihy=0; iihy<slectted.length;iihy++) {
+tsihi = slectted[iihy];
+tspktihi = tsihi.split(":");
+retPlugStr += "  <a href=\"index.html?mk=" + tspktihi[0] + "&pid=aa-show-make&make=" + tspktihi[1] + "\">" + tspktihi[1] + "</a> &nbsp;";
+}
+fretPlugStr = "<div class=\"txtSmall\">" + retPlugStr + "</div>";
+tcanShowPlug = "no";
+break;
+case "aa-contactus":
+fretPlugStr = "<div class=\"txtSmall\">Contacte-nos</div>";
+break;
+case "aa-show-psearch":
+// imgPLicon.src = "images/pshop_logo_small.png"; 
+// fretPlugStr = "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"account\" title=\"account\"> &#xe853;</i>";
+fretPlugStr = "<div class=\"txtSmall\">" + JSSHOP.ads.getPPlgIcnStr(1, "slmtable icndbtn brdrClrTtl", "doNada") + stxt[125] + "</div>";
+break;
+ 
+case "aa-show-msearch":
+imgPLicon.src = "images/mech_logo_small.png";
+fretPlugStr = "<div class=\"txtSmall\">" + stxt[126] + "</div>";
+break;
+case "aa-edit-item":
+    if(c_logoimg.value == "noQvalue") {
+imgPLicon.src = "logoicon.png";   
+    } else {
+imgPLicon.src = c_logoimg.value;
+    }
+fretPlugStr = "<div class=\"txtSmall\">" + c_name.vale + "</div>";
+// fretPlugStr = doNuCollsLoad("links");
+break;
+case "aa-show-place":
+
+// getPAddrssLst();
+tQlogoVA = c_logoimg.value;
+tNameFirstLtr = c_name.value.charAt(0);
+ts = currPlaceObj;
+tttLImg = ts.c_logoimg;
+    if(tttLImg.indexOf(".") != -1) {
+     if(tttLImg.indexOf("http") != -1) {
+ 
+    tBimgU = tttLImg;
+ 
+    } else {
+     
+     tBimgU = "images/slogos/s_thumb" + ts.c_logoimg;
+    }
+    } else { // end of indexOf(".") in c_logoimg
+    // tBimgU = "noQvalue";
+    tBimgU = "images/slogos/s_thumb" + ts.c_logoimg;
+
+    }
+    if(tttLImg == "noQvalue") {
+
+        // use the first letter of the name as the image
+        tCshrtClrd = pSBC( 0.02, JSSHOP.ui.stringToColour(c_name.value));
+dvPartLicon.innerHTML =  "<div class=\"txtSmall txtClrHdr slmtable\" style=\"margin-right:8px;padding-right:8px;vertical-align: middle; align: center; max-width: 27px; max-height: 27px; color:#FFFFFF;background-color:" + tCshrtClrd + "\">&nbsp;" + tNameFirstLtr + "</div>";
+    // atstr += "<div class=\"txtBold txtClrHdr\" style=\"margin-right:8px;padding-right:8px;vertical-align: middle; max-width: 27px; max-height: 27px;\">" + tCshortttl + "</div>";
+    } else {
+        tIBclsStr = "avatar";
+dvPartLicon.innerHTML =  "<a href=\"javascript:JSSHOP.ui.popAFImgUrl('" + tBimgU + "')\"><img id=\"dvPLogoImg\" src=\"" + tBimgU + "\" class=\"" + tIBclsStr + "\" style=\"margin-right:8px;padding-right:8px;vertical-align: middle; max-width: 27px; max-height: 27px;\"  onerror=\"javascript:doGglImgLdErr(" + ts._id + ");\"></a>";
+    }
+
+fretPlugStr = c_name.value;
+        break;
+
+case "aa-edit-place":
+imgPLicon.src = "logoicon.png";    
+fretPlugStr = doNuCollsLoad("links");
+case "aa-edit-parts-category":
+imgPLicon.src = "logoicon.png";    
+fretPlugStr = doNuCollsLoad("links");
+break;
+case "aa-edit-svs-category":
+imgPLicon.src = "logoicon.png";    
+fretPlugStr = doNuCollsLoad("links");
+break;
+case "aa-edit-user":
+// imgPLicon.src = "logoicon.png"; 
+dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"account\" title=\"account\"> &#xe851;</i>";
+fretPlugStr = "<div class=\"txtSmall\">" + stxt[63] + "</div>";
+// fretPlugStr = doNuCollsLoad("links");
+break;
+case "aa-remove":
+imgPLicon.src = "logoicon.png";    
+fretPlugStr = "<div class=\"txtSmall\">" + stxt[815] + "</div>";
+break;
+default:
+if(pid.indexOf("-edit") != -1) {
+if(cid == 0) {
+fretPlugStr = "<div class=\"txtSmall\">Default Admin Area</div>";
+} else {
+fretPlugStr = "<div class=\"txtSmall\">Default Admin ARea for " + c_name.value + "</div>";
+}
+} else {
+    if(cid == 0) {
+        fretPlugStr = "<div class=\"txtSmall\">Default Area</div>";
+        } else {
+        fretPlugStr = "<div class=\"txtSmall\">Default Area for " + c_name.value + "</div>";
+        }
+// fretPlugStr = "<div class=\"txtSmall\">Default</div>";
+}
+break;
+}
+
+
+console.log("JSSHOP.ads.doGenericPlug: " + fretPlugStr);
+if((document.getElementById(tPtDiv))  && (tcanShowPlug == "yes")){
+document.getElementById(tPtDiv).innerHTML = fretPlugStr;
+}
+} catch(e) {
+alert("doGenericPlug: " + e);
+}
+};
+
+
+function getLvsTglBox() {
+    tIMLStglbObj = null;
+    tIMLStglbObj = "";
+    tIMLStglbObj = JSSHOP.ui.nTglBxOb();
+    tIMLStglbObj["ttl"] = stxt[200]; // the toggle box title
+    tIMLStglbObj["dvid"] = "smap"; // the toggle box div id
+    tIMLStglbObj["content"] = "hahahahah<br>hahahahah<br>hahahahah<br>hahahahah<br>hahahahah<br>hahahahah<br>hahahahah<br>hahahahah<br>hahahahah<br>hahahahah<br>hahahahah<br>hahahahah<br>"; // the toggle that goes in above toggle div
+    tIMLStglbObj["cntntFnc"] = "getLeaves" // the toggle that goes in above toggle div
+    tIMLStglbObj["btn"] = "btnTglLvs" // the toogle btn id
+    tIMLStglbObj["pref"] = "tglLvsBx"; // the toogle pref id saved in cookie
+    tIMLStglbObj["tbtmpCB"] = "noQvalue"; // null function as callback
+    tIMLStglbObj["icn"] = "&#xe3ec;"; // the icon
+    tIMLStglbObj["pnid"] = "includedContent"; // the parent node, will just return text if noQvalue
+    tIMLStglbObj["appnd"] = "y"; // the parent node, will just return text if noQvalue
+    tIMLStglbObj["cut"] = 300;
+    JSSHOP.ui.doTglBox(tIMLStglbObj);
+}
+
+
+function getLeaves() {
+    // document.getElementById("smap").innerHTML = "";
+    // document.getElementById("smap").style = "min-height:300px";
+    // document.getElementById("smap").innerHTML = "";  
+    iti = 0; 
+
+    
+    
+    // check if L.map already exists
+      
+   
+        var map = L.map('smap').setView([39.0667, -8.6167], 13);
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        var bounds = L.latLngBounds() // Instantiate LatLngBounds object
+        var LeafIcon = L.Icon.extend({
+            options: {
+     
+                iconSize:     [42, 42],
+     
+
+     
+                popupAnchor:  [-3, -16]
+            }
+        });
+    
+        if(currShopsArr.length > 0) {
+            // alert(b);
+            tPArr  = null;
+            tPArr = currShopsArr;
+    
+    while(iti < tPArr.length) {
+      ts = tPArr[iti];
+      tIcnQcStr = "images/logo_small_green_oct.png"
+      tLatQcStr = ts.ploclat;
+      tLngQcStr = ts.ploclng;
+     tLatQcStr = String(tLatQcStr); // convert to string
+        tLngQcStr = String(tLngQcStr);
+      // convert to float
+        tLatQcFlt = parseFloat(tLatQcStr);
+        tLngQcFlt = parseFloat(tLngQcStr);
+        ttImgstr = ts.pimage;
+        // console.log("getLeaves.ts.cccd: " + ts.cccd + " " + ttImgstr + " " + ts.c_name);
+     
+
+        if(ttImgstr.indexOf(".") != -1) {
+      tIcnQcStr = "admin/property/s_thumb" + ts.pimage;
+        } else {
+        tIcnQcStr = "images/logo_small_oct.png";
+        }
+        
+      ttSSurl = "javascript:JSSHOP.ads.doGenPrpPop(" + iti + ");";
+
+      tCnameQcStr = "<a href=\"" + ttSSurl + "\">" + ts.c_name + "</a>";
+       tLatQcStr =  String(tLatQcFlt);
+      tLngQcStr = String(tLngQcFlt);
+      console.log("getLeaves: " + tLatQcStr + " " + tLngQcStr + " " + tIcnQcStr + " " + tCnameQcStr);
+      try {
+    // check if lat and lng are floats
+    if((tLatQcStr.indexOf(".") != -1) && (tLngQcStr.indexOf(".") != -1))  { 
+      // if((tLatQcStr.indexOf(".") != -1) && (tLngQcStr.indexOf(".") != -1))  {
+        console.log("getLeaves: " + tLatQcStr + " " + tLngQcStr);
+
+    tPAObj = tPArr[iti];
+    lat_lng = [tLatQcStr,tLngQcStr];
+    tImSStr = tIcnQcStr;
+    redIcon = new LeafIcon({iconUrl: tImSStr});
+    // bindPopup('<span class="txtBold txtClrRed">' + tCnameQcStr + '</span>').
+    // add an optionid to the marker
+    // set marker options
+    mRed = L.marker([tLatQcStr,tLngQcStr], {icon: redIcon, iti: iti}).addTo(map).on('click', function(e) {
+        // print out the e.options.iti
+        console.log("L.marker iti: " + JSON.stringify(e.target.options.iti));   
+        doGenPrpPop(e.target.options.iti);
+
+    });
+/*
+    customCircleMarker = L.marker.extend([tLatQcStr,tLngQcStr], {icon: redIcon},{
+        options: { 
+           iti: iti
+        }
+     }).addTo(map).on('click', function(e) {
+        console.log("L.marker iti: " + e.latlng);
+         JSSHOP.ads.doGenCoPop(this.options.iti);
+    });
+    */
+    bounds.extend(lat_lng);
+      }
+      } catch(e) {
+      console.log("getLeaves.ERROR: " + e);
+      }
+    iti++;
+    }
+     map.fitBounds(bounds);
+    
+    }
+    
+    // add a long press listener to the map
+    map.on('contextmenu', function(e) {
+       
+          markers = [];
+        // add a marker to show where you clicked.
+          markers.push(L.marker(e.latlng).addTo(map));
+        // get the coordinates of the point you clicked
+        var coords = e.latlng;
+        // get the lat and lng values
+        var lat = coords.lat;
+        var lng = coords.lng;
+        // 
+        JSSHOP.ads.setPrtsPrefCC("qloc", lat + "|" + lng);
+        if(pid == "aa-show-msearch") {
+            document.getElementById('includedShops').innerHTML='';window['sw']=null;currUrlArr.sw=null;JSSHOP.shared.setPrtSvsPnl('dvGetSvcsLnk', function() {eindex('aa-show-msearch','pid=aa-show-msearch&st=main')});
+        } else if(pid == "aa-show-psearch") {
+            document.getElementById('includedShops').innerHTML='';window['sw']=null;currUrlArr.sw=null;JSSHOP.shared.setPrtSvsPnl('dvGetPLnk', function() {eindex('aa-show-psearch','pid=aa-show-psearch&st=main')}); 
+        } else {
+            document.getElementById('includedShops').innerHTML='This is odd'; 
+        }
+       //  eindex(pid, "pid=" + pid + "&st=pslist&sw=" + lat + "|" + lng);
+ 
+        // alert("You clicked the map at latitude: " + lat + " and longitude: " + lng);
+        // show them in the inputs
+        // document.getElementById('lat').value = lat;
+        // document.getElementById('lng').value = lng;
+        // document.getElementById('latlng').value = lat + ', ' + lng;
+    });
+    }
+
+   
+    /*
+
+    CREATE TABLE `qco` (
+        `_id` int(11) NOT NULL,
+        `c_rtype` int(4) DEFAULT NULL,
+        `c_coid` int(12) DEFAULT NULL,
+        `c_category` int(5) DEFAULT NULL,
+        `c_uid` int(11) DEFAULT NULL,
+        `c_internal` varchar(128) DEFAULT NULL,
+        `c_name` varchar(128) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+        `c_header` varchar(128) DEFAULT NULL,
+        `c_desc` varchar(128) DEFAULT NULL,
+        `c_tel` varchar(28) DEFAULT NULL,
+        `c_contact` varchar(128) DEFAULT NULL,
+        `c_web` varchar(128) DEFAULT NULL,
+        `c_email` varchar(128) DEFAULT NULL,
+        `c_logoimg` varchar(128) DEFAULT NULL,
+        `c_zipcode` varchar(12) DEFAULT NULL,
+        `c_zp` int(3) NOT NULL,
+        `c_door` varchar(28) DEFAULT NULL,
+        `c_street` varchar(128) DEFAULT NULL,
+        `c_location` varchar(128) DEFAULT NULL,
+        `c_region` varchar(128) DEFAULT NULL,
+        `c_country` varchar(128) DEFAULT NULL,
+        `c_ccode` mediumint(5) NOT NULL,
+        `c_placeid` varchar(128) DEFAULT NULL,
+        `c_loc_lat` float DEFAULT NULL,
+        `c_loc_lng` float DEFAULT NULL,
+        `c_google_url` text DEFAULT NULL,
+        `c_rating` varchar(8) DEFAULT NULL,
+        `c_revs` int(5) NOT NULL,
+        `c_msg` text DEFAULT NULL,
+        `c_privacy` varchar(128) DEFAULT NULL,
+        `c_whours` varchar(186) DEFAULT NULL,
+        `c_vala` varchar(128) DEFAULT NULL,
+        `c_valb` varchar(128) DEFAULT NULL,
+        `c_dadded` varchar(14) DEFAULT NULL
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+*/
+JSSHOP.ads.doGenMapShow = function() {
+    if(isJApp == "yes") {
+        /* */ // 
+        // string of currUrlArr
+
+        tOldHref = document.location.href;
+        tCleanRef = "clean.html"
+
+        tOldHref = document.location.href;
+        if(tOldHref.indexOf("recamby.com") != -1) {
+            tnewHref = "https://recamby.com/clean.html";
+     
+        } else {
+            tnewHref = "https://titan/incasa/clean.html";
+        }
+
+
+        if(tOldHref.indexOf("?") != -1) {
+            // get everything after the ?
+            tAddonSTr = tOldHref.split("?")[1];
+
+  tnewHref = tnewHref + "?" + tAddonSTr + "&st=map";        
+
+        } else {
+            tnewHref = tnewHref + "?st=map";
+        }
+        theFill = "This is a test";
+        document.location.href = tnewHref;
+      
+      //  app.setPagePopUp(tnewHref,LZString.compressToEncodedURIComponent(theFill));
+     
+      
+  // document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+    } else {
+    JSSHOP.ui.toggleNuModule("dvTglPMap","smapWrpr");
+     // JSSHOP.ui.toggleVisibility('smapWrpr');
+    if(document.getElementById('smap').innerHTML == "") {
+   
+        document.getElementById('smap').style.position='relative';
+        document.getElementById('smap').style.top='auto';
+        document.getElementById('smap').style.left='auto';
+        getLeaves();
+    }   
+    }
+ 
+};
+
+
+JSSHOP.ads.doGenCoStr = function(tCoRecObj, tCoRecIdx) {
+   
+    ts = tCoRecObj;
+    ttSrtel = ts.c_tel;
+    ttSrtel = ttSrtel.replace(/\s/g, '');
+    ttSweb = ts.c_web;
+    ttSemail = ts.c_email;
+    ttSdesc = ts.c_desc;
+    ttSwhours = ts.c_whours;
+    ttGCSSurl = "javascript:JSSHOP.ads.doGenCoPop(" + tCoRecIdx + ");";
+
+   //  tCurl = "index.html?pid=aa-show-item&itemid=" + ts._id + "&cid=" + ts.c_coid + "&catid=" + ts.c_category;
+   tCurl = "javascript:eindex('aa-show-item','pid=aa-show-item&itemid=" + ts._id + "&cid=" + ts.c_coid + "&catid=" + ts.c_category + "');";
+    tCshort = ts.c_name.substring(0, 20);
+    tCResNuStr = "";
+
+
+
+
+    currFTclr = "menu-material-icons collection-item txtClrTtl";
+if(currRcntFavsStr.indexOf(ts.title) != -1) {
+currFTclr = "menu-material-icons collection-item txtClrRed";
+}
+
+tCResShpStr = "<div tid=\"dvCoFavBtn\">";
+tCResShpStr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + ttSweb + "','" +  ts.c_name + "','noQvalue','" + quid + "','nbtnFavs" + tCoRecIdx + "');\"><i id=\"nbtnFavs" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+tCResShpStr += "</div>";
+
+
+
+
+
+
+// atstr += "<td style=\"text-align: left;\"></td>";
+atstr = "<tr><td>";
+atstr += "<div class=\"collection-item\">";
+atstr += "<div style=\"padding-top:12px;\"><a href=\"" + ttGCSSurl + "\" class=\"txtBold\">" + ts.c_name + "</a>  <span class=\"txtSmall txtClrGrey\">"  + ts.c_location + "</span></div>";
+atstr += "<div style=\"word-wrap: break-word;padding-bottom:12px;\">";
+
+ 
+    if(ttSrtel.indexOf("351") != -1) {
+        atstr += " <div tid=\"dv_c_tel\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','nbtnTel" + tCoRecIdx + "');\"><i id=\"nbtnTel" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"btn_tel\">&#xe551;</i></span></div>";
+    }
+    if(ttSemail.indexOf("@") != -1) {
+        atstr += " <div tid=\"dv_c_tel\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','nbtnEmail" + tCoRecIdx + "');\"><i id=\"nbtnEmail" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"btn_email\">&#xe0be;</i></span></div>";
+    }
+    if(ttSweb.indexOf(".") != -1) {
+        atstr += " <div tid=\"dv_c_tel\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','nbtnWeb" + tCoRecIdx + "');\"><i id=\"nbtnWeb" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"btn_web\">&#xe617;</i></span></div>";
+    }
+    if(ttSwhours.indexOf("?") != -1) {
+        atstr += " <div tid=\"dv_c_tel\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','nbtnWH" + tCoRecIdx + "');\"><i id=\"nbtnWH" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"btn_hours\">&#xe190;</i></span></div>";
+    }
+ 
+
+atstr += "<a href=\"javascript:JSSHOP.ui.popAFImgUrl('" + tBimgU + "')\"><img src=\"" + tBimgU + "\" class=\"icnbtn\" style=\"margin-right:8px;padding-right:6px;max-width:50px;\" onerror=\"doGglImgLdErr('" + ts._id + "');\"></a>";
+atstr += "</div></div></td>";
+
+atstr += "</tr>";
+// rewrite atst with a facebook like style
+ 
+    return atstr;
+};
+
+JSSHOP.ads.getMyShpLnks = function(tCoRecIdx) {
+    tmsla = currShopsArr[tCoRecIdx];
+    tGMSIid = tmsla["_id"];
+    tGMSIname = tmsla["c_name"];
+    tGMSIweb = tmsla["c_web"];
+    tGMSIemail = tmsla["c_email"];
+    tRtGMSIstr = "";
+    tRtGMSIstr += "<div class=\"collection-item txtSmall txtBold txtClrDlg\" style=\"text-align:left\">What would you like to do?</div>";
+    tRtGMSIstr += " <div tid=\"dv_c_page\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><a class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" href=\"index.html?pid=aa-edit-place&tpid=" + tGMSIid + "\"><i id=\"nbtnSS" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"shop\" value=\"btn_shshop\">&#xe190;</i></span>Update Shop Information</div>";
+
+    // tRtGMSIstr += "<div class=\"collection-item txtSmall txtBold txtClrDlg\" style=\"text-align:left\"><a href=\"javascript:JSSHOP.ui.popAFImgUrl('" + tGMSIweb + "')\">Edit Shop Info</a></div>";
+    tRtGMSIstr += "<div class=\"collection-item txtSmall txtBold txtClrHdr\" style=\"text-align:left\"><a href=\"javascript:JSSHOP.ui.popAFImgUrl('mailto:" + tGMSIemail + "')\">Remove Shop from listings</a></div>";
+    tRtGMSIstr += "<div class=\"collection-item txtSmall txtBold txtClrHdr\" style=\"text-align:left\"><a href=\"javascript:JSSHOP.ui.popAFImgUrl('tel:" + tGMSIemail + "')\">Contact us about this listing</a></div>";
+    return tRtGMSIstr;
+};
+
+JSSHOP.ads.getNMyShpLnks = function() {
+    tmsla = currShopsArr[tCoRecIdx];
+    tGMSIid = qco["_id"].value;
+    tGMSIname =  c_name.value;
+    tGMSIweb = c_web.value;
+    tGMSIemail =  c_email.value;
+    tRtGMSIstr = "";
+    tRtGMSIstr += "<div class=\"collection-item txtSmall txtClrHdr\" style=\"text-align:left\">" + c_name.value + "</div>";
+    tUrlEncdn = encodeURIComponent(c_name.value);
+    tRtGMSIstr += "<div class=\"collection-item txtClrHdr\" style=\"text-align:left\">" + stxt[555] + " <a class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrHdr txtBold\" href=\"index.html?pid=aa-contactus&cid=" + cid + "&tpnm=" + tUrlEncdn  + "\">" + stxt[86] + " ListID: " + currPlaceObj._id + "</a></div>";
+    // tRtGMSIstr += "<div class=\"collection-item txtSmall txtClrHdr\" style=\"text-align:left\">" + stxt[556] + "</div>";
+    // tRtGMSIstr += " <div tid=\"dv_c_page\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><a class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrHdr txtBold\" href=\"index.html?pid=aa-contactus&cid=" + cid + "&tpnm=" + tUrlEncdn  + "\">" + stxt[86] + " ListID: " + cid + "</a></div>";
+    tRtGMSIstr += JSSHOP.shared.getPlaceELink();
+    if(currPlaceObj.c_uid  == quid) {
+        document.location.href = "index.html?pid=aa-edit-place&tpid=" + cid;
+    }  
+    return tRtGMSIstr;
+};
+JSSHOP.ads.doGenCoMsgPop = function(tCowRecInc) {
+     // msgbox with object
+     atmpMBobj = nTmpMsgBxOb();
+     atmpMBobj["m_type"] = "product"; // interna� msg type
+     atmpMBobj["m_val"] = "1"; // internal msg token
+     /// atmpMBobj["m_strAll"] = tAllowedStr; // message form values to render
+     atmpMBobj["m_useAnx"] = "y"; // add image upload btn
+     atmpMBobj["m_tmpCB"] = "doNada"; // null function as cllback
+    // return aTmpMsgBxOb;
+
+    tswq = currShopsArr[tCowRecInc];
+    tsraaq = tswq;
+    console.log("doGenCoMsgPop.tsraaq: " + tsraaq);
+    tsrdid = tsraaq["_id"];
+    console.log("doGenCoMsgPop: " + tsrdid);
+     JSSHOP.shared.setFrmFieldVal("qmsgs","msg_to", tsrdid);
+     JSSHOP.ui.showNuMsgBox(atmpMBobj); 
+};
+
+JSSHOP.ads.setGCoPopPanel = function(tggntype, tPPInt) {
+    // dvGetCInf
+    // dvGetCMsg
+    // dvGetCAprase
+    switch(tggntype) {
+        case "dvGetCInf":
+            document.getElementById("dvGCPBody").innerHTML = JSSHOP.ads.doGenCoNStr(tPPInt);
+           //  document.getElementById("dvGCPHDR").innerHTML = "Info";
+            break;
+        case "dvGetCMsg":
+            document.getElementById("dvGCPBody").innerHTML = "Message";
+           //  document.getElementById("dvGCPHDR").innerHTML =  "Message";
+ 
+            break;
+        case "dvGetCAprase":
+            document.getElementById("dvGCPBody").innerHTML = JSSHOP.ads.getARApraseStr(tPPInt);
+            // document.getElementById("dvGCPHDR").innerHTML = "Info";  
+            break;
+        case "dvGetMSInf":
+            document.getElementById("dvGCPBody").innerHTML = JSSHOP.ads.getMyShpLnks(tPPInt);
+                // document.getElementById("dvGCPHDR").innerHTML = "Info";  
+            break;
+        default:
+            document.getElementById("dvGCPBody").innerHTML = JSSHOP.ads.doGenCoStr(currShopsArr[tPPInt], tPPInt);
+            // document.getElementById("dvGCPHDR").innerHTML = "Info";
+            break;
+    }
+
+
+};
+
+
+
+function fnshGCFSave(a,b,c) {
+try {
+console.log("fnshGCFSave: " + b);
+        tncobj = null;
+        tncobj = {};
+    // alert("fnshCoPgAdd: " + b);
+    if(b.indexOf("_id") != -1) {
+    // alert("fnshCoPgAdd: " + b)
+    tncobj = JSON.parse(b);
+    tnAObj = tncobj[0];
+    console.log("fnshGCFSave: " + tnAObj._id);
+    // alert("fnshCoPgAdd: " + tncobj[0]._id);
+    if(tnAObj._id) {
+        // JSSHOP.cookies.setCookie("cuid",tnAObj,"90","","","");
+        document.location.href = "index.html?pid=aa-edit-user&cit=y";
+        }
+    }
+} catch(e) {    
+console.log("fnshGCFSave: " + e);
+}
+    }
+
+
+function doGenCFSave(a,b,c) {
+        tDadded = JSSHOP.shared.getFrmFieldVal("qco", "c_dadded", 0);
+        tmpDOs = {};
+        tmpDOs["ws"] = "where c_uid=? and c_dadded=?";
+        tmpDOs["wa"] = [quid,tDadded];
+        oi = getNuDBFnvp("qco", 5, null, tmpDOs);
+        doQComm(oi["rq"],"noQvalue","fnshGCFSave");
+}
+
+JSSHOP.ads.doGenCoSave = function() {
+    JSSHOP.shared.setFrmFieldVal("qco", "c_uid", quid);
+    JSSHOP.shared.setFrmFieldVal("qco", "c_dadded", JSSHOP.getUnixTimeStamp());
+    tmpFobj = null;
+    tmpFobj = {};
+	// c_whours.value = setWorkHObj("ha");
+	// alert("c_whours.value: " + c_whours.value);
+    tmpFobj["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qco"], "tmp_"));
+
+	oi = getNuDBFnvp("qco", 6, null, tmpFobj);
+	// alert("OI: " + oi["rq"]);
+    console.log("OI: " + oi["rq"]);
+    doQComm(oi["rq"], null, "doGenCFSave");
+};
+
+
+
+JSSHOP.ads.doGenCoAPpd = function() {
+    JSSHOP.shared.doNuDwEL();
+    tSARR = [stxt[3001],stxt[3002]];
+    tVSARR = [svtxt[3001],svtxt[3002]];
+    isslen = tSARR.length;
+    // alert("tSARR" + tSARR[0]._id);
+    rweint = 0;
+    while(rweint < tSARR.length) {
+        tsasa = null;
+     
+    tsasa = tSARR[rweint];
+     
+    if(tVSARR[rweint] == c_category.value) {
+        console.log("tVSARR[rweint]: " + tVSARR[rweint] + " : " + tSARR[rweint] + " : " +  c_category.value);
+    
+        JSSHOP.shared.addCurrSelectOpt(tmp_c_category, tVSARR[rweint], tSARR[rweint], "selected");
+    } else {
+        console.log("tVSARR[rweint]:no " + tVSARR[rweint] + " : " + tSARR[rweint] + " : " +  c_category.value);
+    
+    JSSHOP.shared.addCurrSelectOpt(tmp_c_category, tVSARR[rweint], tSARR[rweint], "");
+    }
+    rweint++; 
+    }
+};
+JSSHOP.ads.doGenCoAPopd = function(tAbCd, tAbCdA, tAbCdB) {
+    // tcloseBstr  = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrRed crsrPointer\" style=\"float:right\"><i class=\"menu-material-icons txtBold txtClrRed\" alt=\"close\" title=\"close\" value=\"close\">&#xe5cd;</i></div>";
+
+    fullResp = tAbCdA;
+    document.getElementById(tAbCd).innerHTML = fullResp;
+    setTimeout("JSSHOP.ads.doGenCoAPpd()", 1000);
+};
+
+JSSHOP.ads.doGenCoAddPop = function() {
+    loadNurJSModal("tplates/aa-mod-add-co.html?tt=" + JSSHOP.getUnixTimeStamp(), "...", JSSHOP.ads.doGenCoAPopd);
+};
+
+
+function fillShrdPvPForm() {
+    tQlogoVA = currPlaceObj.c_logoimg;
+tQlogoV = tQlogoVA.replace("https: /", "https://");
+c_logoimg.value = tQlogoV;
+tIncStr = "default.gif";
+if(tQlogoV.indexOf(".") != -1) {
+    if(tQlogoV.indexOf("http") != -1) {
+tIncStr = currPlaceObj.c_logoimg;
+    } else {
+tIncStr = "images/slogos/s_thumb" + currPlaceObj.c_logoimg;
+    }
+}
+
+// add option "noQvalue" to tmp_k_category
+
+ tIstr = "<img class=\"avatar\" id=\"dvPLogoImg\" src=\"" + tIncStr + "\" width=\"48\" height=\"48\" />";
+ tCdescStr = currPlaceObj.c_desc;
+ if((tCdescStr == "ns") || (tCdescStr == "5")){
+ 
+     tCdescStr = c_name.value + "  " + stxt[559] + " " + c_location.value + ". " ;
   
-	function elementDrag(e) {
-	  e = e || window.event;
-	  e.preventDefault();
-	  // calculate the new cursor position:
-	  pos1 = pos3 - e.clientX;
-	  pos2 = pos4 - e.clientY;
-	  pos3 = e.clientX;
-	  pos4 = e.clientY;
-	  // set the element's new position:
-	  elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-	  elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-	}
+ }
+document.getElementById("pprv_dvPIDHDRstr").innerHTML =  "<div style=\"float:left;padding-right:6px;padding-bottom:6px;\">" + tIstr + "</div>" + currPlaceObj.c_name + "<br><span class=\"txtSmall\">" + tCdescStr + "</span>";
+
+
+
+tWebVal = currPlaceObj.c_web;
+tWUAdr = tWebVal;
+tFPFtel = currPlaceObj.c_tel;
+ttFPFtel = tFPFtel;
+
+// remove "351 " and "34 " from beginning of phone number
+if(tFPFtel.indexOf("351 ") != -1) {
+    ttFPFtel = tFPFtel.replace("351 ", "");
+}
+if(tFPFtel.indexOf("34 ") != -1) {
+    ttFPFtel = tFPFtel.replace("34 ", "");
+}
+tttFPFtel = ttFPFtel.replace(/\s/g, "");
+// if the first number in ttFPFtel is 9 then it is a mobile number
+if((tttFPFtel.charAt(0) == "9") || (tttFPFtel.charAt(0) == "6") || (tttFPFtel.charAt(0) == "7")) {
+   
+    pprv_c_tel.innerHTML = "<a href=\"tel:" + tttFPFtel + "\">" + tttFPFtel + "</a>";
+} else {
   
-	function closeDragElement() {
-	  // stop moving when mouse button is released:
-	  document.onmouseup = null;
-	  document.onmousemove = null;
-	}
+    pprv_c_tel.innerHTML = "<a href=\"tel:" + tttFPFtel + "\">" + tttFPFtel + "</a>";
+}
+
+
+
+tWUTtl = tWebVal;
+if(tWebVal.indexOf(".") != -1) {
+     
+    if(tWebVal.indexOf("http") != -1) {
+    } else {
+        tWUAdr = "http://" + tWebVal;
+    }
+    if(tWebVal.indexOf("facebook") != -1) {
+        // alert("facebook");
+        tWUTtl = "facebook";
+        tWUAdr = "https://www.google.com/search?q=" + c_name.value + " facebook";
+    }
+    if(tWebVal.indexOf("instagram") != -1) {
+        tWUTtl = "instagram";
+        tWUAdr = "https://www.google.com/search?q=" + c_name.value + " instagram";
+    }
+    if(tWebVal.indexOf("twitter") != -1) {
+        tWUTtl = "twitter";
+        tWUAdr = "https://www.google.com/search?q=" + c_name.value + " twitter";
+    }
+    if(tWebVal.indexOf("youtube") != -1) {
+        tWUTtl = "youtube";
+        tWUAdr = "https://www.google.com/search?q=" + c_name.value + " youtube";
+    }
+
+    tWVstr = "<a href=\"" + tWUAdr + "\" target=\"_blank\">" + tWUTtl + "</a>";
+
+    pprv_c_web.innerHTML = tWVstr;
+}
+
+pprv_dvQteBox.innerHTML = "";
+pprv_dvQteBox.innerHTML = JSSHOP.ads.getCoAprsDiv(currPlaceObj, "pprv"); 
+tDlen = pprv_dvQteBox.innerHTML.length;
+if(tDlen > 10) {
+    if(arrUprefs["prfsSHOPuser"][0].tglDvAprs) {
+        if(arrUprefs["prfsSHOPuser"][0].tglDvAprs == "show") {
+        JSSHOP.ui.toggleNuModule('dvTglAprs','dvTglAprsTbl');
+        }
+        }
+    }
+    lnkCoMoreInf.href = "javascript:eindex('aa-show-place','pid=aa-show-place&cid=" + currPlaceObj._id + "&catid=" + currPlaceObj.c_category + "')";
+    if(isJApp == "ayes") {
+        tOldHref = document.location.href;
+        if(tOldHref.indexOf("recamby.com") != -1) {
+            tnewHref = "https://recamby.com/clean.html";
+     
+        } else {
+            tnewHref = "https://titan/recamby/clean.html";
+        }
+        tInnerHSTR = LZString.compressToEncodedURIComponent(lightbox_content.innerHTML);
+        app.setPagePopUp(tnewHref,tInnerHSTR);
+    }
+// document.getElementById("spInDat").innerHTML = c_name.value + " " + stxt[86];
+// document.getElementById("spWHrs").innerHTML = c_name.value + " " + stxt[514];
+// document.getElementById("tmp_qsv").value = c_name.value;
+}
+
+
+function doShrdPrvPFnsh() {
+    JSSHOP.shared.setDynFieldVals(currPlaceObj, "");
+    JSSHOP.shared.setFrmFieldVal("qco", "_id", currPlaceObj._id);
+    JSSHOP.shared.setDynFieldVals(currPlaceObj, "pprv_");
+    // JSSHOP.shared.setDynFrmVals(document["qco"], "pprv_");
+     JSSHOP.shared.doNuDwEL();
+     fillShrdPvPForm();
+
+ }
+
+var doShrdPrvwPop = function(tAbCd, tAbCdA, tAbCdB) {
+    // fullResp = "<div onclick=\"JSSHOP.ui.closeLbox();\" style=\"float:right\">Closei</div>" + tAbCdA;
+    // JSSHOP.shared.popAndFillLbox(fullResp);
+    tcloseBstr  = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrRed crsrPointer\" style=\"float:right\"><i class=\"menu-material-icons txtBold txtClrRed\" alt=\"close\" title=\"close\" value=\"close\">&#xe5cd;</i></div>";
+JSSHOP.ui.popAndFillLbox(tAbCdA);
+    //  document.getElementById(tAbCd).innerHTML = tcloseBstr +  tAbCdA;
+    setTimeout("doShrdPrvPFnsh()", 1000);
+}
+JSSHOP.ads.doGenCoPop = function(tCowRecInc) {
+    tNGCPstr = "";
+    try {
+        tGCoPpObj = currShopsArr[tCowRecInc];
+        currPlaceObj = "";
+        currPlaceObj = {};  
+        currPlaceObj = tGCoPpObj;
+        tgcps = tGCoPpObj;
+        hasGCPcntact = "n";
+        hasGCPweb = "n";
+        hasGCPemail = "n";
+        hasGCPwhours = "n";
+        hasGCPtel = "n";
+        hasGCPdesc = "n";
+        hasGCPlogo = "n";
+        hasGCPzp = "n";
+        hasGCPdoor = "n";
+        hasGCPstreet = "n";
+        hasGCPlocation = "n";
+        hasGCPregion = "n";
+        hasGCPloc_lat = "n";
+        hasGCPloc_lng = "n";
+        hasGCPmsg = "n";
+
+     
+
+ 
+
+
+
+        currPlaceObj = "";
+        currPlaceObj = {};
+        currPlaceObj = tGCoPpObj;
+        JSSHOP.ajax.doNuAjaxPipe("lightbox_content", "tplates/aa-mod-preview-place.html?cid=" + tgcps._id, doShrdPrvwPop);
+                // JSSHOP.ui.popAndFillLbox(tPTXT);
+               //  loadNurJSModal('tplates/aa-mod-preview-place.html?cid=" + tgcps._id + "','...',doShrdPrvwPop);
+        return;
+        currFTclr = "menu-material-icons collection-item txtClrTtl";
+        if(currRcntFavsStr.indexOf(tgcps.c_name) != -1) {
+            currFTclr = "menu-material-icons collection-item txtClrRed";
+        }
+   
+        if(tgcps.c_email.indexOf("@") != -1) {
+            hasGCPemail = "y";
+        }
+        if(tgcps.c_web.indexOf(".") != -1) {
+            hasGCPweb = "y";
+            tCurl = tgcps.c_web;
+        }
+        if(tgcps.c_tel.indexOf("351 9") != -1) {
+            hasGCPtel = "y";
+        }
+        if(tgcps.c_whours.indexOf("?") != -1) {
+            hasGCPwhours = "y";
+        }
+        if(tgcps.c_desc.indexOf("?") != -1) {
+            hasGCPdesc = "y";
+        }
+        if(tgcps.c_logoimg.indexOf(".") != -1) {
+            hasGCPlogo = "y";
+        }
+        if(tgcps.c_tel.indexOf("351 9") != -1) {
+            hasGCPtel = "y";
+        }
+tPTXT = "";
+
+tPTXT += "<table style=\"width: 100%\"><tr><td>";
+tPTXT += "<div tid=\"dvCoLogoImg\" style=\"background-image: url('" + tgcps.c_logoimg + "');background-position: center; background-repeat: no-repeat; background-size: contain;min-height:50px; min-width:50px;max-height:60px; max-width:60px;width:55px;\" class=\"txtBig txtBold txtClrHdr\"><a class=\"ttxtDecorNone\" href=\"" + tCurl + "\"  target=\"_blank\">";
+tPTXT += "</a></div>";
+tPTXT += "</td><td style=\"text-align:left\">";
+tPTXT += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
+tPTXT += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  tgcps.c_name + "','noQvalue','" + quid + "','btnFavs" + tCowRecInc + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+tPTXT += "</div>";
+
+tPTXT += "<div  tid=\"tmp_c_name\"  style=\"min-height:20px;text-align: left;max-width:98%;word-wrap: break-word;word-break: break-word;width: 100%\" class=\"txtSmall txtBold txtClrHdr\"><a class=\"txtDecorNone txtBig txtSmall txtClrHdr\" href=\"" + tCurl + "\"  target=\"" + tGRPtgt + "\">" +  removeDiacritics(tgcps.c_name) + "</a></div>";
+
+
+
+
+tPTXT += "</td>";
+tPTXT += "</tr></table>";
+
+tPTXT += "<div class=\"txtSmall txtClrHdr\" style=\"text-align:right;float: right;margin:8px;\">";
+tPTXT += "<a href=\"javascript:JSSHOP.ads.setGCoPopPanel('dvGetMSInf'," + tCowRecInc + ");\">";
+tPTXT += stxt[712] + "</a></div>";
+
+// tPTXT += "<div class=\"clearfix\"></div>";
+tPTXT += "<table style=\"width:100%;background-color: #F3F3F3\"><tr><td>";
+tPTXT += "<i class=\"menu-material-icons collection-item txtClrDlg\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle\">&#xe0c8;</i>";
+tPTXT += "</td><td style=\"width:100%\">";
+tPTXT += "<span class=\"txtSmall txtClrGrey\">"  + ts.c_location + "</span>";
+tPTXT += "</td><td style=\"text-align:right;\" nowrap=\"nowrap\">";
+nTratInt = tgcps.c_rating * 2;
+nTratwInt = nTratInt.toFixed(1);
+tPTXT += "<div class=\"txtSmall\" style=\"margin-right:10px;\">" + nTratwInt + "  <span class=\"txtClrGrey\">(" +  tgcps.c_revs + ")</span></div>";
+tPTXT += "</td></tr></table>";
+
+if((hasGCPtel == "y") || (hasGCPemail == "y")) {
+tPTXT += "<table class=\"slmtable\" align=\"center\"><tr><td>";
+tPTXT += "<div id=\"dvGCPBtns\" style=\"margin:0 auto;visibility:visible;display:block;\">";
+tPTXT += "<a href=\"javascript:JSSHOP.ads.setGCoPopPanel('dvGetCInf'," + tCowRecInc + ");\">";
+tPTXT += "<div id=\"dvGetCInf\" style=\"margin:2px;padding:2px;float:left;padding-right:5px;\" class=\"slmtable bkgdClrWhite brdrClrDlg txtBold txtClrBSLnks crsrPointer\">";
+tPTXT += "<img src=\"images/misc/parts_w.gif\" style=\"vertical-align: middle; max-width: 27px; max-height: 27px;\" class=\"icnsmlbtn\">";
+tPTXT += "Info";
+tPTXT += "</div></a>";
+tPTXT += "<a href=\"javascript:JSSHOP.ads.setGCoPopPanel('dvGetCAprase'," + tCowRecInc + ");\">";
+tPTXT += "<div id=\"dvGetCAprase\" style=\"margin:2px;padding:2px;float:left;padding-right:5px;\"  class=\"slmtable bkgdClrWhite brdrClrDlg txtBold txtClrBSLnks crsrPointer\">";
+tPTXT += "<img src=\"images/misc/mec2_w.gif\" style=\"vertical-align: middle; max-width: 28px; max-height: 28px;\" class=\"icnsmlbtn\">";
+tPTXT += "Quote";
+tPTXT += "</div></a>";
+tPTXT += "</div>";
+tPTXT += "</td></tr></table>";
+}
+
+tPTXT += "<table><tr><td><span><i class=\"material-icons-two-tone\" style=\"margin-right:4px;\">&#xe601</i></span></td><td><div id=\"dvGCPHDR\" class=\"txtBig txtBold\"></div></td></tr></table>";
+
+tPTXT += "<div id=\"dvGCPBody\" class=\"txtSmall txtBold txtClrHdr\" style=\"text-align:left\">";
+tPTXT += JSSHOP.ads.doGenCoNStr(tCowRecInc);
+
+tPTXT += "</div>";
+tcPTXT = "<div class=\"clearfix\"></div>";
+
+atstr = "<div style=\"word-wrap: break-word;margin-top:0px;padding-right:9px;max-height:100%;\"  class=\"txtSmall\">";
+atstr += "<div style=\"float: left;\">";
+atstr += "<a href=\"javascript:JSSHOP.ui.popAFImgUrl('" + tBimgU + "')\"><img src=\"" + tBimgU + "\" class=\"icndbtn\" style=\"margin-right:8px;padding-right:8px;\"  onerror=\"doGglImgLdErr('" + ts._id + "');\"></a>";
+atstr += "</div>";
+
+atstr += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
+atstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+atstr += "</div>";
+
+
+atstr += "<div><a href=\"" + tCurl + "\" class=\"txtBold txtDecorNone\">" + ts.c_name + "</a></div>";
+atstr += "<table style=\"width:100%;background-color: #F3F3F3\"><tr><td>";
+atstr += "<i class=\"menu-material-icons collection-item txtClrDlg\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle\">&#xe0c8;</i>";
+atstr += "</td><td style=\"width:100%\">";
+atstr += "<span class=\"txtSmall txtClrGrey\">"  + ts.c_location + "</span>";
+atstr += "</td><td style=\"text-align:right;\" nowrap=\"nowrap\">";
+nTratInt = ts.c_rating * 2;
+nTratwInt = nTratInt.toFixed(1);
+atstr += "<div class=\"txtSmall\" style=\"margin-right:10px;\">" + nTratwInt + "  <span class=\"txtClrGrey\">(" +  ts.c_revs + ")</span></div>";
+atstr += "</td></tr></table></div>";
+atstr += tPTXT;
+
+
+        // tNGARstr = JSSHOP.ads.getARApraseStr(tCowRecInc);
+        // tTabbedDiv = "<div class=\"txtBold txtClrHdr\" style=\"text-align:left\">" + tNGARstr + tPTXT + tNGCPstr + tcPTXT + "</div>";
+        console.log("doGenCoPop: " + tNGCPstr);
+
+     } catch(e) {
+        console.log("doGenCoPop.ERROR: " + e);
+    }
+};
+
+
+
+
+
+JSSHOP.ads.doGenMyCoPop = function() {
+    tNGCPstr = "";
+    try {
+        tGCoPpObj = currShopsArr[tCowRecInc];
+        tgcps = tGCoPpObj;
+        hasGCPcntact = "n";
+        hasGCPweb = "n";
+        hasGCPemail = "n";
+        hasGCPwhours = "n";
+        hasGCPtel = "n";
+        hasGCPdesc = "n";
+        hasGCPlogo = "n";
+        hasGCPzp = "n";
+        hasGCPdoor = "n";
+        hasGCPstreet = "n";
+        hasGCPlocation = "n";
+        hasGCPregion = "n";
+        hasGCPloc_lat = "n";
+        hasGCPloc_lng = "n";
+        hasGCPmsg = "n";
+        currFTclr = "menu-material-icons collection-item txtClrTtl";
+        if(currRcntFavsStr.indexOf(tgcps.c_name) != -1) {
+            currFTclr = "menu-material-icons collection-item txtClrRed";
+        }
+   
+
+        if(tgcps.c_web.indexOf(".") != -1) {
+            hasGCPweb = "y";
+            tCurl = tgcps.c_web;
+        }
+ 
+        if(tgcps.c_whours.indexOf("?") != -1) {
+            hasGCPwhours = "y";
+        }
+        if(tgcps.c_desc.indexOf("?") != -1) {
+            hasGCPdesc = "y";
+        }
+        if(tgcps.c_logoimg.indexOf(".") != -1) {
+            hasGCPlogo = "y";
+        }
+        if(tgcps.c_email.indexOf("@") != -1) {
+            hasGCPemail = "y";
+        }
+        if(tgcps.c_tel.indexOf("351 9") != -1) {
+            hasGCPtel = "y";
+        }
+tPTXT = "";
+
+tPTXT += "<table style=\"width: 100%\"><tr><td>";
+tPTXT += "<div tid=\"dvCoLogoImg\" style=\"background-image: url('" + tgcps.c_logoimg + "');background-position: center; background-repeat: no-repeat; background-size: contain;min-height:50px; min-width:50px;max-height:60px; max-width:60px;width:55px;\" class=\"txtBig txtBold txtClrHdr\"><a class=\"ttxtDecorNone\" href=\"" + tCurl + "\"  target=\"_blank\">";
+tPTXT += "</a></div>";
+tPTXT += "</td><td style=\"text-align:left\">";
+tPTXT += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
+tPTXT += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  tgcps.c_name + "','noQvalue','" + quid + "','btnFavs" + tCowRecInc + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+tPTXT += "</div>";
+
+tPTXT += "<div  tid=\"tmp_c_name\"  style=\"min-height:20px;text-align: left;max-width:98%;word-wrap: break-word;word-break: break-word;width: 100%\" class=\"txtSmall txtBold txtClrHdr\"><a class=\"txtDecorNone txtBig txtSmall txtClrHdr\" href=\"" + tCurl + "\"  target=\"" + tGRPtgt + "\">" +  removeDiacritics(tgcps.c_name) + "</a></div>";
+
+
+
+
+tPTXT += "</td>";
+tPTXT += "</tr></table>";
+
+tPTXT += "<div class=\"txtSmall txtClrHdr\" style=\"text-align:right;float: right;margin:8px;\">";
+tPTXT += "<a href=\"javascript:JSSHOP.ads.setGCoPopPanel('dvGetMSInf'," + tCowRecInc + ");\">";
+tPTXT += stxt[712] + "</a></div>";
+
+// tPTXT += "<div class=\"clearfix\"></div>";
+tPTXT += "<table style=\"width:100%;background-color: #F3F3F3\"><tr><td>";
+tPTXT += "<i class=\"menu-material-icons collection-item txtClrDlg\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle\">&#xe0c8;</i>";
+tPTXT += "</td><td style=\"width:100%\">";
+tPTXT += "<span class=\"txtSmall txtClrGrey\">"  + ts.c_location + "</span>";
+tPTXT += "</td><td style=\"text-align:right;\" nowrap=\"nowrap\">";
+nTratInt = tgcps.c_rating * 2;
+nTratwInt = nTratInt.toFixed(1);
+tPTXT += "<div class=\"txtSmall\" style=\"margin-right:10px;\">" + nTratwInt + "  <span class=\"txtClrGrey\">(" +  tgcps.c_revs + ")</span></div>";
+tPTXT += "</td></tr></table>";
+
+if((hasGCPtel == "y") || (hasGCPemail == "y")) {
+tPTXT += "<table class=\"slmtable\" align=\"center\"><tr><td>";
+tPTXT += "<div id=\"dvGCPBtns\" style=\"margin:0 auto;visibility:visible;display:block;\">";
+tPTXT += "<a href=\"javascript:JSSHOP.ads.setGCoPopPanel('dvGetCInf'," + tCowRecInc + ");\">";
+tPTXT += "<div id=\"dvGetCInf\" style=\"margin:2px;padding:2px;float:left;padding-right:5px;\" class=\"slmtable bkgdClrWhite brdrClrDlg txtBold txtClrBSLnks crsrPointer\">";
+tPTXT += "<img src=\"images/misc/parts_w.gif\" style=\"vertical-align: middle; max-width: 27px; max-height: 27px;\" class=\"icnsmlbtn\">";
+tPTXT += "Info";
+tPTXT += "</div></a>";
+tPTXT += "<a href=\"javascript:JSSHOP.ads.setGCoPopPanel('dvGetCAprase'," + tCowRecInc + ");\">";
+tPTXT += "<div id=\"dvGetCAprase\" style=\"margin:2px;padding:2px;float:left;padding-right:5px;\"  class=\"slmtable bkgdClrWhite brdrClrDlg txtBold txtClrBSLnks crsrPointer\">";
+tPTXT += "<img src=\"images/misc/mec2_w.gif\" style=\"vertical-align: middle; max-width: 28px; max-height: 28px;\" class=\"icnsmlbtn\">";
+tPTXT += "Quote";
+tPTXT += "</div></a>";
+tPTXT += "</div>";
+tPTXT += "</td></tr></table>";
+}
+
+tPTXT += "<table><tr><td><span><i class=\"material-icons-two-tone\" style=\"margin-right:4px;\">&#xe601</i></span></td><td><div id=\"dvGCPHDR\" class=\"txtBig txtBold\"></div></td></tr></table>";
+
+tPTXT += "<div id=\"dvGCPBody\" class=\"txtSmall txtBold txtClrHdr\" style=\"text-align:left\">";
+tPTXT += JSSHOP.ads.doGenCoNStr(tCowRecInc);
+
+tPTXT += "</div>";
+tcPTXT = "<div class=\"clearfix\"></div>";
+
+atstr = "<div style=\"word-wrap: break-word;margin-top:0px;padding-right:9px;max-height:100%;\"  class=\"txtSmall\">";
+atstr += "<div style=\"float: left;\">";
+atstr += "<a href=\"javascript:JSSHOP.ui.popAFImgUrl('" + tBimgU + "')\"><img src=\"" + tBimgU + "\" class=\"icndbtn\" style=\"margin-right:8px;padding-right:8px;\"  onerror=\"doGglImgLdErr('" + ts._id + "');\"></a>";
+atstr += "</div>";
+
+atstr += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
+atstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+atstr += "</div>";
+
+
+atstr += "<div><a href=\"" + tCurl + "\" class=\"txtBold txtDecorNone\">" + ts.c_name + "</a></div>";
+atstr += "<table style=\"width:100%;background-color: #F3F3F3\"><tr><td>";
+atstr += "<i class=\"menu-material-icons collection-item txtClrDlg\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle\">&#xe0c8;</i>";
+atstr += "</td><td style=\"width:100%\">";
+atstr += "<span class=\"txtSmall txtClrGrey\">"  + ts.c_location + "</span>";
+atstr += "</td><td style=\"text-align:right;\" nowrap=\"nowrap\">";
+nTratInt = ts.c_rating * 2;
+nTratwInt = nTratInt.toFixed(1);
+atstr += "<div class=\"txtSmall\" style=\"margin-right:10px;\">" + nTratwInt + "  <span class=\"txtClrGrey\">(" +  ts.c_revs + ")</span></div>";
+atstr += "</td></tr></table></div>";
+atstr += tPTXT;
+
+
+        // tNGARstr = JSSHOP.ads.getARApraseStr(tCowRecInc);
+        // tTabbedDiv = "<div class=\"txtBold txtClrHdr\" style=\"text-align:left\">" + tNGARstr + tPTXT + tNGCPstr + tcPTXT + "</div>";
+        console.log("doGenCoPop: " + tNGCPstr);
+        JSSHOP.ui.popAndFillLbox(tPTXT);
+    } catch(e) {
+        console.log("doGenCoPop.ERROR: " + e);
+    }
+};
+
+
+
+
+JSSHOP.ads.doGenCoNStr = function(tCoRecInc) {
+    iint = tCoRecInc;
+    console.log("doGenCoNStr: " + tCoRecInc);
+    tCoRecObj = currShopsArr[tCoRecInc];
+    ts = tCoRecObj;
+    tRSstr = "";
+    tRSstr += "<table style=\"width: 100%\"><tr><td style=\"text-align:left\">";
+    // tRSstr += "<div  tid=\"tmp_c_name\"  style=\"min-height:20px;text-align: left;max-width:98%;word-wrap: break-word;word-break: break-word;width: 100%\" class=\"txtSmall txtBold txtClrHdr txtDecorNone\"><a class=\"txtDecorNone txtBig txtSmall txtClrHdr\" href=\"" + tCurl + "\"  target=\"" + tGRPtgt + "\">" +  removeDiacritics(ts.c_name) + "</a></div>";
+    // tRSstr += "<div tid=\"dvCweb\"  class=\"txtSmall txtBold txtClrHdr\" style=\"word-wrap: break-word;word-break: break-word;max-width: 90%;\">" + tCWebStr + "</div><br>";
+    if(ts.c_location) {
+    // tRSstr += "<i class=\"menu-material-icons collection-item txtClrTtl\" alt=\"location_on\" title=\"Location\">&#xe0c8;</i><div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_location + "</div>";
+    }
+    if(ts.c_tel) {
+        // if c_tel starts with 351 9 thrn create sms link with message "get parts" to number
+        if(ts.c_tel.indexOf("351 9") != -1) {
+        tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\"><a href=\"sms:" + ts.c_tel + "?body=" + stxt[200] + "\">" + ts.c_tel + "</a></div>";
+        } else {
+    tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_tel + "</div>";
+        }    
+}
+    if(ts.c_email) {
+    // tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_email + "</div>";
+    }
+    if(ts.c_web) {
+    tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_web + "</div>";
+    }
+    if(ts.c_whours) {
+        // na| 9 am–6:30 pm| 9 am–6:30 pm| 9 am–6:30 pm| 9 am–6:30 pm| 9 am–6:30 pm| na
+        twBstr = ts.c_whours;
+ 
+        // replace all non alpha numeric minus space and | with ;
+        twAstr = twBstr.replace(/[^a-zA-Z0-9\s\-\|]/g, ";");
+        // replace all ;;; with -
+        twAstr = twAstr.replace(/\;\;\;/g, "-");
+        // replace all am- with am:
+        twAstr = twAstr.replace(/am-/g, "am_");
+        // replace all "; " with .
+        twAstr = twAstr.replace(/\;\s/g, ".");
+        // replace all ; with :
+        twAstr = twAstr.replace(/\;/g, ":");
+// no lunch twAstr:
+//  na| 9-am_6-pm| 9-am_6-pm| 9-am_6-pm| 9-am_6-pm| 9-am_6-pm| na
+// lunch twAstr:
+// na| 9-am_1-pm.2-6:30-pm| 9-am_1-pm.2-6:30-pm| 9-am_1-pm.2-6:30-pm| 9-am_1-pm.2-6:30-pm| 9-am_1-pm.2-6:30-pm| 9-am_1-pm
+// twAstr.split("|") will give seven working days starting with sunday
+// twAstr.split("|")[0] will give sunday
+// twAstr.split("|")[0].split(".") will give two working periods for sunday
+// twAstr.split("|")[0].split(".")[0] will give first working period for sunday
+// twAstr contains "na" for non working days
+// if twAstr contains . then it has two working periods
+
+// twAstr.split("|")[0].split(".")[0].split("-")[0] will give first working period start for sunday
+// twAstr.split("|")[0].split(".")[0].split("-")[1] will give first working period end for sunday
+// twAstr.split("|")[0].split(".")[1] will give second working period for sunday
+// twAstr.split("|")[0].split(".")[1].split("-")[0] will give second working period start for sunday
+// twAstr.split("|")[0].split(".")[1].split("-")[1] will give second working period end for sunday
+
+// using system time to get current day of week and time, then compare with twAstr to see if shop is open
+// if shop is open then twAstr will contain the current day of week and time
+// if shop is closed then twAstr will contain "na"
+tmpDaysArr = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+tmpDaysArrAb = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+tmpWordDaysArr = twAstr.split("|");
+tmpRetWhrStr = "";
+iii = 0;
+while(iii < tmpWordDaysArr.length) {
+    tWDA = tmpWordDaysArr[iii];
+    if(tWDA.indexOf("na") != -1) {
+        tmpRetWhrStr += tmpDaysArrAb[iii] + ": " + stxt[201] + "<br>";  
+    // not open
+    } else {
+    // open
+    // check if there is a second working period
+    if(tWDA.indexOf(".") != -1) {
+    // two working periods
+    tmpWDArr = tWDA.split(".");
+    tmpWD1 = tmpWDArr[0];
+    tmpWD2 = tmpWDArr[1];
+    // check if current time is between first working period
+    tmpWD1Arr = tmpWD1.split("-");
+    tmpWD1Start = tmpWD1Arr[0];
+    tmpWD1End = tmpWD1Arr[1];
+    // check if current time is between second working period
+    tmpWD2Arr = tmpWD2.split("-");
+    tmpWD2Start = tmpWD2Arr[0];
+    tmpWD2End = tmpWD2Arr[1];
+    tmpRetWhrStr += tmpDaysArrAb[iii] + ": " + tmpWD1Start + " - " + tmpWD1End + " | " + tmpWD2Start + " - " + tmpWD2End + "<br>";
+
+    } else {
+    // one working period
+    tmpWD1 = tWDA;
+    tmpWD1Arr = tmpWD1.split("-");
+    tmpWD1Start = tmpWD1Arr[0];
+    tmpWD1End = tmpWD1Arr[1];
+    tmpRetWhrStr += tmpDaysArrAb[iii] + ": " + tmpWD1Start + " - " + tmpWD1End + "<br>";    
+
+    }
+    }
+    iii++;
+}
+
+
+    // tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + tmpRetWhrStr + "</div>";
+    }
+    if(ts.c_desc) {
+    // tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_desc + "</div>";
+    }
+    if(ts.c_rating) {
+    // tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_rating + "</div>";
+    }
+    if(ts.c_revs) {
+    // tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_revs + "</div>";
+    }
+    if(ts.c_msg) {
+    // tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_msg + "</div>";
+    }
+    if(ts.c_privacy) {
+    // tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_privacy + "</div>";
+    }
+
+    tRSstr += "</td><td>";
+    
+    // tRSstr += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
+    // tRSstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+    // tRSstr += "</div>";
+    tRSstr += "</td></tr></table>";
+    // return tRSstr;
+
+    return tRSstr;
+    // JSSHOP.ui.popAndFillLbox(tRSstr);
+ 
+};
+
+JSSHOP.ads.doAprasePop = function(tCoRecInc) {
+    tmpNAPstr = "noQvalue";
+    try {
+    tmpNAPstr = JSSHOP.ads.getARApraseStr(tCoRecInc);
+    JSSHOP.ui.popAndFillLbox(tmpNAPstr);
+    } catch(e) {
+    console.log("doAprasePop.ERROR: " + e);
+    JSSHOP.ui.popAndFillLbox("doAprasePop.ERROR: " + e);
+    }
+};
+
+
+JSSHOP.ads.getCoAprsDiv = function(tPlcObj, theTprfx) {
+ 
+    tCoRecObj = tPlcObj;
+    ts = tCoRecObj;
+    hasGCPemail = "n";
+    hasGCPtel = "n";
+    hasGCPSms = "n";
+    // tRSstr = "";
+    tEmailAddr = "noQvalue";
+    if(tCoRecObj.c_email) {
+        console.log("tCoRecObj.c_email: " + tCoRecObj.c_email);
+    tEmailAddr = tCoRecObj.c_email;
+    
+    if(tEmailAddr == "") {
+        tEmailAddr = "noQvalue";
+    }
+    if(tEmailAddr.indexOf("@") != -1) {
+        hasGCPemail = "y";
+ 
+    }
+    }
+    if(tCoRecObj.c_tel) {
+    tPhoneNum = tCoRecObj.c_tel;
+    if(tPhoneNum.indexOf("3") != -1){
+        hasGCPtel = "y";
+        if((tPhoneNum.indexOf("351 9") != -1) || (tPhoneNum.indexOf("34 6") != -1) || (tPhoneNum.indexOf("34 7") != -1)){
+            hasGCPSms = "y";
+        }
+    }
+    }
+    if(hasGCPSms == "nada") {
+    // if((hasGCPSms == "n") && (hasGCPemail == "n")) {
+    tRSstr = "... ..";
+    } else {
+        if(c_category.value == "101") {
+            tmpRQtstr = stxt[122];
+            tmpRQtOpener = stxt[127];
+            tmpRQtMid = stxt[128];
+            tmpRQtEnd = stxt[133];
+        } else {
+            tmpRQtstr = stxt[123];
+            tmpRQtOpener = stxt[130];
+            tmpRQtMid = stxt[131];
+            tmpRQtEnd = stxt[132];
+        }
+        tRSstr = "<div class=\"bigtable brdrClrRed gradient-pop bkgdClrWhite\" style=\"max-width: 95%;word-wrap: break-word;margin-top:0px;padding-right:9px;max-height:100%;min-height:15px;\">";
+        tRSstr += "<table align=\"center\" style=\"margin: 0 auto;width:100%\"><tr><td align=\"left\">";
+        tRSstr += "<a href=\"javascript:JSSHOP.ui.tglPrefModule('" + theTprfx + "dvTglAprs','" + theTprfx + "dvTglAprsTbl','" + theTprfx + "tglDvAprs');\"  class=\"txtClrWhite txtDecorNone\" style=\"color:white\"><div><table style=\"margin: 0 auto;width:100%\"><tr><td><i class=\"small-material-icons txtClrRed\" title=\"btn_qte\">&#xe241;</i></td><td style=\"width:100%;align:left\"><div style=\"text-align: left\" id=\"tdTglSFld\" class=\"crsrPointer\">" + tmpRQtstr + "</div></td>";
+        tRSstr += "<td><div id=\"" + theTprfx + "dvTglAprs\"><i class=\"small-material-icons\" title=\"expand_more\">&#xe5cf;</i></td></tr></table></div></a>";
+        tRSstr += "</td></tr>";
+        tRSstr += "<tr><td>";
+
+    tRSstr += "<div id=\"" + theTprfx + "dvTglAprsTbl\" style=\"visibility:hidden;display:none;\">";
+    if((JSSHOP.ads.getPrtsPrefCC("mk") == "noQvalue") || (JSSHOP.ads.getPrtsPrefCC("part") == "noQvalue")) {
+        tRSstr += "<div class=\"txtSmall txtClrRed\">* ";
+
+        tRSstr += stxt[129];
+        tRSstr += "</div>";
+    }  
+    tRSstr += "<div id=\"" + theTprfx + "dvApraiseTitle\" style=\"padding-left:10px;\" class=\"txtSmall txtClrGrey\">" + stxt[135] + "</div>";
+    tRSstr += "<div  style=\"margin:6px;\"><span class=\"txtSmall txtBold bkgdClrTtl\">" + stxt[706] + ":</span></div>";
+    tRSstr += "<div id=\"" + theTprfx + "dvApraiseDesc\">";
+    // tFFFstr = "Hi, I am requestiong a quote to replace the [PartName] on my: [CarYear:2001] [Make:Ford] [Series:Fiesta] [Model:F1].";
+    tFFFstr = "";
+
+    
+
+        tRSstr += "<div  id=\"" + theTprfx + "dvAprsMsg\" class=\"form-control bkgdClrTtl\" contenteditable=\"true\" spellckeck=\"false\" data-ms-editor=\"false\">";
+    if(JSSHOP.ads.getPrtsPrefCC("mk") == "noQvalue") {
+    tnkMane = "[" + stxt[102] + " " + stxt[44] + "]";
+    } else {
+    tnkMane = objAllMakes["m" + JSSHOP.ads.getPrtsPrefCC("mk")]["n"];
+    }
+    if(JSSHOP.ads.getPrtsPrefCC("part") == "noQvalue") {
+    tPartName = "[" + stxt[101] +" " + stxt[44] +  "]";
+    } else {
+    tPartName = JSSHOP.ads.getPrtsPrefCC("part");
+    }
+    tYrStr = "[" + stxt[104] + " " + stxt[44] + "]";
+     if(JSSHOP.ads.getPrtsPrefCC("year") != "noQvalue") {
+        tYrStr = JSSHOP.ads.getPrtsPrefCC("year");
+    }
+    
+    tSeriStr = "";
+    if(JSSHOP.ads.getPrtsPrefCC("series") != "noQvalue") {
+        tSeriStr = " - " + JSSHOP.ads.getPrtsPrefCC("series");
+    } else {
+        tSeriStr = "[" + stxt[107] + " " + stxt[44] + "]";
+    }
+    tModSTStr = "";
+    if(JSSHOP.ads.getPrtsPrefCC("model") != "noQvalue") {
+        tModSTStr = " - " + JSSHOP.ads.getPrtsPrefCC("model");
+    }
+    tFFFstr += tmpRQtOpener + " " + tPartName + " " + tmpRQtMid + " " + tnkMane + tSeriStr + tModSTStr + ".     " + stxt[104] + ": " + tYrStr + ".   " + tmpRQtEnd;
+    tRSstr += tFFFstr;
+
+    tRSstr += "</div>";
+    
+    // create buttons to send email or sms
+    tRSstr += "<div id=\"dvApraiseBtns\" style=\"margin:5px;\"><table><tr>";
+    if(hasGCPemail == "y") {
+        // JSSHOP.ui.setNuCBBC
+       
+    tRSstr += "<td><span class=\"form-control bkgdClrTtl brdrClrHdr txtClrRed crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'email','" + theTprfx + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_email\" title=\"email\" value=\"email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0be;</i> Email</span></td>";
+    }
+    if(hasGCPSms == "y") {
+    tRSstr += "<td>&nbsp;</td><td><span class=\"form-control bkgdClrTtl brdrClrHdr txtClrRed crsrPointer\" onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'sms','" + theTprfx + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_sms\" title=\"sms\" value=\"btn_email\" styke=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe625;</i> SMS</span></td>";
+    }
+    tRSstr += "</tr></table></div>";
+// clearfix div
+    tRSstr += "<div class=\"clearfix\"><br></div>";
+
+    
+    tRSstr += "</div>";
+    tRSstr += "</div>";
+
+
+    tRSstr += "</td>";
+    tRSstr += "</tr>";
+    tRSstr += "</table>";
+    tRSstr += "</div>";
+
+     
+    
+    }
+    return tRSstr;
+    // JSSHOP.ui.popAndFillLbox(tRSstr);
+ 
+};
+JSSHOP.ads.getARApraseStr = function(tCoRecInc) {
+    iint = tCoRecInc;
+    console.log("getARApraseStr: " + tCoRecInc);
+    tCoRecObj = currShopsArr[tCoRecInc];
+    ts = tCoRecObj;
+    // tRSstr = "";
+    tRSstr = "<table style=\"width: 100%\"><tr><td style=\"text-align:left\">";
+    tRSstr += "<div  tid=\"tmp_c_name\"  style=\"min-height:20px;text-align: left;max-width:98%;word-wrap: break-word;word-break: break-word;width: 100%\" class=\"txtSmall txtBold txtClrHdr\"><a class=\"txtDecorNone txtBig txtSmall txtClrHdr\" href=\"" + tCurl + "\"  target=\"" + tGRPtgt + "\">" +  removeDiacritics(ts.c_name) + "</a></div>";
+    // tRSstr += "<div tid=\"dvCweb\"  class=\"txtSmall txtBold txtClrHdr\" style=\"word-wrap: break-word;word-break: break-word;max-width: 90%;\">" + tCWebStr + "</div><br>";
+    if(ts.c_location) {
+    tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_location + "</div>";
+    }
+    if(ts.c_tel) {
+        // if c_tel starts with 351 9 thrn create sms link with message "get parts" to number
+        if(ts.c_tel.indexOf("351 9") != -1) {
+        tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\"><a href=\"sms:" + ts.c_tel + "?body=" + stxt[200] + "\">" + ts.c_tel + "</a></div>";
+        } else {
+    tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_tel + "</div>";
+        }    
+}
+    if(ts.c_email) {
+    tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_email + "</div>";
+    }
+    if(ts.c_web) {
+    tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_web + "</div>";
+    }
+     // this is the apraise pop up. create an editable div with prefilled text accrding to the make and model
+
+    
+    tRSstr += "</td><td>";
+    
+    tRSstr += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
+    tRSstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+    tRSstr += "</div>";
+    tRSstr += "</td></tr></table>";
+    // return tRSstr;
+    tRSstr += "<div id=\"dvApraise\" style=\"min-height: 200px;min-width: 200px;max-height: 200px;max-width: 200px;\">";
+    tRSstr += "<div id=\"dvApraiseTitle\" style=\"min-height: 20px;min-width: 200px;max-height: 20px;max-width: 200px;\">Apraise</div>";
+    tRSstr += "<div id=\"dvApraiseDesc\" style=\"min-height: 180px;min-width: 200px;max-height: 180px;max-width: 200px;\">";
+    tRSstr += "<textarea spellckeck=\"false\" data-ms-editor=\"false\" id=\"txtApraiseDesc\" style=\"min-height: 180px;min-width: 200px;max-height: 180px;max-width: 200px;\">";
+    tRSstr += "Hi, I am requestiong a quote to replace the following parts: \n\n";
+    if(JSSHOP.ads.getPrtsPrefCC("mk") == "noQvalue") {
+        tnkMane = "noQvalue";
+    } else {
+    tnkMane = objAllMakes["m" + JSSHOP.ads.getPrtsPrefCC("mk")]["n"];
+
+    tRSstr += "Year: " + JSSHOP.ads.getPrtsPrefCC("year") + "\n";
+    tRSstr += "Make: " + tnkMane + "\n";
+    tRSstr += "Series: " + JSSHOP.ads.getPrtsPrefCC("series") + "\n";
+    tRSstr += "Model: " + JSSHOP.ads.getPrtsPrefCC("model") + "\n";
+    tRSstr += "Parts: " + JSSHOP.ads.getPrtsPrefCC("part") + "\n";
+    }
+    tRSstr += "</textarea>";
+
+    // create buttons to send email or sms
+    tRSstr += "<div id=\"dvApraiseBtns\" style=\"min-height: 20px;min-width: 200px;max-height: 20px;max-width: 200px;\">";
+    tRSstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox('');\"><i class=\"menu-material-icons collection-item txtClrTtl\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
+    tRSstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox('');\"><i class=\"menu-material-icons collection-item txtClrTtl\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
+    tRSstr += "</div>";
+    
+    tRSstr += "</div>";
+    tRSstr += "</div>";
+    return tRSstr;
+    // JSSHOP.ui.popAndFillLbox(tRSstr);
+ 
+};
+
+JSSHOP.ads.sortGenShpArr = function(thePGIdx){ 
+
+  //   doNuSpinSet("dvResWrap", "small", null, "...");
+// document.getElementById("includedContent").innerHTML = "";
+console.log("sortGenShpArr: " + thePGIdx);
+// tmpJSHsrtd = JSSHOP.shared.getSrtdArr(currShopsArr, thePGIdx);
+// console.log("sortGenShpArr: " + tmpJSHsrtd);
+
+tSOrdrStr = "sortAsc";
+if(pid.indexOf("psearch") != -1) {
+    if(currSortObj["psearch"]["sorder"] == "sortAsc") {
+        tSOrdrStr = "sortDesc";
+        currSortObj["psearch"]["sorder"] = "sortDesc";
+    } else {
+        tSOrdrStr = "sortAsc";
+        currSortObj["psearch"]["sorder"] = "sortAsc";
+    }
+    currSortObj["psearch"]["sindex"] = thePGIdx;
+} else {
+    if(currSortObj["msearch"]["sorder"] == "sortAsc") {
+        tSOrdrStr = "sortDesc";
+        currSortObj["msearch"]["sorder"] = "sortDesc";
+    } else {
+        tSOrdrStr = "sortAsc";
+        currSortObj["msearch"]["sorder"] = "sortAsc";
+    }
+    currSortObj["msearch"]["sindex"] = thePGIdx;
+}
+console.log("sortGenShpArr: " + tSOrdrStr);
+// conver currSortObj to string and save to local storage   
+// localStorage.setItem("currSortObj", JSON.stringify(currSortObj));
+// set currSortObj cookie with LZString.compressToUTF16(JSON.stringify(currSortObj))
+JSSHOP.cookies.setCookie("currSortObj", LZString.compressToEncodedURIComponent(JSON.stringify(currSortObj)), 365);
+rashresp = JSSHOP.ads.doNuGenShpStr(currShopsArr, thePGIdx,  tSOrdrStr, "onlyres");
+tarrDiv = document.createElement("div");
+tarrDiv.innerHTML = rashresp;
+console.log("sortGenShpArr:raresp " + rashresp);
+// console.log("doEAdsOnPart: " + inpMakes.value + " " + inpModels.value + " " + inpParts.value);
+ // document.getElementById("includedContent").innerHTML = tBoxStr;
+  document.getElementById("dvResWrap").innerHTML = "";
+
+hararr =   document.getElementById("dvResWrap").appendChild(tarrDiv);
+if(hararr) {
+    JSSHOP.ads.setEboxUp("doEBAdsFill");
+    //  JSSHOP.ads.setShpItmsUp("doShpItmsFill");
+    JSSHOP.ui.setNuCBBClickClr(document.getElementById("dvResWrap"),'slmtable txtClrWhite txtSmall','dummycls', doNill, 580);
+
+}
+
+// JSSHOP.ui.doDefCBBCC('dvResWrap', null, void() );
+};
+
+JSSHOP.ads.doGenShpActn = function(tmPGIdx, tmPGact, tmPrfx){
+    try {
+    theTmpGSAstr = tmPrfx + "dvAprsMsg";
+    dvAprsMsg = document.getElementById(theTmpGSAstr);
+    if(tmPGIdx == 0) {
+        tCoARecObj = currPlaceObj;
+    } else {
+    tCoARecObj = currShopsArr[tmPGIdx];
+    }
+    tss = tCoARecObj;
+    switch(tmPGact) {
+    case "tel":
+        window.location.href = "tel:" + tCoARecObj.c_tel;
+    break;
+    case "sms":
+        // check if device is mobile
+        if(JSSHOP.shared.isMobile()) {
+        window.location.href = "sms:" + tCoARecObj.c_tel + "?body=" + dvAprsMsg.innerText;
+        } else {
+            tTryAnyWUrl = "sms:" + tCoARecObj.c_tel + "?body=" + dvAprsMsg.innerText;
+            tTryAnyWLink = "<a href=\"sms:" + tCoARecObj.c_tel + "?body=" + dvAprsMsg.innerText + "\">" + stxt[137] + "</a>";
+            JSSHOP.ui.popAndFillLbox(stxt[136] + "<br>Link: " + tTryAnyWUrl.substring(0, 15) + ".....<br>" + tTryAnyWLink);
+        }
+    break;
+    case "email":
+    if(tss.c_email) {
+    window.location.href = "mailto:" + tCoARecObj.c_email + "?subject=" + stxt[134] + "&body=" + dvAprsMsg.innerText;
+    }
+    break;
+    case "web":
+    if(tss.c_web) {
+    window.location.href = tss.c_web;
+    }
+    break;
+    case "hours":
+    if(tss.c_whours) {
+    JSSHOP.ads.doGenCoPop(tmPGIdx);
+    }
+    break;
+    case "appraise":
+        JSSHOP.ads.doApraisePop(tmPGIdx);
+    break;
+    default:
+        break;
+    }
+} catch(e) {
+    console.log("doGenShpActn.ERROR: " + e);
+    JSSHOP.ui.popAndFillLbox("doGenShpActn.ERROR: " + e);
+}
+};
+ 
+JSSHOP.ads.doGenShpStr = function(theGresObj, theGresIdx, theGresOrdr) {
+return JSSHOP.ads.doNuGenShpStr(theGresObj, theGresIdx, theGresOrdr, "onlydef");
+};
+JSSHOP.ads.doNuGenShpStr = function(theGresObj, theGresIdx, theGresOrdr, theGresType) {
+
+     try {
+    theTResType = "shops";
+    hasr = "n";
+    fullstr = "";
+ 
+    tToFill = null;
+    tToFill = [];
+    ttarrToFill = null;
+    ttarrToFill = [];
+    tToFill = theGresObj;
+
+    
+tHdrArr = null;
+tHdrArr = "";
+tHdrArr = [];
+tAHdFObj = {};
+tAHdFObj["fld"] = "c_name";
+tAHdFObj["nm"] = stxt[404]; // Name
+tHdrArr.push(tAHdFObj);
+ 
+ 
+tAHdFObj = {};
+tAHdFObj["fld"] = "c_location";
+tAHdFObj["nm"] = stxt[79]; // Location
+tHdrArr.push(tAHdFObj);
+
+tQAHdFObj = {};
+tQAHdFObj["fld"] = "cccd";
+tQAHdFObj["nm"] = stxt[86];
+tHdrArr.push(tQAHdFObj);
+
+tQtAHdFObj = {};
+tQtAHdFObj["fld"] = "cfavd";
+tQtAHdFObj["nm"] = "Favs";
+tHdrArr.push(tQtAHdFObj);
+
+ttQAHdFObj = {};
+ttQAHdFObj["fld"] = "c_rating";
+ttQAHdFObj["nm"] = "Rating";
+tHdrArr.push(ttQAHdFObj);
+
+
+currACTblCnt = tHdrArr.length;
+
+tmpACarr = null;
+tmpACarr = "";
+tmpACarr = [];
+
+ 
+    ttarrToFill = JSSHOP.shared.sort(theGresObj, theGresIdx, theGresOrdr);
+    console.log("JSSHOP.ads.ttarrToFill.sorted: " + JSON.stringify(ttarrToFill));
+  
+    var len = ttarrToFill.length;
+    tIsCntctble = 10;
+    var iint = 0;
+    var pcid = 0;
+    tstr = "";
+    tmpOldStreet = "noQvalue";
+    tmpOldTitle = "noQvalue";
+    tCResBStr = "";
+    tGenShpStr  = "";
+    tCResShpStr = "";
+    atstr = "";
+        tSMUrl = "javascript:getLeaves();";
+/*
+<table align="center" style="margin: 0 auto;width:100%">	<tr>
+		<td align="left">
+		<table><tr><td><i class="small-material-icons txtClrDlg" title="location">&#xe8b6;</i></td><td><div style="text-align: left" id="tdTglSFld" onclick="javascript:JSSHOP.ui.toggleVisibility('dvTglSFldTbl')" class="crsrPointer"><ti data-ison="stxt[402]" data-desc="btn_search">Search</ti></div></td></tr></table>
+</td>
+	</tr>
+					  <tr>
+<td>
+<div id="dvTglSFldTbl" style="visibility:vissible;display:block">
+<table style="width: 100%">
+	<tr>
+		<td><table align="center" style="margin: 0 auto">
+		<tr>
+			<td>&nbsp;</td>
+			<td><input class="form-control"  name="tmp_qv" id="tmp_qv" value="" data="disnull"></td>
+			<td>&nbsp;</td>
+			<td> <div align="center">
+				<button class="form-control crsrPointer"  onclick="javascript:qlDoNuPlSearch('tmp_qv','dvPSList',qlShowPlacesRes);"><ti data-ison="stxt[78]" data-desc="btn_search">Search</ti></button></div>
+</td>
+		</tr>
+	</table></td>
+	</tr>
+	<tr>
+		<td><ti data-ison="stxt[400]" data-desc="btn_save">Enter zip code for shops near you</ti></td>
+	</tr>
+	<tr>
+		<td style="height: 4px"></td>
+	</tr>
+</table>
+</div>
+	</td>
+</tr>
+					  <tr>
+<td>
+</td>
+</tr>
+					  </table>
+*/
+        // tCResShpStr equals the above commented out table as a javascript string
+        if(pid == "aa-show-psearch") {
+            tFindStypeStr = stxt[120];
+        } else {
+            tFindStypeStr = stxt[121];
+        }
+        tCResShpStr = "";
+        tAesShpStr = "<div class=\"prodRowBox slmtable brdrClrRed\" style=\"max-width: 95%;word-wrap: break-word;margin-top:0px;padding-right:9px;max-height:100%;min-height:15px;\">";
+        tAesShpStr += "<table align=\"center\" style=\"margin: 0 auto;width:100%\"><tr><td align=\"left\">";
+        tAesShpStr += "<a href=\"javascript:JSSHOP.ui.toggleNuModule('dvTglCoSrch','dvTglSFldTbl');\"  class=\"txtClrWhite txtDecorNone\" style=\"color:white\"><div><table style=\"margin: 0 auto;width:100%\"><tr><td><i class=\"small-material-icons txtClrDrkGrn\" title=\"location\">&#xe8b6;</i></td><td style=\"width:100%;align:left\"><div style=\"text-align: left\" id=\"tdTglSFld\" class=\"crsrPointer\">" + tFindStypeStr + "</div></td>";
+        tAesShpStr += "<td><div id=\"dvTglCoSrch\"><i class=\"small-material-icons txtClrHdr\" title=\"expand_more\">&#xe5cf;</i></td></tr></table></div></a>";
+        tAesShpStr += "</td></tr>";
+        tAesShpStr += "<tr><td>";
+
+
+        tAesShpStr += "<div id=\"dvTglSFldTbl\" style=\"visibility:visible;display:block\">";
+        tAesShpStr += "<table style=\"width: 100%\">";
+        tAesShpStr += "<tr>";
+        tAesShpStr += "<td><table align=\"center\" style=\"margin: 0 auto\">";
+        tAesShpStr += "<tr>";
+        tAesShpStr += "<td>&nbsp;</td>";
+        tAesShpStr += "<td><input class=\"form-control\"  name=\"tmp_qv\" id=\"tmp_qv\" value=\"\" data=\"disnull\"></td>";
+        tAesShpStr += "<td>&nbsp;</td>";
+        tAesShpStr += "<td>";
+        tAesShpStr += "<div align=\"center\"><button id=\"btnPSearch\" class=\"form-control crsrPointer\" onclick=\"javascript:qlDoNuPlSearch('tmp_qv','dvPSList',qlShowPlacesRes);\">" + stxt[78] + "</button></div>";
+        tAesShpStr += "</td>";
+        tAesShpStr += "</tr>";
+        tAesShpStr += "</table></td>";
+        tAesShpStr += "</tr>";
+        tAesShpStr += "<tr>";
+        // tAddCoUrlSTr = stxt[400] + " " + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"txtBold txctClrHdr bkgdClrNrml\"><a href=\"javascript:JSSHOP.ads.doGenCoAddPop();\" class=\"txtBold txctClrHdr bkgdClrNrml\">+" + stxt[70] + "</a></span>";
+        tAddCoUrlSTr = stxt[400];
+        tAesShpStr += "<td>" + tAddCoUrlSTr + "</td>";
+        tAesShpStr += "</tr>";
+        tAesShpStr += "<tr>";
+        tAesShpStr += "<td style=\"height: 4px\"></td>";
+        tAesShpStr += "</tr>";
+        tAesShpStr += "</table>";
+        tAesShpStr += "</div>";
+
+
+        tAesShpStr += "</td>";
+        tAesShpStr += "</tr>";
+        tAesShpStr += "</table>";
+        tAesShpStr += "</div>";
+        // tAesShpStr += "<br>";
+        tCResShpStr += tAesShpStr;  
+
+        tCResShpStr += "<div class=\"prodRowBox slmtable brdrClrRed gradient-color\" style=\"max-width: 95%;word-wrap: break-word;margin-top:0px;padding-right:9px;max-height:100%;min-height:15px;\">";
+        tCResShpStr += "<a href=\"javascript:JSSHOP.ads.doGenMapShow();\"  class=\"txtClrWhite txtDecorNone\" style=\"color:white\"><div><table style=\"width:100%\"><tr><td><div style=\"padding-right:8px;\" >";
+        tCResShpStr += "<i class=\"small-material-icons slmtable gradient-pop txtClrWhite bkgdClrDGreen\" style=\"margin:3px;\" alt=\"map\" title=\"map\">&#xe0c8;</i></div></td><td style=\"width:90%\" class=\"txtClrWhite\"><span class=\"txtClrWhite txtBold\">" + stxt[124] + "</span></td>";
+        tCResShpStr += "<td class=\"crsrPointer txtClrWhite\"><div id=\"dvTglPMap\" class=\"icnbtn crsrPointer txtClrWhite\" nowrap=\"nowrap\" style=\"float:right\">";
+        tCResShpStr += "<i class=\"small-material-icons txtClrWhite\" title=\"expand_more\">&#xe5cf;</i></div></td></tr></table></div></a>";
+
+ 
+        tCResShpStr += "<div id=\"smapWrpr\" style=\"min-height:300px;visibility:hidden;display:none;min-width:99%;\" onfocus=\"\" onblur=\"\">";
+      
+        tCResShpStr += "<div id=\"smap\" style=\"min-width:99%;min-height:300px;visibility:visible;display:block;position:fixed;top:-500px;\"></div>";
+        tCResShpStr += "<div class=\"txtClrWhite\">" + stxt[531] + "</div>"; 
+        tCResShpStr += "<div class=\"txtClrWhite\">" + stxt[556] + "</div>"; 
+
+        tCResShpStr += "</div>";
+
+
+        tCResShpStr += "</div>";
+
+
+        tCResBStr += "<div id=\"dvResWrap\" class=\"dummycls\">"; // res wrapper
+
+
+    while(iint < len) {
+        tCoRecIdx = iint;
+    ts = ttarrToFill[iint];
+    tStrBrdrClr = "";
+    tBimgU = "images/transparent.gif";
+    console.log("c_logoimg: " + ts.c_logoimg);
+    tGRPtgt = "_blank";
+    tCshort = "...";
+    tIsCntctble = 10;
+    if(ts.c_name) {
+        ts.c_name = ts.c_name;
+    }
+    
+    if(ts.c_name) {
+    taCTV = ts.c_name;
+    
+    tCttl = taCTV.replace("/", " - ");
+    tCshortttl = tCttl.substring(0, 1);
+    } else {
+    tCttl = "noQvalue";
+    tCshortttl = "noQvalue";    
+    }
+    
+    tCWebStr = "";
+    tCweb = "noQvalue";
+    tCurl = "";
+    if(ts.c_url) {
+    tCurl = ts.c_url;
+    }
+    if(ts.c_web) {
+    tCweb = ts.c_web;
+    
+    
+    taCWStr = tCweb;
+    tCWStr = taCWStr;
+    if(tCweb.indexOf("http") != -1) {
+    tbCWStr = taCWStr.replace("http://", "");
+    tcCWStr = tbCWStr.replace("https://", "");
+    tdCWStr = tcCWStr.replace("www.", "");
+    taCWStr = tdCWStr;
+    } else {
+    
+    tCweb = "http://" + tCweb;
+    }
+    tCWStr = taCWStr;
+    if(taCWStr.length > 40){
+    tCWStr = taCWStr.substring(0, 40) + "...";
+    }  
+    if((tCurl == "noQvalue") ||  (tCurl == "noQxalue")) {
+    }  else {
+    tCWebStr = "<a href=\"javasvript:JSSHOP.ads.doGenShpActn(" + tCoRecIdx + ",'web');\">" + tCWStr  + "</a>";
+    }
+    
+    } 
+
+
+    ttSrtel = ts.c_tel;
+    ttSweb = ts.c_web;
+    ttSemail = ts.c_email;
+ 
+         if(ttSrtel != "") {
+        if(ttSrtel.indexOf("3") != -1) {
+            if(ttSrtel.indexOf("1 9") != -1) {
+            tIsCntctble = 15;
+             }  
+        }
+    
+        }
+        if(ttSemail != "") {
+        if(ttSemail.indexOf("@") != -1) {
+            tIsCntctble = 15;
+         }
+        }
+        if(ttSweb != "") {
+        if(ttSweb.indexOf(".") != -1) {
+            tIsCntctble = 15;
+         }
+    }
+    tIBclsStr = "slmtable icndbtn";
+    
+    // if(tCWStr == "noQvalue") {}
+    if(theTResType == "shops") {
+    tGRPtgt = "_blank";
+     
+    ttSSurl = "index.html?pid=aa-show-shop&cid=" + ts._id + "&q=" + removeDiacritics(ts.c_name + " " + ts.c_location);
+    if(theTResType == "shops") {
+        tGRPtgt = "_self";
+        ttSSurl = "javascript:JSSHOP.ads.doGenCoPop(" + iint + ");";
+    }
+    tCurl = ttSSurl;
+    tCWebStr = "<a href=\"" + tCweb + "\">" + stxt[62]  + "...</a>";
+    } // end of if above. using catchall testing 
+    tttLImg = ts.c_logoimg;
+    if(tttLImg.indexOf(".") != -1) {
+     if(tttLImg.indexOf("http") != -1) {
+    ttstamp = new Date().getTime();
+    tttst = ttstamp + iint;
+        if((tttst % 3) == 0) {
+    tBimgU = tttLImg;
+    tIBclsStr = "slmtable icndbtn";
+        } else {
+            tIBclsStr = "icnbtn";
+    tBimgU = "noQvalue";
+        }
+    tCshort = "";
+    } else {
+        tBimgU = tttLImg;
+    // tBimgU = "images/pimgs/s_thumb" + ts.c_logoimg;
+    }
+    } else { // end of indexOf(".") in c_logoimg
+    tBimgU = "noQvalue";
+    }
+        currFTclr = "menu-material-icons collection-item txtClrTtl";
+        if(currRcntFavsStr.indexOf(ts.c_name) != -1) {
+        currFTclr = "menu-material-icons collection-item txtClrRed";
+        }
+    console.log("c_logoimg: " + ts.c_logoimg);
+    if(tIsCntctble == 15) {
+    tStrBrdrClr = " brdrClrRed";
+    }
+    atstr = ""; 
+           if(iint == 0) {
+            
+            // atstr += "<div id=\"dvTglShpItms\"  style=\"word-wrap: break-word;margin-top:0px;padding-right:9px;max-height:90%;\"  class=\"prodRowBox slmtable" + tStrBrdrClr + "\"></div>";
+    }
+     if(len > 3) {
+    if(iint == 3) {
+       //  alert("iint: " + iint);
+       atstr += "<div id=\"dvEBSearM\"  style=\"word-wrap: break-word;margin-top:0px;padding-right:9px;max-height:90%;\"  class=\"prodRowBox slmtable" + tStrBrdrClr + "\"></div>";
+       
+     }  
+    } else {
+        if(iint == 0) {
+            
+    atstr += "<div id=\"dvEBSearM\"  style=\"word-wrap: break-word;margin-top:0px;padding-right:9px;max-height:90%;\"  class=\"prodRowBox slmtable" + tStrBrdrClr + "\"></div>";
+        }
+    }
+    tCshrtClrd = pSBC( 0.72, JSSHOP.ui.stringToColour(ts.c_location));
+
+    atstr += "<div style=\"word-wrap: break-word;margin-top:0px;padding-right:9px;max-height:90%;\"  class=\"prodRowBox slmtable" + tStrBrdrClr + "\">";
+    atstr += "<div style=\"float: left;\">";
+    if(tBimgU == "noQvalue") {
+        // use the first letter of the name as the image
+        atstr += "<div class=\"txtSmall slmtable\" style=\"margin-right:8px;padding-right:8px;vertical-align: middle; align: center; max-width: 27px; max-height: 27px;color: " + tCshrtClrd + ";\">&nbsp;" + tCshortttl + "</div>";
+    // atstr += "<div class=\"txtBold txtClrHdr\" style=\"margin-right:8px;padding-right:8px;vertical-align: middle; max-width: 27px; max-height: 27px;\">" + tCshortttl + "</div>";
+    } else {
+    atstr += "<a href=\"javascript:JSSHOP.ui.popAFImgUrl('" + tBimgU + "')\"><img src=\"" + tBimgU + "\" class=\"" + tIBclsStr + "\" style=\"margin-right:8px;padding-right:8px;vertical-align: middle; max-width: 27px; max-height: 27px;\"  onerror=\"javascript:doGglImgLdErr(" + ts._id + ");\"></a>";
+    }
+    atstr += "</div>";
+    atstr += "<div tid=\"dvCoPopBtn\" style=\"float: right\">";
+    atstr += "<span id=\"btnCoPop" + ts._id + "\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:JSSHOP.ads.doGenCoPop(" + iint + ");\"><i class=\"" + currFTclr + "\" alt=\"open in modal\" title=\"open in modal\">&#xe89e;</i></span>"; 
+    atstr += "</div>";
+    atstr += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
+    atstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-place&cid=" + ts._id + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + ts._id + "');\"><i  id=\"btnFavs" + ts._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+    atstr += "</div>";
+
+    // tCurl = "javascript:eindex('aa-show-place','pid=aa-show-place&cid=" + ts._id + "');";
+    if(c_category.value == 101) {
+        tQsrchName = stxt[3002];
+    } else {
+        tQsrchName = stxt[3001];
+    }
+     
+tQsrchName = JSSHOP.ads.getPrtsPrfStr("thin");
+ 
+     // tCurl = "index.html?pid=aa-show-place&cid=" + ts._id + "&q=" + removeDiacritics(ts.c_name + " " + ts.c_location);
+    tCurl = "javascript:eindex('aa-show-place','pid=aa-show-place&cid=" + ts._id + "&q=" + tQsrchName + "');";
+    // tCurl = "index.html?pid=aa-show-place&cid=" + ts._id + "&q=" + tQsrchName;
+    atstr += "<div><a href=\"" + tCurl + "\" class=\"txtBold txtDecorNone\">" + ts.c_name + "</a></div>";
+   atstr += "<table style=\"width:100%;background-color: #F3F3F3\"><tr><td>";
+    atstr += "<i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:" + tCshrtClrd + ";\">&#xe0c8;</i>";
+    atstr += "</td><td>";
+     atstr += "</td><td>";
+    atstr += "<span class=\"txtSmall txtBold txtClrHdr\">"  + ts.c_location + "</span>";
+    atstr += "</td><td style=\"text-align:right;\" nowrap=\"nowrap\">";
+    nTratInt = ts.c_rating * 2;
+    nTratwInt = nTratInt.toFixed(1);
+    atstr += "<div class=\"txtSmall\" style=\"margin-right:10px;\">" + nTratwInt + "  <span class=\"txtClrGrey\">(" +  ts.c_revs + ")</span></div>";
+    atstr += "</td></tr></table>";
+
+
+
+ 
+
+
+    
+    if(theTResType == "shopsaas") {
+    ttSrtel = ts.c_tel;
+    ttSweb = ts.c_web;
+    ttSemail = ts.c_email;
+    ttSdesc = ts.c_desc;
+    ttSwhours = ts.c_whours;
+    ttGCSSurl = "javascript:JSSHOP.ads.doGenCoPop(" + iint + ");";
+    aaatstr = "";
+    aaatstr += "<div class=\"collection-item\">";
+  
+    
+    ttGCSSurl = "javascript:JSSHOP.ads.doGenCoPop(" + iint + ");";
+        if(ttSrtel != "") {
+        if(ttSrtel.indexOf("3") != -1) {
+            if(ttSrtel.indexOf("1 9") != -1) {
+            tIsCntctble = 15;
+            aaatstr += " <div tid=\"dv_c_tel\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrHdr\" onclick=\"javascript:JSSHOP.ads.doGenShpActn(" + tCoRecIdx + ",'tel');\"><i id=\"nbtnTel" + tCoRecIdx + "\" class=\"menu-material-icons collection-item txtClrHdr\" alt=\"call\" title=\"call\" value=\"btn_tel\">&#xe551;</i></span></div>";
+            } else {
+                aaatstr += " <div tid=\"dv_c_tel\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:JSSHOP.ads.doGenShpActn(" + tCoRecIdx + ",'tel');\"><i id=\"nbtnTel" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"tel\" title=\"tel\" value=\"btn_tel\">&#xe551;</i></span></div>";
+            }
+        }
+    
+        }
+        if(ttSemail != "") {
+        if(ttSemail.indexOf("@") != -1) {
+            tIsCntctble = 15;
+            aaatstr += " <div tid=\"dv_c_email\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:JSSHOP.ads.doGenShpActn(" + tCoRecIdx + ",'email');\"><i id=\"nbtnEmail" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"btn_email\" title=\"email\" value=\"btn_email\">&#xe0be;</i></span></div>";
+        }
+        }
+        if(ttSweb != "") {
+        if(ttSweb.indexOf(".") != -1) {
+            tIsCntctble = 15;
+            aaatstr += " <div tid=\"dv_c_web\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"JSSHOP.ads.doGenShpActn(" + tCoRecIdx + ",'web');\"><i id=\"nbtnWeb" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"brn_web\" title=\"web\" value=\"btn_web\">&#xe617;</i></span></div>";
+        }
+    }
+        if(ttSwhours != "") {
+        if(ttSwhours.indexOf("?") != -1) {
+            aaatstr += " <div tid=\"dv_c_whours\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','nbtnWH" + tCoRecIdx + "');\"><i id=\"nbtnWH" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"btn_hours\">&#xe190;</i></span></div>";
+        }
+        if(tIsCntctble == 15) {
+
+            aaatstr += " <div tid=\"dv_c_appraise\"  class=\"slmtable txtSmall txtBold txtClrHdr brdrClrRed\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:JSSHOP.ads.doGenShpActn(" + tCoRecIdx + ",'appraise');\"><i id=\"nbtnAP" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"hours\" title=\"hours\" value=\"btn_appraise\">&#xe190;</i> Get Quote</span></div>";
+        }
+        aaatstr += " <div tid=\"dv_c_page\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:eindex('aa-edit-place','pid=aa-edit-place&tpid=" + ts._id + "');\"><i id=\"nbtnSS" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"shop\" value=\"btn_shshop\">&#xe190;</i></span></div>";
+        aaatstr += "<div tid=\"dv_c_tel\"  class=\"txtSmall txtBold txtClrHdr bkgdClrRed\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\"  onclick=\"JSSHOP.ads.doGenCoMsgPop(" + tCoRecIdx + ");\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span></div>";
+
+    }
+     
+    aaatstr += "</div>";
+    atstr += aaatstr;
+
+    }
+    atstr += "</div>";
+
+ 
+    
+    tCResBStr += atstr;
+    iint++;
+    }
+    tCResBStr += "</div>"; // dvResWrap 
+
+    newel = document.createElement('div');
+ 
+   // resultsDiv.innerHTML = "";
+   if(theGresObj[0]) {
+    strATHhtml = JSSHOP.shared.getNurTblHdrs(tHdrArr, "JSSHOP.ads.sortGenShpArr");
+    tmpFstr = JSSHOP.shared.getNuTblSortStr(strATHhtml, tCResBStr, "txtBold txtClrBlack");
+    console.log("JSSHOP.ads.doGenShpStr.tmpFstr: " + tmpFstr);
+    if(theGresType == "onlydef") {
+    return tCResShpStr + tmpFstr;
+    } else {
+        return tCResBStr;
+    }
+    } else {
+        console.log("JSSHOP.ads.doGenShpStr.No res: " + tCResBStr);
+
+        strATHhtml = JSSHOP.shared.getNurTblHdrs(tHdrArr, "JSSHOP.ads.sortGenShpArr");
+        tmpFstr = JSSHOP.shared.getNuTblSortStr(strATHhtml, tCResBStr, "txtBold txtClrBlack");
+        console.log("JSSHOP.ads.doGenShpStr.tmpFstr: " + tmpFstr);
+        return tCResShpStr + tmpFstr;
+    // return "No res: " + tCResBStr;
+    }
+    
+
+    
+    } catch(e) {
+        console.log("JSSHOP.ads.doGenShpStr.error: " + e);
+        return "doNuGenShpStr: " + e;
+        }
+    };
+
+
+
+
+    
+JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
+ try {
+    theTResType = a;
+    hasr = "n";
+    fullstr = "";
+    console.log("JSSHOP.ads.doNuGenericRes: " + theResp);
+    tToFill = null;
+    tToFill = [];
+    ttarrToFill = null;
+    ttarrToFill = [];
+    ttarrToFill = JSON.parse(theResp);
+    currShopsArr = null;
+    currShopsArr = [];
+    currShopsArr = ttarrToFill;
+
+    var len = currShopsArr.length;
+    tIsCntctble = 3;
+    tIsFavd = 10;
+    var iint = 0;
+    var pcid = 0;
+    tstr = "";
+    tmpOldStreet = "noQvalue";
+    tmpOldTitle = "noQvalue";
+    tCResBStr = "";
+    tCResShpStr = "";
+ 
+    while(iint < len) {
+        // tIsCntctble = 10;
+        tIsCntctble = 3;
+        tIsFavd = 10;
+        tsar = currShopsArr[iint];
+        ttSQAtel = tsar.c_tel;
+        ttSQAweb = tsar.c_web;
+        ttSQAemail = tsar.c_email;
+        ttSQAwhours = tsar.c_whours;
+        ttSQACSSurl = "javascript:JSSHOP.ads.doGenCoPop(" + iint + ");";
+        
+        if(ttSQAtel != "") {
+        if(ttSQAtel.indexOf("3") != -1) {
+            if((ttSQAtel.indexOf("1 9") != -1) || (ttSQAtel.indexOf("4 6") != -1) || (ttSQAtel.indexOf("4 7") != -1)) {
+            tIsCntctble = tIsCntctble + 50;
+            } else {
+                tIsCntctble = tIsCntctble + 5;
+            } 
+        }
+
+            }
+            if(ttSQAemail != "") {
+            if(ttSQAemail.indexOf("@") != -1) {
+                tIsCntctble = tIsCntctble + 15;
+            }
+            }
+            if(ttSQAweb != "") {
+            if(ttSQAweb.indexOf(".") != -1) {
+                tIsCntctble = tIsCntctble + 4;
+            }
+        }
+ 
+
+        if(currRcntFavsStr.indexOf(tsar.c_name) != -1) {
+            tIsFavd = 15;
+        }
+
+    currShopsArr[iint].cccd = tIsCntctble;
+    currShopsArr[iint].cfavd = tIsFavd;
+    currShopsArr[iint]._id = tsar._id;
+  
+    iint++;
+    }
+    // check for currSortObj in localstorage
+   // and log it if it exists
+    
+        tmpSrtIdx = "cccd";
+        tmpSrtOrdr = "sortDesc";
+             console.log("JSSHOP.ads.doNuGenericRes.currSortObj: " + localStorage.getItem("currSortObj"));
+            if(pid == "aa-show-psearch") {
+                tmpSrtIdx = currSortObj["psearch"]["sindex"];
+                tmpSrtOrdr = currSortObj["psearch"]["sorder"];
+            } else {
+ 
+                tmpSrtIdx = currSortObj["msearch"]["sindex"];
+                tmpSrtOrdr = currSortObj["msearch"]["sorder"];
+            }
+      
+
+    
+            if(isJApp == "yes") {
+                tCmprsdStr = JSON.stringify(ttarrToFill);
+                tFnlCmprsdStr = LZString.compressToEncodedURIComponent(tCmprsdStr);
+                app.setCShpAStr(tFnlCmprsdStr);
+            }
+    
+    return JSSHOP.ads.doGenShpStr(currShopsArr, tmpSrtIdx, tmpSrtOrdr, "onlydef");
+ 
+    // resultsDiv.innerHTML = "";
+    // return currShopsArr;
+   
+    } catch(e) {
+        if(isJApp == "yes") {
+            tCmprsdStr = JSON.stringify(ttarrToFill);
+            tFnlCmprsdStr = LZString.compressToEncodedURIComponent(tCmprsdStr);
+            app.setCShpAStr(tFnlCmprsdStr);
+        }
+
+        console.log("JSSHOP.ads.doNuGenericRes.error: " + e);
+        // return "doNuGenericRes.error: " + e;
+        return JSSHOP.ads.doGenShpStr(currShopsArr, tmpSrtIdx, tmpSrtOrdr, "onlydef");
+ 
+        } 
+  
+
+    };
+
+
+
+    JSSHOP.ads.doGenericRes = function(a,theResp,c) {
+        // document.getElementById("includedContent").innerHTML = theResp;
+         try {} catch(e) {
+            console.log("JSSHOP.ads.doGenericRes.error: " + e);
+            }
+        theTResType = a;
+        hasr = "n";
+        fullstr = "";
+        console.log("JSSHOP.ads.doGenericRes: " + theResp);
+        var arrToFill = JSON.parse(theResp);
+        
+        var len = arrToFill.length;
+        
+        var iint = 0;
+        var pcid = 0;
+        tstr = "";
+        tmpOldStreet = "noQvalue";
+        tmpOldTitle = "noQvalue";
+        tCResBStr = "";
+        tCResShpStr = "";
+        if(theTResType == "shops") {
+            tSMUrl = "javascript:getLeaves();";
+            tCResShpStr += "<div style=\"min-height:20px;text-align: left;max-width:98%;word-wrap: break-word;word-break: break-word;width: 100%\" class=\"txtSmall txtBold txtClrHdr\"><a class=\"txtDecorNone txtBig txtSmall txtClrHdr\" href=\"" + tSMUrl + "\">Map</a></div>";
+            tCResShpStr += "<div><a href=\"javascript:JSSHOP.ui.toggleVisibility('smap')\">tgl</a></div>";
+             tCResShpStr += "<div id=\"smap\" style=\"min-height:300px;visibility:visible;display:block\"></div>";
+           //  getLvsTglBox();
+         
+        }
+        while(iint < len) {
+        ts = arrToFill[iint];
+        tBimgU = "images/transparent.gif";
+        console.log("c_logoimg: " + ts.c_logoimg);
+        tGRPtgt = "_blank";
+        tCshort = "...";
+        if(ts.c_name) {
+            ts.c_name = ts.c_name;
+        }
+        
+        if(ts.c_name) {
+        taCTV = ts.c_name;
+        
+        tCttl = taCTV.replace("/", " - ");
+        tCshortttl = tCttl.substring(0, 1);
+        } else {
+        tCttl = "noQvalue";
+        tCshortttl = "noQvalue";    
+        }
+        
+        tCWebStr = "";
+        tCweb = "noQvalue";
+        tCurl = "";
+        if(ts.c_url) {
+        tCurl = ts.c_url;
+        }
+        if(ts.c_web) {
+        tCweb = ts.c_web;
+        
+        
+        taCWStr = tCweb;
+        tCWStr = taCWStr;
+        if(tCweb.indexOf("http") != -1) {
+        tbCWStr = taCWStr.replace("http://", "");
+        tcCWStr = tbCWStr.replace("https://", "");
+        tdCWStr = tcCWStr.replace("www.", "");
+        taCWStr = tdCWStr;
+        } else {
+        
+        tCweb = "http://" + tCweb;
+        }
+        tCWStr = taCWStr;
+        if(taCWStr.length > 40){
+        tCWStr = taCWStr.substring(0, 40) + "...";
+        }  
+        if((tCurl.indexOf("paginas") != -1) ||  (tCurl == "noQvalue") ||  (tCurl == "noQxalue")) {
+        } else if(tCurl.indexOf("rover") != -1) {
+        tCWebStr = "<a href=\"" + tCweb + "\"></a>";
+        } else {
+        tCWebStr = "<a href=\"" + tCweb + "\" target=\"_blank\">" + tCWStr  + "</a>";
+        }
+        
+        } 
+        // if(tCWStr == "noQvalue") {}
+        if(theTResType == "shops") {
+        tGRPtgt = "_blank";
+         
+        ttSSurl = "index.html?pid=aa-show-shop&cid=" + ts._id + "&q=" + removeDiacritics(ts.c_name + " " + ts.c_location);
+        tCurl = ttSSurl;
+        tCWebStr = "<a href=\"" + tCweb + "\">" + stxt[62]  + "...</a>";
+        } // end of if above. using catchall testing 
+        tttLImg = ts.c_logoimg;
+        if((ts.c_logoimg == "noQvalue") || (ts.c_logoimg == "noQvlaue")) {
+        } else if(tttLImg.indexOf("http") != -1) {
+        tBimgU = tttLImg;
+        tCshort = "";
+        } else {
+        // tBimgU = "images/pimgs/s_thumb" + ts.c_logoimg;
+        }
+            currFTclr = "menu-material-icons collection-item txtClrTtl";
+            if(currRcntFavsStr.indexOf(ts.c_name) != -1) {
+            currFTclr = "menu-material-icons collection-item txtClrRed";
+            }
+        console.log("c_logoimg: " + ts.c_logoimg);
+        
+        
+        
+         
+        if((ts.c_location == tmpOldStreet) && (ts.c_name == tmpOldTitle)) {
+        procNuUIitem("qco","c_rtype",ts._id,10,"doNada");
+        }
+        tmpOldTitle = ts.c_name;
+        tmpOldStreet = ts.c_location;
+        
+         
+        if(theTResType == "shops") {
+        tCResShpStr += "<table style=\"width: 100%\"><tr><td>";
+        tCResShpStr += "<div tid=\"dvCoLogoImg\" style=\"background-image: url('" + tBimgU + "');background-position: center; background-repeat: no-repeat; background-size: contain;min-height:50px; min-width:50px;max-height:60px; max-width:60px;width:55px;\" class=\"txtBig txtBold txtClrHdr\"><a class=\"ttxtDecorNone\" href=\"" + tCurl + "\"  target=\"_blank\">";
+        tCResShpStr +=  tCshort + "</a></div>";
+        tCResShpStr += "</td><td>";
+        tCResShpStr += "<div  tid=\"tmp_c_title\"  style=\"min-height:20px;text-align: left;max-width:98%;word-wrap: break-word;word-break: break-word;width: 100%\" class=\"txtSmall txtBold txtClrHdr\"><a class=\"txtDecorNone txtBig txtSmall txtClrHdr\" href=\"" + tCurl + "\"  target=\"" + tGRPtgt + "\">" +  removeDiacritics(ts.c_name) + "</a></div>";
+        // tCResShpStr += "<div tid=\"dvCweb\"  class=\"txtSmall txtBold txtClrHdr\" style=\"word-wrap: break-word;word-break: break-word;max-width: 90%;\">" + tCWebStr + "</div><br>";
+        if(ts.c_location) {
+        tCResShpStr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_location + "</div>";
+        }
+        tCResShpStr += "</td><td>";
+        
+        tCResShpStr += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
+        tCResShpStr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i id=\"btnFavs" + iint + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+        tCResShpStr += "</div>";
+        tCResShpStr += "</td></tr></table>";
+        } else {
+
+        tCResBStr += "<div class=\"swiper-slide\" style=\"width: 100%;\">";
+        tCResBStr += "<table style=\"width: 100%\" class=\"prodRowBox\"><tr><td>";
+        tCResBStr += "<table style=\"width: 100%\"><tr>";
+        tCResBStr += "<td>";
+
+        tCResBStr += "<table style=\"width:100%\"><tr><td><table cellpadding=\"3px\" cellspacing=\"3px\"><tr>";
+        tCResBStr += "<td><a class=\"ttxtDecorNone\" href=\"" + tCurl + "\"  target=\"_blank\"><div tid=\"dvCoLogoImg\" style=\"background-image: url('" + tBimgU + "'); background-repeat: no-repeat; background-size: contain;min-height:50px; min-width:50px;max-height:60px; max-width:60px;\" class=\"txtBig txtBold txtClrHdr\">";
+        tCResBStr += tCshort + "</div></a></td><td style=\"width: 16px\">";
+        tCResBStr += "</td><td style=\"text-align: left; vertical-align:top\"><div tid=\"dvPrdMedia\"></div></td></tr></table></td></tr></table></td>";
+        tCResBStr += "<td  style=\"width: 100%;text-align: left; vertical-align:top\"><div  tid=\"tmp_c_title\"  style=\"min-height:20px;text-align: left;max-width:98%;word-wrap: break-word;\" class=\"txtBig txtBold txtClrHdr\"><a class=\"txtDecorNone txtBig txtBold txtClrHdr\" href=\"" + tCurl + "\"  target=\"_blank\">" +  ts.c_name + "</a></div>";
+        tCResBStr += "</td>";
+        tCResBStr += "</tr></table>";
+
+        tCResBStr += "</td>";
+        tCResBStr += "</tr><tr><td style=\"background-color: #F3F3F3\">";
+        tCResBStr += "<div style=\"min-height:20px;text-align: left;max-width:80%;word-wrap: break-word;word-break: break-word;\" tid=\"tmp_c_desc\" class=\"txtSmall txtClrDGreen\">" + ts.c_desc + "</div></td></tr>";
+        tCResBStr += "<tr><td><table style=\"width: 100%\"><tr>";
+        tCResBStr += "<td><i class=\"material-icons txtClrDGreen\"  style=\"margin-top: 5px;font-size:10px;\" alt=\"cityloc\" title=\"cityloc\">&#57527;</i></td>";
+        tCResBStr += "<td><table style=\"width: 100%\"><tr>";
+        if(ts.c_street) {
+        tCResBStr += "<td><div class=\"txtSmall txtBold txtClrGrey\"  style=\"max-width:90%; word-warp:break-word;\">" + ts.c_street + "</div></td></tr><tr>";
+        }
+        if(ts.c_location) {
+        // tCResShpStr += "<div class=\"txtSmall txtClrGery\" style=\"float:left;margin-right:20px;\">" + ts.c_location + "</div>";
+        
+        tCResBStr += "<td><div class=\"txtClrHdr\" style=\"float:left;margin-right:20px;\">" + ts.c_location + "</div></td>";
+        }
+        // tCResBStr += "<a  href=\"javascript:JSSHOP.ui.doDefCBBCC('aLnkCall', null, doRegion() );\"><div class=\"txtSmall txtBold\" style=\"float:left\">" + ts.c_region + "</div></a>";
+        // tCResBStr += "<a href=\"javascript:JSSHOP.ui.doDefCBBCC('aLnkCall', null, getRegions() );\"><div  style=\"float:left\">more...</div></a></td>";
+        tCResBStr += "</tr><tr>";
+        if(ts.c_tel) {
+        tCResBStr += "<td><div tid=\"dv_c_tel\"  class=\"txtSmall txtBold txtClrHdr\">" + ts.c_tel + "</div></td></tr><tr>";
+        }
+        
+        tCResBStr += "<td><div tid=\"dvCweb\"  class=\"txtSmall txtBold txtClrHdr\" style=\"word-wrap: break-word;word-break: break-word;max-width: 90%;\">" + tCWebStr + "</div></td></tr>";
+        tCResBStr += "</table></td></tr></table></td></tr><tr><td>&nbsp;</td></tr><tr><td>";
+        tCResBStr += "<table style=\"width: 100%\" class=\"bkgdClrNrml\"><tr><td>";
+        
+        
+        
+        tCResBStr += "<div tid=\"dvCoFavBtn\">";
+        tCResBStr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i id=\"btnFavs" + iint + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+        tCResBStr += "</div>";
+        
+        /*
+        tCResBStr += "<td style=\"text-align: center\"><a tid=\"aLnkCall\" href=\"javascript:JSSHOP.ui.doDefCBBCC('aLnkCall', null, doCall() );\"><i class=\"material-icons\"  style=\"margin-top: 5px;font-size:32px;\" alt=\"call\" title=\"call\">&#xe0cd;</i><br>Call</a></td>";
+        tCResBStr += "<td style=\"text-align: center\"><a href=\"javascript:JSSHOP.ui.doDefCBBCC('ahSettingsIcon', null, document.location.href='index.html?pid=aa-contactus&cid=' + cid);\" class=\"txtClrHdr\"><i class=\"material-icons txtClrHdr\"  style=\"margin-top: 5px;font-size:32px;\" alt=\"message\" title=\"message\">&#57527;</i><br>Msg</a></td>";
+        tCResBStr += "<td style=\"text-align: center\"><a href=\"javascript:JSSHOP.ui.doDefCBBCC('ahSettingsIcon', null, document.location.href='index.html?pid=aa-settings&cid=' + cid);\"><i class=\"material-icons\"  style=\"margin-top: 5px;font-size:32px;\" alt=\"web\" title=\"web\">&#xe069;</i><br>Web</a></td>";
+        tCResBStr += "<td style=\"text-align: center\"><a href=\"javascript:JSSHOP.ui.doDefCBBCC('ahSettingsIcon', null, document.location.href='index.html?pid=aa-settings&cid=' + cid);\"><i class=\"material-icons\"  style=\"margin-top: 5px;font-size:32px;\" alt=\"directions\" title=\"directions\">&#xe0c8;</i><br>Go</a></td>";
+        */
+        tCResBStr += "</td></tr></table></td></tr><tr>";
+        tCResBStr += "<td style=\"background-color: #F3F3F3\"></td></tr><tr><td></td></tr><tr><td></td></tr></table>";
+
+         tCResBStr += "</div>"; // en swiper-slide
+        
+        }
+        iint++;
+        }
+        
+        newel = document.createElement('div');
+        
+        if(arrToFill[0]) {
+        
+        } else {
+        // no results
+        }
+        
+        if(theTResType == "shops") {
+        
+        
+        console.log("JSSHOP.ads.shops.tCResShpStr: " + tCResShpStr);
+        
+        return tCResShpStr;
+        } else {
+        // wrap tCResBStr in the swiper div
+        
+    tmpFFstr = "<div  style=\"max-width:300px;margin: 0 auto;\"><div class=\"swiper\"><div class=\"swiper-wrapper\">" + tCResBStr + "</div>";
+    tmpFFstr += "<div class=\"swiper-pagination\"></div>";
+    tmpFFstr += "<div class=\"swiper-button-prev txtSmall txtBold txtClrRed\"></div>";
+    tmpFFstr += "<div class=\"swiper-button-next\"></div>";
+
+    tmpFFstr += "</div>";
+    tmpFFstr += "<div class=\"clearfix\"></div>";
+ 
+    tmpFFstr += "<div class=\"slmtable txtClrHdr crsrPointer\" onclick=\"javascript:eindex('aa-show-esearch','pid=aa-show-esearch&eatype=ebay');\" style=\"text-align:center\">"  + stxt[557] + "</div>";
+    tmpFFstr += "</div>";
+newStr = tmpFFstr;
+
+        return tCResBStr;
+        }
+        
+        };
+
+/* 
+* g ads function
+*/
+
+JSSHOP.ads.STANDBY_doPgLnkMedia = function(tDPLMtype, tDPLMres) {
+};
+
+JSSHOP.ads.doPgLnkMedia = function(tDPLMtype, tDPLMres) {
+currPLMtype = tDPLMtype;
+// document.getElementById("includedContent").innerHTML = "";
+console.log("doPgLnkMedia: " + tDPLMtype + "::" + tDPLMres + "::" + currIsAjaxed)
+tDPLMtStr = "ggl";
+if((currUrlArr.q) && ("pid" != "aa-show-shop")){
+currCstmQstr = currUrlArr.q;
+} else {
+// currCstmQstr = "recambios auto";
+currCstmQstr = JSSHOP.ads.getPrtsPrfStr("piezas parts auto");
+}
+// remove any special characters minus "-" from currCstmQstr
+currCstmQstr = currCstmQstr.replace(/[^a-zA-Z0-9\s\-]/g, '');
+// remove duplicate words from currCstmQstr
+currCstmQstr = currCstmQstr.replace(/\b(\w+)\s+\1\b/g, '$1');
+
+ 
+ 
+if(tDPLMtype == "ggl") {
+// dvGGlSres.setAttribute("data-resultSetSize", tDPLMres);
+console.log("doPgLnkMedia:getGsearchOnP2 " + tDPLMtype + "::" + tDPLMres)
+currPLMtype = "ggl";
+JSSHOP.ads.getGsearchOnP("Search");
+} else {
+    currPLMtype = "ebay";
+    JSSHOP.ads.initEAds(encodeURIComponent(currCstmQstr), "dvEAdsRes", tDPLMres);
+
+    console.log("doPgLnkMedia:initEAds3 " + tDPLMtype + "::" + tDPLMres + "::" + currCstmQstr)
+
+    // JSSHOP.ads.setNuShopsUp(JSSHOP.ads.doLocalShops(5, "RAND()", "partspt", "setShopsUp"));
+
+  // JSSHOP.ads.doLocalShops(5, "RAND()", "partspt", "setShopsUp");
+
+   //  JSSHOP.ads.setNuShopsUp("doNada");
+tDPLMtStr = "ebay";
+}
+
+ 
+ 
+
+};
+
+/* 
+* g ads function
+*/
+
+JSSHOP.ads.getGsearchOnP = function(tmpCXtype) {
+tmpGSopts = {};
+tmpGSopts["spaVid"] = "7494e5ea7bd171254";
+tmpGSopts["enVid"] = "7494e5ea7bd171254";
+tmpGSopts["ptVid"] = "7494e5ea7bd171254";
+
+tmpGSopts["spaSearch"] = "e5956f3d7f1bbd535";
+tmpGSopts["enSearch"] = "75c5a2c63f8a84fc8";
+tmpGSopts["ptSearch"] = "68b5981fcab397b2b";
+tmpGSopts["frSearch"] = "c43a3ef543bff4073";
+
+tmpGSopts["spaImg"] = "64d8786c6f0cf0da8";
+tmpGSopts["enImg"] = "64d8786c6f0cf0da8";
+tmpGSopts["ptImg"] = "64d8786c6f0cf0da8";
+
+// cx=06e4737e0b0074ff0
+// gl=pt
+// num=10
+// q=pe�a
+// searchType=image
+
+
+tGSPLGarr = [];
+tGSPLGarr  = usrlang.split("_");
+tGSPLGkstr = tGSPLGarr[0] + tmpCXtype;
+tGSPLGcx = tmpGSopts[tGSPLGkstr];
+tGLstr = tGSPLGarr[0];
+console.log("getGsearchOnP: " + tGSPLGcx);
+tGLLoc = "pt";
+if(tGLstr == "pt") {
+tGLLoc = "pt";
+} else if(tGLstr == "es") {
+tGLLoc = "es";
+} else if(tGLstr == "fr") {
+tGLLoc = "fr";
+} else {
+tGLLoc = "uk";
+}
+if(currUrlArr.q) {
+atmpNqval = currUrlArr.q;
+} else {
+    atmpNqval = JSSHOP.ads.getPrtsPrfStr("piezas parts auto");
+
+// atmpNqval = "recambios auto";
+}
+tmpNqval = JSSHOP.ads.getPrtsPrfStr("thin");
+tDocHref = document.location.href;
+
+    if(tDocHref.indexOf("q=") != -1) { 
+if(Math.random() < 0.5) {
+
+     //    JSSHOP.loadScript("https://cse.google.com/cse.js?cx=" + tGSPLGcx, doGsearchOnPart,"js");
+     JSSHOP.loadScript("https://cse.google.com/cse.js?gl=" + tGLLoc + "&cx=" + tGSPLGcx + "&q=" + tmpNqval, doGsearchOnPart,"js");
+
+// tmpQArrQ = JSSHOP.ajax.doNuAjaxPipe(null, "_p/rss/gtest.php?cx=" + tGSPLGcx + "&qv=" + tmpNqval, doNuGSOnPart);
+    } else {
+        JSSHOP.loadScript("https://cse.google.com/cse.js?gl=" + tGLLoc + "&cx=" + tGSPLGcx + "&q=" + tmpNqval, doGsearchOnPart,"js");
+    }
+} else {
+    // JSSHOP.loadScript("https://cse.google.com/cse.js?gl=" + tGLLoc + "&cx=" + tGSPLGcx + "&q=" + tmpNqval, doGsearchOnPart,"js");
+
+    tmpQArrQ = JSSHOP.ajax.doNuAjaxPipe(null, "_p/rss/gtest.php?gl=" + tGLLoc + "&cx=" + tGSPLGcx + "&qv=" + tmpNqval, doNuGSOnPart);
+
+// JSSHOP.loadScript("https://cse.google.com/cse.js?cx=" + tGSPLGcx, doGsearchOnPart,"js");
+}
+
+};
+
+
+
+
+/* 
+* e ad functions
+*/
+function setEbayPTES(tEPSobj) {
+    console.log("setEbayPTES: " + tEPSobj);
+tResObj = JSON.parse(tEPSobj.rs);
+tHHstr = tEPSobj.hh;
+tHHObj = tHHstr.split(":");
+console.log("setEbayPTES: " + tResObj[0].p_spa_spa);
+JSSHOP.ads.setPrtsPrefCC("partES", tResObj[0].p_spa_spa);
+currCstmQry = currUrlArr.make;
+if((currUrlArr.series) && (currUrlArr.series != "null")) {  
+currCstmQry  += " " + currUrlArr.series;
+ }
+ currCstmQry  += " " + tResObj[0].p_spa_spa;
+tmpQArrQ = JSSHOP.ajax.doNuAjaxPipe(tEPSobj.el, "_p/rss/etest.php?nr=" + tHHObj[1] + "&qv=" + JSSHOP.ads.getPrtsPrfStr("thin"), JSSHOP.ads.doEAdsOnPart);
+}
+
+
+
+function setEbayTrPTES(aTlstrA, aTlsrB, aTlstrC) {
+    console.log("setEbayTrPTES: " + aTlsrB);
+
+ tTrnsltdArr = JSON.parse(aTlsrB);
+tSpStr = tTrnsltdArr[0][0][0];
+console.log("setEbayTrPTES: " + tSpStr);
+JSSHOP.ads.setPrtsPrefCC("partES", tSpStr);
+ tmpQArrQ = JSSHOP.ajax.doNuAjaxPipe("includedContent", "_p/rss/etest.php?nr=100&qv=" + removeDiacritics(tSpStr), JSSHOP.ads.doEAdsOnPart);
+}
+ 
+JSSHOP.ads.initEAds = function(tIEAQstr, tIEAelem, tIEAres) {
+console.log("initEAds : " + tIEAQstr);
+if(tIEAQstr.length < 2) {
+return;
+}
+tPrti = "007";
+if(JSSHOP.ads.getPrtsPrefCC("prti") == "noQvalue") {  
+tPrti = "007";
+} else {
+tPrti = JSSHOP.ads.getPrtsPrefCC("prti");
+}
+if(currUrlArr.prti) {
+tPrti = currUrlArr.prti;
+}
+try {
+if((usrlang == "pt_pt") && (JSSHOP.ads.getPrtsPrefCC("partES") == "noQvalue")){
+
+if(tPrti == "007") {
+    if(JSSHOP.ads.getPrtsPrefCC("part") == tIEAQstr) {
+        tmpQArrQ = JSSHOP.ajax.doNuAjaxPipe(tIEAelem, "_p/rss/etest.php?nr=" + tIEAres + "&qv=" + tIEAQstr, JSSHOP.ads.doEAdsOnPart);
+
+    // JSSHOP.ads.setPrtsPrefCC("part", tIEAQstr);
+    } else {
+
+     
+
+   //  if((JSSHOP.ads.getPrtsPrefCC("partES") == "noQvalue") || (JSSHOP.ads.getPrtsPrefCC("partES") == "noQvalue")) {
+// use google translate api to translate currUrlArr.part from pt to es and return the translated string
+//tUrlStr = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=pt&tl=es&dt=t&q=" + currUrlArr.part;
+
+if(JSSHOP.ads.getPrtsPrefCC("prti") == "noQvalue") {
+console.log("initEAds:prti: " + tPrti);
+} else {
+    tmpQArrQ = JSSHOP.ajax.doNuAjaxPipe(tIEAelem, "_p/rss/gtrans.php?nr=" + tIEAres + "&qv=" + tIEAQstr, setEbayTrPTES);
+}
+  // tmpQArrQ = JSSHOP.ajax.doNuAjaxPipe(tIEAelem, "_p/rss/etest.php?nr=" + tIEAres + "&qv=" + tIEAQstr, JSSHOP.ads.doEAdsOnPart);
+    }
+} else {
+
+
+tmpDOs = null;
+tmpDOs = {};
+// tmpDOs["ws"] = "where p_pt_pt=?";
+/// tmpDOs["wa"] = [currUrlArr.part];
+tmpDOs["ws"] = "where p_id=?";
+tmpDOs["wa"] = [tPrti];
+tmpDOs["l"] = 1;
+oi = getNuDBFnvp("qpart",5,null,tmpDOs);
+// doQComm(oi["rq"], tIEAelem, "setEbayPTES");
+
+
+atac = null;
+atac = nCurrCnxOb();
+atac["q"] = oi["rq"];
+atac["cb"] = "setEbayPTES";
+atac["el"] = tIEAelem;
+atac["hh"] = tIEAQstr + ":" + tIEAres;
+// atac["lz"] = "y";
+doNurQComm(atac);
+}
+} else {
+tmpQArrQ = JSSHOP.ajax.doNuAjaxPipe(tIEAelem, "_p/rss/etest.php?nr=" + tIEAres + "&qv=" + tIEAQstr, JSSHOP.ads.doEAdsOnPart);
+}
+} catch(e) {
+console.log("JSSHOP.ads.initEAds.ERROR: " + e);
+}
+};
+
+
+ 
+JSSHOP.ads.sortEAdsFullStr = function(thePGIdx){
+     document.getElementById("includedContent").innerHTML = "";
+console.log("sortEAdsFullStr: " + thePGIdx);
+tmpJSsrtd = JSSHOP.shared.getSrtdArr(currEbyPrdsArr, thePGIdx);
+console.log("sortEAdsFullStr: " + tmpJSsrtd);
+raresp = JSSHOP.ads.getEAdsFullStr(tmpJSsrtd, "part", "doEAdsOnPart");
+trrDiv = document.createElement("div");
+trrDiv.innerHTML = raresp;
+console.log("sortEAdsFullStr:raresp " + raresp);
+// console.log("doEAdsOnPart: " + inpMakes.value + " " + inpModels.value + " " + inpParts.value);
+ // document.getElementById("includedContent").innerHTML = tBoxStr;
+ document.getElementById("includedContent").appendChild(trrDiv);
+};
+
+     
+
+JSSHOP.ads.getEAdsFullStr = function(thePrdsArr, thePrdsCls, thePrdsCB){
+console.log("getEAdsFullStr: " + JSON.stringify(thePrdsArr));
+tProdsAR = null;
+tProdsAR = "";
+tProdsAR = [];
+tProdsTobj = null;
+tProdsTFobj = "";
+tProdsTFobj = {};
+thePrdsArna = "Eads";
+if(arrUprefs["prfsSHOPuser"][0].scv) {
+var upRefs = "r";
+}
+
+if(arrUprefs["prfsSHOPuser"][0].scp) {
+var upPrixRef = "u";
+}
+
+
+strUCPID = "";
+strUCPTtl = "";
+strCatID = "";
+strCatName = "";
+strHtml = "";
+strMLinks = "";
+strImgDsct = "";
+
+var len = thePrdsArr.length;
+ 
+tstr = "";
+iint = 0;
+
+// product-grid
+strHtml += "<div>";
+ 
+
+tHdrArr = null;
+tHdrArr = "";
+tHdrArr = [];
+tAHdFObj = {};
+tAHdFObj["fld"] = "title";
+tAHdFObj["nm"] = "Title";
+tHdrArr.push(tAHdFObj);
+ 
+ 
+tAHdFObj = {};
+tAHdFObj["fld"] = "sellingStatus";
+tAHdFObj["nm"] = "Price";
+tHdrArr.push(tAHdFObj);
+currACTblCnt = tHdrArr.length;
+
+tmpACarr = null;
+tmpACarr = "";
+tmpACarr = [];
+/*
+
+currGSarr = null;
+currGSarr = "";
+currGSarr = [];
+currGSarr = thePrdsArr;
+tmpVitemArr = null;
+tmpVitemArr = "";
+tmpVitemArr = [];
+tmpVitemArr = currGSarr;
+*/
+var len = thePrdsArr.length;
+var iint = 0;
+var pcid = 0;
+tstr = "";
+tShipToLocs = "";
+tShipPrice = "";
+
+while(iint < len) {
+ 
+ts = thePrdsArr[iint];
+console.log("getEAdsFullStr.title: " + ts.title);
+tmptsprd = {}
+ 
+atstr = "";
+// atstr += "<tr>";
+ 
+currFTclr = "menu-material-icons collection-item txtClrTtl";
+if(currRcntFavsStr.indexOf(ts.title) != -1) {
+currFTclr = "menu-material-icons collection-item txtClrRed";
+}
+
+tCResShpStr = "<div tid=\"dvCoFavBtn\">";
+tCResShpStr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + ts.viewItemURL + "','" +  ts.title + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i id=\"btnFavs" + iint + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+tCResShpStr += "</div>";
+
+
+
+
+
+if(usrlang == "pt_pt") {
+ 
+    ptTmpTttl = ts.title;
+    pttLwrTtl = ptTmpTttl.toLowerCase();
+    pttlwrES = JSSHOP.ads.getPrtsPrefCC("partES");
+    pttlwrPT = JSSHOP.ads.getPrtsPrefCC("part");
+    pttLwrTtl = pttLwrTtl.replace(pttlwrES, pttlwrPT);
+
+    // tFlttl = ptTmpTttl.replace(JSSHOP.ads.getPrtsPrefCC("partES"), JSSHOP.ads.getPrtsPrefCC("part"));
+    // replace all instances of pttlwrES with pttlwrPT case insensitive
+    tFlttl = pttLwrTtl.replace(new RegExp(pttlwrES, 'gi'), pttlwrPT);
+    console.log("ptTmpTttl: " + ptTmpTttl + " pttlwrES: " + pttlwrES + " pttlwrPT: " + pttlwrPT + " tFlttl: " + tFlttl);
+} else {
+    tFlttl = ts.title;
+}
+// atstr += "<td style=\"text-align: left;\"></td>";
+atstr += "<div style=\"word-wrap: break-word;margin-top:0px;padding-right:9px;max-height:100%;\"  class=\"prodRowBox\">";
+atstr += "<div><a href=\"" + ts.viewItemURL + "\" class=\"txtBold\">" + tFlttl + "</a>  <span class=\"txtSmall txtClrGrey\"></span></div>";
+atstr += "<div style=\"word-wrap: break-word;\">";
+
+atstr += "<div style=\"float:right;text-align:right;\">" + ts.sellingStatus + "<br>";
+atstr += ts.country + "<br>" + tCResShpStr + "</div>";
+
+
+atstr += "<a href=\"javascript:JSSHOP.ui.popAFImgUrl('" + ts.galleryURL + "')\"><img src=\"" + ts.galleryURL + "\" class=\"icnmbtn\" style=\"margin-right:8px;padding-right:6px;\"></a>";
+atstr += "</div>";
+atstr += "</div>";
+
+
+if((pid == "aa-show-msearch") || (pid == "aa-show-psearch") || (pid == "aa-show-place")) { // do the swiper
+    ptstr = "";
+    ptstr += "<div class=\"swiper-slide\" style=\"width: 100%;\">";
+    ptstr += atstr;
+
+    ptstr += "</div>";
+    tstr += ptstr;
+} else {
+// atstr += "</tr>";
+tstr += atstr;
+}
+ 
+    iint++;
+}
+// tstr += "</div>";
+
+newel = document.createElement('div');
+
+
+// fraresp += "<div style=\"width: 90%;margin:0 auto;text-align: right\"> <a href=\"https://developer.ebay.com\"><img alt=\"logos\"  src=\"images/misc/developersprogrammember-vert.png\" width=\"108px\"></a></div>"
+
+newStr = "";
+// newStr += tmpDrpMdlDv;
+
+
+if((pid == "aa-show-msearch") || (pid == "aa-show-psearch") || (pid == "aa-show-place")) { // do the swiper
+
+   
+    tmpFFstr = "<div  style=\"max-width:300px;margin: 0 auto;\"><div class=\"swiper\"><div class=\"swiper-wrapper\">" + tstr + "</div>";
+    /*
+    <div class="swiper-pagination"></div>
+
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  
+    <!-- If we need scrollbar -->
+    <div class="swiper-scrollbar"></div>
+    */
+    tmpFFstr += "<div class=\"swiper-pagination\"></div>";
+    tmpFFstr += "<div class=\"swiper-button-prev txtSmall txtBold txtClrRed\"></div>";
+    tmpFFstr += "<div class=\"swiper-button-next\"></div>";
+    // tmpFFstr += "<div class=\"swiper-scrollbar\"></div>";
+
+    // clearfix
+
+    
+    tmpFFstr += "</div>";
+    tmpFFstr += "<div class=\"clearfix\"></div>";
+ 
+    tmpFFstr += "<div class=\"slmtable txtClrHdr crsrPointer\" onclick=\"javascript:eindex('aa-show-esearch','pid=aa-show-esearch&eatype=ebay');\" style=\"text-align:center\">" + stxt[557] + "</div>";
+
+newStr = tmpFFstr;
+} else {
+    if(thePrdsArr[0]) {
+        strTHhtml = JSSHOP.shared.getNurTblHdrs(tHdrArr, "JSSHOP.ads.sortEAdsFullStr");
+        }
+        tmpFstr = JSSHOP.shared.getNuTblSortStr(strTHhtml, tstr,"txtBold txtClrBlack");
+    
+        tmpFFstr = "<div style=\"margin: 0 auto;max-width:600px;padding: 2px;margin-left: 2px;margin-right: 2px;\">" + tmpFstr + "</div>";
+   
+    fraresp = "<div class=\"brdrClrDlg\"><div style=\"padding:8px;margin:0 auto;text-align: left;float:left\"><a href=\"" + thePrdsCls + "\" class=\"txtClrHdr\">" + stxt[62] + " " + currCstmQstr + "...</a></div>";
+fraresp += "<div style=\"width: 90%;margin:0 auto;text-align: right\"><a href=\"https://www.ebay.com\"><img  src=\"images/misc/ebay_logo_rgb.png\" width=\"108\"></a></div></div>";
+
+tmpDrpMdlDv =  "<div class=\"rtable txtSmall brdrClrDlg\" style=\"margin:7px;\"><span class=\"txtSmall txtBold txtClrHdr txtDecorNone\"><a href=\"javascript:JSSHOP.shared.doModelsPip();\"  class=\"txtSmall txtClrGrey\">TheModelName</a></span> <a href=\"javascript:JSSHOP.shared.doPartsWords('6','md');\"  class=\"txtSmall txtClrGrey\">X</a></div></div>";
+
+    tmpPGstr = " ";
+    tmpPtotal = Math.round(currEbyPrdsArr.length / currProdsPPg);
+    
+if(currEbyPrdsArr.length > (tmpPtotal * currProdsPPg)) { tmpPtotal = tmpPtotal + 1; }
+tmpPGstr = JSSHOP.shop.getDefaultPageNav(currPgIndex, tmpPtotal);
+newStr += fraresp;
+newStr += tmpFFstr;
+newStr += "<div class=\"rtable pagination\" style=\"min-height:50px;\">" + tmpPGstr + "</div>";
+}
+// newStr += lfraresp;
+console.log("getEAdsFullStr.newStr: " + newStr);
+return newStr;
+
+ 
+};
+
+
+
+JSSHOP.ads.ebayFormat = function(item) {
+    if (typeof item === 'object') {
+      if (Array.isArray(item) && item.length === 1 && typeof item[0] !== 'object') item = item[0];
+      else {
+        var keys = Object.keys(item),
+          i = 0,
+          len = keys.length;
+        for (; i < len; i++) {
+          if (typeof item[keys[i]] === 'object') item[keys[i]] = JSSHOP.ads.ebayFormat(item[keys[i]]);
+        }
+      }
+    }
+    return item;
   };
 
 
 
-
-	/*
-	* shop funcitions
-	*/
-
-
-
-
-
-
-
-	JSSHOP.shop.setCurrItemArr = function(tmpIarr) {
-	currItemArr = null;
-	currItemArr = tmpIarr;
-	};
-	JSSHOP.shop.getCurrItemArr = function() {
-	return currItemArr;
-	};
-	JSSHOP.shop.setCurrItemsArr = function(tmpIarr) {
-	currItemsArr = null;
-	currItemsArr = tmpIarr;
-	};
-	JSSHOP.shop.getCurrItemsArr = function() {
-	return currItemsArr;
-	};
-	JSSHOP.shop.setCurrMItemsArr = function(tmpIarr) {
-	currMItemsArr = null;
-	currMItemsArr = tmpIarr;
-	};
-	JSSHOP.shop.getCurrMItemsArr = function() {
-	return currMItemsArr;
-	};
-	JSSHOP.shop.getCurrIArrIndex = function(tIint) {
-	// alert("getCurrIArrIndex " + JSON.stringify(currItemsArr[tIint]));
-	return currItemsArr[tIint];
-	};
-	JSSHOP.shop.getCurrMIArrIndex = function(tIint) {
-	// alert("getCurrMIArrIndex " + JSON.stringify(currMItemsArr[tIint]));
-	return currMItemsArr[tIint];
-	};
-
-	var setPopCartIArr = function(theObj,b,iei) {
-	currCartIArr = null;
-	currCartIArr = [];
-	currCartIArr = JSON.parse(b);
-	JSSHOP.shop.doCartAddPop();
-	setCartIArr("y", b, "n");
-	// JSSHOP.ui.setCBBClickClr(document.getElementById(theObj),'cls_button cls_button-medium brdrClrDlg txtClrHdr','cls_button cls_button-xxsmall bkgdClrNrml brdrClrDlg txtClrHdr', function(){JSSHOP.shop.doCartAddPop()});
-
-	// JSSHOP.ui.setCBBClickClr(document.getElementById(theObj),'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr bkgdClrWhite', function(){window.scrollTo(0,0);JSSHOP.ui.setCBBClickClr(document.getElementById('ahCartIcon'),'cls_button cls_button-medium brdrClrDlg txtClrHdr','clsDummy', function(){void(0)})});
-	};
-
-	var xdoAddFnsh = function(theObj,b,iei) {
-
-		tmpDOs = null;
-		tmpDOs = {};
-		tmpDOs["ws"] = "where ci_uid=? and ci_coid=? and ci_cartqty >? and ci_rtype=? and ci_cartid=?";
-		tmpDOs["wa"] = [quid,cid,0,5,cartID]; 
-		oi = getNuDBFnvp("qcartitem",5,null,tmpDOs);
-		doQComm(oi["rq"], null, "setPopCartIArr");
-
-
-	// JSSHOP.ui.setCBBClickClr(document.getElementById(theObj),'cls_button cls_button-medium brdrClrDlg txtClrHdr','cls_button cls_button-xxsmall bkgdClrNrml brdrClrDlg txtClrHdr', function(){JSSHOP.shop.doCartAddPop()});
-
-	// JSSHOP.ui.setCBBClickClr(document.getElementById(theObj),'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr bkgdClrWhite', function(){window.scrollTo(0,0);JSSHOP.ui.setCBBClickClr(document.getElementById('ahCartIcon'),'cls_button cls_button-medium brdrClrDlg txtClrHdr','clsDummy', function(){void(0)})});
-	};
-
-	var xrenderCartPop = function(theObj,b, iei) {
-	JSSHOP.ui.popAndFillLbox("loading...");
-	tmpDOs = null;
-	tmpDOs = {};
-
-	tmpQtInt = 6;
-	if(b.indexOf("_id") != -1) {
-	// alert(b);
-	var arrToFill = null;
-	arrToFill = JSON.parse(b);
-	ts = arrToFill[0];
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "_id", ts._id);
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_cartqty", Math.round(ts.ci_cartqty) + 1);
-	tmpDOs["ws"] = "where ci_uid=? and ci_coid=? and ci_pid=?";
-	tmpDOs["wa"] = [quid,cid,strRecID];
-	tmpQtInt = 7;
-	} else {
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_cartqty", 1);
-	}
-	tmpDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qcartitem"], "nada");
-	// alert("renderCartPop: " + oi["rq"]);
-	oi = getNuDBFnvp("qcartitem",tmpQtInt,theObj,tmpDOs);
-	doQComm(oi["rq"], theObj, "xdoAddFnsh");
-	};
-
-	JSSHOP.shop.doQIadd = function(thePrdsArna, theObj,theId, iei){
-	try {
-	tmpVindex = iei;
-	tsa = {};
-	tsa = currProdsArr[thePrdsArna][iei];
-	// alert("JSSHOP.shop.doQIadd"  + thePrdsArna + ":: " + iei + ":: " + JSON.stringify(currProdsArr[thePrdsArna][iei]));
-	 
-	strRecID = tsa._id;
-	strRecType = 51;
-
-	var today = new Date().getTime();
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_uid", quid);
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_cartid", cartID);
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_coid", cid);
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_catid", tsa.i_catid);
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_pid", strRecID);
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_title", tsa.i_title);
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_price_a", tsa.i_price_a);
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_price_b", tsa.i_price_b);
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_dimen_n", tsa.i_dimen_n);
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_dimen_v", tsa.i_dimen_v);
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_img", tsa.i_img);
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_vala", tsa.i_vala);
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_valb", catid);
-	JSSHOP.shared.setFrmFieldVal("qcartitem", "ci_dadded", today);
-
-
-	tmpDOs = null;
-	tmpDOs = {};
-	tmpDOs["ws"] = "where ci_uid=? and ci_coid=? and ci_pid=?";
-	tmpDOs["wa"] = [quid,cid,strRecID];
-	oi = getNuDBFnvp("qcartitem",5,null,tmpDOs);
-	// alert(oi["rq"]);
-	doQComm(oi["rq"], theObj, "xrenderCartPop");
-	} catch(e) {
-	alert(e);
-	}
-	};
-
-
-
-
-	JSSHOP.shop.doItemShowPop = function() {
-		loadNuJSModal("tplates/aa-mod-show-item.html?tt=" + JSSHOP.getUnixTimeStamp(), "trans");
-	};
-
-
-
-	 
-
-
-	JSSHOP.shop.doCartAddPop = function() {
-
-	JSSHOP.ui.popAndFillLbox(JSSHOP.shop.renderNuCartItems("n", "y", 60));
-	};
-
-	JSSHOP.shop.doCAshow = function(thePrdsArna, theObj) {
-	JSSHOP.ui.setCBBClickClr(document.getElementById(theObj),'crsrPointer icndbtn slmtable bkgdClrTtl brdrClrHdr txtClrHdr fltrImgInvClr','crsrPointer icndbtn', function(){void(0)});
-		JSSHOP.shared.setFrmVals("qitem",tmpVitemArr[tmpVindex],function() {doCartAddPop()});
-	};
-
-	JSSHOP.shop.doIshow = function(thePrdsArna, iei) {
-		 // alert("JSSHOP.shop.doIshow "  + thePrdsArna + ":: " + iei + ":: " + JSON.stringify(currProdsArr[thePrdsArna][iei]));
-		JSSHOP.shop.setCurrItemArr(currProdsArr[thePrdsArna][iei]);
-		JSSHOP.shared.setFrmVals("qitem", currProdsArr[thePrdsArna][iei], function () {
-			JSSHOP.shop.doItemShowPop();
-		});
-	};
-
-
-	JSSHOP.shop.getIShowstr = function (thePrdsArna, rid, tmprhtml) {
-		strTret = "<div onclick=\"JSSHOP.ui.setCBBClickClr(this,'crsrPointer brdrClrHdr','crsrPointer brdrNone', function(){JSSHOP.shop.doIshow('" + thePrdsArna + "'," + rid + ");});\" class=\"crsrPointer brdrNone\">";
-		strTret += tmprhtml + "</div>";
-		return strTret;
-	};
-
-
-
-	JSSHOP.shop.getPrdPriceStr = function(thePrdsArna, prcInt, prcID, prcA, prcB){
-	 
-		retStrPrHtml =  "<br><span class=\"txtBig txtClrDlg\">" + prcB + "</span>";
-		// retStrPrHtml +=  "<img src=\"images/cart_r.gif\" class=\"crsrPointer icndbtn\"  id=\"tdCI" + thePrdsArna  + prcID + "\" onclick=\"javascript:JSSHOP.shop.doQIadd('" + thePrdsArna + "',this.id," + prcID + "," + prcInt + ");\">";
-
-	 
-			try {
-		na = prcA - prcB;
-		nd = Math.round((na / prcA) * 100);
-		retStrPrHtml = "";
-			retStrPrHtml =  prcB ;
-		 // retStrPrHtml =  "<br><span class=\"txtBig txtClrDlg\">" + prcB + "</span>";
-		// retStrPrHtml +=  "<img src=\"images/cart_r.gif\" class=\"crsrPointer icndbtn\"  id=\"tdCI" + thePrdsArna + prcID + "\" onclick=\"javascript:JSSHOP.shop.doQIadd('" + thePrdsArna + "',this.id," + prcID + "," + prcInt + ");\">";
-
-
-			return retStrPrHtml;
-			} catch(e) {
-			return retStrPrHtml;
-			}
-	};
-
-	JSSHOP.shop.getPrdImgStr = function(tTAnme, tmpVala){
-
-			retIstrI = "images/misc/example_thumb.png";
-			try {
-			tmpValb = tmpVala;
-			if((tmpValb.indexOf("lcl-") != -1) || (tmpValb.indexOf("rem-") != -1)) {
-			tmpVala = tmpValb.substring(4, tmpValb.length);
-			}
-			if(tmpVala.indexOf(".") != -1) {
-			if((tTAnme == "prodpg") || (tTAnme == "modItem")) {
-			retIstrI = "images/pimgs/" + tmpVala;	
-			} else {
-			retIstrI = "images/pimgs/s_thumb" + tmpVala;	
-			}  
-			}
-			if(isPhP == "no") {
-
-			if(tmpVala.indexOf(".gif") != -1) {
-
-			if(tTAnme == "prdmedia") {
-			tmpEstr = app.doThmbStr(tmpVala);
-			document.getElementById("fldChallArray").value = tmpEstr;
-			fullIstr = document.getElementById("fldChallArray").value;
-			retIstrI = "data:image/jpeg;base64, " + fullIstr;
-				} else {
-			tmpEstr = app.doGifStr(tmpVala);
-			document.getElementById("fldChallArray").value = tmpEstr;
-			fullIstr = document.getElementById("fldChallArray").value;
-			retIstrI = "data:image/gif;base64, " + fullIstr;
-			}
-
-			} else if(tmpVala.indexOf(".mp4") != -1) {
-
-			if(tTAnme == "prdmedia") {
-			tmpEstr = app.doThmbStr(tmpVala);
-			document.getElementById("fldChallArray").value = tmpEstr;
-			fullIstr = document.getElementById("fldChallArray").value;
-			retIstrI = "data:image/jpeg;base64, " + fullIstr;
-
-				} else {
-	 
-			tmpEstr = app.doGifStr(tmpVala);
-			document.getElementById("fldChallArray").value = tmpEstr;
-			fullIstr = document.getElementById("fldChallArray").value;
-			retIstrI = "data:video/mp4;base64, " + fullIstr;
-			}
-
-			} else {
-			tmpEstr = app.doThmbStr(tmpVala);
-			document.getElementById("fldChallArray").value = tmpEstr;
-			fullIstr = document.getElementById("fldChallArray").value;
-			retIstrI = "data:image/jpeg;base64, " + fullIstr;
-			}
-
-			}
-			return retIstrI;
-			} catch(e) {
-			return retIstrI;
-			}
-	};
-
-
-
-
-	JSSHOP.shop.setPrdImg = function(tsCatArrNm, tCIL) {
-	try {
-	 
-	if(ntImgCtr[tsCatArrNm] >= tCIL){
-	clear(tsCatArrNm)();
-	// currPgTitle = "c" + JSSHOP.getUnixTimeStamp();
-	// document.title = currPgTitle; 
-	} else {
-	ass = null;
-	ass = currProdsArr[tsCatArrNm][ntImgCtr[tsCatArrNm]];
-
-		image = null;
-		image = new Image();
-		image.src = JSSHOP.shop.getPrdImgStr(tsCatArrNm, ass.i_img);
-
-		image.onload = function() {
-			if(document.getElementById(tsCatArrNm + ass._id)) {
-		if(document.getElementById(tsCatArrNm + ass._id).src == image.src) {
-		// do nothing if its the example img
-		} else {
-		   document.getElementById(tsCatArrNm + ass._id).src = image.src;
-		}
-		   } else { 
-		   // alert(tsCatArrNm + ass._id);
-		   }
-		ntImgCtr[tsCatArrNm] = ntImgCtr[tsCatArrNm] + 1;
-		// currPgTitle = JSSHOP.getUnixTimeStamp();
-		// document.title = currPgTitle; 
-		}
-		image.onerror = function() {
-		   ntImgCtr[tsCatArrNm] = ntImgCtr[tsCatArrNm] + 1;
-		}
-
-
-	// document.getElementById(tsCatArrNm + ass._id).src = JSSHOP.shop.getPrdImgStr(tsCatArrNm, ass.i_img);
-
-	}
-
-	} catch(e) {
-	// alert("ntImgCtr[tsCatArrNm]: " + ntImgCtr[tsCatArrNm] + " :: tsCatArrNm: " + tsCatArrNm + " :: " + "tCIL: " + tCIL);
-	ntImgCtr[tsCatArrNm] = ntImgCtr[tsCatArrNm] + 1;
-	// alert(e);
-	// clear(tsCatArrNm)();
-	}
-	};
-	 
-	 
-
-
-
-	JSSHOP.shop.setCatPrdImgs = function(tCatArrNm) {
-	try {
-	 
-	ntImgCtr[tCatArrNm] = 0;
-	restart(tCatArrNm, function() { JSSHOP.shop.setPrdImg(tCatArrNm, currProdsArr[tCatArrNm].length) }, currImgSleep)();
-	// JSSHOP.startNuIntrvlEvnt(tCatArrNm,  function() { JSSHOP.shop.setPrdImg(tCatArrNm, currProdsArr[tCatArrNm].length) }, currImgSleep);
-	} catch(e) {
-	alert("setCatPrdImgs " + e);
-	}
-	};
-
-	JSSHOP.shop.rndrPrdMedia = function(aa,bb,cc) {
-	// alert(bb);
-	try {
-	if(bb.indexOf("_id") != -1) {
-	// tmpRPMArr  = JSON.parse(bb);
-
-	}
-	} catch(e) {
-	alert("rndrPrdMedia " + e);
-	}
-	};
-
-
-	JSSHOP.shop.getPrdMedia = function(tmpCatId,tmpIid,tmpGPMCB) {
-	 
-	try {
-		tmpDOs = null;
-		tmpDOs = {};
-		tmpDOs["ws"] = "where m_coid=? and  m_catid=? and m_pid=? and m_rtype=?";
-		tmpDOs["wa"] = [cid,tmpCatId,tmpIid,"5"];
-		oi = getNuDBFnvp("qmedia", 5, null, tmpDOs);
-		doQComm(oi["rq"], null,tmpGPMCB); 
-	} catch(e) {
-	alert("JSSHOP.shop.getPrdMedia: " + e);
-	}
-	};
-	 
-
-
-
-	/* 
-	* this function takes an items array and returns 
-	* the html for displaying those items
-	*/
-
-	JSSHOP.shop.getPrdsFullStr = function(thePrdsArna, thePrdsArr, thePrdsClss, thePrdsElem, thePrdsCB){
-	 
-
-	currProdsArr[thePrdsArna] = thePrdsArr;
-	// alert("getPrdsFullStr: " + JSON.stringify(thePrdsArr));
-
-	  try {
-	var upRefs = arrUprefs["prfsSHOPuser"][0].scv;
-	} catch(e) {
-	var upRefs = "r";
-	}
-
-	try {
-	var upPrixRef = arrUprefs["prfsSHOPuser"][0].scp;
-	} catch(e) {
-	var upPrixRef = "u";
-	}
-
-
-	strUCPID = "";
-	strUCPTtl = "";
-	strCatID = "";
-	strCatName = "";
-	strHtml = "";
-	strMLinks = "";
-	strImgDsct = "";
-
-	var len = thePrdsArr.length;
-	 
-	tstr = "";
-	iint = 0;
-
-	// product-grid
-	strHtml += "<div><ol class=\"float\" style=\"list-style:none;\">";
-	 
-	ts = null;
-
-	while(iint < len) {
-	// ts = null;
-	try {
-	ts = thePrdsArr[iint];
-	if(ts._id) {
-	strImgDsct = "";
-		  subTIdesc = ts.i_desc;
-
-
-		if((thePrdsArna == "prodpg") || (pid == "aa-show-item")){
-		subIdesc = subTIdesc;
-		  strImgDsct += "<div><img onclick=\"document.location.href = this.src\" id=\"" + thePrdsArna +  ts._id + "\" src=\"images/misc/trans.gif\" class=\"activator prodBigImage crsrPointer\"></div>";
-		} else {
-		subIdesc = subTIdesc.substring(0, 15);
-		  strImgDsct += "<a href=\"index.html?pid=aa-show-item&itemid=" + ts._id + "&cid=" + ts.i_coid + "&catid=" + ts.i_catid + "\">";
-		if(upRefs == "r") {
-		  strImgDsct += "<img id=\"" + thePrdsArna +  ts._id + "\" src=\"images/misc/example_thumb.png\" class=\"prodRowImage\">";
-		} else {	
-		  strImgDsct += "<img id=\"" + thePrdsArna +  ts._id + "\" src=\"images/misc/example_thumb.png\" class=\"prodImage\">";
-		}
-		  strImgDsct += "</a>";
-		}
-	   
-
-		if((thePrdsArna == "prodpg") && (pid == "aa-show-item")){
-		strHtml += "<li  class=\"prodBigBox\">";
-		} else {
-		if(upRefs == "r") {
-		 strHtml += "<li  class=\"prodRowBox\" style=\"width:100%;\">";
-	 
-
-		} else {
-		strHtml += "<li class=\"prodBox float-item\" style=\"\">";
-		}
-		}
-
-
-		  strHtml += "<a class=\"txtDecorNone\"  href=\"index.html?pid=aa-show-item&itemid=" + ts._id + "&cid=" + ts.i_coid + "&catid=" + ts.i_catid + "\">";
-
-		strHtml += "<div class=\"txtBold\" style=\"padding: 3px;\">";
-		strHtml += ts.i_title;
-		strHtml += "</div></a>";
-		strHtml +=  strImgDsct;
-
-
-
-
-
-
-
-
-
-		if(thePrdsArna == "prodpg") {
-
-
-	 
-
-
-
-		strHtml += "<div id=\"dvPrdMedia\"></div>";
-
-
-
-		}
-
-		strHtml +=  "<div class=\"txtSmall txtClrHdr\" style=\"padding:6px;\">";
-		strHtml +=  subIdesc;
-		strHtml +=  "</div>";
-
-	 
-		
-
-
-
-		strPriceHtml =  JSSHOP.shop.getPrdPriceStr(thePrdsArna, iint, ts._id, ts.i_price_a, ts.i_price_b);
-
-		 strHtml += "<span class=\"txtBig txtBold txtClrDGreen\"  style=\"margin: 15px;\">" + strPriceHtml + "</span>";
-
-	 
-		strHtml += "<div  id=\"tdCI" + ts._id + "\" onclick=\"javascript:JSSHOP.shop.doQIadd('" + thePrdsArna + "',this.id,'" + ts._id + "','" + iint + "');\" class=\"cls_button cls_button-xxsmall bkgdClrNrml brdrClrDlg txtClrHdr\">";
-		strHtml += "<i class=\"material-icons\" alt=\"add cart\" title=\"add\" value=\"shopping_cart\">&#xe8cc;</i>";
-		strHtml += "<i class=\"material-icons\" alt=\"add cart\" title=\"add\" value=\"add\">&#xe145;</i>"; 
-			 // <img src=\"images/cart_r.gif\" class=\"icnsmlbtn brdrClrWhite crsrPointer\">";
-		strHtml += "</div>";
-		currFTclr = "material-icons txtClrTtl";
-		tmpUFstr = "index.html?pid=aa-show-item&itemid=" + ts._id + "&cid=" + ts.i_coid + "&catid=" + ts.i_catid;
-		if(currFavsIdstr.indexOf(ts._id + "::") != -1) {
-		currFTclr = "material-icons txtClrRed";
-		}
-		strHtml += "<div><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tmpUFstr + "','" +  ts.i_title + "','" + ts.i_img + "','" + ts._id + "','btnFavs" + ts._id + "');\"><i id=\"btnFavs" + ts._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
-		strHtml += "&nbsp;<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\"  onclick=\"JSSHOP.ui.showShareBox('product', ts._id);\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></span>";
-		strHtml += "&nbsp;<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\"  onclick=\"JSSHOP.ui.showMsgBox('product', ts._id,'doNada');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
-
-		strHtml += "</div>";
-
-
-		strHtml += "<input type=\"hidden\" id=\"prd" + 5 + iint + "\" value=\"\">";
-
-		strHtml += "</li>";
-	 
-		}
-	 
-	} catch(e) {
-	// strHtml += e + "<br>";
-	}
-	iint++;
-	} 
-	strHtml += "</ol><div>";
-
-	return strHtml;
-	};
-
-
-
-	 
-
-
-	JSSHOP.shop.getDefaultPageNav = function(currentPage, nrOfPages) {
-
-
-	try {
-	// https://gist.github.com/kottenator/9d936eb3e4e3c3e02598
-	var delta = 1,range = [];
-	pgnString = "<ol class=\"pagination\">";
-	startPg = (currentPage - delta) > 0 ? currentPage - delta : 1;
-	endPg = (currentPage + delta + 2) > nrOfPages ? nrOfPages : currentPage + delta + 2; 
-
-	for(ika = startPg; ika < endPg; ika++) {
-	range.push(ika);
-	}  
-	range.push(endPg);
-
-			if(startPg - 2 > 0) {
-			currPAlink = "javascript:scrollToElement('dvHdr');loadCatChunk(" + 1 + ")";
-			  pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">1</a></li>";
-			}
-
-			if(startPg - 1 > 0) {
-			currPAlink = "javascript:scrollToElement('dvHdr');loadCatChunk(" + (startPg - 1) + ")";
-			if(startPg - 1 == 1) {
-			  pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">1</a></li>";
-			} else {
-			  pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">...</a></li>";
-			}
-			}	
-	 
-			for(idd = 0; idd < range.length; idd++) {
-	 
-			currPAlink = "javascript:scrollToElement('dvHdr');loadCatChunk(" + range[idd] + ")";
-			if(range[idd] == currentPage + 1) {
-			  pgnString += "<li class=\"page\"><b>" + range[idd] + "</b></li>";
-			} else {
-			  pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">" + range[idd] + "</a></li>";
-			}
-
-				} // end of for idd
-
-			if(endPg + 1 <= nrOfPages) {
-			currPAlink = "javascript:scrollToElement('dvHdr');loadCatChunk(" + (endPg + 1) + ")";
-			if(endPg + 1 == nrOfPages) {
-			  pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">" + nrOfPages + "</a></li>";
-			} else {
-			  pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">...</a></li>";
-			}
-			}		
-
-
-			if(endPg + 2 <= nrOfPages) {
-			currPAlink = "javascript:scrollToElement('dvHdr');loadCatChunk(" + nrOfPages + ")";
-			  pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">" + nrOfPages + "</a></li>";
-			}	
-				pgnString += "</ol>";
-				return pgnString;
-
-	} catch(e) {
-	alert(e);
-	}
-	};
-
-	 
-
-
-
-	JSSHOP.shop.renderNuCartItems = function(tmpJustTotals, tmpUseCloseLnk, tmpNumCItems) {
-	 
-		tstr = "";
-		iint = 0;
-		ppint = 1;
-		 cartTtl = 0;
-		cartIttls = 0;
-			ttCAA = currCartIArr[0];
-		// ttCAA = JSON.parse(arrAllForms.qcartitem.v[0]);
-		len = currCartIArr.length;
-		if(len > tmpNumCItems) {
-		len = tmpNumCItems;
-		}
-		var strOnlyTtls = "";
-		strHtml = "<div class=\"txtSmall txtBold mintwofh highZ tatCross\">"; 
-		if(tmpUseCloseLnk == "y") {
-		strHtml += "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrRed crsrPointer\" style=\"float:right\">Close</div>";
-		}
-		strHtml += "<div class=\"txtClrHdr bkdgClrDlg txtBold\" style=\"margin-bottom: 15px;\">";
-		strHtml += "<i class=\"material-icons\"  style=\"margin-top: 5px;font-size:14px;\"  alt=\"shopping_cart\" title=\"shopping_cart\">&#xe8cc;</i> Cart Preview</a></div>";
-
-		if (currCartIArr.length) {
-		   strHtml += "<div onclick=\"javascript:document.location.href='index.html?pid=aa-show-cart&cid=" + cid + "&ppid=" + ppid + "'\" class=\"rtable txtClrHdr bkdgClrDlg txtBold crsrPointer\" style=\"margin-bottom: 18px;max-width: 65%; margin: 0 auto;text-align: center\">Go To Cart/Checkout -></div>";
-	   }
-				strHtml += "<div style=\"padding-top: 8px; margin: 8px; border-bottom: 1px dashed #D1D5D1;\">"; 
-			  strHtml += "</div>";
-
-		ts = null;
-		while (iint < len) {
-			ts = currCartIArr[iint];
-			strRecID = ts._id;
-			strRecType = 50;
-
-
-
-
-
-			if (ts._id > 0) {
-	 
-
-		na = ts.ci_price_a - ts.ci_price_b;
-		nd = Math.round((na / ts.ci_price_a) * 100);
-		strPriceHtml = "";
-
-		  tmpTttl = ts.ci_price_b * ts.ci_cartqty;
-		cartTtl = cartTtl + tmpTttl;
-
-		cartIttls = Math.round(ts.ci_cartqty) + cartIttls;
-
-
-			if(ts.ci_img) {
-			 tmpIstrI = JSSHOP.shop.getPrdImgStr("prdmedia", ts.ci_img);
-			}
-
-
-				strTTHtml = "";
-				strTTHtml += "<div style=\"max-width:78%\">";
-			strTTHtml += "<a class=\"txtDecorNone\" href=\"index.html?pid=aa-show-item&itemid=" + ts.ci_pid + "&cid=" + ts.ci_coid + "&catid=" + ts.ci_catid + "\">";
-			strTTHtml += "<img src=\"" + tmpIstrI + "\" class=\"slmtable brdrClrDlg icndbtn\" style=\"align: center;text-align:center;margin:6px;\" align=\"absmiddle\">" +  ts.ci_title;
-				strTTHtml += "<span class=\"txtstriked txtBig txtClrGrey\">" + ts.ci_price_b + "</span></a>";
-				strTTHtml += "</div>";
-
-			  strOnlyTtls += strTTHtml;
-				strHtml +=  strTTHtml;
-	  
-
-
-
-
-				strHtml += "<div style=\"align: right;text-align:right\">";
-				strHtml += "<span onclick=\"javascript:JSSHOP.ui.doDefCBBCC('ahCartIcon', null, document.location.href='index.html?pid=aa-show-cart&cid=' + cid + '&ppid=' + ppid);\" class=\"crsrPointer\"><span class=\"txtBig txtClrDlg txtBold\">x" + ts.ci_cartqty + " = " + tmpTttl + "</span></span>";
-				 strHtml += "</div>";
-
-
-		 
-
-				strHtml += "<div style=\"padding-top: 8px; margin: 8px; border-bottom: 1px dashed #D1D5D1;\">"; 
-			  strHtml += "</div>";
-
-	 
-
-	 
-
-
-	 
-				strHtml += "<input type=\"hidden\" id=\"prd" + 5 + iint + "\" value=\"\">";
-
-	 
-				strHtml += "<input type=\"hidden\" name=\"item_name_" + ppint + "\" value=\"" +  ts.ci_title + "\">";
-				strHtml += "<input type=\"hidden\" name=\"item_number_" + ppint + "\" value=\"" +  ts._id + "\">";
-				strHtml += "<input type=\"hidden\" name=\"quantity_" + ppint + "\" value=\"" + ts.ci_cartqty + "\">";
-				strHtml += "<input type=\"hidden\" name=\"amount_" + ppint + "\" value=\"" + ts.ci_price_b + "\">";
-
-			}
-				strTTHtml = "";
-		  ppint++;
-			iint++;
-		}
-		if (currCartIArr.length) {
-	 
-		  strHtml += "<div style=\"text-align: right\">Total:<b>" + cartTtl.toFixed(2) + "</b></div>"; 
-		  strHtml += "<div onclick=\"javascript:document.location.href='index.html?pid=aa-show-cart&cid=" + cid + "&ppid=" + ppid + "'\" class=\"rtable txtClrHdr bkdgClrDlg txtBold crsrPointer\" style=\"margin-bottom: 18px;max-width: 65%; margin: 0 auto;text-align: center\">Go To Cart/Checkout -></div>";
-
-	   } else {
-		  strHtml += "<div>" + stxt[34] + "</div>";
-		strHtml += "<div class=\"collection-item txtSmall txtBold\">Recent:<br>" + currRcntActHstr + "</div>";
-
-		}
-
-		strHtml += "</div>";
-
-		if(tmpJustTotals == "y") {
-		strHtml = cartIttls + "::" + cartTtl.toFixed(2);
-		}
-		if(tmpJustTotals == "m") {
-		strHtml = strOnlyTtls;
-		}
-
-	return strHtml;
-	 
-
-
-
-	};
-
-
-
-	/**/
-
-
-
-
-
-// 3rd party functions
-// edit colors
-
-  const pSBC=(p,c0,c1,l)=>{
-    let r,g,b,P,f,t,h,i=parseInt,m=Math.round,a=typeof(c1)=="string";
-    if(typeof(p)!="number"||p<-1||p>1||typeof(c0)!="string"||(c0[0]!='r'&&c0[0]!='#')||(c1&&!a))return null;
-    if(!this.pSBCr)this.pSBCr=(d)=>{
-        let n=d.length,x={};
-        if(n>9){
-            [r,g,b,a]=d=d.split(","),n=d.length;
-            if(n<3||n>4)return null;
-            x.r=i(r[3]=="a"?r.slice(5):r.slice(4)),x.g=i(g),x.b=i(b),x.a=a?parseFloat(a):-1
-        }else{
-            if(n==8||n==6||n<4)return null;
-            if(n<6)d="#"+d[1]+d[1]+d[2]+d[2]+d[3]+d[3]+(n>4?d[4]+d[4]:"");
-            d=i(d.slice(1),16);
-            if(n==9||n==5)x.r=d>>24&255,x.g=d>>16&255,x.b=d>>8&255,x.a=m((d&255)/0.255)/1000;
-            else x.r=d>>16,x.g=d>>8&255,x.b=d&255,x.a=-1
-        }return x};
-    h=c0.length>9,h=a?c1.length>9?true:c1=="c"?!h:false:h,f=this.pSBCr(c0),P=p<0,t=c1&&c1!="c"?this.pSBCr(c1):P?{r:0,g:0,b:0,a:-1}:{r:255,g:255,b:255,a:-1},p=P?p*-1:p,P=1-p;
-    if(!f||!t)return null;
-    if(l)r=m(P*f.r+p*t.r),g=m(P*f.g+p*t.g),b=m(P*f.b+p*t.b);
-    else r=m((P*f.r**2+p*t.r**2)**0.5),g=m((P*f.g**2+p*t.g**2)**0.5),b=m((P*f.b**2+p*t.b**2)**0.5);
-    a=f.a,t=t.a,f=a>=0||t>=0,a=f?a<0?t:t<0?a:a*P+t*p:0;
-    if(h)return"rgb"+(f?"a(":"(")+r+","+g+","+b+(f?","+m(a*1000)/1000:"")+")";
-    else return"#"+(4294967296+r*16777216+g*65536+b*256+(f?m(a*255):0)).toString(16).slice(1,f?undefined:-2)
+JSSHOP.ads.doLEAdsOnPart = function(tVElem, tVresp, tVua) {
+    try {
+document.getElementById("fldChallArray").value = tVresp;
+aresp = document.getElementById("fldChallArray").value;
+console.log("doLEAdsOnPart.tVresp: "  + tVresp );
+
+theVElem = "dvVidsOnPart";
+
+jresp = JSON.parse(tVresp);
+jrresp = JSSHOP.ads.ebayFormat( jresp );
+tmpVitemArr = null;
+tmpVitemArr = "";
+tmpVitemArr = [];
+tmpVitemArr = jrresp.findItemsAdvancedResponse[0].searchResult[0].item;
+currEbyPrdsArr = null;
+currEbyPrdsArr = [];
+if(tmpVitemArr.length > 1) {
+
+// while
+while(incIntEA < tmpVitemArr.length) {
+attssr = tmpVitemArr[incIntEA];
+tmptsprd = {}
+tmptsprd["title"] = attssr.title;
+tmptsprd["viewItemURL"] = attssr.viewItemURL;
+tmptsprd["galleryURL"] = attssr.galleryURL;
+tmptsprd["location"] = attssr.location;
+tmptsprd["country"] = attssr.country;
+tmptsprd["sellingStatus"] = attssr.sellingStatus[0].currentPrice[0].__value__;
+tmptsprd["shippingInfo"] = attssr.shippingInfo[0].shippingServiceCost[0].__value__;
+currEbyPrdsArr[incIntEA] = tmptsprd;
+incIntEA++;
 }
+}
+JSSHOP.shop.loadCatChunk(1);
+// tQPlnTstr = inpMakes.value + " " + inpModels.value + " " + inpParts.value;
+// tmpArrQ = JSSHOP.ajax.doNuAjaxPipe(theVElem, "_p/rss/snpp.php?qv=" + tQPlnTstr, doVidsOnPart);
+// doGsearchOnPart();
+} catch(e) {
+console.log("JSSHOP.ads.doLEAdsOnPart.error: " + e);
+// JSSHOP.ads.getGsearchOnP("Search");
+// JSSHOP.loadScript("https://cse.google.com/cse.js?cx=e5956f3d7f1bbd535", JSSHOP.ads.doGsearchOnPart,"js")
+// tQPlnTstr = inpMakes.value + " " + inpModels.value + " " + inpParts.value;
+// tmpArrQ = JSSHOP.ajax.doNuAjaxPipe(theVElem, "_p/rss/snpp.php?qv=" + tQPlnTstr, doVidsOnPart);
+// doGsearchOnPart();
+}
+}; 
+
+JSSHOP.ads.doEAdsOnPart = function(tVElem, tVresp, tVua) {
+    incIntEA = 0;
+document.getElementById("fldChallArray").value = tVresp;
+aresp = document.getElementById("fldChallArray").value;
+incIntEA = 0;
+try {
+} catch(e) {
+    // ttCstmQstr = JSSHOP.ads.getPrtsPrfStr("thin");
+ 
+    // ttAcstmQry = ttCstmQstr.replace("noQvalue","");
+    // console.log("JSSHOP.ads.doEAdsOnPart.error: " + currCstmQstr + " :: " +  e);
+   //  console.log("JSSHOP.ads.doEAdsOnPart.errorNewTry: " + ttAcstmQry);
+
+    // tmpQArrQ = JSSHOP.ajax.doNuAjaxPipe(tVElem, "_p/rss/etest.php?nr=100    &qv=" + ttAcstmQry, JSSHOP.ads.doLEAdsOnPart);
+    }   
+jresp = JSON.parse(aresp);
+jrresp = JSSHOP.ads.ebayFormat( jresp );
+ 
+console.log("ads.doEAdsOnPart: "  + JSON.stringify(jrresp) );
+console.log("ads.doEAdsOnPart: "  + jrresp.findItemsAdvancedResponse[0].ack );
+// console.log("ebayFormat.count: "  + jrresp.findItemsAdvancedResponse[0].searchResult[0].count );
+
+
+console.log("ebayFormat.itemSearchURL: "  + jrresp.findItemsAdvancedResponse[0].itemSearchURL );
+tmpVitemArr = null;
+tmpVitemArr = "";
+tmpVitemArr = [];
+tmpVitemArr = jrresp.findItemsAdvancedResponse[0].searchResult[0].item;
 
 
 
-// 3rd party functions
-// get places
+       /* resultsDiv = document.getElementById("nresults");
+tIMtglbObj = JSSHOP.ui.nTglBxOb();
+tIMtglbObj["ttl"] = stxt[93]; // the toggle box title
+tIMtglbObj["dvid"] = "dvEADS"; // the toggle box div id
+tIMtglbObj["cntntFnc"] = "noQvalue";
+tIMtglbObj["content"] = raresp; // the toggle that goes in above toggle div
+tIMtglbObj["btn"] = "btnTglEADS" // the toogle btn id
+tIMtglbObj["pref"] = "tglEADS"; // the toogle pref id saved in cookie
+tIMtglbObj["tbtmpCB"] = "donada"; // null function as callback
+tIMtglbObj["icn"] = "&#xe3ec;"; // the icon
+tIMtglbObj["pnid"] = "noQvalue"; // the parent node, will just return text if noQvalue
+tIMtglbObj["appnd"] = "y"; // the parent node, will just return text if noQvalue
+// tBoxStr = JSSHOP.ui.doTglBox(tIMtglbObj);
+// raresp = JSSHOP.ads.getEAdsFullStr(jrresp.findItemsAdvancedResponse[0].searchResult[0].item, jrresp.findItemsAdvancedResponse[0].itemSearchURL, null);
+
+trrDiv = document.createElement("div");
+*/
+// trrDiv.innerHTML = raresp;
+// console.log("doEAdsOnPart:raresp " + raresp);
+// console.log("doEAdsOnPart: " + inpMakes.value + " " + inpModels.value + " " + inpParts.value);
+ // document.getElementById("includedContent").innerHTML = tBoxStr;
+ //document.getElementById("includedContent").appendChild(trrDiv);
+ // 
+ if(tmpVitemArr != null){
+    console.log("ebayFormat.itemid: "  + jrresp.findItemsAdvancedResponse[0].searchResult[0].item[0].itemId );
+
+    console.log("doEAdsOnPart: have tmpVitemArr[0].itemId");
+
+    currEbyPrdsArr = null;
+    currEbyPrdsArr = [];
+    // while
+    while(incIntEA < tmpVitemArr.length) {
+    attssr = tmpVitemArr[incIntEA];
+    tmptsprd = {}
+    tmptsprd["title"] = attssr.title;
+    tmptsprd["viewItemURL"] = attssr.viewItemURL;
+    tmptsprd["galleryURL"] = attssr.galleryURL;
+    tmptsprd["location"] = attssr.location;
+    tmptsprd["country"] = attssr.country;
+    tmptsprd["sellingStatus"] = attssr.sellingStatus[0].currentPrice[0].__value__;
+    tmptsprd["shippingInfo"] = attssr.shippingInfo[0].shippingServiceCost[0].__value__;
+    currEbyPrdsArr[incIntEA] = tmptsprd;
+    incIntEA++;
+    }
+
+JSSHOP.shop.loadCatChunk(1);
+// JSSHOP.ads.doLocalShops(3, "RAND()", "partspt", "setShopsUp")
+
+ } else {
+    /**/
+    ttCstmQstr = JSSHOP.ads.getPrtsPrfStr("thin");
+    ttAcstmQry = ttCstmQstr.replace("noQvalue","");
+    console.log("doEAdsOnPart no : tmpVitemArr: " + tmpVitemArr + " :: " + ttAcstmQry);
+
+    tmpQArrQ = JSSHOP.ajax.doNuAjaxPipe(tVElem, "_p/rss/etest.php?nr=100    &qv=" + ttAcstmQry, JSSHOP.ads.doLEAdsOnPart);
+    
+    // JSSHOP.ads.setGboxUp("doGGAdsFill");
+ }    
+// theVElem = "dvVidsOnPart";
+// tQPlnTstr = inpMakes.value + " " + inpModels.value + " " + inpParts.value;
+// doGsearchOnPart();
+// tmpArrQ = JSSHOP.ajax.doNuAjaxPipe(theVElem, "_p/rss/snpp.php?qv=" + tQPlnTstr, doVidsOnPart);
+
+};
 
 
-var qlDoPDetails = function(theDPResp) {
-	try {
-	
-	theDPAesp = removeDiacritics(theDPResp);
-	// alert("getDPRespStr: " + theDPResp);
-	tDPRObj = JSON.parse(theDPAesp);
-	qloga_name.value = "-";
-	
-	console.log("getDPRespStr: " + JSON.stringify(tDPRObj));
-	 
-	
-	 
-	
-	if(tDPRObj.address) {
-	tAOBjVobj = tDPRObj.address;
-	// qloga_name.value = tDPRObj.address;
-	if(tAOBjVobj["amenity"]) {
-	qloga_name.value = tAOBjVobj["amenity"];
-	}
-	
-	if(tAOBjVobj["postcode"]) {
-		qloga_zipcode.value = tAOBjVobj["postcode"];
-	}
-	if(tAOBjVobj["road"]) {
-		qloga_street.value = tAOBjVobj["road"];
-	}
-	if(tAOBjVobj["city_district"]) {
-		qloga_location.value = tAOBjVobj["city_district"];
-	}
-	if(tAOBjVobj["city"]) {
-		qloga_location.value = tAOBjVobj["city"];
-	}
-	if(tAOBjVobj["county"]) {
-		qloga_region.value = tAOBjVobj["county"];
-	}
-	if(tAOBjVobj["country"]) {
-		qloga_country.value = tAOBjVobj["country"];
-	}
-	 
-	if(tAOBjVobj["shop"]) {
-		qloga_name.value = tAOBjVobj["shop"] + " " + qlogp_location.value;
-	} else if(tAOBjVobj["namedetails"]){
-		if(tAOBjVobj["namedetails"]["name"]) {
-			qloga_name.value = ttAOBjVobj["namedetails"]["name"] + " " + qlogp_location.value;
-	
-		}  
-	}  
-	}
-	if(tDPRObj.lat) {
-		qloga_loc_lat.value = tDPRObj.lat;
-	}
-	if(tDPRObj.lon) {
-		qloga_loc_lng.value = tDPRObj.lon;
-	}
-	if(tDPRObj.place_id) {
-		qloga_placeid.value = tDPRObj.place_id;
-	}
-	 
-	qloga_dadded.value = JSSHOP.getUnixTimeStamp();
-	console.log("qlDoPDetails: " + JSON.stringify(tAOBjVobj));
-
-	} catch(e) {
-	alert("qlDoPDetails: " + e);
-	}
-	
-	};
 
 
-var qlRunPDetails = function(thePDa,thePDResp,thePDc) {
-	console.log("runPlaceDetails: " + thePDResp)
-	try {
-		tDPRObj = JSON.parse(thePDResp);
-		if((tDPRObj.lat)  && (tDPRObj.lon)) {
-			// alert("qlRunPDetails.lat: " + tDPRObj.lat + " lon: " + tDPRObj.lon)
-			// JSSHOP.ui.popLboxMap(tDPRObj.lat, tDPRObj.lon);
-		} else {
-			// JSSHOP.ui.popLboxMap(tDPRObj.lat, tDPRObj.lon);
-		}
-		qlDoPDetails(thePDResp);
-	// JSSHOP.ui.popAndFillLbox(qlDoPDetails(thePDResp));
-	} catch(e) {
-	alert("runPlaceDetails: " + e);
-	}
-	};
+JSSHOP.ads.setPrtsPrefCC = function(ppType, ppWrd) {
+try {
+    if(ppType == "mmk") {
+        JSSHOP.ads.clearAllPrtsPrefCC();
+    }
+    if(arrUprefs["prfsSHOPuser"][0][ppType]) {
+    if(arrUprefs["prfsSHOPuser"][0][ppType] == ppWrd) {
+    tSasastr = "prfsSHOPuser." + ppType;
+    } else {
+    JSSHOP.user.setCkiePrfKV('prfsSHOPuser',ppType,ppWrd);
+    }
+    } else {
+    JSSHOP.user.setCkiePrfKV('prfsSHOPuser',ppType,ppWrd);
+    }
+} catch(e) {
+alert("setPrtsPrefCC: " + e);
+}
+};
 
-var qlShowPDetails = function(tPlaceIDXstr) {
+JSSHOP.ads.getPrtsPrefCC = function(ppType) {
+try {
+    if(arrUprefs["prfsSHOPuser"][0][ppType]) {
+    return arrUprefs["prfsSHOPuser"][0][ppType];
+    } else {
+    return "noQvalue";
+    }
+}   catch(e) {  
+alert("getPrtsPrefCC: " + e);
+}
+};
 
-	qlRunPDetails(null, JSON.stringify(currSPRArr[tPlaceIDXstr]), null);
-   };
+JSSHOP.ads.clearPrtsPrefCC = function(ppType) {
+try {
+    if(arrUprefs["prfsSHOPuser"][0][ppType]) {
+    JSSHOP.user.setCkiePrfKV('prfsSHOPuser',ppType,"noQvalue"); 
+    }
+}   catch(e) {
+alert("clearPrtsPrefCC: " + e);
+}
+};
+JSSHOP.ads.clearAllPrtsPrefCC = function() {
+try {
+    JSSHOP.user.setCkiePrfKV('prfsSHOPuser',"mk","noQvalue");
+    JSSHOP.user.setCkiePrfKV('prfsSHOPuser',"series","noQvalue");
+    JSSHOP.user.setCkiePrfKV('prfsSHOPuser',"model","noQvalue");
+    JSSHOP.user.setCkiePrfKV('prfsSHOPuser',"si","noQvalue");
+    JSSHOP.user.setCkiePrfKV('prfsSHOPuser',"md","noQvalue");
+    // JSSHOP.user.setCkiePrfKV('prfsSHOPuser',"part","noQvalue");
+    // JSSHOP.user.setCkiePrfKV('prfsSHOPuser',"prti","noQvalue");
+}
+catch(e) {  
+alert("clearAllPrtsPrefCC: " + e);
+}
+};
 
-var qlDoPlacesSearch = function() {
-	qlDoNuPlSearch(tmp_qv.value);
+
+
+JSSHOP.ads.getPrtsPrfStr = function(oldStr) {
+try {
+    tmpFullPstr = "";
+     if(JSSHOP.ads.getPrtsPrefCC("mk") !== "noQvalue") {
+
+    // if(arrUprefs["prfsSHOPuser"][0].mk) {
+       //  tMakeId = arrUprefs["prfsSHOPuser"][0].mk;
+       tMakeId = JSSHOP.ads.getPrtsPrefCC("mk");
+// alert("mk: " +arrUprefs["prfsSHOPuser"][0].mk);
+tMkPrfx = "m" + tMakeId;
+tMkNme = objAllMakes[tMkPrfx].n;
+    tmpFullPstr += tMkNme + " ";
+    }
+    if(oldStr == "thin") {
+    isthin = "y";
+    } else {
+        if(JSSHOP.ads.getPrtsPrefCC("series") !== "noQvalue") {
+
+   //  if((arrUprefs["prfsSHOPuser"][0].series) && (arrUprefs["prfsSHOPuser"][0].series != "null")) {
+    // tmpFullPstr += arrUprefs["prfsSHOPuser"][0].series + " ";
+    tmpFullPstr +=  JSSHOP.ads.getPrtsPrefCC("series") + " ";
+    }
+    }
+    /*
+    if(arrUprefs["prfsSHOPuser"][0].model) {
+    tmpFullPstr += arrUprefs["prfsSHOPuser"][0].model + " ";
+    }
+    */
+    if(JSSHOP.ads.getPrtsPrefCC("part") !== "noQvalue") {
+
+    // if(arrUprefs["prfsSHOPuser"][0].part) {
+        if(usrlang == "pt_pt") {
+           //  if((arrUprefs["prfsSHOPuser"][0].partES) && (currPLMtype == "ebay")) {
+            if((JSSHOP.ads.getPrtsPrefCC("partES") !== "noQvalue") && (currPLMtype == "ebay")) {
+    tmpFullPstr += JSSHOP.ads.getPrtsPrefCC("partES") + " ";
+            
+    // tmpFullPstr += arrUprefs["prfsSHOPuser"][0].partES + " ";
+            } else  {
+                 tmpFullPstr += JSSHOP.ads.getPrtsPrefCC("part") + " ";
+            }
+        } else {
+            tmpFullPstr += JSSHOP.ads.getPrtsPrefCC("part") + " ";
+            // tmpFullPstr += arrUprefs["prfsSHOPuser"][0].part + " ";
+        }
+    }
+    if(pid.indexOf("msearch") != -1) {
+    // ampFullPstr =  "mecanico " + tmpFullPstr;
+    // tmpFullPstr = ampFullPstr;
+    }
+    tmpFullPstr = tmpFullPstr.trim();
+    tmpFullPstr = tmpFullPstr.replace(/[^a-zA-Z0-9\s\-]/g, '');
+    tmpFullPstr = tmpFullPstr.replace(/\s+/g, " ");
+    console.log("getPrtsPrfStr: " + tmpFullPstr);
+    return tmpFullPstr.replace(/noQvalue/g, "");
+    } catch(e) {
+        alert("getPrtsPrfStr: " + e);
+// return oldStr;
+}
 };
 
 
 
 
 
-var qlDoNuPlSearch = function(tInpNQLPS, tInpNQLDV, tInpNQLCB) {
+
+
+
+
+/*
+* java and android funcitions
+*/
+
+JSSHOP.jndroid.doImgSter = function(theDDVal) {
+    try {
+        document.getElementById("fldChallArray").value = theDDVal;
+        arzesp = document.getElementById("fldChallArray").value;
+        console.log("app.doImgSter: " + arzesp);
+   //  document.getElementById("includedContent").innerHTML = arzesp;
+   // document.getElementById('dvPLogoImg').src = "data:image/jpg;base64, " + arzesp;
+   JSSHOP.ajax.doNuAjaxPost();
+   // post arzesp to server
+
+    } catch(e) {
+    alert("This only works with our android app and: " + e);
+    }
+    };
+
+JSSHOP.jndroid.setMDcom = function(theCom, theVal) {
+try {
+app.getMDcom(theCom, theVal);
+} catch(e) {
+alert("This only works with our android app and: " + e);
+}
+};
+JSSHOP.jndroid.openBrowser = function() {
+try {
+app.openBrowser();
+} catch(e) {
+alert("File Chooser only works with our android app and: " + e);
+}
+};
+JSSHOP.jndroid.doFileChooser = function() {
+try {
+app.getFileChooser();
+} catch(e) {
+alert("File Chooser only works with our android app and: " + e);
+}
+};
+
+JSSHOP.jndroid.doPagePopUp = function(theUrl, theHTML) {
 	try {
-		tSrchInp = document.getElementById(tInpNQLPS);
-		tSrchIval = tSrchInp.value;
-		tBtnPS = document.getElementById("btnPSearch");
-		tBtnPS.disabled = true;
-	doSpinSet(tInpNQLDV, "small", null);
-	 
-	
-	if((isJApp !== "no") && (isPhP == "no")) { 
-	trstr = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=place_id,formatted_address%2Cname%2Crating%2Copening_hours%2Cgeometry&inputtype=textquery&key=AIzaSyBpMAowLSBf-e_GAykNSdODo0Lap9WmLtE&input=" + encodeURIComponent(tSrchIval);
-	tRespStr = app.getUrlRespString(trstr);
-	document.getElementById("fldChallArray").value = tRespStr;
-	ttRespStr = document.getElementById("fldChallArray").value;
-	qlShowPlacesRes("nada", ttRespStr, "nada" );
-	} else {}
-	JSSHOP.ajax.doNuAjaxPipe(tInpNQLDV, "_p/osmgeo.php?qv=" + encodeURI(tSrchIval), tInpNQLCB);
-	
-	} catch(e) {
-	alert("qlDoPlacesSearch: " + e);
-	}
-	};
+ 
+tOldHref = document.location.href;
+        if(tOldHref.indexOf("recamby.com") != -1) {
+            tnewHref = "https://recamby.com/clean.html";
+     
+        } else {
+            tnewHref = "https://titan/recamby/clean.html";
+        }
+
+	app.setPagePopUp(theUrl, theHTML);
+} catch(e) {
+alert(e);
+JSSHOP.logJSerror(e, arguments, "JSSHOP.jndroid.doPagePopUp");
+}
+};
+
+JSSHOP.jndroid.appRetImgUload = function(theImg, theUri) {
+try {
+JSSHOP.shared.setFrmFieldVal("qitem","i_vala",theImg);
+JSSHOP.shared.setFrmFieldVal("qitem","i_valb",theImg);
+document.getElementById("mod_i_vala").value = theImg;
+document.getElementById("mod_i_valb").value = theUri;
+tIUID = JSSHOP.shared.getFrmFieldVal("qitem","_id",0);
+tImgstr = "data:image/png;base64, " + theImg;
+doItemEdit();
+} catch(e) {
+alert(e);
+}
+};
+
+JSSHOP.jndroid.doWebShopUrl = function() {
+try {
+if(c_web.value) {
+tCWebVal = c_web.value;
+if(tCWebVal.indexOf("http") != -1) {
+document.location.href = tCWebVal;
+} else {
+alert("Invalid Web Url in your shop settings. Url: " + tCWebVal);
+}
+} else {
+alert("Invalid Web Url in your shop settings. Url:");
+}
+} catch(e) {
+alert("Cannot Load: " + e);
+}
+};
+
+JSSHOP.jndroid.doCutOuts = function() {
+try {
+app.getCutOuts();
+} catch(e) {
+alert("Camera functions only work with our android app and: " + e);
+}
+};
 
 
-var qlShowPlacesRes = function(thePSa,thePSResp,thePSc) {
-	// alert("runPlacesSearch: " + thePSa + " " + thePSResp + " " + thePSc);
-	// btnEUsave.disabled = false;
-	mtImDSStr = "js/leaflet/images/tr6.gif";
-	mredIcon = new LeafIcon({iconUrl: mtImDSStr});
-   	var options = { icon: mredIcon };
-	currMapMrkrArr = null;
-	currMapMrkrArr = "";
-	currMapMrkrArr = [];
 
-	tBtnPS = document.getElementById("btnPSearch");
-	tBtnPS.disabled = false;
-	hasr = "n";
-	fullstr = "";
-	// alert("runPlacesSearch: " + thePSResp);
-	farrToFill = JSON.parse(thePSResp);
-	farrToFC = farrToFill;
-	currSPRArr = null;
-	currSPRArr = farrToFC;
-	var len = farrToFC.length;
-	console.log("farrToFC: " + JSON.stringify(farrToFC));
-	var iint = 0;
-	var pcid = 0;
-	tstr = "";
-
-	
-	while(iint < len) {
-	fcts = farrToFC[iint];
+// in the wild functions that need to be incorporated
 
 
+var loadCssScript = function(path, callback) {
+		// alert(loaded_scripts.length);
+        n = path.lastIndexOf("/"); 
+        q = path.lastIndexOf("?");
+ 
+            var scr = document.createElement("link")
+            scr.setAttribute("rel", "stylesheet")
+            scr.setAttribute("type", "text/css")
+            scr.href = path;
+ 
+        var done = false;
+        scr.onload = handleCssLoad;
+        scr.onreadystatechange = handleCssReadyStateChange;
+        scr.onerror = handleCssError;
+        if (n >= 0) {
+            if (q >= 0) {
+                tid = path.substring(n + 1, q);
+            } else {
+                tid = path.substring(n + 1);
+            }
+            scr.id = tid;
+        }
+        document.getElementsByTagName("head")[0].appendChild(scr);
+ 
+        function handleCssLoad() {
+            if (!done) {
+                done = true;
+                callback(path, "ok");
+            }
+        }
 
-	tMrkr = null;
-tMrkr = "";
-tMrkr  = L.marker([fcts.lat, fcts.lon], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:dropMrkr(o);">DROP</a></span>');
-currMapMrkrArr.push(tMrkr);
+        function handleCssReadyStateChange() {
+            var state;
+            if (!done) {
+                state = scr.readyState;
+                if (state === "complete") {
+                    handleLoad();
+                }
+            }
+        }
 
-	fullstr += "<tr>";
-	fullstr += "<td><a href=\"javascript:qlShowPDetails('" + iint + "');currSPRIdx=" + iint + ";JSSHOP.ui.popAndFillLbox(getPPAddPOp());\"><span class=\"txtBold\">" + fcts.display_name +  "</span></a></td>";
-	fullstr += "<td><a href=\"javascript:qlShowPDetails('" + iint + "');currSPRIdx=" + iint + ";JSSHOP.ui.popLboxMap('" + fcts.lat + "','" + fcts.lon + "','qlaTest');\"><span class=\"txtBold\">222</span></a></td>";
-	fullstr += "<td><a href=\"javascript:qlShowPDetails('" + iint + "');\"><span class=\"txtBold\">3</span></a></td>";
-	fullstr += "<td><a href=\"javascript:qlShowPDetails('" + iint + "');\"><span class=\"txtBold\">3</span></a></td>";
-	fullstr += "<td><a href=\"javascript:qlShowPDetails('" + iint + "');\"><span class=\"txtBold\">3</span></a></td>";
-	fullstr += "</tr>";
-	iint++;
-	}
+        function handleCssError() {
+            if (!done) {
+                done = true;
+                callback(path, "error");
+            }
+        }
+ 
+};
+
+var checkCssLoader = function(thePath, theMessage) {
+ ncc = "aa";
+};
 
  
-   tTHstr = "<tr><th></th><th></th><th></th><th></th><th></th></tr>";
+
+function shuffle(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+return array;
+}
+
+// create a function to check for duplicate ids in current page
+function checkForDuplicateIds() {
+    var ids = [];
+    var elements = document.getElementsByTagName("*");
+    for (var i = 0; i < elements.length; i++) {
+        if ((ids.indexOf(elements[i].id) >= 0) && (elements[i].id != "")) {
+            console.log("name: " + elements[i].href + " id: " + elements[i].id)
+            console.log("Duplicate id " + elements[i].id + " found at index " + i);
+        } else {
+            ids.push(elements[i].id);
+        }
+    }
+}
+
+
+
 
  
-    theRespDiv = document.getElementById(thePSa);
-	// fullstr += thePSResp;
-	theRespDiv.innerHTML = getTblSortStr(tTHstr, fullstr);
 
-	};
+function doFnshGIErr(dfgA, dfgB, dfgC) {
+    console.log("doFnshGIErr: " + dfgA + " :: " + dfgB + " :: " + JSON.stringify(dfgC));
+}
+function doGglImgLdErr(tCoID) {
+    currGImgEint++;
+    try {
+        if(currGImgEint < 3) {
+             procNuUIitem('qco', 'c_logoimg',tCoID,'noQvalue','doFnshGIErr');
+        }
+    } catch(e) {
+        console.log("doGglImgLdErr: " + e);
+    }
+}
+ 
 
-
-
-
-	
-// incasa functions
-
-function previewFile(theImgID, theInpObj) {
-	var preview = document.getElementById(theImgID);
-	theInpObj = document.getElementById(theInpObj);
-	var file    = document.querySelector('input[type=file]').files[0];
-	// var file    = theInpObj;
-	var reader  = new FileReader();
-  
-	reader.onloadend = function () {
-	  preview.src = reader.result;
-	  preview.className = "icnmedbtn";
-	}
-  
-	if (file) {
-	  reader.readAsDataURL(file);
-	} else {
-	  preview.src = "";
-	}
-  }
-
- function tImgClass(theTCImg) {
-	tIsrc = theTCImg.src;
-	if(tIsrc.indexOf("admin") != -1) {
-		theTCImg.className = "icnmedbtn";
-	}
- }

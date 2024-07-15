@@ -1,4 +1,5 @@
-<?php 
+<?php
+global $jscssprefix, $isBareTest, $usrlang;
 session_start();
 include("config.php");
 $error="";
@@ -11,14 +12,14 @@ if(isset($_REQUEST['login']))
 	
 	if(!empty($email) && !empty($pass))
 	{
-		$sql = "SELECT * FROM user where uemail='$email' && upass='$pass'";
+		$sql = "SELECT * FROM quser where u_email='$email' && u_pass='$pass'";
 		$result=mysqli_query($con, $sql);
 		$row=mysqli_fetch_array($result);
 		   if($row){
 			   
-				$_SESSION['uid']=$row['uid'];
+				$_SESSION['uid']=$row['_id'];
 				// set a quid cookie with the uid value
-				setcookie('quid', $row['uid'], time() + (86400 * 30), "/"); // 86400 = 1 day
+				setcookie('quid', $row['_id'], time() + (86400 * 30), "/"); // 86400 = 1 day
 				$_SESSION['uemail']=$email;
 				header("location:index.php");
 				
@@ -43,7 +44,7 @@ if(isset($_REQUEST['login']))
 window.onload = function() {
 document.getElementsByName('email')[0].placeholder= stxt[977];
 document.getElementsByName('pass')[0].placeholder= stxt[978];
-doWinLoad();
+// doWinLoad();
 };
 </script>
 <body>

@@ -18,40 +18,36 @@
 -->
 
 
-<link rel="stylesheet" type="text/css" href="css/x_dev.css">
-<link rel="stylesheet" type="text/css" href="css/x_forms.css">
-<link rel="stylesheet" type="text/css" href="css/x_nav.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
 <link rel="stylesheet" type="text/css" href="css/x_cc.css">
+
+<!--	Plugin Css Link
+	======================================================== -->
 <link href="js/bootstrap5.2/bootstrap.min.css" rel="stylesheet"> 
 <link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
 <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="css/layerslider.css">
+<link rel="stylesheet" type="text/css" href="css/layerslider.css"> 
 <link rel="stylesheet" type="text/css" href="css/color.css" id="color-change">
 <link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
 <link rel="stylesheet" type="text/css" href="css/login.css">
-<link href="fonts/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/style.css">
-
 <link rel="stylesheet" type="text/css" href="css/x_bs-fixes.css">
-<!--	Title
-	=========================================================-->
-	<script src="js/bootstrap5.2/bootstrap.js"  language="javascript" type="text/javascript"></script>
-<script src="js/app/x_allinit.js"></script> 
-<script src="js/app/x_last.js"></script> 
-<script src="js/app/x_all.js"></script> 
-<script src="js/app/x_booter.js"></script>
-<script src="js/app/x_admin.js"></script>
+
+
+	<script src="js/app/lz-string.js" language="javascript" type="text/javascript"></script>
+	<script src="js/app/x_allinit.js" type="text/javascript"></script> 
 <script>
 // JSSHOP.loadScript("js/app/aa-" + usrlang + ".js", donada,"js");
 </script>
 <?php
-// check for cookie userlan
-if(isset($_COOKIE['usrlang'])) {
-	$usrlang = $_COOKIE['usrlang'];
-} else {
-	$usrlang = "pt_pt";
-}
 echo "<scr" . "ipt src=\"js/app/aa-" .  $usrlang . ".js\"></script>";
-?>
+?> 
+ <link href="js/thirdp/swiper-bundle.min.css" rel="stylesheet"> 
+ 
+   <script src="js/thirdp/swiper-bundle.min.js" type="text/javascript"></script>    <script src="js/jquery.min.js"></script> 
 
-<title>imobtech</title>
+
+<script src="js/leaflet/leaflet.js" type="text/javascript"></script>
+<link rel="stylesheet" href="js/leaflet/leaflet.css" type="text/css" />
+<link rel="stylesheet" href="js/leaflet/easy-button.css" type="text/css" /> 
+<title>proptech</title>

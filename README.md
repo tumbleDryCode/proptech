@@ -1,9 +1,10 @@
-# incasa
+# proptech
 
-this is a fork of:
-https://github.com/suraj25809/Real-Estate-Php
 
 Scripted for small to medium size real estate agencies.
+
+forked from:
+https://github.com/suraj25809/Real-Estate-Php
 
 changes made include:
 - added Portuguese and Spanish language strings
@@ -20,18 +21,9 @@ admin section:
 
 
 
-suraj25809/Real-Estate-Php readme:
-# Real-Estate-Php
 
-Realestate Management system
-
-This is a ready to use web application for managing Real Estate System. the application is built on PHP and Mysql, its interface is very user friendly.
-
-Description
-
-It can easily be used to manage two different group of users with different permission level.User can find Property easily in particular and Specific Location,Loan Calculator, Admin can Manage all data , User can Add property etc....
-
-# Requirements
+<br><img alt="" src="img13.jpg" style="height: 514px; width: 600px"><p>&nbsp;</p>
+<img alt="" src="img15.jpg" style="height: 461px; width: 500px"># Requi<br>rements
 
     PHP >= 5;
     PDO PHP Extension;
@@ -42,10 +34,7 @@ It can easily be used to manage two different group of users with different perm
 # Installation
 
     Modify config.php file
-
     $con = mysqli_connect("server_name","user_name","password","Database_name");
-
-Import the Database in Your Server like Xampp, Wamp
-
-Database Name -: developer
+    Import the Database in Your Server like Xampp, Wamp
+    Database Name -: developer
 

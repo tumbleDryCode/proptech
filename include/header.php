@@ -6,7 +6,7 @@
 
 <header id="header" class="transparent-header-modern fixed-header-bg-white w-100" style="margin:0px;padding:0px;min-width:100%">
             <div class="top-header bg-secondary bigtable brdrClrHdr" style="margin:15px;visiility:hidden;display:none;">
-                <div class="container">
+                <div class="container" style="width:100%">
                     <div class="row">
                         <div class="col-md-8">
                             <ul class="top-contact list-text-white  d-table">
@@ -32,11 +32,11 @@
                 </div>
             </div>
             <div class="main-nav secondary-nav hover-primary-nav py-6  bg-secondary"  style="">
-                <div class="container">
+                <div class="">
                     <div class="row">
                         <div class="col-lg-12" style="margin:0px;">
-                            <nav class="navbar navbar-expand-lg navbar-light p-0">
-                              <span style="float:left;text-align:left;white-space: nowrap;"><a class="breadcrumb-item active" href="index.php"><img class="slmtable" src="images/logo/logo-small.png" alt="imobtech" style="max-height:40px;max-width:40px;"> <b>imobtech</b></a></span>
+                            <nav class="navbar-expand-lg navbar-light p-0">
+                              <span style="float:left;text-align:left;white-space: nowrap;"><a class="breadcrumb-item active" href="./"><img class="slmtable" src="images/logo/logo-small.png" alt="proptech" style="max-height:40px;max-width:40px;"> <b>proptech</b></a></span>
 
   <!-- menu icons 
 
@@ -58,10 +58,80 @@
 
 			</div>
 				  -->
-                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="padding: 2px;background-color: #fff;border:0px;"> <span class="navbar-toggler-icon"></span> </button>
-                                <div class="collapse navbar-collapse txtClrWhite" id="navbarSupportedContent">
-                                    <ul class="navbar-nav mr-auto">
-                                        <li class="nav-item"> <a class="nav-link" href="index.php" role="button" aria-haspopup="true" aria-expanded="false">Home</a></li>
+
+
+
+
+
+
+<!-- recamy stuff -->
+ 
+ <!-- ols menu -->
+
+<div style="padding:0px;margin:0px;float:right;" class="newNavCls shop-menu" id="newNavDiv">   
+<ul style="" class=""> 
+
+<!-- <li id="ahAccountIcon"  style="padding:0px;margin:0px;display:inline;float:left;" class="newNavCls"><a href="javascript:JSSHOP.ui.doDefCBBCC('ahAccountIcon', null, document.location.href='index.html?pid=aa-edit-uinfo&cid=' + cuid);" style="padding:2px"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="person" title="person"></li>
+   <li id="ahSettingsIcon">  <span id="spnAlrtSettings" class="icnbtn slmtable txtSmall txtClrWhite bkgdClrHdr" style="float:right">5</span> <a href="javascript:JSSHOP.ui.doDefCBBCC('ahSettingsIcon', null, document.location.href='index.html?pid=aa-settings&cid=' + cid);"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="Settings" title="Settings">&#xe8b8;</i></a></li> 
+   <li id="ahNotifyIcon"><span id="spnAlrtNotify" class="icnbtn slmtable txtSmall txtClrWhite bkgdClrHdr" style="float:right"></span><a href="javascript:JSSHOP.ui.doDefCBBCC('ahNotifyIcon', null, document.location.href='index.html?pid=aa-show-notifications&cid=' + cid);"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="Notify" title="notifications">
+  &#59380;</i></a></li>     
+
+
+   <li id="ahCartIcon"><a href="javascript:JSSHOP.ui.doDefCBBCC('ahCartIcon', null, document.location.href='index.html?pid=aa-show-cart&cid=' + cid + '&ppid=' + ppid);"><i class="material-icons"  style="margin-top: 5px;font-size:32px;margin-right:6px;"  alt="shopping_cart" title="shopping_cart">&#xe8cc;</i></a></li>
+    
+    
+               <li id="ahMsgsIcon" style="padding:0px;margin:0px;display:inline;float:left;" class="newNavCls"><span id="spnMsgsNotify" class="icnbtn slmtable txtSmall txtClrWhite bkgdClrHdr" style="float:right"></span><a href="javascript:JSSHOP.ui.doDefCBBCC('ahMsgsIcon', null, document.location.href='index.html?pid=aa-show-messages&cid=' + cid);"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="Messages" title="Messages">
+  &#57527;</i></a></li>-->
+
+    
+   <!--  <li id="ahCartIcon" style="padding:0px;margin:0px;display:inline;float:left;"><span id="spnCIcount" class="nada" style="float:right"></span><a href="javascript:JSSHOP.ui.doDefCBBCC('ahCartIcon', null, document.location.href='index.html?pid=aa-show-cart&cid=' + cid + '&ppid=' + ppid);"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px; margin-bottom:0px;padding-bottom:0px;"  alt="shopping_cart" title="shopping_cart">
+  &#59596;</i></a></li> -->
+
+
+     <li id="ahMenuIcon"  style="padding:0px;margin:0px;display:inline;float:right;"><div class="crsrPointer hoover" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;  text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;">
+     <i class="material-icons" style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="home" title="home"  onclick="javascript:JSSHOP.ui.toggleVisibility('navbarSupportedContent');">
+     &#xe241;</i></div></li> 
+ <!-- <li id="ahHomeIcon" style="padding:0px;margin:0px;display:inline;float:right;"><a href="index.html" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;  text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons" style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="home" title="home">
+     &#59530;</i></a></li>--> 
+
+  <li id="ahDeRecent" style="padding:0px;margin:0px;display:inline;float:right;"><div class="crsrPointer hoover" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;">
+  <i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="ahDeRecent" title="ahDeRecent"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrRed', 'material-icons crsrPointer hoover', function(){JSSHOP.ui.popAndFillLbox(doFavoritesRndr('y', 'y', 'y', 60).replace(/::/g, '<br>'));}, 300);">
+ &#59517;</i></div></li> 
+      <!--       
+  <li id="ahAccnt" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:void(0);" onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'kcoll-menu-item','collection-item txtClrRed', function(){eindex('aa-edit-user', 'pid=aa-edit-user&cit=y')}, 20);" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="account" title="account">
+  &#xe7fd;</i></a></li> 
+                -->
+                <li id="ahAccnt" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:eindex('aa-edit-user','pid=aa-edit-user&cit=y');" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="account" title="account"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrHdr', 'material-icons crsrPointer hoover', function(){void(0);}, 300);">
+  &#xe7fd;</i></a></li> 
+   <li id="ahMsgsIcon" style="padding:0px;margin:0px;display:inline;float:left;" class="newNavCls"><span id="spnMsgsNotify" class="icnbtn slmtable txtSmall txtClrWhite" style="float:right"></span><div class="crsrPointer hoover" id="dvBtnNavMsg" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="Messages" title="Messages"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrHdr', 'material-icons crsrPointer hoover', function(){eindex('aa-show-messages', 'pid=aa-show-messages')}, 300);"  >
+  &#57527;</i></div></li>
+</ul>
+ 
+</div>
+
+      <!-- end ols menu -->
+
+<!-- end recamy stuff -->
+
+
+
+                  
+                              <!--  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="padding: 2px;background-color: #fff;border:0px;"> <span class="navbar-toggler-icon"></span> </button> -->
+                                
+                            </nav>
+                        </div>
+
+                       
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="clearfix"></div>
+        <div> 
+            <table style="width:100%;"><tr><td style="width:90%"> </td><td style="min-width:300px;">
+        <div class="txtClrWhite bg-secondary" id="navbarSupportedContent" style="visibility:hidden;display:none;min-width:300px;max-width:350px;float:right;position:fixed;z-index: 2147483649;">
+                                    <ul>
+                                        <li class="nav-item"> <a class="nav-link" href="./" role="button" aria-haspopup="true" aria-expanded="false">Home</a></li>
 										<li class="nav-item"> <a class="nav-link" href="property.php"><ti data-ison="stxt[940]" data-desc="btn_properties">Properties</ti></a> </li>					 
 										<li class="nav-item"> <a class="nav-link" href="search.php"><ti data-ison="stxt[936]" data-desc="btn_searchprops">Search Properties</ti></a> </li>
 										<!-- <li class="nav-item"> <a class="nav-link" href="agent.php"><ti data-ison="stxt[900]" data-desc="btn_agentes">Agentes</ti></a> </li> -->
@@ -75,12 +145,12 @@
  
 
 										{ ?>
-										<li class="dropdown onlyWideScreen" style="margin-top:10px;">
-											 <a style="float:left;padding-left:15px;" class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><ti data-ison="stxt[56]" data-desc="btn_account">Account</ti></a>
-											<ul class="dropdown-menu">
+										<li class="" style="margin-top:10px;">
+											 <ti data-ison="stxt[56]" data-desc="btn_account">Account</ti>
+											<ul class="">
 												<!-- <li class="nav-item"> <a class="nav-link" href="profile.php"><ti data-ison="stxt[903]" data-desc="btn_profile">Profile</ti></a> </li> -->
-                                                <li class="nav-item"> <a class="nav-link" href="submitproperty.php"><ti data-ison="stxt[916]" data-desc="btn_addprop">Subit Property</ti></a> </li>
-												 <li class="nav-item"> <a class="nav-link" href="feature.php"><ti data-ison="stxt[905]" data-desc="btn_yourprops">Your Properties</ti></a> </li>
+                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-prop','pid=aa-edit-prop');JSSHOP.ui.toggleVisibility('navbarSupportedContent');"><ti data-ison="stxt[916]" data-desc="btn_addprop">Subit Property</ti></a> </li>
+												 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-uprops', 'pid=aa-edit-uprops');JSSHOP.ui.toggleVisibility('navbarSupportedContent');"><ti data-ison="stxt[905]" data-desc="btn_yourprops">Your Properties</ti></a> </li>
 												<li class="nav-item"> <a class="nav-link" href="logout.php">Logout</a> </li>	
 											</ul>
                                         </li>
@@ -88,8 +158,8 @@
 											 <span style="float:left;padding-left:15px;" class="txtBold txtClrDlg"><ti data-ison="stxt[56]" data-desc="btn_account">Account</ti></a>
 											<ul class="">
 												<!-- <li class="nav-item"> <a class="nav-link txtClrDlg txtBold" href="profile.php"><ti data-ison="stxt[903]" data-desc="btn_profile">Profile</ti></a> </li> -->
-                                                <li class="nav-item"> <a class="nav-link" href="submitproperty.php"><ti data-ison="stxt[916]" data-desc="btn_addprop">Subit Property</ti></a> </li>
-												 <li class="nav-item"> <a class="nav-link" href="feature.php"><ti data-ison="stxt[905]" data-desc="btn_yourprops">Your Properties</ti></a> </li>
+                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-prop', 'pid=aa-edit-prop');"><ti data-ison="stxt[916]" data-desc="btn_addprop">Subit Property</ti></a> </li>
+												 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-uprops', 'pid=aa-edit-uprops');"><ti data-ison="stxt[905]" data-desc="btn_yourprops">Your Properties</ti></a> </li>
 												<li class="nav-item"> <a class="nav-link" href="logout.php">Logout</a> </li>	
 											</ul>
                                         </li>
@@ -104,10 +174,7 @@
 									<!-- <a class="btn btn-primary d-none d-xl-block" href="submitproperty.php"><ti data-ison="stxt[90]" data-desc="btn_about">About</ti></a> -->
                                     
                                 </div>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
+                                </td></tr></table>
+        </div>
+
 <div class="txtSmall txtClrWhite">.</div>

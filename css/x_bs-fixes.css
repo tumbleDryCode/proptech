@@ -154,4 +154,21 @@ btn-success {
 }
 
  
+.gradient-color {
+  background: #0d1432;
+  background: linear-gradient(top, #0d1432, #131934);
+  background: -moz-linear-gradient(top, #0d1432, #131934);
+  background : -ms-linear-gradient(top, #0d1432, #131934);
+  background : -webkit-gradient(linear, left top, left bottom, from(#0d1432), to(#131934));
+  border : solid 1px #0d1432;
+  box-shadow : 2px 2px 3px #182562;
+}
+
+.text-primo {
+  /* color: #26a69a; */
+  color: #0d1432;
+}
+
+
+ 
  

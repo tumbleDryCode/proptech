@@ -168,23 +168,23 @@ doWinLoad();
                                 <li class="d-flex mb-4"> <i class="fas fa-map-marker-alt text-white mr-2 font-13 mt-1"></i>
                                     <div class="contact-address">
                                         <h5 class="text-white"><ti data-ison="stxt[209]" data-desc="btn_address">Address</ti></h5>
-                                        <span class="text-secondary">Vale do Tejo</span> 
+                                        <span class="text-secondary">Lisbon</span> 
  
 										</div>
                                 </li>
                                 <li class="d-flex mb-4"> <i class="fas fa-phone-alt text-white mr-2 font-13 mt-1"></i>
                                     <div class="contact-address">
                                         <h5 class="text-white"><ti data-ison="stxt[24]" data-desc="btn_tel">Tel</ti></h5>
-                                        <span class="d-table text-secondary">961159145</span>
+                                        <span class="d-table text-secondary">9123456</span>
  
 									</div>
                                 </li>
                                 <li class="d-flex mb-4"> <i class="fas fa-envelope text-white mr-2 font-13 mt-1"></i>
                                     <div class="contact-address">
                                         <h5 class="text-white">Email</h5>
-										<!-- <span class="d-table text-secondary">in.casa22@sapo.pt</span> -->
+										<!-- <span class="d-table text-secondary">muemail</span> -->
 
-										<span class="d-table text-secondary">home@in-casa.eu</span>
+										<span class="d-table text-secondary">myemail@mysite.com</span>
 
  
 									</div>

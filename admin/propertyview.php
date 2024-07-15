@@ -9,7 +9,7 @@ if(!isset($_SESSION['auser']))
 
 <html>
 <head>
-        	
+    
                     <!--	HTML Header start  -->
                     <?php include("includes/html_header.php");?>
                 <!--	HTML Header end  -->    
@@ -141,6 +141,27 @@ if(!isset($_SESSION['auser']))
 					
 				</div>			
 			</div>
+
+
+
+
+
+
+
+            <div id="includedContent" style="min-height:300px">
+</div>
+
+<div id="dvDynCtt" style="max-width:200px">
+<IFRAME width="200px" height="10px" frameborder="0" border="0" src="blank.html" marginwidth="0" marginheight="0" id="ifrmDynCtt" name="ifrmDynCtt" title="DynContent Iframe">
+</IFRAME>
+</div>
+<div id="dvSandMap"  style="margin: 0 auto;min-height:300px;min-width:95%;z-index:999999999;position:fixed;top:-500px;word-wrap: break-word;" class="bigtable brdrClrRed gradient-pop bkgdClrWhite"  align="center">
+<div id="map" style="margin: 0 auto;min-height:400px;min-width:98%; max-width:98%;"></div>
+</div>	
+<div id="dvDummy"  class="zntainer"></div>
+
+
+
 			<!-- /Main Wrapper -->
 				        <!--	HYML footer start  -->
                         <?php include("includes/html_footer.php");?>

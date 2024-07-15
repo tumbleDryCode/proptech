@@ -488,4 +488,13 @@ tDPStatObj["withdrawn"] = "Retirado";
 tDPStatObj["other"] = "Otro";
 svftObj["propstat"] = tDPStatObj;
 
+tUCatObj = null;
+tUCatObj = "";
+tUCatObj = {};
+tUCatObj["1"] = "Usuario";
+tUCatObj["2"] = "Consultor";
+tUCatObj["3"] = "Agente";
+tUCatObj["4"] = "Constructor";
+svftObj["usercat"] = tUCatObj;
+
  

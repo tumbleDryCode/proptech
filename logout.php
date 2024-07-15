@@ -9,6 +9,6 @@ $_SESSION = array();
 session_destroy();
 setcookie('quid', '', time() - 3600, "/"); // 86400 = 1 day
 // Redirect to login page
-header("location: index.php");
+header("location: index.html");
 exit;
 ?>

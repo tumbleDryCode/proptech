@@ -1,36 +1,41 @@
-if(JSSHOP.cookies.getCookie("usrlang") !== null) {
-	// alert("usrlang.cookie: " + usrlang);
-usrlang = JSSHOP.cookies.getCookie("usrlang");
+var currTglBxsObj = {};
+var btnClosePop = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrRed crsrPointer\" style=\"float:right\"><i class=\"menu-material-icons txtBold txtClrRed\" alt=\"close\" title=\"close\" value=\"close\">&#xe5cd;</i></div>";
+var currSortIdx = "0";
+var currSortObj = {};
+currSortObj["psearch"] = {};
+currSortObj["psearch"]["sindex"] = "c_title";
+currSortObj["psearch"]["sorder"] = "sortAsc";
+currSortObj["msearch"] = {};
+currSortObj["msearch"]["sindex"] = "c_location";
+currSortObj["msearch"]["sorder"] = "asc";
+var currPLMtype = "ebay";
+path = shopDir;
+n = path.lastIndexOf("/");
+q = path.lastIndexOf("?");
+if (n >= 0) {
+shopDir = path.substring(0, n+ 1);
 } else {
-usrlang = "pt_pt";
+shopDir += "/";
 }
-if(JSSHOP.cookies.getCookie("quid") !== null) {
-    quid = JSSHOP.cookies.getCookie("quid");
-}
-if(currUrlArr.id){
-	cid = currUrlArr.id;
-}
+
 
 var doNadaAlert = function(tmpa, tmpb, tmpc) {
 alert("doNadaAlert: " + tmpb);
 };
  
 var doNada = function(tmpa, tmpb, tmpc) {
+    console.log("doNada: " + tmpb);
 };
 var donada = function(tmpa, tmpb, tmpc) {
+    console.log("donada: " + tmpb);
 };
-var doRefresh = function(aqa, aqwwv, aqww) {
-	document.location.href = "?r=y";
-};
-var doRefreshAlert = function(aqa, aqwwv, aqww) {
-	alert("doRefreshAlert: " + aqa);
-	document.location.href = "?r=y";
-};
+
 function doDummyFocus() {
 setTimeout("chkbxDummy.focus()", 500);
- 
 }
-
+if(!window.JSSHOP){
+var JSSHOP = new Object();
+}
 
 var getFrcCacheRLoad = function(tmpDRV) {
 if(currUrlArr.fc){
@@ -39,7 +44,19 @@ return currUrlArr.fc;
 return tmpDRV;
 }
 };
- 
+
+try {
+tmpNvstr = navigator.userAgent;
+if(tmpNvstr.indexOf("JavaFX") != -1) {
+isJavaFx = "yes";
+}
+} catch(e) {
+}
+
+tDLhr = document.location.href;
+if(tDLhr.indexOf("recamby.com") != -1) {
+ jscssprefix = "";
+}
 
 // creates a form component object for uniform
 // events and validation
@@ -82,7 +99,6 @@ acurrCnxOb["ur"] = shopDir + "_p/do.php?"; // ajax url
 acurrCnxOb["rs"] = "noQvalue"; // response string
 acurrCnxOb["er"] = "noQvalue"; // error string
 acurrCnxOb["ui"] = "noQvalue"; // current user interface
-acurrCnxOb["hh"] = {}; // object hitch-hiking. see popTransLabels in aa-edit-trips.js
 return acurrCnxOb;
 };
 
@@ -129,27 +145,6 @@ function setNuLclStrg(lsObj, lsKey, lsVal) {
 
 
 
-function sendAlertMsg(tmpAlertDiv, tmpAlertCls, tmpAlertStr) {
-try {
- document.getElementById(tmpAlertDiv).className = tmpAlertCls;;
-JSSHOP.ui.setTinnerHTML(tmpAlertDiv, tmpAlertStr);
-JSSHOP.ui.showHideElement(tmpAlertDiv, "show");
-} catch(e) {
-alert("sendAlertMsg error: " + e)
-JSSHOP.logJSerror(e, arguments, "sendAlertMsg");
-}
-} 
-
-function sendCoords(tmpLng, tmpLat) {
-try {
-tSCStr = app.setCoordsUpload(quid, "5", "ttccmsg", "tStrAA");
-// alert("sendCoords : " + tSCStr);
-} catch(e) {
-alert("sendCoords error: " + e)
-// JSSHOP.logJSerror(e, arguments, "sendCoords");
-}
-} 
-
 
 function getLclStrg(lsName, lsDefVal) {
         if (localStorage[lsName]) {
@@ -172,6 +167,18 @@ function setLclStrg(lsName, lsVal) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 function doRecentActivity() {
 currUrlArr["i_title"] = i_title.value;
 currUrlArr["i_img"] = i_img.value;
@@ -188,16 +195,18 @@ JSSHOP.cookies.setCookie("recentActivity",LZString.compressToEncodedURIComponent
 
 function doFavoritesRndr(favToggle, closeBtn, FavTitle, favCount) {
 strRFHtml = "";
+tmpImfstr = "";
 if(closeBtn == "y") {
-strRFHtml = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrRed crsrPointer\" style=\"float:right\">Close</div>";
+// strRFHtml = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrRed crsrPointer\" style=\"float:right\">Close</div>";
+}
+if(FavTitle == "y") {
+strRFHtml += "<div><table><tr><td><span class=\"txtClrDlg\"><img src=\"images/misc/fav_logo.png\" class=\"incbtn\" style=\"max-width:30px;\"></span></td><td><span class=\"txtSMall txtBold\">" + stxt[87] +"</span></td></tr></table></div>";
 }
 
-if(FavTitle == "y") {
-strRFHtml += "<div><span class=\" txtClrDlg\"><i class=\"material-icons\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i> Favorites</span>";
-}
 tfi = 0;
 fCount = 20;
 
+strRFHtml += "<table class=\"txtSmall txtClrDlg\">";
 if(currRcntFavsArr.length) {
 if(favCount > 0) {
 fCount = favCount;
@@ -206,26 +215,38 @@ if(fCount > currRcntFavsArr.length) {
 fCount = currRcntFavsArr.length;
 }
 while(tfi < fCount) {
+tmpImfstr = "";
 theTfavId = currRcntFavsArr[tfi]._id;
 theTfavTtl = currRcntFavsArr[tfi].i_title;
 theTfavUrl = currRcntFavsArr[tfi].i_url;
 theITimgVal = currRcntFavsArr[tfi].i_img;
 theIimgVal = "images/misc/example_thumb.png";
-if(currRcntFavsArr[tfi].i_img) {
+
+
 if((theITimgVal) && (theITimgVal.length > 3)){
-theIimgVal = "images/pimgs//s_thumb" + theITimgVal;
+if(theITimgVal == "noQvalue") {
+} else {
+theIimgVal = theITimgVal;
+}
 } 
-}
+
+tmpImfstr = "<img class=\"icnsmlbtn\" src=\"" + theIimgVal + "\" align=\"absmiddle\" style=\"padding:6px;\">";
+
 // strRFHtml += theTfavId + " :: " + theTfavUrl + " :: " + theTfavTtl + " :: " + theIimgVal + "<br>"; 
-
+strRFHtml += "<tr><td>" + tmpImfstr + "</td><td><a class=\"txtDecorNone txtSmall txtClrHdr\" href=\"" + theTfavUrl + "\"><span class=\"txtClrHdr\">" + theTfavTtl + "</span></a></td>";
 if(favToggle == "y") {
-currFTclr = "material-icons txtClrRed";
-strRFHtml += "<div><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + theTfavUrl + "','" +  theTfavTtl + "','" + theITimgVal + "','" + theTfavId + "','btnDynFavs" + theTfavId + "');\"><i id=\"btnDynFavs" + theTfavId + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
+currFTclr = "small-material-icons txtClrRed";
+// strRFHtml += "<td><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + theTfavUrl + "','" +  theTfavTtl + "','" + theITimgVal + "','" + theTfavId + "','btnDynFavs" + theTfavId + "');\"><i id=\"btnDynFavs" + theTfavId + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"recent_actors\" value=\"recent_actors\" style=\"font-size:12px;\">&#xe03f;</i></span></td></tr>";
+// make it also remove table row
+strRFHtml += "<td><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + theTfavUrl + "','" +  theTfavTtl + "','" + theITimgVal + "','" + theTfavId + "','btnDynFavs" + theTfavId + "');this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);\"><i id=\"btnDynFavs" + theTfavId + "\" class=\"menu-material-icons txtBold txtClrRed\" alt=\"close\" title=\"btnClose\" value=\"btnCLose\" style=\"font-size:12px;\">&#xe5cd;</i></span></td></tr>";
+ 
 }
-strRFHtml += "<img class=\"icnsmlbtn\" src=\"" + theIimgVal + "\" align=\"absmiddle\"> <a class=\"txtDecorNone\" href=\"" + theTfavUrl + "\">" + theTfavTtl + "</a>::";
-
+ 
 tfi++;
 }
+strRFHtml += "</table>";
+
+
 } else {
 strRFHtml += "No Favorites";
 
@@ -242,7 +263,11 @@ if(currRcntFavsArr.length) {
 while(tii < currRcntFavsArr.length) {
 if(currRcntFavsArr[tii].i_url == theTfavUrl) {
 // alert("a match");
-nTmpArr = removeArrElement(currRcntFavsArr, tii);
+if(document.getElementById(theTfavEl)) { // this is fix for this boolean function add or remove
+nTmpArr = removeArrElement(currRcntFavsArr, tii); // in some cases you just want to add
+} else {
+nTmpArr = currRcntFavsArr; // in some cases you just want to add and not toggle
+}
 currRcntFavsStr = JSON.stringify(nTmpArr);
 currRcntFavsArr = null;
 currRcntFavsArr = JSON.parse(currRcntFavsStr);
@@ -252,19 +277,30 @@ tii++;
 }
 }
 // removeArrElement(currRcntFavsArr, 0);
-document.getElementById(theTfavEl).className = "material-icons txtClrHdr";
+if(document.getElementById(theTfavEl)) {
+document.getElementById(theTfavEl).className = "menu-material-icons txtClrTtl";
+}
 } else {
+    if(currRcntFavsArr.length > 10) {
+        // remove last element using splice
+        currRcntFavsArr.splice(-1,1);
+        }
 currFavsObj = null;
 currFavsObj = {};
 currUrlArr["_id"] = theIidVal;
 currUrlArr["i_title"] = theTfavTtl;
 currUrlArr["i_url"] = theTfavUrl;
 currUrlArr["i_img"] = theIimgVal;
+// iif currRcntFavsArr length is greater than 10, remove the last element
 
 currRcntFavsArr.push(currUrlArr);
 // currRcntFavsArr.push(currFavsObj);
 currRcntFavsStr = JSON.stringify(currRcntFavsArr);
-document.getElementById(theTfavEl).className = "material-icons txtClrRed";
+if(document.getElementById(theTfavEl)) {
+// document.getElementById(theTfavEl).className = "menu-material-icons txtClrRed";
+// JSSHOP.ui.setCBBClickClr(document.getElementById(theTfavEl),'menu-material-icons txtClrHdr','menu-material-icons txtClrRed', function(){void(0)});
+JSSHOP.ui.setNuCBBClickClr(document.getElementById(theTfavEl),'menu-material-icons txtClrHdr','menu-material-icons txtClrRed', function(){void(0)}, 500);
+}
 }
 // alert("doRF: " + currRcntFavsStr);
 JSSHOP.cookies.setCookie("recentFavs",LZString.compressToEncodedURIComponent(currRcntFavsStr),"30","","","");
@@ -274,6 +310,22 @@ JSSHOP.cookies.setCookie("recentFavs",LZString.compressToEncodedURIComponent(cur
 
 
 
+
+
+
+
+
+
+
+
+
+function doBarCodeScan(tstrScanType) {
+try {
+app.doBarCodeScan(tstrScanType);
+} catch(e) {
+alert("only works with Android App and " + e);
+}
+}
 
 var doPopItemMod = function() {
     loadJSModal("tplates/aa-mod-show-item.html?tt=" + JSSHOP.getUnixTimeStamp());
@@ -301,7 +353,7 @@ currInfoStr += "userID: " + quid + "<br>";
 currInfoStr += "Prefs: <br>";
 currInfoStr += "Prd Layout: " + currPrefPrdV + "<br>";
 currInfoStr += "Price: Order: " + currPrefPrdP + "<br>";
-currInfoStr += "Shop Owner:  " + arrAllForms.qco[0].c_uid  + "<br>";
+currInfoStr += "Shop Owner:  " + arrAllForms.qco.v[0].c_uid  + "<br>";
  
 
 return currInfoStr;
@@ -331,48 +383,62 @@ return currMItemsArr;
 };
 
 
+var getCurrUrl = function() {
+var strTurl = "noQvalue";
+strCurl = document.location.href;
 
-
-
-try {
-cartID = app.fetchConfValString("cartID");
-isJApp = "y";
-} catch(e) {
-	// alert("x_japp.css.error:" + e);
+if(strCurl.indexOf("?") != -1) {
+strTurl = strCurl.substring(strCurl.indexOf('?') + 1);
 }
-
-var pfBoot = function(theElem, theResp, marble) {
-document.getElementById(theElem).innerHTML = theResp;
-setTimeout("doBootLoad()", 800);
+// alert("getCurrUrl: " + strTurl);
+if(isPhP == "no") {
+try  {
+strTurl = app.getCurrPageVars("nada");
+document.getElementById("fldChallArray").value = strTurl;
+strTurl = document.getElementById("fldChallArray").value;
+// alert("getCurrUrl strTurl no php: " + strTurl);
+} catch(e) {
+alert("getCurrUrl: " + e);
+}
+}
+return strTurl;
+// if(strTurl == "noQvalue") {} else {}
+// newArr = JSSHOP.shared.urlToArray(strTurl);
 };
+
+
+ 
+try {
+pointP = app.doWVScrollY();
+isJApp = "yes";
+console.log("isDaJApp.tryP: " + isJApp + " :: " + pointP);
+JSSHOP.loadScript("css/" + jscssprefix + "x_japp.css", JSSHOP.checkLoader,'css');
+} catch(e) {
+    console.log("isDaJApp: " + e);
+}
+ 
+
+ 
 
 var pfRet = function(theElem, theResp, marble) {
 document.getElementById(theElem).innerHTML = theResp;
- 
- xae = document.getElementsByTagName("ti");
-var iint = 0;
-while(iint < xae.length) {
-nuDW(xae[iint]);
-iint++;
-}
- 
 };
 
 
 var doCloseAdd = function(theElem, theResp, marble) {
 fullResp = "<div onclick=\"JSSHOP.ui.closeLbox();\" style=\"float:right\">Close</div>" + theResp;
 document.getElementById(theElem).innerHTML = fullResp;
+setTimeout("JSSHOP.shared.doNuDwEL()", 1000);
 };
 
 var loadNurJSModal = function (theMinc, theClass, theMbLCB) {
   
-    if(theMinc.indexOf("images/") != -1) {
-    JSSHOP.ui.popAndFillLbox("<img src=\"" + theMinc + "\">");
-     // setTinnerHTML("lightbox_content", "<img src=\"" + theMinc + "\">");
-    } else {
- 	JSSHOP.ui.popAndFillLbox("spin"); 
+   if(isJApp == "ayes") {
+   } else {
+ 	 JSSHOP.ui.popAndFillLbox(theClass);
+   }
  	JSSHOP.ajax.doNuAjaxPipe("lightbox_content", theMinc, theMbLCB);
-    }
+ 
 };
 
 var loadNuJSModal = function (theMinc, theClass) {
@@ -429,8 +495,8 @@ currDBUGstr += "<br><br>: " + JSSHOP.getUnixTimeStamp() + " :: " + theFunction +
 
 
 JSSHOP.logJSerror = function(theError, theArgs, theMsg) {
+    try {
 // alert(JSON.stringify(theError));
-// 
 fullArgs = new Array();
 if(theArgs.length) {
 fullArgs = theArgs;
@@ -452,17 +518,20 @@ fullSError += "msg: " + theError.msg  + "\r\n";
 if(theError.constructor) {
 fullSError += theError.constructor;
 }
-fullSError += " ::Estr: " + JSON.stringify(theError);
-// if(JSSHOP.cookies.getCookie("dbug")) {}
-// alert("epconsole.error: " + fullSError + " :: " + fullArgs + " :: " +  theMsg);
+console.log("JSSHOP.logJSerror" + fullSError + " :: " + fullArgs + " :: " +  theMsg);
 
-    setTimeout(function() {
+// if(JSSHOP.cookies.getCookie("dbug")) {}
+     setTimeout(function() {
    ermsg = "epconsole.error: " + fullSError + " :: " + fullArgs + " :: " +  theMsg;
-// ermsg += the
+
         throw new Error(ermsg);
     }, 0);
+    } catch (e) {
+ 
+       alert("JSSHOP.logJSerror.Error: " + e);
+    }
 };
-
+ 
 
 /* simple search function
 */
@@ -470,7 +539,10 @@ fullSError += " ::Estr: " + JSON.stringify(theError);
 var getMainSearch = function(theSstr) {
 document.location.href= "index.html?pid=aa-show-search&cid=" + cid + "&sw=" + theSstr + "&st=" + currSearchType;
 };
+var getPartSearch = function() {
 
+document.location.href= "index.html?pid=aa-show-search&cid=" + cid + "&sw=" + theSstr + "&st=" + currSearchType;
+};
 
 JSSHOP.startNuIntrvlEvnt = function(theObjTag, theFunction, theInterval) {
 try {
@@ -528,6 +600,372 @@ JSSHOP.logJSerror(e, arguments, "JSSHOP.getUnixTimeStamp");
 };
  
 
+
+
+JSSHOP.loadScript = function(path, callback, filetype) {
+		// alert(loaded_scripts.length);
+        n = path.lastIndexOf("/");
+        q = path.lastIndexOf("?");
+        if (filetype == "js") { //if filename is a external JavaScript file
+            var scr = document.createElement('script');
+            scr.setAttribute("type", "text/javascript")
+            scr.src = path;
+        } else if (filetype == "css") { //if filename is an external CSS file
+            var scr = document.createElement("link")
+            scr.setAttribute("rel", "stylesheet")
+            scr.setAttribute("type", "text/css")
+            scr.href = path;
+        }
+        var done = false;
+        scr.onload = handleLoad;
+        scr.onreadystatechange = handleReadyStateChange;
+        scr.onerror = handleError;
+        if (n >= 0) {
+            if (q >= 0) {
+                tid = path.substring(n + 1, q);
+            } else {
+                tid = path.substring(n + 1);
+            }
+            scr.id = tid;
+        }
+        document.getElementsByTagName("head")[0].appendChild(scr);
+        // document.body.appendChild(scr);
+        function handleLoad() {
+            if (!done) {
+                done = true;
+                callback(path, "ok");
+            }
+        }
+
+        function handleReadyStateChange() {
+            var state;
+            if (!done) {
+                state = scr.readyState;
+                if (state === "complete") {
+                    handleLoad();
+                }
+            }
+        }
+
+        function handleError() {
+            if (!done) {
+                done = true;
+                callback(path, "error");
+            }
+        }
+     try {   } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.loadScript");
+    }
+};
+
+JSSHOP.checkLoader = function(thePath, theMessage) {
+    try {
+        ttlLoaded = loaded_scripts.length;
+        loaded_scripts[ttlLoaded] = thePath;
+        //  alert(loaded_scripts[ttlLoaded] + " :: " + loaded_scripts.length + "msg: " + theMessage);
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.checkLoader");
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* cookies
+*/
+
+if (!window.JSSHOP.cookies) {
+    JSSHOP.cookies = new Object();
+}
+
+JSSHOP.cookies.clearAllCookies = function(){
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        JSSHOP.cookies.deleteCookie(name,"","");
+    }
+}
+
+JSSHOP.cookies.getAllCookies = function(){
+    var pairs = document.cookie.split(";");
+    var cookies = {};
+    ccstra = "";
+    for (var i=0; i<pairs.length; i++){
+      var pair = pairs[i].split("=");
+      cookies[(pair[0]+'').trim()] = unescape(pair.slice(1).join('='));
+        ccstra += pair[0] + "<br>";
+    }
+    JSSHOP.ui.popAndFillLbox(JSON.stringify(ccstra));
+ 
+  };
+
+JSSHOP.cookies.getCookie = function(check_name) {
+var cretval = "noQvalue";
+var tval;
+// if(isPhP == "no") {
+if((isPhP == "no") || (isJavaFx == "yes")) {
+try {
+if(check_name == "quid") {
+tval = app.fetchConfValInt(check_name);
+} else {
+tval = app.fetchConfValString(check_name);
+}
+cretval = tval;
+// default null string for android preferences
+
+if(cretval == "noQvalue")  { 
+return null;
+} else {
+return cretval;
+}
+} catch(e) {
+alert("getCookie: " + e);
+return null;
+}
+
+} else {
+
+
+	// first we'll split this cookie up into name/value pairs
+	// note: document.cookie only returns name=value, not the other components
+	var a_all_cookies = document.cookie.split( ';' );
+	var a_temp_cookie = '';
+	var cookie_name = '';
+	var cookie_value = '';
+	var b_cookie_found = false; // set boolean t/f default f
+	for ( i = 0; i < a_all_cookies.length; i++ )
+	{
+		// now we'll split apart each name=value pair
+		a_temp_cookie = a_all_cookies[i].split( '=' );
+		// and trim left/right whitespace while we're at it
+		cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, '');
+	
+		// if the extracted name matches passed check_name
+		if ( cookie_name == check_name )
+		{
+			b_cookie_found = true;
+			// we need to handle case where cookie has no value but exists (no = sign, that is):
+			if ( a_temp_cookie.length > 1 )
+			{
+				cookie_value = unescape( a_temp_cookie[1].replace(/^\s+|\s+$/g, '') );
+			}
+			// note that in cases where cookie is initialized but no value, null is returned
+			return cookie_value;
+			break;
+		}
+		a_temp_cookie = null;
+		cookie_name = '';
+	}
+	if ( !b_cookie_found )
+	{
+		return null;
+	}
+
+}
+};
+
+
+JSSHOP.cookies.setCookie = function(name,value,expires,path,domain,secure) 
+{
+
+// if(isPhP == "no") {
+
+if((isPhP == "no") || (isJavaFx == "yes")) {
+try {
+
+if(name == "quid") {
+app.setConfValInt(name,value);
+} else {
+app.setConfValString(name,value); 
+}
+} catch(e) {
+alert("setCookie.E: " + e)
+}
+
+} else {
+// set time, it's in milliseconds
+var today = new Date();
+today.setTime( today.getTime() );
+/*
+if the expires variable is set, make the correct 
+expires time, the current script below will set 
+it for x number of days, to make it for hours, 
+delete * 24, for minutes, delete * 60 * 24
+*/
+if ( expires )
+{
+expires = expires * 1000 * 60 * 60 * 24;
+}
+var expires_date = new Date( today.getTime() + (expires) );
+document.cookie = name + "=" +escape( value ) +
+( ( expires ) ? ";expires=" + expires_date.toGMTString() : "" ) + 
+( ( path ) ? ";path=" + path : "" ) + 
+( ( domain ) ? ";domain=" + domain : "" ) +
+( ( secure ) ? ";secure" : "" );
+
+}
+};
+
+JSSHOP.cookies.deleteCookie = function(name,path,domain) {
+// if(isPhP == "no") {
+if((isPhP == "no") || (isJavaFx == "yes")) {
+try {
+
+if(name == "quid") {
+app.setConfValInt(name,0);
+} else {
+app.setConfValString(name,"noQvalue"); 
+}
+} catch(e) {
+alert("setCookie.E: " + e)
+}
+
+} else {
+if(JSSHOP.cookies.getCookie(name)) document.cookie = name + "=" + ( ( path ) ? ";path=" + path : "") + ( ( domain ) ? ";domain=" + domain : "" ) + ";expires=Thu, 01-Jan-1970 00:00:01 GMT";
+}
+};
+
+
+JSSHOP.cookies.deleteAllCookies = function() {
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+};
+ 
+if (!window.JSSHOP.shared) {
+    JSSHOP.shared = new Object();
+}
+
+JSSHOP.shared.endsWith = function(str,suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+};
+
+
+JSSHOP.shared.objToUrl = function(tUObj) {
+tUObjStr = "";
+    try {
+        for(var apcgkey in tUObj) {
+		tUObjStr += "&" + apcgkey + "=" + encodeURIComponent(tUObj[apcgkey]);
+		}
+        return tUObjStr;
+    } catch (e) {
+	alert("JSSHOP.shared.objToUrl.error: " + e);
+        return "noQvalue";
+    }
+
+    };
+
+
+
+JSSHOP.shared.urlToArray = function(url) {
+// alert(url);
+    try {
+        tUrl = url.replace("?&", "?");
+        taUrl = removeDiacritics(tUrl);
+		url = taUrl;
+        var request = {};
+        var arr = [];
+        var pairs = url.substring(url.indexOf('?') + 1).split('&');
+        for (var i = 0; i < pairs.length; i++) {
+          var pair = pairs[i].split('=');
+
+          //check we have an array here - add array numeric indexes so the key elem[] is not identical.
+          if(JSSHOP.shared.endsWith(pair[0], '[]') ) {
+             var arrName = pair[0].substring(0, pair[0].length - 2);
+ 
+             if(!(arrName in arr)) {
+                  arr.push(arrName);
+                  arr[arrName] = [];
+              }
+
+              arr[arrName].push(pair[1]);
+              request[arrName] = arr[arrName];
+          } else {
+            request[pair[0]] = pair[1];
+          }
+        }
+        return request;
+    } catch (e) {
+	alert("JSSHOP.shared.urlToArray.error: " + url + " :: " + e);
+      //   JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.urlToArray");
+        return "noQvalue";
+    }
+
+    };
+
+
+
+JSSHOP.shared.urlToNuArray = function(url) {
+// alert(url);
+    try {
+        tUrl = url.replace("?&", "?");
+        taUrl = removeDiacritics(tUrl);
+		url = taUrl;
+        var request = {};
+        var arr = [];
+        var pairs = url.substring(url.indexOf('?') + 1).split('&');
+        for (var i = 0; i < pairs.length; i++) {
+          var pair = pairs[i].split('=');
+
+          //check we have an array here - add array numeric indexes so the key elem[] is not identical.
+          if(JSSHOP.shared.endsWith(decodeURIComponent(JSSHOP.shared.encode_utf8(pair[0])), '[]') ) {
+             var arrName = decodeURIComponent(pair[0]).substring(0, decodeURIComponent(pair[0]).length - 2);
+ 
+             if(!(arrName in arr)) {
+                  arr.push(arrName);
+                  arr[arrName] = [];
+              }
+
+              arr[arrName].push(decodeURIComponent(JSSHOP.shared.encode_utf8(pair[1])));
+              request[arrName] = arr[arrName];
+          } else {
+            request[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+          }
+        }
+        return request;
+    } catch (e) {
+	alert("JSSHOP.shared.urlToArray.error: " + url + " :: " + e);
+      //   JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.urlToArray");
+        return "noQvalue";
+    }
+
+    };
+
+
+
+
+
+
+
+
+
+
+
 /* USer Functions */
 
 if (!window.JSSHOP.user) {
@@ -571,11 +1009,8 @@ JSSHOP.user.encPrefCky = function(cString) {
 
 
 JSSHOP.user.setCkieUprefs = function(ckyP) {  
-	if(ckyP == "prfsSHOPuser") {
-		ckyP = "prefs" + quid;
-	}
 try {
-
+// alert("setCkieUprefs: " + JSON.stringify(arrUprefs[ckyP]));
 if(JSSHOP.cookies.getCookie(ckyP)) {
 JSSHOP.cookies.deleteCookie(ckyP, "","");
 }
@@ -586,25 +1021,8 @@ JSSHOP.logJSerror(e, arguments, "JSSHOP.user.setCkieUprefs");
 }
 };
 
-JSSHOP.user.getCkiePrfKV = function(dCky,key,defval) {  
-adefval = defval;
-	if(dCky == "prfsSHOPuser") {
-		dCky = "prefs" + quid;
-	}
-try {
-adefval = arrUprefs[dCky][0][key];
-return adefval;
-} catch(e) {
-	alert(e);
-JSSHOP.logJSerror(e, arguments, "JSSHOP.user.getCkiePrfKV");
-return adefval;
-}
-};
 
 JSSHOP.user.setCkiePrfKV = function(dCky,key,val) {  
-	if(dCky == "prfsSHOPuser") {
-		dCky = "prefs" + quid;
-	}
 try {
 arrUprefs[dCky][0][key] = val;
 JSSHOP.user.setCkieUprefs(dCky);
@@ -614,17 +1032,16 @@ JSSHOP.logJSerror(e, arguments, "JSSHOP.user.setCkiePrfKV");
 };
 
 JSSHOP.user.setCkiePrfDispVal = function(ckyName,key,rowname) {  
-  tretval = "show";
-	if(ckyName == "prfsSHOPuser") {
-		ckyName = "prefs" + quid;
-	}
+/*
+* swithced true to false since being called before click event
+*/
 	try {
-    	
+    	val = false;
     	theRow = document.getElementById(rowname);
     	if (theRow.style.display=="none") {
-       tretval = "hide";
+      val = true;
     	} 
-	arrUprefs[ckyName][0][key] = tretval;
+	arrUprefs[ckyName][0][key] = val;
 	JSSHOP.user.setCkieUprefs(ckyName);
 	}catch(e) {
 	JSSHOP.logJSerror(e, arguments, "JSSHOP.user.setCkiePrfDispVal");
@@ -633,43 +1050,9 @@ JSSHOP.user.setCkiePrfDispVal = function(ckyName,key,rowname) {
 };
 
 
-
-JSSHOP.user.doNuCkieUprefs = function(daCky) {
-	if(daCky == "prfsSHOPuser") {
-		daCky = "prefs" + quid;
-	}
-
-	try {
-if(JSSHOP.cookies.getCookie(daCky)) { 
-fldChallArray.value = JSSHOP.cookies.getCookie(daCky);
-
-tval = fldChallArray.value;
-arrUprefs[daCky] = JSON.parse(JSSHOP.user.decPrefCky(tval));
-// alert("JSSHOP.user.doNuCkieUprefs: " + daCky + " : " + JSON.stringify(arrUprefs[daCky]));
-
-} else {
-arrUprefs[daCky] = [{"prfDspLmenu":false,"scv":"g","sAL":"y","sAT":"y","sia":"y"}];
-JSSHOP.user.setCkieUprefs(daCky);
-}
-arrUprefs["prfsSHOPuser"] = arrUprefs[daCky];
-return arrUprefs[daCky];
-// alert("doCkieUprefs: " + JSON.stringify(arrUprefs[daCky]));
-	}catch(e) {
-		alert("JSSHOP.user.doNuCkieUprefs: " + e);
-	JSSHOP.logJSerror(e, arguments, "JSSHOP.user.doNuCkieUprefs");
-	}
-};
-
-
-
 JSSHOP.user.doCkieUprefs = function(daCky) {
-		if(daCky == "prfsSHOPuser") {
-		daCky = "prefs" + quid;
-	}
-	// alert("doCkieUprefs: " + daCky + " : " + JSON.stringify(arrUprefs[daCky]));
 	try {
 if(JSSHOP.cookies.getCookie(daCky)) { 
-
 fldChallArray.value = JSSHOP.cookies.getCookie(daCky);
 tval = fldChallArray.value;
 arrUprefs[daCky] = JSON.parse(JSSHOP.user.decPrefCky(tval));
@@ -679,13 +1062,32 @@ JSSHOP.user.setCkieUprefs(daCky);
 }
 // alert("doCkieUprefs: " + JSON.stringify(arrUprefs[daCky]));
 	}catch(e) {
-	JSSHOP.logJSerror(e, arguments, "JSSHOP.user.doCkieUprefs");
+        alert("doCkieUprefs: " + e);
+	// JSSHOP.logJSerror(e, arguments, "JSSHOP.user.doCkieUprefs");
 	}
 };
 
 
+// cleans the sql statement
 
+var clnDBvp = function(tmpCCKw) {
  
+         if (typeof tmpCCKw === 'string' || tmpCCKw instanceof String) {
+		if((tmpCCKw.indexOf("'") != -1) || (tmpCCKw.indexOf("=") != -1)  || (tmpCCKw.indexOf("(") != -1)) {
+		console.log("clnDBvp: You dog!: " + tmpCCKw);
+		} else {
+		}
+		}
+ 
+ 
+ 
+/*
+ntCCWrdA = tmpCCKw.replace("'","");
+ntCCWrdB = ntCCWrdA.replace("(","");
+ntCCWrdC = ntCCWrdB.replace("=","");
+*/ 
+return tmpCCKw;
+};
 
 
 
@@ -710,7 +1112,8 @@ if(de["ws"] != null) {
 xol["ws"] = de["ws"]; 
 }
 if(de["wa"] != null) {
-xol["wa"] = de["wa"]; 
+// console.log("clnURDBvp: " + JSON.stringify(de["wa"]));
+xol["wa"] = de["wa"];
 }
 if(de["gb"] != null) {
 xol["gb"] = de["gb"]; 
@@ -812,7 +1215,8 @@ if(xol["knvp"][iint].t == "_id") { // dont include it
 } else {
 ts += xol["knvp"][iint].t + ",";
 // theVstrClean = xol["knvp"][iint].v;
-theVstrClean = removeDiacritics(xol["knvp"][iint].v);
+// theVstrClean = removeDiacritics(xol["knvp"][iint].v); 
+theVstrClean = encodeURIComponent(removeDiacritics(xol["knvp"][iint].v));
 tv += "'" + theVstrClean + "',";
 }
 iint++;
@@ -825,24 +1229,11 @@ ts = "";
 tv = "";
 ark = [];
 while(iint < len) {
-	
 if(xol["knvp"][iint].t == "_id") { // dont include it
 } else {
-
-	if((xol["c"] != null) && (xol["c"].length > 0)) {
-		theTmpFldN = xol["knvp"][iint].t;
-		theTmpColstr = xol["c"];
-		if(theTmpColstr.indexOf(theTmpFldN) != -1) {
-
 ts += xol["knvp"][iint].t + "=";
-theVstrClean = decodeURIComponent(removeDiacritics(xol["knvp"][iint].v));
+theVstrClean = removeDiacritics(xol["knvp"][iint].v);
 ts += "'" + theVstrClean + "',";
-		}
-	} else {
-		ts += xol["knvp"][iint].t + "=";
-theVstrClean = decodeURIComponent(removeDiacritics(xol["knvp"][iint].v));
-ts += "'" + theVstrClean + "',";
-	}
 }
 iint++;
 }
@@ -964,7 +1355,7 @@ aresp = document.getElementById("fldChallArray").value;
 };
 
 
-
+/*
 navigator.sayswho= (function(){
     var ua= navigator.userAgent, tem, 
     M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -980,7 +1371,7 @@ navigator.sayswho= (function(){
     if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
     return M.join(' ');
 })();
- 
+*/
 
 var remp = function(src) {
     var script = document.createElement('script');
@@ -990,8 +1381,13 @@ var remp = function(src) {
     document.getElementsByTagName('head')[0].appendChild(script);
 };
 
-
- 
+function doMdlsBoot(ttAobj, ttPPObj, ttCobj) {
+    try {
+currCModelsObj = JSON.parse(ttPPObj);
+    } catch (e) {
+        alert("functiondoMdlsBoot: " + e);
+    }
+}
 var fnishCntLoad = function() {
 };
 var fnishCoForm = function() {
@@ -1009,6 +1405,7 @@ var fnishExtrasForm = function() {
 try {
 
 tSPo = {};
+/*
 tSvaKstr = JSSHOP.shared.getFieldVal("e_vala", "noQvalue");
 if(tSvaKstr == "noQvalue") {
 
@@ -1031,14 +1428,12 @@ tmpLStyle = arrSTmpprefs.layout;
 }
 
 loadCssScript("css/x_custom_" + tmpLStyle + ".css", setNuLoadACTB);
+*/
+setNuLoadACTB();
 } catch(e) {
 alert("fnishExtrasForm: " + e);
-setNuLoadACTB();
+// setNuLoadACTB();
 }
-};
-
-var fnishSctrsForm = function(theSObj) {
-	alert("fnishSctrsForm: " + theSObj)
 };
 var fnishCartForm = function() {
 };
@@ -1050,71 +1445,37 @@ var clearActbArr = function() {
 
 
 
-
+var loadJCccjs = function(tPath, tCB) {
+    try {
+        JSSHOP.loadScript("js/app/js_cc.js", donada, "js");
+    }
+    catch (e) {
+        alert("loadJCccjs: " + e);
+    }
+};
 
 
 var mfnishCntLoad = function() {
-	try {
- 
-		// alert("mfnishCntLoaded: " + pid);
-	inpACSearch.value = "";
-	switch(pid) {
-		case "aa-edit-fleet":
-		case "aa-edit-trips":
-		case "aa-edit-users":
-		case "aa-edit-places":
-			JSSHOP.ui.showHideElement("dvACfull", "show");
-			break;
-		default:
-			// alert("mfnishCntLoad pid: " + pid);
-			break;	
-	}
-if(currAdmnMode == "y") {
-tmpStrLgotxt = "Admin";
-} else {
-tmpStrLgotxt = JSSHOP.shared.getFieldVal("c_title", "Logipal");
-}
-JSSHOP.ui.setTinnerHTML("ancLogoTxt", tmpStrLgotxt);
-
-if((document.getElementById("tdTitleBar") && (currPgTitle != ""))) {
-	tIcon = JSSHOP.ui.getCurrPgIcn(currPgIcon);
-	console.log("tIcon: " + tIcon);
-document.getElementById("tdTitleBar").innerHTML = tIcon +  currPgTitle;
-// currPgIcon = "xe061";
-}
-
-
- 
+  
 xae = document.getElementsByTagName("ti");
 var iint = 0;
 while(iint < xae.length) {
 nuDW(xae[iint]);
 iint++;
 }
- 
 
- 	
 
-// alert("mfnishCntLoad.fnishCntLoad pid: " + pid);
 fnishCntLoad();
 
-	if(currUrlArr.dat) {
-	 
-		tDatCmdStr = currUrlArr.dat;
-		tDatstrstr = tDatCmdStr;
- 
-		if(tDatCmdStr.indexOf(":") != -1) {
-			tDatSpl = tDatCmdStr.split(":");
-			tDatCmdStr = tDatSpl[0];
-		    tDatstrstr = tDatSpl[1];
-		} 
-	 doAppTask(tDatCmdStr, tDatstrstr);
-
-	}
-	} catch(e) {
-		alert("mfnishCntLoad.error: " + e);
-	}
 };
+
+
+
+
+
+
+
+
 var mfnishCoForm = function() {
 // alert("MfinishCoForm");
 fnishCoForm();
@@ -1134,9 +1495,7 @@ fnishMsgForm();
 var mfnishExtrasForm = function() {
 fnishExtrasForm();
 };
-var mfnishSctrsForm = function() {
-fnishSctrsForm();
-};
+
 var mfnishCartForm = function() {
 fnishCartForm();
 };
@@ -1158,7 +1517,7 @@ try {
 strQ = tComObj.q;
 if(pipeDir == "noQvalue") {
 if(isPhP == "no") {
-alert("doNurQComm: " + strQ);
+
 atmpArrQ = app.getNuDBselectQ(tComObj.q);
 document.getElementById("fldChallArray").value = atmpArrQ;
 tmpArrQ = document.getElementById("fldChallArray").value;
@@ -1177,21 +1536,18 @@ mf(nNAxObj);
 
 } else {
 tmpArrQ = JSSHOP.ajax.doRequestPrep(tComObj);
-// JSSHOP.ajax.doNurAjaxPipe(tComObj);
 doLclSych(strQ);
 }
 
 } else { // pipeDir is remote
 tComObj.ur = pipeDir + "_p/do.php?";
-
 tmpArrQ = JSSHOP.ajax.doRequestPrep(tComObj);
-// JSSHOP.ajax.doNurAjaxPipe(tComObj);
 doLclSych(strQ);
 }
 
 
 } catch (e) {
-alert("doNurQComm" + e);
+alert(e);
 // rstr = shopDir + "_p/jsdo.php?cb=" + tComObj.cb + "&" + tmpQstr;
 // remp(rstr);
 }
@@ -1235,14 +1591,13 @@ mf = window[theCB];
 mf(theElem, tmpArrQ, null);
 }
 } catch (e) {
-	alert("doNuQComm.error: " + e);
 rstr = shopDir + "_p/jsdo.php?cb=" + theCB + "&" + tmpQstr;
 remp(rstr);
 }
 
 } else {
 mf = window[theCB];
-tmpArrQ = JSSHOP.ajax.doNuAjaxPipe(theElem, shopDir + "_p/do.php?" + tmpQstr, mf);
+tmpArrQ = JSSHOP.ajax.doNuAjaxPipe(theElem, "_p/do.php?" + tmpQstr, mf);
 doLclSych(strQ);
 }
 
@@ -1256,6 +1611,7 @@ doLclSych(strQ);
 
 var doQComm = function(strQ, theElem, theCB) {
 doNuQComm("noQvalue", "n", "123",  strQ, theElem, theCB);
+
 };
 
 
@@ -1345,8 +1701,8 @@ var  getPVname = function(name){
 
 
 var loadLmenu = function() {
-try {
- //  alert("loadLmenu: ");
+
+// alert("loadLmenu: " + JSON.stringify(currMenuArr));
 // alert("mArrFb " + JSON.stringify(currMenuArr));
 
       var tmpmainUL = document.createElement("ul");
@@ -1476,16 +1832,15 @@ iint++;
 
 } // end of if arrAllForms.qextras
  
-} catch(e) {
-	alert("Error.loadLmenu1st: " + e);
- 	
-	}
+
+/*
 
 
-try {
+*/
 
-tmpMColStr = doCollsLoad();
-// alert("tmpMColStr: " + tmpMColStr);
+tmpMColStr = "";
+// tmpMColStr = doCollsLoad();
+
 if(document.getElementById('mmDdown')) {
 tmpMMdownEl = document.getElementById("mmDdown");
 strCHtml = "<div onclick=\"JSSHOP.ui.toggleVisibility('mmDdown');\" class=\"slmtable txtClrRed txtBold rxrBigger brdrClrRed crsrPointer\" style=\"float:right;text-align:right;margin-bottom:38px;max-width:14px;\" align=\"right\">X</div>";
@@ -1503,21 +1858,14 @@ tmpDV = document.createElement("div");
 tmpDV.className = "collection";
 tmpDV.innerHTML = tmpMColStr;
 document.getElementById('tdLMenu').appendChild(tmpDV);
+// document.getElementById('dvMnuT').appendChild(tmpDV);
 }
 
 spinTextDiv.innerHTML = " ..... "; 
-// alert("loadLmenu:content: " + content);
 if(content == "noQvalue") {
-	// alert("loadLmenu:noQvalue: " + pid);
 JSSHOP.loadScript("js/app/" + jscssprefix + "x_" + pid + ".js", doMainContent,"js");
 } else {
 doMainContent(null, null);
-}
- doNuMMenuLd("doMnuFnsh");
-} catch(e) {
-alert("Error.loadLmenuLast: " + e);
-JSSHOP.loadScript("js/app/" + jscssprefix + "x_" + pid + ".js", doMainContent,"js");
-
 }
 };
 
@@ -1553,7 +1901,11 @@ JSSHOP.loadScript("js/app/" + jscssprefix + "x_" + pid + ".js", doMainContent,"j
 
 
 var setNuLoadACTB = function() {
- // doNuMMenuLd("doMnuFnsh");
+if(cid == 0) {} else {}
+// doNuMMenuLd("doMnuFnsh");
+
+// doNuMMenuLd("doMnuFnsh");
+
 tmpRAobj = {};
 tmpRAobj["rs"] = currRcntActArr;
 
@@ -1636,15 +1988,13 @@ if(pid == "aa-show-category") {
 } else {
 // alert("strFArr: " + strFArr)
 try {
-actbSearch = setTimeout("loadListACTB('" + currACTBstr + "','ijUFeedSearch')", 600);
+// actbSearch = setTimeout("loadListACTB('" + currACTBstr + "','ijUFeedSearch')", 600);
 } catch(e) {
 alert("setLoadACTB: " + e);
 }
 
 }
- 
-// alert("setLoadACTB: loadLmenu");
-loadLmenu();
+  loadLmenu();
 
 
 
@@ -1653,6 +2003,7 @@ loadLmenu();
 
 var setLoadACTB = function(theACb) {
 
+// alert("setLoadACTB " + JSON.stringify(theACb.rs));
 strCatID =  "tip:ep:Smart Autocomplete|";
 strCatName =  "This will be a smart auto-complete search box.|";
 strULPID = "";
@@ -1667,6 +2018,7 @@ var tmpSTrSorE = "show";
 if(theACb.rs) {
 var arrToFill = null;
 arrToFill = JSON.parse(theACb.rs);
+// alert("setLoadACTB: " + JSON.stringify(theACb.rs));
 arrAllForms["qextras"] = arrToFill;
  
 
@@ -1735,7 +2087,7 @@ if(pid == "aa-show-category") {
 } else {
 // alert("strFArr: " + strFArr)
 try {
-actbSearch = loadListACTB(currACTBstr, "ijUFeedSearch");
+// actbSearch = loadListACTB(currACTBstr, "ijUFeedSearch");
 } catch(e) {
 alert("setLoadACTB: " + e);
 }
@@ -1775,7 +2127,7 @@ doNurQComm(atac);
 
 // called when all content loaded
 var fnish = function(a,b,c) {
- alert("fnish: " + JSON.stringify(c));
+// alert("fnish: " + JSON.stringify(c));
 
 accA = null;
 accA = [];
@@ -1820,69 +2172,52 @@ if(getViewportWidth() > 500) {
 tmpSBox = "dvSearchBox";
 // JSSHOP.ui.showHideElement("tdLMenu", "show");
 } else {
-// document.getElementById("dvSearchBoxSlim").innerHTML = "";
-// document.getElementById("dvSearchBox").innerHTML = "";
-// document.getElementById("dvSearchBoxSlim").innerHTML = tmpSsstr;
+document.getElementById("dvSearchBoxSlim").innerHTML = "";
+document.getElementById("dvSearchBox").innerHTML = "";
+// !!UNDO document.getElementById("dvSearchBoxSlim").innerHTML = tmpSsstr;
+document.getElementById("dvSearchBoxSlim").className = "txtSmall";
 }
 // JSSHOP.ui.toggleVisibility("dvSearchBoxSlim");
 // doLoadACTB();
 };
 
-
-
+ 
  
 var finishCntLoad = function(a,b,c) {
 try {
-smlspinner.stop();
-spinner.stop();
+ 
 document.getElementById(a).innerHTML = b;
-
-// if(JSSHOP.user.getCkiePrfKV("prfsSHOPuser","TGL_MLM","hide") == "hide") {} 
-tdXCMoreBtn.className = "onlyWideScreen";
-
-JSSHOP.ui.toggleNuModule("dvLMenuTgl","tdLMenu");
-
-// else {
-// JSSHOP.ui.toggleVisibility("tdXCMoreBtn");
-// }
-// alert("TGL_MLM: " + JSSHOP.user.getCkiePrfKV("prfsSHOPuser","TGL_MLM","show"))
-
-doWinResizeE(); // all things changed on window resize
-
-
-
-	
-	
+// doWinResizeE(); // all things changed on window resize
 setTimeout("mfnishCntLoad()", 500);
-
-
-
+ 
 } catch(e) {
-alert("finishCntLoad.error: " + a + " : " + e);
+    console.log("finishCntLoad.error: " + e);
+    setTimeout("mfnishCntLoad()", 500);
+ // alert("finishCntLoad.erroraaa: " + a + " : " + e);
 }
 };
 
  
 
+
 var doMainContent = function(a,b) {
 try {
-
+console.log("doMainContent.pid: " + pid);
 if(content == "noQvalue") {
 
 spinTextDiv.innerHTML = " ... "; 
 fCa = getFArr();
 // this should be fixed. authentication.
-// if((quid == 0) || (quid == "noQvalue")) {
 if((pid.indexOf("edit-") != -1)  && ((quid == 0) || (quid == "noQvalue"))) {
 // page requires user login
 JSSHOP.loadScript("js/app/" + jscssprefix + "x_login.js", JSSHOP.checkLoader,"js");
 JSSHOP.ajax.doNuAjaxPipe("includedContent", "tplates/login.html", finishCntLoad);
-
+return;
 } else {
 if(currIContent == "y") {
 JSSHOP.ajax.doNuAjaxPipe("includedContent", "tplates/" + pid + ".html", finishCntLoad);
 } else {
-finishCntLoad("lightbox_content","loading...","nada");
+// finishCntLoad("lightbox_content","loading...","nada");
 }
 }
 
@@ -1894,202 +2229,24 @@ alert("doMainContent: "  + e);
 }
 };
 
-
-
-
-
-
-
-
-
-
-JSSHOP.ajax.mDynfnishCntLoad = function(a, b) {
-	try {
-	// alert("mDynfnishCntLoad: " + a + " : " + b);
-scrollToElement("dvHdr");
-window.scrollTo(0,0);
-setTimeout("mfnishCntLoad()", 500);
-	} catch(e) {
-alert("mDynfnishCntLoad.error: " + e);
-	}
-
+var fillDynFrmArr = function(theRobj) {
+    
+    // console.log("fillDynFrmArr: " + JSON.stringify(theRobj));
+    fillMFormArr(theRobj);
+    // setTimeout("JSSHOP.ajax.doDynMainContent()", 500);
 };
-
-JSSHOP.ajax.finishDynCntLoad = function(a,b,c) {
-try {
-	 // alert("finishDynCntLoad: " + content);
-ajxspinner.stop();
-// spinner.stop();
-document.getElementById(a).innerHTML = b;
-// document.getElementById("dvSpinnerIcn").innerHTML = "<a href=\"javascript:JSSHOP.ui.doDefCBBCC('ahHomeIcon', null, document.location.href='index.html?&cid=' + cid);\"><i class=\"material-icons\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"home\" title=\"home\">&#59530;</i></a>";
-doWinResizeE(); // all things changed on window resize
-// setTimeout("mfnishCntLoad()", 500);
-if(content == "noQvalue") {
-JSSHOP.loadScript("js/app/" + jscssprefix + "x_" + pid + ".js", JSSHOP.ajax.mDynfnishCntLoad,"js");
-} else {
-// alert("finishDynCntLoad: " + content);
-
-JSSHOP.loadScript("js/app/" + jscssprefix + "x_content.js", JSSHOP.ajax.mDynfnishCntLoad,"js");
-
-}
-} catch(e) {
-alert("JSSHOP.ajax.mDynfnishCntLoad.error: " + a + " : " + e);
-}
-}; 
-
-
-JSSHOP.ajax.doDynMainContent = function() {
-try {
-// alert("JSSHOP.ajax.doDynMainContent: " + content)
-if(content == "noQvalue") {
-
-// spinTextDiv.innerHTML = " ... "; 
-fCa = getFArr();
-// this should be fixed. authentication.
-if((pid.indexOf("edit-") != -1)  && ((quid == 0) || (quid == "noQvalue"))) {
-// page requires user login
-JSSHOP.loadScript("js/" + jscssprefix + "x_login.js", JSSHOP.checkLoader,"js");
-JSSHOP.ajax.doNuAjaxPipe("includedContent", "tplates/login.html", JSSHOP.ajax.finishDynCntLoad);
-
-} else {
-if(pid == "aaaa-contactus") {
-// currIContent = "no";
-}
-if(currIContent == "y") {
-JSSHOP.ajax.doNuAjaxPipe("includedContent", "tplates/" + pid + ".html", JSSHOP.ajax.finishDynCntLoad);
-} else {
-finishCntLoad("lightbox_content","loading...","nada");
-}
-}
-
-} else {
-// alert("includedContent: " + content )
-JSSHOP.ajax.doNuAjaxPipe("includedContent", "content/" + content + ".html", JSSHOP.ajax.finishDynCntLoad);
-}
-} catch(e) {
-alert("JSSHOP.ajax.doDynMainContent: "  + e);
-}
-};
-
-
-JSSHOP.ajax.doAjaxGVals = function(tDlMStr, tDlMUstr) {
-	JSSHOP.ui.showHideElement("dvACfull", "hide");
-content = "noQvalue";
-currUrlArr = null;
-currUrlArr = "";
-currUrlArr = {};
-pid = "index_main";
-currUrlArr = "";
-currUrlArr = {};
-try {
-
-
-if(tDlMStr == pid) {
-tDlMObj = JSSHOP.shared.urlToArray(document.location.href); 
-} else if(tDlMStr == "noQvalue") {
-tDlMObj = JSSHOP.shared.urlToArray(document.location.href); 
-} else {
-tDlMObj = JSSHOP.shared.strToObj(tDlMUstr); 
-
-}
-for(var aRsRgkey in tDlMObj) {
-dcdedRk = decodeURIComponent(tDlMObj[aRsRgkey]);
-$aRsRgkey = dcdedRk;
-window[aRsRgkey] = dcdedRk;
-currUrlArr[aRsRgkey] = dcdedRk;
-// currUrlArr[aRsRgkey] = decodeURIComponent(JSSHOP.shared.encode_utf8(tDlMObj[aRsRgkey]));
-}
- 
-if(tDlMObj.pid) {
-pid = tDlMObj.pid;
-}
-if(tDlMObj.content) {
-// alert("content: " + content);
-content = tDlMObj.content;
-currUrlArr["content"] = content;
-}
-
-if(currUrlArr.mk){
-currPUrlObj.mk = currUrlArr.mk;
-currPUrlObj.make = currUrlArr.make;
-}
-if(currUrlArr.si){
-currPUrlObj.si = currUrlArr.si;
-currPUrlObj.series = currUrlArr.series;
-}
-if(currUrlArr.md){
-currPUrlObj.md = currUrlArr.md;
-currPUrlObj.model = currUrlArr.model;
-} else {
-if(currUrlArr.si){
-currPUrlObj.md = currUrlArr.si;
-currPUrlObj.model = currUrlArr.series;
-}
-}
-if(currUrlArr.prti){
-currPUrlObj.prti = currUrlArr.prti;
-currPUrlObj.part = currUrlArr.part;
-}
-if(currUrlArr.y){
-currPUrlObj.y = currUrlArr.y;
-}
-switch(tDlMStr) {
-case "aa-add-trip-pickup":
-currUrlArr.ttid = undefined;
-delete currUrlArr["ttid"];
-currUrlArr.ttype = "pickup";
-pid = "aa-add-trip";
-break;
-case "aa-edit-trip":
-pid = "aa-edit-trip";
-break;
-case "aa-edit-trips":
-pid = "aa-edit-trips";
-break;
-default:
-break;
-}
-JSSHOP.ajax.doDynMainContent();
-} catch(e) {
-alert("JSSHOP.ajax.doAjaxGVals: " + e);
-}
-}
-
- 
-
-
-
- 
-
-
-
-
 
 var fillMFormArr = function(theRobj) {
 try {
-	arrAllForms = null;
-arrAllForms = "";
-// arrAllForms = {};
- 
-
-// alert("fillMFormArr.theRobj.rs: " + theRobj.rs); 
-tarrAllForms = JSON.parse(theRobj.rs);
-if(isSWT == "yes") {
-arrAllForms = JSON.parse(tarrAllForms);
-} else {
-arrAllForms = tarrAllForms;
-}
-// arrAllForms = theRobj.rs;
-// alert("fillMFormArr: " + JSON.stringify(arrAllForms));
-console.log("fillMFormArrzb: " + arrAllForms);
-
-// alert("fillMFormArr[0]a: " + arrAllForms);
+tmpAforms = [];
+tmpAforms = JSON.parse(theRobj.rs);
+console.log("fillMFormArr: " + JSON.stringify(tmpAforms));
+arrAllForms = tmpAforms;
 
 if(arrAllForms.qco) {
 JSSHOP.shared.setFrmVals("qco",arrAllForms.qco.v[0],function() {void(0)});
 }
-if(arrAllForms["quser"]) {
-	// alert("quserz: " + JSON.stringify(arrAllForms.quser.v[0]));
+if(arrAllForms.quser) {
 JSSHOP.shared.setFrmVals("quser",arrAllForms.quser.v[0],function() { void(0) });
 }
 if(arrAllForms.qcat) {
@@ -2101,43 +2258,13 @@ JSSHOP.shared.setFrmVals("qitem",arrAllForms.qitem.v[0],function() { void(0) });
 if(arrAllForms.qmsgs) {
 JSSHOP.shared.setFrmVals("qmsgs",arrAllForms.gmsgs.v[0],function() {  void(0) });
 }
-if(arrAllForms.qlogiplaces) {
-inCSA = 0;
-currSctrsArr = arrAllForms.qlogiplaces.v;
-while(inCSA < currSctrsArr.length) {
-tCSAob = {};
-tCSAob = currSctrsArr[inCSA];
-tCSsRAst = tCSAob.qlogk_sector;
-currSctrsObj["s" + tCSAob._id] = tCSAob;
-inCSA++;
-}
-if(currSctrsArr[0]) {
-JSSHOP.shared.setFrmVals("qlogiplaces",arrAllForms.qlogiplaces.v[0],function() {  void(0) });
-} else {
-qlogp_coid.value = cid;
-qlogp_uid.value = quid;	 
-qlogp_category.value = "site";
-qlogp_name.value = c_web.value + " Depot";
-// these must be added
-// qlogp_loc_lat.value = c_loc_lat.value;
-// qlogp_loc_lng.value = c_loc_lng.value;
-qlogp_dadded.value = JSSHOP.getUnixTimeStamp();
-tmpESDOs = null;
-tmpESDOs = {};
-tmpESDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qlogiplaces"], "nada");
 
-// tmpESDOs["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qlogiplaces"], "tmp_"));
-oi = getNuDBFnvp("qlogiplaces",6,null,tmpESDOs);
-doQComm(removeDiacritics(oi["rq"]), null, donada);
-}
-}
-if(arrAllForms.qextras) {
-	if(arrAllForms.qextras.v) {
+
+if(arrAllForms.qextras.v[0]) {
 JSSHOP.shared.setFrmVals("qextras",arrAllForms.qextras.v[0],function() { fnishExtrasForm() });
-
-	}
-	}  
-	fnishExtrasForm();
+} else {
+fnishExtrasForm()
+}
 /*
 if(arrAllForms.qcartitem) {
 JSSHOP.shared.setFrmVals("qcartitem",arrAllForms.qcartitem.v[0],);
@@ -2145,19 +2272,22 @@ JSSHOP.shared.setFrmVals("qcartitem",arrAllForms.qcartitem.v[0],);
 
 */
 
-qlogf_coid.value = cid;
-qlogf_uid.value = quid;
-qlogf_dadded.value = JSSHOP.getUnixTimeStamp();
+ //  setNuLoadACTB();
 
 
- 
+
 // 
-// doLoadACTB();
+ // doLoadACTB();
 
 } catch(e) {
-alert("fillMFormArr.error; " + e);
-setNuLoadACTB();
-}
+    alert("fillMFormArr; " + e);
+    if(content == "noQvalue") {
+        JSSHOP.loadScript("js/app/" + jscssprefix + "x_" + pid + ".js", doMainContent,"js");
+        } else {
+        doMainContent(null, null);
+        }
+      // setNuLoadACTB();
+    }
 };
 
  
@@ -2175,7 +2305,7 @@ try {
 
 doCFrmQ = nCurrCnxOb();
 doCFrmQ["q"] = "batch" + JSON.stringify(currFrmQArr);
-// alert("doFrmQLoad:  " + JSON.stringify(currFrmQArr));
+//alert("doFrmQLoad:  " + JSON.stringify(currFrmQArr));
 doCFrmQ["cb"] = "fillMFormArr";
 doNurQComm(doCFrmQ);
 } catch(e) {
@@ -2229,8 +2359,10 @@ if(currCartIttl > 0) {
 if(currCartIttl > 99) {
 tmpCITstr = "+99";
 }
-spnCIcount.className = "icnbtn slmtable txtSmall txtClrHdr bkgdClrDlg brdrClrRed";
-JSSHOP.ui.setTinnerHTML("spnCIcount", tmpCITstr);
+
+// not using yet
+// spnCIcount.className = "icnbtn slmtable txtSmall txtClrHdr bkgdClrDlg brdrClrRed";
+// JSSHOP.ui.setTinnerHTML("spnCIcount", tmpCITstr);
 if(currCartTShow == "y") {
 
 /*
@@ -2272,8 +2404,8 @@ currCartTtl = tciap[1];
 if(currCartIttl > 0) {
 setCartIplugs();
 } else {
-spnCIcount.className = "nada";
-JSSHOP.ui.setTinnerHTML("spnCIcount", "");
+// spnCIcount.className = "nada";
+// JSSHOP.ui.setTinnerHTML("spnCIcount", "");
 // spnCtotal.className = "nada";
 // JSSHOP.ui.setTinnerHTML("spnCtotal", "");
 }
@@ -2282,63 +2414,62 @@ if(a == "y") {
 JSSHOP.cookies.setCookie("cCartStr",LZString.compressToEncodedURIComponent(b),"30","","","");
 }
 } catch(e) {
-alert("setCartIArr: " + e);
+console.log("setCartIArr.error: " + e);
+//alert("setCartIArr: " + e);
 } 
 };
 
 
 
+
 var doBootLoad = function() {
+    console.log("doBootLoad: " + JSON.stringify(arrUprefs));
+try {
+JSSHOP.user.doCkieUprefs('prfsSHOPuser');
+} catch(e) {
+alert("doBootLoad doCkieUprefs error: " + e)
+JSSHOP.logJSerror(e, arguments, "doBootLoad:doCkieUprefs");
+} 
+nShopDir = shopDir.replace("admin/", "");
+shopDir = nShopDir;
 
-
-if(JSSHOP.cookies.getCookie("qcoid") !== null) {
-
-cid = JSSHOP.cookies.getCookie("qcoid");
-// alert("qcoid: " + cid);
-addFrmQArr("qco", cid, "fnishCoForm");
-    tmpEDOs = null;
-    tmpEDOs = {};
-    tmpEDOs["ws"] = "where e_uid=? and e_vala=?";
-    tmpEDOs["wa"] = [cid,"arrSprefs"]; 
-    oi = getNuDBFnvp("qextras",5,null,tmpEDOs);
-    doFrmQArr(oi["rq"], "qextras","fnishExtrasForm");
-
-
-	    tmpDOs = null;
-    tmpDOs = {};
-    tmpDOs["ws"] = "where qlogp_category=? and qlogp_coid=?";
-    tmpDOs["wa"] = ["site",cid];
-    oi = getNuDBFnvp("qlogiplaces", 5, null, tmpDOs);
-	// addFrmQArr("qco", cid, "fnishCoForm");
-    doFrmQArr(oi["rq"],"qlogiplaces","fnishSctrsForm");
- 
-
- 
-
+/* removed this and using another cookie consent script
+// !!to delete
+// the ecommerce demo alert and links div in index.html
+// if it was not closed by user, show it.
+try {
+if(arrUprefs["prfsSHOPuser"][0].sia == "y") {
+JSSHOP.ui.showHideElement("dvDemoAlert", "show");
 }
-/*
-if((isJApp == "no") && (isJavaFx == "no") && (isSWT == "yes")) {
- 
-	cid = 8;
-	addFrmQArr("qco", cid, "fnishCoForm");
-	tmpDOs = null;
-    tmpDOs = {};
-    tmpDOs["ws"] = "where qlogp_category=? and qlogp_coid=?";
-    tmpDOs["wa"] = ["site",cid];
-    oi = getNuDBFnvp("qlogiplaces", 5, null, tmpDOs);
-	// addFrmQArr("qco", cid, "fnishCoForm");
-    doFrmQArr(oi["rq"],"qlogiplaces","fnishSctrsForm");
- 
-JSSHOP.loadScript("css/" + jscssprefix + "x_japp.css", JSSHOP.checkLoader,'css');
+} catch (e) {
+alert(e); 	
 }
 */
+
+try {
+if(arrUprefs["prfsSHOPuser"][0].tglSearchType) {
+currSearchType = arrUprefs["prfsSHOPuser"][0].tglSearchType;
+}
+} catch (e) {
+alert(e); 	
+}
+
 try {
 tmpUrl = getCurrUrl();
-// alert("tmpUrl: " + tmpUrl);
 if(tmpUrl == "noQvalue") {
 } else {
-currUrlArr = JSSHOP.shared.urlToArray(tmpUrl); 
+currUrlArr = JSSHOP.shared.urlToNuArray(tmpUrl);
+ 
+if(currCoDcidId > 0) {
+    dcid = currCoDcidId;
+    currUrlArr.dcid = currCoDcidId;
+}
+if(currUrlArr.prpid) {
+    prpid = currUrlArr.prpid;
+    // addFrmQArr("property", currUrlArr.prpid, "fnishPropForm");
 
+}
+ 
 // adding variable fc [index.html?...&fc=y] to end of url
 // forces refreshing cache and using non compressed .js files.
 if(currUrlArr.fc){
@@ -2347,20 +2478,129 @@ jscssprefix = ""; // null the .js file prefix. use normal js files.
 }
 if(currUrlArr.pid){ // page in tplates/folder
 pid = currUrlArr.pid; 
-// alert("pid: " + pid);
-if(pid.indexOf("edit-") != -1) {
-currAdmnMode = "y"; // authenticate admin before this
-}
-} else {
-pid = "index_main";
-// alert("nopid: " + pid);
 }
 
+console.log("currPurlObj.last: " + JSON.stringify(currPUrlObj));
+currPUrlObj = null;
+currPUrlObj = {};
+
+
+
+/*
+if(JSSHOP.ads.getPrtsPrefCC("mk") == "noQvalue") {
+// currPUrlObj["make"] = "all";
+console.log("doBootLoad: no make" + JSON.stringify(currPUrlObj));
+} else {
+   console.log("doBootLoad: yes make: " + JSSHOP.ads.getPrtsPrefCC("mk") + " : " + JSON.stringify(currPUrlObj));
+currPUrlObj["mk"] =  JSSHOP.ads.getPrtsPrefCC("mk");
+currPUrlObj["make"] = objAllMakes["m" + JSSHOP.ads.getPrtsPrefCC("mk")]["n"];
+JSSHOP.ajax.doNuAjaxPipe("inpModels", "misc/m" + currPUrlObj["mk"] + ".txt", doMdlsBoot);
+
+if(JSSHOP.ads.getPrtsPrefCC("series") == "noQvalue") {
+// currPUrlObj["series"] = "all";
+} else {
+currPUrlObj["series"] = JSSHOP.ads.getPrtsPrefCC("series");
+}
+if(JSSHOP.ads.getPrtsPrefCC("si") == "noQvalue") {
+// currPUrlObj["series"] = "all";
+} else {
+currPUrlObj["si"] = JSSHOP.ads.getPrtsPrefCC("si");
+}
+if(JSSHOP.ads.getPrtsPrefCC("model") == "noQvalue") {
+// currPUrlObj["model"] = "all";
+} else {
+currPUrlObj["model"] = JSSHOP.ads.getPrtsPrefCC("model");
+}
+if(JSSHOP.ads.getPrtsPrefCC("md") == "noQvalue") {
+    // currPUrlObj["model"] = "all";
+    } else {
+    currPUrlObj["md"] = JSSHOP.ads.getPrtsPrefCC("md");
+    }
+if(JSSHOP.ads.getPrtsPrefCC("year") == "noQvalue") {
+// currPUrlObj["year"] = "all";
+} else {
+currPUrlObj["year"] = JSSHOP.ads.getPrtsPrefCC("year");
+}
+if(JSSHOP.ads.getPrtsPrefCC("part") == "noQvalue") {
+ 
+    } else {
+    currPUrlObj["part"] = JSSHOP.ads.getPrtsPrefCC("part");
+    }
+if(JSSHOP.ads.getPrtsPrefCC("prti") == "noQvalue") {
+   
+    } else {
+    currPUrlObj["prti"] = JSSHOP.ads.getPrtsPrefCC("prti");
+    }
+
+
+}
+
+
+
+
+if(currUrlArr.mk){
+currPUrlObj.mk = currUrlArr.mk;
+currPUrlObj.make = currUrlArr.make;
+}
+if(currUrlArr.si){
+currPUrlObj.si = currUrlArr.si;
+currPUrlObj.series = currUrlArr.series;
+}
+if(currUrlArr.md){
+currPUrlObj.md = currUrlArr.md;
+currPUrlObj.model = currUrlArr.model;
+} else {
+if(currUrlArr.si){
+currPUrlObj.md = currUrlArr.si;
+currPUrlObj.model = currUrlArr.series;
+}
+}
+if(currUrlArr.prti){
+currPUrlObj.prti = currUrlArr.prti;
+currPUrlObj.part = currUrlArr.part;
+}
+if(currUrlArr.y){
+currPUrlObj.y = currUrlArr.y;
+}
 if(currUrlArr.ppid){
 ppid = currUrlArr.ppid;
 }
+*/
+ 
 
+if((currUrlArr.cid) && (currUrlArr.cid !== "0")){ // company ID
+cid = currUrlArr.cid;
+// addFrmQArr("qco", cid, "fnishCoForm");
+addFrmQArr("qco", cid, "fnishCoForm");
+} else {
+ 
+if((currUrlArr.cuid) && (currUrlArr.cuid !== "0")){ // contact user ID
+cuid = currUrlArr.cuid;
+// addFrmQArr("qco", cuid, "fnishCoForm");
+}
+if((currUrlArr.tpid) && (currUrlArr.tpid !== "0")){ // contact user ID
+    cid = currUrlArr.tpid;
+    addFrmQArr("qco", currUrlArr.tpid, "fnishCoForm");
+    }
+}
 
+if(currUrlArr.dcid) {
+    cid = currUrlArr.dcid;
+    currUrlArr.cid = currUrlArr.dcid;
+    currUrlArr.tpid = currUrlArr.dcid;
+    tpid = currUrlArr.dcid;
+    pid = "aa-show-place";
+    // addFrmQArr("qco", cid, "fnishCoForm");
+     JSSHOP.shared.setFrmVals("qco",JSON.parse(currCoDcidStr),function() {void(0)});
+
+  }
+
+  if(currUrlArr.ditemid) {
+    itemid = currUrlArr.ditemid;
+    currUrlArr.itemid = currUrlArr.ditemid;
+    pid = "aa-show-item";
+    // addFrmQArr("qitem", itemid, "fnishItemForm");
+   }
 
 if(currUrlArr.content){
 content = currUrlArr.content;
@@ -2396,23 +2636,25 @@ ocrtid = currUrlArr.ocartid;
 
 }
 
+
+
 if(JSSHOP.cookies.getCookie("quid") !== null) {
 quid = JSSHOP.cookies.getCookie("quid");
-// no need to get thif for now
-if(pid == "aa-edit-user") {
-if(currUrlArr.tuid){
-quid = currUrlArr.tuid;
-}
-
-}
 addFrmQArr("quser", quid, "fnishUserForm");
+// no need to get thif for now
+if(pid.indexOf("edit") != -1) {
+
+}
+}
+if(JSSHOP.cookies.getCookie("cuid") !== null) {
+// if(pid == "aa-edit-uinfo"){
+if(pid.indexOf("edit") != -1){}
+cuid = JSSHOP.cookies.getCookie("cuid");
+// addFrmQArr("qco", cuid, "fnishCoForm");
+
 }
 
-if(JSSHOP.cookies.getCookie("qtype") !== null) {
-qtype = JSSHOP.cookies.getCookie("qtype");
-}
-
-
+ 
 if(JSSHOP.cookies.getCookie("cartID") == null) {
 tmpcid = Math.random().toString(36).slice(2);
 JSSHOP.cookies.setCookie("cartID",tmpcid,"30","","","");
@@ -2428,7 +2670,7 @@ if((currUrlArr.cid) && (currUrlArr.cid !== "0")){ // company ID
 if(JSSHOP.cookies.getCookie("cCartStr") !== null) {
 currCartStr = LZString.decompressFromEncodedURIComponent(JSSHOP.cookies.getCookie("cCartStr"));
 if(currCartStr.length > 5) {
-setCartIArr("n", currCartStr, "n");
+ setCartIArr("n", currCartStr, "n");
 }
 } else {
 
@@ -2438,21 +2680,41 @@ setCartIArr("n", currCartStr, "n");
     tmpDOs["ws"] = "where ci_uid=? and ci_coid=? and ci_cartqty >? and ci_rtype=? and ci_cartid=?";
     tmpDOs["wa"] = [quid,cid,0,5,cartID]; 
     oi = getNuDBFnvp("qcartitem",5,null,tmpDOs);
-    // doQComm(oi["rq"], "y", "setCartIArr");
+    doQComm(oi["rq"], "y", "setCartIArr");
 }
 
-    // doFrmQArr(oi["rq"], "qcartitem","fnishCartForm");
+     doFrmQArr(oi["rq"], "qcartitem","fnishCartForm");
 }
 }
  
 
 
 
+    tmpEDOs = null;
+    tmpEDOs = {};
+    tmpEDOs["ws"] = "where e_uid=? and e_vala=?";
+    tmpEDOs["wa"] = [cid,"arrSprefs"]; 
+    oi = getNuDBFnvp("qextras",5,null,tmpEDOs);
+    doFrmQArr(oi["rq"], "qextras","fnishExtrasForm");
 
-	
-	
+if(JSSHOP.cookies.getCookie("usrlang") !== null) {
+usrlang = JSSHOP.cookies.getCookie("usrlang");
+} else {
+tmplang = navigator.language  || navigator.userLanguage;
+if((tmplang.indexOf("pt-")!= -1) || (tmplang.indexOf("pt_")!= -1)) {
+usrlang = "pt_pt";
+}
+if((tmplang.indexOf("es-")!= -1) || (tmplang.indexOf("es_")!= -1)) {
+usrlang = "spa_spa";
+}
+}
 
-
+if(usrlang == "pt_pt") {
+usrcc = "PT";
+}
+if(currUrlArr.ul) {
+usrlang = currUrlArr.ul;
+}
 if(JSSHOP.cookies.getCookie("recentActivity") !== null) {
 // currRcntActStr = JSSHOP.cookies.getCookie("recentActivity");
 currRcntActStr = LZString.decompressFromEncodedURIComponent(JSSHOP.cookies.getCookie("recentActivity"));
@@ -2476,121 +2738,159 @@ tii++;
 }
 }
 }
+
+
+
 // alert("currRcntFavsStr.boot: " + currFavsIdstr + "::" + currRcntFavsStr);
 }
 
 
-
-
-
-try {
-tPSUObj = JSSHOP.user.doNuCkieUprefs("prefs" + quid);
-// alert("uprefs: " + JSON.stringify(tPSUObj));
-} catch(e) {
-alert("tPSUObj.error: " + e);
-} 
-
-	
+if(JSSHOP.cookies.getCookie("currSortObj") != null) {
+      currSortObj = JSON.parse(LZString.decompressFromEncodedURIComponent(JSSHOP.cookies.getCookie("currSortObj")));
+   } 
+// alert("tufilepath: " + (newError).fileName);
+tdhref = document.location.href;
+if(tdhref.indexOf("admin/") != -1) {
+JSSHOP.loadScript("../js/app/" + jscssprefix + "aa-" + usrlang + ".js", doFrmQLoad,"js");
+} else {
 JSSHOP.loadScript("js/app/" + jscssprefix + "aa-" + usrlang + ".js", doFrmQLoad,"js");
-
+}
+// alert("doBootLoad: " + jscssprefix + "aa-" + usrlang + ".js");
 } catch(e) {
 alert("doBootLoad error: " + e)
 // JSSHOP.logJSerror(e, arguments, "doBootLoad");
-// JSSHOP.loadScript("js/app/" + jscssprefix + "aa-" + usrlang + ".js", doFrmQLoad,"js");
+// JSSHOP.loadScript("js/" + jscssprefix + "aa-" + usrlang + ".js", doFrmQLoad,"js");
 
 } 
-
-};
-var getDaCookies = function(){
-		try {
-  var pairs = document.cookie.split(";");
-  var cookies = {};
-  for (var i=0; i<pairs.length; i++){
-    var pair = pairs[i].split("=");
-    cookies[(pair[0]+'').trim()] = unescape(pair.slice(1).join('='));
-  }
-  alert("getDaCookies: " + JSON.stringify(cookies));
-		} catch(e) {
-			alert("getCookies.error: " + e);
-		}
-};
-var doEditUser = function(){
-		try {
-if(JSSHOP.cookies.getCookie("quid") !== null) {
-	doMLinkM('aa-edit-user', 'pid=aa-edit-user');
-} else {
-	javascript:document.location.href='index.html?pid=login'
-}
-		} catch(e) {
-			alert("doEditUser.error: " + e);
-		}
 };
 
+JSSHOP.ajax.doAjaxGVals = function(tDlMStr, tDlMUstr) {
 
+	// JSSHOP.ui.showHideElement("dvACfull", "hide");
+    JSSHOP.ui.closePopMenus();
+    scrollToElement("dvHdr");
+    currFrmQArr = null;
+    currFrmQArr = "";
+currFrmQArr = [];
+// arrAllForms = null;
+// arrAllForms = {};
 
-
-
-/* to delete
-
-
-function mDynfnishCntLoad(a, b, c) {
-
-smlspinner.stop();
-spinner.stop();
-document.getElementById(a).innerHTML = b;
-doWinResizeE(); // all things changed on window resize
-setTimeout("mfnishCntLoad()", 500);
-}
-
-
-var finishDynCntLoad = function(a,b) {
+cid = "0";
+catid = "0";
+content = "noQvalue";
+currUrlArr = null;
+currUrlArr = "";
+currUrlArr = {};
+pid = "index_main";
 try {
 
-// setTimeout("mfnishCntLoad()", 500);
+
+if((tDlMStr == pid) && (pid !== "index_main")) {
+tDlMObj = JSSHOP.shared.urlToArray(document.location.href); 
+} else if(tDlMStr == "noQvalue") {
+tDlMObj = JSSHOP.shared.urlToArray(document.location.href); 
+} else {
+tDlMObj = JSSHOP.shared.strToObj(tDlMUstr); 
+
+}
+for(var aRsRgkey in tDlMObj) {
+dcdedRk = decodeURIComponent(tDlMObj[aRsRgkey]);
+$aRsRgkey = dcdedRk;
+window[aRsRgkey] = dcdedRk;
+currUrlArr[aRsRgkey] = dcdedRk;
+// currUrlArr[aRsRgkey] = decodeURIComponent(JSSHOP.shared.encode_utf8(tDlMObj[aRsRgkey]));
+}
  
-if(currIContent == "y") {
-	alert("finishDynCntLoad:currIContent " + currIContent);
-JSSHOP.ajax.doNuAjaxPipe("includedContent", "tplates/" + pid + ".html", mDynfnishCntLoad);
-}  else {
-	setTimeout("mfnishCntLoad()", 500);
+if(tDlMObj.pid) {
+pid = tDlMObj.pid;
+}
+if(tDlMObj.content) {
+// alert("content: " + content);
+content = tDlMObj.content;
+currUrlArr["content"] = content;
 }
 
+
+switch(tDlMStr) {
+case "aa-add-trip-pickup":
+currUrlArr.ttid = undefined;
+delete currUrlArr["ttid"];
+currUrlArr.ttype = "pickup";
+pid = "aa-add-trip";
+break;
+case "aa-edit-trip":
+pid = "aa-edit-trip";
+break;
+case "aa-edit-trips":
+pid = "aa-edit-trips";
+break;
+
+default:
+break;
+}
+
+ 
+ doFrMBoolStr = "no";
+
+if((currUrlArr.cuid) && (currUrlArr.cuid !== "0")){ // contact user ID
+    cuid = currUrlArr.cuid;
+    doFrMBoolStr = "yes";
+    // addFrmQArr("qco", cuid, "fnishCoForm");
+    }
+    if((currUrlArr.tpid) && (currUrlArr.tpid !== "0")){ // contact user ID
+        cid = currUrlArr.tpid;
+        doFrMBoolStr = "yes";
+        // addFrmQArr("qco", currUrlArr.tpid, "fnishCoForm");
+     
+    } else if((currUrlArr.cid) && (currUrlArr.cid !== "0")){ // contact user ID
+        cid = currUrlArr.cid;
+        doFrMBoolStr = "yes";
+        // addFrmQArr("qco", currUrlArr.cid, "fnishCoForm");
+    }
+    // if cid > 0 and if qco _id does not equal cid, then add qco to currFrmQArr
+    tCidChckId = JSSHOP.shared.getFrmFieldVal("qco", "_id", 0);
+ 
+    if((cid > 0) && (tCidChckId !== cid)){
+
+            addFrmQArr("qco", cid, "fnishCoForm");
+ 
+    }
+ 
+    if(currUrlArr.catid){ // category ID
+    catid = currUrlArr.catid;
+    doFrMBoolStr = "yes";
+    addFrmQArr("qcat", catid, "fnishCatForm");
+    }
+    if(currUrlArr.prpid){ // category ID
+        prpid = currUrlArr.prpid;
+        // doFrMBoolStr = "yes";
+       //  addFrmQArr("property", prpid, "fnishCoForm");
+        }
+    if(currUrlArr.itemid){ // ...
+    itemid = currUrlArr.itemid;
+    doFrMBoolStr = "yes";
+    addFrmQArr("qitem", itemid, "fnishItemForm");
+ 
+    }
+    if(doFrMBoolStr == "yes") {
+        console.log("doFrMBoolStr: " + doFrMBoolStr);
+doCFrmQ = nCurrCnxOb();
+doCFrmQ["q"] = "batch" + JSON.stringify(currFrmQArr);
+//alert("doFrmQLoad:  " + JSON.stringify(currFrmQArr));
+doCFrmQ["cb"] = "fillDynFrmArr";
+doNurQComm(doCFrmQ);
+    } else {
+        JSSHOP.ajax.doDynMainContent();
+    }
 } catch(e) {
-alert("finishCntLoad.error: " + a + " : " + e);
-}
-}; 
-
-
-	
-var doDynMainContent = function() {
-try {
-alert("doDynMainContent: " + content);
-if(content == "noQvalue") {
-
-spinTextDiv.innerHTML = " ... "; 
-fCa = getFArr();
-// this should be fixed. authentication.
-if((pid.indexOf("edit-") != -1)  && ((quid == 0) || (quid == "noQvalue"))) {
-// page requires user login
-// pid="login";
-JSSHOP.loadScript("js/app/" + jscssprefix + "x_login.js", JSSHOP.checkLoader,"js");
-JSSHOP.ajax.doNuAjaxPipe("includedContent", "tplates/login.html", finishDynCntLoad);
-
-} else {
-	
-	JSSHOP.loadScript("js/app/" + jscssprefix + "x_" + pid + ".js", finishDynCntLoad,"js");
-
-
-
-} 
-
-} else {
-JSSHOP.ajax.doNuAjaxPipe("includedContent", "content/" + content + ".html", finishDynCntLoad);
-}
-} catch(e) {
-alert("doDynMainContent: "  + e);
-}
+    alert("doAjaxGVals: " + e);
+    }
 };
 
 
-*/
+tdLHR = document.location.href;
+if(tdLHR.indexOf("clean.html") != -1) {
+isAclean = "y";
+} else {
+setTimeout("doBootLoad()", 800);
+}

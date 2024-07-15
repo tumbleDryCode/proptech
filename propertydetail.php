@@ -134,8 +134,8 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
 var getPropImgs = function() {
     tmpFobj = null;
     tmpFobj = {};
-    tmpFobj["ws"] = "where m_uid=? and m_pid=? and m_rtype=?";
-    tmpFobj["wa"] = [quid, cid, 5];
+    tmpFobj["ws"] = "where m_pid=? and m_rtype=?";
+    tmpFobj["wa"] = [cid, 5];
 	tmpFobj["o"] = "m_vala desc";
     oi = getNuDBFnvp("qmedia", 5, null, tmpFobj);
     doQComm(oi["rq"], null, "setPropImgs");
@@ -287,7 +287,8 @@ var getPropImgs = function() {
                                     <img src="admin/property/<?php echo $row['27'];?>" alt="Not Available"> </div>
                             </div>
 							 end of floor plans -->
-                            <!-- <h5 class="mt-5 mb-4 text-secondary double-down-line-left position-relative"><ti data-ison="stxt[934]" data-desc="btn_contact_agent">Contact Agent</ti></h5>
+                            <!-- start agente data  
+                              <h5 class="mt-5 mb-4 text-secondary double-down-line-left position-relative"><ti data-ison="stxt[934]" data-desc="btn_contact_agent">Contact Agent</ti></h5>
                             <div class="agent-contact pt-60">
                                 <div class="row">
                                     <div class="col-sm-4 col-lg-3"> <img src="admin/user/<?php echo $row['uimage']; ?>" alt="" height="200" width="170"> </div>
@@ -346,7 +347,8 @@ var getPropImgs = function() {
                                                 </div>
                                             </div>
                                         </form>
-                                    </div> -->
+                                    </div>  
+                                     end agente data -->
                                 </div>
                             </div>
                         </div>

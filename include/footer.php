@@ -9,8 +9,8 @@
                                         <div class="footer-logo mb-4" style="padding: 0px;">
                                         <table style="border:0px;">
 											<tr>
-												<td><a href="#"><img src="images/logo/logo-white.png" alt="image" style="max-width:60px"  class="rtable brdrClrHdr bkgdClrWhite"></a></td>
-												<td style="text-align:left;padding:0px;"><span class="text-primary txtBig">imobtech</span></td>
+												<td><a href="#"><img src="images/logo/logo-white.png" alt="image" style="max-width:60px"  class="smltable"></a></td>
+												<td style="text-align:left;padding:0px;"><span class="text-primary txtBig">proptech</span></td>
 											</tr>
 											</table>
 										</div>

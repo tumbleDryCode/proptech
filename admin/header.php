@@ -16,6 +16,9 @@ if(!isset($_SESSION['auser']))
 
   <div class="header">
 			<div>
+
+
+
 	
 				 <!-- WideScreen Menu Toggle
 												<a onclick="javascript:toggleVisibility('sidebara');" id="toggle_btn" style="float:right;padding: 2px;" class="bkgdWhite">

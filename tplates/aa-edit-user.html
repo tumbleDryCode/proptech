@@ -1,0 +1,269 @@
+<table  class="txtSmall slmtable bkgdClrWhite" align="center" style="margin:0 auto;text-align:left">
+			  <tr>
+				 <td>
+<div class="cls-error-div" id="dvVdtnError"></div>
+			  </td></tr><tr><td>&nbsp;</td></tr>
+			  <tr>
+				  <td width="100%"><div id="divCntEdit"  class="clsDummy">
+
+
+					  <table align="center" class="cls-form-dv" width="100%">
+					 	<tr>
+
+<td> 
+  
+<table style="margin:0 auto">
+							 <tr>
+								<td valign="top"><table style="width: 100%" cellspacing="0" cellpadding="0">
+				 <tr>
+					 <td><div id="progressOuter"></div><div id="msgBox"></div></td>
+				 </tr>
+				 <tr>
+					 <td><div class="form-group row">
+													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[94]" data-desc="btn_status">Status</ti></label>
+													<div class="col-lg-9">
+														<select class="form-control" name="tmp_u_cat" id="tmp_u_cat">
+														 
+														</select>
+													</div>
+												</div></td>
+				 </tr>
+				 <tr>
+					 <td><table><tr>
+						 <td>
+						 <div  onclick="javascript:JSSHOP.ui.toggleVisibility('tdUploadBtn');" class="crsrPointer"><img alt="User Icon" src="images/misc/default_user.png"  class="slmtable brdrClrDlg" style="minn-width:150px;max-width:160px;text-align:center;margin-right:3px" align="absmiddle" id="imgIedit"><span class="txtSmall txtClrGrey">Edit</span></div></td>
+						 <td class="crsrPointer" style="text-align:center; height: 50px;" align="absmiddle">
+					
+					</td><td style="vertical-align:top">
+
+					<div class="form-group row">
+													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[97]" data-desc="btn_fullname">Name</ti></label>
+													<div class="col-lg-9">
+														<input type="text" class="form-control" name="tmp_u_fullname" id="tmp_u_fullname" value="1">
+													</div>
+												</div>
+					
+				 
+             </td><td style="text-align: center; vertical-align:top; height: 50px;"><div id="dvPrdMedia"></div></td></tr></table></td>
+				 </tr>
+			 
+				 <tr>
+					 <td id="tdUploadBtn" style="visibility:hidden;display:none">
+					 <table style="width: 100%">
+						 <tr>
+							 <td><div id="dvUploadBtn"  style="display:block;visibility:visible;margin-right:10px"><button id="uploadBtn" class="cls_button cls_button-small form-control"><i class="nav-material-icons coll-menu-item txtClrHdr" style="margin-right:4px;">&#xe439;</i><ti data-ison="stxt[986]" data-desc="btn_upload">Upload</ti></button></div></td>
+				 </tr>
+				 <tr>
+					 <td id="tdAppBCodeBtn"><div id="dvAppBCodeBtn"><div><a href="javascript:doBarCodeScan('add');" class="txtDecorNone">
+					 <!-- <i class="material-icons" style="font-size:42px;" alt="barcode" title="barcode">&#xe329;</i> -->
+					 	</a></div></div><div id="dvProdImgs">dvProdImgs</div></td>
+						 </tr>
+					 </table>
+					 </td>
+				 </tr>
+			 
+			 </table></td>
+							 </tr>
+						 </table></td>
+			  			</tr> 	<tr>
+ 
+<td><div class="form-group row">
+													<label class="col-lg-3 col-form-label">Bio</label>
+													<div class="col-lg-9">
+														<div name="tmp_u_header" id="tmp_u_header"  class="form-control" style="overflow:auto;" contenteditable="true"></div>
+													</div>
+												</div>
+						  </td>					  
+						  </tr>
+
+					   <tr>
+ 
+<td style="height: 58px"><div class="form-group row">
+													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[236]" data-desc="btn_desc">Desc</ti></label>
+													<div class="col-lg-9">
+														<textarea type="text" name="tmp_u_desc" id="tmp_u_desc" type="text" style="min-width:80%;" class="form-control" contenteditable="true" spellckeck="false" data-ms-editor="false">Desc</textarea>
+													</div>
+												</div>
+						  </td>					  </tr>
+						  <tr>
+
+<td> 
+  
+ 											
+</td>
+			  			</tr>
+			  			
+					  <tr>
+ 
+<td><div class="form-group row">
+													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[26]" data-desc="btn_email">Email</ti></label>
+													<div class="col-lg-9">
+														<div name="tmp_u_email" id="tmp_u_email" class="txtClrBlue"></div>
+													</div>
+												</div>
+						  </td>						  </tr>
+					  <tr>
+ 
+<td><table style="width: 100%;">
+						 
+
+						<tbody><tr>
+								<td class="txtSmall txtBold txtClrHdr slmtable"><ti data-ison="stxt[525]" data-desc="btn_select_type">Mas Contactos y Enlaces/ti>:</td>
+							</tr>
+						<tr>
+				  <td><div id="dvCoLinks" class="txtClrHdr bkgdClrWhite"><div><br></div></div></td>
+			  											</tr>
+
+						<tr>
+						<td>
+						<table style="width: 100%">
+							<tbody><tr>
+								<td><select size="1" name="tmp_k_category" id="tmp_k_category" class="crsrPointer form-control" onchange="javascript:tmp_k_title.value=JSSHOP.shared.getCurrSelectOpt(this);" style="max-width:95%">
+                                      <option value="noQvalue" class="noQvalue">Seleccione Tipo</option>
+                                      <option value="facebook">Facebook</option>
+                                      <option value="whatsapp">Whatsapp</option>
+                                      <option value="instagram">Instagram</option>
+                                      <option value="linkedin">Linkedin</option>
+                                      <option value="twitter">Twitter</option>
+                                      <option value="web">Website</option>  
+                                      <option value="email">Email</option>                                                                         
+                                      <option value="telephone">Telephone</option>
+                                      <option value="sms">SMS</option>
+                                      <option value="fax">Fax</option>
+                                      <option value="other">Other</option>
+                                      </select></td>
+							</tr>
+							<tr>
+								<td><input class="form-control" id="tmp_k_title" type="hidden" name="tmp_k_title" placeholder="Title" autocomplete="off" value="twitter"></td>
+							</tr>
+							<tr>
+								<td class="txtSmall">
+				 			    </td>
+							</tr>
+							<tr>
+								<td class="txtSmall">
+				 			   <ti data-ison="stxt[523]" data-desc="btn_web_phone">Direccion Web https://.., Email, Numero de Telefono ...</ti>:</td>
+							</tr>
+							<tr>
+								<td>
+				  <table style="width: 100%">
+									<tr>
+										<td style="width:90%;"><div name="tmp_k_matter" id="tmp_k_matter" type="text" style="overflow:auto;" class="form-control" contenteditable="true" spellckeck="false" data-ms-editor="false">gttrddds</div></td>
+										<td><button id="btnAddSoLink" class="cls_button cls_button-medium bkgdBBlue txtSmall" style="max-width:300px;">Adicionar</button></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+							</tbody></table>
+						 </td>
+			  											</tr>
+						<tr>
+						<td></td>
+			  											</tr>
+						<tr>
+						<td class="txtSmall">&nbsp;</td>
+			  											</tr>
+						<tr>
+						<td><div class="txtSmall" style="text-align:right">
+				 		   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></td>
+			  											</tr>
+						</tbody></table>
+												</div>
+						  </td>						  </tr>
+
+<tr>
+ 
+<td><div class="form-group row">
+													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[48]" data-desc="btn_city">Username</ti></label>
+													<div class="col-lg-9">
+														<input type="text" class="form-control" name="tmp_u_name" id="tmp_u_name" value="1">
+													</div>
+												</div>
+						  </td>					  
+						  </tr>
+
+
+					      
+						  
+
+
+					 
+
+
+
+					  	<tr>
+					  	
+<td> 
+												
+												<div class="form-group row">
+													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[526]" data-desc="btn_price_city">City</ti></label>
+													<div class="col-lg-9">
+														<input type="text" class="form-control" name="tmp_u_region" id="tmp_u_region" value="1">
+														<br>
+														
+													</div>
+												</div>
+
+  
+ 						   </td>
+			  			</tr>
+					  	<tr>
+
+<td>   			<div align="center"><button id="btnEUsave" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite"><ti data-ison="stxt[21]" data-desc="btn_save">Guardar</ti></button></div>
+</td>
+			  			</tr>
+					  	<tr>
+
+<td>  <!-- upload button start  -->
+ 									<div id="dvUImgs">
+										<hr><h5 class="text-secondary"><ti data-ison="stxt[980]" data-desc="btn_images_media">Images - Media</ti></h5>
+
+ 
+								 
+						 </div>
+ 
+
+<!-- upload button end  -->
+
+  
+ 						   </td>
+			  			</tr>
+					  </table>
+				  </div>
+				  
+				  </td>
+			  </tr>
+			  <tr>
+
+<td class=""> 
+
+
+ </td>
+			  </tr>
+			  <tr>
+
+<td style="text-align:right;"> 
+  
+ <a href="javascript:removeAccount();" class="txtSmall txtClrRed"><ti data-ison="stxt[815]">Remove Account</ti></a></td>
+			  </tr>
+			  <tr>
+
+<td> 
+  
+										
+							 
+</td>
+			  </tr>
+			  </table>
+<br>
+
+<table align="center" style="max-width:95%;margin:0 auto;text-align:left">
+			  <tr>
+
+<td> 
+ <div id="dvShops"></div></td>
+			  </tr>
+</table>
+
+
+
