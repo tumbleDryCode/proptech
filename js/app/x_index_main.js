@@ -183,7 +183,7 @@ retPLstSTr += "</div>"; // end featured-thumb hover-zoomer mb-4
 
 
 retPLstSTr += "</div>";  // end col-md-6 col-lg-4
-retPLstSTr += "<hr>";
+ retPLstSTr += "<hr>";
 
 
 istrt++;

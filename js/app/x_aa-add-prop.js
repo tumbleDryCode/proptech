@@ -293,12 +293,10 @@ var doNPropEdit = function() {
     document.getElementById("uid").value = quid;
     tmpFobj = null;
     tmpFobj = {};
-    tTMCcntStr = tinyMCE.activeEditor.getContent();
-    tLZenced = LZString.compressToEncodedURIComponent(tTMCcntStr);
-    tmp_pcontent.value = tLZenced;
+
     alert("tmp_pcontent.value: " + tmp_pcontent.value);
        // alert("c_whours.value: " + c_whours.value);
-    tmpFobj["knvp"] = JSSHOP.shared.getNuKNVParr(JSSHOP.shared.getDynFrmVals(document["property"], "tmp_"), tmpOldFFvals);
+    tmpFobj["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["property"], "tmp_"));
  
     
     
@@ -396,7 +394,7 @@ doQComm(oia["rq"], null, "doMPropForm");
         JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue", "noQvalue");
         
     }
-    if(u_cat.value == "5") {
+    if((u_cat.value == "5") && (pid == "aa-edit-prop")) {
         JSSHOP.ui.showHideElement("dvBHKswitch", "show");
     }
 

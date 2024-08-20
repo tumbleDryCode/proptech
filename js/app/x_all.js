@@ -125,6 +125,21 @@ var loadPlaceLink = function(a, b, c) {
     }
 };
 
+JSSHOP.shared.showUserProfile = function(tSUPID) {
+    try {  
+        tFNlSPID = 0;
+       
+        if (tSUPID == 0) {
+            tSUPID = quid;
+        } 
+            eindex('aa-show-user', 'pid=aa-show-user&tuid=' + tSUPID);
+  } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.showUserProfile");
+    }
+
+        };
+
+
 JSSHOP.shared.setOGtags = function() {
     try {
         var tOGurl = "https://recamby.com";
@@ -2939,6 +2954,35 @@ JSSHOP.shared.setArrVals = function(theMarr, theAIndx, theArr) {
        return theMarr;
 };
 
+
+JSSHOP.shared.getNuKNVParr = function(theArr, tOldKNVArr) {
+    tmpVpar =  null;
+    tmpVpar = [];
+    tmpSobj = null;
+    tmpSobj = {};
+      var len = theArr.length;
+      var iint = 0;
+
+        while (iint < len) {
+      ts = theArr[iint];
+
+     tmpSobj = null;
+    tmpSobj = {};
+      for (var gkey in ts) {
+        if(tOldKNVArr[gkey]) {
+            if(tOldKNVArr[gkey] != ts[gkey]) {
+        tmpSobj["t"] = gkey;
+      tmpSobj["v"] = ts[gkey];
+      tmpVpar.push(tmpSobj);
+            }
+        }
+      }
+      iint++;
+      }
+     return tmpVpar;
+};
+
+
 JSSHOP.shared.getKNVParr = function(theArr) {
 	  tmpVpar =  null;
 	  tmpVpar = [];
@@ -3366,8 +3410,12 @@ JSSHOP.shared.getTblHdrs = function(tHHdrArr) {
     tHdrStr = "";
 for(iha = 0; iha < tHHdrArr.length; iha++) {
     tHlnkObj = tHHdrArr[iha];
+    tStchHstr = "";
+    if(tHlnkObj.fld == "_id") {
+    // tStchHstr = "position: sticky; left: 0; z-index: 3;";
+    }
     if((tHlnkObj.ulnk) && (tHlnkObj.ulnk == "noQvalue")) {
-     tHdrStr += "<th style=\"text-align: left\"><a class=\"txtBold txtClrHdr\">" + tHlnkObj.nm + "</a></th>";	
+     tHdrStr += "<th style=\"text-align: left; " + tStchHstr + "\"><a class=\"txtBold txtClrHdr\">" + tHlnkObj.nm + "</a></th>";	
     } else {
     tHdrStr += "<th style=\"text-align: left\"><a href=\"javascript:rnderFItems('" + tHlnkObj.fld + "');\" class=\"txtBold txtClrHdr\">" + tHlnkObj.nm + "</a></th>";	
     }
@@ -3393,7 +3441,7 @@ for(iha = 0; iha < tHHdrArr.length; iha++) {
                 }
         }
 
-    tHdrStr += "<th style=\"text-align: left\"><a href=\"javascript:rnderFItems('" + tHlnkObj.fld + "');\" class=\"" + tdefcls + "\">" + tHlnkObj.nm + "</a></th>";	
+    tHdrStr += "<th style=\"text-align: left; ;background-color: #FFFFFF;\"><a href=\"javascript:rnderFItems('" + tHlnkObj.fld + "');\" class=\"" + tdefcls + "\">" + tHlnkObj.nm + "</a></th>";	
     }
 }
     return tHdrStr;
@@ -4031,7 +4079,12 @@ if(pid == "aa-contactus") {
 // currIContent = "no";
 }
 if(currIContent == "y") {
+    tdcHref = document.location.href;
+    if(tdcHref.indexOf("admin/") != -1) {
+        JSSHOP.ajax.doNuAjaxPipe("includedContent", "admin/tplates/" + pid + ".html", JSSHOP.ajax.finishDynCntLoad);
+    } else {
 JSSHOP.ajax.doNuAjaxPipe("includedContent", "tplates/" + pid + ".html", JSSHOP.ajax.finishDynCntLoad);
+}
 } else {
 finishCntLoad("lightbox_content","loading...","nada");
 }

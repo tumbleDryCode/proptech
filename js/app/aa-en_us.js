@@ -371,12 +371,6 @@ stxt[3001] = "Item title here";
 stxt[4001] = "Art Pad";
 stxt[4002] = "Note: In order to interact with the Database/Spread-Sheet<br>This Title must match the Custom Title given to your database in DBQuery Box.";
 stxt[4003] = "See Using adminApp";
-
-
-
-
-
-
 // these are form object txts
 // user type strings
 tsvftxt = null;
@@ -393,7 +387,6 @@ tsvftxt["opera"] = "Operations";
 tsvftxt["user"] = "User";
 svftObj["u_jtype"] = tsvftxt;
 
-
  // main menu
 tmmftxt = null;
 tmmftxt = "";
@@ -408,7 +401,6 @@ tmmftxt["super"] = "Super";
 tmmftxt["opera"] = "Operations";
 tmmftxt["user"] = "User";
 svftObj["mmenu"] = tmmftxt;
-
 
 // fleet vehicle types
 tfvftxt = null;
@@ -427,7 +419,6 @@ tfvftxt["10"] = "Trailer Tri Temp";
 tfvftxt["11"] = "Tractor";
 svftObj["f_vtype"] = tfvftxt;
 
-
 tDBcritObj = null;
 tDBcritObj = "";
 tDBcritObj = {};
@@ -439,7 +430,6 @@ tDBcritObj["ends"] = "Ends With";
 tDBcritObj["greater"] = "Greater Than";
 tDBcritObj["less"] = "Less Than";
 svftObj["xss_crit"] = tDBcritObj;
-
 
 tDBHObj = null;
 tDBJObj = "";
@@ -460,10 +450,6 @@ tDBHObj["acreage"] = "Acreage";
 tDBHObj["other"] = "Other";
 svftObj["proptype"] = tDBHObj;
 
-
-
-
-
 tmpContType = null;
 tmpContType = "";
 tmpContType = {};
@@ -475,8 +461,6 @@ tmpContType["foreclosure"] = "Foreclosure";
 tmpContType["buy"] = "Buy";
 tmpContType["other"] = "Other";
 svftObj["contract"] = tmpContType;
-
-
 
 tDPStatObj = null;
 tDPStatObj = "";
@@ -496,4 +480,5 @@ tUCatObj["1"] = "User";
 tUCatObj["2"] = "Agente";
 tUCatObj["3"] = "Builder";
 tUCatObj["4"] = "Consultant";
+// tUCatObj["5"] = "Admin";
 svftObj["usercat"] = tUCatObj;

@@ -53,9 +53,9 @@
 
 
 <form name="quser">
-<input type="hidden" name="_id" value="gfgfgfgfgfg" data-prval="disnull">
+<input type="hidden" name="_id" value="0" data-prval="disnull">
 <input type="hidden" name="u_rtype" id="u_rtype" value="5" data-prval="disnull">
-<input type="hidden" name="u_cat" id="u_cat" value="5" data-prval="disnull">
+<input type="hidden" name="u_cat" id="u_cat" value="1" data-prval="disnull">
 
 <input type="hidden" name="u_name" id="u_name" value="" data-prval="disnull">
 <input type="hidden" name="u_fullname" id="u_fullname" value="" data-prval="disnull">
@@ -187,7 +187,7 @@
 <input type="hidden" name="ptitle" id="ptitle" value="Titulo.. Moradia... " data-prval="disnull">
 <input type="hidden" name="pcontent" id="pcontent" value="Descriçao.. Moradia... Descriçao.. " data-prval="disnull">
 <input type="hidden" name="ptype" id="ptype" value="house" data-prval="disnull">
-<input type="hidden" name="bhk" id="bhk" value="5" data-prval="disnull">
+<input type="hidden" name="bhk" id="bhk" value="1" data-prval="disnull">
 <input type="hidden" name="stype" id="stype" value="sell" data-prval="disnull">
 <input type="hidden" name="bedroom" id="bedroom" value="5" data-prval="disnull">
 <input type="hidden" name="bathroom" id="bathroom" value="2" data-prval="disnull">

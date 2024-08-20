@@ -44,7 +44,9 @@
 
 <script src="../js/bootstrap5.2/bootstrap.js"  language="javascript" type="text/javascript"></script>
 
+<script src="../js/app/js_spinner.js"  language="javascript" type="text/javascript"></script>
 
+<script src="../js/app/lz-string.js" language="javascript" type="text/javascript"></script>
 <script src="../js/app/x_allinit.js"></script> 
 <script src="../js/app/x_all.js"></script> 
 <script src="../js/app/x_admin.js"></script> 

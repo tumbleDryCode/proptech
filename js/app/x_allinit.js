@@ -288,14 +288,11 @@ var getCurrUrl = function() {
     
         JSSHOP.ajax.doNuAjaxPipe = function(theElem,apUrl,tmpCB) {
             try {
-                console.log("doNuAjaxPipe.apUrl: " + apUrl);
-                opUrl = apUrl.replace("index.php", "");
-                rpUrl = opUrl.replace("admin/", "");
-                aapUrl = rpUrl;
+                
                 var oReq = new XMLHttpRequest();
                // var oReq = JSSHOP.ajax.createXMLHTTPObject();
              //  oReq.setRequestHeader("connection", "close");
-             tUTA = JSSHOP.shared.urlToArray(aapUrl);
+             tUTA = JSSHOP.shared.urlToArray(apUrl);
                if(oReq == false) {
                        tmpCB(theElem,"Error",tUTA);
     
@@ -314,10 +311,18 @@ var getCurrUrl = function() {
                       // alert("yikes, we have a connection problem..." + oReq.responseText);
          
                 }
-                opUrl = apUrl.replace("index.php", "");
-                rpUrl = opUrl.replace("admin/", "../");
+                rpUrl = apUrl;
+                console.log("doNuAjaxPipe.apUrl: " + apUrl);
+                rpUrl = apUrl.replace("index.php", "");
+                if(apUrl.indexOf("admin/tplates") != -1) {
+                    isGdAdmn = "y";
+                    
+                    console.log("doNuAjaxPipe:isGdAdmn " + isGdAdmn);
+                } else {
+                 rpUrl = rpUrl.replace("admin/", "");
+                 console.log("doNuAjaxPipe.admin-replace: " + rpUrl);
+                }
                 aapUrl = rpUrl;
-                console.log("doNuAjaxPipe.aapUrl: " + aapUrl);
                 oReq.open("GET", shopDir + aapUrl, true);
                 picr = oReq.send(null);
                }

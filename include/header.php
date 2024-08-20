@@ -116,7 +116,7 @@
 
 
                   
-                              <!--  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="padding: 2px;background-color: #fff;border:0px;"> <span class="navbar-toggler-icon"></span> </button> -->
+                              <!--  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"0% aria-label="Toggle navigation" style="padding: 2px;background-color: #fff;border:0px;"> <span class="navbar-toggler-icon"></span> </button> -->
                                 
                             </nav>
                         </div>
@@ -129,51 +129,57 @@
         <div class="clearfix"></div>
         <div> 
             <table style="width:100%;"><tr><td style="width:90%"> </td><td style="min-width:300px;">
-        <div class="txtClrWhite bg-secondary" id="navbarSupportedContent" style="visibility:hidden;display:none;min-width:300px;max-width:350px;float:right;position:fixed;z-index: 2147483649;">
+        <div class="txtClrWhite bg-secondary" id="navbarSupportedContent" style="visibility:hidden;display:none;min-width:300px;max-width:350px;float:right;position:fixed;z-index: 2147483649;max-height:90%;overflow:scroll;">
                                     <ul>
                                         <li class="nav-item"> <a class="nav-link" href="./" role="button" aria-haspopup="true" aria-expanded="false">Home</a></li>
 										<li class="nav-item"> <a class="nav-link" href="property.php"><ti data-ison="stxt[940]" data-desc="btn_properties">Properties</ti></a> </li>					 
 										<li class="nav-item"> <a class="nav-link" href="search.php"><ti data-ison="stxt[936]" data-desc="btn_searchprops">Search Properties</ti></a> </li>
 										<!-- <li class="nav-item"> <a class="nav-link" href="agent.php"><ti data-ison="stxt[900]" data-desc="btn_agentes">Agentes</ti></a> </li> -->
-                                        <li class="nav-item"> <a class="nav-link" href="contact.php"><ti data-ison="stxt[902]" data-desc="btn_contacts">Contacts</ti></a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="index.html?pid=aa-contactus"><ti data-ison="stxt[902]" data-desc="btn_contacts">Contacts</ti></a> </li>
 										
-										<?php  
-                                        // if(isset($_SESSION['uemail']))
-                                        // check for cookie quid
-                                    if(isset($_COOKIE['quid'])) 
-                                    
- 
-
-										{ ?>
-										<li class="" style="margin-top:10px;">
+									 
+                                    <?php if(isset($_COOKIE['quid'])) { ?>
+										<li class="" style="margin-top:10px;padding-left:8px;">
 											 <ti data-ison="stxt[56]" data-desc="btn_account">Account</ti>
 											<ul class="">
 												<!-- <li class="nav-item"> <a class="nav-link" href="profile.php"><ti data-ison="stxt[903]" data-desc="btn_profile">Profile</ti></a> </li> -->
-                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-prop','pid=aa-edit-prop');JSSHOP.ui.toggleVisibility('navbarSupportedContent');"><ti data-ison="stxt[916]" data-desc="btn_addprop">Subit Property</ti></a> </li>
+                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-add-prop','pid=aa-add-prop');JSSHOP.ui.toggleVisibility('navbarSupportedContent');"><ti data-ison="stxt[916]" data-desc="btn_addprop">Subit Property</ti></a> </li>
 												 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-uprops', 'pid=aa-edit-uprops');JSSHOP.ui.toggleVisibility('navbarSupportedContent');"><ti data-ison="stxt[905]" data-desc="btn_yourprops">Your Properties</ti></a> </li>
 												<li class="nav-item"> <a class="nav-link" href="logout.php">Logout</a> </li>	
 											</ul>
                                         </li>
-                                        <li class="onlySmallScreen" style="margin-top:10px;">
-											 <span style="float:left;padding-left:15px;" class="txtBold txtClrDlg"><ti data-ison="stxt[56]" data-desc="btn_account">Account</ti></a>
-											<ul class="">
-												<!-- <li class="nav-item"> <a class="nav-link txtClrDlg txtBold" href="profile.php"><ti data-ison="stxt[903]" data-desc="btn_profile">Profile</ti></a> </li> -->
-                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-prop', 'pid=aa-edit-prop');"><ti data-ison="stxt[916]" data-desc="btn_addprop">Subit Property</ti></a> </li>
-												 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-uprops', 'pid=aa-edit-uprops');"><ti data-ison="stxt[905]" data-desc="btn_yourprops">Your Properties</ti></a> </li>
-												<li class="nav-item"> <a class="nav-link" href="logout.php">Logout</a> </li>	
-											</ul>
-                                        </li>
+                                         
+                                      
+
 										<?php } else { ?>
-										<li class="nav-item"> <a class="nav-link" href="login.php">Login</a> </li>
-                                        <li class="nav-item"> <a class="nav-link"  href="register.php"><ti data-ison="stxt[961]" data-desc="btn_register">Register</ti></a></li>
+										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-user','pid=aa-edit-user&cit=y');">Login</a> </li>
+                                        <li class="nav-item"> <a class="nav-link"  href="javascript:eindex('aa-edit-user','pid=aa-edit-user&cit=y');"><ti data-ison="stxt[961]" data-desc="btn_register">Register</ti></a></li>
 										<?php } ?>
+
+
 										
                                     </ul>
                                     
 									
 									<!-- <a class="btn btn-primary d-none d-xl-block" href="submitproperty.php"><ti data-ison="stxt[90]" data-desc="btn_about">About</ti></a> -->
                                     
-                                </div>
+        <!-- start of dvAlist -->                      
+<div id="dvAMnuLnks" style="visibility:hidden;display:none;margin:0px;padding:0px;" class="bkgdClrHdr">
+ <ul>
+ <li class="" style="margin-top:10px;padding-left:8px;padding-top:5px;">
+											 <ti data-ison="stxt[83]" data-desc="btn_account">Admin</ti>
+											<ul class="">
+												<!-- <li class="nav-item"> <a class="nav-link" href="profile.php"><ti data-ison="stxt[903]" data-desc="btn_profile">Profile</ti></a> </li> -->
+                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-aprops','pid=aa-edit-aprops');JSSHOP.ui.toggleVisibility('navbarSupportedContent');"><ti data-ison="stxt[901]" data-desc="btn_addprop">Properties</ti></a> </li>
+												 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-ausers', 'pid=aa-edit-ausers');JSSHOP.ui.toggleVisibility('navbarSupportedContent');"><ti data-ison="stxt[80]" data-desc="btn_yourprops">Users</ti></a> </li>
+											</ul>
+                                        </li>
+    </ul>
+</div> <!-- end of dvAMnuLnks -->  
+
+
+
+</div> <!-- end of navbar-collapse -->
                                 </td></tr></table>
         </div>
 

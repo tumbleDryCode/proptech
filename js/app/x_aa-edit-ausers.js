@@ -1,0 +1,146 @@
+var tmpAUsrsLArr = [];
+var tmpAGUsrsLArr = [];
+
+
+var doAUsersList = function(a,rfb,c) {
+    if(rfb.indexOf("_id") != -1) {
+  tmpAUsrsLArr = "";
+  tmpAUsrsLArr = [];
+  tmpAUsrsLArr = JSON.parse(rfb);
+ 
+  rnderULstTbl("_id");
+    } else {
+        alert("doAUsersList: " + rfb);
+        // document.getElementById("divQitems").innerHTML = stxt[508];
+    }
+  };
+
+ 
+
+ 
+
+ var getAUItmsLst = function(tPrpIarr) {
+
+    var aulen = tPrpIarr.length;
+    var iupint = 0;
+    var pucid = 0;
+    autstr = "";
+    tpshdSTr = "";
+    fullurpstr = "";
+    while(iupint < aulen) {
+        tsuar = tPrpIarr[iupint];
+        
+        
+        atstr = "";
+        atstr += "<tr>";
+        
+       //  tSTstr =  ts.u_name + ts.u_fullname + ts.u_cat;
+ 
+        
+        tsUT = tsuar.u_cat;
+        tsrtUT = tsuar.u_cat; 
+          
+         
+        atstr += "<td style=\"text-align: left\"><a href=\"javascript:doMLinkM('aa-edit-worker','pid=aa-edit-worker&twid=" + tsuar._id + "');\">" + tsuar._id + "</a></td>";
+        atstr += "<td style=\"text-align: left\"><a href=\"javascript:doMLinkM('aa-edit-users','pid=aa-edit-users&tujsector=" + tsuar.u_cat + "');\">" + tsuar.u_cat + "</a></td>";
+        
+         
+        
+        atstr += "<td style=\"text-align: left\">" + tsuar.u_fullname +  "</td>";
+        
+ 
+        atstr += "<td style=\"text-align: left\" class=\"txtClrHdr\"><a href=\"javascript:doMLinkM('aa-edit-worker','pid=aa-edit-worker&twid=" + tsuar._id + "');\"><i class=\"menu-material-icons\" alt=\"edit\">&#xe3c9;</i></a>";
+         atstr += "</td>";
+        atstr += "</tr>";
+        autstr += atstr;
+        tmpULTarr.push(atstr);
+    iupint++;
+    }
+ 
+    return autstr;
+    };
+
+    var rnderFItems = function(trSrtIdx) {
+      
+        rnderULstTbl(trSrtIdx);
+    }
+
+ var rnderULstTbl = function(tSrtIdx) {
+ 
+    hasr = "n";
+    fullupstr = "";
+    
+tHdrArr = null;
+tHdrArr = "";
+tHdrArr = [];
+tHdFObj = {};	
+tHdFObj["fld"] = "_id";
+tHdFObj["nm"] = "ID";
+tHdrArr.push(tHdFObj);
+ 
+tAHdFObj = {};	
+tAHdFObj["fld"] = "u_cat";
+tAHdFObj["nm"] = "Dept";
+tHdrArr.push(tAHdFObj);
+
+tBHdFObj = {};	
+tBHdFObj["fld"] = "u_fullname";
+tBHdFObj["nm"] = stxt[97]; // Name
+tHdrArr.push(tBHdFObj);
+tBHdFObj = {};	
+ 
+tBHdFObj = {};	
+tBHdFObj["fld"] = "_id";
+tBHdFObj["nm"] = "<span style=\"margin-right: 10px; margin-top: 10px\" class=\"nav-material-icons txtBold\"><i class=\"nav-material-icons\">&#xe3c9</i></span>";
+tHdrArr.push(tBHdFObj);
+ 
+currACTblCnt = tHdrArr.length;
+ 
+    tmpULTarr = null;
+    tmpULTarr = "";
+    tmpULTarr = [];
+    tmpAGUsrsLArr = null;
+    tmpAGUsrsLArr = "";
+    tmpAGUsrsLArr = [];
+    // currGSarr = currUzsarr;
+ 
+    
+    
+    tSrtIdx = "u_dadded";
+    tmpAGUsrsLArr = JSSHOP.shared.getSrtdArr(tmpAUsrsLArr, tSrtIdx);
+    tRndrINGARr = tmpAGUsrsLArr;
+    tRndrStr = getAUItmsLst(tRndrINGARr);
+    // alert('rnderUEdtPrpItms - tSrtIdx: ' + tSrtIdx);
+
+    newel = document.createElement('div');
+
+    if(tmpAGUsrsLArr[0]) {
+    strTHhtml = JSSHOP.shared.getTblHdrs(tHdrArr);
+    // strTHhtml = JSSHOP.shared.getNurTblHdrs(tHdrArr, "rndrUEdtPrpItms");
+    }
+    tmpFstr = getTblSortStr(strTHhtml, tRndrStr);
+
+    // 
+      //  <div class="tableFixHead"></div>
+    tmpFFstr = "<div class=\"dtable_wrapper\"><div class=\"dtableFixHead\"><div id=\"dvPrpsTbl\">" + tmpFstr + "</div></div></div>";
+    document.getElementById("dvAusrsList").innerHTML = tmpFFstr;
+    JSSHOP.ui.doAutoComp(document.getElementById("inpACSearch"), tmpULTarr);
+    // alert('rndrUEdtPrpItms - tSrtIdx: ' + tSrtIdx);
+    
+ };
+    
+    
+    var dmyFnishCntLoad = fnishCntLoad;
+fnishCntLoad = function() {
+ //  alert('fnishCntLoad');
+ tmpDOs = {};
+ tmpDOs["ws"] = "where _id > ?";
+ tmpDOs["wa"] = [0];
+ 
+ oi = getNuDBFnvp("quser",5,null,tmpDOs);
+ currRQtable = "quser";
+ currRQstr = oi["rq"];
+ // alert("edit users currRQstr: " + currRQstr);
+ doQComm(oi["rq"], null, "doAUsersList");
+return dmyFnishCntLoad;
+};

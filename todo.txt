@@ -1,0 +1,17 @@
+fix login links in dropdown menu
+add featured property toggle to admin and create featured property page
+fix featured properties page
+fix top banner pop up and sayings and ass bottom margin
+fix the add admin drop down.
+add close button to menu drop down
+fix the language files
+fix the messaging
+fix user icon on listings
+fix admin user and prop listing pages
+fix the about us page
+fix the map and its popup
+clean up the datavase and tables
+fix the favorites pop up
+remove all recamby references
+
+

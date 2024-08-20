@@ -1679,3 +1679,82 @@ max-width: 98%;
   max-height:48px;
   max-width:48px;
 }
+
+
+
+
+/*   datatable stuff */
+
+
+
+.dtable {
+  font-family: arial, sans-serif;
+border-collapse: collapse;
+}
+
+.dth {
+width: 126px;
+height: 56px;
+padding: 0px 16px;
+text-align: left;
+background-color: #fafafa;
+}
+
+.dtd {
+  /*
+width: 118px;
+height: 56px;
+min-width: 118px;
+*/
+
+max-width: 118px;
+
+max-height: 56px;
+
+
+overflow: hidden;
+text-align: center;
+border-bottom: 2px solid #dddddd;
+}
+.dpink_color {
+background-color: pink;
+}
+
+.dtable_wrapper {
+position: relative;
+}
+.dtable_scroll {
+height: 73vh;
+overflow: auto;
+}
+.dtable_wrapper table {
+width: 100%;
+}
+
+.dtable_wrapper table thead th .text {
+position: absolute;
+z-index: 2;
+
+}
+.dtableFixHead
+{ 
+overflow: auto; height: 63vh; 
+}
+.dtableFixHead thead th 
+{ 
+ background-color: #FFFFFF; 
+position: sticky; top: 0; z-index: 1; 
+}
+
+
+@media only screen and (min-width: 600px) {
+.dtable_scroll {
+height: 77vh;
+overflow: auto;
+}
+
+.dtableFixHead
+{ 
+overflow: auto; height: 100%; 
+}
+}

@@ -2,7 +2,8 @@
 			  <tr>
 				 <td>
 <div class="cls-error-div" id="dvVdtnError"></div>
-			  </td></tr><tr><td>&nbsp;</td></tr>
+			  </td></tr><tr><td style="text-align: right">
+				  <a href="javascript:JSSHOP.shared.showUserProfile(0);"><ti data-ison="stxt[903]">Profile</ti></a></td></tr>
 			  <tr>
 				  <td width="100%"><div id="divCntEdit"  class="clsDummy">
 
@@ -12,43 +13,58 @@
 
 <td> 
   
-<table style="margin:0 auto">
+<table style="margin:0 auto" width="100%">
 							 <tr>
 								<td valign="top"><table style="width: 100%" cellspacing="0" cellpadding="0">
 				 <tr>
-					 <td><div id="progressOuter"></div><div id="msgBox"></div></td>
+					 <td style="width: 275px"><div id="progressOuter"></div><div id="msgBox"></div></td>
 				 </tr>
 				 <tr>
-					 <td><div class="form-group row">
+					 <td style="width: 275px"><div class="form-group row">
 													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[94]" data-desc="btn_status">Status</ti></label>
 													<div class="col-lg-9">
 														<select class="form-control" name="tmp_u_cat" id="tmp_u_cat">
 														 
-														</select>
-													</div>
+														</select></div>
 												</div></td>
 				 </tr>
 				 <tr>
-					 <td><table><tr>
+					 <td style="width: 275px"><table><tr>
 						 <td>
 						 <div  onclick="javascript:JSSHOP.ui.toggleVisibility('tdUploadBtn');" class="crsrPointer"><img alt="User Icon" src="images/misc/default_user.png"  class="slmtable brdrClrDlg" style="minn-width:150px;max-width:160px;text-align:center;margin-right:3px" align="absmiddle" id="imgIedit"><span class="txtSmall txtClrGrey">Edit</span></div></td>
 						 <td class="crsrPointer" style="text-align:center; height: 50px;" align="absmiddle">
 					
 					</td><td style="vertical-align:top">
 
-					<div class="form-group row">
-													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[97]" data-desc="btn_fullname">Name</ti></label>
+					
+													<table style="width: 100%">
+														<tr>
+															<td><div class=""><label class="col-lg-3 col-form-label"><ti data-ison="stxt[97]" data-desc="btn_fullname">Name</ti></label>
 													<div class="col-lg-9">
 														<input type="text" class="form-control" name="tmp_u_fullname" id="tmp_u_fullname" value="1">
 													</div>
-												</div>
+												</div></td>
+														</tr>
+														<tr>
+ 
+<td> 
+													 
+													 
+														 
+													 
+											 
+						  					  
+														</tr>
+		 
+													</table>
+													
 					
 				 
-             </td><td style="text-align: center; vertical-align:top; height: 50px;"><div id="dvPrdMedia"></div></td></tr></table></td>
+             </td></tr></table></td>
 				 </tr>
 			 
 				 <tr>
-					 <td id="tdUploadBtn" style="visibility:hidden;display:none">
+					 <td id="tdUploadBtn" style="visibility:hidden;display:none; width: 275px;">
 					 <table style="width: 100%">
 						 <tr>
 							 <td><div id="dvUploadBtn"  style="display:block;visibility:visible;margin-right:10px"><button id="uploadBtn" class="cls_button cls_button-small form-control"><i class="nav-material-icons coll-menu-item txtClrHdr" style="margin-right:4px;">&#xe439;</i><ti data-ison="stxt[986]" data-desc="btn_upload">Upload</ti></button></div></td>
@@ -67,7 +83,7 @@
 						 </table></td>
 			  			</tr> 	<tr>
  
-<td><div class="form-group row">
+<td style="width: 552px"><div class="form-group row">
 													<label class="col-lg-3 col-form-label">Bio</label>
 													<div class="col-lg-9">
 														<div name="tmp_u_header" id="tmp_u_header"  class="form-control" style="overflow:auto;" contenteditable="true"></div>
@@ -78,7 +94,7 @@
 
 					   <tr>
  
-<td style="height: 58px"><div class="form-group row">
+<td style="height: 58px; width: 552px;"><div class="form-group row">
 													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[236]" data-desc="btn_desc">Desc</ti></label>
 													<div class="col-lg-9">
 														<textarea type="text" name="tmp_u_desc" id="tmp_u_desc" type="text" style="min-width:80%;" class="form-control" contenteditable="true" spellckeck="false" data-ms-editor="false">Desc</textarea>
@@ -87,7 +103,7 @@
 						  </td>					  </tr>
 						  <tr>
 
-<td> 
+<td style="width: 552px"> 
   
  											
 </td>
@@ -95,29 +111,36 @@
 			  			
 					  <tr>
  
-<td><div class="form-group row">
-													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[26]" data-desc="btn_email">Email</ti></label>
-													<div class="col-lg-9">
-														<div name="tmp_u_email" id="tmp_u_email" class="txtClrBlue"></div>
-													</div>
-												</div>
-						  </td>						  </tr>
+<td>&nbsp;</td>						  </tr>
+
+
+					      
+						  
+
+
+					 
+
+
+
 					  <tr>
  
 <td><table style="width: 100%;">
 						 
 
-						<tbody><tr>
-								<td class="txtSmall txtBold txtClrHdr slmtable"><ti data-ison="stxt[525]" data-desc="btn_select_type">Mas Contactos y Enlaces/ti>:</td>
-							</tr>
-						<tr>
-				  <td><div id="dvCoLinks" class="txtClrHdr bkgdClrWhite"><div><br></div></div></td>
-			  											</tr>
+						<tbody>
+				
 
 						<tr>
 						<td>
 						<table style="width: 100%">
-							<tbody><tr>
+							<tbody>
+								<tr>
+								<td class="txtSmall txtBold txtClrHdr slmtable"><ti data-ison="stxt[525]" data-desc="btn_select_type">Mas Contactos y Enlaces</ti>:</td>
+								</tr>
+										<tr>
+				  <td><div id="dvCoLinks" class="txtClrHdr bkgdClrWhite"></div></td>
+			  											</tr>
+								<tr>
 								<td><select size="1" name="tmp_k_category" id="tmp_k_category" class="crsrPointer form-control" onchange="javascript:tmp_k_title.value=JSSHOP.shared.getCurrSelectOpt(this);" style="max-width:95%">
                                       <option value="noQvalue" class="noQvalue">Seleccione Tipo</option>
                                       <option value="facebook">Facebook</option>
@@ -160,27 +183,9 @@
 						<tr>
 						<td></td>
 			  											</tr>
-						<tr>
-						<td class="txtSmall">&nbsp;</td>
-			  											</tr>
-						<tr>
-						<td><div class="txtSmall" style="text-align:right">
-				 		   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></td>
-			  											</tr>
 						</tbody></table>
-												</div>
+												 
 						  </td>						  </tr>
-
-<tr>
- 
-<td><div class="form-group row">
-													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[48]" data-desc="btn_city">Username</ti></label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control" name="tmp_u_name" id="tmp_u_name" value="1">
-													</div>
-												</div>
-						  </td>					  
-						  </tr>
 
 
 					      
@@ -192,43 +197,11 @@
 
 
 					  	<tr>
-					  	
-<td> 
-												
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[526]" data-desc="btn_price_city">City</ti></label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control" name="tmp_u_region" id="tmp_u_region" value="1">
-														<br>
-														
-													</div>
-												</div>
 
-  
- 						   </td>
-			  			</tr>
-					  	<tr>
-
-<td>   			<div align="center"><button id="btnEUsave" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite"><ti data-ison="stxt[21]" data-desc="btn_save">Guardar</ti></button></div>
+<td style="width: 552px">   			<div align="center"><button id="btnEUsave" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite"><ti data-ison="stxt[21]" data-desc="btn_save">Guardar</ti></button></div>
 </td>
 			  			</tr>
-					  	<tr>
-
-<td>  <!-- upload button start  -->
- 									<div id="dvUImgs">
-										<hr><h5 class="text-secondary"><ti data-ison="stxt[980]" data-desc="btn_images_media">Images - Media</ti></h5>
-
- 
-								 
-						 </div>
- 
-
-<!-- upload button end  -->
-
-  
- 						   </td>
-			  			</tr>
-					  </table>
+					  	</table>
 				  </div>
 				  
 				  </td>
@@ -244,7 +217,7 @@
 
 <td style="text-align:right;"> 
   
- <a href="javascript:removeAccount();" class="txtSmall txtClrRed"><ti data-ison="stxt[815]">Remove Account</ti></a></td>
+ <!-- <a href="javascript:removeAccount();" class="txtSmall txtClrRed"><ti data-ison="stxt[815]">Remove Account</ti></a> --></td>
 			  </tr>
 			  <tr>
 

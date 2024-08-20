@@ -114,6 +114,7 @@ if(!isset($_SESSION['auser']))
 							<li class="submenu">
 								<a href="#"><i class="fe fe-user"></i> <span><ti data-ison="stxt[617]" data-desc="btn_users">Users</span> <span class="menu-arrow"></span></a>
 								<ul style="display: none;">
+								<li><a href="javascript:eindex('aa-edit-aprops','pid=aa-edit-aprops&st=main')"><ti data-ison="stxt[617]" data-desc="btn_users">All</ti></a></li>
 									<li><a href="adminlist.php"> Admin </a></li>
 									<li><a href="useragent.php"><ti data-ison="stxt[943]" data-desc="btn_agent">Agent</ti></a></li>
 									<li><a href="userbuilder.php"><ti data-ison="stxt[944]" data-desc="btn_builder">Builder</ti></a></li>

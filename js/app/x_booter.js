@@ -1,6 +1,6 @@
 var currTglBxsObj = {};
 var btnClosePop = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrRed crsrPointer\" style=\"float:right\"><i class=\"menu-material-icons txtBold txtClrRed\" alt=\"close\" title=\"close\" value=\"close\">&#xe5cd;</i></div>";
-var currSortIdx = "0";
+var currSortIdx = {};
 var currSortObj = {};
 currSortObj["psearch"] = {};
 currSortObj["psearch"]["sindex"] = "c_title";
@@ -1463,7 +1463,10 @@ while(iint < xae.length) {
 nuDW(xae[iint]);
 iint++;
 }
-
+// alert("u_cat.value: " + u_cat.value);
+if(u_cat.value == "5") {
+   JSSHOP.ui.showHideElement("dvAMnuLnks", "show");
+}
 
 fnishCntLoad();
 
@@ -2750,7 +2753,7 @@ if(JSSHOP.cookies.getCookie("currSortObj") != null) {
    } 
 // alert("tufilepath: " + (newError).fileName);
 tdhref = document.location.href;
-if(tdhref.indexOf("admin/") != -1) {
+if(tdhref.indexOf("/admin") != -1) {
 JSSHOP.loadScript("../js/app/" + jscssprefix + "aa-" + usrlang + ".js", doFrmQLoad,"js");
 } else {
 JSSHOP.loadScript("js/app/" + jscssprefix + "aa-" + usrlang + ".js", doFrmQLoad,"js");

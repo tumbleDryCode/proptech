@@ -1,7 +1,3 @@
-if((quid == 0) || (quid == "noQvalue")) {
-    document.location.href = "index.html?pid=login";
-}
-
 currPgTitle = stxt[31] + " " + stxt[56];
 document.title = currPgTitle; 
 var euiFFObjArr = null;
@@ -327,103 +323,42 @@ var finishUPupload = function(theMMum) {
         alert("finishMPupload:" + e);
         }
     };
+function aFillUsrFrm(a,b,c) {
+    fuArr = null;
+    fuArr = JSON.parse(b);
 
-
+    JSSHOP.shared.setDynFieldVals(fuArr[0],"tmp_");
+}
 
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
-    if((quid == 0) || (quid == "noQvalue")) {
-         document.location.href = "index.html?pid=login";
-    }  else { 
-        // tEUhdrStr = "Edit User - more options coming soon.";
-        // document.getElementById("dvPartLinks").innerHTML = tEUhdrStr;
-
-// document.getElementById("dvPartsList").innerHTML = "";
-/*
-tifo = nCurrFFieldOb();
-tifo.fid = "tmp_u_name";
-tifo.fdv = stxt[48];
-tifo.lid = "lbl_u_name"; 
-tifo.ltxt = stxt[48]; 
-// tifo.fvr = ck_username;
-tifo.fve = stxt[1001];
-euiFFObjArr.push(tifo);
-
-tfui = nCurrFFieldOb();
-tfui.fid = "tmp_u_pass";
-tfui.fdv = stxt[49];
-tfui.lid = "lbl_u_pass"; 
-tfui.ltxt = stxt[49]; 
-// tfui.fvr = ck_password;
-tfui.fve = stxt[1001];
-euiFFObjArr.push(tfui);
-*/
-
-/*
-tfue = nCurrFFieldOb();
-tfue.fid = "tmp_u_email";
-tfue.fdv = stxt[50];
-tfue.lid = "lbl_u_email"; 
-tfue.ltxt = stxt[50]; 
-tfue.fve = stxt[1001];
-euiFFObjArr.push(tfue);
-*/
-
-tfsb = nCurrFFieldOb();
-tfsb.fid = "btnAddSoLink";
-tfsb.fty = "button";
-tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){doCoLinkAdd()}) };
-euiFFObjArr.push(tfsb);
-
-
-tfuh = nCurrFFieldOb();
-tfuh.fid = "tmp_u_header";
-tfuh.fdv = stxt[51];
-tfuh.lid = "lbl_u_header"; 
-tfuh.ltxt = stxt[51]; 
-euiFFObjArr.push(tfuh);
-
-tfsb = nCurrFFieldOb();
-tfsb.fid = "btnEUsave";
-tfsb.fty = "button";
-tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){doUserEdit()}) };
-euiFFObjArr.push(tfsb);
-
-
-JSSHOP.shared.initFrmComps(euiFFObjArr);
+ 
 //
-if(arrAllForms.quser) {
-JSSHOP.shared.setDynFieldVals(arrAllForms.quser.v[0],"tmp_");
-} else {
-    tmp_u_name.value = u_name.value;
-    tmp_u_pass.value = u_pass.value;
-    tmp_u_email.value = u_email.value;
-   
 
-// JSSHOP.shared.setDynFieldVals(JSSHOP.shared.getDynFrmVals(document["quser"], ""),"tmp_");
-}
+/*
 
+*/
 
-
+if(currUrlArr.tuid) {
+    tuid = currUrlArr.tuid;
+    tGUKos = null;
+    tGUKos = {};
+    tGUKos["ws"] = "where _id=?";
+    tGUKos["wa"] = [tuid];
+    oi = getNuDBFnvp("quser",5,null,tGUKos);
+    doQComm(oi["rq"], "y", "aFillUsrFrm");
+    tUcat = document.getElementById("tmp_u_cat");
  
+// JSSHOP.shared.addCurrSlctObj(svftObj["usercat"], tUcat, u_cat.value, "noQvalue", "noQvalue");
  
-tUcat = document.getElementById("tmp_u_cat");
- 
-// alert("u_cat.value: " + u_cat.value);
-if((u_cat.value == "5") || (currUrlArr.da)) {
-svftObj["usercat"]["5"] = "Admin";
-}
-JSSHOP.shared.addCurrSlctObj(svftObj["usercat"], tUcat, u_cat.value, "noQvalue", "noQvalue");
- 
-
 tmpDOs = null;
 tmpDOs = {};
 tmpDOs["ws"] = "where k_userid=? and k_coid=? and k_rtype=?";
-tmpDOs["wa"] = [quid,quid,5]; 
+tmpDOs["wa"] = [tuid,tuid,5]; 
 oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
 doQComm(oi["rq"], "y", "setCurrCoLinks");
 
-    }
+  
 
 // disable user name password and email fields
 // document.getElementById("tmp_u_name").disabled=true;
@@ -433,9 +368,15 @@ if(currUrlArr.umsg && currUrlArr.umsg == "remove") {
     dvPartLinks.innerHTML = "<div class=\"txtBold txtClrRed\">" + stxt[824] + "</div>";
 }
 getUiconImgs();
-currMediaID = quid;
-doMediaBtnSetup('uploadBtn', '', 'finishUPupload', '../images/user');
-/**/
+
+} else {
+    alert("no user id in url");
+}
+ 
+ 
+ 
+
+ 
 return dmyFnishCntLoad;
 };
 
@@ -444,20 +385,150 @@ var aEditUser = function() {
 };
 
  
+ 
+
+
+function rndrUProps(aaw,aww,cww) {
+    console.log('doMPropsList - aww: ' + aww);
+     
+istrt = 0;
+iprplen = 0;
+fullPrpLstA = JSON.parse(aww);
+currShopsArr = fullPrpLstA;
+iprplen = fullPrpLstA.length;
+retPLstSTr = "";
+// alert('doMPropsList - iprplen: ' + iprplen);
+while(istrt < iprplen){
+aprpObj = fullPrpLstA[istrt];
+aprpTitle = aprpObj["ptitle"];
+aprpContent = aprpObj["pcontent"];
+aprpType = aprpObj["ptype"];
+aprpBhk = aprpObj["bhk"];
+aprpStype = aprpObj["stype"];
+aprpBedroom = aprpObj["bedroom"];
+aprpBathroom = aprpObj["bathroom"];
+aprpBalcony = aprpObj["balcony"];
+aprpKitchen = aprpObj["kitchen"];
+aprpHall = aprpObj["hall"];
+aprpFloor = aprpObj["floor"];
+aprpSize = aprpObj["size"];
+aprpPrice = aprpObj["price"];
+aprpLocation = aprpObj["location"];
+aprpCity = aprpObj["city"];
+aprpState = aprpObj["state"];
+aprpFeature = aprpObj["feature"];
+aprpPimage = aprpObj["pimage"];
+aprpPimage1 = aprpObj["pimage1"];
+aprpPimage2 = aprpObj["pimage2"];
+aprpPimage3 = aprpObj["pimage3"];
+aprpPimage4 = aprpObj["pimage4"];
+aprpUid = aprpObj["uid"];
+aprpStatus = aprpObj["status"];
+aprpMapimage = aprpObj["mapimage"];
+aprpTopmapimage = aprpObj["topmapimage"];
+aprpGroundmapimage = aprpObj["groundmapimage"];
+aprpTotalfloor = aprpObj["totalfloor"];
+aprpDate = aprpObj["date"];
+aprploclat = aprpObj["ploclat"];
+aprploclng = aprpObj["ploclng"];
+retPLstSTr += "<div class=\"col-md-6 col-lg-4\">";
+/*
+retPLstSTr += "<div tid=\"dvCoFavBtn\" style=\"float: right\"></div>";
+
+<div style="float: right"><span class="cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg" onclick="javascript:doRecentFavorite('index.html?pid=aa-show-item&amp;itemid=12&amp;cid=15155&amp;catid=5','Apoyobrazos central para un BMW 2.6-','0','12','btnFavs12');"><i id="btnFavs12" class="material-icons txtClrTtl" alt="favorite" title="favorite" value="favorite">?</i></span><span class="cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg" style="margin:2px;" onclick="JSSHOP.ui.showShareBox('product',12);"><i class="material-icons txtClrTtl" alt="share" title="share" value="share">?</i></span><span class="cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg" style="margin:2px;" onclick="JSSHOP.ui.showMsgBox('product', ts._id,'showMsgSave');"><i class="material-icons txtClrTtl" alt="chat" title="messages" value="messages">?</i></span></div>
+*/
+currFTclr = "material-icons txtClrTtl";
+ if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {
+currFTclr = "material-icons txtClrRed";
+}
+
+retPLstSTr += "<table><tr><td>";
+
+//  <div  onclick="javascript:JSSHOP.ui.toggleVisibility('tdUploadBtn');" class="crsrPointer"><img alt="User Icon" src="images/misc/default_user.png"  class="slmtable brdrClrDlg" style="minn-width:150px;max-width:160px;text-align:center;margin-right:3px" align="absmiddle" id="imgIedit"><span class="txtSmall txtClrGrey">Edit</span></div>
+ retPLstSTr += "<div  onclick=\"javascript:eindex('aa-pdetail','pid=aa-pdetail&prpid=" + aprpObj._id + "')\" class=\"crsrPointer\"><img src=\"admin/property/" + aprpPimage + "\" alt=\"pimage\" class=\"icnRndnUser\" align=\"absmiddle\"></div>";
+retPLstSTr += "</td><td>";
+retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-pdetail','pid=aa-pdetail&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
+ retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpLocation + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
+ 
+retPLstSTr += "</td></tr></table>";
+
+ retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\">";
+retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-pdetail','pid=aa-pdetail&prpid=" + aprpObj._id + "')\"> <img src=\"admin/property/" + aprpPimage + "\" alt=\"pimage\">";
+retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
+retPLstSTr += "<div class=\"sale bg-secondary text-white text-capitalize\">" + tDBHObj[aprpType] + "</div>";
+retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
+retPLstSTr += "<div class=\"featured-thumb-data shadow-one\">";
+
+/*
+retPLstSTr += "<div class=\"p-3\">";
+retPLstSTr += "<span class=\"location text-capitalize\"><i class=\"fas fa-map-marker-alt text-primary\"></i> " + aprpLocation + "</span> </div>";
+retPLstSTr += "<div class=\"px-4 pb-4 d-inline-block w-100\">";
+retPLstSTr += "<div class=\"\"> <a href=\"propertydetail.php?pid=" + aprpUid + "\" class=\"txtSmall txtBold txtDecorNone\">" + stxt[99] + "...</a> </div>";
+retPLstSTr += "<div class=\"float-right\"><i class=\"nav-material-icons coll-menu-item txtClrHdr\" style=\"margin-right:4px;margin-top:2px;\">&#xe0b7;</i> <a href=\"contact.php?propid=" + aprpUid + "\" class=\"txtSmall txtBold txtDecorNone\">" + stxt[98] + "</a> </div>";
+retPLstSTr += "</div>";
+*/
+
+
+retPLstSTr += "<div class=\"bg-gray quantity px-4 pt-4\">";
+retPLstSTr += "<ul>";
+retPLstSTr += "<li><b>" + aprpSize + "</b> Area m2</li>";
+retPLstSTr += "<li><b>" + aprpBedroom + "</b>" + stxt[922] + "</li>";
+retPLstSTr += "<li><b>" + aprpBathroom + "</b>" + stxt[923] + "</li>"
+retPLstSTr += "<li><b>" + aprpKitchen + "</b>" + stxt[926] + "</li>"; 
+retPLstSTr += "</ul>";
+
+
+
+
+retPLstSTr += "</div>"; // end bg-gray quantity px-4 pt-4
+retPLstSTr += "<div class=\"bkgdClrWhite\">";
+retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></span>";
+retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
+retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-pdetail&prpid=" + aprpObj._id + "','" + aprpTitle + "','noQvalue','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
+// streetview link http://maps.google.com/maps?q=&layer=c&cbll=
+tSrvLLstr = aprploclat + "," + aprploclng;
+retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\"><a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr + "\"><i class=\"material-icons txtClrTtl\" alt=\"streetview\" title=\"streetview\" value=\"streetview\">&#xe56e;</i> Street View</a></span>";
+
+ 
+
+retPLstSTr += "</div>"; // end bkgdClrWhite
+
+
+
+
+retPLstSTr += "</div>"; // end featured-thumb-data shadow-one
+retPLstSTr += "</div>"; // end featured-thumb hover-zoomer mb-4
+
+
+
+
+
+retPLstSTr += "</div>";  // end col-md-6 col-lg-4
+retPLstSTr += "<hr>";
+
+
+istrt++;
+}
+// return retPLstSTr;
+JSSHOP.ui.setTinnerHTML("dvUPropList",retPLstSTr);
+// alert('doMPropsList - aaw: ' + aaw);
+
+
+ }
+
+function getUProps() {
+    // alert("getUProps");
+    tmpDOs = null;
+    tmpDOs = {};
+    tmpDOs["ws"] = "where uid=?";
+    tmpDOs["wa"] = [tuid];
+    tmpDOs["l"] = 5;
+    oi = getNuDBFnvp("property",5,null,tmpDOs);
+    doQComm(oi["rq"], "y", "rndrUProps");
+}
+
 // Link adding functions
 
-
-var doCoLinkDelete = function(tmpCLindex, tmpQlid) {
-    //carr = currCoLinksArr[tmpVindex];
-    cnnarr = removeArrElement(currCoLinksArr, tmpCLindex);
- 
-    currCoLinksArr = null;
-    currCoLinksArr = cnnarr;
-    JSSHOP.ui.setCBBClickClr(dvCoLinks,'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr bkgdClrWhite', function(){JSSHOP.ui.closeLbox()});
-
-    procNuUIitem("qlinks","k_rtype",tmpQlid,"0","rndrCoLnks");
- 
-};
 
 
 
@@ -476,7 +547,7 @@ rcts = null;
 
 var tmpScatA = {};
 rcnsDv = document.createElement('div');
-rcL = "<table style=\"width:100%;\">";
+rcL = "";
 while(rciint < rclen) {
 rcts = theArr[rciint];
 tKmatter = unescape(decodeURIComponent(rcts.k_matter));
@@ -533,21 +604,22 @@ if(tKcategory == "telephone") {
  
 
 // rcnsDv.className = "collection-item txtDecorNone margleft"; 
-rcL += "<tr><td><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span></td>";
-rcL += "<td>" + tKfnlMatter;
+rcL += "<div style=\"margin:10px;\" nowrap=\"nowrap\"><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span>";
+rcL +=    "<span class=\"txtSmall txtClrGrey\">" + rcts.k_title + "</span><br>" + tKfnlMatter + "</div>";
 
 //rcL += "<tr><td><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span></td><td><span class=\"txtSmall txtClrGrey\">" + rcts.k_title + "</span></td><td>" + unescape(decodeURIComponent(rcts.k_matter));
-rcL += "</td><td><button  onclick=\"javascript:doCoLinkDelete(" + rciint + "," + rcts._id + ");\" class=\"crsrPointer txtXLrg txtBold slmtable bkgdClrWhite brdrNone txtClrDrkGrn\"><i class=\"txtClrRed brdrClrWhite bkgdClrWhite menu-material-icons\" alt=\"delete\" title=\"delete\">&#xe92b;</i></button>";
-rcL += "</td></tr>";
+ 
 // rcnsDv.innerHTML = "<span class=\"txtBold\">" + rcts.k_category + "</span><br>" + rcts.k_matter;
 rciint++;
 }
-rcL += "</table>";
-rcnsDv.innerHTML = rcL;
-dvCoLinks.appendChild(rcnsDv);
+ 
+// rcnsDv.innerHTML = rcL;
+dvCoLinks.innerHTML = rcL;
 if(za == "ya") {
     setTimeout("JSSHOP.ui.setCBBClickClr(dvCoLinks,'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr bkgdClrWhite', function(){JSSHOP.ui.closeLbox()})", 1000);
 }
+getUProps();
+ 
 // dvCoLinks.innerHTML = JSON.stringify(currCoLinksArr);
 };
 
@@ -557,23 +629,7 @@ var finishCOLupload = function(theMMum) {
 alert("finishCOLupload: " + theMMum);
 
 };
-
-var fnshCoLinkAdd = function(tCCLA, tCCLB, tCCLC) {
-    // alert("fnshCoLinkAdd: " + tCCLB);
-    stopSpin("btnAddSoLink");
-    btnAddSoLink.innerHTML = "";
-    JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium bkgdBBlue txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
-
-    // JSSHOP.ui.setCBBClickClr(btnAddSoLink,'txtXLrg txtBold slmtable bkgdClrDGreen txtClrWhite','txtXLrg txtBold slmtable bkgdClrWhite brdrNone txtClrDrkGrn', function(){document.getElementById("btnAddSoLink").disabled=false;});
-   //  document.getElementById("btnAddSoLink").innerHTML="<i class=\"txtBold txtClrDrkGrn brdrClrWhite bkgdClrWhite material-icons\" alt=\"add\" title=\"add\">&#xe145;</i>";
-        tmpDOs = null;
-        tmpDOs = {};
-        tmpDOs["ws"] = "where k_userid=? and  k_coid=? and k_rtype=?";
-        tmpDOs["wa"] = [quid,quid,5]; 
-        oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
-        doQComm(oi["rq"], "y", "setCurrCoLinks");
-    }; 
-    
+ 
     var setCurrCoLinks = function(tCCLA, tCCLB, tCCLC) {
         if(tCCLB.indexOf("_id") != -1) {
             currCoLinksArr = null;
@@ -583,82 +639,4 @@ var fnshCoLinkAdd = function(tCCLA, tCCLB, tCCLC) {
         rndrCoLnks(tCCLA, tCCLB, tCCLC);
         }
         }
-    
-var doCoLinkAdd = function() {
-    JSSHOP.shared.setFrmFieldVal("qlinks", "k_userid", quid);
-    JSSHOP.shared.setFrmFieldVal("qlinks", "k_coid", quid);
-    JSSHOP.shared.setFrmFieldVal("qlinks", "k_dadded", JSSHOP.getUnixTimeStamp());
-    // JSSHOP.shared.setDynFrmVals(document["qlinks"], "tmp_");
-
-    tmpFobj = null;
-    tmpFobj = {};
-    tmpFobj["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qlinks"], "tmp_"));
-    tmpKmatter = JSSHOP.shared.getFrmFieldVal("qlinks", "k_matter", 0);
-    // JSSHOP.shared.setDynFrmVals(document["qlinks"], "tmp_");
-    if(JSSHOP.shared.getFrmFieldVal("qlinks", "k_matter", 0) == "") {
-        alert("Please enter a link");
-        stopSpin("btnAddSoLink");
-        btnAddSoLink.innerHTML = "";
-        JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDYellow txtClrWhite','cls_button cls_button-medium bkgdBBlue txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
-    
-        return;
-    }
-    if((JSSHOP.shared.getFrmFieldVal("qlinks", "k_title", 0) == "") || (JSSHOP.shared.getFrmFieldVal("qlinks", "k_title", 0) == "noQvalue")){
-        alert("Please enter a tcategory");
-        stopSpin("btnAddSoLink");
-        btnAddSoLink.innerHTML = "";
-        JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDYellow txtClrWhite','cls_button cls_button-medium bkgdBBlue txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
-    
-        return;
-    }
-    if((JSSHOP.shared.getFrmFieldVal("qlinks", "k_category", 0) == "") || (JSSHOP.shared.getFrmFieldVal("qlinks", "k_category", 0) == "noQvalue")){
-        alert("Please enter a category");
-        stopSpin("btnAddSoLink");
-        btnAddSoLink.innerHTML = "";
-        JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDYellow txtClrWhite',btnAddSoLink.className + ' txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
-        // JSSHOP.ui.setCBBClickClr(tmp_k_category,'brdrClrRed','crsrPointer form-control', function(){void(0);});
-
-        return;
-    }
-    if(tmpKmatter.indexOf("facebook.com") != -1) {
-        JSSHOP.shared.setFrmFieldVal("qlinks", "k_category", "facebook");
-        // try to ectract username or id from url
-        tmpKmatter = tmpKmatter.replace("https://www.facebook.com/", "");
-        tmpKmatter = tmpKmatter.replace("http://www.facebook.com/", "");
-        tmpKmatter = tmpKmatter.replace("https://facebook.com/", "");
-        tmpKmatter = tmpKmatter.replace("http://facebook.com/", "");
-        tmpKmatter = tmpKmatter.replace("www.facebook.com/", "");
-        tmpKmatter = tmpKmatter.replace("facebook.com/", "");
-        tmpKmatter = tmpKmatter.replace("www.facebook.com/", "");
-        tmpKmatter = tmpKmatter.replace("facebook.com/", "");
-    } else if(tmpKmatter.indexOf("twitter.com") != -1) {
-        JSSHOP.shared.setFrmFieldVal("qlinks", "k_category", "twitter");
-        // try to ectract username or id from url
-        tmpKmatter = tmpKmatter.replace("https://www.twitter.com/", "");
-        tmpKmatter = tmpKmatter.replace("http://www.twitter.com/", "");
-        tmpKmatter = tmpKmatter.replace("https://twitter.com/", "");
-        tmpKmatter = tmpKmatter.replace("http://twitter.com/", "");
-        tmpKmatter = tmpKmatter.replace("www.twitter.com/", "");
-        tmpKmatter = tmpKmatter.replace("twitter.com/", "");
-    } else if(tmpKmatter.indexOf("linkedin.com") != -1) {
-        JSSHOP.shared.setFrmFieldVal("qlinks", "k_category", "linkedin");
-        // try to ectract username or id from url
-        tmpKmatter = tmpKmatter.replace("https://www.linkedin.com/", "");
-        tmpKmatter = tmpKmatter.replace("http://www.linkedin.com/", "");
-        tmpKmatter = tmpKmatter.replace("https://linkedin.com/", "");
-        tmpKmatter = tmpKmatter.replace("http://linkedin.com/", "");
-        tmpKmatter = tmpKmatter.replace("www.linkedin.com/", "");
-        tmpKmatter = tmpKmatter.replace("linkedin.com/", "");
-    } else if(tmpKmatter.indexOf("whatsapp.com") != -1) {
-        JSSHOP.shared.setFrmFieldVal("qlinks", "k_category", "whatsapp");
-       } else {
-     }
-
-
-    // startSpin("btnAddSoLink");
-    // check if the 
-    // alert("doCoLinkAdd: " + oi["rq"]);
-    
-    oi = getNuDBFnvp("qlinks", 6, null, tmpFobj);
-    doQComm(oi["rq"], null, "fnshCoLinkAdd");
-};
+     
