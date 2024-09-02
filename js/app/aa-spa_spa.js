@@ -203,7 +203,15 @@ stxt[616] = "Edit Drivers"; // Editar conductores
 stxt[617] = "Usuarios"; // Usuarios
 stxt[618] = "Favorites";
 stxt[619] = "List Trips";
-
+/*
+stxt[620] = "Title, Price...";
+stxt[621] = "Social";
+stxt[622] = "add Social Content";
+*/
+// spanish
+stxt[620] = "Titulo, Precio...";
+stxt[621] = "Social";
+stxt[622] = "Agregar Contenido Social";
 
 
 // messaging strings

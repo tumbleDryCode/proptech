@@ -134,7 +134,7 @@ JSSHOP.shared.showUserProfile = function(tSUPID) {
         } 
             eindex('aa-show-user', 'pid=aa-show-user&tuid=' + tSUPID);
   } catch (e) {
-        JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.showUserProfile");
+         JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.showUserProfile");
     }
 
         };

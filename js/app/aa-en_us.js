@@ -201,6 +201,15 @@ stxt[616] = "Edit Drivers";
 stxt[617] = "Users";
 stxt[618] = "Favorites";
 stxt[619] = "List Trips";
+stxt[620] = "Title, Price...";
+stxt[621] = "Social";
+stxt[622] = "add Social Content";
+stxt[623] = "edit profile details";
+stxt[624] = "Add title and link to your social content";
+stxt[625] = "Link-Url of social post or content";
+stxt[626] = "Current links:";
+stxt[627] = "View Property";
+ 
 
 
 

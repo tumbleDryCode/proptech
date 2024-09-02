@@ -254,7 +254,14 @@ stxt[616] = "Edit Drivers";
 stxt[617] = "Utilizadores";
 stxt[618] = "Favorites";
 stxt[619] = "List Trips";
-
+/*
+stxt[620] = "Title, Price...";
+stxt[621] = "Social";
+stxt[622] = "add Social Content";
+*/
+stxt[620] = "Titulo, Preco...";
+stxt[621] = "Social";
+stxt[622] = "adicionar Conteudo Social";
 
 
 // messaging strings

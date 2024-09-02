@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-lg-12" style="margin:0px;">
                             <nav class="navbar-expand-lg navbar-light p-0">
-                              <span style="float:left;text-align:left;white-space: nowrap;"><a class="breadcrumb-item active" href="./"><img class="slmtable" src="images/logo/logo-small.png" alt="proptech" style="max-height:40px;max-width:40px;"> <b>proptech</b></a></span>
+                              <span style="float:left;text-align:left;white-space: nowrap;"><a class="breadcrumb-item active" href="javascript:eindex('index_main', 'pid=index_main');"><img class="slmtable" src="images/logo/logo-small.png" alt="proptech" style="max-height:40px;max-width:40px;"> <b>proptech</b></a></span>
 
   <!-- menu icons 
 

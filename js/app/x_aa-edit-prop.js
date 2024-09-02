@@ -3,7 +3,9 @@ var euiFFObjArr = null;
 var euiFFObjArr = [];
 var tmpOldFFvals = null;
 var tmpOldFFvals = {};
-
+var tmpSvBtnObj = null;
+var tmpPrpLinksArr = null;
+var tmpPrpLinksArr = [];
 var fnshProdMDel = function(aa,bb,cc) { 
     // alert(bb);
     getPropImgs();
@@ -123,30 +125,87 @@ return tmpRetStr;
 }
 };
 
+var rndrPrpSocLnks = function(a,b,c) {
+    console.log("rndrPrpSocLnks: " + a + " " + b + " " + c);
+    tSocStr =  "<table style=\"width:100%;\">";
+    for(var iint = 0; iint < tmpPrpLinksArr.length; iint++) {
+        tMDstr = tmpPrpLinksArr[iint]["m_data"];
+        if(tMDstr.length < 0) {
+            tMDstr = "No description";
+        }
+        tSocStr += "<tr><td>" + tMDstr + "</td>";
+        tSocStr += "<td><button  onclick=\"javascript:doPrpSocLnkDel(" + iint + "," + tmpPrpLinksArr[iint]._id + ");\" class=\"crsrPointer txtXLrg txtBold slmtable bkgdClrWhite brdrNone txtClrDrkGrn\"><i class=\"txtClrRed brdrClrWhite bkgdClrWhite menu-material-icons\" alt=\"delete\" title=\"delete\">&#xe92b;</i></button></td></tr>";
+    }
+    tSocStr += "</table>";
+    document.getElementById("dvPrpSocLinks").innerHTML = tSocStr;
+    JSSHOP.ui.setCBBClickClr(dvPrpSocLinks,'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr bkgdClrWhite', function(){JSSHOP.ui.closeLbox()});
+
+};
+        
+
+var doPrpSocLnkDel = function(tmpCLindex, tmpQlid) {
+    tPSLarr = null;
+    tPSLarr = [];
+    tPSLarr = removeArrElement(tmpPrpLinksArr, tmpCLindex);
+    tmpPrpLinksArr = null;
+    tmpPrpLinksArr = [];
+    if(tmpCLindex > 0) {
+    tmpPrpLinksArr = tPSLarr;
+    }
+    procNuUIitem("qmedia","m_rtype",tmpQlid,"0","rndrPrpSocLnks");
+};
 
 var setPropImgs = function(theAIa, theAIb, theAIc) {
 	try {
+        tmpPrpLinksArr = null;
+        tmpPrpLinksArr = [];
         console.log("setPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
-
+        tSocStr = "";
     if(theAIb.indexOf("_id") != -1) {
 
 		tAiretArr = JSON.parse(theAIb);
 		var len = tAiretArr.length;
         tstr = "";
+        
         iint = 0;
         while (iint < len) {
+ 
+             tBsj = tAiretArr[iint];
+            if(tAiretArr[iint]["m_catid"] == "5") {
             if(tAiretArr[iint]["m_file"] == c_logoimg.value) {
-                tstr += "<div style=\"float:left\" class=\"crsrPointer brdrClrRed\">";
+              tstr += "<div style=\"float:left\" class=\"crsrPointer brdrClrRed\">";
+              
             } else {
 			tstr += "<div style=\"float:left\" class=\"crsrPointer\">";
             }
  			tstr += "<img src=\"admin/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
 			tstr += "</div>";
+        } else {
+            tMDstr = tAiretArr[iint]["m_data"];
+            if(tMDstr.length < 1) {
+                tMDstr = "No description";
+            }
+            tmpPrpLinksArr.push(tAiretArr[iint]);
+            // tSocStr += "<div>" + tMDstr + "</div>";
+            tSocStr += "<tr><td>" + tMDstr + "</td>";
+            tSocStr += "<td><button  onclick=\"javascript:doPrpSocLnkDel(" + iint + "," + tAiretArr[iint]["_id"] + ");\" class=\"crsrPointer txtXLrg txtBold slmtable bkgdClrWhite brdrNone txtClrDrkGrn\"><i class=\"txtClrRed brdrClrWhite bkgdClrWhite menu-material-icons\" alt=\"delete\" title=\"delete\">&#xe92b;</i></button></td></tr>";
  
+        }
 			iint++;
-		}
+		} // end while
+        
+        tstr += "<div style=\"clear:both\"></div>";
 		document.getElementById("dvProdImgs").innerHTML = tstr;
-	}
+        if(tSocStr.length > 5) {
+            tFllSocStr =  "<table style=\"width:100%;\">" + tSocStr + "</table>";
+
+        document.getElementById("dvPrpSocLinks").innerHTML = tFllSocStr;
+        
+        }
+	} // end if _id
+    document.getElementById("dvPrpDVID").innerHTML = stxt[985] + " ID: " + prpid;
+    document.getElementById("dvPrpDTtl").innerHTML = ptitle.value;
+
 	} catch(e) {
 		alert("setPropImgs: " + e);
 	}
@@ -270,7 +329,7 @@ var cbPrpedit = function(a,b,c) {
 
 	if(currUrlArr.prpid) {
 
-JSSHOP.ui.setCBBClickClr(btnEUsave,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium', function(){document.getElementById("btnEUsave").innerHTML=stxt[21];document.getElementById("btnEUsave").disabled=false;});
+JSSHOP.ui.setCBBClickClr(tmpSvBtnObj,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium  bkgdClrHdr txtClrWhite', function(){tmpSvBtnObj.innerHTML=stxt[21];tmpSvBtnObj.disabled=false;});
 } else {
  
         tDadded = JSSHOP.shared.getFrmFieldVal("property", "pdadded", 0);
@@ -320,7 +379,17 @@ alert("OI: " + oi["rq"]);
 
 
 
+function getTinyPropDesc() {
+    // using tmpOldFFvals, create a descrtiptionof the property
+    tTnyPropDSTr = "";
+    tTnyPropDSTr += "<p><strong>" + tmpOldFFvals.ptitle + "</strong></p>";
+    tTnyPropDSTr += "This property is located in " + tmpOldFFvals.pcity + ", " + tmpOldFFvals.pstate + " and is available for " + tmpOldFFvals.ptype + " " + tmpOldFFvals.pcontract + ". ";
+    tTnyPropDSTr += "The property has " + tmpOldFFvals.bhk + " bedrooms and " + tmpOldFFvals.bhk + " bathrooms. ";
+    tTnyPropDSTr += "The property is " + tmpOldFFvals.pstatus + " and was added on " + tmpOldFFvals.pdadded + ". ";
+ 
+    tinyMCE.activeEditor.setContent(tTnyPropDSTr);
 
+}
 var doPropEdit = function() {
 doNPropEdit();
 }
@@ -355,14 +424,38 @@ var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
 
 
+tarfsb = nCurrFFieldOb();
+tarfsb.fid = "btnAddPrpSoM";
+tarfsb.fty = "button";
+tarfsb.lid = "lbl_AddPrpSoM"; 
+tarfsb.ltxt = stxt[625]; 
+tarfsb.fcl = function() { doFBPostCntnt()  };
+euiFFObjArr.push(tarfsb);
 
-tfsb = nCurrFFieldOb();
-tfsb.fid = "btnEUsave";
-tfsb.fty = "button";
-tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){doPropEdit()}) };
+tafsb = nCurrFFieldOb();
+tafsb.fid = "btnBIsave";
+tafsb.fty = "button";
+tafsb.fcl = function() { tmpSvBtnObj=this;JSSHOP.ui.setSaveBtnClick(this, function(){doPropEdit()}) };
+euiFFObjArr.push(tafsb);
 
+tcfsb = nCurrFFieldOb();
+tcfsb.fid = "btnDEsave";
+tcfsb.fty = "button";
+tcfsb.fcl = function() { tmpSvBtnObj=this;JSSHOP.ui.setSaveBtnClick(this, function(){doPropEdit()}) };
+euiFFObjArr.push(tcfsb);
 
-euiFFObjArr.push(tfsb);
+tifsb = nCurrFFieldOb();
+tifsb.fid = "btnPIsave";
+tifsb.fty = "button";
+tifsb.fcl = function() { tmpSvBtnObj=this;JSSHOP.ui.setSaveBtnClick(this, function(){doPropEdit()}) };
+euiFFObjArr.push(tifsb);
+
+tofsb = nCurrFFieldOb();
+tofsb.fid = "btnLOsave";
+tofsb.fty = "button";
+tofsb.fcl = function() { tmpSvBtnObj=this;JSSHOP.ui.setSaveBtnClick(this, function(){doPropEdit()}) };
+euiFFObjArr.push(tofsb);
+
 tfok = nCurrFFieldOb();
 tfok.fid = "tmp_bhk";
 tfok.lid = "lbl_tmp_bhk"; 
@@ -412,7 +505,61 @@ return dmyFnishCntLoad;
 function loadTnyI() {
     JSSHOP.loadScript("js/tinymce/init-tinymce.min.js", donada, "js");
 }
-// map functions map functions map functions map functions
+
+
+
+// facebook plugin functions
+
+function setUFBPostCntnt(aaw,aww,cww) {
+    console.log("setUFBPostCntnt: " + aaw + " " + aww + " " + cww);
+    // JSSHOP.ui.popAndFillLbox("Facebook post added. " + aaw + " " + aww + " " + cww);
+    document.getElementById("tmp_m_data").innerText = "";
+    document.getElementById("tmp_m_file").innerText = "";
+    // tmpPrpLinksArr.push(JSSHOP.shared.getDynFrmVals(document["qmedia"], "nada"));
+    getPropImgs();
+}
+
+function doFBPostCntnt() {
+    tInpInnerTxt = document.getElementById("tmp_m_file").innerText;
+    tlowerUFBCUrl = tInpInnerTxt.toLowerCase();
+    tMdata = document.getElementById("tmp_m_data").innerText; 
+    if(tMdata.length < 1) {
+        tMdata = "New Title";
+    }
+    if(tlowerUFBCUrl.indexOf("facebook.com") != -1) {
+    tmpFobj = null;
+    tmpFobj = {};
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_catid", "10");
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_data", tMdata);
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tInpInnerTxt);
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_coid", prpid);
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_uid", quid);
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_pid", prpid);
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_dadded", JSSHOP.getUnixTimeStamp());
+
+    tmpDOs = null;
+    tmpDOs = {};
+    tmpDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qmedia"], "nada");
+    oi = getNuDBFnvp("qmedia", 6, null, tmpDOs);
+    doQComm(oi["rq"], null, "setUFBPostCntnt");
+    } else {
+        JSSHOP.ui.popAndFillLbox("Invalid Facebook URL. Please try again.");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// leaflet map functions map functions map functions map functions
 // map functions
 // map functions
 

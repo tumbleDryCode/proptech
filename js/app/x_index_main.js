@@ -102,6 +102,7 @@ aprpPimage2 = aprpObj["pimage2"];
 aprpPimage3 = aprpObj["pimage3"];
 aprpPimage4 = aprpObj["pimage4"];
 aprpUid = aprpObj["uid"];
+aprpUFlName = aprpObj["u_fullname"];
 aprpStatus = aprpObj["status"];
 aprpMapimage = aprpObj["mapimage"];
 aprpTopmapimage = aprpObj["topmapimage"];
@@ -110,7 +111,7 @@ aprpTotalfloor = aprpObj["totalfloor"];
 aprpDate = aprpObj["date"];
 aprploclat = aprpObj["ploclat"];
 aprploclng = aprpObj["ploclng"];
-retPLstSTr += "<div class=\"col-md-6 col-lg-4\">";
+retPLstSTr += "<div class=\"col-md-6\" style=\"float:left;padding-bottom:8px;\">";
 /*
 retPLstSTr += "<div tid=\"dvCoFavBtn\" style=\"float: right\"></div>";
 
@@ -121,10 +122,11 @@ currFTclr = "material-icons txtClrTtl";
 currFTclr = "material-icons txtClrRed";
 }
 
-retPLstSTr += "<table><tr><td style=\"min-width:40px;>";
+retPLstSTr += "<table><tr><td style=\"min-width:40px;\">";
 
 //  <div  onclick="javascript:JSSHOP.ui.toggleVisibility('tdUploadBtn');" class="crsrPointer"><img alt="User Icon" src="images/misc/default_user.png"  class="slmtable brdrClrDlg" style="minn-width:150px;max-width:160px;text-align:center;margin-right:3px" align="absmiddle" id="imgIedit"><span class="txtSmall txtClrGrey">Edit</span></div>
-retPLstSTr += "<div  onclick=\"javascript:eindex('aa-pdetail','pid=aa-pdetail&prpid=" + aprpObj._id + "')\" class=\"crsrPointer\"><img alt=\"Profile\" src=\"images/user/" + aprpObj.u_icon + "\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">Edit</span></div>";
+retPLstSTr += "<a href=\"javascript:eindex('aa-show-user', 'pid=aa-show-user&tuid=" + aprpUid + "');\" class=\"crsrPointer\">";
+retPLstSTr += "<div><img alt=\"Profile\" src=\"images/user/" + aprpObj.u_icon + "\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">" + aprpUFlName + "</span></div></a>";
 retPLstSTr += "</td><td>";
 retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-pdetail','pid=aa-pdetail&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
  retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpLocation + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
@@ -182,8 +184,11 @@ retPLstSTr += "</div>"; // end featured-thumb hover-zoomer mb-4
 
 
 
-retPLstSTr += "</div>";  // end col-md-6 col-lg-4
- retPLstSTr += "<hr>";
+retPLstSTr += "</div>";  // end col-md-6
+ // retPLstSTr += "<hr>";
+ // add clearfix div
+ 
+
 
 
 istrt++;
@@ -229,7 +234,7 @@ aprpTotalfloor = aprpObj["totalfloor"];
 aprpDate = aprpObj["date"];
 aprploclat = aprpObj["ploclat"];
 aprploclng = aprpObj["ploclng"];
-retPLstSTr += "<div class=\"col-md-6 col-lg-4\">";
+retPLstSTr += "<div class=\"col-md-6\" style=\"padding-bottom:4px;\">";
 /*
 retPLstSTr += "<div tid=\"dvCoFavBtn\" style=\"float: right\"></div>";
 
@@ -340,7 +345,7 @@ tmpDOqs["l"] = 45;
 oia = getNuDBFnvp("property",5,null,tmpDOqs);
 newQstr = "select * from property where _id > 0 limit 45";
 // newQstr also grabs user icon from quser  u_icon field
-newQstr = "select p.*, u.u_icon from property p, quser u where p._id > 0 and p.uid = u._id limit 45";
+newQstr = "select p.*, u.u_icon, u.u_fullname from property p, quser u where p._id > 0 and p.uid = u._id limit 45";
 
  doQComm(newQstr, null, "doMPropsList");
 return dmyFnishCntLoad;

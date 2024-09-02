@@ -145,6 +145,10 @@ btn-success {
   padding: 2px;
 }
 
+.accordion-item {
+  border: 0px;
+}
+
 .container {
   width: 100%;
   padding-right: 16px;

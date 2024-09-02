@@ -1,4 +1,7 @@
-currIContent == "y"
+currIContent == "y";
+var tmpSocLinksArr = null;
+tmpSocLinksArr = "";
+tmpSocLinksArr = [];
 
 var doPrdMDelete = function() { 
     if(confirm(stxt[42] + " " + stxt[19] + "?")) {
@@ -81,34 +84,76 @@ var doSwipe = function() {
     });
 };
 
+var getSocLinksStr = function() {
+    tRestSLStr = "<br>"; 
+    for (var i = 0; i < tmpSocLinksArr.length; i++) {
+        tSLurl = tmpSocLinksArr[i];
+        if((tSLurl.indexOf("video") != -1) || (tSLurl.indexOf("reels") != -1)) {
+//             <div class="fb-video" data-href="https://www.facebook.com/facebook/videos/10153231379946729/" data-width="500" data-show-text="false"><blockquote cite="https://www.facebook.com/facebook/videos/10153231379946729/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/facebook/videos/10153231379946729/">How to Share With Just Friends</a><p>How to share with just friends.</p>Posted by <a href="https://facebook.com/facebook">Facebook</a> on Friday, December 5, 2014</blockquote></div>
+            tRestSLStr += "<div class=\"fb-video\" data-href=\"" + tSLurl + "\" data-width=\"500\" data-show-text=\"false\"><blockquote cite=\"" + tSLurl + "\" class=\"fb-xfbml-parse-ignore\"><a href=\"" + tSLurl + "\">" + tSLurl + "</a><p>" + tSLurl + "</p>Posted by <a href=\"https://facebook.com/facebook\">Facebook</a> on Friday, December 5, 2014</blockquote></div><hr>";
+        } else {
+            tRestSLStr += "<div class=\"fb-post\" data-href=\"" + tSLurl + "\" data-width=\"500\" data-show-text=\"true\"><blockquote cite=\"" + tSLurl + "\" class=\"fb-xfbml-parse-ignore\"><a href=\"" + tSLurl + "\">" + tSLurl + "</a></blockquote></div><hr>";
+        }
+    }
+    return tRestSLStr;
+}
+
+var getSocLinksArr = function() {
+    return tmpSocLinksArr;
+}
+
 var setPropImgs = function(theAIa, theAIb, theAIc) {
     console.log("setPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
-    console.log("setPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
-    console.log("setPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
-	if(theAIb.indexOf("_id") != -1) {
+    intIFrmHght = 0;
+    if(theAIb.indexOf("_id") != -1) {
 		tAiretArr = JSON.parse(theAIb);
-		var len = tAiretArr.length;
+		var awlen = tAiretArr.length;
         tstr = "";
-        iint = 0;
+        tpdSocLnksStr = "";
+        iirnt = 0;
         tstr += "<div class=\"swiper\"> <div class=\"swiper-wrapper\">";
-        while (iint < len) {
-            tstr += "<div class=\"swiper-slide\"> <img width=\"100%\"  src=\"admin/property/" + tAiretArr[iint]["m_file"] + "\"  alt=\"\"> </div>";
- 
- 
-			iint++;
+        while (iirnt < awlen) {
+            tIRFname = tAiretArr[iirnt]["m_file"];
+            tIRcatid = tAiretArr[iirnt]["m_catid"];
+            if(tIRcatid == 5) {
+            tstr += "<div class=\"swiper-slide\"> <img width=\"100%\"  src=\"admin/property/" + tAiretArr[iirnt]["m_file"] + "\"  alt=\"\"> </div>";
+            } else {
+                // alert("setPropImgs: " + tIRFname + " " + tIRcatid);
+                intIFrmHght += 1000;
+         tmpSocLinksArr.push(tIRFname);
+             }
+             
+			iirnt++;
 		}
         tstr += "</div><div class=\"swiper-pagination\"></div><div class=\"swiper-button-prev\"></div><div class=\"swiper-button-next\"></div></div>";
         // tmpItDiv = document.createElement('span');
         // tmpItDiv.innerHTML = tstr;
 		document.getElementById("singlerproperty").innerHTML = tstr;
+        if(tmpSocLinksArr[0]){
+            var iframe = document.createElement('iframe');
+       iframe.style.width = '100%';
+       iframe.style.height = intIFrmHght + 'px';
+       iframe.style.border = 'none';
+       // iframe.style.position = 'absolute';
+       // iframe.style.top = '0';
+       // iframe.style.left = '0';
+       iframe.style.zIndex = '999999';
+        iframe.src = 'social.html?pid=aa-pdetail&prpid=' + aprpObj._id;
+         // iframe.src = 'about:blank';
+       dvSocCntnt.appendChild(iframe);
+        // document.getElementById("ifrmSocCntnt").src = 'social.html?pid=aa-pdetail&prpid=' + aprpObj._id;
+        }
        //  document.getElementById("single-property").appendChild(tmpItDiv);
       setTimeout(function(){ doSwipe(); }, 1000);
 	}
 	// alert(inpPropCtrct.value);
-	
+	// https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2
+   //  JSSHOP.loadScript("https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&ttime=" + JSSHOP.getUnixTimeStamp(), doFBFLoad,"js");
 };
 
-
+function doFBFLoad(aee, bee) {
+    console.log("doFBFLoad: " + aee + " " + bee);
+}
 
 var getPropImgs = function() {
     tmpFobj = null;
@@ -334,7 +379,8 @@ if(aww.indexOf("_id") != -1) {
     iprpdetaArr = JSON.parse(aww);
     aprpObj = iprpdetaArr[0];
     aprpTitle = aprpObj["ptitle"];
-    aprpContent = aprpObj["pcontent"];
+    // aprpdContent = aprpObj["pcontent"];
+    aprpContent = LZString.decompressFromEncodedURIComponent(aprpObj["pcontent"]);
     aprpType = aprpObj["ptype"];
     aprpBhk = aprpObj["bhk"];
     aprpStype = aprpObj["stype"];
@@ -398,6 +444,11 @@ if(aww.indexOf("_id") != -1) {
     retPDetStr += "</div>"; // end col-md-6
     retPDetStr += "</div>"; // end row mb-4
 */
+currFTclr = "menu-material-icons collection-item txtClrTtl";
+if(currRcntFavsStr.indexOf(aprpTitle) != -1) {
+currFTclr = "menu-material-icons collection-item txtClrRed";
+}
+
 retPDetStr += "<div class=\"clearfix\"></div>";
 retPDetStr += "<div class=\"clearfix\"></div>";
     retPDetStr += "<div class=\"property-details\">";
@@ -414,7 +465,7 @@ retPDetStr += "<div class=\"clearfix\"></div>";
     retPDetStr += "</div>";
 
     retPDetStr += "<div class=\"bkgdClrWhite\">";
-    retPDetStr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></span>";
+    retPDetStr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + aprpObj._id + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></span>";
 // retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showMsgBox('product'," + aprpObj._id + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
 retPDetStr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-pdetail&prpid=" + aprpObj._id + "','" + aprpTitle + "','noQvalue','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
 retPDetStr += "</div>"; // end bkgdClrWhite
@@ -427,9 +478,17 @@ retPDetStr += "</div>"; // end bkgdClrWhite
     retPDetStr += "</div>";
     retPDetStr += "</div>";
 
+ 
+
     // alert(retPDetStr);
     JSSHOP.ui.setTinnerHTML("dvTop", retAetStr);
     JSSHOP.ui.setTinnerHTML("ixtxt", retPDetStr);
+
+/*
+       // create an iframe that expands to the content of the page
+       
+   
+*/
     tmpFobj = null;
     tmpFobj = {};
     tmpFobj["ws"] = "where m_pid=? and m_rtype=?";
@@ -441,7 +500,56 @@ retPDetStr += "</div>"; // end bkgdClrWhite
 }
 
 
+
+function getFBUPostCntnt(tCntntStr) {
+/*
+        <div class="fb-post" 
+            data-href="https://www.facebook.com/416576078105629/posts/416576594772244/"
+            data-width="500"></div>
+
+            <div class="fb-video" data-href="https://www.facebook.com/facebook/videos/10153231379946729/" data-width="500" data-show-text="false"><blockquote cite="https://www.facebook.com/facebook/videos/10153231379946729/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/facebook/videos/10153231379946729/">How to Share With Just Friends</a><p>How to share with just friends.</p>Posted by <a href="https://facebook.com/facebook">Facebook</a> on Friday, December 5, 2014</blockquote></div>
+*/
+// post url example:  <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fnegociosyemprendimiento%2Fposts%2Fpfbid0qkRnKmmncJETFimqqyXXNwmYNhajdr5EubyM4CLT7LV3DJH3AbhkS2AR8vdRoF7Wl&show_text=true&width=500" width="500" height="538" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+// post url example: https://www.facebook.com/photo/?fbid=1049384213219832&set=a.758084869016436&__cft__[0]=AZVeyfDcXP_dUoBWGhNsAjPQc438NC3zfDcBbQjP0M6MwvcHiLgNAmnmgYaTxE5CrxsEFB1uETMrgT6n9Awqz1y85mrliRRX2O5nhcF603_CHw8Xguyt2I93ZKxm4q27zArwo0bMLRvvq1-zfsQz7KiPrsvuatMXgCwv-2Mjtz1tLp433QPxQKY-UI5H_vjXDvBlcPI1BMk0kKy19I2boqt_&__tn__=EH-R
+// post url example: https://www.facebook.com/416576078105629/posts/416576594772244/
+// video url example: https://www.facebook.com/facebook/videos/10153231379946729/
+// post url example: https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fnegociosyemprendimiento&tabs=timeline&width=500&height=538&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId
+// try getting the user ID and post ID from the url
+if(tCntntStr.indexOf("/posts/") != -1) {
+   //  https://www.facebook.com/userID/posts/postID/
+   // get userID and postID
+
+    tSpltStr = tCntntStr.split("/posts/");
+    tUserFstr = tSpltStr[0];
+    tNuUserFstr = tUserFstr.replace("https://www.facebook.com/", "");
+    tPostFstr = tSpltStr[1];
+    tNuPostFstr = tPostFstr.replace("/", "");
+}
+if(tCntntStr.indexOf("/videos/") != -1) {
+    //  https://www.facebook.com/userID/videos/postID/
+    // get userID and postID
+    tSpltStr = tCntntStr.split("/videos/");
+    tUserFstr = tSpltStr[0];
+    tNuUserFstr = tUserFstr.replace("https://www.facebook.com/", "");
+    tPostFstr = tSpltStr[1];
+    tNuPostFstr = tPostFstr.replace("/", "");
+}
+if(tCntntStr.indexOf("page.php?href=") != -1) {
+    //  https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fnegociosyemprendimiento&tabs=timeline&width=500&height=538&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId
+    // get userID and postID
+    tSpltStr = tCntntStr.split("page.php?href=");
+    tUserFstr = tSpltStr[1];
+    tNuUserFstr = tUserFstr.replace("https%3A%2F%2Fwww.facebook.com%2F", "");
+    tNuUserFstr = tNuUserFstr.replace("%2F", "");
+    tNuUserFstr = tNuUserFstr.replace("%2F", "");
+    tNuUserFstr = tNuUserFstr.replace("%2F", "");
+}
  
+    tCntntStr = "<div class=\"fb-post\" data-href=\"" + tCntntStr + "\" data-width=\"500\"></div>";
+
+    return tCntntStr;
+}
+
 
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
