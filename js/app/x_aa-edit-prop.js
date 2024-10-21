@@ -50,7 +50,7 @@ tpPIEDv = document.createElement('div');
 JSSHOP.shared.setFrmFieldVal("qmedia", "_id", tpIncrNPI);
 JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tpFImg);
  
-tmpRetStr = "<img src=\"admin/property/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
+tmpRetStr = "<img src=\"images/property/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
  try {
 tmpRetStr += "<div class=\"dvTxtBtns\"><input type=\"button\" class=\"btnTxtLabel\" value=\"Set as Main\" onclick=\"javascript:doPrdMMain();\">   |   <input type=\"button\" class=\"btnTxtLabel\" value=\"Delete\" onclick=\"javascript:doPrdMDelete();\"></div>";
 tmpRetStr += "<br><br>";
@@ -73,7 +73,7 @@ var setSliderPropImgs = function(theAIa, theAIb, theAIc) {
         tstr = "";
         iint = 0;
         while (iint < len) {
-            tstr += "<div class=\"ls-slide\" data-ls=\"duration:7500; transition2d:5; kenburnszoom:in; kenburnsscale:1.2;\"> <img width=\"1920\" height=\"1080\"    src=\"admin/property/" + tAiretArr[iint]["m_file"] + "\" class=\"ls-bg\" alt=\"\" /> </div>";
+            tstr += "<div class=\"ls-slide\" data-ls=\"duration:7500; transition2d:5; kenburnszoom:in; kenburnsscale:1.2;\"> <img width=\"1920\" height=\"1080\"    src=\"images/property/" + tAiretArr[iint]["m_file"] + "\" class=\"ls-bg\" alt=\"\" /> </div>";
  
  
 			iint++;
@@ -112,7 +112,7 @@ tpPIEDv = document.createElement('div');
 JSSHOP.shared.setFrmFieldVal("qmedia", "_id", tpIncrNPI);
 JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tpFImg);
  
-tmpRetStr = "<img src=\"admin/property/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
+tmpRetStr = "<img src=\"images/property/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
  try {
 tmpRetStr += "<div class=\"dvTxtBtns\"><input type=\"button\" class=\"btnTxtLabel\" value=\"" + stxt[521] + "\" onclick=\"javascript:doPrdMMain();\">   |   <input type=\"button\" class=\"btnTxtLabel\" value=\"" + stxt[42] + "\" onclick=\"javascript:doPrdMDelete();\"></div>";
 tmpRetStr += "<br><br>";
@@ -125,15 +125,51 @@ return tmpRetStr;
 }
 };
 
+
+var getSocLinksStr = function(tSLurl) {
+    tRestSLStr = "";
+        if((tSLurl.indexOf("video") != -1) || (tSLurl.indexOf("reels") != -1)) {
+//             <div class="fb-video" data-href="https://www.facebook.com/facebook/videos/10153231379946729/" data-width="500" data-show-text="false"><blockquote cite="https://www.facebook.com/facebook/videos/10153231379946729/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/facebook/videos/10153231379946729/">How to Share With Just Friends</a><p>How to share with just friends.</p>Posted by <a href="https://facebook.com/facebook">Facebook</a> on Friday, December 5, 2014</blockquote></div>
+tSLurlL = "javascript:showModalPopUp();";
+            tRestSLStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\"  class=\"fb-video\" data-href=\"" + tSLurl + "\" data-width=\"500\" data-show-text=\"true\" data-show-posts=\"true\"><blockquote cite=\"" + tSLurl + "\" class=\"fb-xfbml-parse-ignore\"><a href=\"" + tSLurl + "\">" + tSLurl + "</a><p>" + tSLurlL + "</p>Posted by <a href=\"https://facebook.com/facebook\">Facebook</a> on Friday, December 5, 2014</blockquote></div><hr>";
+        } else {
+            tSLurlL = "javascript:showModalPopUp();";
+            tRestSLStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\"  data-show-posts=\"true\" class=\"fb-post\" data-href=\"" + tSLurl + "\" data-width=\"500\" data-show-text=\"true\"><blockquote cite=\"" + tSLurl + "\" class=\"fb-xfbml-parse-ignore\"><a href=\"" + tSLurlL + "\">" + tSLurl + "</a></blockquote></div><hr>";
+        }
+  
+    return tRestSLStr;
+}
+
+function saveEdFBPlgObj() {
+    console.log("saveFBPlgObj: " + lightbox_content.innerHTML);
+    currFBPlgObj["prp" + prpid] = lightbox_content.innerHTML;
+}
+function doEdFBPlgObj(aee, bee) {
+    console.log("doFBPlgObj: " + aee + " " + bee);
+    setTimeout(function(){ saveEdFBPlgObj(); }, 3000);
+}
+
+function getEdSocCntnt(tSocLnk) {
+    tIFSCStr = getSocLinksStr(tSocLnk);
+    // document.getElementById("dvSocCntnt").innerHTML = tIFSCStr;
+    JSSHOP.ui.popAndFillLbox(tIFSCStr);
+    ttSIFCs = Math.round(new Date().getTime() / 1000);
+    JSSHOP.loadScript("https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&ttime=" + ttSIFCs, doEdFBPlgObj,"js");
+    }
+
+    
+
+
 var rndrPrpSocLnks = function(a,b,c) {
     console.log("rndrPrpSocLnks: " + a + " " + b + " " + c);
     tSocStr =  "<table style=\"width:100%;\">";
     for(var iint = 0; iint < tmpPrpLinksArr.length; iint++) {
         tMDstr = tmpPrpLinksArr[iint]["m_data"];
+        tMfileSTr = tmpPrpLinksArr[iint]["m_file"];
         if(tMDstr.length < 0) {
             tMDstr = "No description";
         }
-        tSocStr += "<tr><td>" + tMDstr + "</td>";
+        tSocStr += "<tr><td><a href=\"" + tMfileSTr + "\">" + tMDstr + "</a></td>";
         tSocStr += "<td><button  onclick=\"javascript:doPrpSocLnkDel(" + iint + "," + tmpPrpLinksArr[iint]._id + ");\" class=\"crsrPointer txtXLrg txtBold slmtable bkgdClrWhite brdrNone txtClrDrkGrn\"><i class=\"txtClrRed brdrClrWhite bkgdClrWhite menu-material-icons\" alt=\"delete\" title=\"delete\">&#xe92b;</i></button></td></tr>";
     }
     tSocStr += "</table>";
@@ -178,16 +214,17 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
             } else {
 			tstr += "<div style=\"float:left\" class=\"crsrPointer\">";
             }
- 			tstr += "<img src=\"admin/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
+ 			tstr += "<img src=\"images/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
 			tstr += "</div>";
         } else {
+            tmpPrpLinksArr.push(tAiretArr[iint]);
             tMDstr = tAiretArr[iint]["m_data"];
+            tMfileSTr = tAiretArr[iint]["m_file"];
             if(tMDstr.length < 1) {
                 tMDstr = "No description";
             }
-            tmpPrpLinksArr.push(tAiretArr[iint]);
-            // tSocStr += "<div>" + tMDstr + "</div>";
-            tSocStr += "<tr><td>" + tMDstr + "</td>";
+ 
+            tSocStr += "<tr><td><a href=\"" + tMfileSTr + "\">" + tMDstr + "</a></td>";
             tSocStr += "<td><button  onclick=\"javascript:doPrpSocLnkDel(" + iint + "," + tAiretArr[iint]["_id"] + ");\" class=\"crsrPointer txtXLrg txtBold slmtable bkgdClrWhite brdrNone txtClrDrkGrn\"><i class=\"txtClrRed brdrClrWhite bkgdClrWhite menu-material-icons\" alt=\"delete\" title=\"delete\">&#xe92b;</i></button></td></tr>";
  
         }
@@ -197,9 +234,13 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
         tstr += "<div style=\"clear:both\"></div>";
 		document.getElementById("dvProdImgs").innerHTML = tstr;
         if(tSocStr.length > 5) {
-            tFllSocStr =  "<table style=\"width:100%;\">" + tSocStr + "</table>";
+            tFllSocStr =  "<table style=\"width:100%;\">";
+            tFllSocStr +=  "<tr><td colspan=\"2\"><strong>" + stxt[10] + "</strong></td>";
+            tFllSocStr +=  "<td colspan=\"2\"><strong>" + stxt[42] + "</strong></td></tr>";
 
-        document.getElementById("dvPrpSocLinks").innerHTML = tFllSocStr;
+            tFllSocStr +=  tSocStr + "</table>";
+
+        // document.getElementById("dvPrpSocLinks").innerHTML = tFllSocStr;
         
         }
 	} // end if _id
@@ -222,7 +263,7 @@ var finishMPupload = function(theMMum) {
 
         image = null;
         image = new Image();
-        image.src = "admin/property/s_thumb" + theMMum;
+        image.src = "images/property/s_thumb" + theMMum;
                 // document.getElementById('dvPLogoImg').style.backgroundImage="url(images/slogos/s_thumb" + theMMum + ")"; 
                 if(document.getElementById('dvProdImgs').innerText == "dvProdImgs") {
                 // document.getElementById('dvPLogoImg').src = "admin/propert/s_thumb" + theMMum;
@@ -265,18 +306,202 @@ var getPropImgs = function() {
 }
 function fillPpropFields() {
     JSSHOP.shared.setDynFrmVals(document["property"], "tmp_");
-    istype = document.getElementById("tmp_stype");
+
+
+
+    tDDPaddStr = "";
+    tDDPStatObj = JSSHOP.ui.getBSDDOptsO();
+    tDDPStatObj["ddtype"] = "noQvalue";
+    tDDPStatObj["fld"] = "pstatus";
+    tDDPStatObj["lbl"] = stxt[956];
+    tDDPStatObj["val"] = pstatus.value;
+    tDDPStatObj["kvpObj"] = svftObj["propstat"];
+    tDDPStatObj["cb"] = "donada";
+    tDDPStatObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tDDPStatObj["lblcls"] = "txtSmall";
+    tDDPStatObj["valcls"] = "txtSmall";
+    tDDPStatObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+    tDDPStatObj["horvert"] = "vertical";
+    tDDPStatObj["icn"] = "noQvalue";
+    tDDPStatStr = JSSHOP.ui.getNuBSdropDstr(tDDPStatObj);
+    tDDPaddStr += tDDPStatStr;
+    tDDPaddStr += "<br><br>";
+    
+
+
+tDDPStypeObj = JSSHOP.ui.getBSDDOptsO();
+tDDPStypeObj["ddtype"] = "noQvalue";
+tDDPStypeObj["fld"] = "stype";
+tDDPStypeObj["lbl"] = stxt[949];
+tDDPStypeObj["val"] = stype.value;
+tDDPStypeObj["kvpObj"] = svftObj["contract"];
+tDDPStypeObj["cb"] = "donada";
+tDDPStypeObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+tDDPStypeObj["lblcls"] = "txtSmall";
+tDDPStypeObj["valcls"] = "txtSmall";
+tDDPStypeObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+tDDPStypeObj["horvert"] = "vertical";
+tDDPStypeObj["icn"] = "noQvalue";
+tDDPTypeStr = JSSHOP.ui.getNuBSdropDstr(tDDPStypeObj);
+tDDPaddStr += tDDPTypeStr;
+tDDPaddStr += "<br><br>";
+
+
+tDDPPrpTypObj = JSSHOP.ui.getBSDDOptsO();
+tDDPPrpTypObj["ddtype"] = "noQvalue";
+tDDPPrpTypObj["fld"] = "ptype";
+tDDPPrpTypObj["lbl"] = stxt[927];
+tDDPPrpTypObj["val"] = ptype.value;
+tDDPPrpTypObj["kvpObj"] = svftObj["proptype"];
+tDDPPrpTypObj["cb"] = "donada";
+tDDPPrpTypObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+tDDPPrpTypObj["lblcls"] = "txtSmall";
+tDDPPrpTypObj["valcls"] = "txtSmall";
+tDDPPrpTypObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+tDDPPrpTypObj["horvert"] = "vertical";
+tDDPPrpTypObj["icn"] = "noQvalue";
+tDDPPrpTypStr = JSSHOP.ui.getNuBSdropDstr(tDDPPrpTypObj);
+tDDPaddStr += tDDPPrpTypStr;
+tDDPaddStr += "<br><br>";
+
+document.getElementById("dvDDeditprop").innerHTML = tDDPaddStr;
+ 
+
+// prpprtns= `bedroom`, `bathroom`, `balcony`, `kitchen`, `hall`, `floor`
+
+tQuantValObj = {"1":"1","2":"2","3":"3","4":"4","5":"5","6":"6","7":"7","8":"8","9":"9","10":"10"};
+ tPrpPrtnsStr = "";
+ tDDPrpBedRObj = JSSHOP.ui.getBSDDOptsO();
+ tDDPrpBedRObj["ddtype"] = "noQvalue";
+    tDDPrpBedRObj["fld"] = "bedroom";
+    tDDPrpBedRObj["lbl"] = stxt[922];
+    tDDPrpBedRObj["val"] = bedroom.value;
+    tDDPrpBedRObj["kvpObj"] = tQuantValObj;
+    tDDPrpBedRObj["cb"] = "donada";
+    tDDPrpBedRObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tDDPrpBedRObj["lblcls"] = "txtSmall";
+    tDDPrpBedRObj["valcls"] = "txtSmall";
+    tDDPrpBedRObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+    tDDPrpBedRObj["horvert"] = "horizontal";
+    tDDPrpBedRObj["icn"] = "noQvalue";
+    tDDPrpBedRStr = JSSHOP.ui.getNuBSdropDstr(tDDPrpBedRObj);
+    tPrpPrtnsStr += tDDPrpBedRStr;
+    tPrpPrtnsStr += "<br>";
+
+    tDDPrpBathRObj = JSSHOP.ui.getBSDDOptsO();
+    tDDPrpBathRObj["ddtype"] = "noQvalue";
+    tDDPrpBathRObj["fld"] = "bathroom";
+    tDDPrpBathRObj["lbl"] = stxt[923];
+    tDDPrpBathRObj["val"] = bathroom.value;
+    tDDPrpBathRObj["kvpObj"] = tQuantValObj;
+    tDDPrpBathRObj["cb"] = "donada";
+    tDDPrpBathRObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tDDPrpBathRObj["lblcls"] = "txtSmall";
+    tDDPrpBathRObj["valcls"] = "txtSmall";
+    tDDPrpBathRObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+    tDDPrpBathRObj["horvert"] = "horizontal";
+    tDDPrpBathRObj["icn"] = "noQvalue";
+    tDDPrpBathRStr = JSSHOP.ui.getNuBSdropDstr(tDDPrpBathRObj);
+    tPrpPrtnsStr += tDDPrpBathRStr;
+    tPrpPrtnsStr += "<br>";
+
+    tDDPrpBalRObj = JSSHOP.ui.getBSDDOptsO();
+    tDDPrpBalRObj["ddtype"] = "noQvalue";
+    tDDPrpBalRObj["fld"] = "balcony";
+    tDDPrpBalRObj["lbl"] = stxt[924];
+    tDDPrpBalRObj["val"] = balcony.value;
+    tDDPrpBalRObj["kvpObj"] = tQuantValObj;
+    tDDPrpBalRObj["cb"] = "donada";
+    tDDPrpBalRObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tDDPrpBalRObj["lblcls"] = "txtSmall";
+    tDDPrpBalRObj["valcls"] = "txtSmall";
+    tDDPrpBalRObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+    tDDPrpBalRObj["horvert"] = "horizontal";
+    tDDPrpBalRObj["icn"] = "noQvalue";
+    tDDPrpBalRStr = JSSHOP.ui.getNuBSdropDstr(tDDPrpBalRObj);
+    tPrpPrtnsStr += tDDPrpBalRStr;
+    tPrpPrtnsStr += "<br>";
+
+    tDDPrpKitRObj = JSSHOP.ui.getBSDDOptsO();
+    tDDPrpKitRObj["ddtype"] = "noQvalue";
+    tDDPrpKitRObj["fld"] = "kitchen";
+    tDDPrpKitRObj["lbl"] = stxt[926];
+    tDDPrpKitRObj["val"] = kitchen.value;
+    tDDPrpKitRObj["kvpObj"] = tQuantValObj;
+    tDDPrpKitRObj["cb"] = "donada";
+    tDDPrpKitRObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tDDPrpKitRObj["lblcls"] = "txtSmall";
+    tDDPrpKitRObj["valcls"] = "txtSmall";
+    tDDPrpKitRObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+    tDDPrpKitRObj["horvert"] = "horizontal";
+    tDDPrpKitRObj["icn"] = "noQvalue";
+    tDDPrpKitRStr = JSSHOP.ui.getNuBSdropDstr(tDDPrpKitRObj);
+    tPrpPrtnsStr += tDDPrpKitRStr;
+    tPrpPrtnsStr += "<br>";
+
+    tDDPrpHalRObj = JSSHOP.ui.getBSDDOptsO();
+    tDDPrpHalRObj["ddtype"] = "noQvalue";
+    tDDPrpHalRObj["fld"] = "hall";
+    tDDPrpHalRObj["lbl"] = stxt[925];
+    tDDPrpHalRObj["val"] = hall.value;
+    tDDPrpHalRObj["kvpObj"] = tQuantValObj;
+    tDDPrpHalRObj["cb"] = "donada";
+    tDDPrpHalRObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tDDPrpHalRObj["lblcls"] = "txtSmall";
+    tDDPrpHalRObj["valcls"] = "txtSmall";
+    tDDPrpHalRObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+    tDDPrpHalRObj["horvert"] = "horizontal";
+    tDDPrpHalRObj["icn"] = "noQvalue";
+    tDDPrpHalRStr = JSSHOP.ui.getNuBSdropDstr(tDDPrpHalRObj);
+    tPrpPrtnsStr += tDDPrpHalRStr;
+    tPrpPrtnsStr += "<br>";
+
+    // floor
+    tDDPrpFlrRObj = JSSHOP.ui.getBSDDOptsO();
+    tDDPrpFlrRObj["ddtype"] = "noQvalue";
+    tDDPrpFlrRObj["fld"] = "pfloors";
+    tDDPrpFlrRObj["lbl"] = stxt[952];
+    tDDPrpFlrRObj["val"] = pfloors.value;
+    tDDPrpFlrRObj["kvpObj"] = tQuantValObj;
+    tDDPrpFlrRObj["cb"] = "donada";
+    tDDPrpFlrRObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tDDPrpFlrRObj["lblcls"] = "txtSmall";
+    tDDPrpFlrRObj["valcls"] = "txtSmall";
+    tDDPrpFlrRObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+    tDDPrpFlrRObj["horvert"] = "horizontal";
+    tDDPrpFlrRObj["icn"] = "noQvalue";
+    tDDPrpFlrRStr = JSSHOP.ui.getNuBSdropDstr(tDDPrpFlrRObj);
+    tPrpPrtnsStr += tDDPrpFlrRStr;
+    tPrpPrtnsStr += "<br>";
+
+
+    document.getElementById("dvPrpPrtns").innerHTML = tPrpPrtnsStr;
+    // alert("fillPpropFields");
+
+
+
+
+
+/*
+istype = document.getElementById("tmp_stype");
 iptype = document.getElementById("tmp_ptype");
 iselPropStat = document.getElementById("tmp_pstatus"); 
+
+
 JSSHOP.shared.addCurrSlctObj(svftObj["contract"], istype, stype.value, "noQvalue", "noQvalue");
 JSSHOP.shared.addCurrSlctObj(svftObj["propstat"], iselPropStat, pstatus.value, "noQvalue", "noQvalue");
 JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue", "noQvalue");
+*/
+
+
 tmp_pcontent.value = LZString.decompressFromEncodedURIComponent(pcontent.value);
 
 getPropImgs();
 currMediaID = prpid;
-doMediaBtnSetup('uploadBtn', '', 'finishMPupload', 'property');
+doMediaBtnSetup('uploadBtn', '', 'finishMPupload', currPrpImgsFldr);
 // doWinLoad();
+//JSSHOP.loadScript("js/thirdp/tinymce/js/tinymce/tinymce.js", donada, "js");
+
 JSSHOP.loadScript("js/tinymce/tinymce.min.js", loadTnyI, "js");
 }
 function doMPropForm(aaw,aww,cww) {
@@ -344,18 +569,25 @@ JSSHOP.ui.setCBBClickClr(tmpSvBtnObj,'cls_button cls_button-medium  bkgdClrDGree
  }
 };
 
+function cbNuPropEdit(theTCBtxt) {
+    console.log("cbNuPropEdit: " + theTCBtxt);
+    tmpSvBtnObj.innerHTML=stxt[21];
+    tmpSvBtnObj.disabled=false;
+    JSSHOP.ui.popAndFillLbox("Property saved. " + theTCBtxt);
+}
+
 var doNPropEdit = function() {
 
-    JSSHOP.shared.setFrmFieldVal("property", "uid", quid);
+    // JSSHOP.shared.setFrmFieldVal("property", "uid", quid);
 
     JSSHOP.shared.setFrmFieldVal("property", "pdadded", JSSHOP.getUnixTimeStamp());
-    document.getElementById("uid").value = quid;
+    // document.getElementById("uid").value = quid;
     tmpFobj = null;
     tmpFobj = {};
     tTMCcntStr = tinyMCE.activeEditor.getContent();
     tLZenced = LZString.compressToEncodedURIComponent(tTMCcntStr);
     tmp_pcontent.value = tLZenced;
-    alert("tmp_pcontent.value: " + tmp_pcontent.value);
+    // alert("tmp_pcontent.value: " + tmp_pcontent.value);
        // alert("c_whours.value: " + c_whours.value);
     tmpFobj["knvp"] = JSSHOP.shared.getNuKNVParr(JSSHOP.shared.getDynFrmVals(document["property"], "tmp_"), tmpOldFFvals);
  
@@ -373,7 +605,8 @@ if(currUrlArr.prpid) {
 alert("OI: " + oi["rq"]);
 	// alert("OI: " + oi["rq"]);
     console.log("OI: " + oi["rq"]);
-     doQComm(oi["rq"], null, "cbPrpedit");
+     // doQComm(oi["rq"], null, "cbPrpedit");
+     JSSHOP.ajax.doNuAjaxPost(oi["rq"], cbNuPropEdit);
 };
 
 
@@ -423,7 +656,7 @@ var procPrpType = function(theTmpTCB) {
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
 
-
+/* // fb plugin 
 tarfsb = nCurrFFieldOb();
 tarfsb.fid = "btnAddPrpSoM";
 tarfsb.fty = "button";
@@ -431,29 +664,29 @@ tarfsb.lid = "lbl_AddPrpSoM";
 tarfsb.ltxt = stxt[625]; 
 tarfsb.fcl = function() { doFBPostCntnt()  };
 euiFFObjArr.push(tarfsb);
-
+*/
 tafsb = nCurrFFieldOb();
 tafsb.fid = "btnBIsave";
 tafsb.fty = "button";
-tafsb.fcl = function() { tmpSvBtnObj=this;JSSHOP.ui.setSaveBtnClick(this, function(){doPropEdit()}) };
+tafsb.fcl = function() { tmpSvBtnObj=this;doPropEdit();};
 euiFFObjArr.push(tafsb);
 
 tcfsb = nCurrFFieldOb();
 tcfsb.fid = "btnDEsave";
 tcfsb.fty = "button";
-tcfsb.fcl = function() { tmpSvBtnObj=this;JSSHOP.ui.setSaveBtnClick(this, function(){doPropEdit()}) };
+tcfsb.fcl = function() { tmpSvBtnObj=this;doPropEdit(); };
 euiFFObjArr.push(tcfsb);
 
 tifsb = nCurrFFieldOb();
 tifsb.fid = "btnPIsave";
 tifsb.fty = "button";
-tifsb.fcl = function() { tmpSvBtnObj=this;JSSHOP.ui.setSaveBtnClick(this, function(){doPropEdit()}) };
+tifsb.fcl = function() { tmpSvBtnObj=this;doPropEdit(); };
 euiFFObjArr.push(tifsb);
 
 tofsb = nCurrFFieldOb();
 tofsb.fid = "btnLOsave";
 tofsb.fty = "button";
-tofsb.fcl = function() { tmpSvBtnObj=this;JSSHOP.ui.setSaveBtnClick(this, function(){doPropEdit()}) };
+tofsb.fcl = function() { tmpSvBtnObj=this;doPropEdit(); };
 euiFFObjArr.push(tofsb);
 
 tfok = nCurrFFieldOb();
@@ -479,15 +712,7 @@ oia = getNuDBFnvp("property",5,null,tmpDOqs);
 doQComm(oia["rq"], null, "doMPropForm");
 
     } else {
-        JSSHOP.shared.setDynFrmVals(document["property"], "tmp_");
-/**/
-        istype = document.getElementById("tmp_stype");
-        iptype = document.getElementById("tmp_ptype");
-        iselPropStat = document.getElementById("tmp_pstatus"); 
-        JSSHOP.shared.addCurrSlctObj(svftObj["contract"], istype, stype.value, "noQvalue", "noQvalue");
-        JSSHOP.shared.addCurrSlctObj(svftObj["propstat"], iselPropStat, pstatus.value, "noQvalue", "noQvalue");
-        JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue", "noQvalue");
-        
+        JSSHOP.ui.popAndFillLbox("No property ID found. Please try again.");
     }
     if(u_cat.value == "5") {
         JSSHOP.ui.showHideElement("dvBHKswitch", "show");
@@ -541,7 +766,8 @@ function doFBPostCntnt() {
     tmpDOs = {};
     tmpDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qmedia"], "nada");
     oi = getNuDBFnvp("qmedia", 6, null, tmpDOs);
-    doQComm(oi["rq"], null, "setUFBPostCntnt");
+   doQComm(oi["rq"], null, "setUFBPostCntnt");
+   //  getEdSocCntnt(tInpInnerTxt);
     } else {
         JSSHOP.ui.popAndFillLbox("Invalid Facebook URL. Please try again.");
     }
@@ -918,11 +1144,12 @@ popup.className = "brdrClrHdr";
         L.DomEvent.on(startBtn, 'click', function(e) {
             document.getElementById("tmp_ploclat").value = currStartLat;
             document.getElementById("tmp_ploclng").value = currStartLng;
+
             // alert('f: ' + JSON.stringify(e));
             map.closePopup();
             JSSHOP.ui.closePopMenus();
             scrollToElement("tmp_ploclat");
-            JSSHOP.ui.setCBBClickClr(document.getElementById("tmp_ploclat"),'cls_button cls_button-medium brdrClrDlg txtClrHdr',document.getElementById("tmp_ploclat").className, function(){void(0)});
+           //  JSSHOP.ui.setCBBClickClr(document.getElementById("tmp_ploclat"),'cls_button cls_button-medium brdrClrDlg txtClrHdr',document.getElementById("tmp_ploclat").className, function(){void(0)});
         }); 
 /**/
 map.on('contextmenu', function(e) {
@@ -1086,12 +1313,13 @@ var LeafIcon = L.Icon.extend({
     tRetErrSTr = "noQvalue";
     tFullRstr = "...";
     tStreetVal = document.getElementById("tmp_pstreet").value;
-    tLocVal = document.getElementById("tmp_location").value;
+    tLocVal = document.getElementById("tmp_state").value;
     tZipVal = document.getElementById("tmp_pzipcode").value;
-    if(tStreetVal.length < 2){
-        tRetErrSTr = stxt[518];
+    /*
+    // if(tStreetVal.length < 2){ 
+      //   tRetErrSTr = stxt[518];
         // tFullRstr += "<br>- " + tRetErrSTr;
-    }
+   //  }
     if(tLocVal.length < 2) {
         tRetErrSTr = stxt[526];
         tFullRstr += "<br>- " + tRetErrSTr;
@@ -1100,6 +1328,7 @@ var LeafIcon = L.Icon.extend({
         tRetErrSTr = stxt[80];
         tFullRstr += "<br>- " + tRetErrSTr;
     }
+        */
     if(tFullRstr.length > 5) {
         tClosePopSTr =  "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrRed crsrPointer\" style=\"float:right\">" + stxt[804] + "</div>";
 
@@ -1108,7 +1337,7 @@ var LeafIcon = L.Icon.extend({
         JSSHOP.ui.popAndFillLbox(tAFullRstr);
        return;
     } else {
-    tSrchIval = tmp_pstreet.value + " " + tmp_location.value;
+    tSrchIval = tLocVal;
     //qlDoNuPlSearch("dvPSearch", "dvPSearch", "qlShowPlacesRes");
     JSSHOP.ajax.doNuAjaxPipe("dvPSearch", "_p/osmgeo.php?qv=" + encodeURI(tSrchIval), getPlcesLRes);
     }

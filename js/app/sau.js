@@ -2228,10 +2228,8 @@ try {
       progressBar = document.getElementById(cmpPfix + 'progressBar'),
       progressOuter = document.getElementById(cmpPfix + 'progressOuter'),
       msgBox = document.getElementById(cmpPfix + 'msgBox'),
-	tmpDAIurl = 'admin/file_upload.php?in=' + tmpItemID + '&ud=' + tmpMfldr;
-    if(document.location.href.indexOf('admin/') != -1) {
-      tmpDAIurl = 'file_upload.php?in=' + tmpItemID + '&ud=' + tmpMfldr;
-    }
+	tmpDAIurl = '_p/file_upload.php?in=' + tmpItemID + '&ud=' + tmpMfldr;
+  
 	var uploader = null;
   	uploader = new ss.SimpleUpload({
         button: btn,
@@ -2287,8 +2285,11 @@ alert(e);
 }
 };
 
+/*
 if(document.location.href.indexOf('admin/') != -1) {
-    currMediaFldr = "property";
+    currMediaFldr = "../property";
+  } else {
+    currMediaFldr = "../images/property";
   }
-  
+  */
 doAIU(currMediaBtnPrfx, currMediaBtnCB, currMediaFldr, currMediaID);

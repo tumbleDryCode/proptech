@@ -8,14 +8,14 @@ if(isset($_COOKIE['quid'])) {
 ?>
 <input type="hidden" name="uid" id="uid"   value="<?php echo $uid; ?>">
 <br>
-<table style="width:100%;margin:0 auto;" class="rtable">
+<table style="width:100%;margin:0 auto;background-color: #ffffff;" class="slmtable brdrClrNrml">
 	<tr>
 		<td style="text-align: right; height: 37px;">
 				  <table style="width: 100%">
 					  <tr>
 						  <td id="dvPrpDVID" class="txtSmall txtBold">&nbsp;</td>
 						  <td style="text-align:right">
-				  <a href="javascript:eindex('aa-pdetail','pid=aa-pdetail&prpid=' + currUrlArr.prpid);"><ti data-ison="stxt[627]">View Prperty</ti></a></td>
+				  <a href="javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=' + currUrlArr.prpid);"><ti data-ison="stxt[627]">View Prperty</ti></a></td>
 					  </tr>
 				  </table>
 		</td>
@@ -30,7 +30,7 @@ if(isset($_COOKIE['quid'])) {
 												 
 												<div class="accordion-item">
         <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-        <button style="background-color: #eaf9f9;border: 1px solid #483c3c" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+        <button style="background-color: #FFFFFF;"  class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
         <div><i class="nav-material-icons coll-menu-item txtClrHdr" style="margin-right:4px;">&#xe873</i><span><ti data-ison="stxt[947]" data-desc="btn_basic_info">Basic INfo</ti></span><br><span class="txtClrGrey txtSmall"><ti data-ison="stxt[620]" data-desc="btn_basic_info">Title, Price</ti></span>
 
 			 </div>
@@ -39,7 +39,8 @@ if(isset($_COOKIE['quid'])) {
         </h2>
         <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
         <div class="accordion-body">
-        
+        <div id="dvDDeditprop"></div>
+        <!-- old selct drop downs to delete
         <div class="form-group row">
 													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[956]" data-desc="btn_status">Status</ti></label>
 													<div class="col-lg-9">
@@ -69,7 +70,7 @@ if(isset($_COOKIE['quid'])) {
 														</select>
 													</div>
 												</div>
-												
+											!! endo of old drop downs to delete	-->
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[18]" data-desc="btn_price_location">Price</ti></label>
 													<div class="col-lg-9">
@@ -124,7 +125,7 @@ if(isset($_COOKIE['quid'])) {
 												<div class="accordion-item">
 												
         <h2 class="text-secondary"  id="panelsStayOpen-headingSix">
-        <button style="background-color: #eaf9f9;border: 1px solid #483c3c;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="false" aria-controls="panelsStayOpen-collapseSix">
+        <button style="background-color: #ffffff;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="false" aria-controls="panelsStayOpen-collapseSix">
         <div><i class="nav-material-icons coll-menu-item txtClrHdr" style="margin-right:4px;">&#xe873</i><ti data-ison="stxt[40]" data-desc="btn_description">Description</ti><br><span class="txtClrGrey txtSmall"><ti data-ison="stxt[983]" data-desc="btn_content">Description</ti>...</span>
 			 </div>
 
@@ -156,7 +157,7 @@ if(isset($_COOKIE['quid'])) {
 												 
 												<div class="accordion-item">
         <h2 class="accordion-header" id="panelsStayOpen-headingEight">
-        <button style="background-color: #eaf9f9;border: 1px solid #483c3c" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseEight" aria-expanded="false" aria-controls="panelsStayOpen-collapseEight">
+        <button style="background-color: #ffffff;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseEight" aria-expanded="false" aria-controls="panelsStayOpen-collapseEight">
         <div><i class="nav-material-icons coll-menu-item txtClrHdr" style="margin-right:4px;">&#xe242</i><ti data-ison="stxt[981]" data-desc="btn_charachteritics">Charachteristics</ti><br><span class="txtClrGrey txtSmall"><ti data-ison="stxt[982]" data-desc="btn_content">Property Details</ti></span>
 			 </div>
 
@@ -165,13 +166,16 @@ if(isset($_COOKIE['quid'])) {
         <div id="panelsStayOpen-collapseEight" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingEight">
         <div class="accordion-body">
         <!-- tinymc -->
-        
-        										<div class="form-group row">
+        <div class="form-group row" id="dvPrpPrtns"></div>
+        <div class="form-group row">
 													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[953]" data-desc="btn_area_size">Area Size</ti></label>
 													<div class="col-lg-9">
 														<input type="text" class="form-control" name="tmp_size" id="tmp_size" value="5">
 													</div>
 												</div>
+        
+        										<!-- to delete old drop downs
+        										
 												
 												<div class="form-group row" id="dvFGRo">
 													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[952]" data-desc="btn_total_floors">Total Floors</ti></label>
@@ -216,7 +220,7 @@ if(isset($_COOKIE['quid'])) {
 														<input type="text" class="form-control" name="tmp_hall"  id="tmp_hall" value="1">
 													</div>
 												</div>
-												
+												-->
         <!-- end tinymc -->
         <div align="center"><button id="btnPIsave" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite"><ti data-ison="stxt[21]" data-desc="btn_save">Guardar</ti></button></div>
         </div>
@@ -233,7 +237,7 @@ if(isset($_COOKIE['quid'])) {
 												<div class="accordion-item">
 												
         <h2 class="text-secondary">
-        <button style="background-color: #eaf9f9;border: 1px solid #483c3c" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTre" aria-expanded="false" aria-controls="panelsStayOpen-collapseTre">
+        <button style="background-color: #ffffff;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTre" aria-expanded="false" aria-controls="panelsStayOpen-collapseTre">
         <div><i class="nav-material-icons coll-menu-item txtClrHdr" style="margin-right:4px;">&#xe873</i><ti data-ison="stxt[203]" data-desc="btn_location">Location</ti><br><span class="txtClrGrey txtSmall"><ti data-ison="stxt[203]" data-desc="btn_content">Location</ti>...</span>
 			 </div>
 
@@ -344,7 +348,7 @@ if(isset($_COOKIE['quid'])) {
 												<div class="accordion-item">
 												
         <h2 class="text-secondary">
-        <button style="background-color: #eaf9f9;border: 1px solid #483c3c" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFor" aria-expanded="false" aria-controls="panelsStayOpen-collapseFor">
+        <button style="background-color: #ffffff;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFor" aria-expanded="false" aria-controls="panelsStayOpen-collapseFor">
         <div><i class="nav-material-icons coll-menu-item txtClrHdr" style="margin-right:4px;">&#xe873</i><ti data-ison="stxt[980]" data-desc="btn_images_media">Images - Media</ti><br><span class="txtClrGrey txtSmall"><ti data-ison="stxt[984]" data-desc="btn_content">add mor media</ti>...</span>
 			 </div>
 
@@ -410,7 +414,7 @@ if(isset($_COOKIE['quid'])) {
 										
 			   	<hr>	
 			   	<!-- test Accordian -->
-												 
+							<!--					 
  <div class="accordion-item">
  <h2 class="text-secondary"  id="panelsStayOpen-headingFiv">
         <button style="background-color: #eaf9f9;border: 1px solid #483c3c;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFiv" aria-expanded="false" aria-controls="panelsStayOpen-collapseFiv">
@@ -421,7 +425,7 @@ if(isset($_COOKIE['quid'])) {
      </h2>
         <div id="panelsStayOpen-collapseFiv" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFiv">
         <div class="accordion-body">
-             <!-- start tinymc -->
+            
                  <table style="width: 100%">
 					<tr>
  
@@ -466,18 +470,19 @@ if(isset($_COOKIE['quid'])) {
     padding: .125rem .75rem;"></div></td>
 			  		 </tr>
 					 <tr>
-						 <td><button id="btnAddPrpSoM" class="cls_button cls_button-medium bkgdBBlue txtSmall" style="max-width:300px;">Adicionar</button></td>
+						 <td><button id="btnAddPrpSoM" class="cls_button cls_button-medium bkgdBBlue txtSmall" style="max-width:300px;"><ti data-ison="stxt[70]">Add</ti></button></td>
 					 </tr>
 					 <tr>
 						 <td></td>
 					 </tr>
 				 </table>
 		 
-        <!-- end tinymc -->
+         
  
         </div>
         </div>
       	</div>
+      	-->
  <!-- end test Accordian -->	
  <hr>					 
 

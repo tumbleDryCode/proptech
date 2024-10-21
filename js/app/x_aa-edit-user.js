@@ -13,7 +13,41 @@ ck_username = /^[A-Za-z0-9_]{5,20}$/;
 ck_password =  /^[A-Za-z0-9!@#$%^&*()_]{6,20}$/;
 
 
+function popUsrZoneMap() {
+    try {
+   
+    // alert("getUsrZoneMap");
+    /*
+    tLeavesObj["icn"] = "admin/property/sthumb_" + currSlctdPrpsObj[key].pimage;
+    tLeavesObj["title"] = currSlctdPrpsObj[key].ptitle;
+    tLeavesObj["lat"] = currSlctdPrpsObj[key].ploclat;
+    tLeavesObj["lng"] = currSlctdPrpsObj[key].ploclng;
+    tMapLeavesArr.push(tLeavesObj);
+    */
+    tFullUZMapArr = null;
+    tFullUZMapArr = [];
+    tFullUZMapObj = null;
+    tFullUZMapObj = {};
+    tMrkrMapObj = null;
+    tMrkrUZMapObj = {};
+    tMrkrUZMapObj["icn"] = "images/layout.png";
+    tMrkrUZMapObj["title"] = "Select Your Zone";
+    tMrkrUZMapObj["lat"] = "37.1688931";
+    tMrkrUZMapObj["lng"] = "-8.7430359";
+    tFullUZMapArr.push(tMrkrUZMapObj);
+ 
+    // alert(JSON.stringify(tFullUZMapArr));
+    tFullUZMapObj["mrkrs"] = tFullUZMapArr;
+    tFullUZMapObj["mdvid"] = "dvUZMapView";
+    tNewUZDvStr = "<div id=\"dvUZMapView\" style=\"min-height: 340px; width: 100%;\"></div>";
+     JSSHOP.ui.popFillObox(tNewUZDvStr, "&#xe5cd;", "Select Your Zone", "yes", "yes");
 
+    setTimeout(function() {doNuSpinSet("dvUZMapView", "small", null, "...");}, 200);
+    setTimeout(function() {JSSHOP.ads.doNuGenMap(tFullUZMapObj) }, 1000);
+    } catch(e) {
+        alert("popUsrZoneMap: " + e);
+    }
+}
 
 
 
@@ -245,6 +279,144 @@ return tmpRetStr;
 };
 
 
+function getPrvcyBSDDstr() {
+    var tGUPDDstr = "";
+    tDDBPrvojA = {};
+    tDDBPrvojA["ddtype"] = "noQvalue";
+    tDDBPrvojA["fld"] = "u_privacy";
+    tDDBPrvojA["lbl"] = stxt[101];
+    tDDBPrvojA["val"] = u_privacy.value;
+    tDDBPrvojA["kvpObj"] = svftObj["userpriv"];
+    tDDBPrvojA["cb"] = "donada";
+    tDDBPrvojA["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tDDBPrvojA["lblcls"] = "txtSmall";
+    tDDBPrvojA["valcls"] = "txtSmall";
+    tDDBPrvojA["icncls"] = "nav-material-icons txtBold txtClrGrey";
+    tDDBPrvojA["horvert"] = "horizontal";
+    tDDBPrvojA["icn"] = "noQvalue";
+    tDDBPrvojA["kvIcnsObj"] = {};
+    tDDBPrvojA["kvIcnsObj"]["public"] = "&#xe5cd;";
+    tDDBPrvojA["kvIcnsObj"]["private"] = "noQvalue";
+    tDDBPrvojA["kvIcnsObj"]["members"] = "&#xe5cd;";
+    //  {"public":"e5cd;","private":"e5cd;","members":"noQvalue"};
+    tGUPDDstr += JSSHOP.ui.getNuBSdropDstr(tDDBPrvojA);
+    return tGUPDDstr;
+}
+ 
+function doKLksPckChg(tZPCel, tZPVal, tZPtxt) {
+    console.log("doKLksPckChg: " + tZPCel + " " + tZPVal + " " + tZPtxt);
+    try {
+        tKMtrStrObj = {};
+        tKMtrStrObj["uname"] = {};
+        tKMtrStrObj["uname"]["en_us"] = "Please enter your " + tZPtxt + " username";
+        tKMtrStrObj["uname"]["pt_pt"] = "Por favor, insira o seu nome de utilizador " + tZPtxt;
+        tKMtrStrObj["uname"]["spa_spa"] = "Por favor, ingrese su nombre de usuario " + tZPtxt;
+        tKMtrStrObj["knumber"] = {};
+        tKMtrStrObj["knumber"]["en_us"] = "Please enter your " + tZPtxt + " number";
+        tKMtrStrObj["knumber"]["pt_pt"] = "Por favor, insira o seu numero de " + tZPtxt;
+        tKMtrStrObj["knumber"]["spa_spa"] = "Por favor, ingrese su numero de " + tZPtxt;
+        tKMtrStrObj["kaddress"] = {};
+        tKMtrStrObj["kaddress"]["en_us"] = "Please enter your " + tZPtxt + " address";
+        tKMtrStrObj["kaddress"]["pt_pt"] = "Por favor, insira o seu endereco de " + tZPtxt;
+        tKMtrStrObj["kaddress"]["spa_spa"] = "Por favor, ingrese su direccion de " + tZPtxt;
+        tKMtrStrObj["kother"] = {};
+        tKMtrStrObj["kother"]["en_us"] = "Please enter your " + tZPtxt + " information";
+        tKMtrStrObj["kother"]["pt_pt"] = "Por favor, insira a sua informacao " + tZPtxt;
+        tKMtrStrObj["kother"]["spa_spa"] = "Por favor, ingrese su informacion " + tZPtxt;
+         
+        switch(tZPVal) {
+                case "facebook":
+                case "linkedin":
+                case "twitter":
+                case "instagram":
+
+                    dvKmatterTip.innerHTML = tKMtrStrObj["uname"][usrlang];
+                    break;
+                case "whatsapp":
+                case "telephone":
+                case "sms":
+                case "fax":
+                    dvKmatterTip.innerHTML = tKMtrStrObj["knumber"][usrlang];
+                    break;
+                case "web":
+                case "email":
+                    dvKmatterTip.innerHTML =  tKMtrStrObj["kaddress"][usrlang];
+                    break;
+                case "other":
+                    dvKmatterTip.innerHTML =  tKMtrStrObj["kother"][usrlang];
+                    break;
+                default:
+                    dvKmatterTip.innerHTML = tKMtrStrObj["kother"][usrlang];
+                    break;
+        }
+       setTimeout(function(){JSSHOP.ui.setNuCBBClickClr(dvKmatterTip,'txtClrRed','txtSmall txtClrGrey', function(){void(0);}, 2000)}, 1000);
+
+        // JSSHOP.iu.setCBBClickClr(document.getElementById("dvKmatterTip"),'txtBig txtBold txtClrRed',document.getElementById("dvKmatterTip").className, function(){void(0);});
+    }
+    catch(e) {
+        alert("doKLksPckChg: " + e);
+    }
+}
+
+
+    
+
+function getKLinksBSDDstr() {
+    
+
+    var tStr = "";
+    tmpKLnksSlctObj = {};
+    tmpKLnksSlctObj["facebook"] = "Facebook";
+    tmpKLnksSlctObj["whatsapp"] = "Whatsapp";
+    tmpKLnksSlctObj["instagram"] = "Instagram";
+    tmpKLnksSlctObj["linkedin"] = "Linkedin";
+    tmpKLnksSlctObj["twitter"] = "Twitter";
+    tmpKLnksSlctObj["web"] = "Website";
+    tmpKLnksSlctObj["email"] = "Email";
+    tmpKLnksSlctObj["telephone"] = "Telephone";
+    tmpKLnksSlctObj["sms"] = "SMS";
+    tmpKLnksSlctObj["fax"] = "Fax";
+    tmpKLnksSlctObj["other"] = "Other";
+
+    tDDXtraCntObj = {};
+    tDDXtraCntObj["ddtype"] = "noQvalue";
+    tDDXtraCntObj["fld"] = "k_category";
+    tDDXtraCntObj["lbl"] =  stxt[992];
+    tDDXtraCntObj["val"] = "Lisboa";
+    tDDXtraCntObj["kvpObj"] = tmpKLnksSlctObj;
+    tDDXtraCntObj["cb"] = "doKLksPckChg";
+    tDDXtraCntObj["fldcls"] = "nav-item dropdown-toggle txtSmall txtClrHdr";
+    tDDXtraCntObj["lblcls"] = "form-control nav-item txtSmall txtClrHdr txtDecorNone";
+    tDDXtraCntObj["valcls"] = "txtSmall";
+    tDDXtraCntObj["horvert"] = "horizontal";
+    tDDXtraCntObj["icn"] = "noQvalue";
+    tStr = JSSHOP.ui.getNuBSdropDstr(tDDXtraCntObj);
+    return tStr;
+}
+
+
+function doZoneDD(thePrx, theSTat) {
+    try {   
+
+        // alert("doZoneDD: " + thePrx + " " + theSTat);
+        if(theSTat == "ok") {
+           tLclDstDstr = getLocDistDropStr();
+              document.getElementById("dvUsrZone").innerHTML = tLclDstDstr;
+        } else {
+            document.getElementById("dvUsrZone").innerHTML = "error loading zones";
+        }
+        dvBSDDKLnks = document.getElementById("dvBSDDKLnks");
+        dvBSDDKLnks.innerHTML = getKLinksBSDDstr();
+        tPRvBSDDstr = getPrvcyBSDDstr();
+        dvUsrPrivacy = document.getElementById("dvUsrPrivacy");
+        dvUsrPrivacy.innerHTML = tPRvBSDDstr;
+    } catch(e) {
+        alert("doZoneDD: " + e);
+    }
+}
+
+            // alert("doZoneDD: " + thePrx + " " + theSTat);
+            // alert("doZoneDD: " + thePrx + " " + theSTat);
 var setUiconImgs = function(theAIa, theAIb, theAIc) {
 	try {
         console.log("setUiconImgs: " + theAIa + " " + theAIb + " " + theAIc);
@@ -276,6 +448,7 @@ var setUiconImgs = function(theAIa, theAIb, theAIc) {
         tstr += "</div>";
 		document.getElementById("dvProdImgs").innerHTML = tstr;
 	}
+    JSSHOP.loadScript("misc/x_zp_" + usrlang + ".js", doZoneDD,  "js");
 	} catch(e) {
 		alert("setUiconImgs: " + e);
 	}
@@ -373,7 +546,7 @@ tfsb = nCurrFFieldOb();
 tfsb.fid = "btnAddSoLink";
 tfsb.fty = "button";
 tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){doCoLinkAdd()}) };
-euiFFObjArr.push(tfsb);
+// euiFFObjArr.push(tfsb);
 
 
 tfuh = nCurrFFieldOb();
@@ -393,6 +566,8 @@ euiFFObjArr.push(tfsb);
 JSSHOP.shared.initFrmComps(euiFFObjArr);
 //
 if(arrAllForms.quser) {
+    JSSHOP.shared.setFrmVals("quser",arrAllForms.quser.v[0],function() { void(0) });
+
 JSSHOP.shared.setDynFieldVals(arrAllForms.quser.v[0],"tmp_");
 } else {
     tmp_u_name.value = u_name.value;
@@ -563,7 +738,10 @@ var fnshCoLinkAdd = function(tCCLA, tCCLB, tCCLC) {
     stopSpin("btnAddSoLink");
     btnAddSoLink.innerHTML = "";
     JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium bkgdBBlue txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
-
+    currCoLinksArr.push(JSSHOP.shared.getFrmObj(document["qlinks"]));
+        rndrCoLnks(tCCLA, JSON.stringify(currCoLinksArr), tCCLC);
+  
+/*
     // JSSHOP.ui.setCBBClickClr(btnAddSoLink,'txtXLrg txtBold slmtable bkgdClrDGreen txtClrWhite','txtXLrg txtBold slmtable bkgdClrWhite brdrNone txtClrDrkGrn', function(){document.getElementById("btnAddSoLink").disabled=false;});
    //  document.getElementById("btnAddSoLink").innerHTML="<i class=\"txtBold txtClrDrkGrn brdrClrWhite bkgdClrWhite material-icons\" alt=\"add\" title=\"add\">&#xe145;</i>";
         tmpDOs = null;
@@ -572,6 +750,8 @@ var fnshCoLinkAdd = function(tCCLA, tCCLB, tCCLC) {
         tmpDOs["wa"] = [quid,quid,5]; 
         oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
         doQComm(oi["rq"], "y", "setCurrCoLinks");
+
+*/
     }; 
     
     var setCurrCoLinks = function(tCCLA, tCCLB, tCCLC) {
@@ -599,23 +779,23 @@ var doCoLinkAdd = function() {
         alert("Please enter a link");
         stopSpin("btnAddSoLink");
         btnAddSoLink.innerHTML = "";
-        JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDYellow txtClrWhite','cls_button cls_button-medium bkgdBBlue txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
+        // JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDYellow txtClrWhite','cls_button cls_button-medium bkgdBBlue txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
     
         return;
     }
     if((JSSHOP.shared.getFrmFieldVal("qlinks", "k_title", 0) == "") || (JSSHOP.shared.getFrmFieldVal("qlinks", "k_title", 0) == "noQvalue")){
-        alert("Please enter a tcategory");
-        stopSpin("btnAddSoLink");
-        btnAddSoLink.innerHTML = "";
-        JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDYellow txtClrWhite','cls_button cls_button-medium bkgdBBlue txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
-    
-        return;
-    }
-    if((JSSHOP.shared.getFrmFieldVal("qlinks", "k_category", 0) == "") || (JSSHOP.shared.getFrmFieldVal("qlinks", "k_category", 0) == "noQvalue")){
         alert("Please enter a category");
         stopSpin("btnAddSoLink");
         btnAddSoLink.innerHTML = "";
-        JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDYellow txtClrWhite',btnAddSoLink.className + ' txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
+        // JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDYellow txtClrWhite','cls_button cls_button-medium bkgdBBlue txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
+    
+        return;
+    }
+    if((JSSHOP.shared.getFrmFieldVal("qlinks", "k_category", 0) == "") || (JSSHOP.shared.getFrmFieldVal("qlinks", "k_category", 0) == "Select")){
+        alert("Please enter a category");
+        stopSpin("btnAddSoLink");
+        btnAddSoLink.innerHTML = "";
+        // JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDYellow txtClrWhite',btnAddSoLink.className + ' txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
         // JSSHOP.ui.setCBBClickClr(tmp_k_category,'brdrClrRed','crsrPointer form-control', function(){void(0);});
 
         return;

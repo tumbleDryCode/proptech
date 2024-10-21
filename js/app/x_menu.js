@@ -634,73 +634,38 @@ currMCollItems["aa-show-about"] = tmpMCollItem;
 
 tmpMCollItem = null;
 tmpMCollItem = {};
-tmpMCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-add-item&cid=" + cid + "&catid=" + catid + "'";
+tmpMCollItem["u"] = "javascript:eindex('aa-add-prop', 'pid=aa-add-prop&prpid=" + currUrlArr.prpid + "');";
+
+// tmpMCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-add-item&cid=" + cid + "&catid=" + catid + "'";
 tmpMCollItem["mi"] = "&#xe145;"; // add
-tmpMCollItem["ti"] = stxt[17];
+tmpMCollItem["ti"] = stxt[906];
 tmpMCollItem["c"] = "coll-menu-item";
-tmpMCollItem["nm"] = "aa-add-item";
-currMCollItems["aa-add-item"] = tmpMCollItem;
+tmpMCollItem["nm"] = "aa-add-prop";
+currMCollItems["aa-add-prop"] = tmpMCollItem;
 
 tmpMCollItem = null;
 tmpMCollItem = {};
 // tmpMCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-show-item&cid=" + cid + "&catid=" + catid + "&itemid=" + itemid + "'";
-tmpMCollItem["u"] = "javascript:eindex('aa-show-item', 'pid=aa-show-item&cid=" + cid + "&catid=" + catid + "&itemid=" + itemid + "');";
+tmpMCollItem["u"] = "javascript:eindex('aa-show-prop', 'pid=aa-show-prop&&prpid=" + currUrlArr.prpid + "');";
 
 tmpMCollItem["mi"] = "&#xe8ff;"; // zoom_in
-tmpMCollItem["ti"] = stxt[67];
+tmpMCollItem["ti"] = stxt[627];
 tmpMCollItem["c"] = "collection-item";
-tmpMCollItem["nm"] = "aa-show-item";
-currMCollItems["aa-show-item"] = tmpMCollItem;
+tmpMCollItem["nm"] = "aa-show-prop";
+currMCollItems["aa-show-prop"] = tmpMCollItem;
 
 tmpMCollItem = null;
 tmpMCollItem = {};
 
 // tmpMCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-edit-item&cid=" + cid + "&catid=" + catid + "&itemid=" + itemid + "'";
-tmpMCollItem["u"] = "javascript:eindex('aa-edit-item', 'pid=aa-edit-item&cid=" + cid + "&catid=" + catid + "&itemid=" + itemid + "');";
+tmpMCollItem["u"] = "javascript:eindex('aa-edit-prop', 'pid=aa-edit-prop&prpid=" + currUrlArr.prpid + "');";
 tmpMCollItem["mi"] = "&#xe3c9;"; // edit
-tmpMCollItem["ti"] = stxt[20]; 
+tmpMCollItem["ti"] = stxt[985]; 
 tmpMCollItem["c"] = "coll-menu-item";
-tmpMCollItem["nm"] = "aa-edit-item";
-currMCollItems["aa-edit-item"] = tmpMCollItem;
+tmpMCollItem["nm"] = "aa-edit-prop";
+currMCollItems["aa-edit-prop"] = tmpMCollItem;
 
-tmpMCollItem = null;
-tmpMCollItem = {};
-tmpMCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-edit-item&cid=" + cid + "&catid=" + catid + "&itemid=" + itemid + "&cmdci=y'";
-tmpMCollItem["mi"] = "&#xe14d;"; // content_copy
-tmpMCollItem["ti"] = stxt[69];
-tmpMCollItem["c"] = "coll-menu-item";
-tmpMCollItem["nm"] = "aa-copy-item";
-currMCollItems["aa-copy-item"] = tmpMCollItem;
-
-tmpWCollItem = null;
-tmpWCollItem = {};
-// tmpWCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-show-category&cid=" + cid + "&catid=" + catid + "'";
-tmpWCollItem["u"] = "javascript:eindex('aa-show-category', 'pid=aa-show-category&cid=" + cid + "&catid=" + catid + "');";
-tmpWCollItem["mi"] = "&#xe8ff;"; // zoom_in
-tmpWCollItem["ti"] = stxt[505];
-tmpWCollItem["c"] = "collection-item";
-currMCollItems["aa-show-category"] = tmpWCollItem;
-
-
-tmpWCollItem = null;
-tmpWCollItem = {};
-// tmpWCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-show-category&cid=" + cid + "&catid=" + catid + "'";
-tmpWCollItem["u"] = "javascript:eindex('aa-show-parts-category', 'pid=aa-show-parts-category&cid=" + cid + "&catid=" + catid + "');";
-tmpWCollItem["mi"] = "&#xe8ff;"; // zoom_in
-tmpWCollItem["ti"] = stxt[505];
-tmpWCollItem["c"] = "collection-item";
-currMCollItems["aa-show-parts-category"] = tmpWCollItem;
-
-
-tmpWCollItem = null;
-tmpWCollItem = {};
-// tmpWCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-show-category&cid=" + cid + "&catid=" + catid + "'";
-tmpWCollItem["u"] = "javascript:eindex('aa-show-svs-category', 'pid=aa-show-svs-category&cid=" + cid + "&catid=" + catid + "');";
-tmpWCollItem["mi"] = "&#xe8ff;"; // zoom_in
-tmpWCollItem["ti"] = stxt[505];
-tmpWCollItem["c"] = "collection-item";
-currMCollItems["aa-show-svs-category"] = tmpWCollItem;
-
+    
 
 tmpWCollItem = null;
 tmpWCollItem = {};
@@ -709,17 +674,8 @@ tmpWCollItem["u"] = "javascript:JSSHOP.ui.getPartsPage();";
 tmpWCollItem["mi"] = "images/misc/parts_w.gif"; // zoom_in
 tmpWCollItem["ti"] = stxt[108];
 tmpWCollItem["c"] = "collection-item";
-currMCollItems["aa-show-psearch"] = tmpWCollItem;
-
-tmpWCollItem = null;
-tmpWCollItem = {};
-// tmpWCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-show-category&cid=" + cid + "&catid=" + catid + "'";
-tmpWCollItem["u"] = "javascript:JSSHOP.ui.getSvsPage();";
-tmpWCollItem["mi"] = "images/misc/mec2_w.gif"; // zoom_in
-tmpWCollItem["ti"] = stxt[109];
-tmpWCollItem["c"] = "collection-item";
-currMCollItems["aa-show-msearch"] = tmpWCollItem;
-
+currMCollItems["aa-show-search"] = tmpWCollItem;
+ 
 /* toggle-buttons  for the products grid-row  layout and price asc-desc order */
 
 
@@ -792,65 +748,10 @@ tmpQCollItem = null;
 tmpQCollItem = {};
 tmpQCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-edit-mylistings&cid=" + cuid + "'";
 tmpQCollItem["mi"] = "&#xe3c9;"; // edit
-tmpQCollItem["ti"] = "My Listings";
+tmpQCollItem["ti"] = "Properties";
 tmpQCollItem["c"] = "coll-menu-item";
-currMCollItems["aa-show-mylistings"] = tmpQCollItem;
-
-
-tmpQCollItem = null;
-tmpQCollItem = {};
-// tmpQCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-edit-category&cid=" + cid + "&catid=" + catid + "'";
-tmpQCollItem["u"] = "javascript:eindex('aa-edit-parts-category', 'pid=aa-edit-parts-category&cid=" + cid + "&catid=" + catid + "');";
-tmpQCollItem["mi"] = "&#xe3c9;"; // edit
-tmpQCollItem["ti"] = stxt[504];
-tmpQCollItem["c"] = "coll-menu-item";
-currMCollItems["aa-edit-category"] = tmpQCollItem;
-
-tmpQCollItem = null;
-tmpQCollItem = {};
-// tmpQCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-edit-categories&cid=" + cid + "&catid=" + catid + "'";
-tmpQCollItem["u"] = "javascript:eindex('aa-edit-categories', 'pid=aa-edit-categories&cid=" + cid + "&catid=" + catid + "');";
-tmpQCollItem["mi"] = "&#xe3c9;"; // edit
-tmpQCollItem["ti"] = stxt[503];
-tmpQCollItem["c"] = "coll-menu-item";
-currMCollItems["aa-edit-categories"] = tmpQCollItem;
-
-
-tmpMCollItem = null;
-tmpMCollItem = {};
-// tmpMCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-edit-parts-category&cid=" + cid + "&catid=" + catid + "'";
-tmpMCollItem["u"] = "javascript:eindex('aa-edit-parts-category', 'pid=aa-edit-parts-category&cid=" + cid + "&catid=" + catid + "');";
-tmpMCollItem["mi"] = "&#xe869;"; // build
-tmpMCollItem["ti"] = stxt[5003];
-tmpMCollItem["c"] = "coll-menu-item";
-currMCollItems["aa-edit-parts-category"] = tmpMCollItem;
-
-
-tmpQCollItem = null;
-tmpQCollItem = {};
-// tmpQCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-edit-parts-categories&cid=" + cid + "&catid=" + catid + "'";
-tmpQCollItem["u"] = "javascript:eindex('aa-edit-parts-categories', 'pid=aa-edit-parts-categories&cid=" + cid + "&catid=" + catid + "');";
-tmpQCollItem["mi"] = "&#xe3c9;"; // edit
-tmpQCollItem["ti"] = stxt[503];
-tmpQCollItem["c"] = "coll-menu-item";
-currMCollItems["aa-edit-parts-categories"] = tmpQCollItem;
-
-tmpQCollItem = null;
-tmpQCollItem = {};
- tmpQCollItem["u"] = "javascript:eindex('aa-edit-svs-parts-category', 'pid=aa-edit-svs-parts-category&cid=" + cid + "&catid=" + catid + "');";
-tmpQCollItem["mi"] = "&#xe3c9;"; // edit
-tmpQCollItem["ti"] = stxt[504];
-tmpQCollItem["c"] = "coll-menu-item";
-currMCollItems["aa-edit-svs-category"] = tmpQCollItem;
-
-tmpQCollItem = null;
-tmpQCollItem = {};
- tmpQCollItem["u"] = "javascript:eindex('aa-edit-svs-categories', 'pid=aa-edit-svs-categories&cid=" + cid + "&catid=" + catid + "');";
-tmpQCollItem["mi"] = "&#xe3c9;"; // edit
-tmpQCollItem["ti"] = stxt[503];
-tmpQCollItem["c"] = "coll-menu-item";
-currMCollItems["aa-edit-svs-categories"] = tmpQCollItem;
-
+currMCollItems["aa-show-props"] = tmpQCollItem;
+ 
 tmpQCollItem = null;
 tmpQCollItem = {};
 tmpQCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-edit-shop&cid=" + cid + "&catid=" + catid + "'";
@@ -858,23 +759,7 @@ tmpQCollItem["mi"] = "&#xe3c9;"; // edit
 tmpQCollItem["ti"] = stxt[68];
 tmpQCollItem["c"] = "coll-menu-item";
 currMCollItems["aa-edit-shop"] = tmpQCollItem;
-
-tmpQCollItem = null;
-tmpQCollItem = {};
-tmpQCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-edit-shops'";
-tmpQCollItem["mi"] = "&#xe3c9;"; // edit
-tmpQCollItem["ti"] = stxt[4];
-tmpQCollItem["c"] = "coll-menu-item";
-currMCollItems["aa-edit-shops"] = tmpQCollItem;
-
-tmpQCollItem = null;
-tmpQCollItem = {};
-tmpQCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-add-shop'";
-tmpQCollItem["mi"] = "&#xe145;"; // add
-tmpQCollItem["ti"] = stxt[1];
-tmpQCollItem["c"] = "collection-item";
-currMCollItems["aa-add-shop"] = tmpQCollItem;
-
+ 
 tmpQCollItem = null;
 tmpQCollItem = {};
 tmpQCollItem["u"] = "javascript:JSSHOP.shop.doCartAddPop();";
@@ -904,15 +789,7 @@ tmpQCollItem["ti"] = stxt[63];
 tmpQCollItem["c"] = "collection-item";
 currMCollItems["aa-edit-user"] = tmpQCollItem;
 
-
-tmpQCollItem = null;
-tmpQCollItem = {};
-tmpQCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-edit-orders&cid=" + cid + "'";
-tmpQCollItem["mi"] = "&#xe7fd;"; // orders
-tmpQCollItem["ti"] = stxt[601];
-tmpQCollItem["c"] = "collection-item";
-currMCollItems["aa-edit-orders"] = tmpQCollItem;
-
+ 
 
 
 tmpQCollItem = null;
@@ -938,15 +815,7 @@ tmpQCollItem["mi"] = "&#xe3b3;"; // edit
 tmpQCollItem["ti"] = "CutOuts Cam";
 tmpQCollItem["c"] = "coll-menu-item";
 currMCollItems["aa-docutouts"] = tmpQCollItem;
-
-tmpQCollItem = null;
-tmpQCollItem = {};
-tmpQCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-use-adminapp&cid=" + cid + "'";
-tmpQCollItem["mi"] = "&#xe3c9;"; // edit
-tmpQCollItem["ti"] = "Use Java adminApp";
-tmpQCollItem["c"] = "coll-menu-item";
-currMCollItems["aa-use-adminapp"] = tmpQCollItem;
-
+ 
 tmpQCollItem = null;
 tmpQCollItem = {};
 tmpQCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-sqldump'";
@@ -1009,77 +878,7 @@ tmpMCollItem["ti"] = stxt[86];
 tmpMCollItem["c"] = "coll-menu-item";
 currMCollItems["aa-contactus"] = tmpMCollItem;
 
-
-
-tmpMCollItem = null;
-tmpMCollItem = {};
-tmpMCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-edit-synch&cid=" + cid + "&catid=" + catid + "&itemid=" + itemid + "'";
-tmpMCollItem["mi"] = "&#xe869;"; // build
-tmpMCollItem["ti"] = "Synch";
-tmpMCollItem["c"] = "coll-menu-item";
-currMCollItems["aa-edit-synch"] = tmpMCollItem;
-
-
-
-
-
-// recamby links
-
-
-tmpMCollItem = null;
-tmpMCollItem = {};
-tmpMCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-show-makes';";
-tmpMCollItem["mi"] = "&#xe87d;"; // Car Makes
-tmpMCollItem["ti"] = stxt[206];
-tmpMCollItem["c"] = "collection-item";
-tmpMCollItem["nm"] = "aa-show-makes";
-currMCollItems["aa-show-makes"] = tmpMCollItem;
-
-tmpMCollItem = null;
-tmpMCollItem = {};
-tmpMCollItem["u"] = "javascript:document.location.href='index.html?content=automotive-industry-news';";
-
-// tmpMCollItem["u"] = "javascript:eindex('automotive-industry-news','content=automotive-industry-news')";
-tmpMCollItem["mi"] = "&#xe87d;"; // News
-tmpMCollItem["ti"] = stxt[200]; 
-tmpMCollItem["c"] = "collection-item";
-tmpMCollItem["nm"] = "automotive-industry-news";
-currMCollItems["automotive-industry-news"] = tmpMCollItem;
-
-tmpMCollItem = null;
-tmpMCollItem = {};
-tmpMCollItem["u"] = "JSSHOP.ui.popAndFillLbox(doCurrInfoStr());";
-tmpMCollItem["mi"] = "&#xe869;"; // build
-tmpMCollItem["ti"] = "debug";
-tmpMCollItem["c"] = "coll-menu-item";
-currMCollItems["aa-show-dbug"] = tmpMCollItem;
-
-
-tmpMCollItem = null;
-tmpMCollItem = {};
-tmpMCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-add-part&cid=" + cid + "&catid=" + catid + "'";
-tmpMCollItem["mi"] = "&#xe869;"; // build
-tmpMCollItem["ti"] = stxt[5001];
-tmpMCollItem["c"] = "coll-menu-item";
-currMCollItems["aa-add-part"] = tmpMCollItem;
-
-tmpMCollItem = null;
-tmpMCollItem = {};
-tmpMCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-edit-part&cid=" + cid + "&catid=" + catid + "&itemid=" + itemid + "'";
-tmpMCollItem["mi"] = "&#xe869;"; // build
-tmpMCollItem["ti"] = stxt[5002];
-tmpMCollItem["c"] = "coll-menu-item";
-currMCollItems["aa-edit-part"] = tmpMCollItem;
-
-tmpAMCollItem = null;
-tmpAMCollItem = {};
-// tmpAMCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-edit-parts-category&cid=" + cid + "&catid=" + catid + "'";
-tmpAMCollItem["u"] = "javascript:eindex('aa-edit-parts-category', 'pid=aa-edit-parts-category&cid=" + cid + "&disabled=y');";
-tmpAMCollItem["mi"] = "&#xe869;"; // build
-tmpAMCollItem["ti"] = stxt[568];
-tmpAMCollItem["c"] = "coll-menu-item";
-currMCollItems["aa-edit-parts-disabled"] = tmpAMCollItem;
-
+  
 
 currMCollArr = [];
 tmpPrfSAL = "y";
@@ -1096,148 +895,18 @@ tmpPrfSAL = "y";
 switch(pid) {
 
 
-
-
-case "aa-show-item":
-/*
-if((arrAllForms.qco.v[0].c_uid == quid) && (tmpPrfSAL == "y")) {
-if(i_vala.value.indexOf(":") != -1) {
-currMCollArr.push("aa-add-part");
-currMCollArr.push("aa-edit-part");
-currMCollArr.push("aa-edit-parts-category");
-} else {
-currMCollArr.push("aa-add-item");
-currMCollArr.push("aa-edit-item");
-currMCollArr.push("aa-copy-item");
-currMCollArr.push("aa-edit-category");
-}
-boolShwLogoHdr = "y";
-
-}
-*/
+ 
+case "aa-add-prop":
+currMCollArr.push("aa-show-prop");
+currMCollArr.push("aa-edit-prop");
 break;
-
-case "aa-show-category":
-
-
-try { var upMRefs = arrUprefs["prfsSHOPuser"][0].scv; }catch (e) { var upRefs = "r";}
-try { var upMPrixRef = arrUprefs["prfsSHOPuser"][0].scp; } catch (e) { var upPrixRef = "u"; }
-if (upMRefs == "r") {
-currMCollArr.push("aa-toggle-grid");
-} else {
-currMCollArr.push("aa-toggle-row");
-}
-if (upMPrixRef == "a") {
-currMCollArr.push("aa-toggle-priceDesc");
-} else {
-currMCollArr.push("aa-toggle-priceDesc");
-}
-
-
-// not using this for now
-/*
-if(arrAllForms.qco.v[0]) {
-if((arrAllForms.qco.v[0].c_uid == quid) && (tmpPrfSAL == "y")) {
-
-if(cat_vala.value < 10) {
-currMCollArr.push("aa-add-part");
-currMCollArr.push("aa-edit-parts-category");
-} else {
-currMCollArr.push("aa-add-item");
-currMCollArr.push("aa-edit-category");
-}
-currMCollArr.push("aa-force-clear");
-currMCollArr.push("aa-edit-shop");
-if(isJavaFx == "yes") {
-currMCollArr.push("aa-appdbreq");
-} else {
-currMCollArr.push("aa-use-adminapp");
-}
-}
-} // end if arr
-*/
-
-currMCollArr.push("break");
-boolShwLogoHdr = "y";
+case "aa-edit-prop":
+currMCollArr.push("aa-show-prop");
+currMCollArr.push("aa-add-prop");
 break;
-
-case "aa-add-item":
-currMCollArr.push("aa-show-category");
-currMCollArr.push("aa-edit-category");
-currMCollArr.push("aa-edit-categories");
-break;
-case "aa-edit-item":
-currMCollArr.push("aa-show-item");
-currMCollArr.push("aa-edit-category");
-currMCollArr.push("aa-show-category");
-break;
-case "aa-edit-place":
-currMCollArr.push("aa-show-item");
-currMCollArr.push("aa-edit-category");
-currMCollArr.push("aa-show-category");
-break;
-case "aa-show-mylistings":
-case "aa-show-category":
-case "aa-edit-category":
-
-try { var upMRefs = arrUprefs["prfsSHOPuser"][0].scv; }catch (e) { var upRefs = "r";}
-try { var upMPrixRef = arrUprefs["prfsSHOPuser"][0].scp; } catch (e) { var upPrixRef = "u"; }
-if (upMRefs == "r") {
-currMCollArr.push("aa-toggle-grid");
-} else {
-currMCollArr.push("aa-toggle-row");
-}
-if (upMPrixRef == "a") {
-currMCollArr.push("aa-toggle-priceDesc");
-} else {
-currMCollArr.push("aa-toggle-priceDesc");
-}
-
-currMCollArr.push("aa-add-part");
-currMCollArr.push("aa-add-item");
-currMCollArr.push("aa-show-category");
-currMCollArr.push("aa-edit-categories");
-currMCollArr.push("aa-edit-shop");
-// currMCollArr.push("aa-edit-shops");
-currMCollArr.push("aa-edit-synch");
-if(isJavaFx == "yes") {
-currMCollArr.push("aa-appdbreq");
-} else {
-currMCollArr.push("aa-use-adminapp");
-} 
-break;
-case "aa-edit-categories":
-currMCollArr.push("aa-edit-shop");
-// currMCollArr.push("aa-edit-shops");
-break;
-case "aa-edit-shop":
-currMCollArr.push("aa-edit-categories");
-// currMCollArr.push("aa-edit-shops");
-break;
-case "aa-edit-user":
-currMCollArr.push("aa-edit-shop");
-// currMCollArr.push("aa-edit-shops");
-currMCollArr.push("aa-settings");
-currMCollArr.push("aa-add-shop");
-break;
-
-// recamby links
-case "aa-add-part":
-currMCollArr.push("aa-edit-parts-category");
-break;
-case "aa-edit-part":
-currMCollArr.push("aa-edit-parts-category");
-currMCollArr.push("aa-add-part");
-break;
-case "aa-edit-parts-category":
-currMCollArr.push("aa-edit-parts-category");
-currMCollArr.push("aa-edit-parts-disabled");
-// currMCollArr.push("aa-add-part");
-break;
-
-case "aa-edit-svs-category":
-currMCollArr.push("aa-show-svs-category");
-currMCollArr.push("aa-edit-svs-categories");
+case "aa-show-prop":
+currMCollArr.push("aa-edit-prop");
+currMCollArr.push("aa-add-prop");
 break;
 
 default:
@@ -1253,8 +922,7 @@ if((quid == 0) || (quid == "noQvalue")){
 
 currMCollArr.push("recent");
 currMCollArr.push("aa-show-favorites");
-currMCollArr.push("aa-show-psearch");
-currMCollArr.push("aa-show-msearch");
+ 
 break;
 }
  

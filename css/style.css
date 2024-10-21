@@ -727,8 +727,12 @@ a, a:hover, .btn-link, .btn-link:hover {
 	cousor: pointer
 }
 img {
-	width: 100%
+	/* width: 100% */
 }
+
+.img100p {
+	width: 100%
+}	
 button, button:focus {
 	border: none;
 	outline: none
@@ -1034,7 +1038,8 @@ blockquote {
 	border-right: 5px solid transparent;
 	border-left: 5px solid transparent;
 	vertical-align: 1px;
-	font-size: 14px;
+	font-size: 16px;
+	margin: 6px 0 0 5px;
 }
 .navbar-expand-lg .navbar-nav .nav-link {
 	padding: 12px 15px;
@@ -1310,10 +1315,23 @@ blockquote {
 .form-control {
 	font-family: var(--theme-ordinary-font);
 	font-size: 15px;
-	/* height: 50px; */
+	/* height: 50px; 
+		line-height: 35px;
+	*/
 	border-color: #483c3c;
-	line-height: 35px;
+
 	background-color: #eaf9f9;
+	padding: .125rem .75rem;
+}
+.form-control-disabled {
+	font-family: var(--theme-ordinary-font);
+	font-size: 15px;
+	/* height: 50px; 
+		line-height: 35px;
+	*/
+	border-color: #483c3c;
+
+	background-color: #ffffff;
 	padding: .125rem .75rem;
 }
 ::-webkit-input-placeholder { /* Edge */
@@ -1705,8 +1723,8 @@ blockquote {
 .property-quantity li, .featured-thumb .quantity li {
 	display: inline-block;
 	font-weight: 500;
-	padding-bottom: 20px;
-	padding-right: 15px;
+	/* padding-bottom: 2px; */
+	padding-right: 10px;
 }
 .property-quantity li span, .featured-thumb .quantity li span {
 	display: table;
@@ -2751,7 +2769,8 @@ Register page
 	padding: 5px 0
 }
 .dropdown-menu {
-	border: none;
+	/* border: none; */
+	border:#2b2f36 solid 1px;
 	padding-left: 15px
 }
 .dropdown-menu .dropdown-item:hover, .dropdown-menu .dropdown-item.active {

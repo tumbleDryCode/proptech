@@ -371,38 +371,79 @@ euiFFObjArr.push(tfok);
  
 JSSHOP.shared.initFrmComps(euiFFObjArr);
 
-
-    if(currUrlArr.prpid) {
-  // alert('fnishCntLoad');
-  JSSHOP.ui.showHideElement("dvPrpImgs", "show");
- tmpDOqs = null;
-tmpDOqs = {};
-tmpDOqs["ws"] = "where _id=?";
-tmpDOqs["wa"] = [currUrlArr.prpid];
-tmpDOqs["l"] = 45;
-oia = getNuDBFnvp("property",5,null,tmpDOqs);
-doQComm(oia["rq"], null, "doMPropForm");
-
-    } else {
-        JSSHOP.shared.setDynFrmVals(document["property"], "tmp_");
+ 
+       //  JSSHOP.shared.setDynFrmVals(document["property"], "tmp_");
 /**/
-        istype = document.getElementById("tmp_stype");
-        iptype = document.getElementById("tmp_ptype");
-        iselPropStat = document.getElementById("tmp_pstatus"); 
-        JSSHOP.shared.addCurrSlctObj(svftObj["contract"], istype, stype.value, "noQvalue", "noQvalue");
-        JSSHOP.shared.addCurrSlctObj(svftObj["propstat"], iselPropStat, pstatus.value, "noQvalue", "noQvalue");
-        JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue", "noQvalue");
+        istype = document.getElementById("stype");
+        iptype = document.getElementById("ptype");
+        // iselPropStat = document.getElementById("tmp_pstatus"); 
+        // JSSHOP.shared.addCurrSlctObj(svftObj["contract"], istype, stype.value, "noQvalue", "noQvalue");
+        // JSSHOP.shared.addCurrSlctObj(svftObj["propstat"], iselPropStat, pstatus.value, "noQvalue", "noQvalue");
+        // JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue", "noQvalue");
+        /*
         
-    }
-    if((u_cat.value == "5") && (pid == "aa-edit-prop")) {
-        JSSHOP.ui.showHideElement("dvBHKswitch", "show");
-    }
+       
+         tDDPPosObj = JSSHOP.ui.getBSDDOptsO();
+        tDDPPosObj["ddtype"] = "noQvalue";
+        tDDPPosObj["fld"] = "p_pos";
+        tDDPPosObj["lbl"] = stxt[104];
+        tDDPPosObj["val"] = svftObj["postpos"];
+        tDDPPosObj["kvpObj"] = svftObj["postpos"];
+        tDDPPosObj["cb"] = "donada";
+        tDDPPosObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDPPosObj["lblcls"] = "txtSmall";
+        tDDPPosObj["valcls"] = "txtSmall";
+        tDDPPosObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDPPosObj["horvert"] = "vertical";
+        tDDPPosObj["icn"] = "noQvalue";
+        tDDPPosObj["kvIcnsObj"] = {};
+        tDDPPosObj["kvIcnsObj"]["top"] = "&#xe5cd;";
+        tDDPPosObj["kvIcnsObj"]["bottom"] = "noQvalue";
+        tDDPPosStr = JSSHOP.ui.getNuBSdropDstr(tDDPPosObj);
+        tDDPStr += tDDPPosStr;
 
-// JSSHOP.shared.setDynFrmVals(document["property"], "tmp_");
+        */
 
-// getPropImgs();
-// doWinLoad();
-// 
+        tDDPaddStr = "";
+        tDDPStypeObj = JSSHOP.ui.getBSDDOptsO();
+        tDDPStypeObj["ddtype"] = "noQvalue";
+        tDDPStypeObj["fld"] = "stype";
+        tDDPStypeObj["lbl"] = stxt[949];
+        tDDPStypeObj["val"] = stype.value;
+        tDDPStypeObj["kvpObj"] = svftObj["contract"];
+        tDDPStypeObj["cb"] = "donada";
+        tDDPStypeObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDPStypeObj["lblcls"] = "txtSmall";
+        tDDPStypeObj["valcls"] = "txtSmall";
+        tDDPStypeObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDPStypeObj["horvert"] = "vertical";
+        tDDPStypeObj["icn"] = "noQvalue";
+        tDDPTypeStr = JSSHOP.ui.getNuBSdropDstr(tDDPStypeObj);
+        tDDPaddStr += tDDPTypeStr;
+        tDDPaddStr += "<br><br>";
+
+
+        tDDPPrpTypObj = JSSHOP.ui.getBSDDOptsO();
+        tDDPPrpTypObj["ddtype"] = "noQvalue";
+        tDDPPrpTypObj["fld"] = "ptype";
+        tDDPPrpTypObj["lbl"] = stxt[950];
+        tDDPPrpTypObj["val"] = ptype.value;
+        tDDPPrpTypObj["kvpObj"] = svftObj["proptype"];
+        tDDPPrpTypObj["cb"] = "donada";
+        tDDPPrpTypObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDPPrpTypObj["lblcls"] = "txtSmall";
+        tDDPPrpTypObj["valcls"] = "txtSmall";
+        tDDPPrpTypObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDPPrpTypObj["horvert"] = "vertical";
+        tDDPPrpTypObj["icn"] = "noQvalue";
+        tDDPPrpTypStr = JSSHOP.ui.getNuBSdropDstr(tDDPPrpTypObj);
+        tDDPaddStr += tDDPPrpTypStr;
+        tDDPaddStr += "<br><br>";
+        
+        document.getElementById("dvAddPrpDrpDwns").innerHTML = tDDPaddStr;
+
+ 
+
  
 return dmyFnishCntLoad;
 };

@@ -217,8 +217,12 @@ $respstat = "nofile";
 } // fn not empty
  
 
-if(!empty($_GET['q'])) {
+if(!empty($_GET['q']) || !empty($_POST['q'])) {
+if(!empty($_POST['q'])) {
+$qq = $_POST['q'];
+} else {
 $qq = $_GET['q'];
+}
 
 
 $gArray = array();

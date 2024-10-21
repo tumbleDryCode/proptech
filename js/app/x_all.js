@@ -1,3 +1,8 @@
+// #aa-en_us.js
+// #aa-pt_pt.js
+// #aa-spa_spa.js
+
+
 if (!window.JSSHOP) {
     var JSSHOP = new Object();
 }
@@ -132,6 +137,9 @@ JSSHOP.shared.showUserProfile = function(tSUPID) {
         if (tSUPID == 0) {
             tSUPID = quid;
         } 
+        if(currUrlArr.tuid) {
+            tSUPID = currUrlArr.tuid;
+        }
             eindex('aa-show-user', 'pid=aa-show-user&tuid=' + tSUPID);
   } catch (e) {
          JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.showUserProfile");
@@ -963,510 +971,13 @@ JSSHOP.shared.doPartsWords(50,"noQvalue");
 JSSHOP.shared.doModelsPip();
 };
 
-JSSHOP.shared.doYearsPop = function() {
-tPYS = "<div  class=\"collection\">";
-for (i = 0; i < arrAllYears.length; i++) {
-tJSMstr = "currPUrlObj.y= '" +  arrAllYears[i] + "';JSSHOP.ui.closeLbox();"
-tJSMstr += "JSSHOP.shared.doPartsWords(50,'noQvalue');";
-tPYS += "<div class=\"collection-item crsrPointer\" onclick=\"javascript:" + tJSMstr + "\">" + arrAllYears[i] + "</div>";
-// tPYS += "<div>" + arrAllYears[i] + "</div>";
-}
-tPYS += "</div>";
-// alert(tPYS);
-JSSHOP.ui.popAndFillLbox(tPYS);
-};
 
 
-JSSHOP.shared.doMakesPop = function(tMCBBstr) {
-// tPYS = btnClosePop;
-tPYS = "";
-trArr = [];
-tPYS += "<div class=\"txtBold txtClrHdr\">";
-for (i = 0; i < 5; i++) {
-    tLpdIDstr = currPMakesArr[Math.floor(Math.random() * currPMakesArr.length)];
-    tLpdSplit = tLpdIDstr.split(":");
-    tLpdID = tLpdSplit[0];
-    tLpdName = tLpdSplit[1];
-    tLpdmgMStr = imgPLicon.src = "images/mlogos/" + tLpdName.toLowerCase().replace(" ", "-") + "-logo.png";
- tPYS += "<img src=\"" + tLpdmgMStr + "\" style=\"max-width:30px;max-height:30px;\"></img>";   
-trArr.push();
-}
-tPYS += "</div>";
-
-tPYS += "<div class=\"txtBold txtClrHdr\">" + stxt[82] + " " + stxt[102] + ":</div>";
-
-console.log("doMakesPop.trArr: " + JSON.stringify(trArr));
-
-
-tPYS += "<div class=\"collection\">";
-
-tMkObj = objAllMakes;
-for(var gkey in tMkObj) {
-		if(tMkObj[gkey].n) {
-		 TMPnOBJ = tMkObj[gkey];
-		 tSSv = TMPnOBJ.n;
-		 tSSI =  TMPnOBJ.id;
- 		  tPYS += "<div class=\"collection-item crsrPointer\" onclick=\"javascript:JSSHOP.shared.setMakeStuff('" + tSSI + "','" + tSSv + "','" + tMCBBstr + "');JSSHOP.ads.clearAllPrtsPrefCC();JSSHOP.ads.setPrtsPrefCC('mk','" + tSSI + "');\">" + tSSv + "</div>";
-		  }
-}
-tPYS += "</div>";
-// alert(tPYS);
-JSSHOP.ui.popAndFillLbox(tPYS);
-};
-
-
-
-JSSHOP.shared.doModelsLoad = function(ttPPInp, ttPPObj, toPPbju) {
-currCModelsObj = JSON.parse(ttPPObj);
-};
-
-
-
-JSSHOP.shared.doModelsPip = function() {
-tSMSMID = currPUrlObj["mk"];
-ttCMOS = JSON.stringify(currCModelsObj);
-if(ttCMOS.indexOf("id") !== -1) {
-if(currCModelsObj.pi == tSMSMID) {
-
-console.log("doModelsPip is same : " + "currCModelsObj.id");
-JSSHOP.shared.doModelsPop("inpModels", JSON.stringify(currCModelsObj), "nada");
-} else {
-console.log("doModelsPip is diff : " + "currCModelsObj.id");
-JSSHOP.ajax.doNuAjaxPipe("inpModels", "misc/m" + tSMSMID + ".txt", JSSHOP.shared.doModelsPop);
-}
-} else {
-console.log("doModelsPip : " + "currCModelsObj.no-id");
-JSSHOP.ajax.doNuAjaxPipe("inpModels", "misc/m" + tSMSMID + ".txt", JSSHOP.shared.doModelsPop);
-}
-};
-
-
-
-
-JSSHOP.shared.doModelsPop = function(ttPPInp, ttPPObj, toPPbju) {
-// alert("doModelsPop : " + ttPPObj);
-console.log("doModelsPop : " + ttPPObj);
-tLastN = "";
-tTName = "";
-tMdlName = "";
-currtMSstrS = "";
-currSeriesArr = "";
-currSeriesArr = [];
-currCModelsObj = JSON.parse(ttPPObj);
-for(var gkey in currCModelsObj) {
-TMPnOBJ = currCModelsObj[gkey];
-if(TMPnOBJ.n) {
-tSSv = TMPnOBJ.n;
-if(tSSv.indexOf(" ") != -1) {
-
-tSpS = tSSv.split(" ");
-tTName = tSpS[0];
-tMdlName = tSSv.substring(tSSv.indexOf(" "), tSSv.length);
-// replace all special chars except . and -  and space in tMdlName
-tMdlName = tMdlName.replace(/[^a-zA-Z0-9-.\s]/g, "");
-
- 
-} else {
-tTName = tSSv;
-tMdlName = TMPnOBJ.yf + " " + TMPnOBJ.yt;
-}
-gkey = TMPnOBJ.id;
-tSSI =  TMPnOBJ.id;
-tprtyN = tSSv;
-tsiN = tSSv.replace("(","[");
-tsiN = tsiN.replace(")","]");
-if(tSSv.indexOf("(") != -1) {
-tprtyN = tSSv.replace("(","&nbsp;&nbsp;&nbsp;<span class=\"txtClrGrey\">[&nbsp;");
-}
-if(tprtyN.indexOf(")") != -1) {
-tprtyN = tprtyN.replace(")","&nbsp;]</span>");
-}
-tInpStr = TMPnOBJ.id + "::" + TMPnOBJ.n;
-// tJSMstr = "inpImpModels.value = '" +  tInpStr + "';inpModels.value='" + tsiN + "';inpModels.focus();JSSHOP.ui.closeLbox();";	  
-tJSMstr = "currPUrlObj.si = '" +  tSSI + "';currPUrlObj.series='" + tTName + "';";
-tJSMstr += "currPUrlObj.md = '" +  tSSI + "';currPUrlObj.model='" + tMdlName + "';";
-tJSMstr += "JSSHOP.ui.closeLbox();";
-
-
-
-tJSMstr += "JSSHOP.shared.doPartsWords(50,'noQvalue');";
-tJSMstr += "inpTParts.focus();scrollToElement('dvHdr');window.scrollTo(0,0);";
-tJSMstr += "JSSHOP.ads.setPrtsPrefCC('series','" + tTName + "');";
-tJSMstr += "JSSHOP.ads.setPrtsPrefCC('md','" + tSSI + "');";
-tJSMstr += "JSSHOP.ads.setPrtsPrefCC('model','" + tMdlName + "');";
-tJSMstr += "JSSHOP.ads.setPrtsPrefCC('si','" + tSSI + "');";
-
-/*
-
-
-*/
-
-if(tTName == tLastN) {
-currtMSstrS += "<div onclick=\"javascript:" + tJSMstr + "\" class=\"collection-item crsrPointer\">" + tprtyN + "<br> <span class=\"txtSmall txtBold txtClrDlg\">" + TMPnOBJ.yf + "  -&gt; ";
-if(TMPnOBJ.yt == "0") {
-} else {
-    currSeriesArr.push(tTName);
-currtMSstrS += " " + TMPnOBJ.yt;
-}
-currtMSstrS += "</span></div>"
-
-
-} else {
-currtMSstrS += "</div>"
- 
-tJSstr = "JSSHOP.ui.tglPrefModule('dvTglMD" + gkey + "','dvMD" + gkey + "','tglMD" + gkey + "');";
-currtMSstrS += "<div class=\"crsrPointer\" onclick=\"javascript:" + tJSstr + "\"><table style=\"width: 95%\" class=\"collection\">";
-currtMSstrS += "<tr><td><strong>&nbsp;" + tTName + "</strong></td>";
-currtMSstrS += "<td><div id=\"dvTglMD" + gkey + "\" class=\"icnbtn crsrPointer\" nowrap=\"nowrap\" style=\"float:right\">";
-currtMSstrS += "<i class=\"small-material-icons\" title=\"expand_more\">&#xe5cf;</i></div></td></tr></table></div>";
-
-
-if(currPUrlObj.part) {
-tJSMstr += "JSSHOP.shared.doPartsSearch('inpTParts');";
-} 
-currtMSstrS += "<div style=\"display:none;visibility:hidden\" class=\"collection\" id=\'dvMD" + gkey + "'\">";
-currtMSstrS += "<div onclick=\"javascript:" + tJSMstr + "\" class=\"collection-item crsrPointer\">" + tprtyN + "<br> <span class=\"txtSmall txtBold txtClrDlg\">" + TMPnOBJ.yf + "  -&gt; ";
-if(TMPnOBJ.yt == "0") {
-} else {
-currtMSstrS += " " + TMPnOBJ.yt;
-}
-
-currtMSstrS += "</span></div>";
-
-}
-tLastN = tTName;
-}
-}
-/* check if lightbox_content is empty
-tLBCinnerhtml = document.getElementById("lightbox_content").innerHTML;
-if(tLBCinnerhtml.indexOf("setMakeStuff") != -1) {
-    document.getElementById("lightbox_content").innerHTML = currtMSstrS;
-} else {}
-*/
-
-tPYS = "<br><div class=\"bkgdClrNrml\"  style=\"text-align:center;margin:6px;\">";
-// create a div string with the current make name
-tPYS += "<div class=\"txtSMall txtBold txtClrTtl\">" + currPUrlObj.make + "</div>";
-tPYS += "<div style=\"float:left\"><img src=\"images/mlogos/" + currPUrlObj.make.toLowerCase().replace(" ", "-") + "-logo.png\" style=\"max-width:30px;max-height:30px;\"></img></div>";
-
-tPYS += "<div class=\"txtBold txtClrHdr\">" + stxt[82] + " " + stxt[103] + ":</div>";
-
-for (i = 0; i < 3; i++) {
-    tLpdIDstr = currSeriesArr[Math.floor(Math.random() * currSeriesArr.length)];
-
-  tPYS += " <span class=\"txtSmall txtClrTtl\">" + tLpdIDstr + "</span> ";   
- 
-}
-tPYS += "...";
-
-// create a div string with style float right with the curren make image logo
-
-// 
-tPYS += "</div>";
-JSSHOP.ui.popAndFillLbox(tPYS + currtMSstrS);
-
-// alert(currtMSstrS);
-};
-
-function doNill() {
-    tNill = "nill";
-// alert("doNill");
-}
-
-JSSHOP.shared.doPartsPop = function() {
-tCatArrStr = "";
-
-tCatArrStr += "<div class=\"crsrPointer\"><table style=\"width: 100%\" class=\"bigtable bkgdClrNrml brdrClrHdr txtBold txtBig\">";
-tCatArrStr += "<tr><td><strong>&nbsp;" + stxt[512] + "</strong></td></tr></table></div>";
-
-
-
-/*
-
-
-tEPobj = currPartsObj;
-tPPobj = tEPobj.pcats;
-for(var gkey in tPPobj) {
-tCatArrStr +=  "<br>";
-
-
-tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPC" + gkey + "','dvPC" + gkey + "','tglPrts" + gkey + "');";
-tCatArrStr += "<div class=\"crsrPointer\" onclick=\"javascript:" + tJSstr + "\"><table style=\"width: 100%\" class=\"collection txtBold txtBig\">";
-tCatArrStr += "<tr><td><strong>&nbsp;" + tPPobj[gkey] + "</strong></td>";
-tCatArrStr += "<td><div id=dvTglPC" + gkey + " class=\"icnbtn crsrPointer\" nowrap=\"nowrap\" style=\"float:right\">";
-tCatArrStr += "<i class=\"small-material-icons\" title=\"expand_more\">&#xe5cf;</i></div></td></tr></table></div>";
-
-// javascript:JSSHOP.ui.tglPrefModule('dvTglPCpc1','dvPCpc1','tglPrtspc1')
-
-
-
-
-
-if(tEPobj.pprts[gkey].pts){
-tCatArrStr += "<div style=\"display:none;visibility:hidden\" class=\"collection\" id=\"dvPC" + gkey + "\">";
-tCatPtsobj = tEPobj.pprts[gkey].pts;
-for(var pcgkey in tCatPtsobj) {
-tCatArrStr += "<div onclick=\"javascript:setShpPartCatID('" + tCatPtsobj[pcgkey].id + "','" + tCatPtsobj[pcgkey].pi + "','" + tCatPtsobj[pcgkey].n + "');\" class=\"collection-item crsrPointer\">" + tCatPtsobj[pcgkey].id + " : " + tCatPtsobj[pcgkey].n + "</div>";
-}
-tCatArrStr += "</div>";
-}
-}
-*/
-
-
-tEPobj = currPartsObj;
-tPPobj = tEPobj.pcats;
 
  
 
 
-
-for(var gkey in tPPobj) {
-// tCatArrStr +=  "<br>";
-tDynMunuObj = null;
-tDynMunuObj = "";
-tDynMunuObj = {};
-tDynMunuObj._id = gkey;
-tDynMunuObj.cat_rtype = "5";
-tDynMunuObj.cat_uid = "1";
-tDynMunuObj.cat_coid = "0";
-tDynMunuObj.cat_pid = "0";
-tDynMunuObj.cat_title = tPPobj[gkey];
-tDynMunuObj.cat_desc = tPPobj[gkey];
-tDynMunuObj.cat_vala = "1";
-tDynMunuObj.cat_valb = "10001";
-tDynMunuObj.cat_dadded = "10001";
-currDynMenuArr.push(tDynMunuObj);
-currPPrtCatArr.push(gkey + ":" + tPPobj[gkey]);
-tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPC" + gkey + "','dvPC" + gkey + "','tglPrts" + gkey + "');";
-
-tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\" class=\"crsrPointer\" onclick=\"javascript:" + tJSstr + "\"><table  class=\"collection\"  cellpadding=\"0px\" cellspacing=\"0px\">";
-tCatArrStr += "<tr><td><img src=\"images/misc/" + gkey + ".gif\" class=\"icnsmlbtn\"></td>";
-tCatArrStr += "<td class=\"txtBold\" style=\"word-wrap:break-word;word-break: break-word;text-align: left;width:100%\">&nbsp;" + tPPobj[gkey] + "</td>";
-
-tCatArrStr += "<td><div id=\"dvTglPC" + gkey + "\" class=\"icnbtn crsrPointer\"  style=\"float:right\">";
-tCatArrStr += "<i class=\"small-material-icons\" title=\"expand_more \">&#xe5cf;</i></div></td></tr></table></div>";
-
-// javascript:JSSHOP.ui.tglPrefModule('dvTglPCpc1','dvPCpc1','tglPrtspc1')
-
-
-
-
-
-if(tEPobj.pprts[gkey].pts){
-tCatArrStr += "<div style=\"display:none;visibility:hidden;word-wrap:break-word;word-break: break-word;\" class=\"collection\" id=\"dvPC" + gkey + "\">";
-
-
-
-
-tCatPtsobj = tEPobj.pprts[gkey].pts;
-for(var pcgkey in tCatPtsobj) {
-
-// currCstmQstr += " " + tCatPtsobj[pcgkey].n;
-tmpFPSstr = "&part=" + tCatPtsobj[pcgkey].n + "&prti=" + tCatPtsobj[pcgkey].pi + "&q=" + encodeURIComponent(currCstmQstr + " " + tCatPtsobj[pcgkey].n);
  
-// tUtoL = tCatUStr + "&part=" + tCatPtsobj[pcgkey].n + "&prti=" + tCatPtsobj[pcgkey].pi + "&pid=aa-show-part&q=" + currCstmQstr + " " + encodeURIComponent(tCatPtsobj[pcgkey].n);
-tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\"><a  class=\"collection-item\" href=\"javascript:document.location.href=JSSHOP.shared.doPartDynL('" + tCatPtsobj[pcgkey].id + "','" + tCatPtsobj[pcgkey].n + "');\" class=\"collection-item crsrPointer\">" + tCatPtsobj[pcgkey].id + " : " + tCatPtsobj[pcgkey].n + "</a></div>";
-// tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\" onclick=\"javascript:eindex('aa-show-part','" + tUtoL + "');\" class=\"collection-item crsrPointer\">" + tCatPtsobj[pcgkey].id + " : " + tCatPtsobj[pcgkey].n + "</div>";
-}
-}
-tCatArrStr += "</div>";
-}
-
-
-
-JSSHOP.ui.popAndFillLbox(tCatArrStr);
-};
-
-
-
-
-
-
-
-
-
-
-JSSHOP.shared.getMakesTbl = function() {
-tPYS = "<div  class=\"collection\"  style=\"text-align:center; line-height:30px;word-break:break-word;\">";
-tMkObj = objAllMakes;
-// ttRstr = [];
-for(var gkey in tMkObj) {
-		if(tMkObj[gkey].n) {
-		 TMPnOBJ = tMkObj[gkey];
-		 tSSv = TMPnOBJ.n;
-		 tSSI =  TMPnOBJ.id;
-          
- 		  // tPYS += "<a class=\"txtClrHdr txtSmall txtBold txtDecorNone\" href=\"index.html?mk=" + tSSI + "&make=" + tSSv + "&pid=aa-show-make&q=" + encodeURIComponent(tSSv) + "\">" + tSSv + "</a>&nbsp; &nbsp; ";
- 		  //  tPYS += "<a class=\"txtClrHdr txtSmall txtBold txtDecorNone\" href=\"index.html?mk=" + tSSI + "&make=" + tSSv + "&pid=aa-show-make&q=" + encodeURIComponent(tSSv) + "\">" + tSSv + "</a>&nbsp; &nbsp; ";
-		  //  tPYS += "<a class=\"txtClrHdr txtSmall txtBold txtDecorNone\" href=\"javascript:JSSHOP.ads.clearAllPrtsPrefCC();eindex('aa-show-make','make=" + tSSv + "&mk=" + tSSI + "&pid=aa-show-make&q=" + removeDiacritics(stxt[101]) + " " + tSSv + "')\";>" + tSSv + "</a>&nbsp; &nbsp; ";
-		  //  tPYS += "<a class=\"txtClrHdr txtSmall txtBold txtDecorNone\" href=\"javascript:JSSHOP.ads.clearAllPrtsPrefCC();scrollToElement('dvPartsList');eindex('aa-show-make','make=" + tSSv + "&mk=" + tSSI + "&pid=aa-show-make&q=" + removeDiacritics(stxt[101]) + " " + tSSv + "');\">" + tSSv + "</a>&nbsp; &nbsp; ";
-           tPYS += "<a class=\"txtClrHdr txtSmall txtBold txtDecorNone\" href=\"javascript:JSSHOP.shared.setMakeStuff('" + tSSI + "','" + tSSv + "','noQvalue');JSSHOP.ads.clearAllPrtsPrefCC();JSSHOP.ads.setPrtsPrefCC('mk','" + tSSI + "');\">" + tSSv + "</a>&nbsp; &nbsp; ";
-           // ttRstr.push(tSSI+":"+tSSv);
-		  }
-
-}
-tPYS += "</div>";
-// tPYS += "<br>" + JSON.stringify();
-// alert(tPYS);
-return tPYS;
-};
-
-
-
-JSSHOP.shared.getSeriesLnks = function() {
-currtMSstrS = ""; 
-tLastN = "";
-tTName = "";
-tHasMcount = 0;
-for(var gkey in currCModelsObj) {
-
-TMPnOBJ = currCModelsObj[gkey];
-if(TMPnOBJ.n) {
-tSSv = TMPnOBJ.n;
-if(tSSv.indexOf(" ") != -1) {
-tSpS = tSSv.split(" ");
-ttTName = tSpS[0];
-} else {
-ttTName = tSSv;
-}
-// taeTName = JSSHOP.shared.decode_utf8(ttTName);
-// taTName = decodeURIComponent(ttTName);
-ttRemSlName = ttTName.replace("/", " - ");
-tTName = removeDiacritics(ttRemSlName);
-tSSI =  TMPnOBJ.id;
-if(tTName == tLastN) {
-tHasMcount++;
-} else {
-if(tHasMcount == 0) {
-currtMSstrS += "&nbsp; . &nbsp;<a href=\"index.html?make=" + currMakeName + "&mk=" + currMakeID +  "&series=" + tTName + "&si=" + TMPnOBJ.id + "&model=" + TMPnOBJ.n + "&md=" + TMPnOBJ.id + "&pid=aa-show-model&q=" + currCstmQstr + "\" class=\"txtSmall txtBold\">" + tTName + "</a>";
-} else {
-// currtMSstrS += "&nbsp; . &nbsp;<a href=\"javascript:eindex('aa-show-series','make=" + currMakeName + "&mk=" + currMakeID +  "&series=" + tTName + "&si=" + TMPnOBJ.id + "&pid=aa-show-series&q=" +  currCstmQstr+ "')\">" + tTName + "</a>";
-currtMSstrS += "&nbsp; . &nbsp;<a href=\"index.html?make=" + currMakeName + "&mk=" + currMakeID +  "&series=" + tTName + "&si=" + TMPnOBJ.id + "&model=" + TMPnOBJ.n + "&md=" + TMPnOBJ.id + "&pid=aa-show-series&q=" + currCstmQstr + "\" class=\"txtSmall txtBold\">" + tTName + "</a>";
-}
-// currtMSstrS += "<a href=\"index.html?make=" + currMakeName + "&mk=" + currMakeID +  "&series=" + tTName + "&si=" + TMPnOBJ.id + "&pid=aa-show-series\">" + tTName + "</a><br>";
-}
-tLastN = tTName;
-}
-}
-return currtMSstrS;
-};
-
-
-
-
-
-
-
-
-function fillMakesBox() {
-    document.getElementById("dvMks").innerHTML = JSSHOP.shared.getMakesTbl();
-}
-    
-JSSHOP.shared.setMakesBox = function() {
-    tIMtglbObj = JSSHOP.ui.nTglBxOb();
-    tIMtglbObj["ttl"] = stxt[82] + " " + stxt[102]; // the toggle box title
-    tIMtglbObj["dvid"] = "dvMks"; // the toggle box div id
-    tIMtglbObj["cntntFnc"] =  "fillMakesBox";
-    tIMtglbObj["content"] = "noQvalue"; // the toggle that goes in above toggle div
-    tIMtglbObj["btn"] = "btnTglMMi" // the toogle btn id
-    tIMtglbObj["pref"] = "tglMksMI"; // the toogle pref id saved in cookie
-    tIMtglbObj["tbtmpCB"] = "noQvalue"; // null function as callback
-    tIMtglbObj["icn"] = "&#xe3ec;"; // the icon
-    tIMtglbObj["pnid"] = "dvMakesBox"; // the parent node, will just return text if noQvalue
-    tIMtglbObj["appnd"] = "y"; // append or fill above parent node
-    tIMtglbObj["cut"] = 200; // the parent node, will just return text if noQvalue
-    tIMtglbObj["clsmaintbl"] = "txtClrHdr slmtable brdrDarkBlue"; // main table class
-    tIMtglbObj["clstitletd"] = ""; // title box class
-    tIMtglbObj["clsttltxt"] = "txtSmall txtBold txtClrDrkGrn"; // title box text class
-    JSSHOP.ui.doTglBox(tIMtglbObj);
-    };
-
-
-
-JSSHOP.shared.doModelTbl = function(ttInp, ttObj, tobju) {
-if(pid == "aa-show-part") {
-tSMTTstr = stxt[83] + " " + stxt[105] + ":";
-} else {
-tSMTTstr = stxt[82] + " " + stxt[103] + ":";
-}
-currtMSstrS = "<table style=\"margin: 0 auto;text-align:left;width: 100%;\" class=\"rtable brdrClrNrml\"><tr><td class=\"txtBold\">" + tSMTTstr +  "</td></tr>";
-currtMSstrS += "<tr><td></td></tr><tr><td>";
-currtMSstrS += "<table style=\"margin: 0 auto;text-align:left;width: 100%;\" class=\"txtSmall txtClrHdr\" align=\"center\"><tr><td>" + stxt[103] + "&nbsp;</td><td>ID  &nbsp;</td><td>From  &nbsp;</td><td>To  &nbsp;</td></tr>";
-tMkObj = JSON.parse(ttObj);
-currCModelsObj = null;
-tLastN = "";
-tTName = "";
-tModIdstr = "";
-tImcnt = 0;
-currCModelsObj = JSON.parse(ttObj);
-console.log("JSSHOP.shared.doModelTbl.currCModelsObj: " + JSON.stringify(currCModelsObj));
-for(var gkey in currCModelsObj) {
-TMPnOBJ = currCModelsObj[gkey];
-if(TMPnOBJ.n) {
-tSSv = TMPnOBJ.n;
-if(tSSv.indexOf(" ") != -1) {
-tSpS = tSSv.split(" ");
-tTName = tSpS[0];
-} else {
-tTName = tSSv;
-}
-if(TMPnOBJ.yt == "0") {
-ttimeMTo = "...";
-} else {
-ttimeMTo = TMPnOBJ.yt;
-}
-tSSI =  TMPnOBJ.id;
-if(tTName == tLastN) {
-// if(tTName == inpSeries.value) {
-// currtMSstrS += "<br><a href=\"javascript:eindex('aa-show-model','make=" +  currUrlArr.make + "&mk=" + currMakeID +  "&series=" + currUrlArr.series + "&si=" + currUrlArr.si + "&model=" + TMPnOBJ.n + "&md=" + TMPnOBJ.id + "&yf=" + TMPnOBJ.yf + "&yt=" + TMPnOBJ.ty + "&pid=aa-show-model&q=" + currCstmQstr + "')\">" + TMPnOBJ.n + " (" + TMPnOBJ.yf + " - " + TMPnOBJ.yt + ")</a>";
-tAModlName = TMPnOBJ.n;
-tBModlName = TMPnOBJ.n;
-if(tAModlName.indexOf("(") != -1) {
-tAModIdstr = tAModlName.substring(tAModlName.indexOf("(") + 1, tAModlName.length - 1);
-tModIdstr = tAModIdstr.replace("/", "-");
-
-tCModlName = tAModlName.substring(0, tAModlName.indexOf("("));
-tDModlName = tCModlName.replace(currUrlArr.series + " ", ""); 
-// tBModlName = tDModlName.replace("/", "-");
-}
-tBModlName = tBModlName.replace(/\//i, "-");
-
-if(tBModlName == ""){
-tBModlName = tAModlName.replace(/\//i, "-");
-}
-if(tModIdstr == ""){
-tModIdstr = tBModlName;
-}
-tModQstr =   encodeURIComponent(currUrlArr.make + " " + currUrlArr.series);
-
-// tModQstr =   encodeURIComponent(currUrlArr.make + " " + currUrlArr.series + " " + tBModlName);
-currtMSstrS += "<tr>";
-currtMSstrS += "<td><a href=\"index.html?make=" + currUrlArr.make + "&mk=" + currMakeID +  "&series=" + currUrlArr.series + "&si=" + currUrlArr.si + "&model=" + tModIdstr + "&md=" + TMPnOBJ.id + "&pid=aa-show-model&q=" + tModQstr + "\">" + tBModlName + "</a></td>";
-currtMSstrS += "<td><a href=\"index.html?make=" + currUrlArr.make + "&mk=" + currMakeID +  "&series=" + currUrlArr.series + "&si=" + currUrlArr.si + "&model=" + tModIdstr + "&md=" + TMPnOBJ.id + "&pid=aa-show-model&q=" + tModQstr + "\">" + tModIdstr + "</a></td>";
-
-
-currtMSstrS += "<td>" + TMPnOBJ.yf + "</td>";
-currtMSstrS += "<td>" + ttimeMTo + "</td>";
-currtMSstrS += "</tr>";
-tImcnt++;
-}
-tLastN = tTName;
-}
-}
-currtMSstrS += "</table></td></tr></table>";
-// dvModelsList.innerHTML = currtMSstrS;
-if(tImcnt == 0) {
-document.getElementById(ttInp).innerHTML = "NOOOOOOOOOOOOOOOOOOOOO";
-alert("JSSHOP.shared.doModelTbl: " + JSON.stringify(TMPnOBJ));
- 
- 
-} else {
-document.getElementById("includedContent").innerHTML = currtMSstrS;
-}
-// console.log(currtMSstrS);
-};
-
 
 
 /*
@@ -1784,652 +1295,7 @@ tMkNme = objAllMakes[tMkPrfx].n;
 
 
 
-
-JSSHOP.shared.doPartsSearch = function(theTPSDiv) {
-
-
-ttTPSDiv = document.getElementById(theTPSDiv);
-ttTPSDVal = ttTPSDiv.value;
-tQstrFstr = "";
-ttArrStr = document.getElementById("inpImpTParts").value;
-if(document.getElementById(theTPSDiv).innerText) {
-ttTPSDVal = document.getElementById(theTPSDiv).innerText;
-}
-ttArrVal = JSON.parse(ttArrStr);
-
-
-if(ttArrVal[0]) {
-for(iihy=0; iihy<ttArrVal.length;iihy++) {
-    if(ttArrVal[iihy] == "null") {
-
-    } else {
-        tQstrFstr += ttArrVal[iihy] + " ";
-    }
-
-}
-}
-
-tQstrFstr += ttTPSDVal;
-currPUrlObj.pid = "aa-show-psearch";
-pid = "aa-show-psearch";
-tCatUStr = JSSHOP.shared.objToUrl(currPUrlObj);
  
-
-if((tQstrFstr.length < 2)|| (ttTPSDVal == "currPUrlObj.part")) {
-} else {
-if(currPUrlObj.prti == "007") {
-currPUrlObj.part = ttTPSDVal;
-}
-tCUARR = currUrlArr;
-tCUARR.q = tQstrFstr;
-tCUARR.pid = "aa-show-part";
-tCUARR.pq = ttTPSDVal;
-// tCatUStr = JSSHOP.shared.objToUrl(tCUARR);
- document.location.href = "index.html?" + tCatUStr;
-}
-
-if(currPUrlObj.prti) {
-// tpDynL = JSSHOP.shared.doPartDynL(currPUrlObj.prti, currPUrlObj.part);
- document.location.href = JSSHOP.shared.doPartDynL(currPUrlObj.prti, currPUrlObj.part);
-} else {
-
-// tpDynL = JSSHOP.shared.doPartDynL("007",ttTPSDVal);
- document.location.href = JSSHOP.shared.doPartDynL("007",ttTPSDVal);
-}
- 
-
-
-};
-
- 
-JSSHOP.shared.setListing = function() {
-if((quid == 0) || (quid == "noQvalue")){
-document.location.href="index.html?pid=login";
-} else {
-tPurlArr = currUrlArr;
-if(tPurlArr.cid) {
-tPurlArr.cid = cuid;
-}
-tPurlArr.pid = "aa-edit-parts-category";
-tStrUA = JSSHOP.shared.objToUrl(tPurlArr);
-tUb = "index.html?" + tStrUA.replace("&=undefined&region", "region");
-tUb += "&cuid=" + cuid;
-
-// tUb += "&prtpi=" + cuid;
-
-document.location.href = tUb;
-
-}
-};
-
-JSSHOP.shared.doPartsWords = function(tDPWRIdx, theTPrtKN) {
-tSarrVStr = "";
-tSarrWodStr = "";
-tArrPSrchLst = [];
-ihy = 6;
-console.log("JSSHOP.shared.doPartsWords: " + theTPrtKN);
-
-
-if(pid == "aa-edit-svs-categories") {
-    tPYS = "<div class=\"slmtable brdrClrHdr txtBold txtClrHdr crsrPointer\"  onclick=\"javascript:JSSHOP.ui.setNuCBBClickClr(this,'txtBold txtClrRed',this.className, function() { JSSHOP.admin.doSvsMakesPop('noQvalue'); }, 300); \" style=\"text-align:center;\">";
-    for (i = 0; i < 5; i++) {
-        tLpdIDstr = currPMakesArr[Math.floor(Math.random() * currPMakesArr.length)];
-        tLpdSplit = tLpdIDstr.split(":");
-        tLpdID = tLpdSplit[0];
-        tLpdName = tLpdSplit[1];
-        tLpdmgMStr = imgPLicon.src = "images/mlogos/" + tLpdName.toLowerCase().replace(" ", "-") + "-logo.png";
-     tPYS += "<img src=\"" + tLpdmgMStr + "\" style=\"max-width:30px;max-height:30px;\"></img>";   
-    }
-    tPYS += "...";
-    tPYS += "<div class=\"txtBold txtClrHdr\">" + stxt[82] + " " + stxt[102] + "s</div>";
-    tChdrStr = c_header.value;
-    tCsplyStr = "";
-    if(tChdrStr.indexOf("1000") != -1) {
-        tPYS += "<div class=\"txtBold txtClrHdr\">Supports All makes</div>";
-    } else { // not 1000
-
-    if(tChdrStr.indexOf(":") != -1) {
-        tChdrSplit = tChdrStr.split(":");   
-        tCsplyLen = tChdrSplit.length;
-        tCinci = 0;
-
-        while(tCinci < tCsplyLen) {
-            if(tChdrSplit[tCinci] > 0) {
-            // get make name from tChdrSplit[tCinci]
-            tMknamed = objAllMakes["m" + tChdrSplit[tCinci]]["n"];
-            tCsplyStr += tMknamed + " ";
-            tCinci++;
-            } else {
-            tCsplyStr += tChdrSplit[tCinci] + " ";
-            tCinci++;
-            }
-        }
-        tPYS += "<div class=\"txtBold txtClrHdr\">" + tCsplyStr + "</div>";
-    } else { // not :
-        tCsplyStr += tChdrStr + " ";
-        tPYS += "<div class=\"txtBold txtClrHdr\">no: " + tCsplyStr + "</div>";
-    }
-} // end else if(tChdrStr.indexOf("1000") != -1)
-
-    tPYS += "</div>";
-    // alert("tPYS: " + tPYS);
-         document.getElementById("dvDoPSWrds").innerHTML = tPYS;
-        // inpImpTParts.value = JSON.stringify(tArrPSrchLst);
-        
-      
-
-return;
-}  
-
-
-
-
-if(tDPWRIdx == 50) {
-
-if(currPUrlObj.make) {
-tSarrVStr += currPUrlObj.make + " ";
-tSarrWodStr += "<div class=\"rtable txtSmall brdrClrDlg\" style=\"margin:7px;\"><span class=\"txtSmall txtBold txtClrHdr txtDecorNone\"><a href=\"javascript:JSSHOP.shared.doMakesPop('noQvalue');\"  class=\"txtSmall txtClrGrey\">" + currPUrlObj.make + "</a></span> <div style=\"float:right\"  class=\"txtSmall txtBold txtClrRed\"><a href=\"javascript:JSSHOP.shared.doPartsWords(" + ihy + ",'mk');\"  class=\"txtSmall txtDecorNone txtClrRed txtBold\">X</a></div></div>";
-tArrPSrchLst.push(currPUrlObj.make);
-}
-if((currPUrlObj.series) && (currPUrlObj.series != "null"))  {
-tSarrVStr += currPUrlObj.series + " ";
-tSarrWodStr += "<div class=\"rtable txtSmall brdrClrDlg\" style=\"margin:7px;\"><span class=\"txtSmall txtBold txtClrHdr txtDecorNone\"><a href=\"javascript:JSSHOP.shared.doModelsPip();\"  class=\"txtSmall txtClrGrey\">" + currPUrlObj.series + "</a></span> <div style=\"float:right\"  class=\"txtSmall txtBold txtClrRed\"><a href=\"javascript:JSSHOP.shared.doPartsWords(" + ihy + ",'si');\"  class=\"txtSmall txtDecorNone txtClrRed txtBold\">X</a></div></div>";
-tArrPSrchLst.push(currPUrlObj.series);
-}
-if((currPUrlObj.model) && (currPUrlObj.model != "null")) {
-// alert("WORDSmodel: " + currPUrlObj.model);
-tAcleanMstr = currPUrlObj.model;
-
-tBcleanMstr = tAcleanMstr.replace(currPUrlObj.series, "");
-tcleanMstr = tAcleanMstr;
-tArrPSrchLst.push(tcleanMstr);
-tSarrVStr += tcleanMstr + " ";
-tSarrWodStr += "<div class=\"rtable txtSmall brdrClrDlg\" style=\"margin:7px;\"><span class=\"txtSmall txtBold txtClrHdr txtDecorNone\" style=\"min-width:90%\"><a href=\"javascript:JSSHOP.shared.doModelsPip();\"  class=\"txtSmall txtClrGrey\">" + tcleanMstr + "</a></span> <div style=\"float:right\"  class=\"txtSmall txtBold txtClrRed\"><a href=\"javascript:JSSHOP.shared.doPartsWords(" + ihy + ",'md');\"  class=\"txtSmall txtDecorNone txtClrRed txtBold\">X</a></div></div>";
-
-tfMIdstr = "m" + currPUrlObj.md;
-if(currCModelsObj[tfMIdstr]) {
-tMPMObj = currCModelsObj[tfMIdstr];
- 
-tSarrWodStr += "<div class=\"rtable txtSmall brdrClrDlg\" style=\"margin:7px;\"><span class=\"txtSmall txtBold txtClrHdr txtDecorNone\"><a href=\"javascript:JSSHOP.shared.doModelsPip();\"  class=\"txtSmall txtClrGrey\">" + tMPMObj.yf + " .." + tMPMObj.yt + "</a></span></div>";
-}
-
-}
-if(currPUrlObj.part) {
-/*
-if(inpTParts.innerText) {
-inpTParts.innerText = currPUrlObj.part;
-} else {
-inpTParts.value = currPUrlObj.part;
-}
-*/
-if(document.getElementById("inpTParts")) {
-inpTParts.innerHTML = "";
-inpTParts.innerText = currPUrlObj.part;
-
-tArrPSrchLst.push(currPUrlObj.part);
-tSarrVStr += currPUrlObj.part;
-if(pid == "aa-edit-parts-category") {
-} else {
-tSarrWodStr += "<div class=\"rtable txtSmall brdrClrDlg\" style=\"margin:7px;\"><span class=\"txtSmall txtBold txtClrHdr txtDecorNone\">" + currPUrlObj.part + "</span> <div style=\"float:right\"   class=\"txtSmall txtClrRed slmtable bckgdClrDlg\"><a href=\"javascript:JSSHOP.shared.doPartsWords(" + ihy + ",'prti');\"  class=\"txtSmall txtClrRed\">X</a></div></div>";
-}
-}
-
-
-}
-
-
-if((currPUrlObj.y) && (currPUrlObj.y != "null")){
-tArrPSrchLst.push(currPUrlObj.y);
-tSarrVStr += currPUrlObj.y;
-tSarrWodStr += "<div class=\"rtable txtSmall brdrClrDlg\" style=\"margin:7px;\"><span class=\"txtSmall txtBold txtClrHdr txtDecorNone\">" + currPUrlObj.y + "</span> <a href=\"javascript:JSSHOP.shared.doPartsWords(" + ihy + ",'y');\"  class=\"txtSmall txtClrGrey\">X</a></div>";
-}
-
-// tSarrWodStr += "<br>";
-if(pid == "index_main") {
-} else {
-} // pid not main
-
-if(currPUrlObj.make) {
-if((currPUrlObj.series) && (currPUrlObj.series != "null")) {
-    if(2 > 1) { // sneaky trick to hide the model link
-// if((currPUrlObj.model)  && (currPUrlObj.model != "null")) {
-if((currPUrlObj.part)  && (currPUrlObj.part != "null")) {
-if(currPUrlObj.part == "007") {
-tMCBBstr = "noQvalue";
-// tSarrWodStr += "<div class=\"rtable txtSmall brdrClrRed\" style=\"margin:7px;\"><i class=\"menu-material-icons txtBold txtClrRed\" title=\"add_alert\">&#xe003;</i><a class=\"menu-material-icons txtSmall txtBold\" href=\"javascript:JSSHOP.shared.doPartsPop();\">" + stxt[82] + " " + stxt[101] + "</a></div>";
-
-// create div with 5 random parts categories and icon
-tPYS = "<div class=\"slmtable brdrClrRed crsrPointer\"  onclick=\"javascript:doInpTFocus();\" style=\"text-align:center;\">";
-tPYS += "<div class=\"txtBold txtClrHdr crsrPointer\">" + stxt[82] + " " + stxt[101] + "</div>";
-for(i = 0; i < 3; i++) {
-tLpdIDstr = currPPrtCatArr[Math.floor(Math.random() * currPPrtCatArr.length)];
-tFlnSlit = tLpdIDstr.split(":");
-tLpdID = tFlnSlit[0];
-tLpdName = tFlnSlit[1];
-tPYS += tLpdName + " ";
-}
-tPYS += "</div>";
-tSarrWodStr += tPYS;
-
-}
-} else { // part
-tMCBBstr = "noQvalue";
-// tSarrWodStr += "<div class=\"rtable txtSmall brdrClrRed\" style=\"margin:7px;\"><i class=\"menu-material-icons txtBold txtClrRed\" title=\"add_alert\">&#xe003;</i>";
-// tSarrWodStr += "<a style=\"vertical-align:super;padding-left:12px;\" class=\"menu-material-icons txtSmall txtBold\" href=\"javascript:JSSHOP.shared.doInpT();\">" + stxt[82] + " " + stxt[101] + "</a></div>";
-tPYS = "<div class=\"slmtable brdrClrRed crsrPointer\"  onclick=\"javascript:scrollToElement('dvPartsMain');doInpTFocus();\" style=\"text-align:center;\">";
-tPYS += "<div class=\"txtBold txtClrHdr crsrPointer\">" + stxt[82] + " " + stxt[101] + "</div>";
-tPYS += "<div class=\"txtSmall txtClrTtl crsrPointer\">";
-
-tFlRanSTr = "";
-
-// select 3 unique random indexes from the array currPPrtCatArr
-
-
-tFPCArInt = 0;
-for(i = 0; i < 30; i++) {
-tRanNum = Math.random() * currPPrtCatArr.length;
-tLpdIDstr = currPPrtCatArr[Math.floor(tRanNum)];
-if(tFlRanSTr.indexOf(tLpdIDstr) != -1) {
-tdds = "noQvalue";
-} else {
-tFPCArInt++;
-
-tFlRanSTr += tLpdIDstr + " ";
-if(tFlRanSTr.indexOf(":") != -1) {
-tFlnSlit = tLpdIDstr.split(":");
-tLpdID = tFlnSlit[0];
-tLpdName = tFlnSlit[1];
-tPYS += tLpdName + " ";
-if(tFPCArInt > 2) {
-    i = 30;
-}
-}
-
-}
-}
-tPYS += "<div>" + JSSHOP.ads.getPPlgIcnStr(4, "slmtable icndbtn brdrClrTtl", "doNada") + "</div>";
-tPYS += "</div>"; // end txtSmall txtClrTtl
-tPYS += "</div>"; // end slmtable
-if(pid == "aa-edit-parts-category") {
-} else {
-tSarrWodStr += tPYS;
-}
-
-if(document.getElementById("dvPartsMain")) {
-if(dvPartsMain.style.display == "block") {
-} else {
-JSSHOP.ui.toggleNuModule('dvTglPSmain','dvPartsMain');
-}
-}
-
-}
-} else { // model
-tMCBBstr = "noQvalue";
-// tSarrWodStr += "<div class=\"rtable txtSmall brdrClrRed\" style=\"margin:7px;\"><i class=\"menu-material-icons txtBold txtClrRed\" title=\"add_alert\">&#xe003;</i>";
-// tSarrWodStr += "<a style=\"vertical-align:super;padding-left:12px;\" class=\"menu-material-icons txtSmall txtBold\" href=\"javascript:JSSHOP.shared.doModelsPip();\">" + stxt[82] + " " + stxt[103] + "</a></div>";
-}
-} else { // series
-tMCBBstr = "noQvalue";
-// tSarrWodStr += "<div class=\"rtable txtSmall brdrClrRed\" style=\"margin:7px;\"><i class=\"menu-material-icons txtBold txtClrRed\" title=\"add_alert\">&#xe003;</i>";
-// tSarrWodStr += "<a style=\"vertical-align:super;padding-left:12px;\" class=\"menu-material-icons txtSmall txtBold\" href=\"javascript:JSSHOP.shared.setMakeStuff('" + currPUrlObj.mk + "','" + currPUrlObj.make + "','" + tMCBBstr + "');\">" + stxt[82] + " " + stxt[107] + "</a></div>";
-// tSarrWodStr += "<a style=\"vertical-align:super;padding-left:12px;\" class=\"menu-material-icons txtSmall txtBold\" href=\"javascript:JSSHOP.shared.doModelsPip();\">" + stxt[82] + " " + stxt[107] + "</a></div>";
-tPYS = "<div class=\"slmtable brdrClrRed crsrPointer\"  onclick=\"javascript:JSSHOP.ui.setNuCBBClickClr(this,'txtBold txtClrRed',this.className, function() { JSSHOP.shared.doModelsPip(); }, 300); \" style=\"text-align:center;\">";
-tPYS += "<div class=\"txtBold txtClrHdr crsrPointer\">" + stxt[82] + " " + stxt[107] + "</div>";
-
-if(currSeriesArr.length > 0) {
-for (i = 0; i < 5; i++) {
-tLpdIDstr = currSeriesArr[Math.floor(Math.random() * currSeriesArr.length)];
-tPYS += tLpdIDstr + " ";
-}
-}
-tPYS += "</div>";
-tSarrWodStr += tPYS;
-}
-
- 
-} else { // make
-
-    
-    if(JSSHOP.ads.getPrtsPrefCC("mk") == "noQvalue") {
- 
- 
-tPYS = "<div class=\"slmtable brdrClrRed txtBold txtClrHdr crsrPointer\"  onclick=\"javascript:JSSHOP.ui.setNuCBBClickClr(this,'txtBold txtClrRed',this.className, function() { JSSHOP.shared.doMakesPop('noQvalue'); }, 300); \" style=\"text-align:center;\">";
-for (i = 0; i < 5; i++) {
-    tLpdIDstr = currPMakesArr[Math.floor(Math.random() * currPMakesArr.length)];
-    tLpdSplit = tLpdIDstr.split(":");
-    tLpdID = tLpdSplit[0];
-    tLpdName = tLpdSplit[1];
-    tLpdmgMStr = imgPLicon.src = "images/mlogos/" + tLpdName.toLowerCase().replace(" ", "-") + "-logo.png";
- tPYS += "<img src=\"" + tLpdmgMStr + "\" style=\"max-width:30px;max-height:30px;\"></img>";   
-}
-tPYS += "...";
-tPYS += "<div class=\"txtBold txtClrHdr\">" + stxt[82] + " " + stxt[102] + "</div>";
-tPYS += "</div>";
-
-
-
-tSarrWodStr += tPYS;
-
-    } else {
-        currPUrlObj.mk = JSSHOP.ads.getPrtsPrefCC("mk");
-        if(JSSHOP.ads.getPrtsPrefCC("make") == "noQvalue") {
-            currPUrlObj.make = objAllMakes["m" + JSSHOP.ads.getPrtsPrefCC("mk")]["n"];
-        } else {
-            currPUrlObj.make = JSSHOP.ads.getPrtsPrefCC("make");
-        }
-        if(JSSHOP.ads.getPrtsPrefCC("series") == "noQvalue") {
-  
-            currPUrlObj.series = null;
-        } else {
-  
-            currPUrlObj.series = JSSHOP.ads.getPrtsPrefCC("series");
-        }
-
-        if(JSSHOP.ads.getPrtsPrefCC("si") == "noQvalue") {
-            currPUrlObj.si = null;
- 
-        } else {
-            currPUrlObj.si = JSSHOP.ads.getPrtsPrefCC("si");
- 
-        }
-        if(JSSHOP.ads.getPrtsPrefCC("md") == "noQvalue") {
-            currPUrlObj.md = null;
-  
-        } else {
-            currPUrlObj.md = JSSHOP.ads.getPrtsPrefCC("md");
-        
-        }
-        if(JSSHOP.ads.getPrtsPrefCC("model") == "noQvalue") {
-     
-            currPUrlObj.model = null;
-        } else {
- 
-            currPUrlObj.model = JSSHOP.ads.getPrtsPrefCC("model");
-        }
-        if(JSSHOP.ads.getPrtsPrefCC("y") == "noQvalue") {
-            currPUrlObj.y = null;
-        } else {
-            currPUrlObj.y = JSSHOP.ads.getPrtsPrefCC("y");
-        }
-        if(JSSHOP.ads.getPrtsPrefCC("part") == "noQvalue") {
-            currPUrlObj.part = null;
-        } else {
-            currPUrlObj.part = JSSHOP.ads.getPrtsPrefCC("part");
-        }
-        if(JSSHOP.ads.getPrtsPrefCC("prti") == "noQvalue") {
-            currPUrlObj.prti = null;
-        } else {
-            currPUrlObj.prti = JSSHOP.ads.getPrtsPrefCC("prti");
-        }
-
-JSSHOP.shared.doPartsWords(50, "noQvalue");
-    }
-
-
-}
-
-if(currPUrlObj.prti) {
-// alert("have.prti");
-if(currPUrlObj.y) {
-} else { // year
-tMCBBstr = "noQvalue";
-// tSarrWodStr += "<div class=\"rtable txtSmall brdrClrRed\" style=\"margin:7px;\"><i class=\"menu-material-icons txtBold txtClrRed\" title=\"add_alert\">&#xe003;</i>";
-// tSarrWodStr += "<a style=\"vertical-align:super;padding-left:12px;\" class=\"menu-material-icons txtSmall txtBold\" href=\"javascript:JSSHOP.shared.doYearsPop();\">" + stxt[82] + " " + stxt[104] + "</a></div>";
-}
-}
-
-if(document.getElementById("dvDoPSWrds")) {
-dvDoPSWrds.innerHTML = tSarrWodStr;
-inpImpTParts.value = JSON.stringify(tArrPSrchLst);
-
-}
-
-
-
-
-
-} else { // tDPWRIdx !== 50
-
-switch(theTPrtKN) {
-case "mk":
-    currSeriesArr = "";
-    currSeriesArr = [];
-JSSHOP.ads.clearPrtsPrefCC("mk");
-JSSHOP.ads.clearPrtsPrefCC("make");
-JSSHOP.ads.clearPrtsPrefCC("model");
-JSSHOP.ads.clearPrtsPrefCC("md");
-JSSHOP.ads.clearPrtsPrefCC("series");
-JSSHOP.ads.clearPrtsPrefCC("si");
-currPUrlObj["mk"] = null;
-currPUrlObj["make"] = null;
-currUrlArr["mk"] = "";
-currUrlArr["make"] = "";
-currPUrlObj["si"] = null;
-currPUrlObj["series"] = null;
-currUrlArr["si"] = "";
-currUrlArr["series"] = "";
-currPUrlObj["md"] = null;
-currPUrlObj["model"] = null;
-currUrlArr["md"] = "";
-currUrlArr["model"] = "";
-currUrlArr["y"] = "";
-break;
-case "si":
-    JSSHOP.ads.clearPrtsPrefCC("si");
-    JSSHOP.ads.clearPrtsPrefCC("series");
-currPUrlObj["si"] = null;
-currPUrlObj["series"] = null;
-currUrlArr["si"] = "";
-currUrlArr["series"] = "";
-currPUrlObj["md"] = null;
-currPUrlObj["model"] = null;
-currUrlArr["md"] = "";
-currUrlArr["model"] = "";
-currUrlArr["y"] = "";
-break;
-case "md":
-JSSHOP.ads.clearPrtsPrefCC("md");
-JSSHOP.ads.clearPrtsPrefCC("model");
-currPUrlObj["md"] = null;
-currPUrlObj["model"] = null;
-currUrlArr["md"] = "";
-currUrlArr["model"] = "";
-currUrlArr["y"] = "";
-break;
-case "prti":
-    JSSHOP.ads.clearPrtsPrefCC("prti");
-    JSSHOP.ads.clearPrtsPrefCC("part");
-currPUrlObj["prti"] = null;
-currPUrlObj["part"] = null;
-currUrlArr["prti"] = "";
-currUrlArr["part"] = "";
-inpTParts.value = "";
-break;
-case "y":
-currPUrlObj["y"] = null;
-currPUrlObj["y"] = null;
-currUrlArr["y"] = "";
-currUrlArr["y"] = "";
-inpTParts.value = "";
-break;
-default:
-break;
-}
-JSSHOP.shared.doPartsWords(50, "noQvalue");
-// ttArrPSrchLst = removeArrElement(JSON.parse(inpImpTParts.value), tDPWRIdx);
-// tArrPSrchLst = ttArrPSrchLst;
-}
-
-};
-
-
-
-JSSHOP.shared.doPartDynL = function(ttPIDstr, ttPISTNstr) {
-    // setPrtsPrefCC
-JSSHOP.ads.setPrtsPrefCC("prti", ttPIDstr);
-JSSHOP.ads.setPrtsPrefCC("part", ttPISTNstr);
-currPUrlObj.prti = ttPIDstr;
-currPUrlObj.part = ttPISTNstr;
-tQparr = [];
-tNLstr = "";
-if(currPUrlObj.make) {
-tQparr.push(currPUrlObj.make);
-}
-if(currPUrlObj.series) {
-tQparr.push(currPUrlObj.series);
-}
-if(currPUrlObj.model) {
-    if(currPUrlObj.model.indexOf("null") != -1) {
-        currPUrlObj["model"] = null;
-    } else {
-        tQparr.push(currPUrlObj.model);
-    }
-
-    }
-tQparr.push(ttPISTNstr);
-
-tmpACstmStr = tQparr.join(" ");
-// remove any special characters from currCstmQstr exlude "-"
-tmpBCstmStr = tmpACstmStr.replace(/[^a-zA-Z0-9- ]/g, "");
-// remove duplicate words from currCstmQstr
-tmpCCstmStr = tmpBCstmStr.replace(/\b(\w+)\s+\1\b/g, '$1');
-tmpDCstmStr = tmpCCstmStr.replace(/null/g, "");
-
-
-currCstmQstr = encodeURIComponent(tmpDCstmStr);
-
-console.log("doPartDynL.currCstmQstr: " + currCstmQstr);
-tccUtoL = "index.html?st=main&region=noQvalue&pid=aa-show-psearch&" + JSSHOP.shared.objToUrl(currPUrlObj);
-tccUtoL += "&q=" + currCstmQstr.replace(/null/g, "");
-// alert("doPartDynL: " + tccUtoL);
-return tccUtoL;
-};
-
-
-
-
-JSSHOP.shared.fnshPartsList = function() {
-setTimeout("JSSHOP.shared.fnishPartsList()", 500);
-}
-JSSHOP.shared.fnishPartsList = function() { 
-JSSHOP.shared.doPartsWords(50,"noQvalue");
-JSSHOP.shared.doPartsInpAC("inpTParts", currPartsObj);
-if(arrUprefs["prfsSHOPuser"][0].tglPartsMain) {
-if(arrUprefs["prfsSHOPuser"][0].tglPartsMain == "show") {
-JSSHOP.ui.toggleNuModule('dvTglPSmain','dvPartsMain');
-}
-}
-document.getElementById("inpTParts")
-    .addEventListener("keyup", function(event) {
-    event.preventDefault();
-    if (e.keyCode == 13) {
-        JSSHOP.shared.doPartsSearch('inpTParts');    }
-});
-};
-
-
-
-setPartsBox = function() {
-    console.log("setPartsBox: " + pid + " " + JSON.stringify(currPartsObj) + " " + pid.indexOf("-edit-"));
-
-tTmpPartsL = JSSHOP.shared.doPartsList("noQvalue");
-document.getElementById("dvTBPList").innerHTML = tTmpPartsL;
-JSSHOP.shared.fnshPartsList();
-};
-
-JSSHOP.shared.setCurPrtsObj = function(aw, bw,cw) {
-currPartsObj = null;
-currPartsObj = JSON.parse(bw);
-if(aw == "menu") {
-    doNuMMenuLd("doMnuFnsh");
-}
-};
-
-JSSHOP.shared.getPartsBox = function(aw, bw,cw) {
-    console.log("getPartsBox: " + aw + " " + bw + " " + cw);
-
-   
-// includedContent.innerHTML = "";
-// alert("getPartsBox: " + cw);
-tCatArrStr = "";
-currPartsObj = null;
- 
-currPartsObj = JSON.parse(bw);
-boolShwPrtsB = "no";
-
-
-switch(pid) {
-case "aa-show-makes":
-case "aa-show-make":
-case "aa-show-model":
-case "aa-show-part":
-case "aa-show-series":
-case "aa-show-shop":
-case "aa-show-search":
-case "aa-show-psearch": 
-case "aa-show-msearch":
-case "aa-show-place":
-case "index_main":
-case "aa-edit-parts-category":
-case "aa-edit-category":
-// case "aa-show-item":
-case "aa-edit-item":   
-case "aa-show-category":
-boolShwPrtsB = "maybe";
-break;
-default:
-bkjh = "jhkjh";
-break;
-}
-
-console.log("getPartsBox.boolShwPrtsB: " + boolShwPrtsB + " " + pid + " " + JSON.stringify(cw));
-if(boolShwPrtsB == "maybe") {
-if(dvPartsList.innerHTML == "") {
-    boolShwPrtsB = "yes";
-}
-if(pid.indexOf("edit") != -1) {
- if(document.getElementById("btnTglBPrtsL")) {
-    boolShwPrtsB = "yes";
-}
-}
-// ** WILL REFRESH THE PARTS LIST
-boolShwPrtsB = "yes";
-}
-if(c_category.value == "101") {
-    // boolShwPrtsB = "no";
-    }
-if(boolShwPrtsB == "yes") {
-dvPartsList.innerHTML = "";
-tIMtglbObj = null;
-tIMtglbObj = "";
-tIMtglbObj = JSSHOP.ui.nTglBxOb();
- 
-tIMtglbObj["ttl"] = stxt[112]; // the toggle box title
-tIMtglbObj["dvid"] = "dvTBPList"; // the toggle box div id
-tIMtglbObj["cntntFnc"] = "setPartsBox";
-tIMtglbObj["content"] = "noQvalue"; // the toggle that goes in above toggle div
-tIMtglbObj["btn"] = "btnTglBPrtsL" // the toogle btn id
-tIMtglbObj["pref"] = "tglBPrtsL"; // the toogle pref id saved in cookie
-tIMtglbObj["tbtmpCB"] = "noQvalue"; // null function as callback
-tIMtglbObj["icn"] = "&#xe8b6;"; //<img src=\"images/misc/parts_w.gif\" style=\"vertical-align: middle; max-width: 27px; max-height: 27px;\" class=\"icnsmlbtn\">;"; // the icon
-tIMtglbObj["pnid"] = "dvPartsList"; // the parent node, will just return text if noQvalue
-tIMtglbObj["appnd"] = "y"; // append to parent node, will just return text if noQvalue
-// tIMtglbObj["clsmaintbl"] = "slmtable brdrClrRed bkgdClrWhite"; // main table class
-tIMtglbObj["clsmaintbl"] = "gradient-pop bkgdClrWhite"; // main table class
-
-tIMtglbObj["clstitletd"] = "txtBold txtClrHdr"; // title box class
-tIMtglbObj["clsttltxt"] = "txtSmall txtBold"; // title box text class
-
-JSSHOP.ui.doTglBox(tIMtglbObj);
-}
-if(dvMMainParts.style.display == "block") {
-} else {
-    JSSHOP.ui.showHideElement('dvMMainParts','show');
-}
- 
-// JSSHOP.shared.doPartsList(document.getElementById("dvPartsList"));
-};
-
 
 var doInpTFocus = function() {
     tINTcstr = inpTParts.innerHTML;
@@ -2446,389 +1312,7 @@ var doInpTFocus = function() {
 };
 
 
-
-JSSHOP.shared.doPartsList = function(theTPDiv) {
-tCatArrStr = "";
-tCurrUmake = "";
-tCurrUseries = "";
-tCurrUmodel = "";
-tCurrUpart = "";
-tCurrUyear = "";
-tImpVstr = "";
-currDynMenuArr = null;
-currDynMenuArr = "";
-currDynMenuArr = [];
-
-// tUtoL = "index.html?make=" + currUrlArr.make + "&mk=" + currUrlArr.mk + "&si=" + currUrlArr.si  + "&series=" + currUrlArr.series + "&md=" + currUrlArr.md  + "&model=" + currUrlArr.model + "&region=noQvalue&pid=aa-show-part" 
-// tUtoL = "index.html?&region=noQvalue&pid=aa-show-part&" + JSSHOP.shared.objToUrl(currPUrlObj);
-
-// tCatUStr = JSSHOP.shared.objToUrl(currUrlArr);
-mbrdrCls = "rtable brdrClrHdr"; 
-if(theTPDiv == "noQvalue") {
-mbrdrCls = "";
-}
-tPSBstr = "<table style=\"margin: 0 auto;width:90%\" align=\"center\" class=\"txtClrHdr" + mbrdrCls + "\">";
-tPSBstr += "<tr><td>";
-tPSBstr += "<div  class=\"slmtable bkgdClrNrml\" id=\"dvDoPSWrds\" style=\"margin: 0 auto;text-align:left\"></div>";
-
-tPSBstr += "<input type=\"hidden\" id=\"inpImpTParts\" value=\"\">";
-tPSBstr += "</td></tr>";
-
-tPSBstr += "<tr><td>";
- 
-tPSBstr += "<div style=\"min-height:20px;\" class=\"txtSmall txtBold txtClrRed\">";
-if(JSSHOP.ads.getPrtsPrefCC("mk") == "noQvalue") {
-tPSBstr += stxt[110] // Please select the make and model before searching your part
-}  
-
-tPSBstr += "<br>" + stxt[111]; // Enter your part name or select from the list below for better results.";
-tPSBstr += "</div>";
- 
-// tPSBstr += "<div name=\"mod_i_title\"  id=\"mod_i_title\"  style=\"min-height:20px;\" contenteditable=\"true\"  class=\"cls_input_tarea\"></div>";
-
-tPSBstr += "</td></tr>";
-
-tPSBstr += "<tr><td>&nbsp;</td></tr>";
- 
-
-
-
-
-tPSBstr += "<tr><td>";
-
-
-tPSBstr += "<table style=\"margin: 0 auto;\" width=\"98%\" align=\"center\"><tr>";
-
-tPSBstr += "<td style=\"width:100%\">";
-// set the div placeholder str
-tdITPplhldr = "<span class=\"txtSmall txtClrGrey\">Ex: Alternador</span>";
-// check if mobile
-if(JSSHOP.shared.isMobile()) {
-    tPSBstr += "<div name=\"inpTParts\"  id=\"inpTParts\"  class=\"form-control brdrClrRed bkgdClrNrml\" style=\"min-height:20px;\" contenteditable=\"true\"  placeholder=\"Parts\" value=\"\" onfocus=\"javascript:this.scrollIntoView({behavior: 'smooth', block: 'start'});doInpTFocus();\"  spellckeck=\"false\" data-ms-editor=\"false\">" + tdITPplhldr + "</div>";
-} else {
-    tPSBstr += "<div name=\"inpTParts\"  id=\"inpTParts\"  class=\"form-control brdrClrRed bkgdClrNrml\" style=\"min-height:20px;\" contenteditable=\"true\"  placeholder=\"Parts\" value=\"\" onfocus=\"javascript:doInpTFocus();\"  spellckeck=\"false\" data-ms-editor=\"false\">" + tdITPplhldr + "</div>";
-}
-
- 
-// tPSBstr += "<input spellckeck=\"false\" autocomplete=\"off\" name=\"inpTParts\" id=\"inpTParts\" class=\"cls_nuinput_text brdrNone txtSmall\" style=\"width:100%\" placeholder=\"\">
-
-tPSBstr += "</td>";
-tPSBstr += "<td valign=\"top\">&nbsp;&nbsp; &nbsp;</td>";
-tPSBstr += "<td valign=\"top\"><button class=\"brdrNone crsrPointer bkgdClrWhite\" onclick=\"javascript:inpTParts.value='';if(inpTParts.innerText)inpTParts.innerText='';JSSHOP.shared.closePartsList();JSSHOP.shared.doPartsWords(6,'prti');\"><i class=\"material-icons txtBigger txtClrDlg\" title=\"delete\">&#xe14c;</i></button></td>";
-
-tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPSmain','dvPartsMain','tglPartsMain');";
-
-// tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPSmain','dvPCmain','tglPrtsMain');";
-tPSBstr += "<td valign=\"top\" style=\"max-height: 42px\"></td>";
-
-tPSBstr += "</tr>";
-tPSBstr += "</table>";
- 
-tPSBstr += "</td></tr>";
-
-tPSBstr += "<tr><td>&nbsp;</td></tr>";
-
-tPSBstr += "<tr><td valign=\"top\">";
-// <button id="btnPSearch" class="form-control"><ti data-ison="stxt[78]" data-desc="btn_search" onclick="javascript:qlDoNuPlSearch('tmp_qv','dvPSList',qlShowPlacesRes);">Search</ti></button>
-// tPSBstr += "<button class=\"form-control cls_hoover slmtable txtSmall bkgdClrRed crsrPonter txtClrWhite brdrClrHdr\" onclick=\"javascript:JSSHOP.shared.doPartsSearch('inpTParts')\">";
- tPSBstr += "<button class=\"cls_button cls_button-medium\" onclick=\"javascript:JSSHOP.shared.doPartsSearch('inpTParts')\">";
-
-tPSBstr += "<i class=\"nav-material-icons coll-menu-item txtClrWhite\" title=\"search\" style=\"vertical-align:center\">&#xe8b6;</i>&nbsp;<span data-ison=\"\" data-desc=\"btn_search\"  style=\"vertical-align:center\" class=\"txtBold txtClrWhite\">" + stxt[78] + "</span></button></td></tr>";
-tPSBstr += "<tr><td>";
-
-
-if(currUrlArr.prti != null) {
-
-    // tmpDvOLStr = "<div><a href=\"javascript:JSSHOP.ads.doPgLnkMedia('ebay',30);\">Ebay</a> | <a href=\"javascript:JSSHOP.ads.doPgLnkMedia('ggl',30);\")\">Google</a></div>";
-   //  tPSBstr += tmpDvOLStr;
-// shout out stuff here!!! 
-// tPSBstr += "&nbsp; &nbsp; &nbsp;<img class=\"slmtable icndbtn brdrCldrDlg txtClrHdr\" style=\"margin-top: 5px;font-size:16px;margin-right:6px;\" alt=\"speaker\" title=\"speaker\" src=\"images/misc/shout_out.gif\"></img>  <a href=\"javascript:JSSHOP.shared.setListing();\" class=\"txtDecorNone\">List this Item</a>";
-}
-tPSBstr += "</td></tr>";
-tPSBstr += "<tr><td>&nbsp;</td></tr>";
-tPSBstr += "<tr><td><div class=\"crsrPointer txtBold txtClrRed bkgdClrNrml\" nowrap=\"nowrap\" onclick=\"javascript:" + tJSstr + "\">Lista de Pe\u00e7as";
-tPSBstr += "<div id=\"dvTglPSmain\" style=\"float:right\"><i class=\"material-icons txtClrDlg\" title=\"expand_more\">&#xe5cf;</i></div></div></td></tr>";
-
-
-tPSBstr += "<tr><td id=\"dvPartsMain\" style=\"visibility:hidden;display:none\" class=\"bkgdClrWhite\">";
-
-
-
-
-
-tEPobj = currPartsObj;
-tPPobj = tEPobj.pcats;
-
-tCatArrStr += tPSBstr;
-
-
-thePPBrdrClr = "brdrClrRed";
-thePPTextClr = "txtClrRed";
-
-
-
-for(var gkey in tPPobj) {
-
-// tCatArrStr +=  "<br>";
-tDynMunuObj = null;
-tDynMunuObj = "";
-tDynMunuObj = {};
-tDynMunuObj._id = gkey;
-tDynMunuObj.cat_rtype = "5";
-tDynMunuObj.cat_uid = "1";
-tDynMunuObj.cat_coid = "0";
-tDynMunuObj.cat_pid = "0";
-tDynMunuObj.cat_title = tPPobj[gkey];
-tDynMunuObj.cat_desc = tPPobj[gkey];
-tDynMunuObj.cat_vala = "1";
-tDynMunuObj.cat_valb = "10001";
-tDynMunuObj.cat_dadded = "10001";
-currDynMenuArr.push(tDynMunuObj);
-currPPrtCatArr.push(gkey + ":" + tPPobj[gkey]);
-tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPC" + gkey + "','dvPC" + gkey + "','tglPrts" + gkey + "');";
-
-tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\" class=\"crsrPointer\" onclick=\"javascript:" + tJSstr + "\"><table  class=\"collection\"  cellpadding=\"0px\" cellspacing=\"0px\">";
-tCatArrStr += "<tr><td><img src=\"images/misc/" + gkey + ".gif\" class=\"slmtable " + thePPBrdrClr + "\" style=\"max-width:30px;margin:0px;\"></td>";
-tCatArrStr += "<td class=\"txtSmall txtBold " + thePPTextClr + "\" style=\"word-wrap:break-word;word-break: break-word;text-align: left;width:100%\">&nbsp;" + tPPobj[gkey] + "</td>";
-
-tCatArrStr += "<td><div id=\"dvTglPC" + gkey + "\" class=\"icnbtn crsrPointer\"  style=\"float:right\">";
-tCatArrStr += "<i class=\"small-material-icons\" title=\"expand_more \">&#xe5cf;</i></div></td></tr></table></div>";
-
-// javascript:JSSHOP.ui.tglPrefModule('dvTglPCpc1','dvPCpc1','tglPrtspc1')
-
-
-
-
-
-if(tEPobj.pprts[gkey].pts){
-tCatArrStr += "<div style=\"display:none;visibility:hidden;word-wrap:break-word;word-break: break-word;\" class=\"collection\" id=\"dvPC" + gkey + "\">";
-
-
-
-
-tCatPtsobj = tEPobj.pprts[gkey].pts;
-for(var pcgkey in tCatPtsobj) {
-
-// currCstmQstr += " " + tCatPtsobj[pcgkey].n;
-tmpFPSstr = "&part=" + tCatPtsobj[pcgkey].n + "&prti=" + tCatPtsobj[pcgkey].pi + "&q=" + encodeURIComponent(currCstmQstr + " " + tCatPtsobj[pcgkey].n);
- 
-// tUtoL = tCatUStr + "&part=" + tCatPtsobj[pcgkey].n + "&prti=" + tCatPtsobj[pcgkey].pi + "&pid=aa-show-part&q=" + currCstmQstr + " " + encodeURIComponent(tCatPtsobj[pcgkey].n);
-tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\"><a  class=\"collection-item\" href=\"javascript:document.location.href=JSSHOP.shared.doPartDynL('" + tCatPtsobj[pcgkey].id + "','" + tCatPtsobj[pcgkey].n + "');JSSHOP.ads.setPrtsPrefCC('part','" + tCatPtsobj[pcgkey].n + "');JSSHOP.ads.setPrtsPrefCC('prti','" +  + tCatPtsobj[pcgkey].id + "');\" class=\"collection-item crsrPointer\">" + tCatPtsobj[pcgkey].id + " : " + tCatPtsobj[pcgkey].n + "</a></div>";
-// tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\" onclick=\"javascript:eindex('aa-show-part','" + tUtoL + "');\" class=\"collection-item crsrPointer\">" + tCatPtsobj[pcgkey].id + " : " + tCatPtsobj[pcgkey].n + "</div>";
-}
-tCatArrStr += "</div>";
-}
-
-if(thePPBrdrClr == "brdrClrRed") {
-thePPBrdrClr = "brdrClrHdr";
-thePPTextClr = "txtClrHdr";
-} else {
-thePPBrdrClr = "brdrClrRed";
-thePPTextClr = "txtClrRed";
-}
- 
-} // end for gkey in tPPobj
-
-if(cid == 0) {
-// alert("cid: " + cid);
-currMenuArr = currDynMenuArr;
-// doProdCatTreeLoad();
-// doMainTreeLoad();
-//  doCatTreeLoad();
-// doShopMnuLd("nada",JSON.stringify(currDynMenuArr),null);
-
-} else {
-// doShopMnuLd("nada",JSON.stringify(currMenuArr),null);
-}
-tCatArrStr += "</td></tr></table>";
-if(theTPDiv == "noQvalue") {
-return tCatArrStr;
-} else {
-theTPDiv.innerHTML = tCatArrStr;
-// fnshPartsList();
-} // end theTPDiv is not noQvalue
-// return tCatArrStr;
-// JSSHOP.ui.popAndFillLbox(tCatArrStr);
-};
-
-
-
-JSSHOP.shared.closePartsList = function() {
-
-    /*close all autocomplete lists in the document,
-    except the one passed as an argument:*/
-    var x = document.getElementsByClassName("autocomplete-items");
-    for (var i = 0; i < x.length; i++) {
-
-      x[i].parentNode.removeChild(x[i]);
-
-  }
-};
- 
-JSSHOP.shared.setPrtSvsPnl = function(tmpPSLdvId, tmpPSLfnc) {  
-    try {
-    // div ids dvGetLLnk dvGetSvcsLnk dvGetPLnk
-    if(document.getElementById("includedShops")) {
-        document.getElementById("includedShops").innerHTML = "";
-        }
-    tISPSame = "no";
-    tDefClsName = "slmtable bkgdClrWhite brdrClrDlg txtBold txtClrBSLnks crsrPointer";
-    tBounceClsName = "rtable bkgdClrWhite brdrClrRed txtBold txtClrRed";
-    tActvClsName = "slmtable bkgdClrWhite brdrClrRed txtBold txtClrRed crsrPointer";
-    tmpDvIDarr = ["dvGetLLnk", "dvGetSvcsLnk", "dvGetPLnk"];
-    for (var i = 0; i < tmpDvIDarr.length; i++) {
-        // set each to class txtClrGrey
-        document.getElementById(tmpDvIDarr[i]).className = tDefClsName;
-    }
-    tPspstr = JSSHOP.ads.getPrtsPrefCC("psvcpnl");
-    if(tPspstr == "noQvalue") {
-        JSSHOP.ads.setPrtsPrefCC("psvcpnl", tmpPSLdvId);
-    } else {
-        if(tPspstr == tmpPSLdvId) {
-
-            tISPSame = "yes";
-           // JSSHOP.ads.setPrtsPrefCC("psvcpnl", "noQvalue");
-        } else {
-            JSSHOP.ads.setPrtsPrefCC("psvcpnl", tmpPSLdvId);
-
-        }
-    }
-
-    JSSHOP.ui.setNuCBBClickClr(document.getElementById(tmpPSLdvId),tBounceClsName,tActvClsName, tmpPSLfnc, 300);
-} catch(e) {
-    alert("setPrtSvsPnl: " + e);
-}
-};
-JSSHOP.shared.doPartsLinks = function() {
-	try {
-imgPLicon.src = "./images/transparent.gif";
-tMakeN = "";
-tMakeID = "";
-tSerN = "";
-tSerID = "";
-tModelN = "";
-tModelID = ""; 
-tPartN = "";
-tPartID = "";
-tLinkIstr = "";
-tQLCstmQstr = "&q=";
-tLinkPHstr = "index.html?";
-acurrCstmQstr = "";
-tLinkPAstr = "";
-if((currUrlArr.mk != null) && (currUrlArr.make != null)){
-tMakeID = currUrlArr.mk;
-tMakeN = currUrlArr.make;
-acurrCstmQstr = tMakeN;
-tQLCstmQstr += tMakeN + " ";
-tLinkPIDstr = "pid=aa-show-make";
-tLinkPAstr += "&make=" + tMakeN + "&mk=" + tMakeID;
-imgPLicon.src = "images/mlogos/" + tMakeN.toLowerCase().replace(" ", "-") + "-logo.png";
-// tLinkIstr += "<a href=\"javascript:eindex('aa-show-make','make=" + tMakeN + "&mk=" + tMakeID + "&pid=aa-show-make&q=" + acurrCstmQstr + "')\";>" + tMakeN + "</a>";
-tLinkIstr += "<a href=\"" + tLinkPHstr + tLinkPIDstr + tLinkPAstr + tQLCstmQstr + "\";>" + tMakeN + "</a>";
-} 
-
-
-if((currUrlArr.si != null) && (currUrlArr.series != "null")){
-tSerID = currUrlArr.si;
-tCURAstr = currUrlArr.series;
-tCOUAstr = currUrlArr.series;
-if(tCURAstr.indexOf("(") != -1) {
-tCOUAstr = tCURAstr.substring(0, tCURAstr.indexOf("("));
-} 
-tSerN = tCOUAstr.replace(tMakeN + " ", "");
-acurrCstmQstr += " " + tSerN;
-tQLCstmQstr += tSerN + " ";
-tLinkPIDstr = "pid=aa-show-series";
-tLinkPAstr += "&series=" + tSerN + "&si=" + tSerID;
-
-// tLinkIstr += "&nbsp; &nbsp; &nbsp;<a href=\"javascript:eindex('aa-show-series','make=" + tMakeN + "&mk=" + tMakeID +  "&series=" + tSerN + "&si=" + tSerID + "&pid=aa-show-series&q=" + currCstmQstr + "')\">" + tSerN + "</a>";
-tLinkIstr += "&nbsp; &nbsp; &nbsp;<a href=\"" + tLinkPHstr + tLinkPIDstr + tLinkPAstr + tQLCstmQstr + "\">" + tSerN + "</a>";
-
-}
-
-if((currUrlArr.model) && (currUrlArr.model != "null" )) {
-tModelID = currUrlArr.md;
-tModelN = currUrlArr.model;
-tModelN = tModelN.replace(/[^a-zA-Z0-9- ]/g, "");
-tQLCstmQstr += tModelN + " ";
-tLinkPIDstr = "pid=aa-show-model";
-tLinkPAstr += "&model=" + tModelN + "&md=" + tModelID;
-// tLinkIstr += "&nbsp; &nbsp; &nbsp;<a href=\"javascript:eindex('aa-show-model','make=" + tMakeN + "&mk=" + tMakeID +  "&series=" + tSerN + "&si=" + tSerID + "&model=" + tModelN + "&md=" + tModelID + "&pid=aa-show-model&q=" + acurrCstmQstr + "')\">" + tModelN.replace(tSerN + " ", "") + "</a>";
-tLinkIstr += "&nbsp; &nbsp; &nbsp;<a href=\"" + tLinkPHstr + tLinkPIDstr + tLinkPAstr + tQLCstmQstr + "\">" + tModelN + "</a>";
-
-} 
-
-if((currUrlArr.prti)  && (currUrlArr.part)) {
-tPartID = currUrlArr.prti;
-tPartN = currUrlArr.part;
-// acurrCstmQstr += " " + tPartN;
-// tLinkIstr += "&nbsp; &nbsp; &nbsp;<a href=\"javascript:eindex('aa-show-part','make=" + tMakeN + "&mk=" + tMakeID +  "&series=" + tSerN + "&si=" + tSerID + "&model=" + tModelN + "&md=" + tModelID + "&part=" + tPartN + "&prti=" + tPartID + "&pid=aa-show-part&q=" + acurrCstmQstr + "')\">" + tPartN + "</a>";
-tLinkPIDstr = "pid=aa-show-part";
-tQLCstmQstr += tPartN + " ";
-tLinkPAstr += "&part=" + tPartN + "&prti=" + tPartID + tQLCstmQstr;
-tLinkIstr += "&nbsp; &nbsp; &nbsp;<a href=\"" + tLinkPHstr + tLinkPIDstr +  tLinkPAstr + "\">" + tPartN + "</a>";
-
-// tLinkIstr += "<br><br><a href=\"javascript:eindex('aa-show-video', 'pid=aa-show-video&make=" + tMakeN + "&mk=" + tMakeID +  "&series=" + tSerN + "&si=" + tSerID + "&model=" + tModelN + "&md=" + tModelID + "&part=" + tPartN + "&prti=" + tPartID + "&q=" + acurrCstmQstr + "');\">" + stxt[88] + " " + tMakeN + " " + tSerN + " " + tPartN + "</a><br>";
-} else if(currUrlArr.pq) {
-tPartID = "007";
-tPartN = currUrlArr.pq;
-currUrlArr.part = currUrlArr.pq;
-currUrlArr.prti = "007";
-acurrCstmQstr += " " + tPartN;
-// tLinkIstr += "&nbsp; &nbsp; &nbsp;<a href=\"javascript:eindex('aa-show-part','make=" + tMakeN + "&mk=" + tMakeID +  "&series=" + tSerN + "&si=" + tSerID + "&model=" + tModelN + "&md=" + tModelID + "&part=" + tPartN + "&prti=" + tPartID + "&pid=aa-show-part&q=" + acurrCstmQstr + "')\">" + tPartN + "</a>";
-
-
-tQLCstmQstr += tPartN;
-tLinkPAstr += "&part=" + tPartN + "&prti=" + tPartID + tQLCstmQstr;
-
-
-// tLinkIstr += "&nbsp; &nbsp; &nbsp;<b>*</b><a href=\"" + tLinkPAstr + "\">" + tPartN + "</a>";
-// tLinkIstr += "<br><a href=\"javascript:eindex('aa-show-video', 'pid=aa-show-video&make=" + tMakeN + "&mk=" + tMakeID +  "&series=" + tSerN + "&si=" + tSerID + "&model=" + tModelN + "&md=" + tModelID + "&part=" + tPartN + "&prti=" + tPartID + "&q=" + acurrCstmQstr + "');\">" + stxt[88] + " " + tMakeN + " " + tSerN + " " + tPartN + "</a><br>";
-
-}
-tcurrCstmQstr = acurrCstmQstr.replace("/", "-");
-ttcurrCstmQstr = removeDiacritics(tcurrCstmQstr);
-// tmpCleanCCQStr = ttcurrCstmQstr.replace(/^[a-z\d\-_\s]+$/i, "");
-// tcurrCstmQstr = encodeURIComponent(acurrCstmQstr);
-// replace all duplicate words in ttcurrCstmQstr
- 
-
-ttcurrCstmQstr = ttcurrCstmQstr.replace(/[^a-zA-Z0-9\s\-]/g, '');
-ttcurrCstmQstr = ttcurrCstmQstr.replace(/(\b\S+\b)(?=.*?\1)/g, "");
-if(pid == "aa-show-part") {
-currCstmQstr = ttcurrCstmQstr;
-} else {
-currCstmQstr = ttcurrCstmQstr;
-}
-if(tLinkIstr.length < 3) {
-    // console.log("doPartsLinks.tLinkIstr.length < 3");
-// setTimeout("JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')", 1500);
-// tLinkIstr = "...";
-} else {
-document.getElementById("dvPartLinks").innerHTML = tLinkIstr;
-}
-
-document.getElementById("dvAPartsList").innerHTML = "";
-document.getElementById("dvPartsList").innerHTML = "";
-document.getElementById("dvASvsList").innerHTML = "";
-
-// this needs to be checked (currPartsObj), if it is null, then do the ajax call to get the parts list
- if(pid.indexOf("edit") != -1) {
-    if(c_category.value == "202") {
-    JSSHOP.ajax.doNuAjaxPipe("inpParts", "misc/x_cp_" + usrlang + ".txt", JSSHOP.admin.getAddPartsBox);
-    } else {
-    JSSHOP.ajax.doNuAjaxPipe("inpParts", "misc/x_cp_" + usrlang + ".txt", JSSHOP.admin.getAddSvcBox);
-    }
- } else {
-JSSHOP.ajax.doNuAjaxPipe("inpParts", "misc/x_cp_" + usrlang + ".txt", JSSHOP.shared.getPartsBox);
- }
-// return tLinkIstr;
-	} catch(e) {
-alert(e);
-JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.doPartsLinks: " + e);
-	}
-};
-
+  
 
 JSSHOP.shared.setFieldVal = function(theField, theVal) {
 	try {
@@ -2956,6 +1440,8 @@ JSSHOP.shared.setArrVals = function(theMarr, theAIndx, theArr) {
 
 
 JSSHOP.shared.getNuKNVParr = function(theArr, tOldKNVArr) {
+    console.log("getNuKNVParr.new: " + JSON.stringify(theArr));
+    console.log("getNuKNVParr.old: " + JSON.stringify(tOldKNVArr));
     tmpVpar =  null;
     tmpVpar = [];
     tmpSobj = null;
@@ -2969,12 +1455,18 @@ JSSHOP.shared.getNuKNVParr = function(theArr, tOldKNVArr) {
      tmpSobj = null;
     tmpSobj = {};
       for (var gkey in ts) {
-        if(tOldKNVArr[gkey]) {
+         try {
             if(tOldKNVArr[gkey] != ts[gkey]) {
         tmpSobj["t"] = gkey;
       tmpSobj["v"] = ts[gkey];
       tmpVpar.push(tmpSobj);
+      console.log("getNuKNVParr.dif: " + gkey + " :: " + tOldKNVArr[gkey] + " :: " + ts[gkey]);
+
+            } else {
+                console.log("getNuKNVParr.same: " + gkey + " :: " + tOldKNVArr[gkey] + " :: " + ts[gkey]);
             }
+        } catch(e) {
+            console.log("getNuKNVParr.err: " + e);
         }
       }
       iint++;
@@ -3826,6 +2318,45 @@ JSSHOP.ajax.doNuResponse(tmppNArrDRP);
 
 }; 
 
+
+JSSHOP.ajax.doNuGenAjaxPost = function(tFormName, tNameValArr, tUrl, tMethdType, tCB) {
+try {
+    var formData = new FormData(document.forms[tFormName]);
+    for (var i = 0; i < tNameValArr.length; i++) {
+        formData.append(tNameValArr[i].t, tNameValArr[i].v);
+        if(document.getElementById(tNameValArr[i].t)) {
+            document.getElementById(tNameValArr[i].t).value = tNameValArr[i].v;
+        }
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.open(tMethdType, tUrl, true);
+    xhr.onreadystatechange = function() {
+        console.log("doNuGenAjaxPost: " + xhr.responseText);
+}
+
+
+xhr.onload = function(e) {
+currVRPCLIresp = xhr.responseText;
+tCB(currVRPCLIresp);
+};
+
+xhr.onerror = function(e) {
+JSSHOP.ui.popAndFillLbox("doNuGenAjaxPost.ERROR: <br>" + e);
+};
+xhr.send(formData);
+if (xhr.status != 200) {
+return '';
+} else {
+    JSSHOP.ui.popAndFillLbox("doNuGenAjaxPost.status: " + xhr.responseText);
+// return xhr.responseText;
+}
+} catch(e) {
+    alert("doNuGenAjaxPost: " + e);
+}
+};
+
+
+
 JSSHOP.ajax.doGenAjaxPost = function(tNameValArr, tUrl, tMethdType, tCB) {
 try {
     var formData = new FormData(document.forms.do);
@@ -3870,25 +2401,19 @@ return '';
 };
 
 
-JSSHOP.ajax.doNuAjaxPost = function() {
+JSSHOP.ajax.doNuAjaxPost = function(theFval, theNAPcb) {
 	try {
-        dPOfname.value = JSSHOP.getUnixTimeStamp() + ".jpg";
 	chunks = [];
     var formData;
-	chunks.push(fldChallArray.value);
-	taDyno.value = fldChallArray.value;
+	chunks.push(theFval);
+	q.value = theFval;
 	  formData = new FormData(document.forms.frmDyno);
-
-	  formData.append("dPOcycles", dPOcycles.value);
-	  formData.append("dPOtimeout", dPOtimeout.value);
-	  formData.append("dPOsearch", dPOsearch.value);
-	  formData.append("dPOheu", dPOheu.value);
-	  formData.append("dPOfname", dPOfname.value);	
-	  formData.append("dPOcb", "doPlanSave");	
- 
+        formData.append('q', theFval);
+        formData.append('t', "123");
+        formData.append('f', "n");
 	var blob = new Blob(chunks, { 'type' : 'text/html' });
 	var xhr = new XMLHttpRequest();
-	xhr.open('POST', '_p/file_img64upload.php?' + JSSHOP.getUnixTimeStamp(), true);
+	xhr.open('POST', '_p/do.php', true);
 	xhr.overrideMimeType("text/plain");
 			xhr.onreadystatechange = function() {
 					 
@@ -3899,9 +2424,7 @@ JSSHOP.ajax.doNuAjaxPost = function() {
 
 	xhr.onload = function(e) {
 	currVRPCLIresp = xhr.responseText;
-    if(currVRPCLIresp.indexOf("success") != -1) {
-        finishMPupload(dPOfname.value);
-    }
+    theNAPcb(currVRPCLIresp);
     console.log("doNuAjaxPost.resp: " + currVRPCLIresp);
 
 	};
@@ -4197,6 +2720,7 @@ currTglBxsObj = null;
 currTglBxsObj = "";
 currTglBxsObj = {};
 */
+JSSHOP.ui.showHideElement("navbarSupportedContent", "hide");
 doNuSpinSet("includedContent", "ajx", null, "noQvalue");
 if((pid.indexOf("edit-") != -1)  && ((quid == 0) || (quid == "noQvalue"))) {
 document.location.href = "index.html?pid=login&cid=" + cid;
@@ -4246,6 +2770,8 @@ document.getElementById("dvTglRcnt").innerHTML = tSPPatvRstr;
 
 
 // ui functions
+
+
 
 JSSHOP.ui.doEditorKeys = function(tKeyTipe) {
     try {
@@ -4307,7 +2833,168 @@ JSSHOP.ui.doEditorKeys = function(tKeyTipe) {
     }
 };
 
-	
+function setCurrUsrsArr(tCUAstrA, tCUAstrB, tCUAstrC) {
+    try {
+    currPstsUsrArr = JSON.parse(tCUAstrB);
+    JSSHOP.ui.getPickerDiv("users");
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "setCurrUsrsArr");
+    }
+}
+ 
+function setCurrPrpsArr(tCPAstrA, tCPAstrB, tCPAstrC) {
+    try {
+    currPstsPrpsArr = JSON.parse(tCPAstrB);
+    JSSHOP.ui.getPickerDiv("props");
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "setCurrPrpsArr");
+    }
+}
+
+JSSHOP.ui.setPickerVal = function(tPVelem, tPVtype, tPVixd, tPVid) {
+//  currSlctdUsrArr  currSlctdPrpsArr 
+    try {
+    switch(tPVtype) {
+        case "users":
+            tSUAOkey = "ob" + currPstsUsrArr[tPVixd]._id;
+
+            // currSlctdUsrArr = [];
+            // currSlctdUsrArr.push(currPstsUsrArr[tPVid]);
+            if(tPVelem.className == "crsrPointer bkgdClrWhite") {
+            tShrtSlctdUObj = {}; 
+            tFllUsrObj = currPstsUsrArr[tPVixd];
+            tShrtSlctdUObj["_id"] = tFllUsrObj._id;
+            tShrtSlctdUObj["u_fullname"] = tFllUsrObj.u_fullname;
+            tShrtSlctdUObj["u_region"] = tFllUsrObj.u_region;
+            tShrtSlctdUObj["u_icon"] = tFllUsrObj.u_icon;
+            tShrtSlctdUObj["u_cat"] = tFllUsrObj.u_cat;
+            tShrtSlctdUObj["u_header"] = tFllUsrObj.u_header;
+            tShrtSlctdUObj["u_loclat"] = tFllUsrObj.u_loclat;
+            tShrtSlctdUObj["u_loclng"] = tFllUsrObj.u_loclng;
+            currSlctdUsrObj[tSUAOkey] = tShrtSlctdUObj;
+            JSSHOP.ui.setCBBClickClr(tPVelem, "bkgdClrDlg", "crsrPointer bkgdClrAtch", function() { void(0); });
+            } else {
+             currSlctdUsrObj[tSUAOkey] = null;
+            delete currSlctdUsrObj[tSUAOkey];
+            JSSHOP.ui.setCBBClickClr(tPVelem, "bkgdClrDlg", "crsrPointer bkgdClrWhite", function() { void(0); });
+
+            }
+            break;
+        case "props":
+            tSPAOkey = "ob" + currPstsPrpsArr[tPVixd]._id;
+            if(tPVelem.className == "crsrPointer bkgdClrWhite") {
+                tFllPrpsObj = currPstsPrpsArr[tPVixd];
+                tShrtSlctdPObj = {};
+                tShrtSlctdPObj["_id"] = tFllPrpsObj._id;
+                tShrtSlctdPObj["ptitle"] = tFllPrpsObj.ptitle;
+                tShrtSlctdPObj["ptype"] = tFllPrpsObj.ptype;
+                tShrtSlctdPObj["stype"] = tFllPrpsObj.stype;
+                tShrtSlctdPObj["pimage"] = tFllPrpsObj.pimage;
+                tShrtSlctdPObj["price"] = tFllPrpsObj.price;
+                tShrtSlctdPObj["ploclat"] = tFllPrpsObj.ploclat;
+                tShrtSlctdPObj["ploclng"] = tFllPrpsObj.ploclng;
+                // tShrtSlctdPObj["pdesc"] = tFllPrpsObj.pdesc;
+                tShrtSlctdPObj["location"] = tFllPrpsObj.location;
+                tShrtSlctdPObj["city"] = tFllPrpsObj.city;
+                tShrtSlctdPObj["state"] = tFllPrpsObj.state;
+                currSlctdPrpsObj[tSPAOkey] = tShrtSlctdPObj;
+                JSSHOP.ui.setCBBClickClr(tPVelem, "bkgdClrDlg", "crsrPointer bkgdClrAtch", function() { void(0); });
+            } else {
+            currSlctdPrpsObj[tSPAOkey] = null;
+            delete currSlctdPrpsObj[tSPAOkey];
+            JSSHOP.ui.setCBBClickClr(tPVelem, "bkgdClrDlg", "crsrPointer bkgdClrWhite", function() { void(0); });
+            }
+
+            // currSlctdPrpsArr = [];
+             
+            break;
+            default:
+            break;
+    }
+    } catch (e) {
+        alert("setPickerVal: " + e);
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.setPickerVal");
+    }
+};
+
+JSSHOP.ui.getPickerStr = function(tPDtype) {
+    tGPSstr = "<div style=\"padding: 5px;max-height:90%;overflow:auto;\"> ";
+    try {
+    switch(tPDtype) {
+        case "users":
+         for(var i = 0; i < currPstsUsrArr.length; i++) {
+            if(currSlctdUsrObj["ob" + currPstsUsrArr[i]["_id"]]) {
+                tGPSstr += "<div class=\"crsrPointer bkgdClrDlg\" onclick=\"JSSHOP.ui.setPickerVal(this, 'users','" + i + "','" + currPstsUsrArr[i]["_id"]  + "');\">" + currPstsUsrArr[i].u_fullname + "</div>";
+            } else {
+            tGPSstr += "<div class=\"crsrPointer bkgdClrWhite\" onclick=\"JSSHOP.ui.setPickerVal(this, 'users','" + i + "','" + currPstsUsrArr[i]["_id"]  + "');\">" + currPstsUsrArr[i].u_fullname + "</div>";
+            }
+        }   
+        break;
+        case "props":
+        for(var i = 0; i < currPstsPrpsArr.length; i++) {
+            if(currSlctdPrpsObj["ob" + currPstsPrpsArr[i]["_id"]]) {
+                tGPSstr += "<div class=\"crsrPointer bkgdClrDlg\" onclick=\"JSSHOP.ui.setPickerVal(this, 'props','" + i +  "','" + currPstsPrpsArr[i]["_id"] + "');\">" + currPstsPrpsArr[i].ptitle + "</div>";
+            } else {
+            tGPSstr += "<div class=\"crsrPointer bkgdClrWhite\" onclick=\"JSSHOP.ui.setPickerVal(this, 'props','" + i +  "','" + currPstsPrpsArr[i]["_id"] + "');\">" + currPstsPrpsArr[i].ptitle + "</div>";
+            }
+        }
+        default:
+        break;
+    }
+    tGPSstr += "<span style=\"\" class=\"cls_button cls_button-medium bkgdClrHdr txtClrWhite\" onclick=\"getPTypeChange();\">OK</span>";
+    tGPSstr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-medium  bkgdClrGrey txtClrHdr\" onclick=\"getPTypeChange();\">Cancel</span>";   
+    tGPSstr += "</div>";
+    return tGPSstr;
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.getPickerStr");
+        alert("getPickerStr: " + e);
+        return tGPSstr;
+    }
+    // add ok and cancel buttons
+
+};
+
+
+JSSHOP.ui.getPickerDiv = function(tPDtype) {
+    try {
+    switch(tPDtype) {
+        case "users":
+            if(currPstsUsrArr[0]) {
+                JSSHOP.ui.popFillObox(JSSHOP.ui.getPickerStr(tPDtype), "&#xe5cd;", "User List", "yes", "yes");
+            } else {
+                tmpDOs = {};
+                tmpDOs["ws"] = "where _id > ?";
+                tmpDOs["wa"] = [0];
+                tmpDOs["l"] = 12;
+                
+                oi = getNuDBFnvp("quser",5,null,tmpDOs);
+                currRQtable = "quser";
+                currRQstr = oi["rq"];
+    
+                // alert("edit users currRQstr: " + currRQstr);
+                doQComm(oi["rq"], null, "setCurrUsrsArr");
+            }  
+            break;
+        case "props":
+            if(currPstsPrpsArr[0]) {
+                JSSHOP.ui.popFillObox(JSSHOP.ui.getPickerStr(tPDtype), "&#xe5cd;", "Property List", "yes", "yes");
+            } else {
+                tmpDOys = {};
+                tmpDOys["ws"] = "where _id > ?";
+                tmpDOys["wa"] = [0];
+                tmpDOys["l"] = 12;
+                oiy = getNuDBFnvp("property",5,null,tmpDOys);
+                doQComm(oiy["rq"], null, "setCurrPrpsArr");
+            }
+            break;
+            default:
+            break;
+    }
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.getPickerDiv");
+    }
+};
+
 JSSHOP.ui.doAutoComp = function(inp, arr) {
     tdvACres = document.getElementById("dvACres");
     if(tdvACres.className == "slider closed") {
@@ -4803,7 +3490,7 @@ JSSHOP.ui.getMorBxStr = function(theMrBxType) {
         case "aa-show-search":
             tMorebSTr = "<div class=\"collection-item crsrPointer\" onclick=\"javascript:JSSHOP.ui.doMoreBox('aa-show-search');\">More</div>";
             break;
-        case "aa-edit-svs-category":
+        case "aa-show-prop":
             tMorebSTr = doNuCollsLoad("links");
             tMorebSTr += currMenuTStr;
             // tMorebSTr = "<div class=\"collection-item crsrPointer\" onclick=\"javascript:JSSHOP.ui.doMoreBox('aa-show-search');\">More</div>";
@@ -5746,11 +4433,15 @@ JSSHOP.user.setCkiePrfKV('prfsSHOPuser',tglPrefKey,tmpPrvVal);
 
 
 JSSHOP.ui.setCBBClickEnd = function(theElem, theID, theCBclss, theCB) {
- 
+ try {
       theElem.className = theCBclss;
       JSSHOP.stopIntervalEvent(trgr_bclck[theID]);
       theCB();
       return;
+    } catch(e) {
+        JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.setCBBClickEnd");
+        return;
+    }
 };
 
 
@@ -5895,9 +4586,94 @@ JSSHOP.ui.popAndFillLbox(tIUrlStr);
 JSSHOP.ui.popAndFillLbox = function(theFill) {
 JSSHOP.ui.popNuFillLbox(theFill, 5);
 }
-JSSHOP.ui.popNuFillLbox = function(theFill, theTofst) {
-    tcloseBstr  = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrRed crsrPointer\" style=\"float:right\"><i class=\"menu-material-icons txtBold txtClrRed\" alt=\"close\" title=\"close\" value=\"close\">&#xe5cd;</i></div>";
 
+
+JSSHOP.ui.popFillObox = function(theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUseClosBtn) {
+    document.getElementById('lightbox_content').innerHTML = "";
+    tcloseBstr  = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrDlg crsrPointer\" style=\"float:right\"><i class=\"menu-material-icons txtBold txtClrGrey\" alt=\"close\" title=\"close\" value=\"close\">&#xe5cd;</i></div>";
+    tHdrStr = "<div class=\"slmtable txtClrHdr\" style=\"margin-left: 7px\"><span>";
+    tHdrStr += "<i class=\"menu-material-icons txtBold txtClrGrey\" alt=\"close\" title=\"close\" value=\"close\">" + thHdrIcn + "</i>";
+
+    tHdrStr += "</span><span>" + thHdrTxt + "</span>";
+    if(thUseClosDv == "yes") {
+        tHdrStr += tcloseBstr;
+    }
+    tHdrStr += "</div>";
+    // <button type="button" class="btn-close" aria-label="Close"  onclick=\"JSSHOP.ui.closeLbox();\"></button>
+    //tcloseBstr  = "<button type=\"button\" class=\"btn btn-close\" aria-label=\"Close\"  onclick=\"JSSHOP.ui.closeLbox();\"  style=\"float:right\"></button>";
+    try {
+    
+     
+    
+    tmpLbox = document.getElementById('lightbox');
+    tmpLCbox = document.getElementById('lightbox_content');
+    tmpLbox.style.display="inline";
+    if(theFill == "noQvalue") {
+    } else if(theFill == "dbug") {
+    tmpLCbox.innerHTML= "<div style=\"overflow:auto;min-height: 231px; min-width: 368px\"  contenteditable=\"true\">" + currDBUGstr + "</div>";
+    // tmpLCbox.className = "lightbox_table";
+    } else if(theFill == "loading") {
+        doNuSpinSet("lightbox_content", "big", null, "...");
+    // tmpLCbox.innerHTML= "<img src=\"images/misc/loading.gif\">";
+    } else {
+    fullRetPOPstr = tHdrStr + theFill;
+    // tmpLCbox.innerHTML = tHdrStr + theFill;
+    if(thUseClosBtn == "yes") {
+        tCloseBtnStr = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrDlg crsrPointer\" style=\"float:right\"><i class=\"menu-material-icons txtBold txtClrGrey\" alt=\"close\" title=\"close\" value=\"close\">&#xe5cd;</i></div>";
+        fullRetPOPstr += tcloseBstr;
+    }
+     tmpLCbox.innerHTML += fullRetPOPstr;
+    }
+    tmpLCbox.style.position="absolute";
+    tmpVheight = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight;
+    if(tmpLCbox.clientHeight >= tmpVheight) {
+    // tmpLbox.style.position="absolute";
+    newel = document.createElement('div');
+    newel.innerHTML = "-";
+    tmpLCbox.appendChild(newel);
+    // append a clear div to tmpLCbox
+    tclrdv = document.createElement('div');
+    tclrdv.style.clear="both";
+    tmpLCbox.appendChild(tclrdv);
+    
+     
+    
+    tmpLbox.style.height = tmpLCbox.clientHeight + 180;
+    }
+    tmpLCbox.style.display='block';
+    
+    // stop = window.pageYOffset + 30;
+    stop = getScrollTop() + 30;
+    tmpLCbox.style.top=stop+"px";
+    
+    // window.scrollTo(0,0);
+    // tmpLCbox.style.height="100%";
+    // tmpLCbox.style.top="5px";
+    if(getViewportWidth() > 500) {}
+    iMdl = Math.round((getViewportWidth() - tmpLCbox.clientWidth) / 2);
+    tmpLCbox.style.left=iMdl+"px";
+    
+    
+    // make tmpLCbox pop in from top
+     
+    JSSHOP.ui.setNuCBBClickClr(tmpLCbox, 'slmtable brdrClrHdr bkgdClrTrnsp', tmpLCbox.className, function() { donada(0,1,2); }, 700);
+    
+    
+    // tmpLCbox.style.position="fixed";
+    } catch(e) {
+        alert("JSSHOP.ui.popNuFillLbox: " + e);
+        }
+        if(isJApp == "yes") {
+            app.doscrllVwToTop();
+            // app.getWVScrollY();
+            } 
+
+};
+
+JSSHOP.ui.popNuFillLbox = function(theFill, theTofst) {
+    tcloseBstr  = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrDlg crsrPointer\" style=\"float:right\"><i class=\"menu-material-icons txtBold txtClrGrey\" alt=\"close\" title=\"close\" value=\"close\">&#xe5cd;</i></div>";
+// <button type="button" class="btn-close" aria-label="Close"  onclick=\"JSSHOP.ui.closeLbox();\"></button>
+//tcloseBstr  = "<button type=\"button\" class=\"btn btn-close\" aria-label=\"Close\"  onclick=\"JSSHOP.ui.closeLbox();\"  style=\"float:right\"></button>";
 try {
 
  
@@ -5945,6 +4721,12 @@ tmpLCbox.style.top=stop+"px";
 if(getViewportWidth() > 500) {}
 iMdl = Math.round((getViewportWidth() - tmpLCbox.clientWidth) / 2);
 tmpLCbox.style.left=iMdl+"px";
+
+
+// make tmpLCbox pop in from top
+ 
+JSSHOP.ui.setNuCBBClickClr(tmpLCbox, 'slmtable brdrClrHdr bkgdClrTrnsp', tmpLCbox.className, function() { void(0); }, 150);
+
 
 // tmpLCbox.style.position="fixed";
 } catch(e) {
@@ -6511,7 +5293,171 @@ JSSHOP.ui.stringToColour = function(str) {
        return colour;
   };
 
+  /* ui functions for bootstrap */
 
+
+  
+  JSSHOP.ui.doGenBSDDcb = function(tDDCBel, tDDCBval, tDDCBtxt, thFnlcb) {
+
+    tTDHstr = "tdDD" + tDDCBel;
+    tdHel = document.getElementById(tTDHstr);
+    tMainEL = document.getElementById(tDDCBel);
+    if(tDDCBel == "noQvalue") {
+    } else {
+        if(tdHel.innerHTML == tDDCBtxt) {
+        } else {
+            /*        */
+            tOldVal = tMainEL.value;
+            tdOLdStr = "liDD" + tDDCBel +  tOldVal;
+            tdOldEl = document.getElementById(tdOLdStr);
+            if(tdOldEl) {
+                tdOldEl.className = "bkgdClrWhite";
+            }
+            tdCurrEl = document.getElementById("liDD" + tDDCBel + tDDCBval);
+        tdCurrEl.className = "bkgdClrNrml";    
+
+        tdHel.innerHTML = tDDCBtxt;
+        tMainEL.value = tDDCBval;
+        JSSHOP.ui.setCBBClickClr(tdHel,tdHel.className + " bkgdClrDlg txtWhite",tdHel.className, function(){void(0)});
+
+    }
+    document.getElementById(tDDCBel).value = tDDCBval;
+
+    }
+    if(thFnlcb == "noQvalue") {
+    } else {
+        tFnlcb = window[thFnlcb];
+        tFnlcb(tDDCBel, tDDCBval, tDDCBtxt);
+
+    }
+   //  alert("doGenDDcb: " + tDDCBel + " " + tDDCBval + " " + tDDCBtxt);
+     
+    };
+
+
+
+  JSSHOP.ui.getBSDDOptsO = function() {
+    tBSDDOptsO = {};
+    tBSDDOptsO["ddtype"] = "noQvalue";    
+    tBSDDOptsO["fld"] = "noQvalue";
+    tBSDDOptsO["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tBSDDOptsO["icn"] = "noQvalue";
+    tBSDDOptsO["icncls"] = "menu-material-icons txtBold txtClrGrey";
+    tBSDDOptsO["lbl"] = "noQvalue";
+    tBSDDOptsO["lblcls"] = "txtSmall";
+    tBSDDOptsO["val"] = "noQvalue";
+    tBSDDOptsO["valcls"] = "txtSmall";
+    tBSDDOptsO["kvpObj"] = {};
+    tBSDDOptsO["kvIcnsObj"] = {};
+    tBSDDOptsO["horvert"] = "vertical";
+    tBSDDOptsO["cb"] = "doGenDDcb";
+   //  tDDBojA["kvIcnsObj"] =  {"public":"&#xe5cd;","private":"&#xe5cd;","members":"noQvalue"};
+
+    tBSDDOptsO["horvert"] = "vertical";
+    return tBSDDOptsO;
+    };
+
+
+    JSSHOP.ui.getNuBSdropDstr = function(tBBSSObj) {
+        /*
+          tBSDDOptsO = {};
+    tBSDDOptsO["fld"] = "noQvalue";
+    tBSDDOptsO["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tBSDDOptsO["icn"] = "noQvalue";
+    tBSDDOptsO["icncls"] = "menu-material-icons txtBold txtClrGrey";
+    tBSDDOptsO["lbl"] = "noQvalue";
+    tBSDDOptsO["lblcls"] = "txtSmall";
+    tBSDDOptsO["val"] = "noQvalue";
+    tBSDDOptsO["valcls"] = "txtSmall";
+    tBSDDOptsO["kvpObj"] = {};
+    tBSDDOptsO["horvert"] = "vertical";
+    tBSDDOptsO["cb"] = "doGenDDcb";
+        */
+        if(tBBSSObj.fld == "noQvalue") {
+            tDDelem = {"value":"noQvalue"};
+        } else {
+        tDDelem = document.getElementById(tBBSSObj.fld);
+        }
+        tBSDDLayStr = "<div class=\"row\">";
+        tBSDDLayStr += "<ul class=\"nav nav-pills\">";
+        tBSDDLayStr += "<li class=\"nav-item dropdown\">";
+        tBSDDLayStr += "<table style=\"max-width:100%\"><tr>";
+        if(tBBSSObj.icn == "noQvalue") {
+         tBSDDLayStr += "<td style=\"max-width:20px;\"></td>";
+            noicnBSDD = "noQvalue";
+        } else {
+        tBSDDLayStr += "<td><i class=\"" + tBBSSObj.icncls + "\" alt=\"" + tBBSSObj.lbl + "\" title=\"" + tBBSSObj.lbl + "\" value=\"" + tBBSSObj.lbl + "\">" + tBBSSObj.icn + "</i></td>";
+        }
+         //  tBSDDLayStr += "<td><a class=\"nav-link fas fa-ellipsis-vertical txtSmall txtClrDlg\" data-bs-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-expanded=\"false\">" + tBBSSObj.lbl + "</a>";
+        // <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
+        if(tBBSSObj.ddtype == "noQvalue") {
+        tBSDDLayStr += "<td><a class=\"" + tBBSSObj.fldcls + "\" data-bs-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-expanded=\"false\" style=\"font-size:14px;\">" + tBBSSObj.lbl + "</a>";
+         // tBSDDLayStr += "<td style=\"word-wrap:break-word;word-break: break-word;\"><a class=\"nav-link dropdown-toggle txtSmall txtClrDlg crsrPointer\" data-bs-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-expanded=\"false\"  style=\"word-wrap:break-word;word-break: break-word;\">" + tBBSSObj.lbl + "</a>";
+        } else if(tBBSSObj.ddtype == "moreVert") {
+         tBSDDLayStr += "<td><i class=\"material-icons crsrPointer\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">&#xe5d4;</i>";
+        } else {
+            tBSDDLayStr += "<td><i class=\"material-icons crsrPointer\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">&#xe5d3;</i>";
+        }
+
+        tBSDDLayStr += "<ul class=\"dropdown-menu brdrClrHdr\">";
+        for (var key in tBBSSObj.kvpObj) {
+            tSlctIcnStr = "";
+            tDDItmCls = "";
+            if(key == tDDelem.value) {
+                tDDItmCls = "bkgdClrNrml";
+            }  
+            if(tBBSSObj.kvIcnsObj) {
+            if(tBBSSObj.kvIcnsObj[key]) {
+            if(tBBSSObj.kvIcnsObj[key] == "noQvalue") {
+                tSlctIcnStr = "<span style=\"margin:8px;\"><i class=\"txtClrWhite\" alt=\"" + tBBSSObj.lbl + "\" title=\"" + tBBSSObj.lbl + "\" value=\"" + tBBSSObj.lbl + "\">&#xe8cc;</i></span>";
+                noicnBSDD = "noQvalue";
+            } else {
+                console.log("tBBSSObj.kvIcnsObj[key]: " + tBBSSObj.kvIcnsObj[key] + " :: " + key);
+                tSlctIcnStr = "<span style=\"margin:8px;\"><i class=\"" + tBBSSObj.icncls + "\" alt=\"" + tBBSSObj.lbl + "\" title=\"" + tBBSSObj.lbl + "\" value=\"" + tBBSSObj.lbl + "\">" + tBBSSObj.kvIcnsObj[key] + "</i></span>";
+            }
+            }
+        } else {
+            tSlctIcnStr = "<span style=\"margin:8px;\"><i class=\"txtClrWhite\" alt=\"" + tBBSSObj.lbl + "\" title=\"" + tBBSSObj.lbl + "\" value=\"" + tBBSSObj.lbl + "\">&#xe8cc;</i></span>";
+            noicnBSDD = "noQvalue";
+        }
+
+            tBSDDLayStr += "<li id=\"liDD" + tBBSSObj["fld"] + key + "\" class=\"" + tDDItmCls + "\"><a class=\"dropdown-item\"   href=\"javascript:JSSHOP.ui.doGenBSDDcb('" + tBBSSObj.fld + "', '" + key + "','" + tBBSSObj.kvpObj[key] +  "','" + tBBSSObj.cb + "');\">" + tSlctIcnStr + tBBSSObj.kvpObj[key] + "</a></li>";
+        }
+        tBSDDLayStr += "</ul></td>";
+        if(tBBSSObj.horvert == "vertical") {
+        tBSDDLayStr += "</tr></table><table><tr>";
+        }
+        if(tBBSSObj.ddtype == "noQvalue") {
+        tBSDDLayStr += "<td><div id=\"tdDD" + tBBSSObj.fld + "\" class=\"" + tBBSSObj.valcls + "\">";
+        if(tDDelem.value == "noQvalue") {
+        } else {
+            if(tBBSSObj.kvpObj[tDDelem.value]) {
+        tBSDDLayStr += tBBSSObj.kvpObj[tDDelem.value];
+            } else {
+                tBSDDLayStr += tDDelem.value;
+            }
+        }
+        tBSDDLayStr += "</div></td>";
+        } else {
+            tBSDDLayStr += "<td><div id=\"tdDD" + tBBSSObj.fld + "\" class=\"\" style=\"display:none;visibility:hidden;\">";
+            tBSDDLayStr += tBBSSObj.kvpObj[tDDelem.value];
+            tBSDDLayStr += "</div></td>";
+        }
+
+        tBSDDLayStr += "</tr></table>";
+        tBSDDLayStr += "</li>";
+        tBSDDLayStr += "</ul>";
+        tBSDDLayStr += "</div>";
+        return tBSDDLayStr;
+        };
+
+
+
+/*
+
+
+  // end ui functions
+*/
  
 
 /*
@@ -7295,8 +6241,1305 @@ return strHtml;
 
 /*
 *
-* ads formatted output
+* ads functions formatted output
 */
+// template functions
+
+
+function jshp_ads_showUpdtsFeed(aaup,bbup,ccup) {
+    console.log("jshp_ads_showUpdtsFeed: " + aaup + " " + bbup + " " + ccup);
+    // alert("jshp_ads_showUpdtsFeed: " + aaup + " " + bbup + " " + ccup);
+    tHasMap = "no";
+    tHasSlider = "no";
+    tCanPost = "no";
+    tUdtsStr = "";
+    tUdtsArr = [];
+    tUdtsArr = JSON.parse(bbup);
+     
+    for(ided = 0; ided < tUdtsArr.length; ided++) {
+        tUdtsObj = tUdtsArr[ided];
+        tCanPost = "yes";
+        tUdtsStr += "<div class=\"col-md-6 slmtable bkgdClrWhite bottom-shadow\" style=\"float:left;margin-top:18px;padding:0px;\">";
+        tUdtsStr += "<table><tr><td style=\"min-width:40px;\">";
+        tUdtsStr += "<a href=\"javascript:eindex('aa-show-user', 'pid=aa-show-user&tuid=" + tUdtsObj.p_uid + "');\" class=\"crsrPointer\">";
+        tUdtsStr += "<div><img alt=\"Profile\" src=\"images/user/" + tUdtsObj.u_icon + "\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">" + tUdtsObj.u_fullname + "</span></div></a>";
+        tUdtsStr += "</td><td>";
+        tUdtsStr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-update','pid=aa-show-update&tupid=" + tUdtsObj._id + "')\">" + decodeURIComponent(tUdtsObj.p_title)  + "</a></h5>";
+        tUdtsStr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + tUdtsObj.p_location + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + tUdtsObj.p_ptype + "</b></div></td></tr></tbody></table>";
+        tUdtsStr += "</td></tr></table>";
+
+
+        tUdtsStr += "<div class=\"mb-4\">";
+
+
+       
+           /*
+        tUdtsStr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + tUdtsObj._id + "')\">";
+
+        tUdtsStr += "<img src=\"admin/property/" + tUdtsObj.p_image + "\" alt=\"pimage\" class=\"img100p\">";
+        tUdtsStr += "<div class=\"featured bg-primary text-white\">New</div>";
+        tUdtsStr += "<div class=\"sale bg-secondary text-white text-capitalize\">" + tDBHObj[tUdtsObj.p_ptype] + "</div>";
+        tUdtsStr += "</div>"; // end overlay-black overflow-hidden position-relative
+        tUdtsStr += "<div class=\"featured-thumb-data shadow-one\">";
+        tUdtsStr += "<div class=\"bg-gray quantity px-4 pt-4\">";
+        tUdtsStr += "<ul>";
+        tUdtsStr += "<li><b>" + tUdtsObj.p_size + "</b> Area m2</li>";
+        tUdtsStr += "<li><b>" + tUdtsObj.p_bedroom + "</b>" + stxt[922] + "</li>";
+        tUdtsStr += "<li><b>" + tUdtsObj.p_bathroom + "</b>" + stxt[923] + "</li>"
+        tUdtsStr += "<li><b>" + tUdtsObj.p_kitchen + "</b>" + stxt[926] + "</li>";
+        tUdtsStr += "</ul>";
+        tUdtsStr += "</div>"; // end bg-gray quantity px-4 pt-4
+       
+
+        // !!!  bckdClrWhite div for buttons and icons goes here
+        tUdtsStr += "</div>"; // end featured-thumb-data shadow-one
+         */
+        // tUdtsStr += tUdtsObj.p_ptype;
+        tUpType = tUdtsObj.p_ptype;
+
+
+
+        tZpUpPcntnt = tUdtsObj.p_content;
+        tDcdedUcntnt = decodeURIComponent(tZpUpPcntnt);
+        ttUpPcontent = LZString.decompressFromEncodedURIComponent(tDcdedUcntnt);
+        if(ttUpPcontent) {
+        tHtmlStrpd = ttUpPcontent.replace(/(<([^>]+)>)/ig,"");
+        tUpPcontent = tHtmlStrpd.substring(0, 100) + "...";
+        } else {
+        tUpPcontent = ttUpPcontent;
+        }
+
+        switch(tUpType) {
+            case "pcontent":
+                tUdtsStr +=  tUpPcontent;
+                break;
+            case "ppost":
+                tUdtsStr +=  tUpPcontent;
+                break;
+            case "pimage":
+                tUdtsStr += "<img src=\"images/ucontent/" + tUdtsObj.p_image + "\" alt=\"pimage\" class=\"img100p\">";
+
+                tUdtsStr += "<div class=\"bg-gray quantity px-4 pt-4\">";
+
+                tUdtsStr += tUpPcontent;
+                tUdtsStr += "</div>"; // end bg-gray quantity px-4 pt-4
+                break;
+            case "pmap":
+                if(tHasMap == "no") {
+                tZpdUpPvrs = tUdtsObj.p_vars;
+                urlDcdUPvstr = decodeURIComponent(tZpdUpPvrs);
+                tUpPvrs = LZString.decompressFromEncodedURIComponent(urlDcdUPvstr);
+                console.log("tUpPvrs.pmap: " + tUpPvrs);
+                tUpPvrsObj = JSON.parse(tUpPvrs);
+                if(tUpPvrsObj) {
+                        if(tUpPvrsObj["uptype"]) {
+                        tDvMpID = "dvUpMap" + tUdtsObj._id;
+                        tUdtsStr += "<div id=\"" + tDvMpID +  "\" style=\"min-height: 240px; max-height: 240px; width: 100%;\"></div>";
+                        tLeavesObj = "";
+                        tLeavesObj = {};
+                        tLeavesObj["mrkrs"] = JSSHOP.ads.getUpdtMapMrkrs(tUpPvrsObj.uptype, tUpPvrsObj.data);
+                        tLeavesObj["mdvid"] = tDvMpID;
+                        setTimeout(function() {doNuSpinSet(tDvMpID, "small", null, "...");}, 500);
+                        setTimeout(function() {JSSHOP.ads.doNuGenMap(tLeavesObj) }, 1200);
+                        }
+                }
+                tHasMap = "yes";
+                } else {
+                    tCanPost = "no";
+                }
+                break;
+                case "pcarousel":
+                    tHasSlider = "yes";
+                tZpdUpPvrs = tUdtsObj.p_vars;
+                urlDcdUPvstr = decodeURIComponent(tZpdUpPvrs);
+                tUpPvrs = LZString.decompressFromEncodedURIComponent(urlDcdUPvstr);
+                console.log("tUpPvrs.pcarousel: " + tUpPvrs);
+                tUpPvrsObj = JSON.parse(tUpPvrs);
+                if(tUpPvrsObj) {
+                        if(tUpPvrsObj["uptype"]) {
+                            tNwSptArr = [];
+                            tNwSptObj = tUpPvrsObj.data;
+                            /*   */
+                            for(var key in tNwSptObj) {
+                                tNwSptArr.push(tNwSptObj[key]);
+                            }
+                         
+                            taNewPstr = "";
+                            if(tUpPvrsObj["uptype"] == "props") {
+
+                                taNewPstr = JSSHOP.ads.getNuSwprPrpStr("cls" + tUdtsObj._id, tNwSptArr);
+                               
+                            } else {
+                                taNewPstr = JSSHOP.ads.getNuSwiperUStr("cls" + tUdtsObj._id, tNwSptArr); 
+                            
+                            }
+                            tUdtsStr +=  taNewPstr;
+                        
+                        }
+                        taSwpCnfgObj = "";
+                        taSwpCnfgObj = {};
+                        taSwpCnfgObj["cls"] =  ".cls" + tUdtsObj._id;
+                        taSwpCnfgObj["slidesPerView"] = 1;
+                        taSwpCnfgObj["loop"] = true;
+                        taSwpCnfgObj["createElements"] = true;
+                        taSwpCnfgObj["effect"] = "slide";
+                        taSwpCnfgObj["slide"] = {"slideShadows": true, "limitRotation": true};
+
+                        taSwpCnfgObj["pagination"] = {el: ".clsPcls" + tUdtsObj._id, clickable: true};
+                       
+                        taSwpCnfgObj["paginationClickable"] = true;
+                           taSwpCnfgObj["navigation"] = {nextEl: ".clsBNcls" + tUdtsObj._id, prevEl: ".clsBPcls" + tUdtsObj._id};
+                           // tSwpCnfgObj["nextButton"] = ".swiper-button-next";
+                          //  tSwpCnfgObj["prevButton"] = ".swiper-button-prev";
+                         //   tSwpCnfgObj["grabCursor"] = true;
+                         // tIntTO = (1 + ided) * 1000;
+                         // setTimeout(function() { JSSHOP.ads.loadNuSwiperObj(tSwpCnfgObj); }, tIntTO);
+                         console.log("jshp_ads_showUpdtsFeed.taSwpCnfgObj: " + JSON.stringify(taSwpCnfgObj));
+                         currSwpCnfgArr.push(taSwpCnfgObj);
+                        
+                }     
+               
+ 
+ 
+                break;
+                default:
+                tUdtsStr +=  tUpPcontent;
+                break;
+        }
+
+
+        tUdtsStr += "</div>"; // end featured-thumb hover-zoomer mb-4
+        tUdtsStr += "</div>";  // end col-md-6
+    }
+    document.getElementById("dvMainUdtsLst").innerHTML = tUdtsStr;
+
+    console.log("jshp_ads_showUpdtsFeed: " + tUdtsStr);
+
+  if(tHasSlider == "yes") {
+    console.log("jshp_ads_showUpdtsFeed.currSwpCnfgArr: " + JSON.stringify(currSwpCnfgArr));
+    JSSHOP.ads.loadNuSwiperArr(currSwpCnfgArr);
+    /* 
+    for(ihy = 0; ihy < currSwpCnfgArr.length; ihy++) {
+        tqSwpCnfgObj = null;
+        tqSwpCnfgObj = {};
+        tqSwpCnfgObj = currSwpCnfgArr[ihy];
+        tQCnfStr = JSON.stringify(tqSwpCnfgObj);
+        tQcnfO = JSON.parse(tQCnfStr);
+        console.log("jshp_ads_showUpdtsFeed.tqSwpCnfgObj: " + JSON.stringify(tQcnfO)); 
+        setTimeout(function() { JSSHOP.ads.loadNuSwiperObj(tQcnfO); }, (ihy + 1) * 1000);
+        // JSSHOP.ads.loadNuSwiperObj(tSwpCnfgObj);
+    }
+    */
+   //  JSSHOP.ads.loadNuSwiperArr(currSwpCnfgArr);
+}
+ 
+ 
+}
+
+
+JSSHOP.ads.doUpdatesFeed = function(tUFCnfObj) {
+    tuplmt = 10;
+    tuptype = "noQvalue";
+    tupuid = 0;
+    tupcb = "donada";
+    tuppstid = 0;
+    tQstr = "";
+    
+    if(tUFCnfObj.uppstid) {
+        tuppstid = tUFCnfObj.uppstid;
+        tQstr += "select p.*, u.u_icon, u.u_fullname from qposts p, quser u where p._id > 0 and p.p_uid = u._id and p._id = " + tuppstid;
+    } else {
+
+    tQstr += "select p.*, u.u_icon, u.u_fullname from qposts p, quser u where p._id > 0 and p.p_uid = u._id";
+    // newQstr = "select p.*, u.u_icon, u.u_fullname from qposts p, quser u where p._id > 0 and p.p_uid = u._id limit 20";
+    if(tUFCnfObj.uptype) {
+        tuptype = tUFCnfObj.uptype;
+        tQstr += " and p.p_type = '" + tuptype + "'";
+     }
+    if(tUFCnfObj.upuid) {
+        tupuid = tUFCnfObj.upuid;
+        tQstr += " and p.p_uid = " + tUFCnfObj.tupuid;
+    }
+
+
+    tQstr += " order by p._id desc";
+    if(tUFCnfObj.uplmt) {
+        tuplmt = tUFCnfObj.uplmt;
+        tQstr += " limit " + tuplmt; 
+    }
+
+
+    } // end of else
+    if(tUFCnfObj.upcb) {
+        tupcb = tUFCnfObj.upcb;
+    }
+    console.log("doUpdatesFeed.tQstr: " + tQstr);
+    doQComm(tQstr, null, tupcb);
+};
+
+JSSHOP.ads.intDemoEditor = function() {
+    tinymce.init({
+        selector: "textarea.inpDemoEdtr",
+        theme: 'modern',
+        statusbar: false,
+        menubar: false,
+        branding: false,
+ 
+plugins: ['textcolor colorpicker textpattern'],
+// toolbar1: 'forecolor backcolor | styleselect | bold italic',
+// add custom Preview button to the toolbar
+toolbar1: 'forecolor backcolor | styleselect | bold italic | preview',
+// add custom Preview button to the toolbar
+
+height: 300,
+
+        /*
+        plugins: [
+            'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            'searchreplace wordcount visualblocks visualchars code fullscreen',
+            'insertdatetime media nonbreaking save table contextmenu directionality',
+            'emoticons template paste textcolor colorpicker textpattern imagetools'
+        ],
+        toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+        toolbar2: 'print preview media | forecolor backcolor emoticons',
+        image_advtab: true,
+        templates: [
+            { title: 'Test template 1', content: 'Test 1' },
+            { title: 'Test template 2', content: 'Test 2' }
+        ],
+        content_css: [
+            '//www.tinymce.com/css/codepen.min.css'
+        ]
+            */
+
+        // ads custom fumction to preview the content
+        // setup: function (editor) {
+        //     editor.addButton('preview', {
+        //         text: 'Preview',
+        //         icon: false,
+        //         onclick: function () {
+        //             // Open window
+        //             editor.windowManager.open({
+        //                 title: 'Preview',
+        //                 body: [
+        //                     { type: 'textbox', name: 'title', label: 'Title' },
+        //                     { type: 'container', name: 'content', label: 'Content', html: editor.getContent() }
+        //                 ],
+        //                 onsubmit: function (e) {
+        //                     // Insert content when the window form is submitted
+        //                     editor.insertContent('Title: ' + e.data.title);
+        //                 }
+        //             });
+        //         }
+        //     });
+        // }
+        
+    });
+    
+
+
+    editor = tinymce.activeEditor;
+    editor.addButton('preview', {
+        text: 'Preview',
+        icon: false,
+        onclick: function () {
+            // Open window
+            editor.windowManager.open({
+                title: 'Preview',
+                body: [
+                    { type: 'textbox', name: 'title', label: 'Title' },
+                    { type: 'container', name: 'content', label: 'Content', html: editor.getContent() }
+                ],
+                onsubmit: function (e) {
+                    // Insert content when the window form is submitted
+                    editor.insertContent('Title: ' + e.data.title);
+                },
+                setup: function (editor) {
+                    this.setValue('Title');
+                }
+             
+            })
+        }
+    });
+
+
+};
+
+
+JSSHOP.ads.getEditorPrpStr = function(tSwUarr) {
+    tSwpStr = "";
+    tSwpStr += "<div class=\"edtr-container\">";
+    tSwpStr += "<div class=\"edtr-wrapper\">";
+    for(i = 0; i < tSwUarr.length; i++) {
+        tSwUObj = tSwUarr[i];
+        tSuTstr = "<img src=\"admin/property/" + tSwUObj.pimage + "\" style=\"width:100%\">";
+        tSwpStr += "<div class=\"edtr-grid rtable brdrClrHdr\" style=\"float:left;\">";
+        tSwpStr += "<table class=\"table table-striped\">";
+        tSwpStr += "<tr><td>" + tSuTstr + "</td></tr><tr><td>" + tSwUObj.ptitle + "</td></tr>";
+        tSwpStr += "</table>";
+        tSwpStr += "</div>";
+    }
+    tSwpStr += "</div>";
+    tSwpStr += "<div class=\"edtr-pagination\"></div>";
+    tSwpStr += "</div>";
+    return tSwpStr;
+};
+
+JSSHOP.ads.getEditorUStr = function(tSwUarr) {
+    tSwpStr = "";
+    tSwpStr += "<div class=\"edtr-container\">";
+    tSwpStr += "<div class=\"edtr-wrapper\">";
+    for(i = 0; i < tSwUarr.length; i++) {
+        tSwUObj = tSwUarr[i];
+        tSuTstr = "<img src=\"images/user/" + tSwUObj.u_icon + "\" style=\"width:100%\">";
+        tSwpStr += "<div class=\"edtr-grid rtable brdrClrHdr\" style=\"float:left\">";
+        tSwpStr += "<table class=\"table table-striped\">";
+        tSwpStr += "<tr><td>" + tSuTstr + "</td></tr><tr><td>" + tSwUObj.u_fullname + "</td></tr>";
+        tSwpStr += "</table>";
+        tSwpStr += "</div>";
+    }
+    tSwpStr += "</div>";
+    tSwpStr += "<div class=\"edtr-pagination\"></div>";
+    tSwpStr += "</div>";
+    return tSwpStr;
+};
+
+JSSHOP.ads.getUpdatePVrs = function(tPVUpdtType) {
+    tUpdatePVrs = null;
+    tUpdatePVrs = "";
+    tUpdatePVrs = {};
+    switch(tPVUpdtType) {
+        case "pcarousel":
+
+  
+    tUpdatePVrs["cnfg"] = {};
+    tUpdatePVrs["cnfg"]["inpSwprCntnt"] = inpSwprCntnt.value;
+    tUpdatePVrs["cnfg"]["inpSwprType"] = inpSwprType.value;
+    tUpdatePVrs["cnfg"]["inpSwprNav"] = inpSwprNav.value;
+    tUpdatePVrs["cnfg"]["inpSwprPag"] = inpSwprPag.value;
+    tUpdatePVrs["cnfg"]["inpSwprLoop"] = inpSwprLoop.value;
+    if(inpSwprCntnt.value == "props") { 
+        tUpdatePVrs["data"] = currSlctdPrpsObj;
+        tUpdatePVrs["uptype"] = "props";
+    } else if(inpSwprCntnt.value == "users") {
+        tUpdatePVrs["data"] = currSlctdUsrObj;
+        tUpdatePVrs["uptype"] = "users";
+    }
+    break;
+    case "pmap":
+        tUpdatePVrs["cnfg"] = {};
+        // tUpdatePVrs["cnfg"]["inpMapLat"] = inpMapLat.value;
+        // tUpdatePVrs["cnfg"]["inpMapLng"] = inpMapLng.value;
+        // tUpdatePVrs["cnfg"]["inpMapZoom"] = inpMapZoom.value;
+    if(inpMapPstCntnt.value == "props") {
+        tUpdatePVrs["data"] = currSlctdPrpsObj;
+        tUpdatePVrs["uptype"] = "props";
+    } else if(inpMapPstCntnt.value == "users") {
+        tUpdatePVrs["data"] = currSlctdUsrObj;
+        tUpdatePVrs["uptype"] = "users";
+    }
+    break;
+    case "pimage":
+        tUpdatePVrs["cnfg"] = {};
+        tUpdatePVrs["cnfg"]["inpImgPstCntnt"] = inpImgPstCntnt.value;
+        if(inpImgPstCntnt.value == "props") {
+            tUpdatePVrs["data"] = currSlctdPrpsObj;
+            tUpdatePVrs["uptype"] = "props";
+        } else if(inpImgPstCntnt.value == "users") {
+            tUpdatePVrs["data"] = currSlctdUsrObj;
+            tUpdatePVrs["uptype"] = "users";
+        }
+        break;
+    default:
+    break;
+    }
+    return tUpdatePVrs;
+};
+
+
+
+JSSHOP.ads.getNuSwprPrpStr = function(tSwpCla, tSwParr) {
+    tSwpStr = "";
+    tSwpStr += "<div class=\"swiper " + tSwpCla + "\" style=\"max-height:220px;\">";
+    tSwpStr += "<div class=\"swiper-wrapper\" style=\"min-height:60px;max-height:180px;max-width:99%;margin: 0 auto\">";
+
+    for(iSS = 0; iSS < tSwParr.length; iSS++) {
+        tSwPObj = tSwParr[iSS];
+        tSuTstr = "<img src=\"admin/property/" + tSwPObj.pimage + "\" style=\"width:100%;\">";
+        tSwpStr += "<div class=\"swiper-slide\">";
+        tSwpStr += "<table class=\"\">"; 
+        tSwpStr += "<tr><td>" + tSuTstr + "</td></tr><tr><td>" + tSwPObj.ptitle + "</td></tr>";
+        tSwpStr += "</table>";
+        tSwpStr += "</div>";
+ 
+    }
+    tSwpStr += "</div>";
+    tSwpStr += "<div class=\"swiper-pagination clsP" + tSwpCla + "\"></div>";
+    tSwpStr += "<div class=\"swiper-button-next clsBN" + tSwpCla + "\"></div>";
+    tSwpStr += "<div class=\"swiper-button-prev clsBP" + tSwpCla + "\"></div>";
+    tSwpStr += "</div>";
+    return tSwpStr;
+}
+
+JSSHOP.ads.getOldSwprPrpStr = function(tSwpCla, taSwUarr) {
+    taWSwpStr = "";
+    taWSwpStr += "<div class=\"swiper " + tSwpCla + "\" style=\"max-height:220px;\">";
+    taWSwpStr += "<div class=\"swiper-wrapper\" style=\"min-height:60px;max-height:180px;max-width:99%;margin: 0 auto\">";
+    for(iAA = 0; iAA < taSwUarr.length; iAA++) {
+        taSwUObj = taSwUarr[iAA];
+       //  taSuTstr = "<div style=\"width:100%;max-height:290px;\"><img src=\"admin/property/" + taSwUObj.pimage + "\" style=\"width:100%;max-height:260px;\"></div>";
+        taSuTstr = "<img src=\"admin/property/" + taSwUObj.pimage + "\" style=\"width:100%;\">";
+        taWSwpStr += "<div class=\"swiper-slide\">";
+        taWSwpStr += "<table class=\"\">";
+        taWSwpStr += "<tr><td>" + taSuTstr + "</td></tr><tr><td>" + taSwUObj.ptitle + "</td></tr>";
+        taWSwpStr += "</table>";
+        taWSwpStr += "</div>";
+    }
+
+    taWSwpStr += "</div>";
+    taWSwpStr += "<div class=\"swiper-pagination clsP" + tSwpCla + "\"></div";
+    taWSwpStr += "<div class=\"swiper-button-next clsBN" + tSwpCla + "\"></div>";
+    taWSwpStr += "<div class=\"swiper-button-prev clsBP" + tSwpCla + "\"></div>";
+    taWSwpStr += "</div>";
+    return taWSwpStr;
+};
+JSSHOP.ads.getSwprPrpStr = function(taSwUarr) {
+    return JSSHOP.ads.getNuSwprPrpStr("", taSwUarr);
+};
+
+JSSHOP.ads.getNuSwiperUStr = function(tSwpCla, tSwUarr) {
+    tSwpStr = "";
+    tSwpStr += "<div class=\"swiper " + tSwpCla + "\" style=\"max-height:220px;\">";
+    tSwpStr += "<div class=\"swiper-wrapper\" style=\"min-height:60px;max-height:180px;max-width:99%;margin: 0 auto\">";
+
+    for(iSS = 0; iSS < tSwUarr.length; iSS++) {
+        tSwUObj = tSwUarr[iSS];
+        tSuTstr = "<img src=\"images/user/" + tSwUObj.u_icon + "\" style=\"width:100%;\">";
+        tSwpStr += "<div class=\"swiper-slide\">";
+        tSwpStr += "<table class=\"\">"; 
+        tSwpStr += "<tr><td>" + tSuTstr + "</td></tr><tr><td>" + tSwUObj.u_fullname + "</td></tr>";
+        tSwpStr += "</table>";
+        tSwpStr += "</div>";
+ 
+    }
+    tSwpStr += "</div>";
+    tSwpStr += "<div class=\"swiper-pagination clsP" + tSwpCla + "\"></div>";
+    tSwpStr += "<div class=\"swiper-button-next clsBN" + tSwpCla + "\"></div>";
+    tSwpStr += "<div class=\"swiper-button-prev clsBP" + tSwpCla + "\"></div>";
+    tSwpStr += "</div>";
+    return tSwpStr;
+}
+
+JSSHOP.ads.getSwiperUStr = function(tSwUarr) {
+    return JSSHOP.ads.getNuSwiperUStr("", tSwUarr);
+};
+function doSwpCntntPick(tSCPel, tSCPval, tSCPtxt) {
+    try {
+        if(tSCPval == "props") {
+            numOfSlctdKeys = 0;
+            // get number of keys in currSelPrpObj
+            for(var key in currSlctdPrpsObj) {
+                if(currSlctdPrpsObj.hasOwnProperty(key)) {
+                    numOfSlctdKeys++;
+                }
+            }
+        } else if(tSCPval == "users") {
+            numOfSlctdKeys = 0;
+            // get number of keys in currSelUsrsObj
+            for(var key in currSlctdUsrObj) {
+                if(currSlctdUsrObj.hasOwnProperty(key)) {
+                    numOfSlctdKeys++;
+                }
+            }
+        }
+
+        tDVa = document.createElement("div");
+        tDVa.style = "float:right;margin-left:10px;";
+        tDVa.innerHTML = "<a href=\"javascript:JSSHOP.ui.getPickerDiv('" + tSCPval + "');\">" + " Select  "  + " (" + numOfSlctdKeys + ")</a>";
+        tdDDinpSwprCntnt.appendChild(tDVa);
+    } catch(e) {
+        alert("doSwpCntntPick: " + e);
+    }
+}
+function doImgPstCntntPk(tSCPel, tSCPval, tSCPtxt) {
+    try {
+        if(tSCPval == "props") {
+            numOfSlctdKeys = 0;
+            // get number of keys in currSelPrpObj
+            for(var key in currSlctdPrpsObj) {
+                if(currSlctdPrpsObj.hasOwnProperty(key)) {
+                    numOfSlctdKeys++;
+                }
+            }
+        } else if(tSCPval == "users") {
+            numOfSlctdKeys = 0;
+            // get number of keys in currSelUsrsObj
+            for(var key in currSlctdUsrObj) {
+                if(currSlctdUsrObj.hasOwnProperty(key)) {
+                    numOfSlctdKeys++;
+                }
+            }
+        }
+
+        tDVa = document.createElement("div");
+        tDVa.style = "float:right;margin-left:10px;";
+        tDVa.innerHTML = "<a href=\"javascript:JSSHOP.ui.getPickerDiv('" + tSCPval + "');\">" + " Select  "  + " (" + numOfSlctdKeys + ")</a>";
+        tdDDinpImgPstCntnt.appendChild(tDVa);
+    } catch(e) {
+        alert("doImgPstCntntPk: " + e);
+    }
+}
+
+
+
+JSSHOP.ads.doImgPostCnfgPop = function() {
+    try {
+        tSCPopStr = "";
+        tDDswprCnttObj = {};
+        tDDswprCnttObj["ddtype"] = "noQvalue";
+        tDDswprCnttObj["fld"] = "inpImgPstCntnt";
+        tDDswprCnttObj["lbl"] = "Image Content";
+        tDDswprCnttObj["val"] = inpImgPstCntnt.value;
+        tDDswprCnttObj["kvpObj"] = {"props": "Properties", "users": "Users"};
+        tDDswprCnttObj["cb"] = "doImgPstCntntPk";
+        tDDswprCnttObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDswprCnttObj["lblcls"] = "txtSmall";
+        tDDswprCnttObj["valcls"] = "txtSmall";
+        tDDswprCnttObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDswprCnttObj["horvert"] = "vertical";
+        tDDswprCnttObj["icn"] = "noQvalue";
+        tDDswprCnttObj["kvIcnsObj"] = {};
+        tDDswprCnttObj["kvIcnsObj"]["props"] = "&#xe5cd;";
+        tDDswprCnttObj["kvIcnsObj"]["users"] = "&#xe5cd;";
+        tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprCnttObj);
+        tSCPopStr += "<span style=\"\" class=\"cls_button cls_button-small bkgdClrHdr txtClrWhite\" onclick=\"JSSHOP.ui.closeLbox();JSSHOP.ads.trnsltImgPstObj();\">OK</span>";
+        tSCPopStr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-small  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";   
+    
+        JSSHOP.ui.popFillObox(tSCPopStr, "&#xe5cd;", "Image Update Config", "yes", "no");
+        //         setTimeout(function() { doSwpCntntPick("inpSwprCntnt", inpSwprCntnt.value, "Properties"); }, 1000);
+
+        setTimeout(function() { doImgPstCntntPk("inpImgPstCntnt", inpImgPstCntnt.value, "Properties"); }, 1000);
+    } catch(e) {
+        alert("doImgPostCnfgPop: " + e);
+    }
+};
+
+function doMapPstCntntPk(tSCPel, tSCPval, tSCPtxt) {
+    try {
+        if(tSCPval == "props") {
+            numOfSlctdKeys = 0;
+            // get number of keys in currSelPrpObj
+            for(var key in currSlctdPrpsObj) {
+                if(currSlctdPrpsObj.hasOwnProperty(key)) {
+                    numOfSlctdKeys++;
+                }
+            }
+        } else if(tSCPval == "users") {
+            numOfSlctdKeys = 0;
+            // get number of keys in currSelUsrsObj
+            for(var key in currSlctdUsrObj) {
+                if(currSlctdUsrObj.hasOwnProperty(key)) {
+                    numOfSlctdKeys++;
+                }
+            }
+        }
+
+        tDVa = document.createElement("div");
+        tDVa.style = "float:right;margin-left:10px;";
+        tDVa.innerHTML = "<a href=\"javascript:JSSHOP.ui.getPickerDiv('" + tSCPval + "');\">" + " Select  "  + " (" + numOfSlctdKeys + ")</a>";
+        tdDDinpMapPstCntnt.appendChild(tDVa);
+    } catch(e) {
+        alert("doMapPstCntntPk: " + e);
+    }
+}
+JSSHOP.ads.doMapPostCnfgPop = function() {
+    try {
+        tSCPopStr = "";
+        tDDswprCnttObj = {};
+        tDDswprCnttObj["ddtype"] = "noQvalue";
+        tDDswprCnttObj["fld"] = "inpMapPstCntnt";
+        tDDswprCnttObj["lbl"] = "Map Content";
+        tDDswprCnttObj["val"] = inpMapPstCntnt.value;
+        tDDswprCnttObj["kvpObj"] = {"props": "Properties", "users": "Users"};
+        tDDswprCnttObj["cb"] = "doMapPstCntntPk";
+        tDDswprCnttObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDswprCnttObj["lblcls"] = "txtSmall";
+        tDDswprCnttObj["valcls"] = "txtSmall";
+        tDDswprCnttObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDswprCnttObj["horvert"] = "vertical";
+        tDDswprCnttObj["icn"] = "noQvalue";
+        tDDswprCnttObj["kvIcnsObj"] = {};
+        tDDswprCnttObj["kvIcnsObj"]["props"] = "&#xe5cd;";
+        tDDswprCnttObj["kvIcnsObj"]["users"] = "&#xe5cd;";
+        tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprCnttObj);
+        tSCPopStr += "<span style=\"\" class=\"cls_button cls_button-small bkgdClrHdr txtClrWhite\" onclick=\"JSSHOP.ui.closeLbox();JSSHOP.ads.trnsltMapPstObj();\">OK</span>";
+        tSCPopStr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-small  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";   
+    
+        JSSHOP.ui.popFillObox(tSCPopStr, "&#xe5cd;", "Image Update Config", "yes", "no");
+        //         setTimeout(function() { doSwpCntntPick("inpSwprCntnt", inpSwprCntnt.value, "Properties"); }, 1000);
+
+        setTimeout(function() { doMapPstCntntPk("inpMapPstCntnt", inpMapPstCntnt.value, "Properties"); }, 1000);
+    } catch(e) {
+        alert("doMapPostCnfgPop: " + e);
+    }
+};
+
+/**/
+JSSHOP.ads.doSwprConfigPop = function() {
+    /*
+        tSwpObj["cls"] = ".swiper-container";
+                    tSwpObj["spv"] = 3;
+            tSwpObj["spaceBetween"] = 10;
+            tSwpObj["loop"] = false;
+            tSwpObj["createElements"] = true;
+            tSwpObj["height"] = 250;
+            tSwpObj["autoplay"] = 2500;
+            tSwpObj["autoplayDisableOnInteraction"] = false;
+            tSwpObj["pagination"] = ".swiper-pagination";
+            tSwpObj["paginationClickable"] = true;
+            tSwpObj["nextButton"] = ".swiper-button-next";
+            tSwpObj["prevButton"] = ".swiper-button-prev";
+            tSwpObj["grabCursor"] = true;
+
+            effect: 'coverflow',
+            coverflow: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows : true
+            },
+            effect: 'cube',
+            cube: {
+                slideShadows: true,
+                shadow: true,
+                shadowOffset: 20,
+                shadowScale: 0.94
+            },
+            effect: 'fade',
+            fade: {
+                crossFade: true
+            },
+            effect: 'flip',
+            flip: {
+                slideShadows: true,
+                limitRotation: true
+            },
+            effect: 'slide',
+            slide: {
+                slideShadows: true,
+                limitRotation: true
+            },
+            effect: 'creative',
+            creative: {
+                prev: '.swiper-button-prev',
+                next: '.swiper-button-next',
+                pagination: '.swiper-pagination',
+                paginationClickable: true
+            },
+
+
+                    tDDXtraCntObj = {};
+            tDDXtraCntObj["ddtype"] = "noQvalue";
+            tDDXtraCntObj["fld"] = "noQvalue";
+            tDDXtraCntObj["lbl"] =  stxt[110]; // more
+            tDDXtraCntObj["val"] = "noQvalue";
+            tDDXtraCntObj["kvpObj"] = {"images":stxt[980],"templates":stxt[111],"snippets":stxt[112]};
+            tDDXtraCntObj["cb"] = "doDDxcntntPop";
+            tDDXtraCntObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+            tDDXtraCntObj["lblcls"] = "txtSmall";
+            tDDXtraCntObj["valcls"] = "txtSmall";
+            tDDXtraCntObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+            tDDXtraCntObj["horvert"] = "vertical";
+            tDDXtraCntObj["icn"] = "noQvalue";
+            tDDXtraCntObj["kvIcnsObj"] = {};
+            tDDXtraCntObj["kvIcnsObj"]["images"] = "&#xe5cd;";
+            tDDXtraCntObj["kvIcnsObj"]["templates"] = "&#xe5cd;";
+            tDDXtraCntObj["kvIcnsObj"]["snippets"] = "&#xe5cd;";
+ 
+            */
+    try {
+        tSCPopStr = "";
+        tDDswprCnttObj = {};
+        tDDswprCnttObj["ddtype"] = "noQvalue";
+        tDDswprCnttObj["fld"] = "inpSwprCntnt";
+        tDDswprCnttObj["lbl"] = "Swiper Content";
+        tDDswprCnttObj["val"] = inpSwprCntnt.value;
+        tDDswprCnttObj["kvpObj"] = {"props": "Properties", "users": "Users"};
+        tDDswprCnttObj["cb"] = "doSwpCntntPick";
+        tDDswprCnttObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDswprCnttObj["lblcls"] = "txtSmall";
+        tDDswprCnttObj["valcls"] = "txtSmall";
+        tDDswprCnttObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDswprCnttObj["horvert"] = "vertical";
+        tDDswprCnttObj["icn"] = "noQvalue";
+        tDDswprCnttObj["kvIcnsObj"] = {};
+        tDDswprCnttObj["kvIcnsObj"]["props"] = "&#xe5cd;";
+        tDDswprCnttObj["kvIcnsObj"]["users"] = "&#xe5cd;";
+        tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprCnttObj);
+
+        // swiper types, cube, fade, flip, slide, creative
+        tDDswprTypeObj = JSSHOP.ui.getBSDDOptsO();
+        tDDswprTypeObj["ddtype"] = "noQvalue";
+        tDDswprTypeObj["fld"] = "inpSwprType";
+        tDDswprTypeObj["lbl"] = "Swiper Type";
+        tDDswprTypeObj["val"] = inpSwprType.value;
+        tDDswprTypeObj["kvpObj"] = {"cube": "Cube", "fade": "Fade", "flip": "Flip", "slide": "Slide", "coverflow": "Cover Flow"};
+        tDDswprTypeObj["cb"] = "donada";
+        tDDswprTypeObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDswprTypeObj["lblcls"] = "txtSmall";
+        tDDswprTypeObj["valcls"] = "txtSmall";
+        tDDswprTypeObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDswprTypeObj["horvert"] = "vertical";
+        tDDswprTypeObj["icn"] = "noQvalue";
+        tDDswprTypeObj["kvIcnsObj"] = {};
+        tDDswprTypeObj["kvIcnsObj"]["cube"] = "&#xe5cd;";
+        tDDswprTypeObj["kvIcnsObj"]["fade"] = "&#xe5cd;";
+        tDDswprTypeObj["kvIcnsObj"]["flip"] = "&#xe5cd;";
+        tDDswprTypeObj["kvIcnsObj"]["slide"] = "&#xe5cd;";
+        tDDswprTypeObj["kvIcnsObj"]["creative"] = "&#xe5cd;";
+        tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprTypeObj);
+
+        // swiper use pagination yes or no
+        tDDswprPagObj = JSSHOP.ui.getBSDDOptsO();
+        tDDswprPagObj["ddtype"] = "noQvalue";
+        tDDswprPagObj["fld"] = "inpSwprPag";
+        tDDswprPagObj["lbl"] = "Swiper Pagination";
+        tDDswprPagObj["val"] = inpSwprPag.value;
+        tDDswprPagObj["kvpObj"] = {"true": "true", "false": "false"};
+        tDDswprPagObj["cb"] = "donada";
+        tDDswprPagObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDswprPagObj["lblcls"] = "txtSmall";
+        tDDswprPagObj["valcls"] = "txtSmall";
+        tDDswprPagObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDswprPagObj["horvert"] = "vertical";
+        tDDswprPagObj["icn"] = "noQvalue";
+        tDDswprPagObj["kvIcnsObj"] = {};
+        tDDswprPagObj["kvIcnsObj"]["yes"] = "&#xe5cd;";
+        tDDswprPagObj["kvIcnsObj"]["no"] = "&#xe5cd;";
+        tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprPagObj);
+
+        // swiper use navigation yes or no
+        tDDswprNavObj = JSSHOP.ui.getBSDDOptsO();
+        tDDswprNavObj["ddtype"] = "noQvalue";
+        tDDswprNavObj["fld"] = "inpSwprNav";
+        tDDswprNavObj["lbl"] = "Swiper Navigation";
+        tDDswprNavObj["val"] = inpSwprNav.value;
+        tDDswprNavObj["kvpObj"] = {"true": "true", "false": "false"};
+        tDDswprNavObj["cb"] = "donada";
+        tDDswprNavObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDswprNavObj["lblcls"] = "txtSmall";
+        tDDswprNavObj["valcls"] = "txtSmall";
+        tDDswprNavObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDswprNavObj["horvert"] = "vertical";
+        tDDswprNavObj["icn"] = "noQvalue";
+        tDDswprNavObj["kvIcnsObj"] = {};
+        tDDswprNavObj["kvIcnsObj"]["yes"] = "&#xe5cd;";
+        tDDswprNavObj["kvIcnsObj"]["no"] = "&#xe5cd;";
+        tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprNavObj);
+
+
+        
+        // swiper use loop yes or no
+        tDDswprLoopObj = JSSHOP.ui.getBSDDOptsO();
+        tDDswprLoopObj["ddtype"] = "noQvalue";
+        tDDswprLoopObj["fld"] = "inpSwprLoop";
+        tDDswprLoopObj["lbl"] = "Swiper Loop";
+        tDDswprLoopObj["val"] = inpSwprLoop.value;
+        tDDswprLoopObj["kvpObj"] = {"true": "true", "false": "false"};
+        tDDswprLoopObj["cb"] = "donada";
+        tDDswprLoopObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDswprLoopObj["lblcls"] = "txtSmall";
+        tDDswprLoopObj["valcls"] = "txtSmall";
+        tDDswprLoopObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDswprLoopObj["horvert"] = "vertical";
+        tDDswprLoopObj["icn"] = "noQvalue";
+        tDDswprLoopObj["kvIcnsObj"] = {};
+        tDDswprLoopObj["kvIcnsObj"]["yes"] = "&#xe5cd;";
+        tDDswprLoopObj["kvIcnsObj"]["no"] = "&#xe5cd;";
+        tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprLoopObj);
+
+        /*
+        // swiper use grab cursor yes or no
+        tDDswprGrabObj = JSSHOP.ui.getBSDDOptsO();
+        tDDswprGrabObj["ddtype"] = "noQvalue";
+        tDDswprGrabObj["fld"] = "inpSwprGrab";
+        tDDswprGrabObj["lbl"] = "Swiper Grab Cursor";
+        tDDswprGrabObj["val"] = inpSwprGrab.value;
+        tDDswprGrabObj["kvpObj"] = {"yes": "Yes", "no": "No"};
+        tDDswprGrabObj["cb"] = "donada";
+        tDDswprGrabObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDswprGrabObj["lblcls"] = "txtSmall";
+        tDDswprGrabObj["valcls"] = "txtSmall";
+        tDDswprGrabObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDswprGrabObj["horvert"] = "vertical";
+        tDDswprGrabObj["icn"] = "noQvalue";
+        tDDswprGrabObj["kvIcnsObj"] = {};
+        tDDswprGrabObj["kvIcnsObj"]["yes"] = "&#xe5cd;";
+        tDDswprGrabObj["kvIcnsObj"]["no"] = "&#xe5cd;";
+        tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprGrabObj);
+
+        // swiper use create elements yes or no
+        tDDswprCrElObj = JSSHOP.ui.getBSDDOptsO();
+        tDDswprCrElObj["ddtype"] = "noQvalue";
+        tDDswprCrElObj["fld"] = "inpSwprCrEl";
+        tDDswprCrElObj["lbl"] = "Swiper Create Elements";
+        tDDswprCrElObj["val"] = inpSwprCrEl.value;
+        tDDswprCrElObj["kvpObj"] = {"yes": "Yes", "no": "No"};
+        tDDswprCrElObj["cb"] = "donada";
+        tDDswprCrElObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDswprCrElObj["lblcls"] = "txtSmall";
+        tDDswprCrElObj["valcls"] = "txtSmall";
+        tDDswprCrElObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDswprCrElObj["horvert"] = "vertical";
+        tDDswprCrElObj["icn"] = "noQvalue";
+        tDDswprCrElObj["kvIcnsObj"] = {};
+        tDDswprCrElObj["kvIcnsObj"]["yes"] = "&#xe5cd;";
+        tDDswprCrElObj["kvIcnsObj"]["no"] = "&#xe5cd;";
+        tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprCrElObj);
+
+        // swiper slides per view
+        tDDswprSPVObj = JSSHOP.ui.getBSDDOptsO();
+        tDDswprSPVObj["ddtype"] = "noQvalue";
+        tDDswprSPVObj["fld"] = "inpSwprSPV";
+        tDDswprSPVObj["lbl"] = "Swiper Slides Per View";
+        tDDswprSPVObj["val"] = inpSwprSPV.value;
+        tDDswprSPVObj["kvpObj"] = {"1": "1", "2": "2", "3": "3", "4": "4", "5": "5"};
+        tDDswprSPVObj["cb"] = "donada";
+        tDDswprSPVObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDswprSPVObj["lblcls"] = "txtSmall";
+        tDDswprSPVObj["valcls"] = "txtSmall";
+        tDDswprSPVObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDswprSPVObj["horvert"] = "vertical";
+        tDDswprSPVObj["icn"] = "noQvalue";
+        tDDswprSPVObj["kvIcnsObj"] = {};
+        tDDswprSPVObj["kvIcnsObj"]["1"] = "&#xe5cd;";
+        tDDswprSPVObj["kvIcnsObj"]["2"] = "&#xe5cd;";
+        tDDswprSPVObj["kvIcnsObj"]["3"] = "&#xe5cd;";
+        tDDswprSPVObj["kvIcnsObj"]["4"] = "&#xe5cd;";
+        tDDswprSPVObj["kvIcnsObj"]["5"] = "&#xe5cd;";
+        tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprSPVObj);
+
+        // swiper space between
+        tDDswprSBObj = JSSHOP.ui.getBSDDOptsO();
+        tDDswprSBObj["ddtype"] = "noQvalue";
+        tDDswprSBObj["fld"] = "inpSwprSB";
+        tDDswprSBObj["lbl"] = "Swiper Space Between";
+        tDDswprSBObj["val"] = inpSwprSB.value;
+        tDDswprSBObj["kvpObj"] = {"10": "10", "20": "20", "30": "30", "40": "40", "50": "50"};
+        tDDswprSBObj["cb"] = "donada";
+        tDDswprSBObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDswprSBObj["lblcls"] = "txtSmall";
+        tDDswprSBObj["valcls"] = "txtSmall";
+        tDDswprSBObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDswprSBObj["horvert"] = "vertical";
+        tDDswprSBObj["icn"] = "noQvalue";
+        tDDswprSBObj["kvIcnsObj"] = {};
+        tDDswprSBObj["kvIcnsObj"]["10"] = "&#xe5cd;";
+        tDDswprSBObj["kvIcnsObj"]["20"] = "&#xe5cd;";
+        tDDswprSBObj["kvIcnsObj"]["30"] = "&#xe5cd;";
+        tDDswprSBObj["kvIcnsObj"]["40"] = "&#xe5cd;";
+        tDDswprSBObj["kvIcnsObj"]["50"] = "&#xe5cd;";
+        tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprSBObj);
+
+        // swiper height
+        tDDswprHObj = JSSHOP.ui.getBSDDOptsO();
+        tDDswprHObj["ddtype"] = "noQvalue";
+        tDDswprHObj["fld"] = "inpSwprH";
+        tDDswprHObj["lbl"] = "Swiper Height";
+        tDDswprHObj["val"] = inpSwprH.value;
+        tDDswprHObj["kvpObj"] = {"100": "100", "250": "250", "200": "200", "300": "300", "400": "400", "500": "500"};
+        tDDswprHObj["cb"] = "donada";
+        tDDswprHObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDswprHObj["lblcls"] = "txtSmall";
+        tDDswprHObj["valcls"] = "txtSmall";
+        tDDswprHObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDswprHObj["horvert"] = "vertical";
+        tDDswprHObj["icn"] = "noQvalue";
+        tDDswprHObj["kvIcnsObj"] = {};
+        tDDswprHObj["kvIcnsObj"]["100"] = "&#xe5cd;";
+        tDDswprHObj["kvIcnsObj"]["200"] = "&#xe5cd;";
+        tDDswprHObj["kvIcnsObj"]["300"] = "&#xe5cd;";
+        tDDswprHObj["kvIcnsObj"]["400"] = "&#xe5cd;";
+        tDDswprHObj["kvIcnsObj"]["500"] = "&#xe5cd;";
+        tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprHObj);
+
+        // swiper autoplay
+        tDDswprAPObj = JSSHOP.ui.getBSDDOptsO();
+        tDDswprAPObj["ddtype"] = "noQvalue";
+        tDDswprAPObj["fld"] = "inpSwprAP";
+        tDDswprAPObj["lbl"] = "Swiper Autoplay";
+        tDDswprAPObj["val"] = inpSwprAP.value;
+        tDDswprAPObj["kvpObj"] = {"1000": "1000", "2000": "2000", "3000": "3000", "4000": "4000", "5000": "5000"};
+        tDDswprAPObj["cb"] = "donada";
+        tDDswprAPObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDswprAPObj["lblcls"] = "txtSmall";
+        tDDswprAPObj["valcls"] = "txtSmall";
+        tDDswprAPObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDswprAPObj["horvert"] = "vertical";
+        tDDswprAPObj["icn"] = "noQvalue";
+        tDDswprAPObj["kvIcnsObj"] = {};
+        tDDswprAPObj["kvIcnsObj"]["1000"] = "&#xe5cd;";
+        tDDswprAPObj["kvIcnsObj"]["2000"] = "&#xe5cd;";
+        tDDswprAPObj["kvIcnsObj"]["3000"] = "&#xe5cd;";
+        tDDswprAPObj["kvIcnsObj"]["4000"] = "&#xe5cd;";
+        tDDswprAPObj["kvIcnsObj"]["5000"] = "&#xe5cd;";
+        tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprAPObj);
+
+    */
+
+    
+        tSCPopStr += "<span style=\"\" class=\"cls_button cls_button-small bkgdClrHdr txtClrWhite\" onclick=\"JSSHOP.ui.closeLbox();JSSHOP.ads.trnsltSwiperObj();\">OK</span>";
+        tSCPopStr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-small  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";   
+        
+        JSSHOP.ui.popFillObox(tSCPopStr, "&#xe5cd;", "Swiper Config", "yes", "no");
+        setTimeout(function() { doSwpCntntPick("inpSwprCntnt", inpSwprCntnt.value, "Properties"); }, 1000);
+        
+} catch(e) {
+console.log("doSwiperConfigPop: " + e);
+}
+};
+JSSHOP.ads.trnsltImgPstObj = function() {
+    tSCval = inpImgPstCntnt.value;
+    if(tSCval == "props") {
+        tSlctdPrpsArr = [];
+        for(var key in currSlctdPrpsObj) {
+            if(currSlctdPrpsObj.hasOwnProperty(key)) {
+                tSlctdPrpsArr.push(currSlctdPrpsObj[key]);
+            }
+        }
+        tSwprStr = JSSHOP.ads.getEditorPrpStr(tSlctdPrpsArr);
+    } else if(tSCval == "users") {
+        tSlctdUsrsArr = [];
+        for(var key in currSlctdUsrObj) {
+            if(currSlctdUsrObj.hasOwnProperty(key)) {
+                tSlctdUsrsArr.push(currSlctdUsrObj[key]);
+            }
+        }
+        tSwprStr = JSSHOP.ads.getEditorUStr(tSlctdUsrsArr);
+    }
+    // create new editor in dvDemoView
+    
+     tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tSwprStr + "</textarea>";
+     tDVDstr += "<div class=\"clearfix\"></div><br>";
+    document.getElementById("dvDemoView").innerHTML = tDVDstr;
+    setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+    // tinyMCE.activeEditor.setContent(tSwprStr);
+ };
+
+ JSSHOP.ads.getUpdtMapMrkrs = function(tmmtype, tmmobj) {
+    try {
+        tMapLeavesArr = null;
+        tMapLeavesArr = "";
+        tMapLeavesArr = [];
+  
+       switch(tmmtype) {
+            case "props":
+               
+                for(var key in tmmobj) {
+                    tLeavesObj = null;
+                    tLeavesObj = "";
+                    tLeavesObj = {};
+                    if(tmmobj.hasOwnProperty(key)) {
+                        tLeavesObj["icn"] = "admin/property/sthumb_" + tmmobj[key].pimage;
+                        tLeavesObj["title"] = tmmobj[key].ptitle;
+                        tLeavesObj["lat"] = tmmobj[key].ploclat;
+                        tLeavesObj["lng"] = tmmobj[key].ploclng;
+                        tMapLeavesArr.push(tLeavesObj);
+                    }
+                }
+                break;
+            case "users":
+               
+                for(var key in tmmobj) {
+                    if(tmmobj.hasOwnProperty(key)) {
+                        tLeavesObj["icn"] = "images/user/sthumb_" + tmmobj[key].u_icon;
+                        tLeavesObj["title"] = tmmobj[key].u_name;
+                        tLeavesObj["lat"] = tmmobj[key].u_loclat;
+                        tLeavesObj["lng"] = tmmobj[key].u_loclng;
+                        tMapLeavesArr.push(tLeavesObj);
+                    }
+                }
+                break;
+        } 
+        return tMapLeavesArr;
+    } catch(e) {
+        alert("getUpdtMapMrkrs: " + e);
+    }
+};
+
+
+
+
+ JSSHOP.ads.trnsltMapPstObj = function() {
+    tMapFullObj = {};
+    tMapFullObj["leaves"] = [];
+    tMapLeavesArr = null;
+    tMapLeavesArr = [];
+
+
+    tSCval = inpMapPstCntnt.value;
+    console.log("trnsltMapPstObj.tSCval: " + tSCval);
+    if(tSCval == "props") {
+        console.log("trnsltMapPstObj.tSCval: == props" + tSCval);
+
+        tSlctdPrpsArr = [];
+        for(var key in currSlctdPrpsObj) {
+   
+
+
+            if(currSlctdPrpsObj.hasOwnProperty(key)) {
+             
+                tLeavesObj = null;
+                tLeavesObj = "";
+                tLeavesObj = {};
+                tLeavesObj["icn"] = "images/property/s_thumb" + currSlctdPrpsObj[key].pimage;
+                tLeavesObj["title"] = currSlctdPrpsObj[key].ptitle;
+                tLeavesObj["lat"] = currSlctdPrpsObj[key].ploclat;
+                tLeavesObj["lng"] = currSlctdPrpsObj[key].ploclng;
+                tMapLeavesArr.push(tLeavesObj);
+                // tSlctdPrpsArr.push(currSlctdPrpsObj[key]);
+            }
+        }
+        // tSwprStr = JSSHOP.ads.getSwprPrpStr(tSlctdPrpsArr);
+    } else if(tSCval == "users") {
+        console.log("trnsltMapPstObj.tSCval: == users" + tSCval);
+
+        tSlctdUsrsArr = [];
+        for(var key in currSlctdUsrObj) {
+            if(currSlctdUsrObj.hasOwnProperty(key)) {
+                tLeavesObj = null;
+                tLeavesObj = "";
+                tLeavesObj = {};
+                tLeavesObj["icn"] = "images/user/s_thumb" + currSlctdUsrObj[key].u_icon;
+                tLeavesObj["title"] = currSlctdUsrObj[key].u_name;
+                tLeavesObj["lat"] = currSlctdUsrObj[key].u_loclat;
+                tLeavesObj["lng"] = currSlctdUsrObj[key].u_loclng;
+                tMapLeavesArr.push(tLeavesObj);
+
+                // tSlctdUsrsArr.push(currSlctdUsrObj[key]);
+            }
+        }
+       //  tSwprStr = JSSHOP.ads.getSwiperUStr(tSlctdUsrsArr);
+    }
+    
+    tLeavesObj["mrkrs"] = tMapLeavesArr;
+    tLeavesObj["mdvid"] = "dvDMapView";
+    tNewDvStr = "<div id=\"dvDMapView\" style=\"min-height: 340px; width: 100%;\"></div>";
+ 
+    document.getElementById("dvDemoView").innerHTML = "";
+    document.getElementById("dvDemoView").innerHTML = tNewDvStr;
+    setTimeout(function() {doNuSpinSet("dvDMapView", "small", null, "...");}, 200);
+    setTimeout(function() {JSSHOP.ads.doNuGenMap(tLeavesObj) }, 1000);
+    // document.getElementById("dvDemoView").innerHTML = tSwprStr;
+};
+
+
+JSSHOP.ads.trnsltSwiperObj = function() {
+    tSCval = inpSwprCntnt.value;
+    if(tSCval == "props") {
+      tSlctdPrpsArr = [];
+        for(var key in currSlctdPrpsObj) {
+            if(currSlctdPrpsObj.hasOwnProperty(key)) {
+                tSlctdPrpsArr.push(currSlctdPrpsObj[key]);
+            }
+        }
+        tSwprStr = JSSHOP.ads.getSwprPrpStr(tSlctdPrpsArr);
+    } else if(tSCval == "users") {
+        tSlctdUsrsArr = [];
+        for(var key in currSlctdUsrObj) {
+            if(currSlctdUsrObj.hasOwnProperty(key)) {
+                tSlctdUsrsArr.push(currSlctdUsrObj[key]);
+            }
+        }
+        tSwprStr = JSSHOP.ads.getSwiperUStr(tSlctdUsrsArr);
+    }
+    document.getElementById("dvDemoView").innerHTML = tSwprStr;
+      // currSlctdPrpsObj;
+        
+        // currPstsPrpsArr
+
+ /*
+ <input type="hidden" id="inpSwprType" name="inpSwprType" value="slide">
+<input type="hidden" id="inpSwprNav" name="inpSwprNav" value="yes">
+<input type="hidden" id="inpSwprPag" name="inpSwprPag" value="yes">
+<input type="hidden" id="inpSwprLoop" name="inpSwprLoop" value="yes">
+*/
+
+/*
+        tSwpObj["cls"] = ".swiper-container";
+                    tSwpObj["spv"] = 3;
+            tSwpObj["spaceBetween"] = 10;
+            tSwpObj["loop"] = false;
+            tSwpObj["createElements"] = true;
+            tSwpObj["height"] = 250;
+            tSwpObj["autoplay"] = 2500;
+            tSwpObj["autoplayDisableOnInteraction"] = false;
+            tSwpObj["pagination"] = ".swiper-pagination";
+            tSwpObj["paginationClickable"] = true;
+            tSwpObj["nextButton"] = ".swiper-button-next";
+            tSwpObj["prevButton"] = ".swiper-button-prev";
+            tSwpObj["grabCursor"] = true;
+
+            effect: 'coverflow',
+            coverflow: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows : true
+            },
+            effect: 'cube',
+            cube: {
+                slideShadows: true,
+                shadow: true,
+                shadowOffset: 20,
+                shadowScale: 0.94
+            },
+            effect: 'fade',
+            fade: {
+                crossFade: true
+            },
+            effect: 'flip',
+            flip: {
+                slideShadows: true,
+                limitRotation: true
+            },
+            effect: 'slide',
+            slide: {
+                slideShadows: true,
+                limitRotation: true
+            },
+            effect: 'creative',
+            creative: {
+                prev: '.swiper-button-prev',
+                next: '.swiper-button-next',
+                pagination: '.swiper-pagination',
+                paginationClickable: true
+            },
+
+            */
+    try {
+        tEffectsObj = {};
+        tEffectsObj["cube"] = {"rotate": 50, "stretch": 0, "depth": 100, "modifier": 1, "slideShadows": true};
+        tEffectsObj["fade"] = {"crossFade": true};
+        tEffectsObj["flip"] = {"slideShadows": true, "limitRotation": true};
+        tEffectsObj["slide"] = {"slideShadows": true, "limitRotation": true};
+        tEffectsObj["creative"] = {"prev": ".swiper-button-prev", "next": ".swiper-button-next", "pagination": ".swiper-pagination", "paginationClickable": true};
+        tEffectsObj["coverflow"] = {"rotate": 50, "stretch": 0, "depth": 100, "modifier": 1, "slideShadows": true};
+       if(inpSwprType.value == "slide" || inpSwprType.value == "fade") {
+        inpSwprSPV.value = 2;
+       } else {
+        inpSwprSPV.value = 1;
+         }
+        tSwpObj = {};
+        tSwpObj["cls"] = ".swiper";
+        tSwpObj["slidesPerView"] = inpSwprSPV.value;
+        // tSwpObj["spaceBetween"] = inpSwprSB.value;
+        tSwpObj["loop"] = inpSwprLoop.value;
+        tSwpObj["createElements"] = inpSwprCrEl.value;
+        // tSwpObj["height"] = inpSwprH.value;
+        // tSwpObj["autoplay"] = inpSwprAP.value;
+        // tSwpObj["autoplayDisableOnInteraction"] = false;
+        if(inpSwprPag.value == "true") {
+         tSwpObj["pagination"] = {el: ".swiper-pagination", clickable: true};
+        }
+        // tSwpObj["paginationClickable"] = true;
+        if(inpSwprNav.value == "true") {
+        tSwpObj["navigation"] = {nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev"};
+        }
+        // tSwpObj["nextButton"] = ".swiper-button-next";
+        // tSwpObj["prevButton"] = ".swiper-button-prev";
+        /// tSwpObj["grabCursor"] = true;
+        tSwpObj["effect"] = inpSwprType.value;
+        tSwpObj[inpSwprType.value] = tEffectsObj[inpSwprType.value];
+        currSwpCnfgObj = tSwpObj;
+        // JSSHOP.ads.loadNuSwiperObj(tSwpObj);
+        setTimeout(function() { JSSHOP.ads.loadNuSwiperObj(tSwpObj); }, 1000);
+    } catch(e) {
+        console.log("trnsltSwiperObj: " + e);
+    }
+};
+
+JSSHOP.ads.loadNuSwiperArr = function(tSwpArr) {
+    try {
+        console.log("loadNuSwiperArr: " + JSON.stringify(tSwpArr));
+        intSAL = tSwpArr.length;
+        for(iqswa = 0; iqswa < intSAL; iqswa++) {
+            tSWARROb = null;
+            tSWARROb = {};
+            tSWARROb = tSwpArr[iqswa];
+            taswapr = new Swiper(tSWARROb.cls, tSWARROb);
+            // JSSHOP.ads.loadNuSwiperObj(tSWARROb);
+        }
+    } catch(e) {
+        console.log("loadNuSwiperArr: " + e);
+    }
+};
+JSSHOP.ads.loadNuSwiperObj = function(tSwpbj) {
+    try {
+        console.log("loadNuSwiperObj: " + JSON.stringify(tSwpbj));
+
+        taswpr = new Swiper(tSwpbj.cls, tSwpbj);
+    } catch(e) {
+        console.log("loadNuSwiperObj: " + e);
+    }
+};
+
+JSSHOP.ads.loadSwiperObj = function(tSwpLoadObj) {
+    try {
+
+
+        
+    var swiper = new Swiper(tSwpLoadObj.cls, {
+        slidesPerView: tSwpLoadObj.spv,
+        spaceBetween: tSwpLoadObj.spaceBetween,
+        loop: tSwpLoadObj.loop,
+        createElements: tSwpLoadObj.createElements,
+        height: tSwpLoadObj.height,
+        pagination: {
+            el: tSwpLoadObj.pagination,
+            clickable: tSwpLoadObj.paginationClickable,
+        } ,
+        navigation: {
+        nextEl:  tSwpLoadObj.nextButton,
+        prevEl:  tSwpLoadObj.prevButton,
+        },
+        renderBullet: function (index, className) {
+            return '<span class="' + className + '">' + (index + 1) + '</span>';
+            },
+            breakpoints: {
+                // when window width is >= 320px
+                320: {
+                  slidesPerView: 3,
+                  spaceBetween: 20
+                },
+                // when window width is >= 480px
+                480: {
+                  slidesPerView: 4,
+                  spaceBetween: 30
+                },
+                // when window width is >= 640px
+                640: {
+                  slidesPerView: 5,
+                  spaceBetween: 40
+                }
+              },
+              effect: 'cube',
+              cube: {
+                  slideShadows: true,
+                  shadow: true,
+                  shadowOffset: 20,
+                  shadowScale: 0.94
+              },
+    });
+
+    } catch(e) {
+        console.log("loadSwiperObj: " + e);
+    }
+};
+
+
 
 JSSHOP.ads.getPPlgIcnStr = function(tPPICnt, tPPIClass, tPPICB) {
     tNPPICnt = 4;
@@ -7436,107 +7679,7 @@ tmpTDQI.insertBefore(newel, tmpTDQI.firstChild);
 
 
 
-
-
-function setShopsUp(tssuVa, tssuVb, tssuVv) {
-    try {
-    console.log("setShopsUp: " + tssuVa + " " + tssuVb + " " + tssuVv);
-tMResStr = "<br><a href=\"javascript:JSSHOP.ui.popAndFillLbox(JSSHOP.ui.getRegionsList());\">"  + stxt[81] + "</a>";
-document.getElementById("tdNuSearchRes").innerHTML = "";
-ttSdiv = document.createElement("div");
-// ttSdiv.id = "dvLSshops";
-// ttSdiv.className = "slmtable brdrClrDlg";
-// ttSdiv.style = "width: 100%;";
-tGenSjopSTr = "noQvalue";
-tGenSjopSTr = JSSHOP.ads.doNuGenericRes("shops", tssuVb, tssuVv);
-console.log("setShopsUp.tGenSjopSTr: " + tGenSjopSTr);
-ttSdiv.innerHTML = tGenSjopSTr;
-if(document.getElementById("dvLSshops")) {
-hehar = document.getElementById("dvLSshops").appendChild(ttSdiv);
-
-if(hehar) {
-if(currShopsArr.length > 0) {
-    if(JSSHOP.ads.getPrtsPrefCC("qloc") == "noQvalue") {
-    } else {
-    JSSHOP.ui.toggleVisibility("dvTglSFldTbl");
-    }
-JSSHOP.ads.setEboxUp("doEBAdsFill");
-}
-//  JSSHOP.ads.doGenMapShow();
-if(pid.indexOf("psearch") != -1) {
-   //  JSSHOP.ads.setShpItmsUp("doShpItmsFill");
-
-currBtnSort = document.getElementById("btnSort_" + currSortObj["psearch"]["sindex"]);
-} else {
-currBtnSort = document.getElementById("btnSort_" + currSortObj["msearch"]["sindex"]);
-}
-if(JSSHOP.ads.getPrtsPrefCC("qloc") == "noQvalue") {
- //   JSSHOP.ui.toggleNuModule('dvTglCoSrch','dvTglSFldTbl');
-}
-} 
-}  
-} catch(e) {
-    console.log("setShopsUp.ERROR: " + e);
-// JSSHOP.logJSerror(e, arguments, "setShopsUp: " + e);
-}
-// document.getElementById("includedContent").insertBefore(ttSdiv, document.getElementById("includedContent").firstChild);
-// document.getElementById("dvLSshops").innerHTML = JSSHOP.ads.doGenericRes("shops", tssuVb, tssuVv) + tMResStr;
-}
-
-function doLSshopsBx() {
-JSSHOP.ads.doLocalShops(3, 'RAND()', 'noQvalue', 'setShopsUp');
-};
-JSSHOP.ads.setNuShopsUp = function(tQFunct) {
-    try {
-    if(pid == "aa-show-psearch") {
-        tmpLSIcn = "<img src=\"images/misc/parts_w.gif\" style=\"vertical-align: middle; max-width: 27px; max-height: 27px;\" class=\"icnsmlbtn\"></img>";
-
-        if(JSSHOP.ads.getPrtsPrefCC("part") == "noQvalue") {
-            ttTforBx = stxt[113];
-        } else {
-            ttTforBx = stxt[113] + " " + stxt[118] + " " + JSSHOP.ads.getPrtsPrefCC("part");
-        }
-
-    } else {
-        tmpLSIcn = "<img src=\"images/misc/mec2_w.gif\" style=\"vertical-align: middle; max-width: 27px; max-height: 27px;\" class=\"icnsmlbtn\"></img>";
-        if(JSSHOP.ads.getPrtsPrefCC("part") == "noQvalue") {
-        ttTforBx = stxt[114];
-        } else {
-        ttTforBx = stxt[114] + " " + stxt[119] + " " + JSSHOP.ads.getPrtsPrefCC("part");
-        }
-
-    }
-    if(JSSHOP.ads.getPrtsPrefCC("mk") == "noQvalue") {
-    } else {
-       tMkPrfx = "m" + JSSHOP.ads.getPrtsPrefCC("mk");
-        tMkNme = objAllMakes[tMkPrfx].n;
-    ttTforBx += " - " + tMkNme;
-    }
-    
-tIMLStglbObj = JSSHOP.ui.nTglBxOb();
-
-
-tIMLStglbObj["ttl"] = ttTforBx; // the toggle box title
-tIMLStglbObj["dvid"] = "dvLSshops"; // the toggle box div id
-tIMLStglbObj["cntntFnc"] =  tQFunct;
-tIMLStglbObj["content"] = "noQvalue"; // the toggle that goes in above toggle div
-tIMLStglbObj["btn"] = "btnTglLSMi" // the toogle btn id
-tIMLStglbObj["pref"] = "tglLSMI"; // the toogle pref id saved in cookie
-tIMLStglbObj["tbtmpCB"] = "noQvalue"; // null function as callback
-tIMLStglbObj["icn"] = tmpLSIcn; // the icon
-tIMLStglbObj["pnid"] = "dvPSList"; // the parent node, will just return text if noQvalue
-tIMLStglbObj["appnd"] = "y"; // the parent node, will just return text if noQvalue
-tIMLStglbObj["cut"] = 200; // the parent node, will just return text if noQvalue
-tIMLStglbObj["clsmaintbl"] = "txtClrHdr slmtable bkgdClrNrml"; // main table class
-tIMLStglbObj["clstitletd"] = "txtBold txtClrDGreen"; // title box class
-tIMLStglbObj["clsttltxt"] = "txtSmall txtBold txtClrDrkGrn"; // title box text class
-JSSHOP.ui.doTglBox(tIMLStglbObj);
-} catch(e) {
-    alert("setNuShopsUp: " + e);
-// JSSHOP.logJSerror(e, arguments, "setNuShopsUp: " + e);
-}
-};
-
+ 
 
 JSSHOP.ads.doGenericPlug = function(tPtype, tPresQty, tPtDiv) {
 console.log("JSSHOP.ads.doGenericPlug: " + tPtype + " " + tPresQty + " " + tPtDiv);
@@ -7548,98 +7691,14 @@ retPlugStr = "...";
 tcanShowPlug = "yes";
 switch(pid) {
 case "index_main":
-tFpharr = [];
-tFpharr.push(stxt[89]);
-tFpharr.push(stxt[90]);
-tFpharr.push(stxt[91]);
-ppshfled = shuffle(tFpharr);
-ppslectted = ppshfled.slice(0, 1);
-retPlugStr += ppslectted.join(" ");
-if(currPPrtCatArr.length < 3) {
-// no parts
-} else {
-pshfled = shuffle(currPPrtCatArr);
-pslectted = pshfled.slice(0, tPresQty);
-// retPlugStr += pslectted.join(" ");
-}
-shfled = shuffle(currPMakesArr);
-slectted = shfled.slice(0, tPresQty);
-for(iihy=0; iihy<slectted.length;iihy++) {
-tsihi = slectted[iihy];
-tspktihi = tsihi.split(":");
-retPlugStr += "  <a href=\"index.html?mk=" + tspktihi[0] + "&pid=aa-show-make&make=" + tspktihi[1] + "\">" + tspktihi[1] + "</a> &nbsp;";
-}
+ 
 fretPlugStr = "<div class=\"txtSmall\">" + retPlugStr + "</div>";
 tcanShowPlug = "no";
 break;
 case "aa-contactus":
 fretPlugStr = "<div class=\"txtSmall\">Contacte-nos</div>";
 break;
-case "aa-show-psearch":
-// imgPLicon.src = "images/pshop_logo_small.png"; 
-// fretPlugStr = "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"account\" title=\"account\"> &#xe853;</i>";
-fretPlugStr = "<div class=\"txtSmall\">" + JSSHOP.ads.getPPlgIcnStr(1, "slmtable icndbtn brdrClrTtl", "doNada") + stxt[125] + "</div>";
-break;
  
-case "aa-show-msearch":
-imgPLicon.src = "images/mech_logo_small.png";
-fretPlugStr = "<div class=\"txtSmall\">" + stxt[126] + "</div>";
-break;
-case "aa-edit-item":
-    if(c_logoimg.value == "noQvalue") {
-imgPLicon.src = "logoicon.png";   
-    } else {
-imgPLicon.src = c_logoimg.value;
-    }
-fretPlugStr = "<div class=\"txtSmall\">" + c_name.vale + "</div>";
-// fretPlugStr = doNuCollsLoad("links");
-break;
-case "aa-show-place":
-
-// getPAddrssLst();
-tQlogoVA = c_logoimg.value;
-tNameFirstLtr = c_name.value.charAt(0);
-ts = currPlaceObj;
-tttLImg = ts.c_logoimg;
-    if(tttLImg.indexOf(".") != -1) {
-     if(tttLImg.indexOf("http") != -1) {
- 
-    tBimgU = tttLImg;
- 
-    } else {
-     
-     tBimgU = "images/slogos/s_thumb" + ts.c_logoimg;
-    }
-    } else { // end of indexOf(".") in c_logoimg
-    // tBimgU = "noQvalue";
-    tBimgU = "images/slogos/s_thumb" + ts.c_logoimg;
-
-    }
-    if(tttLImg == "noQvalue") {
-
-        // use the first letter of the name as the image
-        tCshrtClrd = pSBC( 0.02, JSSHOP.ui.stringToColour(c_name.value));
-dvPartLicon.innerHTML =  "<div class=\"txtSmall txtClrHdr slmtable\" style=\"margin-right:8px;padding-right:8px;vertical-align: middle; align: center; max-width: 27px; max-height: 27px; color:#FFFFFF;background-color:" + tCshrtClrd + "\">&nbsp;" + tNameFirstLtr + "</div>";
-    // atstr += "<div class=\"txtBold txtClrHdr\" style=\"margin-right:8px;padding-right:8px;vertical-align: middle; max-width: 27px; max-height: 27px;\">" + tCshortttl + "</div>";
-    } else {
-        tIBclsStr = "avatar";
-dvPartLicon.innerHTML =  "<a href=\"javascript:JSSHOP.ui.popAFImgUrl('" + tBimgU + "')\"><img id=\"dvPLogoImg\" src=\"" + tBimgU + "\" class=\"" + tIBclsStr + "\" style=\"margin-right:8px;padding-right:8px;vertical-align: middle; max-width: 27px; max-height: 27px;\"  onerror=\"javascript:doGglImgLdErr(" + ts._id + ");\"></a>";
-    }
-
-fretPlugStr = c_name.value;
-        break;
-
-case "aa-edit-place":
-imgPLicon.src = "logoicon.png";    
-fretPlugStr = doNuCollsLoad("links");
-case "aa-edit-parts-category":
-imgPLicon.src = "logoicon.png";    
-fretPlugStr = doNuCollsLoad("links");
-break;
-case "aa-edit-svs-category":
-imgPLicon.src = "logoicon.png";    
-fretPlugStr = doNuCollsLoad("links");
-break;
 case "aa-edit-user":
 // imgPLicon.src = "logoicon.png"; 
 dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"account\" title=\"account\"> &#xe851;</i>";
@@ -7651,20 +7710,12 @@ imgPLicon.src = "logoicon.png";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[815] + "</div>";
 break;
 default:
-if(pid.indexOf("-edit") != -1) {
-if(cid == 0) {
-fretPlugStr = "<div class=\"txtSmall\">Default Admin Area</div>";
-} else {
-fretPlugStr = "<div class=\"txtSmall\">Default Admin ARea for " + c_name.value + "</div>";
-}
-} else {
-    if(cid == 0) {
-        fretPlugStr = "<div class=\"txtSmall\">Default Area</div>";
-        } else {
-        fretPlugStr = "<div class=\"txtSmall\">Default Area for " + c_name.value + "</div>";
-        }
+ 
+ 
+fretPlugStr = "<div class=\"txtSmall\">.... </div>";
+ 
 // fretPlugStr = "<div class=\"txtSmall\">Default</div>";
-}
+ 
 break;
 }
 
@@ -7776,16 +7827,7 @@ function getLeaves() {
         doGenPrpPop(e.target.options.iti);
 
     });
-/*
-    customCircleMarker = L.marker.extend([tLatQcStr,tLngQcStr], {icon: redIcon},{
-        options: { 
-           iti: iti
-        }
-     }).addTo(map).on('click', function(e) {
-        console.log("L.marker iti: " + e.latlng);
-         JSSHOP.ads.doGenCoPop(this.options.iti);
-    });
-    */
+  
     bounds.extend(lat_lng);
       }
       } catch(e) {
@@ -7825,49 +7867,9 @@ function getLeaves() {
         // document.getElementById('lng').value = lng;
         // document.getElementById('latlng').value = lat + ', ' + lng;
     });
-    }
+    }  // end of getLeaves
 
-   
-    /*
-
-    CREATE TABLE `qco` (
-        `_id` int(11) NOT NULL,
-        `c_rtype` int(4) DEFAULT NULL,
-        `c_coid` int(12) DEFAULT NULL,
-        `c_category` int(5) DEFAULT NULL,
-        `c_uid` int(11) DEFAULT NULL,
-        `c_internal` varchar(128) DEFAULT NULL,
-        `c_name` varchar(128) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-        `c_header` varchar(128) DEFAULT NULL,
-        `c_desc` varchar(128) DEFAULT NULL,
-        `c_tel` varchar(28) DEFAULT NULL,
-        `c_contact` varchar(128) DEFAULT NULL,
-        `c_web` varchar(128) DEFAULT NULL,
-        `c_email` varchar(128) DEFAULT NULL,
-        `c_logoimg` varchar(128) DEFAULT NULL,
-        `c_zipcode` varchar(12) DEFAULT NULL,
-        `c_zp` int(3) NOT NULL,
-        `c_door` varchar(28) DEFAULT NULL,
-        `c_street` varchar(128) DEFAULT NULL,
-        `c_location` varchar(128) DEFAULT NULL,
-        `c_region` varchar(128) DEFAULT NULL,
-        `c_country` varchar(128) DEFAULT NULL,
-        `c_ccode` mediumint(5) NOT NULL,
-        `c_placeid` varchar(128) DEFAULT NULL,
-        `c_loc_lat` float DEFAULT NULL,
-        `c_loc_lng` float DEFAULT NULL,
-        `c_google_url` text DEFAULT NULL,
-        `c_rating` varchar(8) DEFAULT NULL,
-        `c_revs` int(5) NOT NULL,
-        `c_msg` text DEFAULT NULL,
-        `c_privacy` varchar(128) DEFAULT NULL,
-        `c_whours` varchar(186) DEFAULT NULL,
-        `c_vala` varchar(128) DEFAULT NULL,
-        `c_valb` varchar(128) DEFAULT NULL,
-        `c_dadded` varchar(14) DEFAULT NULL
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-*/
+    
 JSSHOP.ads.doGenMapShow = function() {
     if(isJApp == "yes") {
         /* */ // 
@@ -7915,6 +7917,189 @@ JSSHOP.ads.doGenMapShow = function() {
  
 };
 
+
+JSSHOP.ads.doNuGenMap = function(tDNGMObj) {
+    
+    try {
+        spinner.stop();
+smlspinner.stop();
+        /*
+        iti = 0; 
+
+    
+    
+    // check if L.map already exists
+      
+   
+        var map = L.map('smap').setView([39.0667, -8.6167], 13);
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        var bounds = L.latLngBounds() // Instantiate LatLngBounds object
+        var LeafIcon = L.Icon.extend({
+            options: {
+     
+                iconSize:     [42, 42],
+     
+
+     
+                popupAnchor:  [-3, -16]
+            }
+        });
+    
+        if(currShopsArr.length > 0) {
+            // alert(b);
+            tPArr  = null;
+            tPArr = currShopsArr;
+    
+    while(iti < tPArr.length) {
+      ts = tPArr[iti];
+      tIcnQcStr = "images/logo_small_green_oct.png"
+      tLatQcStr = ts.ploclat;
+      tLngQcStr = ts.ploclng;
+     tLatQcStr = String(tLatQcStr); // convert to string
+        tLngQcStr = String(tLngQcStr);
+      // convert to float
+        tLatQcFlt = parseFloat(tLatQcStr);
+        tLngQcFlt = parseFloat(tLngQcStr);
+        ttImgstr = ts.pimage;
+        // console.log("getLeaves.ts.cccd: " + ts.cccd + " " + ttImgstr + " " + ts.c_name);
+     
+
+        if(ttImgstr.indexOf(".") != -1) {
+      tIcnQcStr = "admin/property/s_thumb" + ts.pimage;
+        } else {
+        tIcnQcStr = "images/logo_small_oct.png";
+        }
+        
+      ttSSurl = "javascript:JSSHOP.ads.doGenPrpPop(" + iti + ");";
+
+      tCnameQcStr = "<a href=\"" + ttSSurl + "\">" + ts.c_name + "</a>";
+       tLatQcStr =  String(tLatQcFlt);
+      tLngQcStr = String(tLngQcFlt);
+      console.log("getLeaves: " + tLatQcStr + " " + tLngQcStr + " " + tIcnQcStr + " " + tCnameQcStr);
+      try {
+    // check if lat and lng are floats
+    if((tLatQcStr.indexOf(".") != -1) && (tLngQcStr.indexOf(".") != -1))  { 
+      // if((tLatQcStr.indexOf(".") != -1) && (tLngQcStr.indexOf(".") != -1))  {
+        console.log("getLeaves: " + tLatQcStr + " " + tLngQcStr);
+
+    tPAObj = tPArr[iti];
+    lat_lng = [tLatQcStr,tLngQcStr];
+    tImSStr = tIcnQcStr;
+    redIcon = new LeafIcon({iconUrl: tImSStr});
+    // bindPopup('<span class="txtBold txtClrRed">' + tCnameQcStr + '</span>').
+    // add an optionid to the marker
+    // set marker options
+    mRed = L.marker([tLatQcStr,tLngQcStr], {icon: redIcon, iti: iti}).addTo(map).on('click', function(e) {
+        // print out the e.options.iti
+        console.log("L.marker iti: " + JSON.stringify(e.target.options.iti));   
+        doGenPrpPop(e.target.options.iti);
+
+    });
+  
+    bounds.extend(lat_lng);
+      }
+      } catch(e) {
+      console.log("getLeaves.ERROR: " + e);
+      }
+    iti++;
+    }
+     map.fitBounds(bounds);
+    
+    }
+    
+    // add a long press listener to the map
+    map.on('contextmenu', function(e) {
+       
+          markers = [];
+        // add a marker to show where you clicked.
+          markers.push(L.marker(e.latlng).addTo(map));
+        // get the coordinates of the point you clicked
+        var coords = e.latlng;
+        // get the lat and lng values
+        var lat = coords.lat;
+        var lng = coords.lng;
+        // 
+        JSSHOP.ads.setPrtsPrefCC("qloc", lat + "|" + lng);
+        if(pid == "aa-show-msearch") {
+            document.getElementById('includedShops').innerHTML='';window['sw']=null;currUrlArr.sw=null;JSSHOP.shared.setPrtSvsPnl('dvGetSvcsLnk', function() {eindex('aa-show-msearch','pid=aa-show-msearch&st=main')});
+        } else if(pid == "aa-show-psearch") {
+            document.getElementById('includedShops').innerHTML='';window['sw']=null;currUrlArr.sw=null;JSSHOP.shared.setPrtSvsPnl('dvGetPLnk', function() {eindex('aa-show-psearch','pid=aa-show-psearch&st=main')}); 
+        } else {
+            document.getElementById('includedShops').innerHTML='This is odd'; 
+        }
+            */
+        var map = L.map(tDNGMObj["mdvid"]).setView([39.0667, -8.6167], 13);
+        tDGMSmrkrArr = tDNGMObj["mrkrs"];
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        var bounds = L.latLngBounds() // Instantiate LatLngBounds object
+        var LeafIcon = L.Icon.extend({
+            options: {
+                iconSize:     [42, 42],
+                popupAnchor:  [-3, -16]
+            }
+        });
+        if(tDGMSmrkrArr.length > 0) {
+            tPArr  = null;
+            tPArr = tDGMSmrkrArr;
+            iti = 0;
+            while(iti < tPArr.length) {
+                ts = tPArr[iti];
+                tIcnQcStr = "images/logo_small_green_oct.png"
+                tLatQcStr = ts.lat;
+                tLngQcStr = ts.lng;
+                tLatQcStr = String(tLatQcStr); // convert to string
+                tLngQcStr = String(tLngQcStr);
+                tLatQcFlt = parseFloat(tLatQcStr);
+                tLngQcFlt = parseFloat(tLngQcStr);
+                ttImgstr = ts.icn;
+                if(ttImgstr.indexOf(".") != -1) {
+                    tIcnQcStr = ttImgstr;
+                } else {
+                    tIcnQcStr = "images/logo_small_oct.png";
+                }
+                ttSSurl = "javascript:JSSHOP.ads.doGenPrpPop(" + iti + ");";
+                tCnameQcStr = "<a href=\"" + ttSSurl + "\">" + ts.cname + "</a>";
+                tLatQcStr =  String(tLatQcFlt);
+                tLngQcStr = String(tLngQcFlt);
+                try {
+                    if((tLatQcStr.indexOf(".") != -1) && (tLngQcStr.indexOf(".") != -1))  {
+                        tPAObj = tPArr[iti];
+                        lat_lng = [tLatQcStr,tLngQcStr];
+                        tImSStr = tIcnQcStr;
+                        redIcon = new LeafIcon({iconUrl: tImSStr});
+                        mRed = L.marker([tLatQcStr,tLngQcStr], {icon: redIcon, iti: iti}).addTo(map).on('click', function(e) {
+                            console.log("L.marker iti: " + JSON.stringify(e.target.options.iti));
+                            doGenPrpPop(e.target.options.iti);
+                        });
+                        bounds.extend(lat_lng);
+                    }
+               
+            } catch(e) {
+            console.log("getLeaves.ERROR: " + e);
+            }
+          iti++;
+          }
+           map.fitBounds(bounds);
+          
+          }
+     
+
+
+
+
+
+    } catch(e) {
+        console.log("doNuGenMap: " + e);
+    }
+};
+
+
+     
 
 JSSHOP.ads.doGenCoStr = function(tCoRecObj, tCoRecIdx) {
    
@@ -10752,3 +10937,342 @@ function doGglImgLdErr(tCoID) {
 }
  
 
+
+
+
+
+
+/* 
+// stuff to delete
+
+
+
+JSSHOP.shared.doYearsPop = function() {
+tPYS = "<div  class=\"collection\">";
+for (i = 0; i < arrAllYears.length; i++) {
+tJSMstr = "currPUrlObj.y= '" +  arrAllYears[i] + "';JSSHOP.ui.closeLbox();"
+tJSMstr += "JSSHOP.shared.doPartsWords(50,'noQvalue');";
+tPYS += "<div class=\"collection-item crsrPointer\" onclick=\"javascript:" + tJSMstr + "\">" + arrAllYears[i] + "</div>";
+// tPYS += "<div>" + arrAllYears[i] + "</div>";
+}
+tPYS += "</div>";
+// alert(tPYS);
+JSSHOP.ui.popAndFillLbox(tPYS);
+};
+
+
+JSSHOP.shared.doMakesPop = function(tMCBBstr) {
+// tPYS = btnClosePop;
+tPYS = "";
+trArr = [];
+tPYS += "<div class=\"txtBold txtClrHdr\">";
+for (i = 0; i < 5; i++) {
+    tLpdIDstr = currPMakesArr[Math.floor(Math.random() * currPMakesArr.length)];
+    tLpdSplit = tLpdIDstr.split(":");
+    tLpdID = tLpdSplit[0];
+    tLpdName = tLpdSplit[1];
+    tLpdmgMStr = imgPLicon.src = "images/mlogos/" + tLpdName.toLowerCase().replace(" ", "-") + "-logo.png";
+ tPYS += "<img src=\"" + tLpdmgMStr + "\" style=\"max-width:30px;max-height:30px;\"></img>";   
+trArr.push();
+}
+tPYS += "</div>";
+
+tPYS += "<div class=\"txtBold txtClrHdr\">" + stxt[82] + " " + stxt[102] + ":</div>";
+
+console.log("doMakesPop.trArr: " + JSON.stringify(trArr));
+
+
+tPYS += "<div class=\"collection\">";
+
+tMkObj = objAllMakes;
+for(var gkey in tMkObj) {
+		if(tMkObj[gkey].n) {
+		 TMPnOBJ = tMkObj[gkey];
+		 tSSv = TMPnOBJ.n;
+		 tSSI =  TMPnOBJ.id;
+ 		  tPYS += "<div class=\"collection-item crsrPointer\" onclick=\"javascript:JSSHOP.shared.setMakeStuff('" + tSSI + "','" + tSSv + "','" + tMCBBstr + "');JSSHOP.ads.clearAllPrtsPrefCC();JSSHOP.ads.setPrtsPrefCC('mk','" + tSSI + "');\">" + tSSv + "</div>";
+		  }
+}
+tPYS += "</div>";
+// alert(tPYS);
+JSSHOP.ui.popAndFillLbox(tPYS);
+};
+
+
+
+JSSHOP.shared.doModelsLoad = function(ttPPInp, ttPPObj, toPPbju) {
+currCModelsObj = JSON.parse(ttPPObj);
+};
+
+
+
+JSSHOP.shared.doModelsPip = function() {
+tSMSMID = currPUrlObj["mk"];
+ttCMOS = JSON.stringify(currCModelsObj);
+if(ttCMOS.indexOf("id") !== -1) {
+if(currCModelsObj.pi == tSMSMID) {
+
+console.log("doModelsPip is same : " + "currCModelsObj.id");
+JSSHOP.shared.doModelsPop("inpModels", JSON.stringify(currCModelsObj), "nada");
+} else {
+console.log("doModelsPip is diff : " + "currCModelsObj.id");
+JSSHOP.ajax.doNuAjaxPipe("inpModels", "misc/m" + tSMSMID + ".txt", JSSHOP.shared.doModelsPop);
+}
+} else {
+console.log("doModelsPip : " + "currCModelsObj.no-id");
+JSSHOP.ajax.doNuAjaxPipe("inpModels", "misc/m" + tSMSMID + ".txt", JSSHOP.shared.doModelsPop);
+}
+};
+
+
+
+
+JSSHOP.shared.doModelsPop = function(ttPPInp, ttPPObj, toPPbju) {
+// alert("doModelsPop : " + ttPPObj);
+console.log("doModelsPop : " + ttPPObj);
+tLastN = "";
+tTName = "";
+tMdlName = "";
+currtMSstrS = "";
+currSeriesArr = "";
+currSeriesArr = [];
+currCModelsObj = JSON.parse(ttPPObj);
+for(var gkey in currCModelsObj) {
+TMPnOBJ = currCModelsObj[gkey];
+if(TMPnOBJ.n) {
+tSSv = TMPnOBJ.n;
+if(tSSv.indexOf(" ") != -1) {
+
+tSpS = tSSv.split(" ");
+tTName = tSpS[0];
+tMdlName = tSSv.substring(tSSv.indexOf(" "), tSSv.length);
+// replace all special chars except . and -  and space in tMdlName
+tMdlName = tMdlName.replace(/[^a-zA-Z0-9-.\s]/g, "");
+
+ 
+} else {
+tTName = tSSv;
+tMdlName = TMPnOBJ.yf + " " + TMPnOBJ.yt;
+}
+gkey = TMPnOBJ.id;
+tSSI =  TMPnOBJ.id;
+tprtyN = tSSv;
+tsiN = tSSv.replace("(","[");
+tsiN = tsiN.replace(")","]");
+if(tSSv.indexOf("(") != -1) {
+tprtyN = tSSv.replace("(","&nbsp;&nbsp;&nbsp;<span class=\"txtClrGrey\">[&nbsp;");
+}
+if(tprtyN.indexOf(")") != -1) {
+tprtyN = tprtyN.replace(")","&nbsp;]</span>");
+}
+tInpStr = TMPnOBJ.id + "::" + TMPnOBJ.n;
+// tJSMstr = "inpImpModels.value = '" +  tInpStr + "';inpModels.value='" + tsiN + "';inpModels.focus();JSSHOP.ui.closeLbox();";	  
+tJSMstr = "currPUrlObj.si = '" +  tSSI + "';currPUrlObj.series='" + tTName + "';";
+tJSMstr += "currPUrlObj.md = '" +  tSSI + "';currPUrlObj.model='" + tMdlName + "';";
+tJSMstr += "JSSHOP.ui.closeLbox();";
+
+
+
+tJSMstr += "JSSHOP.shared.doPartsWords(50,'noQvalue');";
+tJSMstr += "inpTParts.focus();scrollToElement('dvHdr');window.scrollTo(0,0);";
+tJSMstr += "JSSHOP.ads.setPrtsPrefCC('series','" + tTName + "');";
+tJSMstr += "JSSHOP.ads.setPrtsPrefCC('md','" + tSSI + "');";
+tJSMstr += "JSSHOP.ads.setPrtsPrefCC('model','" + tMdlName + "');";
+tJSMstr += "JSSHOP.ads.setPrtsPrefCC('si','" + tSSI + "');";
+ 
+
+if(tTName == tLastN) {
+    currtMSstrS += "<div onclick=\"javascript:" + tJSMstr + "\" class=\"collection-item crsrPointer\">" + tprtyN + "<br> <span class=\"txtSmall txtBold txtClrDlg\">" + TMPnOBJ.yf + "  -&gt; ";
+    if(TMPnOBJ.yt == "0") {
+    } else {
+        currSeriesArr.push(tTName);
+    currtMSstrS += " " + TMPnOBJ.yt;
+    }
+    currtMSstrS += "</span></div>"
+    
+    
+    } else {
+    currtMSstrS += "</div>"
+     
+    tJSstr = "JSSHOP.ui.tglPrefModule('dvTglMD" + gkey + "','dvMD" + gkey + "','tglMD" + gkey + "');";
+    currtMSstrS += "<div class=\"crsrPointer\" onclick=\"javascript:" + tJSstr + "\"><table style=\"width: 95%\" class=\"collection\">";
+    currtMSstrS += "<tr><td><strong>&nbsp;" + tTName + "</strong></td>";
+    currtMSstrS += "<td><div id=\"dvTglMD" + gkey + "\" class=\"icnbtn crsrPointer\" nowrap=\"nowrap\" style=\"float:right\">";
+    currtMSstrS += "<i class=\"small-material-icons\" title=\"expand_more\">&#xe5cf;</i></div></td></tr></table></div>";
+    
+    
+    if(currPUrlObj.part) {
+    tJSMstr += "JSSHOP.shared.doPartsSearch('inpTParts');";
+    } 
+    currtMSstrS += "<div style=\"display:none;visibility:hidden\" class=\"collection\" id=\'dvMD" + gkey + "'\">";
+    currtMSstrS += "<div onclick=\"javascript:" + tJSMstr + "\" class=\"collection-item crsrPointer\">" + tprtyN + "<br> <span class=\"txtSmall txtBold txtClrDlg\">" + TMPnOBJ.yf + "  -&gt; ";
+    if(TMPnOBJ.yt == "0") {
+    } else {
+    currtMSstrS += " " + TMPnOBJ.yt;
+    }
+    
+    currtMSstrS += "</span></div>";
+    
+    }
+    tLastN = tTName;
+    }
+    }
+   
+    
+    tPYS = "<br><div class=\"bkgdClrNrml\"  style=\"text-align:center;margin:6px;\">";
+    // create a div string with the current make name
+    tPYS += "<div class=\"txtSMall txtBold txtClrTtl\">" + currPUrlObj.make + "</div>";
+    tPYS += "<div style=\"float:left\"><img src=\"images/mlogos/" + currPUrlObj.make.toLowerCase().replace(" ", "-") + "-logo.png\" style=\"max-width:30px;max-height:30px;\"></img></div>";
+    
+    tPYS += "<div class=\"txtBold txtClrHdr\">" + stxt[82] + " " + stxt[103] + ":</div>";
+    
+    for (i = 0; i < 3; i++) {
+        tLpdIDstr = currSeriesArr[Math.floor(Math.random() * currSeriesArr.length)];
+    
+      tPYS += " <span class=\"txtSmall txtClrTtl\">" + tLpdIDstr + "</span> ";   
+     
+    }
+    tPYS += "...";
+    
+    // create a div string with style float right with the curren make image logo
+    
+    // 
+    tPYS += "</div>";
+    JSSHOP.ui.popAndFillLbox(tPYS + currtMSstrS);
+    
+    // alert(currtMSstrS);
+    };
+    
+    function doNill() {
+        tNill = "nill";
+    // alert("doNill");
+    }
+    
+    JSSHOP.shared.doPartsPop = function() {
+    tCatArrStr = "";
+    
+    tCatArrStr += "<div class=\"crsrPointer\"><table style=\"width: 100%\" class=\"bigtable bkgdClrNrml brdrClrHdr txtBold txtBig\">";
+    tCatArrStr += "<tr><td><strong>&nbsp;" + stxt[512] + "</strong></td></tr></table></div>";
+    
+    
+     
+    
+    tEPobj = currPartsObj;
+    tPPobj = tEPobj.pcats;
+    
+     
+    
+    
+    
+    for(var gkey in tPPobj) {
+    // tCatArrStr +=  "<br>";
+    tDynMunuObj = null;
+    tDynMunuObj = "";
+    tDynMunuObj = {};
+    tDynMunuObj._id = gkey;
+    tDynMunuObj.cat_rtype = "5";
+    tDynMunuObj.cat_uid = "1";
+    tDynMunuObj.cat_coid = "0";
+    tDynMunuObj.cat_pid = "0";
+    tDynMunuObj.cat_title = tPPobj[gkey];
+    tDynMunuObj.cat_desc = tPPobj[gkey];
+    tDynMunuObj.cat_vala = "1";
+    tDynMunuObj.cat_valb = "10001";
+    tDynMunuObj.cat_dadded = "10001";
+    currDynMenuArr.push(tDynMunuObj);
+    currPPrtCatArr.push(gkey + ":" + tPPobj[gkey]);
+    tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPC" + gkey + "','dvPC" + gkey + "','tglPrts" + gkey + "');";
+    
+    tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\" class=\"crsrPointer\" onclick=\"javascript:" + tJSstr + "\"><table  class=\"collection\"  cellpadding=\"0px\" cellspacing=\"0px\">";
+    tCatArrStr += "<tr><td><img src=\"images/misc/" + gkey + ".gif\" class=\"icnsmlbtn\"></td>";
+    tCatArrStr += "<td class=\"txtBold\" style=\"word-wrap:break-word;word-break: break-word;text-align: left;width:100%\">&nbsp;" + tPPobj[gkey] + "</td>";
+    
+    tCatArrStr += "<td><div id=\"dvTglPC" + gkey + "\" class=\"icnbtn crsrPointer\"  style=\"float:right\">";
+    tCatArrStr += "<i class=\"small-material-icons\" title=\"expand_more \">&#xe5cf;</i></div></td></tr></table></div>";
+    
+    // javascript:JSSHOP.ui.tglPrefModule('dvTglPCpc1','dvPCpc1','tglPrtspc1')
+    
+    
+    
+    
+    
+    if(tEPobj.pprts[gkey].pts){
+    tCatArrStr += "<div style=\"display:none;visibility:hidden;word-wrap:break-word;word-break: break-word;\" class=\"collection\" id=\"dvPC" + gkey + "\">";
+    
+    
+    
+    
+    tCatPtsobj = tEPobj.pprts[gkey].pts;
+    for(var pcgkey in tCatPtsobj) {
+    
+    // currCstmQstr += " " + tCatPtsobj[pcgkey].n;
+    tmpFPSstr = "&part=" + tCatPtsobj[pcgkey].n + "&prti=" + tCatPtsobj[pcgkey].pi + "&q=" + encodeURIComponent(currCstmQstr + " " + tCatPtsobj[pcgkey].n);
+     
+    // tUtoL = tCatUStr + "&part=" + tCatPtsobj[pcgkey].n + "&prti=" + tCatPtsobj[pcgkey].pi + "&pid=aa-show-part&q=" + currCstmQstr + " " + encodeURIComponent(tCatPtsobj[pcgkey].n);
+    tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\"><a  class=\"collection-item\" href=\"javascript:document.location.href=JSSHOP.shared.doPartDynL('" + tCatPtsobj[pcgkey].id + "','" + tCatPtsobj[pcgkey].n + "');\" class=\"collection-item crsrPointer\">" + tCatPtsobj[pcgkey].id + " : " + tCatPtsobj[pcgkey].n + "</a></div>";
+    // tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\" onclick=\"javascript:eindex('aa-show-part','" + tUtoL + "');\" class=\"collection-item crsrPointer\">" + tCatPtsobj[pcgkey].id + " : " + tCatPtsobj[pcgkey].n + "</div>";
+    }
+    }
+    tCatArrStr += "</div>";
+    }
+    
+    
+    
+    JSSHOP.ui.popAndFillLbox(tCatArrStr);
+    };
+    
+    
+
+/* to delete
+
+    JSSHOP.ui.getBSdropDstr = function(tBBSSObj) {
+        tDDelem = document.getElementById(tBBSSObj.fld);
+        tBSDDLayStr = "<div class=\"form-group row\">";
+        tBSDDLayStr += "<ul class=\"nav nav-pills\">";
+        tBSDDLayStr += "<li class=\"nav-item dropdown\">";
+        tBSDDLayStr += "<table><tr><td><a class=\"nav-link dropdown-toggle txtSmall txtClrDlg\" data-bs-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-expanded=\"false\">" + tBBSSObj.lbl + "</a>";
+        tBSDDLayStr += "<ul class=\"dropdown-menu brdrClrHdr\">";
+        for (var key in tBBSSObj.kvpObj) {
+            tBSDDLayStr += "<li><a class=\"dropdown-item\"   href=\"javascript:" + tBBSSObj.cb + "('" + tBBSSObj.fld + "', '" + key + "','" + tBBSSObj.kvpObj[key] +  "');\">" + tBBSSObj.kvpObj[key] + "</a></li>";
+        }
+        tBSDDLayStr += "</ul></td>";
+        if(tBBSSObj.horvert == "vertical") {
+        tBSDDLayStr += "</tr><tr>";
+        }
+        tBSDDLayStr += "<td><div id=\"tdDD" + tBBSSObj.fld + "\" class=\"slmtable bkgdClrNrml txtBold txtClrNrml\">";
+        tBSDDLayStr += tBBSSObj.kvpObj[tDDelem.value];
+        tBSDDLayStr += "</div></td>";
+        tBSDDLayStr += "</tr></table>";
+        tBSDDLayStr += "</li>";
+        tBSDDLayStr += "</ul>";
+        tBSDDLayStr += "</div>";
+        return tBSDDLayStr;
+        };
+
+
+  JSSHOP.ui.getBSdropDstr = function(theElid, theDDlabel, theDDobj, theDDcb) {
+    tDDelem = document.getElementById(theElid);
+
+  
+  
+    tBSDDLayStr = "<div class=\"form-group row\">";
+    tBSDDLayStr += "<ul class=\"nav nav-pills\">";   
+    tBSDDLayStr += "<li class=\"nav-item dropdown\">";
+    tBSDDLayStr += "<table><tr><td><a class=\"nav-link dropdown-toggle txtSmall txtClrDlg\" data-bs-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-expanded=\"false\">" + theDDlabel + "</a>";
+    tBSDDLayStr += "<ul class=\"dropdown-menu brdrClrHdr\">";
+    for (var key in theDDobj) {
+        tBSDDLayStr += "<li><a class=\"dropdown-item\"   href=\"javascript:" + theDDcb + "('" + theElid + "', '" + key + "','" + theDDobj[key] +  "');\">" + theDDobj[key] + "</a></li>";
+    }
+ 
+    tBSDDLayStr += "</ul></td></tr>";
+    tBSDDLayStr += "<tr><td><div id=\"tdDD" + theElid + "\" class=\"slmtable bkgdClrNrml txtBold txtClrNrml\">";
+    tBSDDLayStr += theDDobj[tDDelem.value];
+    tBSDDLayStr += "</div></td>";
+    tBSDDLayStr += "</tr></table>";
+    tBSDDLayStr += "</li>";
+    tBSDDLayStr += "</ul>";
+    tBSDDLayStr += "</div>";
+    return tBSDDLayStr;
+  };
+
+   */

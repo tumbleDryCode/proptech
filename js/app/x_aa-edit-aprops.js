@@ -72,7 +72,7 @@ var setUEdtPrpList = function(a,rfb,c) {
     // atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-item', 'pid=aa-edit-item&itemid=" + ts._id + "&cid=" + ts.i_coid + "&catid=" + ts.i_catid + "');\"><div class=\"crsrPointer\">" + ts._id + "</div></a></td>";
     tSTstr = "<tr>";
     tSTstr += "<td style=\"text-align: left;position: sticky; left: 0; z-index: 3;background-color: #FFFFFF; \"  class=\"dtd\"><a href=\"javascript:eindex('aa-edit-prop', 'pid=aa-edit-prop&prpid=" + apropID + "');\"><div class=\"crsrPointer\">" + apropID + "</div></a></td>";
-    tSTstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-pdetail', 'pid=aa-pdetail&prpid=" + apropID + "');\">" + aprpTitle + "</a></td>";
+    tSTstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-show-prop', 'pid=aa-show-prop&prpid=" + apropID + "');\">" + aprpTitle + "</a></td>";
     tSTstr += "<td style=\"text-align: left\">" + aprpPrice + "</td>";
     tSTstr += "<td style=\"text-align: left\">" + tdaprpType + "</td>";
     tSTstr += "<td style=\"text-align: left\">" + tcutLocat + "</td>";
@@ -182,9 +182,10 @@ fnishCntLoad = function() {
  //  alert('fnishCntLoad');
  tmpDOqs = null;
 tmpDOqs = {};
-tmpDOqs["ws"] = "where uid=?";
-tmpDOqs["wa"] = [quid];
+tmpDOqs["ws"] = "where _id>?";
+tmpDOqs["wa"] = [0];
 tmpDOqs["l"] = 45;
+
 oia = getNuDBFnvp("property",5,null,tmpDOqs);
  doQComm(oia["rq"], null, "setUEdtPrpList");
 return dmyFnishCntLoad;

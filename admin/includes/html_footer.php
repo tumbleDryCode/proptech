@@ -186,6 +186,12 @@
 <input type="hidden" name="totalfloor" id="totalfloor" value="5" data-prval="disnull">
 <input type="hidden" name="pdadded" id="pdadded" value="5" data-prval="disnull">
 </form>
+
+<form name="frmDyno">
+<input type="hidden" name="t" id="t" value="123" data-prval="disnull">
+<input type="hidden" name="f" id="f" value="5" data-prval="disnull">
+<input type="hidden" name="q" id="q" value="5" data-prval="disnull">
+</form>
 </div>
 
 

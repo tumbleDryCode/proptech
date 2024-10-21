@@ -536,12 +536,13 @@ color: #939393;
 .bkgdClrTtl {background-color: #FFF8F8;}
 .bkgdClrWhite {background-color: #FFFFFF;}
 .bkgdClrDlg {background-color: rgb(169,199,216);}
-.bkgdClrAtch {background-color: rgb(240,240,240);}
+.bkgdClrAtch {background-color: rgb(180, 185, 236);}
 .bkgdClrLRed {background-color: rgb(255,196,196);}
 .bkgdClrRed {background-color: rgb(255,0,0);}
 .bkgdClrGreen {background-color: rgb(0,255,0);}
 .bkgdClrDGreen {background-color: rgb(10,137,10);}
 .bkgdClrCollHdr {background-color: rgb(249,249,251);}
+.bkgdClrTrnsp {background-color: rgba(255,255,255,0.5);}
 
 
 
@@ -1525,6 +1526,9 @@ nav ul a span.badge {
   display: inline-block;
   float: left;
 }
+.clsPcntnt img {
+max-width: 95%;
+}
 
 
 
@@ -1681,6 +1685,20 @@ max-width: 98%;
 }
 
 
+.icnRndDSmUser {
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+ 
+	-khtml-border-radius: 50%;
+ 
+  min-width:36px;
+  min-height:36px;
+  max-height:38px;
+  max-width:38px;
+}
 
 
 /*   datatable stuff */
@@ -1758,3 +1776,5 @@ overflow: auto;
 overflow: auto; height: 100%; 
 }
 }
+
+ 

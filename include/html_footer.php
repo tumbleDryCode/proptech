@@ -6,7 +6,7 @@
 <script src="js/layerslider.transitions.js"></script> 
 <script src="js/layerslider.kreaturamedia.jquery.js"></script> 
  --> <!--
-<script src="js/popper.min.js"></script>
+
 <script src="js/bootstrap.min.js"></script>
 <script src="js/owl.carousel.min.js"></script>
 <script src="js/tmpl.js"></script>
@@ -25,9 +25,9 @@
 <input type="hidden" name="k_rtype" id="k_rtype" value="5" data-prval="disnull">
 <input type="hidden" name="k_userid" id="k_userid" value="5" data-prval="disnull">
 <input type="hidden" name="k_coid" id="k_coid" value="" data-prval="disnull">
-<input type="hidden" name="k_category" id="k_category" value="" data-prval="disnull">
+<input type="hidden" name="k_category" id="k_category" value="Select" data-prval="disnull">
 <input type="hidden" name="k_title" id="k_title" value="" data-prval="disnull">
-<input type="hidden" name="k_matter" id="k_matter" value="matter" data-prval="disnull">
+<input type="hidden" name="k_matter" id="k_matter" value="" data-prval="disnull">
 <input type="hidden" name="k_privacy" id="k_privacy" value="aa" data-prval="disnull">
 <input type="hidden" name="k_dadded" id="k_dadded" value="" data-prval="disnull">
 </form>
@@ -60,15 +60,16 @@
 <input type="hidden" name="u_name" id="u_name" value="" data-prval="disnull">
 <input type="hidden" name="u_fullname" id="u_fullname" value="" data-prval="disnull">
 <input type="hidden" name="u_location" id="u_location" value="" data-prval="disnull">
-<input type="hidden" name="u_region" id="u_region" value="" data-prval="disnull">
-<input type="hidden" name="u_loclat" id="u_loclat" value="" data-prval="disnull">
-<input type="hidden" name="u_loclng" id="u_loclng" value="" data-prval="disnull">
+<input type="hidden" name="u_region" id="u_region" value="Lisboa" data-prval="disnull">
+<input type="hidden" name="u_loclat" id="u_loclat" value="38.71667" data-prval="disnull">
+<input type="hidden" name="u_loclng" id="u_loclng" value="-9.13333" data-prval="disnull">
 
 <input type="hidden" name="u_email" id="u_email" value="" data-prval="disnull">
 <input type="hidden" name="u_pass" id="u_pass" value="" data-prval="disnull">
 <input type="hidden" name="u_header" id="u_header" value="" data-prval="disnull">
 <input type="hidden" name="u_desc" id="u_desc" value="" data-prval="disnull">
 <input type="hidden" name="u_icon" id="u_icon" value="default_user.png" data-prval="disnull">
+<input type="hidden" name="u_privacy" id="u_privacy" value="public" data-prval="disnull">
 
 <input type="hidden" name="u_socauthtype" id="u_socauthtype" value="5" data-prval="disnull">
 <input type="hidden" name="u_socauthid" id="u_socauthid" value="5" data-prval="disnull">
@@ -181,7 +182,28 @@
 <input type="hidden" name="ms_dadded" id="ms_dadded" value="" data-prval="disnull">
 </form>
 
+ 
+<form name="qposts">
+<input type="hidden" name="_id" value="" data-prval="disnull">
+<input type="hidden" name="p_rtype" id="p_rtype" value="5" data-prval="disnull">
+<input type="hidden" name="p_uid" id="p_uid" value="5" data-prval="disnull">
+<input type="hidden" name="p_cat" id="p_cat" value="def" data-prval="disnull">
+<input type="hidden" name="p_ptype" id="p_ptype" value="ppost" data-prval="disnull">
+<input type="hidden" name="p_ppage" id="p_ppage" value="main" data-prval="disnull">
+<input type="hidden" name="p_pos" id="p_pos" value="top" data-prval="disnull">
 
+<input type="hidden" name="p_title" id="p_title" value="" data-prval="disnull">
+<input type="hidden" name="p_content" id="p_content" value="" data-prval="disnull">
+<input type="hidden" name="p_image" id="p_image" value="default.jpg" data-prval="disnull">
+<input type="hidden" name="p_privacy" id="p_privacy" value="members" data-prval="disnull">
+<input type="hidden" name="p_author" id="p_author" value="user" data-prval="disnull">
+<input type="hidden" name="p_stat" id="p_stat" value="normal" data-prval="disnull">
+<input type="hidden" name="p_vars" id="p_vars" value="5" data-prval="disnull">
+<input type="hidden" name="p_ready" id="p_ready" value="5" data-prval="disnull">
+<input type="hidden" name="p_vala" id="p_vala" value="" data-prval="disnull">
+<input type="hidden" name="p_dmodified" id="p_dmodified" value="" data-prval="disnull">
+<input type="hidden" name="p_dadded" id="p_dadded" value="" data-prval="disnull">
+</form>
 <form name="property">
 <input type="hidden" name="_id" value="" data-prval="disnull">
 <input type="hidden" name="ptitle" id="ptitle" value="Titulo.. Moradia... " data-prval="disnull">
@@ -194,7 +216,7 @@
 <input type="hidden" name="balcony" id="balcony" value="1" data-prval="disnull">
 <input type="hidden" name="kitchen" id="kitchen" value="1" data-prval="disnull">
 <input type="hidden" name="hall" id="hall" value="1" data-prval="disnull">
-<input type="hidden" name="floor" id="floor" value="2" data-prval="disnull">
+<input type="hidden" name="pfloors" id="pfloors" value="2" data-prval="disnull">
 <input type="hidden" name="size" id="size" value="125" data-prval="disnull">
 <input type="hidden" name="price" id="price" value="199.000" data-prval="disnull">
 <input type="hidden" name="pstreet" id="pstreet" value="Avenida 25 Abril" data-prval="disnull">

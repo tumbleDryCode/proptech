@@ -1,5 +1,5 @@
 <div id="lightbox" class="lightbox"   onclick="javascript:JSSHOP.ui.closePopMenus();">
-</div> <div id="lightbox_content" class="rtable bkgdClrWhite" style="min-height:400px;min-width:350px;z-index: 2147483647;position:fixed;top:-700px;left:-700px;word-wrap: break-word;max-width:80%;margin: 0 auto">
+</div> <div id="lightbox_content" class="rtable bkgdClrWhite bottom-shadow" style="min-height:400px;min-width:50%;z-index: 2147483647;position:fixed;top:-700px;left:-700px;word-wrap: break-word;max-width:80%;margin: 0 auto;">
       </div>
 
 
@@ -91,20 +91,25 @@
      <li id="ahMenuIcon"  style="padding:0px;margin:0px;display:inline;float:right;"><div class="crsrPointer hoover" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;  text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;">
      <i class="material-icons" style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="home" title="home"  onclick="javascript:JSSHOP.ui.toggleVisibility('navbarSupportedContent');">
      &#xe241;</i></div></li> 
+
+     <li id="ahAccnt" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:eindex('aa-edit-user','pid=aa-edit-user&cit=y');" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="account" title="account"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrHdr', 'material-icons crsrPointer hoover', function(){void(0);}, 300);">
+     &#xe7fd;</i></a></li> 
  <!-- <li id="ahHomeIcon" style="padding:0px;margin:0px;display:inline;float:right;"><a href="index.html" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;  text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons" style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="home" title="home">
      &#59530;</i></a></li>--> 
 
   <li id="ahDeRecent" style="padding:0px;margin:0px;display:inline;float:right;"><div class="crsrPointer hoover" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;">
   <i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="ahDeRecent" title="ahDeRecent"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrRed', 'material-icons crsrPointer hoover', function(){JSSHOP.ui.popAndFillLbox(doFavoritesRndr('y', 'y', 'y', 60).replace(/::/g, '<br>'));}, 300);">
  &#59517;</i></div></li> 
-      <!--       
+ <li id="ahSearch" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:eindex('aa-show-search','pid=aa-show-search&cit=y');" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="search" title="search"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrHdr', 'material-icons crsrPointer hoover', function(){void(0);}, 300);">
+ &#xe8b6;</i></a></li>
+        <!--    
   <li id="ahAccnt" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:void(0);" onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'kcoll-menu-item','collection-item txtClrRed', function(){eindex('aa-edit-user', 'pid=aa-edit-user&cit=y')}, 20);" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="account" title="account">
   &#xe7fd;</i></a></li> 
-                -->
-                <li id="ahAccnt" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:eindex('aa-edit-user','pid=aa-edit-user&cit=y');" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="account" title="account"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrHdr', 'material-icons crsrPointer hoover', function(){void(0);}, 300);">
-  &#xe7fd;</i></a></li> 
+               
+               
+    
    <li id="ahMsgsIcon" style="padding:0px;margin:0px;display:inline;float:left;" class="newNavCls"><span id="spnMsgsNotify" class="icnbtn slmtable txtSmall txtClrWhite" style="float:right"></span><div class="crsrPointer hoover" id="dvBtnNavMsg" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="Messages" title="Messages"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrHdr', 'material-icons crsrPointer hoover', function(){eindex('aa-show-messages', 'pid=aa-show-messages')}, 300);"  >
-  &#57527;</i></div></li>
+  &#57527;</i></div></li>   -->
 </ul>
  
 </div>
@@ -132,8 +137,8 @@
         <div class="txtClrWhite bg-secondary" id="navbarSupportedContent" style="visibility:hidden;display:none;min-width:300px;max-width:350px;float:right;position:fixed;z-index: 2147483649;max-height:90%;overflow:scroll;">
                                     <ul>
                                         <li class="nav-item"> <a class="nav-link" href="./" role="button" aria-haspopup="true" aria-expanded="false">Home</a></li>
-										<li class="nav-item"> <a class="nav-link" href="property.php"><ti data-ison="stxt[940]" data-desc="btn_properties">Properties</ti></a> </li>					 
-										<li class="nav-item"> <a class="nav-link" href="search.php"><ti data-ison="stxt[936]" data-desc="btn_searchprops">Search Properties</ti></a> </li>
+										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-featured','pid=aa-show-featured');"><ti data-ison="stxt[940]" data-desc="btn_properties">Properties</ti></a> </li>					 
+										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-search','pid=aa-show-search&cit=y');"><ti data-ison="stxt[936]" data-desc="btn_searchprops">Search Properties</ti></a> </li>
 										<!-- <li class="nav-item"> <a class="nav-link" href="agent.php"><ti data-ison="stxt[900]" data-desc="btn_agentes">Agentes</ti></a> </li> -->
                                         <li class="nav-item"> <a class="nav-link" href="index.html?pid=aa-contactus"><ti data-ison="stxt[902]" data-desc="btn_contacts">Contacts</ti></a> </li>
 										
@@ -143,8 +148,9 @@
 											 <ti data-ison="stxt[56]" data-desc="btn_account">Account</ti>
 											<ul class="">
 												<!-- <li class="nav-item"> <a class="nav-link" href="profile.php"><ti data-ison="stxt[903]" data-desc="btn_profile">Profile</ti></a> </li> -->
-                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-add-prop','pid=aa-add-prop');JSSHOP.ui.toggleVisibility('navbarSupportedContent');"><ti data-ison="stxt[916]" data-desc="btn_addprop">Subit Property</ti></a> </li>
-												 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-uprops', 'pid=aa-edit-uprops');JSSHOP.ui.toggleVisibility('navbarSupportedContent');"><ti data-ison="stxt[905]" data-desc="btn_yourprops">Your Properties</ti></a> </li>
+                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-add-prop','pid=aa-add-prop');"><ti data-ison="stxt[916]" data-desc="btn_addprop">Subit Property</ti></a> </li>
+												 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-uprops', 'pid=aa-edit-uprops');"><ti data-ison="stxt[905]" data-desc="btn_yourprops">Your Properties</ti></a> </li>
+                                                    <li class="nav-item"> <table><tr><td><a class="nav-link" href="javascript:eindex('aa-edit-posts', 'pid=aa-edit-posts');"><ti data-ison="stxt[100]" data-desc="btn_yourinfo">Update</ti></a></td><td><a class="nav-link" href="javascript:eindex('aa-add-post', 'pid=aa-add-post');"><ti data-ison="stxt[107]" data-desc="btn_create">Create</ti></a></td></tr></table></li>
 												<li class="nav-item"> <a class="nav-link" href="logout.php">Logout</a> </li>	
 											</ul>
                                         </li>
@@ -153,7 +159,7 @@
 
 										<?php } else { ?>
 										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-user','pid=aa-edit-user&cit=y');">Login</a> </li>
-                                        <li class="nav-item"> <a class="nav-link"  href="javascript:eindex('aa-edit-user','pid=aa-edit-user&cit=y');"><ti data-ison="stxt[961]" data-desc="btn_register">Register</ti></a></li>
+                                        <li class="nav-item"> <a class="nav-link"  href="javascript:eindex('register','pid=register&cit=y');"><ti data-ison="stxt[961]" data-desc="btn_register">Register</ti></a></li>
 										<?php } ?>
 
 
@@ -170,8 +176,8 @@
 											 <ti data-ison="stxt[83]" data-desc="btn_account">Admin</ti>
 											<ul class="">
 												<!-- <li class="nav-item"> <a class="nav-link" href="profile.php"><ti data-ison="stxt[903]" data-desc="btn_profile">Profile</ti></a> </li> -->
-                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-aprops','pid=aa-edit-aprops');JSSHOP.ui.toggleVisibility('navbarSupportedContent');"><ti data-ison="stxt[901]" data-desc="btn_addprop">Properties</ti></a> </li>
-												 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-ausers', 'pid=aa-edit-ausers');JSSHOP.ui.toggleVisibility('navbarSupportedContent');"><ti data-ison="stxt[80]" data-desc="btn_yourprops">Users</ti></a> </li>
+                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-aprops','pid=aa-edit-aprops');"><ti data-ison="stxt[901]" data-desc="btn_addprop">Properties</ti></a> </li>
+												 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-ausers', 'pid=aa-edit-ausers');"><ti data-ison="stxt[80]" data-desc="btn_yourprops">Users</ti></a> </li>
 											</ul>
                                         </li>
     </ul>

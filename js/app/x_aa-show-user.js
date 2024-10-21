@@ -244,7 +244,7 @@ return tmpRetStr;
 var setUiconImgs = function(theAIa, theAIb, theAIc) {
 	try {
         console.log("setUiconImgs: " + theAIa + " " + theAIb + " " + theAIc);
-        imgIedit.src = "images/user/" + JSSHOP.shared.getFrmFieldVal("quser", "u_icon", "default_user.png");
+         imgIedit.src = "images/user/" + JSSHOP.shared.getFrmFieldVal("quser", "u_icon", "default_user.png");
 
     if(theAIb.indexOf("_id") != -1) {
 
@@ -280,7 +280,7 @@ var getUiconImgs = function() {
     tmpFobj = null;
     tmpFobj = {};
     tmpFobj["ws"] = "where m_uid=? and  m_pid=? and m_rtype=?";
-    tmpFobj["wa"] = [quid, quid, 5];
+    tmpFobj["wa"] = [tuid, tuid, 5];
     tmpFobj["o"] = "m_vala desc";
     oi = getNuDBFnvp("qmedia", 5, null, tmpFobj);
     doQComm(oi["rq"], null, "setUiconImgs");
@@ -305,9 +305,9 @@ var finishUPupload = function(theMMum) {
         // document.getElementById('dvUImgs').style.backgroundImage="url(images/users/s_thumb" + theMMum + ")";    
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_file_thumb", "s_thumb" + theMMum);
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", theMMum);
-        JSSHOP.shared.setFrmFieldVal("qmedia", "m_coid", quid);
-        JSSHOP.shared.setFrmFieldVal("qmedia", "m_uid", quid);
-        JSSHOP.shared.setFrmFieldVal("qmedia", "m_pid", quid);
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_coid", tuid);
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_uid", tuid);
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_pid", tuid);
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_dadded", JSSHOP.getUnixTimeStamp());
 
         tmpDOs = null;
@@ -326,8 +326,17 @@ var finishUPupload = function(theMMum) {
 function aFillUsrFrm(a,b,c) {
     fuArr = null;
     fuArr = JSON.parse(b);
+    JSSHOP.shared.setFrmVals("quser",fuArr[0],function() {void(0)});
 
     JSSHOP.shared.setDynFieldVals(fuArr[0],"tmp_");
+    tmpDOs = null;
+tmpDOs = {};
+tmpDOs["ws"] = "where k_userid=? and k_coid=? and k_rtype=?";
+tmpDOs["wa"] = [tuid,tuid,5]; 
+oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
+doQComm(oi["rq"], "y", "setCurrCoLinks");
+getUiconImgs();
+getUProps();
 }
 
 var dmyFnishCntLoad = fnishCntLoad;
@@ -351,12 +360,6 @@ if(currUrlArr.tuid) {
  
 // JSSHOP.shared.addCurrSlctObj(svftObj["usercat"], tUcat, u_cat.value, "noQvalue", "noQvalue");
  
-tmpDOs = null;
-tmpDOs = {};
-tmpDOs["ws"] = "where k_userid=? and k_coid=? and k_rtype=?";
-tmpDOs["wa"] = [tuid,tuid,5]; 
-oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
-doQComm(oi["rq"], "y", "setCurrCoLinks");
 
   
 
@@ -367,7 +370,7 @@ doQComm(oi["rq"], "y", "setCurrCoLinks");
 if(currUrlArr.umsg && currUrlArr.umsg == "remove") {
     dvPartLinks.innerHTML = "<div class=\"txtBold txtClrRed\">" + stxt[824] + "</div>";
 }
-getUiconImgs();
+
 
 } else {
     alert("no user id in url");
@@ -387,10 +390,8 @@ var aEditUser = function() {
  
  
 
-
 function rndrUProps(aaw,aww,cww) {
-    console.log('doMPropsList - aww: ' + aww);
-     
+console.log('doMPropsList - aww: ' + aww);
 istrt = 0;
 iprplen = 0;
 fullPrpLstA = JSON.parse(aww);
@@ -525,7 +526,7 @@ function getUProps() {
     tmpDOs = null;
     tmpDOs = {};
     tmpDOs["ws"] = "where uid=?";
-    tmpDOs["wa"] = [tuid];
+    tmpDOs["wa"] = [currUrlArr.tuid];
     tmpDOs["l"] = 5;
     oi = getNuDBFnvp("property",5,null,tmpDOs);
     doQComm(oi["rq"], "y", "rndrUProps");
@@ -622,7 +623,7 @@ dvCoLinks.innerHTML = rcL;
 if(za == "ya") {
     setTimeout("JSSHOP.ui.setCBBClickClr(dvCoLinks,'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr bkgdClrWhite', function(){JSSHOP.ui.closeLbox()})", 1000);
 }
-getUProps();
+
  
 // dvCoLinks.innerHTML = JSON.stringify(currCoLinksArr);
 };

@@ -49,7 +49,8 @@ var currCartIArr = [];
 var currMsgsIArr = [];
 var currMediaBtnPrfx = "";
 var currMediaBtnCB = "finishImgUload";
-var currMediaFldr = "pimgs";
+var currMediaFldr = "images/property";
+var currPrpImgsFldr = "images/property";
 var currCartStr = "";
 var currCartIttl = 0;
 var currCartTtl = 0;
@@ -147,6 +148,14 @@ var currCoCatsArr = [];
 var currCoCatsStr = ":";
 var currMediaID = 0;
 var currCoDcidId = 0;
+var currFBPlgObj = {};
+var currPstsUsrArr = [];
+var currPstsPrpsArr = [];
+var currSlctdUsrObj = {};
+var currSlctdPrpsObj = {};
+var currSwpCnfgObj = {};
+var currSwpCnfgArr = [];
+
 var nuDW = function(theElem) { 
 if(theElem.getAttribute("data-isscript") != null) {
 try {

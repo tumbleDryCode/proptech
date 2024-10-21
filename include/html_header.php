@@ -1,6 +1,7 @@
 <!-- Required meta tags -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="initial-scale=1, user-scalable=no, maximum-scale=1">
+<script src="js/bootstrap5.2/bootstrap.bundle.min.js"  language="javascript" type="text/javascript"></script>
 
 <!--<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
  Meta Tags -->
@@ -24,6 +25,9 @@
 <!--	Plugin Css Link
 	======================================================== -->
 <link href="js/bootstrap5.2/bootstrap.min.css" rel="stylesheet"> 
+
+
+
 <link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
 <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="css/layerslider.css"> 
@@ -32,8 +36,7 @@
 <link rel="stylesheet" type="text/css" href="css/login.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/x_bs-fixes.css">
-
-
+ 
 	<script src="js/app/lz-string.js" language="javascript" type="text/javascript"></script>
 	<script src="js/app/x_allinit.js" type="text/javascript"></script> 
 <script>
@@ -45,6 +48,7 @@ echo "<scr" . "ipt src=\"js/app/aa-" .  $usrlang . ".js\"></script>";
  <link href="js/thirdp/swiper-bundle.min.css" rel="stylesheet"> 
  
    <script src="js/thirdp/swiper-bundle.min.js" type="text/javascript"></script>    <script src="js/jquery.min.js"></script> 
+   <script src="js/thirdp/html2canvas.js" type="text/javascript"></script>    <script src="js/jquery.min.js"></script> 
 
 
 <script src="js/leaflet/leaflet.js" type="text/javascript"></script>

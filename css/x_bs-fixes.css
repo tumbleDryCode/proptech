@@ -64,8 +64,8 @@ btn-success {
 }
 
 .dropdown-toggle, .dropdown-toggle-split {
-	font-weight: bold;
-	font-size: 18px;
+	/*font-weight: bold;
+	font-size: 18px; */
 	padding-right:10px;
 	text-align: absmiddle;
 	vertical-align: absmiddle;
@@ -73,17 +73,12 @@ btn-success {
 .dropdown-toggle-split {
 	color: #DEDEDE;
 }
-.dropdown-toggle {
-	float: right;
-}
 
 .modal-backdrop-bg {
 	    background:rgba(236, 236, 255, .6);
 }
  
-.alert {
  
-}
 
 @media screen and (max-width: 2000px) {
  
@@ -142,11 +137,14 @@ btn-success {
 }
 
 .accordion-body {
-  padding: 2px;
+  padding: 12px;
 }
 
 .accordion-item {
   border: 0px;
+  background-color: #FFFFFF;
+  
+  border: 1px solid rgb(169,199,216);
 }
 
 .container {
@@ -173,6 +171,39 @@ btn-success {
   color: #0d1432;
 }
 
+.pt-4, .py-4 {
+   padding-top: 3px !important;
+}
+ 
 
+#page-wrapper {
  
+  background-color: #F3F3F3;
  
+}
+ 
+.bottom-shadow {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-toggle, .dropdown-toggle-split {
+  /* font-weight: bold; */
+  font-size: 14px;
+  padding-right: 10px;
+  text-align: absmiddle;
+  vertical-align: absmiddle;
+}
+.nav-link {
+  padding: 5px;
+}
+
+
+table.tfixed {table-layout:fixed; width:250px;}/*Setting the table width is important!*/
+table.tfixed td {overflow:hidden;}/*Hide text outside the cell.*/
+table.tfixed td:nth-of-type(1) {width:20px;}/*Setting the width of column 1.*/
+table.tfixed td:nth-of-type(2) {width:200px;}/*Setting the width of column 2.*/
+
+.img100p {
+	max-width: 100%;
+  max-height: 100%;
+}

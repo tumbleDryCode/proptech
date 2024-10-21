@@ -97,11 +97,25 @@ stxt[96] = "All Users";
 stxt[97] = "Name";
 stxt[98] = "Contactar";
 stxt[99] = "mas detalles";
-
-
-
+stxt[100] = "Updates";
+stxt[101] = "Privacidad";
+stxt[102] = "Mostrar en Paginas:";
 stxt[102] = "Make";
-stxt[104] = "Year";
+stxt[103] = "Tipo de Update";
+stxt[104] = "Posicion";
+stxt[105] = "Autor";
+stxt[106] = "Relevancia";
+stxt[107] = "Crear";
+stxt[108] = "Crear nuevo Update";
+stxt[109] = "Visibilidad";
+stxt[110] = "mas...";
+stxt[111] = "Modelos";
+stxt[112] = "Snippets";
+stxt[113] = "Latitude";
+stxt[114] = "Longitude";
+stxt[115] = "Selecione o tipo de contato ou link";
+
+
 
 // user strings 
 stxt[201] = "First Name";
@@ -203,15 +217,14 @@ stxt[616] = "Edit Drivers"; // Editar conductores
 stxt[617] = "Usuarios"; // Usuarios
 stxt[618] = "Favorites";
 stxt[619] = "List Trips";
-/*
-stxt[620] = "Title, Price...";
-stxt[621] = "Social";
-stxt[622] = "add Social Content";
-*/
-// spanish
 stxt[620] = "Titulo, Precio...";
 stxt[621] = "Social";
 stxt[622] = "Agregar Contenido Social";
+stxt[623] = "editar detalles del perfil";
+stxt[624] = "Agregar título y enlace a su contenido social";
+stxt[625] = "Link-Url de la publicaci\u00f3n o contenido social";
+stxt[626] = "Enlaces actuales:";
+stxt[627] = "Ver Propiedad";
 
 
 // messaging strings
@@ -236,6 +249,16 @@ stxt[811] = "Advertisement and Targeting cookies";
 stxt[812] = "These cookies collect information about how you use the website, which pages you visited and which links you clicked on. All of the data is anonymized and cannot be used to identify you.";
 stxt[813] = "More information";
 stxt[814] = "For any queries in relation to my policy on cookies and your choices, please <a href=\"index.php?pid=aa-contactus\" class=\"cc-link\">contact us</a>.";
+stxt[815] = "Eliminar Cuenta";
+stxt[816] = "Estas seguro de que quieres eliminar tu cuenta?";
+stxt[817] = "Eliminar";
+stxt[818] = "Por favor incluya la direccion de correo electronico que utilizo para registrar su cuenta.";
+stxt[819] = "Tambien puede incluir un mensaje si lo desea.";
+stxt[820] = "Eliminar su cuenta eliminara toda su informacion de la base de datos.";
+stxt[821] = "O puede iniciar sesion y usar el enlace [Eliminar Cuenta] en la configuracion de su cuenta.";
+stxt[822] = "Accion confirmada. Lamentamos verte ir. Si tiene alguna pregunta o inquietud, por favor <a href=\"index.html?pid=aa-contactus\" class=\"cc-link\">contactenos</a>.";
+stxt[823] = "Tambien elimine todos mis listados de tiendas";
+stxt[824] = "Haga clic en el enlace a continuacion para eliminar su cuenta.";
 
 
 
@@ -506,4 +529,91 @@ tUCatObj["4"] = "Consultor";
 // tUCatObj["5"] = "Admin";
 svftObj["usercat"] = tUCatObj;
 
+tUSPrivObj = null;
+tUSPrivObj = "";
+tUSPrivObj = {};
+tUSPrivObj["public"] = "Publico";
+tUSPrivObj["private"] = "Privado";
+tUSPrivObj["members"] = "Membros";
+svftObj["userpriv"] = tUSPrivObj;
+
+/*
+tPstPgsAuthObj = null;
+tPstPgsAuthObj = "";
+tPstPgsAuthObj = {};
+tPstPgsAuthObj["all"] = "All";
+tPstPgsAuthObj["main"] = "Main";
+tPstPgsAuthObj["profile"] = "Profile";
+tPstPgsAuthObj["prop"] = "Properties";
+tPstPgsAuthObj["cont"] = "Contacts";
+tPstPgsAuthObj["about"] = "About";
+svftObj["postpages"] = tPstPgsAuthObj;
+*/
+tPstPgsAuthObj = null;
+tPstPgsAuthObj = "";
+tPstPgsAuthObj = {};
+tPstPgsAuthObj["all"] = "Todas";
+tPstPgsAuthObj["main"] = "Principal";
+tPstPgsAuthObj["profile"] = "Perfil";
+tPstPgsAuthObj["prop"] = "Propiedades";
+tPstPgsAuthObj["cont"] = "Contactos";
+tPstPgsAuthObj["about"] = "Acerca de";
+svftObj["postpages"] = tPstPgsAuthObj;
+
+
+/*
+
+tPostsTypeObj = null;
+tPostsTypeObj = "";
+tPostsTypeObj = {};
+tPostsTypeObj["ppost"] = "Post";
+tPostsTypeObj["pcontent"] = "Content";
+tPostsTypeObj["pimage"] = "Image";
+tPostsTypeObj["pcarousel"] = "Carousel";
+tPostsTypeObj["pmap"] = "Map";
+svftObj["posttype"] = tPostsTypeObj;
+
+tPostsPosObj = null;
+tPostsPosObj = "";
+tPostsPosObj = {};
+tPostsPosObj["top"] = "Top";
+tPostsPosObj["bottom"] = "Bottom";
+svftObj["postpos"] = tPostsPosObj;
+*/
+
+// es strings
+tPostsTypeObj = null;
+tPostsTypeObj = "";
+tPostsTypeObj = {};
+tPostsTypeObj["ppost"] = "Publicacion";
+tPostsTypeObj["pcontent"] = "Contenido";
+tPostsTypeObj["pimage"] = "Imagen";
+tPostsTypeObj["pcarousel"] = "Carrusel";
+tPostsTypeObj["pmap"] = "Mapa";
+svftObj["posttype"] = tPostsTypeObj;
+
+tPostsPosObj = null;
+tPostsPosObj = "";
+tPostsPosObj = {};
+tPostsPosObj["top"] = "Arriba";
+tPostsPosObj["bottom"] = "Abajo";
+svftObj["postpos"] = tPostsPosObj;
+
+tPostsAuthObj = null;
+tPostsAuthObj = "";
+tPostsAuthObj = {};
+tPostsAuthObj["user"] = "Yo";
+tPostsAuthObj["co"] = "Compania";
+tPostsAuthObj["anon"] = "Anonimo";
+tPostsAuthObj["none"] = "Ninguno";
+svftObj["postauth"] = tPostsAuthObj;
  
+tPostsStatObj = null;
+tPostsStatObj = "";
+tPostsStatObj = {};
+tPostsStatObj["normal"] = "Normal";
+tPostsStatObj["featured"] = "Destacado";
+tPostsStatObj["highlight"] = "Resaltar";
+tPostsStatObj["pin"] = "Pin";
+tPostsStatObj["pinhlight"] = "Pin & Resaltar";
+svftObj["poststat"] = tPostsStatObj;

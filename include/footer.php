@@ -25,7 +25,7 @@
                                                 <h4 class="widget-title text-white double-down-line-left position-relative">Quick Links</h4>
                                                 <ul class="hover-text-primary">
                                                     <li><a href="about.php" class="text-white"><ti data-ison="stxt[913]" data-desc="btn_about">About Us</ti></a></li>
-                                                    <li><a href="property.php" class="text-white"><ti data-ison="stxt[914]" data-desc="btn_featured">Featured Property</ti></a></li>
+                                                    <li><a href="javascript:eindex('aa-show-featured','pid=aa-show-featured');" class="text-white"><ti data-ison="stxt[914]" data-desc="btn_featured">Featured Property</ti></a></li>
                                                     <!--
                                                     <li><a href="#" class="text-white"><ti data-ison="stxt[915]" data-desc="btn_member">Become A Member</ti></a></li>
                                                     <li><a href="submitproperty.php" class="text-white"><ti data-ison="stxt[916]" data-desc="btn_addprop">Submit Property</ti></a></li>
@@ -49,10 +49,10 @@
                                                     <li><a href="#" class="text-white"><ti data-ison="stxt[908]" data-desc="btn_statistics">Statistics</ti></a></li>
                                                     -->
 
-                                                    <li><a href="contact.php" class="text-white"><ti data-ison="stxt[912]" data-desc="btn_contact">Contact</ti></a></li>
+                                                    <li><a href="index.html?pid=aa-contactus" class="text-white"><ti data-ison="stxt[912]" data-desc="btn_contact">Contact</ti></a></li>
                                                     <li><a href="https://www.livroreclamacoes.pt/" class="text-white" target="_blank"><ti data-ison="stxt[973]" data-desc="btn_complaint">Report Issue</ti></a></li>
-                                                    <li><a href="terms.php" class="text-white"><ti data-ison="stxt[909]" data-desc="btn_terms">Terms and Condition</ti></a></li>
-                                                    <li><a href="privacy.php" class="text-white"><ti data-ison="stxt[919]" data-desc="btn_privacy">Privacy Policy</ti></a></li>
+                                                    <li><a href="javascript:eindex('aa-terms_privacy','pid=aa-terms_privacy&td=t');" class="text-white"><ti data-ison="stxt[909]" data-desc="btn_terms">Terms and Condition</ti></a></li>
+                                                    <li><a href="javascript:eindex('aa-terms_privacy','pid=aa-terms_privacy&tp=p');" class="text-white"><ti data-ison="stxt[919]" data-desc="btn_privacy">Privacy Policy</ti></a></li>
 
 
 
@@ -113,3 +113,6 @@
             </div>
            
         </footer>
+
+
+  
