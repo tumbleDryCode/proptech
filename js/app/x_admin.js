@@ -143,6 +143,8 @@ function doALI() {
     var doSaveRedir = function(a,b,c) {
     document.location.href = "index.html?pid=" + pid + "&ppid=" + ppid;
     };
+
+
     
        var getTblSortStr = function(theTBhdr, theTBbdy) {
            strFhtml = "<div class=\"tabler\"  style=\"margin: 0 auto;min-width:90%;max-width:95%;\" ><table style=\"margin: 0 auto;min-width:90%;max-width:95%;\" class=\"table table-sm table-striped table-hover txtSmall\" width=\"100%\" cellpadding=\"0px;\"  cellspacing=\"0px;\">";

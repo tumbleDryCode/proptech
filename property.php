@@ -132,3 +132,12 @@ include("config.php");
 </body>
 
 </html>
+
+<?php
+/*
+// write sql statement to create table qlogifleettkt in mysql with the following fields _id, qlogit_rtype, qlogit_vid, qlogit_coid, qlogit_uid, qlogit_tlst, qlogit_notes, qlogit_tractr, qlogit_uco, qlogit_tusr, qlogit_tuid, qlogit_tco, qlogit_tcoid, qlogit_dadded where only qlogit_notes is text and a�� inclided id are integer and the rest are varchar(255) and _id is primary key and auto increment
+create table qlogifleettkt(_id int primary key auto_increment, qlogit_rtype int(12), qlogit_vid int(12), qlogit_coid int(12), qlogit_uid int(12), qlogit_tlst text, qlogit_notes text, qlogit_tractr varchar(64), qlogit_uco varchar(255), qlogit_tusr varchar(255), qlogit_tuid int(12), qlogit_tco varchar(255), qlogit_tcoid int(12), qlogit_dadded varchar(24));
+
+create table qlogifleetfwl(_id int primary key auto_increment, qlogif_rtype int(12), qlogif_vid int(12), qlogif_coid int(12), qlogif_uid int(12), qlogif_fwltype varchar(24), qlogif_vusage varchar(26), qlogif_tractr varchar(64), qlogif_uco int(12), qlogif_tusr varchar(255), qlogif_tuid int(12), qlogif_tco varchar(255), qlogif_tcoid int(12), qlogif_dadded varchar(24));
+*/
+?>

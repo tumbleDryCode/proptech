@@ -1,0 +1,147 @@
+﻿ <table style="width: 100%">
+	 <tr>
+		 <td>
+		 <table style="width: 100%">
+			 <tr>
+				 <td><a href="javascript:html2canvas(tmp_p_content_ifr.contentWindow.document.body).then(function(canvas) { document.body.appendChild(canvas);alert('iscanned');})">
+													Render</a></td>
+				 <td><a href="javascript:html2canvas(tmp_p_content_ifr.contentWindow.document.body).then(function(canvas) { document.body.appendChild(canvas);alert('iscanned');})">
+													Render</a></td>
+			 </tr>
+		 </table>
+		 </td>
+	 </tr>
+	 <tr>
+		 <td>&nbsp;</td>
+	 </tr>
+ </table>
+ <div class="card-body">
+										<div class="row">
+											<div class="col-xl-12">
+									 <div class="form-group row">
+													<label class="col-lg-2 col-form-label"><ti data-ison="stxt[101]" data-desc="btn_privacy">Privacy</ti></label>
+													<div class="col-lg-9">
+<select size="1" name="tmp_p_privacy" id="tmp_p_privacy" class="form-control crsrPointer"  onchange="javascript:doPrivacyChange(this)">
+   
+                  
+                                      </select>													</div>
+												</div>
+												
+												
+												
+												<div class="form-group row">
+													<label class="col-lg-2 col-form-label"><ti data-ison="stxt[105]" data-desc="btn_privacy">Author</ti></label>
+													<div class="col-lg-9">
+<select size="1" name="tmp_p_author" id="tmp_p_author" class="form-control crsrPointer"  onchange="javascript:doPrivacyChange(this)">
+   
+                  
+                                      </select>													</div>
+												</div>
+
+
+
+
+												
+												<div class="form-group row">
+													<label class="col-lg-2 col-form-label"><ti data-ison="stxt[102]" data-desc="btn_ppages">Show on Pages</ti>:</label>
+													<div class="col-lg-9">
+<select size="1" name="tmp_p_ppage" id="tmp_p_ppage" class="form-control crsrPointer"  onchange="javascript:doPPagesChange(this)">
+   
+                  
+                                      </select>													</div>
+												</div>
+
+
+												
+												<div class="form-group row">
+													<label class="col-lg-2 col-form-label"><ti data-ison="stxt[104]" data-desc="btn_ppages">Post Position</ti>:</label>
+													<div class="col-lg-9">
+<select size="1" name="tmp_p_pos" id="tmp_p_pos" class="form-control crsrPointer"  onchange="javascript:doPPosChange(this)">
+   
+                  
+                                      </select>													</div>
+												</div>
+												 
+												
+												
+												<div class="form-group row">
+													<label class="col-lg-2 col-form-label"><ti data-ison="stxt[106]" data-desc="btn_ppages">Relevance</ti>:</label>
+													<div class="col-lg-9">
+<select size="1" name="tmp_p_stat" id="tmp_p_stat" class="form-control crsrPointer"  onchange="javascript:doPStatChange(this)">
+   
+                  
+                                      </select>													</div>
+												</div>
+												
+												
+																						<div class="form-group row">
+													<label class="col-lg-2 col-form-label"><ti data-ison="stxt[103]" data-desc="btn_ppages">Post Type</ti>:</label>
+													<div class="col-lg-9">
+<select size="1" name="tmp_p_ptype" id="tmp_p_ptype" class="form-control crsrPointer"  onchange="javascript:doPTypeChange(this)">
+   
+                  
+                                      </select>													</div>
+												</div>
+												 
+												
+
+
+
+												<div class="form-group row">
+													<label class="col-lg-2 col-form-label"><ti data-ison="stxt[10]" data-desc="btn_adminlist">Title</ti></label>
+													<div class="col-lg-9">
+														<input type="text" class="form-control" id="tmp_p_title" name="tmp_p_title" required="">
+													</div>
+												</div>
+
+
+ 			<!-- map or scrooler view div -->
+ 			<div id="dvDemoView" style="max-height:380px;max-width:95%"></div>
+
+												<div class="form-group row">
+													<label class="col-lg-2 col-form-label"><ti data-ison="stxt[948]" data-desc="btn_desc">Content&nbsp;&nbsp;
+													</ti></label>
+													<div class="col-lg-9">
+														<textarea class="tinymce form-control" name="tmp_p_content" id="tmp_p_content" rows="10" cols="30"></textarea>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="text-left">
+											<button id="btnEUsave" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite"><ti data-ison="stxt[21]" data-desc="btn_save">Save</ti></button>
+										</div>
+									 
+									 
+									 
+									 <div style="visibility:visible;display:block">
+										<hr><h5 class="text-secondary"><ti data-ison="stxt[980]" data-desc="btn_images_media">Images - Media</ti></h5>
+
+ 
+								 <table style="max-width:95%;min-width:90%;margin:0 auto">
+							 <tr>
+								<td valign="top"><table style="width: 100%" cellspacing="0" cellpadding="0">
+				 <tr>
+					 <td style="height: 6px"><div id="progressOuter"></div><div id="msgBox"></div></td>
+				 </tr>
+				 <tr>
+					 <td><table><tr>
+						 <td style="height: 50px">
+						 <img alt="Product Image" src="images/misc/transparent.gif"  class="slmtable icnsmlbtn brdrClrDlg" style="text-align:center;max-height:3px; margin-right:3px" align="absmiddle" id="imgIedit"></td>
+						 <td class="crsrPointer" style="text-align:center; height: 50px;" align="absmiddle" id="dvPrpImgs">
+					
+					</td><td style="height: 50px">
+
+					<div id="dvUploadBtn"  style="display:block;visibility:visible;margin-right:10px"><button id="uploadBtn" class="cls_button cls_button-small form-control"><i class="nav-material-icons coll-menu-item txtClrHdr" style="margin-right:4px;">&#xe439;</i><ti data-ison="stxt[986]" data-desc="btn_upload">Upload</ti></button></div>
+					
+				 
+             </td><td style="text-align: center; vertical-align:top; height: 50px;"><div id="dvPrdMedia"></div></td></tr></table></td>
+				 </tr>
+				 <tr>
+					 <td id="tdAppBCodeBtn"><div id="dvAppBCodeBtn"><div><a href="javascript:doBarCodeScan('add');" class="txtDecorNone">
+					 <!-- <i class="material-icons" style="font-size:42px;" alt="barcode" title="barcode">&#xe329;</i> -->
+					 	</a></div></div><div id="dvPostImgs">dvProdImgs</div></td>
+				 </tr>
+			 </table></td>
+							 </tr>
+						 </table>
+						 </div>

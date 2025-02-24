@@ -6,6 +6,15 @@ var tmpOldFFvals = {};
 var tmpSvBtnObj = null;
 var tmpPrpLinksArr = null;
 var tmpPrpLinksArr = [];
+var tmpMapUmrkdObj = null;
+var tmpMapUmrkdObj = {};
+var tmpSVpos = "";
+var tmpSVheading = "";
+var tmpSVpitch = "";
+var gpmap = null;
+
+
+
 var fnshProdMDel = function(aa,bb,cc) { 
     // alert(bb);
     getPropImgs();
@@ -21,6 +30,358 @@ var fnshProdMDel = function(aa,bb,cc) {
         
         };
 
+
+
+
+        function showStrtVwPop(tLocLat, tLocLng) {
+            var panorama;
+            tprpLocLat = tmp_ploclat.value;
+            tprpLocLng = tmp_ploclng.value;
+            var svLoc = {lat: parseFloat(tprpLocLat), lng: parseFloat(tprpLocLng)};
+            panorama = new google.maps.StreetViewPanorama(  
+                document.getElementById("dvStrtVwPop"), {
+                    position: svLoc,
+                    pov: {heading: 165, pitch: 0},
+                    zoom: 10,
+                    fullscreenControl: false,
+                    panControl: false,
+                    zoomControl: false,
+                    addressControl: false,
+                    enableCloseButton: false,
+                    visible: true,
+                    motionTracking: false,
+                    motionTrackingControl: false,
+                    linksControl: false,
+                    showRoadLabels: false,
+                    showLabels: false,
+                    showLocation: false,
+                    showHeading: false,
+                    showPanoProvider: false,
+                    showZoomControl: false,
+                    showPanControl: false
+
+                });
+
+                panorama.addListener("position_changed", () => {
+                    tmpSVpos = panorama.getPosition();
+                  });
+                    panorama.addListener("pov_changed", () => {
+                    tmpSVheading = panorama.getPov().heading;
+                    tmpSVpitch = panorama.getPov().pitch;
+
+                    });
+
+            }
+
+
+ 
+            function getCurrSVImgUrl(tIUwidth, tIUheight) {
+                tmpSVurl = "https://maps.googleapis.com/maps/api/streetview?size=" + tIUwidth + "x" + tIUheight + "&location=" + tmpSVpos.lat() + "," + tmpSVpos.lng() + "&heading=" + tmpSVheading + "&pitch=" + tmpSVpitch + "&key=" + gglSKey;
+                return tmpSVurl;
+            }
+ 
+            function showSVImages(a,b,c) {
+                tSVImgStr = "";
+                if(b.indexOf("_id") != -1) {
+                    tAiretArr = JSON.parse(b);
+                    var len = tAiretArr.length;
+                    iint = 0;
+                    while (iint < len) {
+                        tNrmlImg = tAiretArr[iint]["m_file"];
+                        tLZuncompD = LZString.decompressFromEncodedURIComponent(tNrmlImg);
+                        tThumbImg = tAiretArr[iint]["m_file_thumb"];
+                        tLZuncomp = LZString.decompressFromEncodedURIComponent(tThumbImg);
+                        //  			tstr += "<img src=\"images/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
+
+                        tSVImgStr += "<img src=\"" + tLZuncomp + "\" class=\"icnmedbtn slmtable\" onclick=\"JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tNrmlImg + "'));\">";
+                        iint++;
+                    }
+                    document.getElementById("dvSVimgs").innerHTML = tSVImgStr;
+                }
+            }
+
+function fnishSVImgAdd(aa,bb,cc) {
+    JSSHOP.ui.closeLbox();
+    // getSVImages();
+    tmpDOs = null;
+    tmpDOs = {};
+    tmpDOs["ws"] = "where m_pid=? and m_rtype=? and m_catid=?";
+    tmpDOs["wa"] = [prpid, 5, 20];
+    tmpDOs["o"] = "m_vala desc";
+    oi = getNuDBFnvp("qmedia", 5, null, tmpDOs);
+    doQComm(oi["rq"], null, "showSVImages");
+
+    };
+
+            function saveCurrSVImgUrl() {
+                tSVIurl = getCurrSVImgUrl("640", "480");
+                tSVIthmburl = getCurrSVImgUrl("320", "240");
+                tmpSVurl = LZString.compressToEncodedURIComponent(tSVIurl);
+                tmpSVthmburl = LZString.compressToEncodedURIComponent(tSVIthmburl);
+                JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tmpSVurl);
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_file_thumb", tmpSVthmburl);
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_coid", prpid);
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_uid", quid);
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_pid", prpid);
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_dadded", JSSHOP.getUnixTimeStamp());
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_catid", 20);
+ 
+
+        tmpDOs = null;
+        tmpDOs = {};
+        tmpDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qmedia"], "nada");
+        oi = getNuDBFnvp("qmedia", 6, null, tmpDOs);
+        doQComm(oi["rq"], null, "fnishSVImgAdd");
+            }
+
+
+            
+var doStrtVwPop = function() {
+    tSVpopStr = "<div id=\"dvStrtVwPop\" style=\"width:100%;height:100%;min-height:300px;\"><img src=\"images/misc/loading.gif\"></div>";
+    // create a div that has a the camera material.icon to call getCurrSVImgUrl
+    tSVpopStr += "<i class=\"txtClrRed brdrClrWhite bkgdClrWhite menu-material-icons\" alt=\"delete\" title=\"delete\">&#xe92b;</i>";
+    tSVpopStr += "<div class=\"dvTxtBtns\"><input type=\"button\" class=\"btnTxtLabel\" value=\"Get Image URL\" onclick=\"javascript:saveCurrSVImgUrl();\"></div>";
+    JSSHOP.ui.popAndFillLbox(tSVpopStr);
+
+    if(currGglSVloaded == "no") {
+        currGglSVloaded = "y";
+        JSSHOP.loadScript("https://maps.googleapis.com/maps/api/js?key=" + gglSKey, showStrtVwPop,"js");
+        } else {
+            tLocLat = tmp_ploclat.value;
+            tLocLng = tmp_ploclng.value;
+            showStrtVwPop(tLocLat, tLocLng);
+        }
+ 
+     };
+ 
+     function saveArialVwImgUrl() {
+        tAVIurl = getCurrAVImgUrl("640", "480");    
+        tAVIthmburl = getCurrAVImgUrl("320", "240");
+        tmpAVurl = LZString.compressToEncodedURIComponent(tAVIurl);
+        tmpAVthmburl = LZString.compressToEncodedURIComponent(tAVIthmburl);
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tmpAVurl);
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_file_thumb", tmpAVthmburl);
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_coid", prpid);
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_uid", quid);
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_pid", prpid);
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_dadded", JSSHOP.getUnixTimeStamp());
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_catid", 25);
+        tmpDOs = null;
+        tmpDOs = {};
+        tmpDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qmedia"], "nada");
+        oi = getNuDBFnvp("qmedia", 6, null, tmpDOs);
+        doQComm(oi["rq"], null, "fnishAVImgAdd");
+    }
+    function fnishAVImgAdd(aa,bb,cc) {
+        JSSHOP.ui.closeLbox();
+        // getAVImages();
+        tmpDOs = null;
+        tmpDOs = {};
+        tmpDOs["ws"] = "where m_pid=? and m_rtype=? and m_catid=?";
+        tmpDOs["wa"] = [prpid, 5, 25];
+        tmpDOs["o"] = "m_vala desc";
+        oi = getNuDBFnvp("qmedia", 5, null, tmpDOs);
+        doQComm(oi["rq"], null, "showAVImages");
+    }
+    function getCurrAVImgUrl(tIUwidth, tIUheight) {
+        // get the center of the map
+        tCntrMap = gpmap.getCenter();
+        // tCntrMapLat = tCntrMap.lat();
+        // tCntrMapLng = tCntrMap.lng();
+        // adjust the lat lang to 10 meters south of the center of the map
+        tCntrMapLat = tCntrMap.lat() - 0.0001;
+        tCntrMapLng = tCntrMap.lng();
+
+
+
+        // get the zoom level of the map
+        tZmLvl = gpmap.getZoom();
+        // get the map type of the map
+        tMpType = gpmap.getMapTypeId();
+
+    
+        // tWdth = tIUwidth;
+        // tHght = tIUheight;
+                // get the size of the map
+        tIUwidth = gpmap.getDiv().offsetWidth;
+         tIUheight = gpmap.getDiv().offsetHeight;
+
+      
+        tAVImgUstr = "https://maps.googleapis.com/maps/api/staticmap?zoom=" + tZmLvl + "&size=" + tIUwidth + "x" + tIUheight + "&maptype=" + tMpType + "&key=" + gglSKey;
+        //     zoom=" + tZmLvl + "&size=" + tIUwidth + "x" + tIUheight + "&maptype=" + tMpType + "&key=" + gglSKey;
+/*
+        // tAVImgUstr = "https://maps.googleapis.com/maps/api/staticmap?center=" + tCntrMapLat + "," + tCntrMapLng + "&zoom=" + tZmLvl + "&size=" + tIUwidth + "x" + tIUheight + "&maptype=" + tMpType + "&key=" + gglSKey;
+ // Check if there are any markers in gpmap
+    if(Object.keys(tmpMapUmrkdObj).length > 0) {
+    // if(Object.keys(tmpMapUmrkdObj).length > 0) {
+        tAVImgUstr += "&path=color:0xff0000ff|weight:5";
+        incAVMrs = 0;
+        tfnalpntstr = "";
+        for(var tmpMkey in tmpMapUmrkdObj) {
+            // create a closed path with the markers
+            if(incAVMrs == 0) {
+                tfnalpntstr = "|" + tmpMapUmrkdObj[tmpMkey].lat + "," + tmpMapUmrkdObj[tmpMkey].lng; 
+                tAVImgUstr += "|" + tmpMapUmrkdObj[tmpMkey].lat + "," + tmpMapUmrkdObj[tmpMkey].lng;
+            } else {
+                tAVImgUstr += "|" + tmpMapUmrkdObj[tmpMkey].lat + "," + tmpMapUmrkdObj[tmpMkey].lng;
+            }
+
+            
+            // tAVImgUstr += "|" + tmpMapUmrkdObj[tmpMkey].lat + "," + tmpMapUmrkdObj[tmpMkey].lng;
+            incAVMrs++;
+        }
+        tAVImgUstr += tfnalpntstr;
+        
+    }
+    */
+   // get path of polyline on map and add to url
+    if(poly != null) {
+        tAVImgUstr += "&path=color:0xff0000ff|weight:5";
+        const path = poly.getPath();
+        // get the length of the path
+        const len = path.getLength();
+        // loop through all points
+        for (var i = 0; i < len; i++) {
+            // get the lat/lng of the point
+            var pos = path.getAt(i);
+            // add the lat/lng of the point to the path
+            tAVImgUstr += "|" + pos.lat() + "," + pos.lng();
+        }
+    }
+    
+
+        console.log("getCurrAVImgUrl: " + tAVImgUstr);
+         return tAVImgUstr;
+    }
+    function showAVImages(a,b,c) {
+        tAVImgStr = "";
+        if(b.indexOf("_id") != -1) {
+            tAiretArr = JSON.parse(b);
+            var len = tAiretArr.length;
+            iint = 0;
+            while (iint < len) {
+                tNrmlImg = tAiretArr[iint]["m_file"];
+                tLZuncompD = LZString.decompressFromEncodedURIComponent(tNrmlImg);
+                tThumbImg = tAiretArr[iint]["m_file_thumb"];
+                tLZuncomp = LZString.decompressFromEncodedURIComponent(tThumbImg);
+                tAVImgStr += "<img src=\"" + tLZuncomp + "\" class=\"icnmedbtn slmtable\" onclick=\"JSSHOP.ui.popAndFillLbox(getPrdImgEditDv('" + tAiretArr[iint]["_id"] + "','" + tNrmlImg + "'));\">";
+                iint++;
+            }
+            document.getElementById("dvAVimgs").innerHTML = tAVImgStr;
+        }
+    }
+
+
+
+    function addLatLng(event) {
+        const path = poly.getPath();
+      
+        // Because path is an MVCArray, we can simply append a new coordinate
+        // and it will automatically appear.
+        path.push(event.latLng);
+        // Add a new marker at the new plotted point on the polyline.
+        new google.maps.Marker({
+          position: event.latLng,
+          title: "#" + path.getLength(),
+          map: gpmap,
+        });
+      }
+     function showArialVwPop(tLocLat, tLocLng) {
+      
+        tprpLocLat = tmp_ploclat.value;
+        tprpLocLng = tmp_ploclng.value;
+        tFltdSVlat = parseFloat(tprpLocLat);
+        tFltdSVlng = parseFloat(tprpLocLng);
+        gpmap = new google.maps.Map(document.getElementById("dvArialVwPop"), {
+          center: { lat: tFltdSVlat, lng: tFltdSVlng },
+          mapTypeId: "satellite",
+          // set max zoom level
+            zoom: 20,
+            maxZoom: 20,
+            // hide all map controls
+           //  disableDefaultUI: true,
+            // hide the zoom control
+            zoomControl: true,
+            // hide the scale control
+            scaleControl: false,
+            // hide the street view control
+            streetViewControl: false,
+            // enale the rotate control
+              rotateControl: true
+
+        });
+
+        poly = new google.maps.Polyline({
+            strokeColor: "#000000",
+            strokeOpacity: 1.0,
+            strokeWeight: 3,
+          });
+          poly.setMap(gpmap);
+       // add event listener to map to get the lat/lng of click
+         google.maps.event.addListener(gpmap, "click", function(event) {
+            // get lat/lng of click
+            var clickLat = event.latLng.lat();
+            var clickLng = event.latLng.lng();
+
+            tmpMapUmrkdObj["mrk" + clickLat] = {lat: clickLat, lng: clickLng};
+
+            // add marker to map
+            var marker = new google.maps.Marker({
+                position: { lat: clickLat, lng: clickLng },
+                map: gpmap
+            });
+            // add click event to marker
+            google.maps.event.addListener(marker, "click", function() {
+                // remove marker from map
+                // tmpMapUmrkdObj["mrk" + clickLat] = null;
+                // tmpMapUmrkdObj["mrk" + clickLat] = "";
+                marker.setMap(null);
+                // remove point from polyline
+                const path = poly.getPath();
+                // get the length of the path
+                const len = path.getLength();
+                // loop through all points
+                for (var i = 0; i < len; i++) {
+                    // get the lat/lng of the point
+                    var pos = path.getAt(i);
+                    // if the lat/lng of the point is the same as the lat/lng of the click
+                    if (pos.lat() == clickLat && pos.lng() == clickLng) {
+                        // remove the point from the polyline
+                        path.removeAt(i);
+                        // exit the loop
+                        break;
+                    }
+                }
+
+
+            });
+            // add marker to map
+            addLatLng(event);
+        });
+        // set tilt of map
+    
+        gpmap.setTilt(45);
+    }
+    function getArialVwPop(tLocLat, tLocLng) {
+        setTimeout(function(){ showArialVwPop(tLocLat, tLocLng); }, 3000);
+    }
+
+     function doArialVwPop() {
+        tAVpopStr = "<div id=\"dvArialVwPop\" style=\"width:100%;height:100%;min-height:300px;\"><img src=\"images/misc/loading.gif\"></div>";
+         tAVpopStr += "<div class=\"dvTxtBtns\"><input type=\"button\" class=\"btnTxtLabel\" value=\"Get Image URL\" onclick=\"javascript:saveArialVwImgUrl();\"></div>";
+        JSSHOP.ui.popAndFillLbox(tAVpopStr);
+         tmpMapUmrkdObj = null;
+var         tmpMapUmrkdObj = {};
+        if(currGglSVloaded == "no") {
+            currGglSVloaded = "y";
+            JSSHOP.loadScript("https://maps.googleapis.com/maps/api/js?key=" + gglSKey, showArialVwPop,"js");
+            } else {
+                tLocLat = tmp_ploclat.value;
+                tLocLng = tmp_ploclng.value;
+                showArialVwPop(tLocLat, tLocLng);
+            }
+    }
+        // create a div that has a the camera material.icon to call getCurrSVImgUrl
 
 var doPrdMDelete = function() { 
     if(confirm(stxt[42] + " " + stxt[19] + "?")) {
@@ -49,8 +410,12 @@ var getPrdImgEditDv = function(tpIncrNPI, tpFImg) {
 tpPIEDv = document.createElement('div');
 JSSHOP.shared.setFrmFieldVal("qmedia", "_id", tpIncrNPI);
 JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tpFImg);
- 
+ if(tpFImg.indexOf(".") != -1) {
 tmpRetStr = "<img src=\"images/property/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
+} else {
+    tLZdecd = LZString.decompressFromEncodedURIComponent(tpFImg);
+tmpRetStr = "<img src=\"" + tLZdecd +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
+}
  try {
 tmpRetStr += "<div class=\"dvTxtBtns\"><input type=\"button\" class=\"btnTxtLabel\" value=\"Set as Main\" onclick=\"javascript:doPrdMMain();\">   |   <input type=\"button\" class=\"btnTxtLabel\" value=\"Delete\" onclick=\"javascript:doPrdMDelete();\"></div>";
 tmpRetStr += "<br><br>";
@@ -197,6 +562,8 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
         tmpPrpLinksArr = [];
         console.log("setPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
         tSocStr = "";
+        tSVImgDarr = [];
+        tAVImgDarr = [];
     if(theAIb.indexOf("_id") != -1) {
 
 		tAiretArr = JSON.parse(theAIb);
@@ -214,9 +581,15 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
             } else {
 			tstr += "<div style=\"float:left\" class=\"crsrPointer\">";
             }
+ 
  			tstr += "<img src=\"images/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
 			tstr += "</div>";
-        } else {
+        } else if(tAiretArr[iint]["m_catid"] == "20") {
+            tSVImgDarr.push(tAiretArr[iint]);
+        }  else if(tAiretArr[iint]["m_catid"] == "25") {
+            tAVImgDarr.push(tAiretArr[iint]);
+        }  else {
+
             tmpPrpLinksArr.push(tAiretArr[iint]);
             tMDstr = tAiretArr[iint]["m_data"];
             tMfileSTr = tAiretArr[iint]["m_file"];
@@ -247,6 +620,18 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
     document.getElementById("dvPrpDVID").innerHTML = stxt[985] + " ID: " + prpid;
     document.getElementById("dvPrpDTtl").innerHTML = ptitle.value;
 
+     if(tSVImgDarr.length > 0) {
+        tJSONstr = JSON.stringify(tSVImgDarr);
+        showSVImages(1, tJSONstr, 1);
+    }
+    if(tAVImgDarr.length > 0) {
+        tJSONstr = JSON.stringify(tAVImgDarr);
+        showAVImages(1, tJSONstr, 1);
+    }
+    if(tAVImgDarr.length > 0) {
+        tJSONstr = JSON.stringify(tAVImgDarr);
+        showAVImages(1, tJSONstr, 1);
+    }
 	} catch(e) {
 		alert("setPropImgs: " + e);
 	}
@@ -727,8 +1112,27 @@ doQComm(oia["rq"], null, "doMPropForm");
 return dmyFnishCntLoad;
 };
 
+
+function doPropZoneDD(thePrx, theSTat) {
+    try {        } catch(e) {
+        alert("doPropZoneDD: " + e);
+    }
+
+        // alert("doZoneDD: " + thePrx + " " + theSTat);
+        if(theSTat == "ok") {
+            tLclDstDstr = getCountryDropStr("country", "doCountryPckChg");
+            document.getElementById("dvCountryDD").innerHTML = tLclDstDstr;
+        } else {
+            document.getElementById("dvCountryDD").innerHTML = "error loading zones";
+        }
+        // doCountryPckChg("dvCountryDD", u_country.value, u_country.value);
+        getRegionDropStr(document.getElementById("country").value, "state", "setUregionDD");
+}
+
 function loadTnyI() {
     JSSHOP.loadScript("js/tinymce/init-tinymce.min.js", donada, "js");
+    JSSHOP.loadScript("misc/x_countries.js", doPropZoneDD,  "js");
+
 }
 
 
@@ -935,7 +1339,7 @@ currMapMrkrArr.push(tMrkr);
 	}
 
    function getPlcesLRes(thePSa,thePSResp,thePSc) {
-	// alert("runPlacesSearch: " + thePSa + " " + thePSResp + " " + thePSc);
+	 alert("runPlacesSearch: " + thePSa + " " + thePSResp + " " + thePSc);
 	// btnEUsave.disabled = false;
 	mtImDSStr = "js/leaflet/images/marker-icon.png";
 	mredIcon = new LeafIcon({iconUrl: mtImDSStr});
@@ -987,7 +1391,288 @@ currMapMrkrArr.push(tMrkr);
 	}
 
 
+     
+ function setPrpAdrsFlds(thePIdx) {
 
+    
+   tDemoRetArr =  [{"place_id":264059589,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright","osm_type":"node","osm_id":1297298949,"lat":"40.2066454","lon":"-8.4286035","class":"tourism","type":"hotel","place_rank":30,"importance":0.00006753566796363801,"addresstype":"tourism","name":"Hotel Avenida","display_name":"Hotel Avenida, 37, Avenida Emídio Navarro, Almedina, Alta, Coimbra (Sé Nova, Santa Cruz, Almedina e São Bartolomeu), Coimbra, 3000-150, Portugal","address":{"tourism":"Hotel Avenida","house_number":"37","road":"Avenida Emídio Navarro","neighbourhood":"Almedina","suburb":"Alta","city_district":"Coimbra (Sé Nova, Santa Cruz, Almedina e São Bartolomeu)","city":"Coimbra","county":"Coimbra","ISO3166-2-lvl6":"PT-06","postcode":"3000-150","country":"Portugal","country_code":"pt"},"extratags":{"phone":"+351 239 822 155","website":"http://www.hotelavenidacoimbra.com/"},"namedetails":{"name":"Hotel Avenida"},"boundingbox":["40.2065954","40.2066954","-8.4286535","-8.4285535"]}]
+     
+    tDPRObj = currSPRArr[thePIdx];
+    tExtrTstr = "";
+
+    tExtraTags = "";
+    if(tDPRObj.extratags) {
+        tExtraTags = tDPRObj.extratags;
+        for(var tkey in tExtraTags) {
+            tExtrTstr += tkey + ": " + tExtraTags[tkey] + "<br>";
+        }
+    }
+     
+
+    // alert("setPrpAdrsFlds: " + JSON.stringify(tDPRObj));
+    if(tDPRObj.address) {
+        tAOBjVobj = tDPRObj.address;
+        // qloga_name.value = tDPRObj.address;
+        if(tAOBjVobj["amenity"]) {
+            tExtrTstr += tAOBjVobj["amenity"] + "<br>";
+        }
+
+        if(tAOBjVobj["postcode"]) {
+             tmp_pzipcode.value  = tAOBjVobj["postcode"];
+        }
+        if(tAOBjVobj["house_number"]) {
+            tmp_pdoornum.value = tAOBjVobj["house_number"];
+        }
+        if(tAOBjVobj["road"]) {
+ 
+            tmp_pstreet.value = tAOBjVobj["road"];
+        }
+        if(tAOBjVobj["city_district"]) {
+            tmp_city.value  = tAOBjVobj["city_district"];
+         }
+        if(tAOBjVobj["city"]) {
+            tmp_city.value  = tAOBjVobj["city"];
+        }
+        if(tAOBjVobj["county"]) {
+            document.getElementById("tmp_state").value  = tAOBjVobj["county"];
+        }
+        if(tAOBjVobj["state"]) {
+            document.getElementById("tmp_state").value  = tAOBjVobj["state"];
+        }
+        if(tAOBjVobj["country_code"]) {
+            console.log("tAOBjVobj[country_code]: " + tAOBjVobj["country_code"]);
+            // Country from country code
+            tcXccode = tAOBjVobj["country_code"];
+            tcXccodUppe = tcXccode.toUpperCase();
+            tCCPckSTr = tLocCCTCtryObj[tcXccodUppe];
+            document.getElementById("tmp_country").value  = tCCPckSTr;
+        
+        }
+        if(tAOBjVobj["country"]) {
+            tmp_country.value  = tAOBjVobj["country"];
+        }
+        if(tAOBjVobj["shop"]) {
+            tExtrTstr  += tAOBjVobj["shop"];
+        }
+        if(tAOBjVobj["namedetails"]){
+            if(tAOBjVobj["namedetails"]["name"]) {
+                tExtrTstr  += ttAOBjVobj["namedetails"]["name"] + " " + qlogp_location.value;
+        
+            }  
+        }
+
+
+
+    }
+    if(tDPRObj.lat) {
+        tmp_ploclat.value = tDPRObj.lat;
+    }
+    if(tDPRObj.lon) {
+        tmp_ploclng.value = tDPRObj.lon;
+    }
+
+   // validate all possible information from nominatim response and include in description if available
+    if(tDPRObj.place_id) {
+        tExtrTstr += "Place ID: " + tDPRObj.place_id + "<br>";
+    }
+    if(tDPRObj.osm_id) {
+        tExtrTstr += "OSM ID: " + tDPRObj.osm_id + "<br>";
+    }
+    if(tDPRObj.osm_type) {
+        tExtrTstr += "OSM Type: " + tDPRObj.osm_type + "<br>";
+    }
+    if(tDPRObj.class) {
+        tExtrTstr += "Class: " + tDPRObj.class + "<br>";
+    }
+    if(tDPRObj.type) {
+        tExtrTstr += "Type: " + tDPRObj.type + "<br>";
+    }
+    if(tDPRObj.place_rank) {
+        tExtrTstr += "Place Rank: " + tDPRObj.place_rank + "<br>";
+    }
+    if(tDPRObj.importance) {
+        tExtrTstr += "Importance: " + tDPRObj.importance + "<br>";
+    }
+    if(tDPRObj.addresstype) {
+        tExtrTstr += "Address Type: " + tDPRObj.addresstype + "<br>";
+    }
+    if(tDPRObj.display_name) {
+        tExtrTstr += "Display Name: " + tDPRObj.display_name + "<br>";
+    }
+    if(tDPRObj.boundingbox) {
+        tExtrTstr += "Bounding Box: " + tDPRObj.boundingbox + "<br>";
+    }
+    if(tDPRObj.lat) {
+        tExtrTstr += "Latitude: " + tDPRObj.lat + "<br>";
+    }
+    if(tDPRObj.lon) {
+        tExtrTstr += "Longitude: " + tDPRObj.lon + "<br>";
+    }
+    if(tDPRObj.licence) {
+        tExtrTstr += "Licence: " + tDPRObj.licence + "<br>";
+    }
+    if(tDPRObj.importance) {
+        tExtrTstr += "Importance: " + tDPRObj.importance + "<br>";
+    }
+    if(tDPRObj.addresstype) {
+        tExtrTstr += "Address Type: " + tDPRObj.addresstype + "<br>";
+    }
+    if(tDPRObj.name) {
+        tExtrTstr += "Name: " + tDPRObj.name + "<br>";
+    }
+    if(tDPRObj.display_name) {
+        tExtrTstr += "Display Name: " + tDPRObj.display_name + "<br>";
+    }
+    if(tDPRObj.address) {
+        tExtrTstr += "Address: " + JSON.stringify(tDPRObj.address) + "<br>";
+    }
+    if(tDPRObj.extratags) {
+        if(tDPRObj.extratags.phone) {
+            tExtrTstr += "Phone: " + tDPRObj.extratags.phone + "<br>";
+        }
+        if(tDPRObj.extratags.website) {
+            tExtrTstr += "Website: " + tDPRObj.extratags.website + "<br>";
+        }
+        if(tDPRObj.extratags.wikipedia) {
+            tExtrTstr += "Wikipedia: " + tDPRObj.extratags.wikipedia + "<br>";
+        }
+     }
+
+    if(tDPRObj.namedetails) {
+        tExtrTstr += "Namedetails: " + JSON.stringify(tDPRObj.namedetails) + "<br>";
+    }
+    if(tDPRObj.boundingbox) {
+        tExtrTstr += "Bounding Box: " + JSON.stringify(tDPRObj.boundingbox) + "<br>";
+    }
+  
+    
+
+    // set value of textarea tmp_pcontent to tExtrTstr
+    tmp_pcontent.value = tmp_pcontent.value + tExtrTstr;
+    tinyMCE.activeEditor.setContent(tinyMCE.activeEditor.getContent() + "<br><br>" + tExtrTstr);
+    JSSHOP.ui.closePopMenus();
+}
+
+function showPrpAdrsPop(theA, thePSResp, theC) {
+    
+	hasr = "n";
+	fullstr = "";
+	// alert("runPlacesSearch: " + thePSResp);
+	farrToFill = JSON.parse(thePSResp);
+	farrToFC = farrToFill;
+	currSPRArr = null;
+	currSPRArr = farrToFC;
+	var len = farrToFC.length;
+	console.log("farrToFC: " + JSON.stringify(farrToFC));
+	var iint = 0;
+	var pcid = 0;
+	tstr = "";
+    qloga_name = "...";
+    qloga_zipcode = "...";
+    qloga_street = "...";
+    qloga_location = "...";
+    qloga_region = "...";
+    qloga_country = "...";
+    qloga_loc_lat = "...";
+    qloga_loc_lng = "...";
+    qloga_placeid = "...";
+    qloga_dadded = "...";
+    theFormatedAddrssStr = "";
+
+	
+	while(iint < len) {
+        tDPRObj = farrToFC[iint];
+
+ 
+	if(tDPRObj.address) {
+        tAOBjVobj = tDPRObj.address;
+        // qloga_name.value = tDPRObj.address;
+        if(tAOBjVobj["amenity"]) {
+        qloga_name  = tAOBjVobj["amenity"];
+        }
+        
+        if(tAOBjVobj["postcode"]) {
+            qloga_zipcode  = tAOBjVobj["postcode"];
+        }
+        if(tAOBjVobj["road"]) {
+            qloga_street  = tAOBjVobj["road"];
+        }
+        if(tAOBjVobj["city_district"]) {
+            qloga_location  = tAOBjVobj["city_district"];
+        }
+        if(tAOBjVobj["city"]) {
+            qloga_location  = tAOBjVobj["city"];
+        }
+        if(tAOBjVobj["county"]) {
+            qloga_region  = tAOBjVobj["county"];
+        }
+        if(tAOBjVobj["country"]) {
+            qloga_country  = tAOBjVobj["country"];
+        }
+         
+        if(tAOBjVobj["shop"]) {
+            qloga_name  = tAOBjVobj["shop"];
+        } else if(tAOBjVobj["namedetails"]){
+            if(tAOBjVobj["namedetails"]["name"]) {
+                qloga_name  = ttAOBjVobj["namedetails"]["name"];
+        
+            }  
+        }  
+        }
+        if(tDPRObj.lat) {
+            qloga_loc_lat = tDPRObj.lat;
+        }
+        if(tDPRObj.lon) {
+            qloga_loc_lng = tDPRObj.lon;
+        }
+        if(tDPRObj.place_id) {
+            qloga_placeid = tDPRObj.place_id;
+        }
+         
+        qloga_dadded = JSSHOP.getUnixTimeStamp();
+        console.log("qlDoPDetails: " + JSON.stringify(tAOBjVobj));
+        theFormatedAddrssStr = "<a href=\"javascript:setPrpAdrsFlds('" + iint + "');currSPRIdx=" + iint + ";\">";
+   
+        theFormatedAddrssStr += "<span class=\"txtBold\">Click to set Address</span><br>";
+        theFormatedAddrssStr += qloga_street + "<br>";
+        theFormatedAddrssStr += qloga_location + "<br>";
+        theFormatedAddrssStr += qloga_region + "<br>";
+        theFormatedAddrssStr += qloga_country + "<br>";
+        theFormatedAddrssStr += qloga_zipcode + "<br>";
+        theFormatedAddrssStr += "<span class=\"txtClrGrey\">" + qloga_loc_lat + " " + qloga_loc_lng + "</span><br>";
+        theFormatedAddrssStr += "<span class=\"txtClrGrey\">" + qloga_placeid + "</span><br>";
+        theFormatedAddrssStr += "<span class=\"txtClrGrey\">" + qloga_dadded + "</span><br>";
+ 
+	fullstr += "<tr>";
+	fullstr += "<td><a href=\"javascript:setPrpAdrsFlds('" + iint + "');currSPRIdx=" + iint + ";\"><span class=\"txtBold\">" + theFormatedAddrssStr +  "</span></a></td>";
+	fullstr += "</tr>";
+	iint++;
+	}
+
+ 
+   tTHstr = "<tr><th>Set this Address</th></tr>";
+
+ 
+    // theRespDiv = document.getElementById(thePSa);
+	// fullstr += thePSResp;
+	// theRespDiv.innerHTML = getTblSortStr(tTHstr, fullstr);
+    // JSSHOP.ui.popFillObox(getTblSortStr(tTHstr, fullstr), "&#xe5cd;", "Click To set Address", "yes", "no");
+    var container = L.DomUtil.create('div'),
+    startBtn = JSSHOP.ui.createLfButton('', container);
+    startBtn.innerHTML = "";
+    tmpSSpn = document.createElement('span');
+     tmpSSpn.innerHTML = theFormatedAddrssStr;
+    // tmpSSpn.innerHTML = stxt[529] + ":<br>"  + e.latlng.lat + "<br>" + e.latlng.lng + "<br>" + stxt[530];
+    startBtn.appendChild(tmpSSpn); 
+    // console.log(getTileURL(e.latlng.lat, e.latlng.lng, map.getZoom()))
+     // alert('f: ' + e.latlng.lat + ", " + e.latlng.lng);
+     // create e.latlng
+     newLatLang = new L.LatLng(qloga_loc_lat, qloga_loc_lng);
+L.popup()
+    .setContent(container)
+    .setLatLng(newLatLang)
+    .openOn(map);
+}
 
     
 function doGenPEMap() {
@@ -998,6 +1683,9 @@ xaCstr = document.getElementById('map').innerHTML;
   if(xaCstr.length > 4){
      
  console.log("Map Already Exists");
+ ttLatStr = document.getElementById("tmp_ploclat").value;
+    ttLngStr = document.getElementById("tmp_ploclng").value;
+ map.flyTo([ttLatStr, ttLngStr]);
  // map.setView(new L.LatLng( ttLatStr,  ttLngStr),14);
 return "OK";
  // currNavIcon = L.marker([ttLatStr, ttLngStr], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:dropMrkr(o);">DROP</a></span>').addTo(map);
@@ -1029,7 +1717,7 @@ var tDestLng = tRAObj.lng;
 
 
 
-    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    var osm = L.tileLayer.canvas('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
@@ -1064,11 +1752,12 @@ themaxbounds = L.latLngBounds(corner1, corner2);
 map = L.map('map', {
     // center: [ttLatStr, ttLngStr],
     // set zoom level
-    zoom: 14,
+    renderer: L.canvas(),
+    zoom: 10,
     minZoom: 6,
     maxZoom: 18,
     zoomControl: false,
-    preferCanvas: false,
+    preferCanvas: true,
     // maxBounds: themaxbounds,
     zoomAnimation:false,
     fullscreenControl: true,
@@ -1111,11 +1800,7 @@ map = L.map('map', {
     map.fitBounds(bounds);
     // zoom out a little
     map.setZoom(map.getZoom() - 1);
-
-
- // layerControl = L.control.layers(baseMaps).addTo(map);
-
-
+   
 
 
 
@@ -1144,8 +1829,10 @@ popup.className = "brdrClrHdr";
         L.DomEvent.on(startBtn, 'click', function(e) {
             document.getElementById("tmp_ploclat").value = currStartLat;
             document.getElementById("tmp_ploclng").value = currStartLng;
-
-            // alert('f: ' + JSON.stringify(e));
+           //  JSSHOP.ajax.doNuAjaxPipe("dvPSearch", "_p/osmgeo.php?qv=" + currStartLat + "," + currStartLng, getPlcesLRes);
+                document.getElementById("fldChallArray").value = currStartLat + "," + currStartLng;
+                qlDoNuPlSearch("fldChallArray", "dvPSearch", showPrpAdrsPop);
+             // alert('f: ' + JSON.stringify(e));
             map.closePopup();
             JSSHOP.ui.closePopMenus();
             scrollToElement("tmp_ploclat");
@@ -1155,6 +1842,10 @@ popup.className = "brdrClrHdr";
 map.on('contextmenu', function(e) {
         currStartLat = e.latlng.lat;
         currStartLng = e.latlng.lng;
+        document.getElementById("fldChallArray").value = currStartLat + "," + currStartLng;
+        qlDoNuPlSearch("fldChallArray", "dvPSearch", showPrpAdrsPop);
+
+        /*
         startBtn.innerHTML = "";
         tmpSSpn = document.createElement('span');
         tTextNd = document.createTextNode("Set "  + e.latlng.lat + ", " + e.latlng.lng + "<br> as start point?"); 
@@ -1167,6 +1858,7 @@ map.on('contextmenu', function(e) {
         .setContent(container)
         .setLatLng(e.latlng)
         .openOn(map);
+        */
 });
  
 
@@ -1311,24 +2003,16 @@ var LeafIcon = L.Icon.extend({
 
 
     tRetErrSTr = "noQvalue";
-    tFullRstr = "...";
+    tFullRstr = "--";
     tStreetVal = document.getElementById("tmp_pstreet").value;
     tLocVal = document.getElementById("tmp_state").value;
     tZipVal = document.getElementById("tmp_pzipcode").value;
-    /*
+    
     // if(tStreetVal.length < 2){ 
       //   tRetErrSTr = stxt[518];
         // tFullRstr += "<br>- " + tRetErrSTr;
    //  }
-    if(tLocVal.length < 2) {
-        tRetErrSTr = stxt[526];
-        tFullRstr += "<br>- " + tRetErrSTr;
-    }
-    if(tZipVal.length < 2) {
-        tRetErrSTr = stxt[80];
-        tFullRstr += "<br>- " + tRetErrSTr;
-    }
-        */
+  
     if(tFullRstr.length > 5) {
         tClosePopSTr =  "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrRed crsrPointer\" style=\"float:right\">" + stxt[804] + "</div>";
 
@@ -1339,7 +2023,10 @@ var LeafIcon = L.Icon.extend({
     } else {
     tSrchIval = tLocVal;
     //qlDoNuPlSearch("dvPSearch", "dvPSearch", "qlShowPlacesRes");
-    JSSHOP.ajax.doNuAjaxPipe("dvPSearch", "_p/osmgeo.php?qv=" + encodeURI(tSrchIval), getPlcesLRes);
+    // JSSHOP.ajax.doNuAjaxPipe("dvPSearch", "_p/osmgeo.php?qv=" + encodeURI(tSrchIval), getPlcesLRes);
+    document.getElementById("fldChallArray").value = tSrchIval;
+    qlDoNuPlSearch("fldChallArray", "dvPSearch", showPrpAdrsPop);
+
     }
     }
 }

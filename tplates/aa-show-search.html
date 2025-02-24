@@ -7,53 +7,25 @@ if(isset($_COOKIE['quid'])) {
 }
 ?>
 <input type="hidden" name="uid" id="uid"   value="<?php echo $uid; ?>">
-								<div class="accordion" id="accordionEPExample">
-									<h5 class="text-secondary"><ti data-ison="stxt[947]" data-desc="btn_basic_information">Basic Information</ti></h5>
-						 <div class="form-group row" style="visibility:hidden;display:none;" id="dvBHKswitch">
-													<label class="col-lg-3 col-form-label"  id="lbl_tmp_bhk">BHK</label>
+									<div class="accordion" id="accordionEPExample">
+								<br>	<h5 class="text-secondary"><ti data-ison="stxt[936]" data-desc="hdr_basic_info">Search Properties</ti></h5>
+										<p class="text-secondary">&nbsp;</p>
+										<div id="dvSrchPDrpDwns"></div>
+								 			   <div class="form-group row">
+													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[18]" data-desc="btn_price_location">Price</ti></label>
 													<div class="col-lg-9">
-													 
-	<div class="switch">
-    <label>
-     
-      <input type="checkbox" id="tmp_bhk" name="tmp_bhk">
-      <span class="lever" style="float:right"></span>
-     
-    </label>
-   </div>
-  									  
-  									  
-  									  
+														<div id="dvCountryDD" class=""></div><div><div id="dvCountryAC" class=""></div></div>
 													</div>
 												</div>
-												
-												 
-											<div class="form-group row">
-													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[949]" data-desc="btn_selling_type">Selling Type</ti></label>
+						
+						 			   <div class="form-group row">
+													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[18]" data-desc="btn_price_location">Price</ti></label>
 													<div class="col-lg-9">
-														<select class="form-control" name="tmp_stype" id="tmp_stype">
-	 
-														</select>
-													
+														<input type="text" class="form-control" name="tmp_price" id="tmp_price"  value="5">
 													</div>
 												</div>
-												
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[927]" data-desc="btn_property_type">Property Typee</ti></label>
-													<div class="col-lg-9">
-														<select class="form-control" name="tmp_ptype" id="tmp_ptype">
-															 
-														</select>
-													</div>
-												</div>
-												
-												 
-												
-												 
-												
-												
-												<!-- div to hide uneeded content -->
-												<div style="visibility:hidden;display:none">
+
+&nbsp;<!-- div to hide uneeded content --><div style="visibility:hidden;display:none">
 												<!-- test Accordian -->
 												 
 												<div class="accordion-item">

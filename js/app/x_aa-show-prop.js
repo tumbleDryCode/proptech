@@ -5,12 +5,136 @@ tmpSocLinksArr = [];
 tmpFBJSLoaded = "n";
 tmpFBIDvsArr = [];
 tmpFBscrLdd = "n";
+tmpSVloclat = "0";
+tmpSVloclng = "0";
+// https://developers.google.com/maps/documentation/streetview/request-streetview
 if(currUrlArr.prpid) {
     prpid = currUrlArr.prpid;
 }
+var panorama;
 
+function initGMap() {
+    tFltdSVlat = parseFloat(tmpSVloclat);
+    tFltdSVlng = parseFloat(tmpSVloclng);
+    const gpmap = new google.maps.Map(document.getElementById("gpmap"), {
+      center: { lat: tFltdSVlat, lng: tFltdSVlng },
+      zoom: 15,
+      mapTypeId: "satellite",
+    });
+  
+    gpmap.setTilt(45);
+  }
 
+function initStreetView() {
+    // JSSHOP.ui.closeLbox();
+    JSSHOP.ui.showHideElement("dvAPrpImg", "hide");
+    JSSHOP.ui.showHideElement("street-view", "show");
  
+    console.log("initStreetView: " + tmpSVloclat + " :: " + tmpSVloclng);
+    // latpos = ploclat.value;
+    // lngpos = ploclng.value;
+ // 37.86926 -122.254811
+    tFltdSVlat = parseFloat(tmpSVloclat);
+    tFltdSVlng = parseFloat(tmpSVloclng);
+    panorama = new google.maps.StreetViewPanorama(
+        document.getElementById("street-view"),
+        {
+          position: { lat: tFltdSVlat, lng:  tFltdSVlng },
+          pov: { heading: 165, pitch: 0 },
+          fullscreenControl: false,
+          panControl: false,
+          zoomControl: false,
+          addressControl: false,
+          enableCloseButton: false,
+          visible: true,
+          motionTracking: false,
+          motionTrackingControl: false,
+          linksControl: false,
+          showRoadLabels: false,
+          showLabels: false,
+          showLocation: false,
+          showHeading: false,
+          showPanoProvider: false,
+          showZoomControl: false,
+          showPanControl: false
+        },
+      );
+    }
+
+  function doSVDinit(theSCa, theSCb) {
+    console.log("doSVDinit");
+    if(tmpSVloclat == "0") {
+    tmpSVloclat = ploclat.value;
+    tmpSVloclng = ploclng.value;
+    }
+    initStreetView();
+    }
+
+function doSVLoad(tlat, tlng) {
+    console.log("doSVLoad");
+    tmpSVloclat = tlat;
+    tmpSVloclng = tlng;
+     
+    // alert("doSVLoad");
+    if(currGglSVloaded == "no") {
+        currGglSVloaded = "y";
+        JSSHOP.loadScript("https://maps.googleapis.com/maps/api/js?key=" + gglSKey, doSVDinit,"js");
+        } else {
+            initStreetView();
+        }
+}
+function setPropMainImg(tPMImgSRC) {
+    JSSHOP.ui.showHideElement("dvAPrpImg", "show");
+    JSSHOP.ui.showHideElement("street-view", "hide");
+    document.getElementById("imgAPrpMain").src = "images/misc/loading.gif";
+    tLderIMG = new Image();
+    tLderIMG.src = tPMImgSRC;
+    tLderIMG.onload = function() {
+        document.getElementById("imgAPrpMain").src = tPMImgSRC;
+    }
+// scroll to imgAPrpMain
+    document.getElementById("imgAPrpMain").scrollIntoView();
+ }
+
+// use js file x_all.js
+// use js file x_aa-show-prop.js
+
+/*
+
+
+CREATE TABLE `property` (
+  `_id` int(50) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `pcontent` longtext NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `bhk` varchar(50) NOT NULL,
+  `stype` varchar(100) NOT NULL,
+  `bedroom` int(50) NOT NULL,
+  `bathroom` int(50) NOT NULL,
+  `balcony` int(50) NOT NULL,
+  `kitchen` int(50) NOT NULL,
+  `hall` int(50) NOT NULL,
+  `floor` varchar(50) NOT NULL,
+  `size` int(50) NOT NULL,
+  `price` int(50) NOT NULL,
+  `location` varchar(200) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `state` varchar(100) NOT NULL,
+  `feature` longtext NOT NULL,
+  `pimage` varchar(300) NOT NULL,
+  `pimage1` varchar(300) NOT NULL,
+  `pimage2` varchar(300) NOT NULL,
+  `pimage3` varchar(300) NOT NULL,
+  `pimage4` varchar(300) NOT NULL,
+  `uid` int(50) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `mapimage` varchar(300) NOT NULL,
+  `topmapimage` varchar(300) NOT NULL,
+  `groundmapimage` varchar(300) NOT NULL,
+  `totalfloor` varchar(50) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+*/
 var doPrdMDelete = function() { 
     if(confirm(stxt[42] + " " + stxt[19] + "?")) {
     procNuUIitem("qmedia","m_rtype",JSSHOP.shared.getFrmFieldVal("qmedia", "_id", 0),"0","fnshProdMDel");
@@ -156,22 +280,53 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
         tstr = "";
         tpdSocLnksStr = "";
         iirnt = 0;
-        tstr += "<div class=\"swiper\"> <div class=\"swiper-wrapper\">";
+        /* get minimum width of images
+        tImage = new Image();
+        tImage.src = "images/property/" + tAiretArr[0]["m_file"];
+        tImage.onload = function() {
+            // alert("Width: " + this.width + " Height: " + this.height);
+            // alert("Width: " + this.width + " Height: " + this.height);
+        }
+            */
+        // tstr += "<div class=\"swiper\"  style=\"max-height:280px;max-width:500px;\"> <div class=\"swiper-wrapper\"  style=\"min-height:60px;max-height:280px;max-width:500px;margin: 0 auto\">";
+     tstr += "<div class=\"swiper swiperPrp\" style=\"width: 400px;height:140px;\"> <div class=\"swiper-wrapper\">";
+        
         while (iirnt < awlen) {
             tIRFname = tAiretArr[iirnt]["m_file"];
             tIRcatid = tAiretArr[iirnt]["m_catid"];
-            if(tIRcatid == 5) {
-            tstr += "<div class=\"swiper-slide\"> <img width=\"100%\"  src=\"admin/property/" + tAiretArr[iirnt]["m_file"] + "\"  alt=\"\"> </div>";
-            } else {
+            if(tIRcatid == "5")  {
+                tImageFstr = "images/property/" + tAiretArr[iirnt]["m_file"];
+
+            tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:setPropMainImg('" + tImageFstr + "');\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"images/property/s_thumb" + tAiretArr[iirnt]["m_file"] + "\"  alt=\"image\"></a> </div>";
+            } else if(tIRcatid == "20") {
+                tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
+                tLuncthm = LZString.decompressFromEncodedURIComponent(tAiretArr[iirnt]["m_file_thumb"]);
+                tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initStreetView();\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tLuncthm + "\"  alt=\"image\"></a> </div>";
+            } else if(tIRcatid == "25") {
+                tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
+                tLuncthm = LZString.decompressFromEncodedURIComponent(tAiretArr[iirnt]["m_file_thumb"]);
+                //             tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:setPropMainImg('" + tImageFstr + "');\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"images/property/s_thumb" + tAiretArr[iirnt]["m_file"] + "\"  alt=\"image\"></a> </div>";
+                tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:setPropMainImg('" + tLZuncd + "');\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tLuncthm + "\"  alt=\"image\"></a> </div>";
+             }  else {
                 // alert("setPropImgs: " + tIRFname + " " + tIRcatid);
                 intIFrmHght += 1000;
          // tmpSocLinksArr.push(tIRFname);
             tmpSocLinksArr.push(tAiretArr[iirnt]);
              }
-             
+    
 			iirnt++;
 		}
-        tstr += "</div><div class=\"swiper-pagination\"></div><div class=\"swiper-button-prev\"></div><div class=\"swiper-button-next\"></div></div>";
+                 // https://maps.googleapis.com/maps/api/streetview?size=400x400&location=47.5763831,-122.4211769&fov=80&heading=70&pitch=0&key=YOUR_API_KEY
+             // add 3 street view images
+             tNloclatlat = ploclat.value * 1.07;
+                tNloclatlng = ploclng.value * 1.07;
+                // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:setPropMainImg('https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + ploclat.value + "," + ploclng.value + "&fov=100&heading=70&pitch=0&key=" + gglSKey + "');\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + ploclat.value + "," + ploclng.value + "&fov=80&heading=70&pitch=0&key=" + gglSKey + "\"  alt=\"image\"></a> </div>";
+                //  tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:setPropMainImg('https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + ploclat.value + "," + ploclng.value + "&fov=40&heading=100&pitch=30&key=" + gglSKey + "');\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + ploclat.value + "," + ploclng.value + "&fov=40&heading=100&pitch=30&key=" + gglSKey + "\"  alt=\"image\"></a> </div>";
+
+                //  tstr += "<div class=\"swiper-slide\">  <img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + tNloclatlat + "," + tNloclatlng + "&fov=80&heading=70&pitch=0&key=" + gglSKey + "\"  alt=\"image\" onclick=\"javascript:setPropMainImg(this.src);\"> </div>";
+
+                
+        tstr += "</div><div class=\"swiper-pagination swpPrpPg\"></div><div class=\"swiper-button-prev swprBtnPrev\"></div><div class=\"swiper-button-next swprBtnNext\"></div></div>";
         // tmpItDiv = document.createElement('span');
         // tmpItDiv.innerHTML = tstr;
 		document.getElementById("singlerproperty").innerHTML = tstr;
@@ -199,8 +354,24 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
 
         }
        //  document.getElementById("single-property").appendChild(tmpItDiv);
-      setTimeout(function(){ doSwipe(); }, 1000);
+       // setTimeout(function(){ doSwipe(); }, 1000);
+              // JSSHOP.ads.loadNuSwiperObj(tSwpCnfgObj);
+              tSwpPrpCnfObj = {};
+                tSwpPrpCnfObj["slidesPerView"] = 3;
+ 
+                tSwpPrpCnfObj["loop"] = true;
+                tSwpPrpCnfObj["pagination"] = {};
+                tSwpPrpCnfObj["pagination"]["el"] = '.swpPrpPg';
+                tSwpPrpCnfObj["pagination"]["clickable"] = true;
+                tSwpPrpCnfObj["navigation"] = {};
+                tSwpPrpCnfObj["navigation"]["nextEl"] = '.swprBtnPrev';
+                tSwpPrpCnfObj["navigation"]["prevEl"] = '.swprBtnNext';
+ 
+                tSwpPrpCnfObj["cls"] = ".swiperPrp";
+                setTimeout(function(){ JSSHOP.ads.loadNuSwiperObj(tSwpPrpCnfObj); }, 1000);
+
 	}
+    // AIzaSyAiBR8BEPj2YCepKplisQKK709r1TI48Vo
 	// alert(inpPropCtrct.value);
 	// https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2
    //  JSSHOP.loadScript("https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&ttime=" + JSSHOP.getUnixTimeStamp(), doFBFLoad,"js");
@@ -221,221 +392,33 @@ var getPropImgs = function() {
 };
 
  
-	window.onload = function() {
-        getPropImgs();
- doWinLoad();
-	};
-
-
-function doMPropDeatils(aaw,aww,cww) {
-/*
-
-
-CREATE TABLE `property` (
-  `_id` int(50) NOT NULL,
-  `title` varchar(200) NOT NULL,
-  `pcontent` longtext NOT NULL,
-  `type` varchar(100) NOT NULL,
-  `bhk` varchar(50) NOT NULL,
-  `stype` varchar(100) NOT NULL,
-  `bedroom` int(50) NOT NULL,
-  `bathroom` int(50) NOT NULL,
-  `balcony` int(50) NOT NULL,
-  `kitchen` int(50) NOT NULL,
-  `hall` int(50) NOT NULL,
-  `floor` varchar(50) NOT NULL,
-  `size` int(50) NOT NULL,
-  `price` int(50) NOT NULL,
-  `location` varchar(200) NOT NULL,
-  `city` varchar(100) NOT NULL,
-  `state` varchar(100) NOT NULL,
-  `feature` longtext NOT NULL,
-  `pimage` varchar(300) NOT NULL,
-  `pimage1` varchar(300) NOT NULL,
-  `pimage2` varchar(300) NOT NULL,
-  `pimage3` varchar(300) NOT NULL,
-  `pimage4` varchar(300) NOT NULL,
-  `uid` int(50) NOT NULL,
-  `status` varchar(50) NOT NULL,
-  `mapimage` varchar(300) NOT NULL,
-  `topmapimage` varchar(300) NOT NULL,
-  `groundmapimage` varchar(300) NOT NULL,
-  `totalfloor` varchar(50) NOT NULL,
-  `date` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
-<input type="hidden" id="inpPropCtrct" value="<?php echo $row['5'];?>">
-                    <div class="col-lg-8">
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div id="singlerproperty" style="margin: 12px;"> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                            <div class="float-right"><i class="nav-material-icons coll-menu-item txtClrHdr" style="margin-right:4px;margin-top:2px;">&#xe0b7;</i> <a href="contact.php?propid=<?php echo $row['0'];?>" class="txtSmall txtBold txtDecorNone"><ti data-ison="stxt[98]" data-desc="btn_contact">Contact</ti></a> </div>
-
-                                <div class="bg-primary d-table px-3 py-2 rounded text-white text-capitalize" id="dvPropTypeK"><?php echo getPropTypeStr($row['5']);?></div>
-                                <h5 class="mt-2 text-secondary text-capitalize"><?php echo $row['1'];?></h5>
-                                <span class="mb-sm-20 d-block text-capitalize"><i class="fas fa-map-marker-alt text-primary font-12"></i> &nbsp;<?php echo $row['16'];?></span>
-
-							</div>
-                            <div class="col-md-6">
-                                <div class="text-primary text-left h5 my-2 text-md-right"><?php echo $row['13'];?></div>
-                                <div class="text-left text-md-right"><ti data-ison="stxt[18]" data-desc="btn_price">Price</ti></div>
-                            </div>
-                        </div>
-                        <div class="property-details">
-                            <div class="bg-gray property-quantity px-4 pt-4 w-100">
-                                <ul>
-                                <li><span class="text-secondary"><?php echo $row['12'];?></span><ti data-ison="stxt[921]" data-desc="btn_ms">M2</ti></li>
-                                <li><span class="text-secondary"><?php echo $row['6'];?></span><ti data-ison="stxt[922]" data-desc="btn_bedroom">Bedroom</ti></li>
-                                <li><span class="text-secondary"><?php echo $row['7'];?></span><ti data-ison="stxt[923]" data-desc="btn_bath">Bathroom</ti></li>
-                                <li><span class="text-secondary"><?php echo $row['8'];?></span><ti data-ison="stxt[924]" data-desc="btn_balcony">Balcony</ti></li>
-                                <li><span class="text-secondary"><?php echo $row['10'];?></span><ti data-ison="stxt[925]" data-desc="btn_hall">Hall</ti></li>
-                                <li><span class="text-secondary"><?php echo $row['9'];?></span><ti data-ison="stxt[926]" data-desc="btn_kitchen">Kitchen</ti></li>
-                                </ul>
-                            </div>
-                            <h4 class="text-secondary my-4"><ti data-ison="stxt[40]" data-desc="btn_desc">Description</ti></h4>
-                            <p><?php echo $row['2'];?></p>
-                            
-                            <!-- <h5 class="mt-5 mb-4 text-secondary">Property Summary</h5>
-                            <div  class="table-striped font-14 pb-2">
-                                <table class="w-100">
-                                    <tbody>
-                                        <tr>
-                                            <td>BHK:</td>
-                                            <td class="text-capitalize"><?php echo $row['4'];?></td>
-                                            <td>Property Type:</td>
-                                            <td class="text-capitalize"><?php echo $row['3'];?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><ti data-ison="stxt[928]" data-desc="btn_desc">Floor</ti></td>
-                                            <td class="text-capitalize"><?php echo $row['11'];?></td>
-                                            <td><ti data-ison="stxt[929]" data-desc="btn_desc">Total Floor</ti></td>
-                                            <td class="text-capitalize"><?php echo $row['28'];?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><ti data-ison="stxt[210]" data-desc="btn_desc">City</ti></td>
-                                            <td class="text-capitalize"><?php echo $row['15'];?></td>
-                                            <td><ti data-ison="stxt[211]" data-desc="btn_desc">State</ti></td>
-                                            <td class="text-capitalize"><?php echo $row['16'];?></td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </div> -->
-                            <!-- not showing features for now
-                            <h5 class="mt-5 mb-4 text-secondary"><ti data-ison="stxt[930]" data-desc="btn_features">Features</ti></h5>
-                            <div class="row">
-								<?php // echo $row['17'];?>
-								
-                            </div> 
-                            -->  
-							<!-- start of floor plans
-                            <h5 class="mt-5 mb-4 text-secondary">Floor Plans</h5>
-                            <div class="accordion" id="accordionExample">
-                                <button class="bg-gray hover-bg-primary hover-text-white text-ordinary py-3 px-4 mb-1 w-100 text-left rounded position-relative" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><ti data-ison="stxt[931]" data-desc="btn_floor_plans">Floor Plans</ti></button>
-                                <div id="collapseOne" class="collapse show p-4" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                    <img src="admin/property/<?php echo $row['25'];?>" alt="Not Available"> </div>
-                                <button class="bg-gray hover-bg-primary hover-text-white text-ordinary py-3 px-4 mb-1 w-100 text-left rounded position-relative collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><ti data-ison="stxt[932]" data-desc="btn_basement_floor">Basement Floor</ti></button>
-                                <div id="collapseTwo" class="collapse p-4" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                    <img src="admin/property/<?php echo $row['26'];?>" alt="Not Available"> </div>
-                                <button class="bg-gray hover-bg-primary hover-text-white text-ordinary py-3 px-4 mb-1 w-100 text-left rounded position-relative collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><ti data-ison="stxt[933]" data-desc="btn_ground_floor">Ground Floor</ti></button>
-                                <div id="collapseThree" class="collapse p-4" aria-labelledby="headingThree" data-parent="#accordionExample">
-                                    <img src="admin/property/<?php echo $row['27'];?>" alt="Not Available"> </div>
-                            </div>
-							 end of floor plans -->
-                            <!-- start agente data  
-                              <h5 class="mt-5 mb-4 text-secondary double-down-line-left position-relative"><ti data-ison="stxt[934]" data-desc="btn_contact_agent">Contact Agent</ti></h5>
-                            <div class="agent-contact pt-60">
-                                <div class="row">
-                                    <div class="col-sm-4 col-lg-3"> <img src="admin/user/<?php echo $row['uimage']; ?>" alt="" height="200" width="170"> </div>
-                                    <div class="col-sm-8 col-lg-9">
-                                        <div class="agent-data text-ordinary mt-sm-20">
-                                            <h6 class="text-primary text-capitalize"><?php echo $row['uname'];?></h6>
-                                            <ul class="mb-3">
-                                                <li><?php echo $row['uphone'];?></li>
-                                                <li><?php echo $row['uemail'];?></li>
-                                            </ul>
-                                            
-                                            <div class="mt-3 text-secondary hover-text-primary">
-                                                <ul>
-                                                    <li class="float-left mr-3"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                                    <li class="float-left mr-3"><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                                    <li class="float-left mr-3"><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
-                                                    <li class="float-left mr-3"><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                                    <li class="float-left mr-3"><a href="#"><i class="fas fa-rss"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12">
-                                        <form class="bg-gray-form mt-5" action="#" method="post">
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <input class="form-control bg-gray" id="name" name="firstname" placeholder="Name" type="text">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <input class="form-control bg-gray" id="email" name="email" placeholder="Email" type="text">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <input class="form-control bg-gray" id="phone" name="phone" placeholder="Phone" type="text">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <button type="submit" id="send" value="submit" class="btn btn-primary">Send Message</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    <div class="row">
-                                                        <div class="col-md-12 col-lg-12">
-                                                            <div class="form-group">
-                                                                <textarea class="form-control bg-gray mt-sm-20" id="massage" name="massage" cols="30" rows="7" placeholder="Massage"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>  
-                                     end agente data -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    */
-iprpinc = 0;
-
-// iprpdetaLen = iprpdetaArr.length;
-retPDetStr = "";
-aprpObj = null;
-aprpTitle = "";
-aprpContent = "";
-aprpType = "";
-aprpBhk = "";
-aprpStype = "";
-aprpBedroom = "";
-
-aprpBathroom = "";
  
-if(aww.indexOf("_id") != -1) {
-    iprpdetaArr = JSON.parse(aww);
-    aprpObj = iprpdetaArr[0];
+
+
+
+    function doMPropDeatils(aaw,aww,cww) {
+        console.log('doMPropsList - aww: ' + aww);
+        tPropUID = 0;   
+    istrt = 0;
+    iprplen = 0;
+    fullPrpLstA = JSON.parse(aww);
+    currShopsArr = fullPrpLstA;
+    iprplen = fullPrpLstA.length;
+    retPLstSTr = "";
+    if(iprplen == 0) {
+        retPLstSTr = "<div class=\"col-md-12\"><h4 class=\"text-center text-secondary\">No Properties Found</h4></div>";
+    }
+    if(iprplen > 3) {
+     iprplen = 3;
+    }
+    // alert('doMPropsList - iprplen: ' + iprplen);
+    while(istrt < iprplen){
+    aprpObj = fullPrpLstA[istrt];
     aprpTitle = aprpObj["ptitle"];
-    // aprpdContent = aprpObj["pcontent"];
-    aprpContent = LZString.decompressFromEncodedURIComponent(aprpObj["pcontent"]);
+    tAprpCntt = aprpObj["pcontent"];
+    tUrlDecCnt = decodeURIComponent(tAprpCntt);
+    aprpContent = LZString.decompressFromEncodedURIComponent(tUrlDecCnt);
+ 
     aprpType = aprpObj["ptype"];
     aprpBhk = aprpObj["bhk"];
     aprpStype = aprpObj["stype"];
@@ -457,93 +440,163 @@ if(aww.indexOf("_id") != -1) {
     aprpPimage3 = aprpObj["pimage3"];
     aprpPimage4 = aprpObj["pimage4"];
     aprpUid = aprpObj["uid"];
+    tPropUID = aprpUid;
+    aprpUFlName = aprpObj["u_fullname"];
     aprpStatus = aprpObj["status"];
     aprpMapimage = aprpObj["mapimage"];
     aprpTopmapimage = aprpObj["topmapimage"];
     aprpGroundmapimage = aprpObj["groundmapimage"];
     aprpTotalfloor = aprpObj["totalfloor"];
     aprpDate = aprpObj["date"];
-    // alert(aprpTitle);
-    // alert(aprpContent);
-    // alert(aprpType);
-    retAetStr = "<table><tr><td style=\"min-width:40px;>";
-    retAetStr += "<div  onclick=\"javascript:eindex('aa-pdetail','pid=aa-pdetail&prpid=" + aprpObj._id + "')\" class=\"crsrPointer\"><img alt=\"Profile\" src=\"images/user/" + aprpObj.u_icon + "\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">Edit</span></div>";
-    retAetStr += "</td><td>";
-    retAetStr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-pdetail','pid=aa-pdetail&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
-    retAetStr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpLocation + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
+    aprploclat = aprpObj["ploclat"];
+    aprploclng = aprpObj["ploclng"];
+    retPLstSTr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;max-width: 600px;margin: 0 auto;\">";
+    
      
-    retAetStr += "</td></tr></table>";
-    retPDetStr += "<div class=\"col-lg-8\">";
-    retPDetStr += "<div class=\"row\">";
-
-    // retPDetStr += "<h5 class=\"mt-2 text-secondary text-capitalize\">" + aprpTitle + "</h5>";
-    // retPDetStr += "<span class=\"mb-sm-20 d-block text-capitalize\"><i class=\"fas fa-map-marker-alt text-primary font-12\"></i> &nbsp;" + aprpLocation + "</span>";
-
-   
-
-    retPDetStr += "<div class=\"col-md-12\">";
-    retPDetStr += "<div id=\"singlerproperty\" style=\"margin: 12px;\"> </div>";
-
-    retPDetStr += "</div>";
-    retPDetStr += "</div>";
-/*
-    retPDetStr += "<div class=\"row mb-4\">";
-    retPDetStr += "<div class=\"col-md-6\">";
-    retPDetStr += "<div class=\"float-right\"><i class=\"nav-material-icons coll-menu-item txtClrHdr\" style=\"margin-right:4px;margin-top:2px;\">&#xe0b7;</i> <a href=\"contact.php?propid=" + aprpUid + "\" class=\"txtSmall txtBold txtDecorNone\">" + stxt[98] + "</a> </div>";
-    retPDetStr += "<div class=\"bg-primary d-table px-3 py-2 rounded text-white text-capitalize\" id=\"dvPropTypeK\">" + aprpType + "</div>";
-
-    retPDetStr += "</div>"; // end col-md-6
-    retPDetStr += "<div class=\"col-md-6\">";
-    retPDetStr += "<div class=\"text-primary text-left h5 my-2 text-md-right\">" + aprpPrice + "</div>";
-    retPDetStr += "<div class=\"text-left text-md-right\">" + stxt[18] + "</div>";
-    retPDetStr += "</div>"; // end col-md-6
-    retPDetStr += "</div>"; // end row mb-4
-*/
-currFTclr = "menu-material-icons collection-item txtClrTtl";
-if(currRcntFavsStr.indexOf(aprpTitle) != -1) {
-currFTclr = "menu-material-icons collection-item txtClrRed";
-}
-
-retPDetStr += "<div class=\"clearfix\"></div>";
-retPDetStr += "<div class=\"clearfix\"></div>";
-    retPDetStr += "<div class=\"property-details\">";
-    retPDetStr += "<div class=\"bg-gray property-quantity px-4 pt-4 w-100\">";
-    retPDetStr += "<ul>";
-
-    retPDetStr += "<li><span class=\"text-secondary\">" + aprpSize + "</span>" + stxt[921] + "</li>";
-    retPDetStr += "<li><span class=\"text-secondary\">" + aprpBedroom + "</span>" + stxt[922] + "</li>";
-    retPDetStr += "<li><span class=\"text-secondary\">" + aprpBathroom + "</span>" + stxt[923] + "</li>";
-    retPDetStr += "<li><span class=\"text-secondary\">" + aprpBalcony + "</span>" + stxt[924] + "</li>";
-    retPDetStr += "<li><span class=\"text-secondary\">" + aprpHall + "</span>" + stxt[925] + "</li>";
-    retPDetStr += "<li><span class=\"text-secondary\">" + aprpKitchen + "</span>" + stxt[928] + "</li>";
-    retPDetStr += "</ul>";
-    retPDetStr += "</div>";
-
-    retPDetStr += "<div class=\"bkgdClrWhite\">";
-    retPDetStr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + aprpObj._id + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></span>";
-// retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showMsgBox('product'," + aprpObj._id + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
-retPDetStr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-pdetail&prpid=" + aprpObj._id + "','" + aprpTitle + "','noQvalue','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
-retPDetStr += "</div>"; // end bkgdClrWhite
-
-
-    retPDetStr += "<h4 class=\"text-secondary my-4\">" + stxt[40] + "</h4>";
-    retPDetStr += "<div class=\"clsPcntnt\" style=\"max-width:95%\">" + aprpContent + "</div>";
-    retPDetStr += "</div>";
-    retPDetStr += "</div>";
-    retPDetStr += "</div>";
-    retPDetStr += "</div>";
-
+    tPrpMMListObj = null;
+    tPrpMMListObj = "";
+    tPrpMMListObj = {};
+    if((quid == aprpUid) || (u_cat.value == "5")) {
+    tPrpMMListObj["edit"] = stxt[31];
+    // tPrpMMListObj["delete"] = stxt[109];
+    // tPrpMMListObj["privacy"] = stxt[101];
+    }
+    tPrpMMListObj["view"] = stxt[53];
+    tPrpMMListObj["share"] = stxt[72];
+    tPrpMMListObj["msg"] = stxt[117];
+    tPrpMMListObj["fav"] = stxt[21];
+    tPrpMMListObj["streetview"] = "Street View";
+    
+    
+    tDDPrpStr = "";
+    tDDPrpPLdStr  = aprpObj._id + ":" + istrt;
+    
+    tDDPrpObj = {};
+    tDDPrpObj["ddtype"] = "moreHoriz";
+    tDDPrpObj["fld"] = "noQvalue";
+    tDDPrpObj["lbl"] = stxt[101];
+    tDDPrpObj["val"] = "noQvalue";
+    tDDPrpObj["pload"] = tDDPrpPLdStr;
+    tDDPrpObj["kvpObj"] = tPrpMMListObj;
+    tDDPrpObj["cb"] = "doPrpMDDSlct";
+    tDDPrpObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tDDPrpObj["lblcls"] = "txtSmall txtBold txtClrGrey";
+    tDDPrpObj["valcls"] = "txtSmall txtBold txtClrGrey";
+    tDDPrpObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+    tDDPrpObj["horvert"] = "horizontal";
+    tDDPrpObj["icn"] = "noQvalue";
+    tDDPrpObj["kvIcnsObj"] = {};
+    tDDPrpObj["kvIcnsObj"]["edit"] = "&#xe3c9;";
+    tDDPrpObj["kvIcnsObj"]["view"] = "&#xe8f4;";
+    tDDPrpObj["kvIcnsObj"]["share"] = "&#xe80d;";
+    tDDPrpObj["kvIcnsObj"]["msg"] = "&#xe0b7;";
+    tDDPrpObj["kvIcnsObj"]["fav"] = "&#xe87d;";
+    tDDPrpObj["kvIcnsObj"]["streetview"] = "&#xe56e;";
+    
+    tDDPrpStr = JSSHOP.ui.getNuBSdropDstr(tDDPrpObj);
+    
+    
+    /*
+    retPLstSTr += "<div tid=\"dvCoFavBtn\" style=\"float: right\"></div>";
+    
+    <div style="float: right"><span class="cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg" onclick="javascript:doRecentFavorite('index.html?pid=aa-show-item&amp;itemid=12&amp;cid=15155&amp;catid=5','Apoyobrazos central para un BMW 2.6-','0','12','btnFavs12');"><i id="btnFavs12" class="material-icons txtClrTtl" alt="favorite" title="favorite" value="favorite">?</i></span><span class="cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg" style="margin:2px;" onclick="JSSHOP.ui.showShareBox('product',12);"><i class="material-icons txtClrTtl" alt="share" title="share" value="share">?</i></span><span class="cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg" style="margin:2px;" onclick="JSSHOP.ui.showMsgBox('product', ts._id,'showMsgSave');"><i class="material-icons txtClrTtl" alt="chat" title="messages" value="messages">?</i></span></div>
+    */
+    currFTclr = "material-icons txtClrTtl";
+     if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {
+    currFTclr = "material-icons txtClrRed";
+    }
+    
+    retPLstSTr += "<table style=\"width: 100%\"><tr><td style=\"min-width:40px;\">";
+    
+    //  <div  onclick="javascript:JSSHOP.ui.toggleVisibility('tdUploadBtn');" class="crsrPointer"><img alt="User Icon" src="images/misc/default_user.png"  class="slmtable brdrClrDlg" style="minn-width:150px;max-width:160px;text-align:center;margin-right:3px" align="absmiddle" id="imgIedit"><span class="txtSmall txtClrGrey">Edit</span></div>
+    retPLstSTr += "<a href=\"javascript:eindex('aa-show-user', 'pid=aa-show-user&tuid=" + aprpUid + "');\" class=\"crsrPointer\">";
+    retPLstSTr += "<div><img alt=\"Profile\" src=\"images/user/" + aprpObj.u_icon + "\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">" + aprpUFlName + "</span></div></a>";
+    retPLstSTr += "</td><td>";
+    retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
+     retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpLocation + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
+     
+    retPLstSTr += "</td><td style=\"vertical-align:top\">" + tDDPrpStr + "</td></tr></table>";
+    
+     retPLstSTr += "<div class=\"\">";
+//   <div id="street-view" style="min-height:400px;min-width:99%;max-width:99%;position:absolute;visibility:visible;display:block;"></div>
+    retPLstSTr += "<div id=\"street-view\" style=\"min-height:300px;min-width:99%;max-width:99%;visibility:hidden;display:none;z-index:99999990\"></div>";
+      
+    retPLstSTr += "<div id=\"dvAPrpImg\" class=\"overlay-black overflow-hidden position-relative crsrPointer hover-zoomer\"> <img src=\"" + currPrpImgsFldr + "/" + aprpPimage + "\" alt=\"pimage\" class=\"img100p\" id=\"imgAPrpMain\">";
+    retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
+    retPLstSTr += "<div class=\"sale bg-secondary text-white text-capitalize\">" + tDBHObj[aprpType] + "</div>";
+    retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
  
+    retPLstSTr += "<div id=\"singlerproperty\" class=\"\"></div>";
 
-    // alert(retPDetStr);
-    JSSHOP.ui.setTinnerHTML("dvTop", retAetStr);
-    JSSHOP.ui.setTinnerHTML("ixtxt", retPDetStr);
+    retPLstSTr += "<div class=\"featured-thumb-data shadow-one\">";
+    
+    /*
+    retPLstSTr += "<div class=\"p-3\">";
+    retPLstSTr += "<span class=\"location text-capitalize\"><i class=\"fas fa-map-marker-alt text-primary\"></i> " + aprpLocation + "</span> </div>";
+    retPLstSTr += "<div class=\"px-4 pb-4 d-inline-block w-100\">";
+    retPLstSTr += "<div class=\"\"> <a href=\"propertydetail.php?pid=" + aprpUid + "\" class=\"txtSmall txtBold txtDecorNone\">" + stxt[99] + "...</a> </div>";
+    retPLstSTr += "<div class=\"float-right\"><i class=\"nav-material-icons coll-menu-item txtClrHdr\" style=\"margin-right:4px;margin-top:2px;\">&#xe0b7;</i> <a href=\"contact.php?propid=" + aprpUid + "\" class=\"txtSmall txtBold txtDecorNone\">" + stxt[98] + "</a> </div>";
+    retPLstSTr += "</div>";
+    */
+    
+    
+    retPLstSTr += "<div class=\"bg-gray quantity px-4 pt-4\">";
+    retPLstSTr += "<ul>";
+    retPLstSTr += "<li><b>" + aprpSize + "</b> Area m2</li>";
+    retPLstSTr += "<li><b>" + aprpBedroom + "</b>" + stxt[922] + "</li>";
+    retPLstSTr += "<li><b>" + aprpBathroom + "</b>" + stxt[923] + "</li>"
+    retPLstSTr += "<li><b>" + aprpKitchen + "</b>" + stxt[926] + "</li>"; 
+    retPLstSTr += "</ul>";
+    
+    
+    
+    
+    retPLstSTr += "</div>"; // end bg-gray quantity px-4 pt-4
+    retPLstSTr += "<div class=\"bkgdClrWhite\">";
+    retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></span>";
+    retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
+    retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','noQvalue','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
+    // streetview link http://maps.google.com/maps?q=&layer=c&cbll=
+    tSrvLLstr = aprploclat + "," + aprploclng;
 
-/*
-       // create an iframe that expands to the content of the page
-       
+    if(tSrvLLstr.length < 5) {
+        aprploclat = 40.7128;
+        aprploclng = -74.0060;
+     
+        tSrvLLstr = aprploclat + "," + aprploclng;
+    }
+    tmpSVloclat = aprploclat;
+    tmpSVloclng = aprploclng;
+    retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\"><a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr + "\"><i class=\"material-icons txtClrTtl\" alt=\"streetview\" title=\"streetview\" value=\"streetview\">&#xe56e;</i> Street View</a></span>";
+    
+    retPLstSTr += "<div class=\"clsPcntnt\" style=\"max-width:95%\">" + aprpContent + "</div>";
+
+    
+    retPLstSTr += "</div>"; // end bkgdClrWhite
+    
    
-*/
+    
+    
+    retPLstSTr += "</div>"; // end featured-thumb-data shadow-one
+    retPLstSTr += "</div>"; // end featured-thumb hover-zoomer mb-4
+    
+    
+    
+    
+    
+    retPLstSTr += "</div>";  // end col-md-6
+     
+     // add clearfix div
+     
+    
+    
+    
+    istrt++;
+    }
+
+    // JSSHOP.ui.setTinnerHTML("dvTop", retAetStr);
+    JSSHOP.ui.setTinnerHTML("ixtxt", retPLstSTr);
+    // setTimeout("doSVLoad(" + aprploclat + "," + aprploclng + ")", 1000);
     tmpFobj = null;
     tmpFobj = {};
     tmpFobj["ws"] = "where m_pid=? and m_rtype=?";
@@ -551,9 +604,17 @@ retPDetStr += "</div>"; // end bkgdClrWhite
     tmpFobj["o"] = "m_vala desc";
     oi = getNuDBFnvp("qmedia", 5, null, tmpFobj);
     doQComm(oi["rq"], null, "setPropImgs");
-}
-}
+    
+    // return retPLstSTr;
+    // JSSHOP.ui.setTinnerHTML("dvMainPrpsLst",retPLstSTr);
+    // alert('doMPropsList - aaw: ' + aaw);
+    // JSSHOP.ads.doGenMapShow();
 
+     
+     }
+
+
+ 
 
 
 function getFBUPostCntnt(tCntntStr) {
@@ -619,5 +680,6 @@ oia = getNuDBFnvp("property",5,null,tmpDOqs);
 anewQstr = "select p.*, u.u_icon from property p, quser u where p._id = " + prpid + " and p.uid = u._id";
 
 doQComm(anewQstr, null, "doMPropDeatils");
+
 return dmyFnishCntLoad;
 };

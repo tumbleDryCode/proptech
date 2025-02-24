@@ -113,6 +113,8 @@ stxt[112] = "Snippets";
 stxt[113] = "Latitude";
 stxt[114] = "Longitude";
 stxt[115] = "Select type of contact or link";
+stxt[116] = "Add new contact";
+stxt[117] = "Mark a Visit";
 
 
 // user strings 
@@ -129,7 +131,7 @@ stxt[210] = "City";
 stxt[211] = "State";
 stxt[212] = "Zip Code";
 stxt[213] = "Street";
-stxt[214] = "Door Nº";
+stxt[214] = "Door Number:";
 stxt[215] = "Date of Birth";
 stxt[216] = "Social Security Number";
 stxt[217] = "SS Expiration Date";
@@ -192,6 +194,68 @@ stxt[508] = "Start by adding some items to this category."
 stxt[509] = "Or use the <b>Quick Item Add</b> by entering item title and clicking (+).";
 stxt[510] = "Quick Item Edit";
 stxt[511] = "Item Title";
+stxt[512] = "Parts Categories";
+stxt[513] = "Edit your shops name, desciption and logo..";
+stxt[514] = "Working Hours";
+stxt[515] = "Address";
+stxt[516] = "city, state...";
+stxt[517] = "Contact";
+stxt[518] = "Street Name or Address";
+stxt[519] = "Your Listings";
+stxt[520] = "If you are managing shops, you can switch between them here.";
+stxt[521] = "Set as main";
+stxt[522] = "Select Type";
+stxt[523] = "Web Address https://.., Email, Phone Number ...";
+stxt[524] = "Add more links, emails phone numbers etc..";
+stxt[525] = "More Contacts and Links";
+stxt[526] = "City or Town";
+stxt[527] = "State or Region";
+stxt[528] = "Country";
+stxt[529] = "Click to set these coordinates";
+stxt[530] = "Remember to save afterwords";
+stxt[531] = "You can also choose a location by holding down on a point on the map (mobile) or right clicking (desktop)";
+stxt[532] = "To give you better results, please fill out the following:";
+stxt[533] = "Select from Map";
+stxt[534] = "Set Default";
+stxt[535] = "Monday";
+stxt[536] = "Tuesday";
+stxt[537] = "Wednesday";
+stxt[538] = "Thursday";
+stxt[539] = "Friday";
+stxt[540] = "Saturday";
+stxt[541] = "Sunday";
+stxt[542] = "Weekdays";
+stxt[543] = "Weekends";
+stxt[544] = "Set Monday hours to all week";
+stxt[545] = "All Week";
+stxt[546] = "Workin Hours";
+stxt[547] = "Closed";
+stxt[548] = "Open 24 Hours";
+stxt[549] = "Holidays";
+stxt[550] = "Weekend Holiday";
+stxt[551] = "Weekday Holiday";
+stxt[552] = "Note";
+stxt[553] = "Result";
+stxt[554] = "View on Map";
+stxt[555] = "We are contantly working to improve our services. If you would like to edit-remove your shop information, please contact us.";
+stxt[556] = "* These locations are approximate and may not represent the actual location of the shop.";
+stxt[557] = "Show All";
+stxt[558] = "Open";
+stxt[559] = "is a company located in";
+stxt[560] = "We are a company located in";
+stxt[561] = "Select the make and model, then enter the price next to the part in the list below.";
+stxt[562] = "When your finsihsed, click the Save button below.";
+stxt[563] = "item images";
+stxt[564] = "Add Item Image";
+stxt[565] = "Settings";
+stxt[566] = "product availibility, privacy";
+stxt[567] = "Your Internal Part ID";
+stxt[568] = "Disabled";
+stxt[569] = "for a cadillac eldorado";
+stxt[570] = "Inquire about this item";
+stxt[571] = "Clear All";
+
+
 
 
 // admin strings
@@ -225,12 +289,36 @@ stxt[626] = "Current links:";
 stxt[627] = "View Property";
  
 
-
-
+ 
 // messaging strings
 stxt[700] = "Have a Question?";
-stxt[701] = "Message";
-stxt[702] = "Messages";
+stxt[702] = " Optional for location based services ";
+stxt[703] = " Your Name ";
+stxt[704] = " Email ";
+stxt[705] = " Subject ";
+stxt[706] = " Message ";
+stxt[707] = " You can use this form to contact us.<br>Or email us at: web@recamby.com";
+stxt[708] = "Send";
+stxt[709] = "Thank you for your feedback or inquiry. If requested, we we contact you as soon as possible.";
+stxt[710] = "Messages";
+stxt[711] = "ShoutOuts";
+stxt[712] = "Is this your shop?";
+stxt[713] = "Please confirm email address";
+stxt[714] = "Thank you for registering. Please confirm your email address by clicking the link in the email we just sent you. If you do not see the email, please check your spam folder.";
+stxt[715] = "Please confirm your email address by clicking this link"; 
+stxt[716] = "Thank you from the team at Recamby.com";
+stxt[717] = "A link will sent to";
+stxt[718] = "to confirm your email address.";
+stxt[719] = "Please check your email and click the link inside to confirm your email address.";
+stxt[720] = "Send me link";
+stxt[721] = "By confirming you are agreeing to our terms of service.";
+stxt[722] = "Continue";
+stxt[723] = "Someone else is registered as administrator. Multi user permission will be coming soon for shops. For now, please contact us to resolve this issue. Thank you for your understanding.";
+stxt[724] = "If this is your shop, and you would like to edit or remove it";
+stxt[725] = "You must be logged in.";
+stxt[726] = "Confirmed!  Your email address has been confirmed.";
+stxt[727] = "Sorry, an error occured.  Please contact us.";
+stxt[728] = "Click here to continue";
 
 
 
@@ -250,6 +338,9 @@ stxt[811] = "Advertisement and Targeting cookies";
 stxt[812] = "These cookies collect information about how you use the website, which pages you visited and which links you clicked on. All of the data is anonymized and cannot be used to identify you.";
 stxt[813] = "More information";
 stxt[814] = "For any queries in relation to my policy on cookies and your choices, please <a href=\"index.php?pid=aa-contactus\" class=\"cc-link\">contact us</a>.";
+
+
+
 // account strings
 stxt[815] = "Remove Account";
 stxt[816] = "Are you sure you want to remove your account?";
@@ -261,7 +352,7 @@ stxt[821] = "Or you can login and use the Remove Account link in your account se
 stxt[822] = "Action confirmed. We are sorry to see you go. If you have any questions or concerns, please <a href=\"index.html?pid=aa-contactus\" class=\"cc-link\">contact us</a>.";
 stxt[823] = "Also remove all my shop listings";
 stxt[824] = "Click on the link below to remove your account.";
-
+stxt[825] = "Edit your account details";
 
 
 stxt[900] = "Agentes";
@@ -319,7 +410,7 @@ stxt[949] = "Selling Type";
 stxt[950] = "Select Status";
 stxt[951] = "Price & Location";
 stxt[952] = "Total Floors";
-stxt[953] = "Area Size";
+stxt[953] = "Area m2";
 stxt[954] = "Image & Status";
 stxt[955] = "Image";
 stxt[956] = "Status";
@@ -579,6 +670,10 @@ svftObj["poststat"] = tPostsStatObj;
 
 
 
-
-
+// custom editable strings
+var cstmStr = "";
+cstmStr = {};
+cstmStr["prop1"] = "proptech - property technology";
+cstmStr["prop2"] = "proptech - your onestop property technology";
+cstmStr["prop3"] = "proptech - buy, sell, rent...";   
 

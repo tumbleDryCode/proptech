@@ -19,7 +19,7 @@ var trgr_bclck = [];
 var canLoad = "no";
 var pid = "index_main";
 var ppid = 0;
-var cid = 0;
+var cid = 24807;
 var catid = 0;
 var itemid = 0;
 var threadid = 0;
@@ -76,6 +76,13 @@ var usrcc = "ES"; // user country code
 var actbSearch;
 var actbLoaded = false; // boolean show js_actb.js  is loaded
 var shopDir = document.location.href;
+var currWebHome = document.location.href;
+if(shopDir.indexOf("titan") != -1) {
+    currWebHome = "https://titan/incasa/";
+} else {
+    currWebHome = "https://dev.propsgo.com/";
+}
+currWebHome = "https://dev.propsgo.com/";
 var spinTextDiv = document.createElement("div");
 var currSpinText = "noQvalue";
 var currSpinType = "small";
@@ -155,6 +162,8 @@ var currSlctdUsrObj = {};
 var currSlctdPrpsObj = {};
 var currSwpCnfgObj = {};
 var currSwpCnfgArr = [];
+var currGglSVloaded = "no";
+var gglSKey = "AIzaSyAiBR8BEPj2YCepKplisQKK709r1TI48Vo";
 
 var nuDW = function(theElem) { 
 if(theElem.getAttribute("data-isscript") != null) {

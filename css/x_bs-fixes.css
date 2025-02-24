@@ -57,6 +57,10 @@ btn-success {
   margin-right: 3px;
 }
 
+.dropdown-menu {
+    max-height: 400px;
+    overflow-y: auto;
+}
 .dropdown-menu:after, .dropdown-menu:before {
     content: none;
     display: none;
@@ -206,4 +210,8 @@ table.tfixed td:nth-of-type(2) {width:200px;}/*Setting the width of column 2.*/
 .img100p {
 	max-width: 100%;
   max-height: 100%;
+}
+
+.form-control {
+  height: auto;
 }

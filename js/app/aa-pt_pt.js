@@ -53,7 +53,7 @@ stxt[49] = "Password";
 stxt[50] = "Email";
 stxt[51] = "Header";
 stxt[52] = "Limpar";
-stxt[53] = "View";
+stxt[53] = "Ver";
 stxt[54] = "Copy";
 stxt[55] = "Media";
 stxt[56] = "Sua Conta";
@@ -115,8 +115,11 @@ stxt[111] = "Modelos";
 stxt[112] = "Snippets";
 stxt[113] = "Latitude";
 stxt[114] = "Longitude";
- stxt[115] = "Selecione o tipo de contato ou link";
-
+stxt[115] = "Selecione o tipo de contato ou link";
+// stxt[116] = "Add new contact";
+// stxt[117] = "Mark a Visit";
+stxt[116] = "Adicionar novo contato";
+stxt[117] = "Marcar uma Visita";
  
 
 // user strings 
@@ -133,7 +136,7 @@ stxt[210] = "Concelho";
 stxt[211] = "Distrito";
 stxt[212] = "Codigo Postal";
 stxt[213] = "Rua / Avenida";
-stxt[214] = "Nº Porta";
+stxt[214] = "Numero Porta";
 stxt[215] = "Date of Birth";
 stxt[216] = "Social Security Number";
 stxt[217] = "SS Expiration Date";
@@ -297,10 +300,34 @@ stxt[621] = "Social";
 stxt[622] = "adicionar Conteudo Social";
 
 
-// messaging strings
-stxt[700] = "Have a Question?";
-stxt[701] = "Mensagem";
-stxt[702] = "Mensagens";
+stxt[700] = "Tem uma pergunta?";
+stxt[702] = " Opcional para servi\u00e7os baseados em localiza\u00e7\u00e3o ";
+stxt[703] = " Seu Nome ";
+stxt[704] = " Email ";
+stxt[705] = " Assunto ";
+stxt[706] = " Mensagem ";
+stxt[707] = " Voc\u00ea pode usar este formul\u00e1rio para entrar em contato conosco.<br>Ou envie-nos um email para: ";
+stxt[708] = "Enviar";
+stxt[709] = "Obrigado pelo seu feedback ou pergunta. Se solicitado, entraremos em contato o mais r\u00e1pido poss\u00edvel.";
+stxt[710] = "Mensagens";
+stxt[711] = "ShoutOuts";
+stxt[712] = "Esta \u00e9 a sua loja?";
+stxt[713] = "Por favor, confirme o endere\u00e7o de email";
+stxt[714] = "Obrigado por se registrar. Por favor, confirme o seu endere\u00e7o de email clicando no link no email que acabamos de enviar. Se voc\u00ea n\u00e3o vir o email, verifique sua pasta de spam.";
+stxt[715] = "Por favor, confirme o seu endere\u00e7o de email clicando neste link";
+stxt[716] = "Obrigado da equipe da Recamby.com";
+stxt[717] = "Um link ser\u00e1 enviado para";
+stxt[718] = "para confirmar o seu endere\u00e7o de email.";
+stxt[719] = "Por favor, verifique seu email e clique no link dentro para confirmar seu endere\u00e7o de email.";
+stxt[720] = "Enviar-me link";
+stxt[721] = "Ao confirmar, voc\u00ea concorda com nossos termos de servi\u00e7o.";
+stxt[722] = "Continuar";
+stxt[723] = "Outra pessoa est\u00e1 registrada como administrador. Permiss\u00e3o multiusu\u00e1rio estar\u00e1 dispon\u00edvel em breve para lojas. Por enquanto, entre em contato conosco para resolver este problema. Obrigado pela sua compreens\u00e3o.";
+stxt[724] = "Se esta \u00e9 a sua loja e voc\u00ea gostaria de edit\u00e1-la ou remov\u00ea-la";
+stxt[725] = "Voc\u00ea deve estar logado.";
+stxt[726] = "Confirmado! Seu endere\u00e7o de email foi confirmado.";
+stxt[727] = "Desculpe, ocorreu um erro. Por favor, entre em contato conosco.";
+stxt[728] = "Clique aqui para continuar";
 
 
 // coookie consent strings
@@ -341,7 +368,8 @@ stxt[821] = "Ou voce pode fazer login e usar o link Remover Conta nas configurac
 stxt[822] = "Acao confirmada. Sentimos muito por ve-lo partir. Se tiver alguma duvida ou preocupacao, entre em contato conosco.";
 stxt[823] = "Tambem remover todas as minhas listagens de loja";
 stxt[824] = "Clique no link abaixo para remover sua conta.";
-
+// stxt[825] = "Edit your account details";
+stxt[825] = "Editar detalhes da sua conta";
 
 
 
@@ -402,7 +430,7 @@ stxt[949] = "Tipo de Contrato";
 stxt[950] = "Select Status";
 stxt[951] = "Preco e Local";
 stxt[952] = "Andares Totais";
-stxt[953] = "Area Total";
+stxt[953] = "Area m2";
 stxt[954] = "Imagen e Status";
 stxt[955] = "Imagen";
 stxt[956] = "Status";
@@ -675,4 +703,11 @@ tPostsStatObj["pin"] = "Fixo";
 tPostsStatObj["pinhlight"] = "Fixo & Sublinhado";
 svftObj["poststat"] = tPostsStatObj;
  
-
+ 
+// custom strings
+ 
+var cstmStr = "";
+cstmStr = {};
+cstmStr["prop1"] = "proptech - tecnologia imobiliaria";
+cstmStr["prop2"] = "proptech - sua tecnologia imobiliaria";
+cstmStr["prop3"] = "proptech - comprar, vender, alugar...";

@@ -9,7 +9,10 @@ include("config.php");
 <head>
  
         <!--	HTML Header start  -->
-		<?php include("include/html_header.php");?>
+		<?php
+         include("include/html_header.php"); 
+         include("include/inc-index_meta.php");
+        ?>
         <!--	HTML Header end  -->
 
 </head>
@@ -37,15 +40,17 @@ include("config.php");
 		<td style="width: 37px"><div id="dvPartLicon"></div><div id="dvPLicon" style="visibility:hidden;display:none;"><img id="imgPLicon" src="images/mech_logo_small.png" style="max-width:40px;max-height:40px;"></div></td>
 		<td>&nbsp;</td>
 		<td style="width: 100%"><div id="dvPartLinks" style="max-width:90%; word-wrap:break-word;"><div class="txtSmall">...</div></div></td>
-        <td style="vertical-align:middle;"><div><a class="txtBold" href="javascript:JSSHOP.ui.popAndFillLbox(JSSHOP.ui.getMorBxStr('mmDdown'));" style="text-transform:none;visibility:visible;display: block;"><i class="material-icons txtClrHdr txtBold" style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="More" title="More">
-            &#xe5d4;</i></a></div></td>
+        <td style="vertical-align:middle;">
+           <!-- <div><a class="txtBold" href="javascript:JSSHOP.ui.popAndFillLbox(JSSHOP.ui.getMorBxStr('mmDdown'));" style="text-transform:none;visibility:visible;display: block;"><i class="material-icons txtClrHdr txtBold" style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="More" title="More">
+            &#xe5d4;</i></a></div>-->
+        </td>
 			</tr>
 			</tbody></table>
         </td></tr>
         <tr><td>
-        <table style="margin:0 auto;max-width:80%"><tr>
+        <!-- <table style="margin:0 auto;max-width:80%"><tr>
             <td style="text-align:center;"><ti data-ison="tmpContType['buy']">Buy</ti> </td><td style="text-align:center;"><ti data-ison="tmpContType['sell']">Sell</ti></td>
-        </tr></table>
+        </tr></table> -->
         </td>
         </tr></table>
         <!--	newbanner end  -->
@@ -94,8 +99,7 @@ include("config.php");
 <script src="js/app/x_all.js"></script> 
 <script src="js/app/x_booter.js"></script>
 <script src="js/app/x_admin.js"></script>
- 
-		<?php include("include/footer.php");?>
+  		<?php include("include/footer.php");?>
 		<!--	Footer   start-->
         
         

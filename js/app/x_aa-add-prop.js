@@ -382,26 +382,7 @@ JSSHOP.shared.initFrmComps(euiFFObjArr);
         // JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue", "noQvalue");
         /*
         
-       
-         tDDPPosObj = JSSHOP.ui.getBSDDOptsO();
-        tDDPPosObj["ddtype"] = "noQvalue";
-        tDDPPosObj["fld"] = "p_pos";
-        tDDPPosObj["lbl"] = stxt[104];
-        tDDPPosObj["val"] = svftObj["postpos"];
-        tDDPPosObj["kvpObj"] = svftObj["postpos"];
-        tDDPPosObj["cb"] = "donada";
-        tDDPPosObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
-        tDDPPosObj["lblcls"] = "txtSmall";
-        tDDPPosObj["valcls"] = "txtSmall";
-        tDDPPosObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
-        tDDPPosObj["horvert"] = "vertical";
-        tDDPPosObj["icn"] = "noQvalue";
-        tDDPPosObj["kvIcnsObj"] = {};
-        tDDPPosObj["kvIcnsObj"]["top"] = "&#xe5cd;";
-        tDDPPosObj["kvIcnsObj"]["bottom"] = "noQvalue";
-        tDDPPosStr = JSSHOP.ui.getNuBSdropDstr(tDDPPosObj);
-        tDDPStr += tDDPPosStr;
-
+        
         */
 
         tDDPaddStr = "";
@@ -426,7 +407,7 @@ JSSHOP.shared.initFrmComps(euiFFObjArr);
         tDDPPrpTypObj = JSSHOP.ui.getBSDDOptsO();
         tDDPPrpTypObj["ddtype"] = "noQvalue";
         tDDPPrpTypObj["fld"] = "ptype";
-        tDDPPrpTypObj["lbl"] = stxt[950];
+        tDDPPrpTypObj["lbl"] = stxt[927];
         tDDPPrpTypObj["val"] = ptype.value;
         tDDPPrpTypObj["kvpObj"] = svftObj["proptype"];
         tDDPPrpTypObj["cb"] = "donada";
@@ -439,7 +420,7 @@ JSSHOP.shared.initFrmComps(euiFFObjArr);
         tDDPPrpTypStr = JSSHOP.ui.getNuBSdropDstr(tDDPPrpTypObj);
         tDDPaddStr += tDDPPrpTypStr;
         tDDPaddStr += "<br><br>";
-        
+
         document.getElementById("dvAddPrpDrpDwns").innerHTML = tDDPaddStr;
 
  
@@ -810,6 +791,8 @@ popup.className = "brdrClrHdr";
         L.DomEvent.on(startBtn, 'click', function(e) {
             document.getElementById("tmp_ploclat").value = currStartLat;
             document.getElementById("tmp_ploclng").value = currStartLng;
+            JSSHOP.ajax.doNuAjaxPipe("dvPSearch", "_p/osmgeo.php?qv=" + currStartLat + "," + currStartLng, getPlcesLRes);
+
             // alert('f: ' + JSON.stringify(e));
             map.closePopup();
             JSSHOP.ui.closePopMenus();

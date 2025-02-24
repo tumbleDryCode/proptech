@@ -151,14 +151,37 @@ JSSHOP.ui.setCBBClickClr(btnEUsave,'cls_button cls_button-medium  bkgdClrDGreen 
     doQComm(oia["rq"], null, "rndrPropSearch");
  } 
 
+function doSrchCtryPckChg(tZPCel, tZPVal, tZPtxt) {
+         console.log("doSrchCtryPckChg: " + tZPCel + " " + tZPVal + " " + tZPtxt);
+  try {
+    document.getElementById(tmpTCountryFid).value = tZPtxt;
+      alert("doSrchCtryPckChg: " + tZPCel + " " + tZPVal + " " + tZPtxt);
 
+    } catch(e) {
+      alert("doCountryPckChg: " + e);
+    }
+  }
+    
+        
+function doSrchZoneDD(thePrx, theSTat) {
+    try {   
 
-
+        // alert("doZoneDD: " + thePrx + " " + theSTat);
+        if(theSTat == "ok") {
+           tLclDstDstr = getCountryDropStr("country", "doSrchCtryPckChg");
+              document.getElementById("dvCountryDD").innerHTML = tLclDstDstr;
+        } else {
+            document.getElementById("dvCountryDD").innerHTML = "error loading zones";
+        }
+     } catch (e) {
+        alert("doSrchZoneDD: " + e);
+    }
+}
 
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
 
-
+country.value = u_country.value;
 
 tfsb = nCurrFFieldOb();
 tfsb.fid = "btnEUsave";
@@ -175,9 +198,47 @@ JSSHOP.shared.initFrmComps(euiFFObjArr);
  
         istype = document.getElementById("tmp_stype");
         iptype = document.getElementById("tmp_ptype");
-        JSSHOP.shared.addCurrSlctObj(svftObj["contract"], istype, stype.value, "noQvalue", "noQvalue");
-        JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue", "noQvalue");
-        
+        // JSSHOP.shared.addCurrSlctObj(svftObj["contract"], istype, stype.value, "noQvalue", "noQvalue");
+        // JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue", "noQvalue");
+      
+        tDDPaddStr = "";
+        tDDPStypeObj = JSSHOP.ui.getBSDDOptsO();
+        tDDPStypeObj["ddtype"] = "noQvalue";
+        tDDPStypeObj["fld"] = "stype";
+        tDDPStypeObj["lbl"] = stxt[949];
+        tDDPStypeObj["val"] = stype.value;
+        tDDPStypeObj["kvpObj"] = svftObj["contract"];
+        tDDPStypeObj["cb"] = "donada";
+        tDDPStypeObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDPStypeObj["lblcls"] = "txtSmall";
+        tDDPStypeObj["valcls"] = "txtSmall";
+        tDDPStypeObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDPStypeObj["horvert"] = "vertical";
+        tDDPStypeObj["icn"] = "noQvalue";
+        tDDPTypeStr = JSSHOP.ui.getNuBSdropDstr(tDDPStypeObj);
+        tDDPaddStr += tDDPTypeStr;
+        tDDPaddStr += "<br><br>";
+
+
+        tDDPPrpTypObj = JSSHOP.ui.getBSDDOptsO();
+        tDDPPrpTypObj["ddtype"] = "noQvalue";
+        tDDPPrpTypObj["fld"] = "ptype";
+        tDDPPrpTypObj["lbl"] = stxt[927];
+        tDDPPrpTypObj["val"] = ptype.value;
+        tDDPPrpTypObj["kvpObj"] = svftObj["proptype"];
+        tDDPPrpTypObj["cb"] = "donada";
+        tDDPPrpTypObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDPPrpTypObj["lblcls"] = "txtSmall";
+        tDDPPrpTypObj["valcls"] = "txtSmall";
+        tDDPPrpTypObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDPPrpTypObj["horvert"] = "vertical";
+        tDDPPrpTypObj["icn"] = "noQvalue";
+        tDDPPrpTypStr = JSSHOP.ui.getNuBSdropDstr(tDDPPrpTypObj);
+        tDDPaddStr += tDDPPrpTypStr;
+        tDDPaddStr += "<br><br>";
+
+        document.getElementById("dvSrchPDrpDwns").innerHTML = tDDPaddStr;
+ 
  
  
 // JSSHOP.shared.setDynFrmVals(document["property"], "tmp_");
@@ -185,7 +246,11 @@ JSSHOP.shared.initFrmComps(euiFFObjArr);
 // getPropImgs();
 // doWinLoad();
 // 
- 
+
+JSSHOP.loadScript("misc/x_countries.js", doSrchZoneDD,  "js");
+
+JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')
+
 return dmyFnishCntLoad;
 };
 

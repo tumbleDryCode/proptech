@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-lg-12" style="margin:0px;">
                             <nav class="navbar-expand-lg navbar-light p-0">
-                              <span style="float:left;text-align:left;white-space: nowrap;"><a class="breadcrumb-item active" href="javascript:eindex('index_main', 'pid=index_main');"><img class="slmtable" src="images/logo/logo-small.png" alt="proptech" style="max-height:40px;max-width:40px;"> <b>proptech</b></a></span>
+                              <span style="float:left;text-align:left;white-space: nowrap;"><a class="breadcrumb-item active" href="javascript:eindex('index_main', 'pid=index_main');"><img id="imgMainLogo" class="slmtable" src="images/logo/logo-small.png" alt="proptech" style="max-height:40px;max-width:40px;"> <b>proptech</b></a></span>
 
   <!-- menu icons 
 
@@ -96,7 +96,8 @@
      &#xe7fd;</i></a></li> 
  <!-- <li id="ahHomeIcon" style="padding:0px;margin:0px;display:inline;float:right;"><a href="index.html" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;  text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons" style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="home" title="home">
      &#59530;</i></a></li>--> 
-
+     <li id="ahMsgsIcon" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:eindex('aa-show-messages','pid=aa-show-messages&cit=y');" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="messages" title="messages"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrHdr', 'material-icons crsrPointer hoover', function(){void(0);}, 300);">
+     &#57527;</i></a></li>
   <li id="ahDeRecent" style="padding:0px;margin:0px;display:inline;float:right;"><div class="crsrPointer hoover" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;">
   <i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="ahDeRecent" title="ahDeRecent"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrRed', 'material-icons crsrPointer hoover', function(){JSSHOP.ui.popAndFillLbox(doFavoritesRndr('y', 'y', 'y', 60).replace(/::/g, '<br>'));}, 300);">
  &#59517;</i></div></li> 
@@ -140,7 +141,7 @@
 										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-featured','pid=aa-show-featured');"><ti data-ison="stxt[940]" data-desc="btn_properties">Properties</ti></a> </li>					 
 										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-search','pid=aa-show-search&cit=y');"><ti data-ison="stxt[936]" data-desc="btn_searchprops">Search Properties</ti></a> </li>
 										<!-- <li class="nav-item"> <a class="nav-link" href="agent.php"><ti data-ison="stxt[900]" data-desc="btn_agentes">Agentes</ti></a> </li> -->
-                                        <li class="nav-item"> <a class="nav-link" href="index.html?pid=aa-contactus"><ti data-ison="stxt[902]" data-desc="btn_contacts">Contacts</ti></a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-contact-us','pid=aa-contact-us');"><ti data-ison="stxt[902]" data-desc="btn_contacts">Contacts</ti></a> </li>
 										
 									 
                                     <?php if(isset($_COOKIE['quid'])) { ?>
@@ -176,6 +177,8 @@
 											 <ti data-ison="stxt[83]" data-desc="btn_account">Admin</ti>
 											<ul class="">
 												<!-- <li class="nav-item"> <a class="nav-link" href="profile.php"><ti data-ison="stxt[903]" data-desc="btn_profile">Profile</ti></a> </li> -->
+                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-place','pid=aa-edit-place');"><ti data-ison="stxt[68]" data-desc="btn_shpsettinhs">Shop Settings</ti></a> </li>
+
                                                 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-aprops','pid=aa-edit-aprops');"><ti data-ison="stxt[901]" data-desc="btn_addprop">Properties</ti></a> </li>
 												 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-ausers', 'pid=aa-edit-ausers');"><ti data-ison="stxt[80]" data-desc="btn_yourprops">Users</ti></a> </li>
 											</ul>

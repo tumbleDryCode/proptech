@@ -1468,6 +1468,7 @@ if(u_cat.value == "5") {
    JSSHOP.ui.showHideElement("dvAMnuLnks", "show");
 }
 
+ 
 fnishCntLoad();
 
 };
@@ -2232,6 +2233,21 @@ alert("doMainContent: "  + e);
 }
 };
 
+var setCoLogo = function() {
+    alert("setCoLogo");
+try {
+if(arrAllForms.qco) {
+if(arrAllForms.qco.v[0].c_logoimg) {
+if(arrAllForms.qco.v[0].c_logoimg !== "0") {
+document.getElementById("imgMainLogo").src = "images/pimgs/s_" + arrAllForms.qco.v[0].c_logo;
+}
+}
+}
+} catch(e) {
+alert("setCoLogo: " + e);
+}
+};
+
 var fillDynFrmArr = function(theRobj) {
     
     // console.log("fillDynFrmArr: " + JSON.stringify(theRobj));
@@ -2245,25 +2261,33 @@ tmpAforms = [];
 tmpAforms = JSON.parse(theRobj.rs);
 console.log("fillMFormArr: " + JSON.stringify(tmpAforms));
 arrAllForms = tmpAforms;
-
+tFerr = "qco";
 if(arrAllForms.qco) {
-JSSHOP.shared.setFrmVals("qco",arrAllForms.qco.v[0],function() {void(0)});
+    tFerr = "qco";
+
+JSSHOP.shared.setFrmVals("qco",arrAllForms.qco.v[0],function() {void(0) });
+
 }
 if(arrAllForms.quser) {
+    tFerr = "quser";
 JSSHOP.shared.setFrmVals("quser",arrAllForms.quser.v[0],function() { void(0) });
 }
 if(arrAllForms.qcat) {
+    tFerr = "qcat";
 JSSHOP.shared.setFrmVals("qcat",arrAllForms.qcat.v[0],function() { void(0) });
 }
 if(arrAllForms.qitem) {
+    tFerr = "qitem";
 JSSHOP.shared.setFrmVals("qitem",arrAllForms.qitem.v[0],function() { void(0) });
 }
 if(arrAllForms.qmsgs) {
+    tFerr = "qmsgs";
 JSSHOP.shared.setFrmVals("qmsgs",arrAllForms.gmsgs.v[0],function() {  void(0) });
 }
 
 
 if(arrAllForms.qextras.v[0]) {
+    tFerr = "qextras";
 JSSHOP.shared.setFrmVals("qextras",arrAllForms.qextras.v[0],function() { fnishExtrasForm() });
 } else {
 fnishExtrasForm()
@@ -2283,7 +2307,8 @@ JSSHOP.shared.setFrmVals("qcartitem",arrAllForms.qcartitem.v[0],);
  // doLoadACTB();
 
 } catch(e) {
-    alert("fillMFormArr; " + e);
+    // alert("fillMFormArr: " + e + " :: " + tFerr);
+    console.log("fillMFormArr.error: " + e + " :: " + tFerr);
     if(content == "noQvalue") {
         JSSHOP.loadScript("js/app/" + jscssprefix + "x_" + pid + ".js", doMainContent,"js");
         } else {
@@ -2426,38 +2451,22 @@ console.log("setCartIArr.error: " + e);
 
 
 var doBootLoad = function() {
+  
     console.log("doBootLoad: " + JSON.stringify(arrUprefs));
 try {
 JSSHOP.user.doCkieUprefs('prfsSHOPuser');
-} catch(e) {
-alert("doBootLoad doCkieUprefs error: " + e)
-JSSHOP.logJSerror(e, arguments, "doBootLoad:doCkieUprefs");
-} 
+ 
 nShopDir = shopDir.replace("admin/", "");
 shopDir = nShopDir;
 
-/* removed this and using another cookie consent script
-// !!to delete
-// the ecommerce demo alert and links div in index.html
-// if it was not closed by user, show it.
-try {
-if(arrUprefs["prfsSHOPuser"][0].sia == "y") {
-JSSHOP.ui.showHideElement("dvDemoAlert", "show");
-}
-} catch (e) {
-alert(e); 	
-}
-*/
+ 
 
-try {
+ 
 if(arrUprefs["prfsSHOPuser"][0].tglSearchType) {
 currSearchType = arrUprefs["prfsSHOPuser"][0].tglSearchType;
 }
-} catch (e) {
-alert(e); 	
-}
-
-try {
+ 
+ 
 tmpUrl = getCurrUrl();
 if(tmpUrl == "noQvalue") {
 } else {
@@ -2487,104 +2496,24 @@ console.log("currPurlObj.last: " + JSON.stringify(currPUrlObj));
 currPUrlObj = null;
 currPUrlObj = {};
 
-
-
-/*
-if(JSSHOP.ads.getPrtsPrefCC("mk") == "noQvalue") {
-// currPUrlObj["make"] = "all";
-console.log("doBootLoad: no make" + JSON.stringify(currPUrlObj));
-} else {
-   console.log("doBootLoad: yes make: " + JSSHOP.ads.getPrtsPrefCC("mk") + " : " + JSON.stringify(currPUrlObj));
-currPUrlObj["mk"] =  JSSHOP.ads.getPrtsPrefCC("mk");
-currPUrlObj["make"] = objAllMakes["m" + JSSHOP.ads.getPrtsPrefCC("mk")]["n"];
-JSSHOP.ajax.doNuAjaxPipe("inpModels", "misc/m" + currPUrlObj["mk"] + ".txt", doMdlsBoot);
-
-if(JSSHOP.ads.getPrtsPrefCC("series") == "noQvalue") {
-// currPUrlObj["series"] = "all";
-} else {
-currPUrlObj["series"] = JSSHOP.ads.getPrtsPrefCC("series");
-}
-if(JSSHOP.ads.getPrtsPrefCC("si") == "noQvalue") {
-// currPUrlObj["series"] = "all";
-} else {
-currPUrlObj["si"] = JSSHOP.ads.getPrtsPrefCC("si");
-}
-if(JSSHOP.ads.getPrtsPrefCC("model") == "noQvalue") {
-// currPUrlObj["model"] = "all";
-} else {
-currPUrlObj["model"] = JSSHOP.ads.getPrtsPrefCC("model");
-}
-if(JSSHOP.ads.getPrtsPrefCC("md") == "noQvalue") {
-    // currPUrlObj["model"] = "all";
-    } else {
-    currPUrlObj["md"] = JSSHOP.ads.getPrtsPrefCC("md");
-    }
-if(JSSHOP.ads.getPrtsPrefCC("year") == "noQvalue") {
-// currPUrlObj["year"] = "all";
-} else {
-currPUrlObj["year"] = JSSHOP.ads.getPrtsPrefCC("year");
-}
-if(JSSHOP.ads.getPrtsPrefCC("part") == "noQvalue") {
  
-    } else {
-    currPUrlObj["part"] = JSSHOP.ads.getPrtsPrefCC("part");
-    }
-if(JSSHOP.ads.getPrtsPrefCC("prti") == "noQvalue") {
-   
-    } else {
-    currPUrlObj["prti"] = JSSHOP.ads.getPrtsPrefCC("prti");
-    }
-
-
-}
-
-
-
-
-if(currUrlArr.mk){
-currPUrlObj.mk = currUrlArr.mk;
-currPUrlObj.make = currUrlArr.make;
-}
-if(currUrlArr.si){
-currPUrlObj.si = currUrlArr.si;
-currPUrlObj.series = currUrlArr.series;
-}
-if(currUrlArr.md){
-currPUrlObj.md = currUrlArr.md;
-currPUrlObj.model = currUrlArr.model;
-} else {
-if(currUrlArr.si){
-currPUrlObj.md = currUrlArr.si;
-currPUrlObj.model = currUrlArr.series;
-}
-}
-if(currUrlArr.prti){
-currPUrlObj.prti = currUrlArr.prti;
-currPUrlObj.part = currUrlArr.part;
-}
-if(currUrlArr.y){
-currPUrlObj.y = currUrlArr.y;
-}
-if(currUrlArr.ppid){
-ppid = currUrlArr.ppid;
-}
-*/
- 
-
 if((currUrlArr.cid) && (currUrlArr.cid !== "0")){ // company ID
+
 cid = currUrlArr.cid;
-// addFrmQArr("qco", cid, "fnishCoForm");
-addFrmQArr("qco", cid, "fnishCoForm");
+  addFrmQArr("qco", cid, "fnishCoForm");
 } else {
- 
-if((currUrlArr.cuid) && (currUrlArr.cuid !== "0")){ // contact user ID
-cuid = currUrlArr.cuid;
-// addFrmQArr("qco", cuid, "fnishCoForm");
+ if((currUrlArr.cuid) && (currUrlArr.cuid !== "0")){ // contact user ID
+ cuid = currUrlArr.cuid;
+addFrmQArr("qco", cuid, "fnishCoForm");
 }
 if((currUrlArr.tpid) && (currUrlArr.tpid !== "0")){ // contact user ID
-    cid = currUrlArr.tpid;
+     cid = currUrlArr.tpid;
     addFrmQArr("qco", currUrlArr.tpid, "fnishCoForm");
     }
+ 
+   
+ 
+
 }
 
 if(currUrlArr.dcid) {
@@ -2599,9 +2528,9 @@ if(currUrlArr.dcid) {
   }
 
   if(currUrlArr.ditemid) {
-    itemid = currUrlArr.ditemid;
-    currUrlArr.itemid = currUrlArr.ditemid;
-    pid = "aa-show-item";
+    prpid = currUrlArr.ditemid;
+    currUrlArr.prpid = currUrlArr.ditemid;
+    pid = "aa-show-prop";
     // addFrmQArr("qitem", itemid, "fnishItemForm");
    }
 
@@ -2686,7 +2615,7 @@ if(currCartStr.length > 5) {
     doQComm(oi["rq"], "y", "setCartIArr");
 }
 
-     doFrmQArr(oi["rq"], "qcartitem","fnishCartForm");
+    //  doFrmQArr(oi["rq"], "qcartitem","fnishCartForm");
 }
 }
  
@@ -2778,7 +2707,7 @@ currFrmQArr = [];
 // arrAllForms = null;
 // arrAllForms = {};
 
-cid = "0";
+// cid = "0";
 catid = "0";
 content = "noQvalue";
 currUrlArr = null;
@@ -2854,10 +2783,12 @@ if((currUrlArr.cuid) && (currUrlArr.cuid !== "0")){ // contact user ID
     tCidChckId = JSSHOP.shared.getFrmFieldVal("qco", "_id", 0);
  
     if((cid > 0) && (tCidChckId !== cid)){
-
-            addFrmQArr("qco", cid, "fnishCoForm");
+       //  alert("cid: " + cid + " tCidChckId: " + tCidChckId);
+        doFrMBoolStr = "yes";
+             addFrmQArr("qco", cid, "fnishCoForm");
  
-    }
+    }  
+
  
     if(currUrlArr.catid){ // category ID
     catid = currUrlArr.catid;

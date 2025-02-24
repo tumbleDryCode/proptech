@@ -61,6 +61,7 @@
 <input type="hidden" name="u_fullname" id="u_fullname" value="" data-prval="disnull">
 <input type="hidden" name="u_location" id="u_location" value="" data-prval="disnull">
 <input type="hidden" name="u_region" id="u_region" value="Lisboa" data-prval="disnull">
+<input type="hidden" name="u_country" id="u_country" value="Portugal" data-prval="disnull">
 <input type="hidden" name="u_loclat" id="u_loclat" value="38.71667" data-prval="disnull">
 <input type="hidden" name="u_loclng" id="u_loclng" value="-9.13333" data-prval="disnull">
 
@@ -70,6 +71,7 @@
 <input type="hidden" name="u_desc" id="u_desc" value="" data-prval="disnull">
 <input type="hidden" name="u_icon" id="u_icon" value="default_user.png" data-prval="disnull">
 <input type="hidden" name="u_privacy" id="u_privacy" value="public" data-prval="disnull">
+<input type="hidden" name="u_prfs" id="u_prfs" value="public" data-prval="disnull">
 
 <input type="hidden" name="u_socauthtype" id="u_socauthtype" value="5" data-prval="disnull">
 <input type="hidden" name="u_socauthid" id="u_socauthid" value="5" data-prval="disnull">
@@ -109,8 +111,8 @@
 
 <input type="hidden" name="c_ccode" id="c_ccode" value="1" data-prval="disnull"> 
 <input type="hidden" name="c_placeid" id="c_placeid" value="1" data-prval="disnull"> 
-<input type="hidden" name="c_loc_lat" id="c_loc_lat" value="1" data-prval="disnull">
-<input type="hidden" name="c_loc_lng" id="c_loc_lng" value="1" data-prval="disnull">
+<input type="hidden" name="c_loc_lat" id="c_loc_lat" value="40.2" data-prval="disnull">
+<input type="hidden" name="c_loc_lng" id="c_loc_lng" value="-8.1" data-prval="disnull">
 <input type="hidden" name="c_google_url" id="c_google_url" value="1" data-prval="disnull"> 
 <input type="hidden" name="c_rating" id="c_rating" value="1" data-prval="disnull"> 
 <input type="hidden" name="c_revs" id="c_revs" value="1" data-prval="disnull"> 
@@ -186,6 +188,7 @@
 <form name="qposts">
 <input type="hidden" name="_id" value="" data-prval="disnull">
 <input type="hidden" name="p_rtype" id="p_rtype" value="5" data-prval="disnull">
+<input type="hidden" name="p_coid" id="p_coid" value="5" data-prval="disnull">
 <input type="hidden" name="p_uid" id="p_uid" value="5" data-prval="disnull">
 <input type="hidden" name="p_cat" id="p_cat" value="def" data-prval="disnull">
 <input type="hidden" name="p_ptype" id="p_ptype" value="ppost" data-prval="disnull">
@@ -206,6 +209,8 @@
 </form>
 <form name="property">
 <input type="hidden" name="_id" value="" data-prval="disnull">
+<input type="hidden" name="prtype" id="prtype" value="5" data-prval="disnull">
+<input type="hidden" name="pcoid" id="pcoid" value="5" data-prval="disnull">
 <input type="hidden" name="ptitle" id="ptitle" value="Titulo.. Moradia... " data-prval="disnull">
 <input type="hidden" name="pcontent" id="pcontent" value="Descriçao.. Moradia... Descriçao.. " data-prval="disnull">
 <input type="hidden" name="ptype" id="ptype" value="house" data-prval="disnull">
@@ -219,20 +224,22 @@
 <input type="hidden" name="pfloors" id="pfloors" value="2" data-prval="disnull">
 <input type="hidden" name="size" id="size" value="125" data-prval="disnull">
 <input type="hidden" name="price" id="price" value="199.000" data-prval="disnull">
+<input type="hidden" name="pdoornum" id="pdoornum" value="1" data-prval="disnull">
 <input type="hidden" name="pstreet" id="pstreet" value="Avenida 25 Abril" data-prval="disnull">
 <input type="hidden" name="location" id="location" value="Sacavem" data-prval="disnull">
 <input type="hidden" name="city" id="city" value="Lisboa" data-prval="disnull">
 <input type="hidden" name="state" id="state" value="Lisboa" data-prval="disnull">
+<input type="hidden" name="country" id="country" value="Portugal" data-prval="disnull">
 <input type="hidden" name="pzipcode" id="pzipcode" value="1200" data-prval="disnull">
 
 <input type="hidden" name="ploclat" id="ploclat" value="38.78440225175098" data-prval="disnull">
 <input type="hidden" name="ploclng" id="ploclng" value="-9.122766726227416" data-prval="disnull">
 <input type="hidden" name="feature" id="feature" value="5" data-prval="disnull">
 <input type="hidden" name="pimage" id="pimage" value="default.jpg" data-prval="disnull">
-<input type="hidden" name="pimage1" id="pimage1" value="5" data-prval="disnull">
-<input type="hidden" name="pimage2" id="pimage2" value="5" data-prval="disnull">
-<input type="hidden" name="pimage3" id="pimage3" value="5" data-prval="disnull">
-<input type="hidden" name="pimage4" id="pimage4" value="5" data-prval="disnull">
+<input type="hidden" name="pprf_showslr" id="pprf_showslr" value="5" data-prval="disnull">
+<input type="hidden" name="pprf_showftd" id="pprf_showftd" value="5" data-prval="disnull">
+<input type="hidden" name="pprf_showloc" id="pprf_showloc" value="5" data-prval="disnull">
+<input type="hidden" name="pprf_prvcy" id="pprf_prvcy" value="5" data-prval="disnull">
 <input type="hidden" name="uid" id="uid" value="5" data-prval="disnull">
 <input type="hidden" name="pstatus" id="pstatus" value="pending" data-prval="disnull">
 <input type="hidden" name="mapimage" id="mapimage" value="5" data-prval="disnull">

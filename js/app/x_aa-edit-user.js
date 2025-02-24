@@ -32,14 +32,14 @@ function popUsrZoneMap() {
     tMrkrUZMapObj = {};
     tMrkrUZMapObj["icn"] = "images/layout.png";
     tMrkrUZMapObj["title"] = "Select Your Zone";
-    tMrkrUZMapObj["lat"] = "37.1688931";
-    tMrkrUZMapObj["lng"] = "-8.7430359";
+    tMrkrUZMapObj["lat"] = tmp_u_loclat.value;
+    tMrkrUZMapObj["lng"] = tmp_u_loclng.value;
     tFullUZMapArr.push(tMrkrUZMapObj);
  
     // alert(JSON.stringify(tFullUZMapArr));
     tFullUZMapObj["mrkrs"] = tFullUZMapArr;
     tFullUZMapObj["mdvid"] = "dvUZMapView";
-    tNewUZDvStr = "<div id=\"dvUZMapView\" style=\"min-height: 340px; width: 100%;\"></div>";
+    tNewUZDvStr = "<div id=\"dvUZMapView\" style=\"min-height: 340px; width: 100%;\"></dix>";
      JSSHOP.ui.popFillObox(tNewUZDvStr, "&#xe5cd;", "Select Your Zone", "yes", "yes");
 
     setTimeout(function() {doNuSpinSet("dvUZMapView", "small", null, "...");}, 200);
@@ -52,9 +52,9 @@ function popUsrZoneMap() {
 
 
 var doShopsList = function(a,theResp,c) {
+    console.log("doShopsList: " + theResp);
 // document.getElementById("includedContent").innerHTML = theResp;
-
-// alert(JSON.parse(theResp));
+//  alert("doShopsList: " + theResp);
 hasr = "n";
 fullstr = "";
 tFullTknCoSTr = "";
@@ -64,27 +64,27 @@ var iint = 0;
 var pcid = 0;
 tstr = "";
 while(iint < len) {
-ts = arrToFill[iint];
-tFullTknCoSTr += ":" + ts._id + ":";
+tssl = arrToFill[iint];
+tFullTknCoSTr += ":" + tssl._id + ":";
 tstr += "<tr>";
-// tstr += "<td>" + ts._id + "</td>";
-//   tstr += "<td><a href=\"index.html?pid=aa-edit-place&tpid=" + ts._id + "\">" + ts._id + "</a></td>";
+// tstr += "<td>" + tssl._id + "</td>";
+//   tstr += "<td><a href=\"index.html?pid=aa-edit-place&tpid=" + tssl._id + "\">" + tssl._id + "</a></td>";
 
-tstr += "<td><a href=\"javascript:eindex('aa-edit-place', 'pid=aa-edit-place&tpid=" + ts._id + "');\">" + ts._id + "</a></td>";
-if(ts.c_category == "202") {
-    tstr += "<td><a href=\"javascript:eindex('aa-edit-parts-category', 'pid=aa-edit-parts-category&cid=" + ts._id + "');\"><img src=\"images/misc/parts_w.gif\" style=\"vertical-align: middle; max-width: 27px; max-height: 27px;\" class=\"icnsmlbtn\"></a></td>";
+tstr += "<td><a href=\"javascript:eindex('aa-edit-place', 'pid=aa-edit-place&tpid=" + tssl._id + "');\">" + tssl._id + "</a></td>";
+if(tssl.c_category == "202") {
+    tstr += "<td><a href=\"javascript:eindex('aa-edit-parts-category', 'pid=aa-edit-parts-category&cid=" + tssl._id + "');\"><img src=\"images/misc/parts_w.gif\" style=\"vertical-align: middle; max-width: 27px; max-height: 27px;\" class=\"icnsmlbtn\"></a></td>";
     } else {
-    tstr += "<td><a href=\"javascript:eindex('aa-edit-svs-categories', 'pid=aa-edit-svs-categories&cid=" + ts._id + "');\"><img src=\"images/misc/mec2_w.gif\" style=\"vertical-align: middle; max-width: 27px; max-height: 27px;\" class=\"icnsmlbtn\"></a></td>";
+    tstr += "<td><a href=\"javascript:eindex('aa-edit-svs-categories', 'pid=aa-edit-svs-categories&cid=" + tssl._id + "');\"><img src=\"images/misc/mec2_w.gif\" style=\"vertical-align: middle; max-width: 27px; max-height: 27px;\" class=\"icnsmlbtn\"></a></td>";
     }
-tstr += "<td><a href=\"javascript:eindex('aa-show-place', 'pid=aa-show-place&cid=" + ts._id + "');\">" + ts.c_name + "</a></td>";
+tstr += "<td><a href=\"javascript:eindex('aa-show-place', 'pid=aa-show-place&cid=" + tssl._id + "');\">" + tssl.c_name + "</a></td>";
 
-// tstr += "<td><a href=\"index.html?pid=aa-edit-place&tpid=" + ts._id + "\">" + ts.c_name + "</a></td>";
+// tstr += "<td><a href=\"index.html?pid=aa-edit-place&tpid=" + tssl._id + "\">" + tssl.c_name + "</a></td>";
 // tstr += "<td style=\"min-width: 38px;\" class=\"txtClrHdr\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>";
-//  tstr += "<td class=\"txtClrHdr\"><a href=\"index.html?pid=aa-edit-categories&cid=" + ts._id + "\"><i class=\"small-material-icons txtClrDlg\" alt=\"edit\" title=\"edit\">&#xe3c9;</i></a></td>";
-if(ts.c_category == "202") {
-tstr += "<td><a href=\"javascript:eindex('aa-edit-parts-category', 'pid=aa-edit-parts-category&cid=" + ts._id + "');\"><i class=\"small-material-icons txtClrDlg\" alt=\"edit\" title=\"edit\">&#xe3c9;</i></a></td>";
+//  tstr += "<td class=\"txtClrHdr\"><a href=\"index.html?pid=aa-edit-categories&cid=" + tssl._id + "\"><i class=\"small-material-icons txtClrDlg\" alt=\"edit\" title=\"edit\">&#xe3c9;</i></a></td>";
+if(tssl.c_category == "202") {
+tstr += "<td><a href=\"javascript:eindex('aa-edit-parts-category', 'pid=aa-edit-parts-category&cid=" + tssl._id + "');\"><i class=\"small-material-icons txtClrDlg\" alt=\"edit\" title=\"edit\">&#xe3c9;</i></a></td>";
 } else {
-tstr += "<td><a href=\"javascript:eindex('aa-edit-svs-categories', 'pid=aa-edit-svs-categories&cid=" + ts._id + "');\"><i class=\"small-material-icons txtClrDlg\" alt=\"edit\" title=\"edit\">&#xe3c9;</i></a></td>";
+tstr += "<td><a href=\"javascript:eindex('aa-edit-svs-categories', 'pid=aa-edit-svs-categories&cid=" + tssl._id + "');\"><i class=\"small-material-icons txtClrDlg\" alt=\"edit\" title=\"edit\">&#xe3c9;</i></a></td>";
 }
 // tstr with eindex
 
@@ -93,7 +93,7 @@ iint++;
 }
 newel = document.createElement('div');
 
-tAddCoUrlSTr = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"txtBold txctClrHdr bkgdClrNrml\"><a href=\"javascript:loadJSModal('tplates/aa-mod-add-co.html?tt=" + JSSHOP.getUnixTimeStamp() + "');\" class=\"txtBold txctClrHdr bkgdClrNrml\">+" + stxt[70] + "</a></span>";
+tAddCoUrlSTr = "<span class=\"txtBold txctClrHdr bkgdClrNrml\"><a href=\"javascript:eindex('aa-edit-place','pid=aa-edit-place');\" class=\"txtBold txctClrHdr bkgdClrNrml\">+" + stxt[70] + "</a></span>";
 
 if(arrToFill[0]) {
 strTHhtml = "<th><span style=\"margin-right: 10px; margin-top: 10px\" class=\"txtBold\">ID</span></th>";
@@ -107,6 +107,9 @@ strTHhtml += "<th><span style=\"margin-right: 10px; margin-top: 10px\" class=\"t
 // strTHhtml += "<th><span style=\"margin-right: 10px; margin-top: 10px\" class=\"txtBold\"><i class=\"menu-material-icons\">&#xe896</i></span>View</th>";
 tmpFstr = getTblSortStr(strTHhtml, tstr);
 tmpFFstr = "<div class=\"slmtable bkgdClrWhite brdrClrHdr\" style=\"margin: 0 auto;max-width:600px;padding: 10px;margin-left: 15px;margin-right: 15px;\"><div class=\"txtBold txtSmall txtClrHdr\">" + stxt[519] + "</div>" + tmpFstr + "</div>";
+
+// create an add company button that loads eindex('aa-edit-place', 'pid=aa-edit-place');
+tmpFFstr += "<div class=\"slmtable bkgdClrWhite brdrClrHdr\" style=\"margin: 0 auto;max-width:600px;padding: 10px;margin-left: 15px;margin-right: 15px;\">" + tAddCoUrlSTr + "</div>";
 document.getElementById("dvShops").innerHTML = tmpFFstr;
 } else {
 tmpFFstr = "<div class=\"slmtable bkgdClrWhite brdrClrHdr\" style=\"margin: 0 auto;max-width:600px;padding: 10px;margin-left: 15px;margin-right: 15px;\"><div class=\"txtBold txtSmall txtClrHdr\">" + stxt[519] + "</div>" + stxt[520] + "</div>";
@@ -400,17 +403,20 @@ function doZoneDD(thePrx, theSTat) {
 
         // alert("doZoneDD: " + thePrx + " " + theSTat);
         if(theSTat == "ok") {
-           tLclDstDstr = getLocDistDropStr();
-              document.getElementById("dvUsrZone").innerHTML = tLclDstDstr;
+           tLclDstDstr = getCountryDropStr("u_country", "doCountryPckChg");
+              document.getElementById("dvCountryDD").innerHTML = tLclDstDstr;
         } else {
-            document.getElementById("dvUsrZone").innerHTML = "error loading zones";
+            document.getElementById("dvCountryDD").innerHTML = "error loading zones";
         }
         dvBSDDKLnks = document.getElementById("dvBSDDKLnks");
         dvBSDDKLnks.innerHTML = getKLinksBSDDstr();
         tPRvBSDDstr = getPrvcyBSDDstr();
         dvUsrPrivacy = document.getElementById("dvUsrPrivacy");
         dvUsrPrivacy.innerHTML = tPRvBSDDstr;
-    } catch(e) {
+        // doCountryPckChg("dvCountryDD", u_country.value, u_country.value);
+        getRegionDropStr(u_country.value, "u_region", "setUregionDD");
+        
+     } catch(e) {
         alert("doZoneDD: " + e);
     }
 }
@@ -448,7 +454,6 @@ var setUiconImgs = function(theAIa, theAIb, theAIc) {
         tstr += "</div>";
 		document.getElementById("dvProdImgs").innerHTML = tstr;
 	}
-    JSSHOP.loadScript("misc/x_zp_" + usrlang + ".js", doZoneDD,  "js");
 	} catch(e) {
 		alert("setUiconImgs: " + e);
 	}
@@ -570,14 +575,14 @@ if(arrAllForms.quser) {
 
 JSSHOP.shared.setDynFieldVals(arrAllForms.quser.v[0],"tmp_");
 } else {
-    tmp_u_name.value = u_name.value;
-    tmp_u_pass.value = u_pass.value;
-    tmp_u_email.value = u_email.value;
-   
+    // tmp_u_name.value = u_name.value;
+    // tmp_u_pass.value = u_pass.value;
+    // tmp_u_email.value = u_email.value;
 
 // JSSHOP.shared.setDynFieldVals(JSSHOP.shared.getDynFrmVals(document["quser"], ""),"tmp_");
 }
 
+JSSHOP.loadScript("misc/x_countries.js", doZoneDD,  "js");
 
 
  
@@ -587,6 +592,17 @@ tUcat = document.getElementById("tmp_u_cat");
 // alert("u_cat.value: " + u_cat.value);
 if((u_cat.value == "5") || (currUrlArr.da)) {
 svftObj["usercat"]["5"] = "Admin";
+ 
+    // alert("Admin user");
+    tmpDOs = null;
+tmpDOs = {};
+tmpDOs["ws"] = "where c_uid=? and c_rtype=?";
+tmpDOs["wa"] = [quid,5];
+tmpDOs["l"] = 45;
+oi = getNuDBFnvp("qco",5,null,tmpDOs);
+doQComm(oi["rq"], null, "doShopsList");
+ 
+
 }
 JSSHOP.shared.addCurrSlctObj(svftObj["usercat"], tUcat, u_cat.value, "noQvalue", "noQvalue");
  
@@ -609,8 +625,11 @@ if(currUrlArr.umsg && currUrlArr.umsg == "remove") {
 }
 getUiconImgs();
 currMediaID = quid;
-doMediaBtnSetup('uploadBtn', '', 'finishUPupload', '../images/user');
+doMediaBtnSetup('uploadBtn', '', 'finishUPupload', 'images/user');
 /**/
+JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')
+JSSHOP.loadScript("misc/x_countries.js", doZoneDD,  "js");
+
 return dmyFnishCntLoad;
 };
 

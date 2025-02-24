@@ -1,71 +1,47 @@
 
 
-function doUMsglinks(tULUID, tdivMID) {
-  tmpDOs = null;
-  tmpDOs = {};
-  tmpDOs["ws"] = "where k_userid=? and k_rtype=?";
-  tmpDOs["wa"] = [tULUID,5]; 
-  oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
-  doQComm(oi["rq"], tdivMID, "getUMsgLnkStr");
-   //  JSSHOP.ui.showMsgBox(tPPrpTy,tPPrpI,tTPcb);
-  }
 
-var rndrUMsgLnks = function(za,zb,zc) {
-
-  // dvCoLinks.innerHTML = "";
-  
-  theArr = JSON.parse(zb);
-  
-  // alert("rndrCoLnks: " + theArr);
-  var rclen = theArr.length;
-  var rciint = 0;
-  var rcsblen = 0;
-  var lastcatID = "";
-  rcts = null;
-  
-  var tmpScatA = {};
-  rcnsDv = document.createElement('div');
-  rcL = "<table style=\"width:100%;\">";
-  while(rciint < rclen) {
-  rcts = theArr[rciint];
-  tKmatter = unescape(decodeURIComponent(rcts.k_matter));
-  tKshrtMatter = tKmatter;
-  tKfnlMatter = "";
-  if(tKmatter.length > 20) {
-      tKshrtMatter = tKmatter.substring(0,20) + "...";
-  
-  }
-  if(tKmatter.indexOf("http") != -1) {
-      tKfnlMatter = "<a href=\"" + tKmatter + "\" target=\"_blank\">" + tKshrtMatter + "</a>";
-  } else {
-      tKfnlMatter = tKshrtMatter;
-  }
-  
-  // rcnsDv.className = "collection-item txtDecorNone margleft"; 
-  rcL += "<tr><td><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span></td>";
-  rcL += "<td>" + tKfnlMatter;
-  
-  //rcL += "<tr><td><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span></td><td><span class=\"txtSmall txtClrGrey\">" + rcts.k_title + "</span></td><td>" + unescape(decodeURIComponent(rcts.k_matter));
-  rcL += "</td><td><button  onclick=\"javascript:doCoLinkDelete(" + rciint + "," + rcts._id + ");\" class=\"crsrPointer txtXLrg txtBold slmtable bkgdClrWhite brdrNone txtClrDrkGrn\"><i class=\"txtClrRed brdrClrWhite bkgdClrWhite menu-material-icons\" alt=\"delete\" title=\"delete\">&#xe92b;</i></button>";
-  rcL += "</td></tr>";
-  // rcnsDv.innerHTML = "<span class=\"txtBold\">" + rcts.k_category + "</span><br>" + rcts.k_matter;
-  rciint++;
-  }
-  rcL += "</table>";
-  document.getElementById(za).innerHTML = rcL;
- };
-
-var getUMsgLnkStr = function(tCCLA, tCCLB, tCCLC) {
-  if(tCCLB.indexOf("_id") != -1) {
-      currCoLinksArr = null;
-      currCoLinksArr = [];
-  // alert("setCurrCoLinks: " + tCCLB);
-  
-  rndrUMsgLnks(tCCLA, tCCLB, tCCLC);
-  }
-  }
  
+function doPrpMDDSlct(apld, aaw,aww,cww) {
+  tPsLctPlObj = null;
+  tPsLctPlarr = [];
+  tDDiid = "";
+  tDDiidx = "";
+  if(apld.indexOf(":") != -1) {
+      tPsLctPlarr = apld.split(":");
+      tDDiid = tPsLctPlarr[0];
+      tDDiidx = tPsLctPlarr[1];
+      }
 
+  console.log('doPrpMDDSlct: ' +  apld + " :: " + aaw + " :: " + aww);
+ switch(aww) {
+  case "edit":
+    // alert('doPrpMDDSlct - edit');
+    eindex('aa-edit-prop', 'pid=aa-edit-prop&prpid=' + tDDiid);
+    break;
+  case "view":
+     eindex('aa-show-prop', 'pid=aa-show-prop&prpid=' + tDDiid);
+    break;
+  case "share":
+    JSSHOP.ui.showShareBox('property',  tDDiidx);
+    break;
+  case "msg":
+    JSSHOP.ui.showMsgBox('uproperty', tDDiidx, 'showMsgSave');
+    break;
+  case "fav":
+    doRecentFavorite('index.html?pid=aa-show-prop&prpid=' + tDDiid, 'noQvalue', 'noQvalue', tDDiid, 'btnFavs' + tDDiid);
+    break;
+  case "streetview":
+    tPropObj = currShopsArr[tDDiidx];
+    tSrvLLstr = tPropObj.ploclat + "," + tPropObj.ploclng;
+    window.open("http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr);
+    break;
+  default:
+    alert('doPrpMDDSlct - default');
+    break;
+
+}
+}
 
 function doMPropsList(aaw,aww,cww) {
     console.log('doMPropsList - aww: ' + aww);
@@ -118,6 +94,51 @@ aprpDate = aprpObj["date"];
 aprploclat = aprpObj["ploclat"];
 aprploclng = aprpObj["ploclng"];
 retPLstSTr += "<div class=\"col-md-6 slmtable bkgdClrWhite bottom-shadow\" style=\"float:left;margin-top:18px;padding:0px;\">";
+
+ 
+tPrpMMListObj = null;
+tPrpMMListObj = "";
+tPrpMMListObj = {};
+if((quid == aprpUid) || (u_cat.value == "5")) {
+tPrpMMListObj["edit"] = stxt[31];
+// tPrpMMListObj["delete"] = stxt[109];
+// tPrpMMListObj["privacy"] = stxt[101];
+}
+tPrpMMListObj["view"] = stxt[53];
+tPrpMMListObj["share"] = stxt[72];
+tPrpMMListObj["msg"] = stxt[117];
+tPrpMMListObj["fav"] = stxt[21];
+tPrpMMListObj["streetview"] = "Street View";
+
+
+tDDPrpStr = "";
+tDDPrpPLdStr  = aprpObj._id + ":" + istrt;
+
+tDDPrpObj = {};
+tDDPrpObj["ddtype"] = "moreHoriz";
+tDDPrpObj["fld"] = "noQvalue";
+tDDPrpObj["lbl"] = stxt[101];
+tDDPrpObj["val"] = "noQvalue";
+tDDPrpObj["pload"] = tDDPrpPLdStr;
+tDDPrpObj["kvpObj"] = tPrpMMListObj;
+tDDPrpObj["cb"] = "doPrpMDDSlct";
+tDDPrpObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+tDDPrpObj["lblcls"] = "txtSmall txtBold txtClrGrey";
+tDDPrpObj["valcls"] = "txtSmall txtBold txtClrGrey";
+tDDPrpObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+tDDPrpObj["horvert"] = "horizontal";
+tDDPrpObj["icn"] = "noQvalue";
+tDDPrpObj["kvIcnsObj"] = {};
+tDDPrpObj["kvIcnsObj"]["edit"] = "&#xe3c9;";
+tDDPrpObj["kvIcnsObj"]["view"] = "&#xe8f4;";
+tDDPrpObj["kvIcnsObj"]["share"] = "&#xe80d;";
+tDDPrpObj["kvIcnsObj"]["msg"] = "&#xe0b7;";
+tDDPrpObj["kvIcnsObj"]["fav"] = "&#xe87d;";
+tDDPrpObj["kvIcnsObj"]["streetview"] = "&#xe56e;";
+
+tDDPrpStr = JSSHOP.ui.getNuBSdropDstr(tDDPrpObj);
+
+
 /*
 retPLstSTr += "<div tid=\"dvCoFavBtn\" style=\"float: right\"></div>";
 
@@ -128,7 +149,7 @@ currFTclr = "material-icons txtClrTtl";
 currFTclr = "material-icons txtClrRed";
 }
 
-retPLstSTr += "<table><tr><td style=\"min-width:40px;\">";
+retPLstSTr += "<table style=\"width: 100%\"><tr><td style=\"min-width:40px;\">";
 
 //  <div  onclick="javascript:JSSHOP.ui.toggleVisibility('tdUploadBtn');" class="crsrPointer"><img alt="User Icon" src="images/misc/default_user.png"  class="slmtable brdrClrDlg" style="minn-width:150px;max-width:160px;text-align:center;margin-right:3px" align="absmiddle" id="imgIedit"><span class="txtSmall txtClrGrey">Edit</span></div>
 retPLstSTr += "<a href=\"javascript:eindex('aa-show-user', 'pid=aa-show-user&tuid=" + aprpUid + "');\" class=\"crsrPointer\">";
@@ -137,10 +158,10 @@ retPLstSTr += "</td><td>";
 retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
  retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpLocation + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
  
-retPLstSTr += "</td></tr></table>";
+retPLstSTr += "</td><td style=\"vertical-align:top\">" + tDDPrpStr + "</td></tr></table>";
 
  retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\">";
-retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"admin/property/" + aprpPimage + "\" alt=\"pimage\" class=\"img100p\">";
+retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"" + currPrpImgsFldr + "/" + aprpPimage + "\" alt=\"pimage\" class=\"img100p\">";
 retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
 retPLstSTr += "<div class=\"sale bg-secondary text-white text-capitalize\">" + tDBHObj[aprpType] + "</div>";
 retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
@@ -158,10 +179,10 @@ retPLstSTr += "</div>";
 
 retPLstSTr += "<div class=\"bg-gray quantity px-4 pt-4\">";
 retPLstSTr += "<ul>";
-retPLstSTr += "<li><b>" + aprpSize + "</b> Area m2</li>";
-retPLstSTr += "<li><b>" + aprpBedroom + "</b>" + stxt[922] + "</li>";
-retPLstSTr += "<li><b>" + aprpBathroom + "</b>" + stxt[923] + "</li>"
-retPLstSTr += "<li><b>" + aprpKitchen + "</b>" + stxt[926] + "</li>"; 
+retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpSize + " </b>  <span class=\"txtSmall\">" + stxt[953] + "</span></div></li>";
+retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpBedroom + " </b>  <span class=\"txtSmall\">" + stxt[922] + "</span></div></li>";
+retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpBathroom + " </b>  <span class=\"txtSmall\">" + stxt[923] + "</span></div></li>"
+retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpKitchen + " </b>  <span class=\"txtSmall\">" + stxt[926] + "</span></div></li>"; 
 retPLstSTr += "</ul>";
 
 
@@ -170,7 +191,7 @@ retPLstSTr += "</ul>";
 retPLstSTr += "</div>"; // end bg-gray quantity px-4 pt-4
 retPLstSTr += "<div class=\"bkgdClrWhite\">";
 retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></span>";
-retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
+retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
 retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','noQvalue','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
 // streetview link http://maps.google.com/maps?q=&layer=c&cbll=
 tSrvLLstr = aprploclat + "," + aprploclng;
@@ -207,7 +228,7 @@ tUFObj = {};
 tUFObj["uplmt"] = 15;
 tUFObj["upcb"] = "jshp_ads_showUpdtsFeed";
  JSSHOP.ads.doUpdatesFeed(tUFObj);
- 
+ JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')
  }
 
 
@@ -273,7 +294,7 @@ retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" s
 retPLstSTr += "</td></tr></table>";
 
  retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\">";
-retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"admin/property/" + aprpPimage + "\" alt=\"pimage\" class=\"img100p\">";
+retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"" +  currPrpImgsFldr + "/" + aprpPimage + "\" alt=\"pimage\" class=\"img100p\">";
 retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
 retPLstSTr += "<div class=\"sale bg-secondary text-white text-capitalize\">" + tDBHObj[aprpType] + "</div>";
 retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
@@ -303,7 +324,7 @@ retPLstSTr += "</ul>";
 retPLstSTr += "</div>"; // end bg-gray quantity px-4 pt-4
 retPLstSTr += "<div class=\"bkgdClrWhite\">";
 retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></span>";
-retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
+retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ads.getUPrpAprsStr(" + istrt + ");\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
 retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','noQvalue','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
 // streetview link http://maps.google.com/maps?q=&layer=c&cbll=
 tSrvLLstr = aprploclat + "," + aprploclng;

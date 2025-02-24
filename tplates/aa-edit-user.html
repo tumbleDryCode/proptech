@@ -5,7 +5,7 @@
 <div class="cls-error-div" id="dvVdtnError"></div>
 			  </td></tr>
 			  <tr>
-				  <td width="100%"><div id="divCntEdit"  class="clsDummy">
+				  <td width="100%"><div>
 
 
 					  <table align="center" class="cls-form-dv" width="100%">
@@ -75,7 +75,7 @@
 											   <td><div class=""><label class="col-lg-3 col-form-label"><ti data-ison="stxt[97]" data-desc="btn_fullname">Name</ti></label>
 									   <div class="col-lg-9">
 										   <input type="text" class="form-control" name="tmp_u_fullname" id="tmp_u_fullname" value="1">
-									   </div>
+									  <input type="hidden" name="tmp_u_name" id="tmp_u_name" value="1"> </div>
 								   </div></td>
 										   </tr>
 										   <tr>
@@ -147,13 +147,21 @@
 			 <tr>
 
 <td>
-<table style="width: 100%">
+<table>
 	<tr>
-		<td style="width:90%"><div id="dvUsrZone"></div></td>
-										  <td style="text-align:right"><!--
+		<td><!-- dvCountryDD drop down div --><div id="dvCountryDD"></div><div><div id="dvCountryAC" class=""></div></div></td></tr>
+		<tr><td><!-- dvRegionDD drop down div --><div id="dvRegionDD"></div>
+				<!-- acomp dvRegionAC drop down div --><div><div id="dvRegionAC"></div></div> 
+		<!-- dvLocltyDD drop down div --><div id="dvLocltyDD"></div>
+						<!-- acomp dvLocltyAC drop down div --><div><div id="dvLocltyAC"></div></div> 
+
+
+								   </td>
+</tr><tr>
+										  <td style="text-align:right">
 										  <span class="txtSmall txtBold txtClrHdr" style="vertical-align:super">
 										  <a href="javascript:javascript:popUsrZoneMap();">
-										  <ti data-ison="tPostsTypeObj['pmap']" data-desc="Select from Map">Map</ti></a></span>--></td>
+										  <ti data-ison="tPostsTypeObj['pmap']" data-desc="Select from Map">Map</ti></a></span></td>
 	</tr>
 	</table>
 </td>				  
@@ -167,7 +175,7 @@
 				 <table style="width: 100%">
 														<tr>
 						  <td>
-						 <!-- <table style="width: 100%">
+						 <table style="width: 100%">
 							  <tr>
 								  <td><span class="txtSMall txtClrGrey"><ti data-ison="stxt[113]" data-desc="Latitude">Latitude</ti></span></td>
 								  <td>
@@ -184,7 +192,7 @@
 								  <td>
 							  <input name="tmp_u_loclng" id="tmp_u_loclng" value="" data-ison="v:" class="form-control"  aria-describedby="basic-addon1"></td>
 							  </tr>
-						  </table> -->
+						  </table>  
 						  </td>
 					  </tr>
 	 

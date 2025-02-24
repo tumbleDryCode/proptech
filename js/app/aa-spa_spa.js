@@ -50,8 +50,8 @@ stxt[49] = "Password";
 stxt[50] = "Email";
 stxt[51] = "Header";
 stxt[52] = "Clear";
-stxt[53] = "View";
-stxt[54] = "Copy";
+stxt[53] = "Ver";
+stxt[54] = "Copiar";
 stxt[55] = "Media";
 stxt[56] = "Account";
 stxt[57] = "Preview";
@@ -114,7 +114,8 @@ stxt[112] = "Snippets";
 stxt[113] = "Latitude";
 stxt[114] = "Longitude";
 stxt[115] = "Selecione o tipo de contato ou link";
-
+stxt[116] = "Adicionar novo contato";
+stxt[117] = "Marcar uma Visita";
 
 
 // user strings 
@@ -131,7 +132,7 @@ stxt[210] = "City";
 stxt[211] = "State";
 stxt[212] = "Zip Code";
 stxt[213] = "Street";
-stxt[214] = "Door Nº";
+stxt[214] = "Numero Puerta";
 stxt[215] = "Date of Birth";
 stxt[216] = "Social Security Number";
 stxt[217] = "SS Expiration Date";
@@ -181,19 +182,93 @@ stxt[402] = "Trailer";
 stxt[403] = "Tractor";
 stxt[404] = "Inspection Date";
 stxt[405] = "Insurance Date";
+
+
+
 // items and categories
-stxt[500] = "Add New Category";
-stxt[501] = "Goes in category";
-stxt[502] = "Category title here";
-stxt[503] = "Edit Categories";
-stxt[504] = "Edit Category";
-stxt[505] = "View Category";
-stxt[506] = "Edit Category Title";
-stxt[507] = "Quick Item Add";
-stxt[508] = "Start by adding some items to this category."
-stxt[509] = "Or use the <b>Quick Item Add</b> by entering item title and clicking (+).";
-stxt[510] = "Quick Item Edit";
-stxt[511] = "Item Title";
+ 
+stxt[500] = "Adicionar Nueva Categoria";
+stxt[501] = "Vai em categoria";
+stxt[502] = "Titulo da Categoria aqui";
+stxt[503] = "Editar Categorias";
+stxt[504] = "Editar Categoria";
+stxt[505] = "Ver Categoria";
+stxt[506] = "Editar Titulo da Categoria";
+stxt[507] = "Adicionar Item Rapido";
+stxt[508] = "Comece adicionando alguns itens a esta categoria."
+stxt[509] = "Ou use a <b>Adicao Rapida de Item</b> inserindo o titulo do item e clicando (+).";
+stxt[510] = "Edicao Rapida de Item";
+stxt[511] = "Titulo do Item";
+
+stxt[512] = "Categorias de Piezas";
+stxt[513] = "Edite el nombre de su tienda, descripcion y logotipo..";
+stxt[514] = "Horario de trabajo";
+ 
+stxt[515] = "Direccion";
+stxt[516] = "ciudad, estado...";
+stxt[517] = "Contacto";
+stxt[518] = "Nombre de la calle o direccion";
+stxt[519] = "Sus Listados";
+stxt[520] = "Si esta administrando tiendas, puede cambiar entre ellas aqui.";
+stxt[521] = "Establecer como principal";
+stxt[522] = "Seleccione Tipo";
+stxt[523] = "Direccion Web https://.., Email, Numero de Telefono ...";
+// stxt[524] = "Add more links, emails phone numbers etc..";
+stxt[524] = "Agregar mas enlaces, correos electronicos, numeros de telefono, etc..";
+// stxt[525] = "More Contacts and Links";
+stxt[525] = "Mas Contactos y Enlaces";
+stxt[526] = "Ciudad o Pueblo";
+stxt[527] = "Provincia o Region";
+stxt[528] = "Pais";
+stxt[529] = "Click para establecer estas coordenadas";
+stxt[530] = "Recuerde guardar despues";
+stxt[531] = "Tambien puede elegir una ubicacion manteniendo presionado un punto en el mapa (movil) o haciendo clic derecho (escritorio)";
+stxt[532] = "Para brindarle mejores resultados, complete lo siguiente:";
+stxt[533] = "Seleccione del Mapa";
+stxt[534] = "Predeterminadas";
+stxt[535] = "Lunes";
+stxt[536] = "Martes";
+stxt[537] = "Miercoles";
+stxt[538] = "Jueves";
+stxt[539] = "Viernes";
+stxt[540] = "Sabado";
+stxt[541] = "Domingo";
+stxt[542] = "Dias de Semana";
+stxt[543] = "Fines de Semana";
+//stxt[544] = "Set Monday hours to all week";
+stxt[544] = "Establecer horas de lunes a toda la semana";
+
+stxt[546] = "Horario de Trabajo";
+stxt[547] = "Cerrado";
+stxt[548] = "Abierto 24 Horas";
+stxt[549] = "Feriados";
+stxt[550] = "Feriado Fin de Semana";
+stxt[551] = "Feriado Dia de Semana";
+stxt[552] = "Nota";
+stxt[553] = "Resultado";
+stxt[554] = "Ver en Mapa";
+// stxt[555] = "We are contantly working to improve our services. If you would like to remove your shop from our database, please contact us.";
+stxt[555] = "Estamos trabajando constantemente para mejorar nuestros servicios. Si desea editar-eliminar los datos de su tienda, contactenos.";
+// stxt[556] = "* These locations are approximate and may not represent the actual location of the shop.";
+stxt[556] = "* Estas ubicaciones son aproximadas y pueden no representar la ubicacion real de la tienda.";
+
+// stxt[557] = "Show All";
+stxt[557] = "Mostrar Todos";
+stxt[558] = "Aberto";
+// stxt[559] = "is a company located in";
+stxt[559] = "es una empresa ubicada en";
+stxt[560] = "Somos una empresa ubicada en";
+stxt[561] = "Seleccione la marca y el modelo, luego ingrese el precio al lado de la pieza en la lista a continuacion.";
+stxt[562] = "Cuando termine, haga clic en el boton Guardar a continuacion.";
+stxt[563] = "imagenes del item";
+stxt[564] = "Agregar Imagen del Item";
+stxt[565] = "Configuracion";
+stxt[566] = "disponibilidad del producto, privacidad";
+stxt[567] = "Su ID de Pieza Interna";
+stxt[568] = "Deshabilitado";
+stxt[569] = "para un";
+stxt[570] = "Consultar sobre este item";
+stxt[571] = "Limpiar Todo";
 
 
 // admin strings
@@ -227,10 +302,69 @@ stxt[626] = "Enlaces actuales:";
 stxt[627] = "Ver Propiedad";
 
 
+/*
+
 // messaging strings
 stxt[700] = "Have a Question?";
-stxt[701] = "Mensaje";
-stxt[702] = "Mensajes";
+stxt[702] = " Optional for location based services ";
+stxt[703] = " Your Name ";
+stxt[704] = " Email ";
+stxt[705] = " Subject ";
+stxt[706] = " Message ";
+stxt[707] = " You can use this form to contact us.<br>Or email us at: web@recamby.com";
+stxt[708] = "Send";
+stxt[709] = "Thank you for your feedback or inquiry. If requested, we we contact you as soon as possible.";
+stxt[710] = "Messages";
+stxt[711] = "ShoutOuts";
+stxt[712] = "Is this your shop?";
+stxt[713] = "Please confirm email address";
+stxt[714] = "Thank you for registering. Please confirm your email address by clicking the link in the email we just sent you. If you do not see the email, please check your spam folder.";
+stxt[715] = "Please confirm your email address by clicking this link"; 
+stxt[716] = "Thank you from the team at Recamby.com";
+stxt[717] = "A link will sent to";
+stxt[718] = "to confirm your email address.";
+stxt[719] = "Please check your email and click the link inside to confirm your email address.";
+stxt[720] = "Send me link";
+stxt[721] = "By confirming you are agreeing to our terms of service.";
+stxt[722] = "Continue";
+stxt[723] = "Someone else is registered as administrator. Multi user permission will be coming soon for shops. For now, please contact us to resolve this issue. Thank you for your understanding.";
+stxt[724] = "If this is your shop, and you would like to edit or remove it";
+stxt[725] = "You must be logged in.";
+stxt[726] = "Confirmed!  Your email address has been confirmed.";
+stxt[727] = "Sorry, an error occured.  Please contact us.";
+stxt[728] = "Click here to continue";
+*/
+// unicode characters for spanish
+// use only unicode characters for spanish strings in stxt
+stxt[700] = "Tienes una pregunta?";
+stxt[702] = " Opcional para servicios basados en la ubicacion ";
+stxt[703] = " Su nombre ";
+stxt[704] = " Correo electronico ";
+stxt[705] = " Tema ";
+stxt[706] = " Mensaje ";
+stxt[707] = " Puede usar este formulario para contactarnos.<br>O envienos un correo electronico a: web@ppropsgo.com";
+stxt[708] = "Enviar";
+stxt[709] = "Gracias por su comentario o consulta. Si lo solicita, nos pondremos en contacto con usted lo antes posible.";
+stxt[710] = "Mensajes";
+stxt[711] = "ShoutOuts";
+stxt[712] = "Es esta tu tienda?";
+stxt[713] = "Por favor confirme la direccion de correo electronico";
+stxt[714] = "Gracias por registrarte. Confirma tu direccion de correo electronico haciendo clic en el enlace del correo electronico que acabamos de enviarte. Si no ves el correo electronico, revisa tu carpeta de spam.";
+stxt[715] = "Confirma tu direccion de correo electronico haciendo clic en este enlace";
+stxt[716] = "Gracias de parte del equipo de Recamby.com";
+stxt[717] = "Se enviara un enlace a";
+stxt[718] = "para confirmar tu direccion de correo electronico.";
+stxt[719] = "Por favor revisa tu correo electronico y haz clic en el enlace para confirmar tu direccion de correo electronico.";
+stxt[720] = "Enviame el enlace";
+stxt[721] = "Al confirmar, aceptas nuestros terminos de servicio.";
+stxt[722] = "Continuar";
+stxt[723] = "Otra persona esta registrada como administrador. La autorizacion multiusuario estara disponible pronto para las tiendas. Por ahora, contactenos para resolver este problema. Gracias por su comprension.";
+stxt[724] = "Si esta es tu tienda, y te gustaria editarla o eliminarla";
+stxt[725] = "Debes iniciar sesion.";
+stxt[726] = "Confirmado! Su direccion de correo electronico ha sido confirmada.";
+stxt[727] = "Lo siento, se produjo un error. Por favor contactenos.";
+stxt[728] = "Haga clic aqui para continuar";
+
 
 
 // coookie consent strings
@@ -259,7 +393,8 @@ stxt[821] = "O puede iniciar sesion y usar el enlace [Eliminar Cuenta] en la con
 stxt[822] = "Accion confirmada. Lamentamos verte ir. Si tiene alguna pregunta o inquietud, por favor <a href=\"index.html?pid=aa-contactus\" class=\"cc-link\">contactenos</a>.";
 stxt[823] = "Tambien elimine todos mis listados de tiendas";
 stxt[824] = "Haga clic en el enlace a continuacion para eliminar su cuenta.";
-
+// stxt[825] = "Edit your account details";
+stxt[825] = "Editar detalles de la cuenta";
 
 
 
@@ -280,15 +415,15 @@ stxt[913] = "Acerca de nosotros";
 stxt[914] = "Propiedad destacada";
 stxt[915] = "Hágase miembro";
 stxt[916] = "Enviar propiedad";
-stxt[917] = "Cómo funciona";
+stxt[917] = "Como funciona";
 stxt[918] = "Nuestros agentes";
 stxt[919] = "Política de privacidad";
 stxt[920] = "Detalle de la propiedad";
 stxt[921] = "M2";
 stxt[922] = "Dormitorio";
 stxt[923] = "Baño";
-stxt[924] = "Balcón";
-stxt[925] = "Salón";
+stxt[924] = "Balcon";
+stxt[925] = "Salon";
 stxt[926] = "Cocina";
 stxt[927] = "Tipo de propiedad";
 stxt[928] = "Piso";
@@ -310,18 +445,18 @@ stxt[943] = "Agente";
 stxt[944] = "Constructor";
 stxt[945] = "Imagen de usuario";
 stxt[946] = "¿Ya tienes una cuenta?";
-stxt[947] = "Información básica";
+stxt[947] = "Informacion básica";
 stxt[948] = "Contenido";
 stxt[949] = "Tipo de venta";
 stxt[950] = "Seleccionar estado";
-stxt[951] = "Precio y ubicación";
+stxt[951] = "Precio y ubicacion";
 stxt[952] = "Pisos totales";
-stxt[953] = "Tamaño del área";
+stxt[953] = "Area m2";
 stxt[954] = "Imagen y estado";
 stxt[955] = "Imagen";
 stxt[956] = "Estado";
 stxt[957] = "Seleccionar estado";
-stxt[958] = "Imagen del plano del sótano";
+stxt[958] = "Imagen del plano del sotano";
 stxt[959] = "Imagen del plano de planta";
 stxt[960] = "Imagen del plano de planta baja";
 stxt[961] = "Registrarse";
@@ -340,7 +475,7 @@ stxt[973] = "Reportar problema";
 stxt[974] = "Login to Access our DashBoard";
 // translate to spanish
 stxt[975] = "Dont have an Account?"; // No tienes una cuenta?  
-stxt[976] = "Login was not successful. Please try again."; // El inicio de sesión no fue exitoso. Inténtalo de nuevo.
+stxt[976] = "Login was not successful. Please try again."; // El inicio de sesion no fue exitoso. Inténtalo de nuevo.
 stxt[977] = "*Su email"; // *Su email 
 stxt[978] = "**Su contraseña"; // *Su contraseña
 stxt[979] = "Titulo"; // Título
@@ -355,7 +490,7 @@ stxt[987] = "Para Venta";  // Para venda
 stxt[988] = "Para alquilar";  // Para alquilar
 stxt[989] = "Arrendamiento"; // Arrendamiento
 stxt[990] = "Subasta";
-stxt[991] = "Ejecucion"; // ejecución
+stxt[991] = "Ejecucion"; // ejecucion
 stxt[992] = "Type"; 
 
 
@@ -374,11 +509,11 @@ stxt[1005] = "Item price must be good.";
 stxt[1006] = "Mensaje enviado con exito";
 stxt[1007] = "Mensaje no enviado";
 stxt[1008] = "Por favor, rellene todos los campos";
-stxt[1009] = "El registro falló. Inténtalo de nuevo."; // El registro falló. Inténtalo de nuevo.
-stxt[1010] = "Registro exitoso. Por favor <a href=\"login.php\">login</a>."; // Registro exitoso. Por favor inicia sesión.
-stxt[1011] = "Ingrese su nombre y contraseña para iniciar sesión en el administrador"; // Ingrese su nombre y contraseña para iniciar sesión en el administrador
-stxt[1012] = "Rellene todos los campos para registrarse como administrador. Su nombre y contrasena se utilizaran para iniciar sesion."; // Rellene todos los campos para registrarse como administrador. Su nombre y contraseña se utilizarán para iniciar sesión.
-stxt[1013] = "Registro exitoso. Por favor <a href=\"index.php\">login</a>."; // Registro exitoso. Por favor inicia sesión.
+stxt[1009] = "El registro fallo. Inténtalo de nuevo."; // El registro fallo. Inténtalo de nuevo.
+stxt[1010] = "Registro exitoso. Por favor <a href=\"login.php\">login</a>."; // Registro exitoso. Por favor inicia sesion.
+stxt[1011] = "Ingrese su nombre y contraseña para iniciar sesion en el administrador"; // Ingrese su nombre y contraseña para iniciar sesion en el administrador
+stxt[1012] = "Rellene todos los campos para registrarse como administrador. Su nombre y contrasena se utilizaran para iniciar sesion."; // Rellene todos los campos para registrarse como administrador. Su nombre y contraseña se utilizarán para iniciar sesion.
+stxt[1013] = "Registro exitoso. Por favor <a href=\"index.php\">login</a>."; // Registro exitoso. Por favor inicia sesion.
 stxt[1014] = "Sobre nosotros"; // Sobre nosotros
 stxt[1015] = "Nueva historia"; // Nueva historia
 stxt[1016] = "Editar historias"; // Editar historias
@@ -487,7 +622,7 @@ tDBHObj["townhouse"] = "Casa Adosada";
 tDBHObj["duplex"] = "Dúplex";
 tDBHObj["triplex"] = "Tríplex";
 tDBHObj["fourplex"] = "Fourplex";
-tDBHObj["mobile"] = "Móvil";
+tDBHObj["mobile"] = "Movil";
 tDBHObj["manufactured"] = "Fabricado";
 tDBHObj["farm"] = "Granja";
 tDBHObj["ranch"] = "Rancho";
@@ -503,7 +638,7 @@ tmpContType["sell"] = "Vender";
 tmpContType["rent"] = "Alquilar";
 tmpContType["lease"] = "Arrendamiento";
 tmpContType["auction"] = "Subasta";
-tmpContType["foreclosure"] = "Ejecución hipotecaria";
+tmpContType["foreclosure"] = "Ejecucion hipotecaria";
 tmpContType["buy"] = "Comprar";
 tmpContType["other"] = "Otro";
 svftObj["contract"] = tmpContType;
@@ -617,3 +752,18 @@ tPostsStatObj["highlight"] = "Resaltar";
 tPostsStatObj["pin"] = "Pin";
 tPostsStatObj["pinhlight"] = "Pin & Resaltar";
 svftObj["poststat"] = tPostsStatObj;
+
+
+// custom strings
+/*
+var cstmStr = "";
+cstmStr = {};
+cstmStr["prop1"] = "proptech - property technology";
+cstmStr["prop2"] = "proptech - your onestop property technology";
+cstmStr["prop3"] = "proptech - buy, sell, rent...";   
+*/
+var cstmStr = "";
+cstmStr = {};
+cstmStr["prop1"] = "proptech - tecnologia de propiedades";
+cstmStr["prop2"] = "proptech - su tecnologia de propiedades";
+cstmStr["prop3"] = "proptech - comprar, vender, alquilar...";

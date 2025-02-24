@@ -247,13 +247,29 @@ if(isset($_COOKIE['quid'])) {
         <div class="accordion-body">
         
         
+        	<table style="width: 100%">
+				<tr>
+					<td>
         <div class="form-group row">
+													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[214]" data-desc="btn_pdoornum">Door No</ti></label>
+													<div class="col-lg-9">
+														<input class="form-control" name="tmp_pdoornum" id="tmp_pdoornum" value="1">
+															 
+													</div>
+												</div></td>
+					<td>
+<div class="form-group row">
 													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[928]" data-desc="btn_floor">Floor</ti></label>
 													<div class="col-lg-9">
 														<input class="form-control" name="tmp_floor" id="tmp_floor" value="1">
 															 
 													</div>
 												</div>
+</td>
+				</tr>
+			</table>
+        
+        
 												
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[213]" data-desc="btn_address">Street</ti></label>
@@ -269,7 +285,7 @@ if(isset($_COOKIE['quid'])) {
 														<input type="text" class="form-control" name="tmp_location" id="tmp_location" value="1">
 													</div>
 												</div>
-													
+													<!--
 												
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[210]" data-desc="btn_city">City</ti></label>
@@ -285,8 +301,26 @@ if(isset($_COOKIE['quid'])) {
 														
 													</div>
 												</div>
-									
-												
+												-->
+												<table>
+	<tr>
+		<td><!-- dvCountryDD drop down div --><div id="dvCountryDD"></div>
+		<!-- acomp dvCountrAC drop down div --><div><div id="dvCountryAC"></div></div> 
+		<!-- dvRegionDD drop down div --><div id="dvRegionDD"></div>
+				<!-- acomp dvRegionAC drop down div --><div><div id="dvRegionAC"></div></div> 
+		<!-- dvLocltyDD drop down div --><div id="dvLocltyDD"></div>
+						<!-- acomp dvLocltyAC drop down div --><div><div id="dvLocltyAC"></div></div> 
+
+
+								   </td>
+</tr><tr>
+										  <td style="text-align:right; width: 44px;">
+										  <span class="txtSmall txtBold txtClrHdr" style="vertical-align:super">
+										  <a href="javascript:javascript:popUsrZoneMap();">
+										  <ti data-ison="tPostsTypeObj['pmap']" data-desc="Select from Map">Map</ti></a></span></td>
+	</tr>
+	</table>
+
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label"><ti data-ison="stxt[212]" data-desc="btn_price_location">Zip Code</ti></label>
 													<div class="col-lg-9">
@@ -312,7 +346,11 @@ if(isset($_COOKIE['quid'])) {
 	<span class="txtBold txtClrHdr" style="vertical-align:super">
 	<a href="javascript:javascript:getPlaceCrdsM();"><ti data-ison="stxt[533]" data-desc="Select from Map">Select from Map</ti></a></span></td></tr></table>	</td></tr></table>
 						  </td>					  
-				</tr>
+				</tr>				<tr>
+						  <td>
+						  <!-- osgmeo presults --><div id="dvPSearch"></div></td>
+					  </tr>
+
 				<tr>
 						  <td>
 						  <input  name="tmp_ploclat" id="tmp_ploclat" value="" data-ison="v:" class="form-control"  aria-describedby="basic-addon1"></td>
@@ -399,7 +437,27 @@ if(isset($_COOKIE['quid'])) {
 
 
 													<div class="col-lg-9">
- 
+
+														<table style="width: 100%">
+															<tr>
+																<td><a href="javascript:doStrtVwPop();">Street pop</a></td>
+															</tr>
+															<tr>
+																<td><div id="dvSVimgs"></div></td>
+															</tr>
+															<tr>
+																<td>&nbsp;</td>
+															</tr>
+															<tr>
+																<td><a href="javascript:doArialVwPop();">SArial pop</a></td>
+															</tr>
+															<tr>
+																<td><div id="dvAVimgs"></div></td>
+															</tr>
+															<tr>
+																<td>&nbsp;</td>
+															</tr>
+														</table>
 													</div>
 												</div>
         
@@ -491,4 +549,7 @@ if(isset($_COOKIE['quid'])) {
 								 
 										 		<div></div>
 
- 
+</div>
+<canvas id="myc"></canvas>
+
+

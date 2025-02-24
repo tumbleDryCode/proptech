@@ -1,13 +1,5 @@
 <?php
 
-/**
- * PDO mysql database helper class
- * 
- * @author wildantea <wildannudin@gmail.com>
- * @copyright june 2013
- */
-
-
 
 class DumDatabase {
   
@@ -113,9 +105,48 @@ $data .= "]";
 
 
 
+    public function fetch_cstmArr( $sql,$data=null) {
+        $dumhost = "localhost";
+        $tvalues = array();
+        $data = "";
+        $dbpropsString = "";
+        $numlines = 0;
+        $numrows = 0;
+        
+        
+        
+        $dumdb = ($GLOBALS["___mysqli_ston"] = mysqli_connect($dumhost, DB_USERNAME, DB_PASSWORD)) or trigger_error(((is_object($GLOBALS["___mysqli_ston"]) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
+        ((bool)mysqli_query($dumdb, "USE " . DB_NAME));
+        
+ 
+        $result = mysqli_query($dumdb, $sql) or trigger_error(((is_object($GLOBALS["___mysqli_ston"]) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
+        return $result;
+        } 
+ 
+
+
+    public function edit_custom( $sql,$data=null) {
+	$dumhost = "localhost";
+$tvalues = array();
+$data = "";
+$dbpropsString = "";
+$numlines = 0;
+$numrows = 0;
 
 
 
+      $dumdb = ($GLOBALS["___mysqli_ston"] = mysqli_connect($dumhost, DB_USERNAME, DB_PASSWORD)) or trigger_error(((is_object($GLOBALS["___mysqli_ston"]) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
+((bool)mysqli_query($dumdb, "USE " . DB_NAME));
+
+$result = mysqli_query($dumdb, $sql) or trigger_error(((is_object($GLOBALS["___mysqli_ston"]) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
+  return $result;
+    }
+
+
+
+
+
+/*
     public function edit_custom( $sql,$data=null) {
         global $con;
 	$dumhost = "localhost";
@@ -125,15 +156,11 @@ $dbpropsString = "";
 $numlines = 0;
 $numrows = 0;
 
-/*
-
-      $dumdb = ($GLOBALS["___mysqli_ston"] = mysqli_connect($dumhost, DB_USERNAME, DB_PASSWORD)) or trigger_error(((is_object($GLOBALS["___mysqli_ston"]) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
-((bool)mysqli_query($dumdb, "USE " . DB_USERNAME));
-*/
+ 
 $result = mysqli_query($con, $sql) or trigger_error(((is_object($GLOBALS["___mysqli_ston"]) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
   return $result;
     }
-
+*/
 
 
 

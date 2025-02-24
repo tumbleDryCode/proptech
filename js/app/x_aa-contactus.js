@@ -57,11 +57,13 @@ iint++;
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
 try {
-
+    tfsb = null;
+    tfsb = "";
 tfsb = nCurrFFieldOb();
 tfsb.fid = "btnMsgsave";
 tfsb.fty = "button";
 tfsb.ltxt = "stxt[708]";
+retRndrObj = {};
 tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){JSSHOP.ui.doMsgSave('contactus', 'nada', "fnishcu")}) };
 
 tAllowedStr = "msg_subjectmsg_matter";
@@ -71,23 +73,23 @@ tAllowedStr += "msg_fromsg_email";
 msgFObj =  JSSHOP.shared.rndrDynFrmVals(document["qmsgs"], "tmp_", tAllowedStr, tfsb);
 retRndrObj["rndrStr"] = tmpVstr;
 retRndrObj["rndrFobj"] = rndrFFObjArr;
-setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj)", 500);
+// setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj)", 500);
 annewel = document.createElement('div');
 ttstr = "<div style=\"margin:15px;padding:9px;margin: 0 auto;max-width: 88%\"  class=\"slmtable brdrClrDlg bkgdClrWhite\" id=\"dvContactUs\">";
 ttstr += stxt[707] + "<br>" + msgFObj.rndrStr + "<div>";
-annewel.innerHTML = ttstr;
-tatmpTDQI = document.getElementById("includedContent");
-ataqkk = tatmpTDQI.appendChild(annewel);
-if(ataqkk != null) {
- tInrH =   tatmpTDQI.innerHTML
-if(tInrH.length > 5) {
+// annewel.innerHTML = ttstr;
+// tatmpTDQI = document.getElementById("includedContent");
+// ataqkk = tatmpTDQI.appendChild(annewel);
+alert("dvContactUs: " + ttstr);
+document.getElementById("dvContactUsFrm").innerHTML = ttstr;
+ 
 if(currUrlArr.cid){
-    tmp_msg_subject.value = "Re: " + currUrlArr.cid;
+    // tmp_msg_subject.value = "Re: " + currUrlArr.cid;
+    setTimeout("document.getElementById('tmp_msg_subject').value = 'Re: " + currUrlArr.cid + "'", 800);
 }
-}
-}
+ 
 setTimeout("JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')", 1500);
-
+return dmyFnishCntLoad;
 // setTimeout("runTNDW()", 1000);
 } catch(e) {
 alert("no contactus: " + e);

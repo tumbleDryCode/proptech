@@ -518,7 +518,11 @@ istrt++;
 JSSHOP.ui.setTinnerHTML("dvUPropList",retPLstSTr);
 // alert('doMPropsList - aaw: ' + aaw);
 
-
+tUFObj = {};
+tUFObj["uplmt"] = 15;
+tUFObj["uppstid"] = tPropUID;
+tUFObj["upcb"] = "jshp_ads_showUpdtsFeed";
+ JSSHOP.ads.doUpdatesFeed(tUFObj);
  }
 
 function getUProps() {

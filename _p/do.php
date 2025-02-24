@@ -5,15 +5,17 @@ header('Content-Type: text/html; charset=ISO-8859-15');
 global $fJSonFldrQstring, $respstat, $con;
 
 if(stristr($_SERVER["HTTP_HOST"], "localhost") || stristr($_SERVER["HTTP_HOST"], "titan") || stristr($_SERVER["HTTP_HOST"], "192.")) {
-// change evenflow to your database name
-define("DB_DSN","mysql:host=titan;dbname=developers"); // works with rhcloud and xampp
-define("DB_USERNAME","developers");
-define("DB_PASSWORD","casain");
-} else {
-define("DB_DSN","mysql:host=pdb46.freehostingeu.com;dbname=3537280_logipal"); // works with rhcloud and xampp
-define("DB_USERNAME","3537280_incasa");
-define("DB_PASSWORD","casain");
-}
+    // change evenflow to your database name
+    define("DB_DSN","mysql:host=titan;dbname=developers"); // works with rhcloud and xampp
+    define("DB_USERNAME","developers");
+    define("DB_NAME","developers");
+    define("DB_PASSWORD","casain");
+    } else {
+    define("DB_DSN","mysql:host=pdb46.freehostingeu.com;dbname=3537280_logipal"); // works with rhcloud and xampp
+    define("DB_USERNAME","3537280_incasa");
+    define("DB_NAME","3537280_incasa");
+    define("DB_PASSWORD","casain01");
+    }
 // define("DB_CHARACSET","utf8");
 $filename = "qcache/";
 $ftime = intval(time());

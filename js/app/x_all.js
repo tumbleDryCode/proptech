@@ -1817,7 +1817,8 @@ JSSHOP.shared.rndrDynFrmVals = function(oFormElement, dPrfx, tFAllowed, tSavBtnO
 
 			// tmpFlbl = ttmpFlbl;
 			} else {
-			tmpFlbl = eval(ttmpFlbl);
+                tmpFlbl = ttmpFlbl;
+			// tmpFlbl = eval(ttmpFlbl);
 			
 			}
  			tmpVstr += "data-flbl=\"" + tmpFlbl + "\" ";
@@ -2995,7 +2996,194 @@ JSSHOP.ui.getPickerDiv = function(tPDtype) {
     }
 };
 
+
+JSSHOP.ui.doNuAutoComp = function(inp, arr, dvResO) {
+    console.log("doNuAutoComp: " + inp + " : " + arr + " : " + dvResO);
+    tdvACres = document.getElementById(dvResO);
+    if(tdvACres.className == "slider closed") {
+        tdvACres.classList.toggle('closed');
+    }
+
+     
+
+/*the autocomplete function takes two arguments,
+the text field element and an array of possible autocompleted values:*/
+var currentFocus;
+/*execute a function when someone writes in the text field:*/
+inp.addEventListener("input", function(e) {
+    tdvACres = document.getElementById(dvResO);
+    // tdvACres.classList.toggle('closed');
+    tdvACres.innerHTML = "";
+    var strFhtml = "";
+    var a, b, i, val = this.value;
+    /*close any already open lists of autocompleted values*/
+    closeAllLists();
+    if (!val) { return false;}
+    currentFocus = -1;
+    /*create a DIV element that will contain the items (values):*/
+    a = document.createElement("DIV");
+    a.setAttribute("id", this.id + "autocomplete-list");
+    a.setAttribute("class", "autocomplete-items");
+    /*append the DIV element as a child of the autocomplete container:*/
+    this.parentNode.appendChild(a);
+
+    /*for each item in the array...*/
+    for (i = 0; i < arr.length; i++) {
+      /*check if the item starts with the same letters as the text field value:*/
+      if((arr[i].toUpperCase().indexOf(val.toUpperCase()) != -1) && (val.length > 1)){
+
+      // if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+        /*create a DIV element for each matching element:*/
+
+        /*make the matching letters bold:*/
+        strFhtml += arr[i];
+        b = document.createElement("DIV");
+        // b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+        // b.innerHTML += arr[i].substr(val.length);
+        /*insert a input field that will hold the current array item's value:*/
+        // b.innerHTML += "<input type='hidden' value='" + i + "'>";
+        /*execute a function when someone clicks on the item value (DIV element):*/
+            b.addEventListener("click", function(e) {
+    
+            /*insert the value for the autocomplete text field:*/
+
+  
+
+     
+            /*close the list of autocompleted values,
+            (or any other open lists of autocompleted values:*/
+            closeAllLists();
+        
+        });
+
+    
+      }
+
+
+    }
+
+    tmpDVAC = document.createElement("DIV");
+
+   
+     tmpDVAC.innerHTML = "";
+     // tmpDVAC.setAttribute("id", "dvACres");
+        tmpDVAC.setAttribute("class", "acdropdown-menu");
+     //  class="acdropdown-menu" style="padding-right:22px;margin-right:22px;max-height:400px;overflow:auto"
+    tmpDVAC.style.maxHeight = "400px";
+    tmpDVAC.style.overflow = "auto";
+    tmpDVAC.style.paddingRight = "22px";
+    tmpDVAC.style.marginRight = "22px";
+ 
+
+     tmpHdrStr = "";
+     for(i = 0; i < currACTblCnt; i++) {
+        tmpHdrStr += "<th></th>";
+     }
+    tTHstr = "<tr>" + tmpHdrStr + "</tr>";
+// tmpDVAC.innerHTML = strFhtml;
+
+     astrFhtml = "<div class=\"atabler\"  style=\"margin: 0 auto;max-width:95%;\" ><table style=\"margin: 0 auto;max-width:95%;\" class=\"table table-sm table-striped table-hover txtSmall\" width=\"100%\" cellpadding=\"0px;\"  cellspacing=\"0px;\">";
+    astrFhtml += "<THEAD>" + tTHstr + "</THEAD><TBODY>";
+    astrFhtml += strFhtml + "</TBODY></table></div>";
+ 
+
+     tmpDVAC.innerHTML = getTblSortStr(tTHstr,strFhtml);
+    // b.innerHTML = strFhtml;
+    // a.appendChild(tmpDVAC);
+    tdvACres = document.getElementById(dvResO);
+    tdvACres.innerHTML = "";
+    // tdvACres.classList.toggle('closed');
+    tdvACres.appendChild(tmpDVAC);
+});
+/*execute a function presses a key on the keyboard:*/
+inp.addEventListener("keydown", function(e) {
+    var x = document.getElementById(this.id + "autocomplete-list");
+    if (x) x = x.getElementsByTagName("div");
+    if (e.keyCode == 40) {
+      /*If the arrow DOWN key is pressed,
+      increase the currentFocus variable:*/
+      currentFocus++;
+      /*and and make the current item more visible:*/
+      addActive(x);
+    } else if (e.keyCode == 38) { //up
+      /*If the arrow UP key is pressed,
+      decrease the currentFocus variable:*/
+      currentFocus--;
+      /*and and make the current item more visible:*/
+      addActive(x);
+    } else if (e.keyCode == 13) {
+        alert("enter pressed");
+      /*If the ENTER key is pressed, prevent the form from being submitted,*/
+      e.preventDefault();
+      if (currentFocus > -1) {
+        /*and simulate a click on the "active" item:*/
+        if (x) x[currentFocus].click();
+      }
+    }
+});
+function addActive(x) {
+  /*a function to classify an item as "active":*/
+  if (!x) return false;
+  /*start by removing the "active" class on all items:*/
+  removeActive(x);
+  if (currentFocus >= x.length) currentFocus = 0;
+  if (currentFocus < 0) currentFocus = (x.length - 1);
+  /*add class "autocomplete-active":*/
+  x[currentFocus].classList.add("autocomplete-active");
+}
+function removeActive(x) {
+  /*a function to remove the "active" class from all autocomplete items:*/
+  for (var i = 0; i < x.length; i++) {
+    x[i].classList.remove("autocomplete-active");
+  }
+}
+
+/*execute a function when someone clicks in the document:*/
+document.addEventListener("click", documentClickHandler);
+
+};
+
+
+
+
+
+
+
+
+function closeAllLists() {
+    try {
+  /*close all autocomplete lists in the document,
+  except the one passed as an argument:*/
+  var x = document.getElementsByClassName("acdropdown-item");
+  for (var i = 0; i < x.length; i++) {
+ 
+    x[i].parentNode.removeChild(x[i]);
+}
+var xpar = document.getElementsByClassName("acdropdown-menu");
+for (var i = 0; i < xpar.length; i++) {
+    xpars = xpar[i];
+    xpars.parentNode.removeChild(xpars);
+}
+} catch (e) {
+ 
+    console.log("closeAllLists.error: " + e);
+    document.removeEventListener("click", documentClickHandler);
+ 
+}
+}
+
+function documentClickHandler(e) {
+    closeAllLists();
+    // ...
+  }
+
+
+
+
+
 JSSHOP.ui.doAutoComp = function(inp, arr) {
+    console.log("doAutoComp: " + inp + " : " + arr);
+
     tdvACres = document.getElementById("dvACres");
     if(tdvACres.className == "slider closed") {
         tdvACres.classList.toggle('closed');
@@ -3041,7 +3229,7 @@ inp.addEventListener("input", function(e) {
         // b.innerHTML += "<input type='hidden' value='" + i + "'>";
         /*execute a function when someone clicks on the item value (DIV element):*/
             b.addEventListener("click", function(e) {
-
+    
             /*insert the value for the autocomplete text field:*/
 
   
@@ -3058,15 +3246,33 @@ inp.addEventListener("input", function(e) {
 
 
     }
+
     tmpDVAC = document.createElement("DIV");
+
+   
      tmpDVAC.innerHTML = "";
+     tmpDVAC.setAttribute("id", "dvACres");
+        tmpDVAC.setAttribute("class", "acdropdown-menu");
+     //  class="acdropdown-menu" style="padding-right:22px;margin-right:22px;max-height:400px;overflow:auto"
+    tmpDVAC.style.maxHeight = "400px";
+    tmpDVAC.style.overflow = "auto";
+    tmpDVAC.style.paddingRight = "22px";
+    tmpDVAC.style.marginRight = "22px";
+ 
+
      tmpHdrStr = "";
      for(i = 0; i < currACTblCnt; i++) {
         tmpHdrStr += "<th></th>";
      }
     tTHstr = "<tr>" + tmpHdrStr + "</tr>";
+// tmpDVAC.innerHTML = strFhtml;
 
-    tmpDVAC.innerHTML = getTblSortStr(tTHstr, strFhtml);
+     astrFhtml = "<div class=\"atabler\"  style=\"margin: 0 auto;max-width:95%;\" ><table style=\"margin: 0 auto;max-width:95%;\" class=\"table table-sm table-striped table-hover txtSmall\" width=\"100%\" cellpadding=\"0px;\"  cellspacing=\"0px;\">";
+    astrFhtml += "<THEAD>" + tTHstr + "</THEAD><TBODY>";
+    astrFhtml += strFhtml + "</TBODY></table></div>";
+ 
+
+     tmpDVAC.innerHTML = getTblSortStr(tTHstr,strFhtml);
     // b.innerHTML = strFhtml;
     // a.appendChild(tmpDVAC);
     tdvACres = document.getElementById("dvACres");
@@ -3116,24 +3322,10 @@ function removeActive(x) {
     x[i].classList.remove("autocomplete-active");
   }
 }
-function closeAllLists(elmnt) {
-  /*close all autocomplete lists in the document,
-  except the one passed as an argument:*/
-  var x = document.getElementsByClassName("autocomplete-items");
-  for (var i = 0; i < x.length; i++) {
-    if (elmnt != x[i] && elmnt != inp) {
-    x[i].parentNode.removeChild(x[i]);
-  }
-}
-}
+
+
 /*execute a function when someone clicks in the document:*/
-document.addEventListener("click", function (e) {
-  closeAllLists(e.target);
-  
-  // tdvACres = document.getElementById("dvACres");
-  // tdvACres.className = "slider closed";
-   // tdvACres.innerHTML = "";
-});
+document.addEventListener("click", documentClickHandler);
 
 };
 
@@ -3709,8 +3901,8 @@ try {
     switch(tmpMsgType) {
         case "product":
             tShareMsgSTr = stxt[72] + " " + stxt[19];
-            tShareMsgUrl = "https://recamby.com/index.html?ditemid=" + tmpMsgVal;
-            tShareMsgImg = "https://recamby.com/images/pimgs/" + i_img.value;
+            tShareMsgUrl = currWebHome + "index.html?ditemid=" + tmpMsgVal;
+            tShareMsgImg = currWebHome + "images/property/" + i_img.value;
             tShareThmbImg = "images/pimgs/s_thumb" + i_img.value;
             tShareMsgTtl = i_title.value;
             tShareMsgDsc = i_desc.value;
@@ -3718,16 +3910,16 @@ try {
             case "property":
                 tmpPrpObj = currShopsArr[tmpMsgVal];
                 tShareMsgSTr = stxt[72] + " " + stxt[19];
-                tShareMsgUrl = "https://recamby.com/index.html?ditemid=" + tmpMsgVal;
-                tShareMsgImg = "https://recamby.com/images/pimgs/" + tmpPrpObj.pimage;
-                tShareThmbImg = "admin/property/s_thumb" + tmpPrpObj.pimage;
+                tShareMsgUrl = currWebHome + "index.html?ditemid=" + tmpMsgVal;
+                tShareMsgImg = currWebHome + "images/property/" + tmpPrpObj.pimage;
+                tShareThmbImg = currPrpImgsFldr + "/" + "s_thumb" + tmpPrpObj.pimage;
                 tShareMsgTtl = tmpPrpObj.ptitle;
                 tShareMsgDsc = tmpPrpObj.pcontent;
                 break;
         case "category":
             tShareMsgSTr = "Category";
-            tShareMsgUrl = "https://recamny.com/index.html?cid=" + tmpMsgVal;
-            tShareMsgImg = "https://recamny.com/images/pimgs/s_thumb" + i_img.value;
+            tShareMsgUrl = "https://propsgo.com/index.html?cid=" + tmpMsgVal;
+            tShareMsgImg = "https://propsgo.com/images/pimgs/s_thumb" + i_img.value;
             tShareMsgTtl = "1Place4Ads Category";
             tShareMsgDsc = "Check out this category on 1Place4Ads";
             break;
@@ -3742,16 +3934,16 @@ tClogoimg = c_logoimg.value;
     tClogoimg = c_logoimg.value;
     tShareThmbImg = tClogoimg;
 } else {
-    tClogoimg = "https://recamby.com/images/slogos/" + c_logoimg.value;
-    tShareThmbImg = "https://recamby.com/images/slogos/s_thumb" + c_logoimg.value;
+    tClogoimg = currWebHome + "images/slogos/" + c_logoimg.value;
+    tShareThmbImg = currWebHome + "images/slogos/s_thumb" + c_logoimg.value;
 }  
 } else {
-    tClogoimg = "https://recamby.com/images/logo_og.png";
-    tShareThmbImg = "https://recamby.com/images/logo_og.png";
+    tClogoimg = currWebHome + "images/logo_og.png";
+    tShareThmbImg = currWebHome + "images/logo_og.png";
 }         
 
             tShareMsgSTr = stxt[72];
-            tShareMsgUrl = "https://recamby.com/index.html?dcid=" + tmpMsgVal;
+            tShareMsgUrl = currWebHome + "index.html?dcid=" + tmpMsgVal;
             tShareMsgImg = tClogoimg;
             tShareMsgTtl = c_name.value;
             tShareMsgDsc = tCdescStr;
@@ -3784,7 +3976,7 @@ tClogoimg = c_logoimg.value;
     tShareMsgStr += "<div class=\"txtClrHdr txtBold\">" + stxt[141] + "</div>";
     tShareMsgStr += "<div class=\"txtClrHdr\">";
     for(var i = 0; i < tShareSIteArr.length; i++) {
-          tShareMsgStr += "<a href=\"javascript:JSSHOP.ui.doShare('" + tShareSIteArr[i] + "','" + tShareMsgUrl + "','" + tShareMsgTtl + "','" + tShareMsgDsc + "','" + tShareMsgImg + "');\" class=\"\">" + tShareSIteArr[i] + "</a> &nbsp; ";
+          tShareMsgStr += "<a href=\"javascript:JSSHOP.ui.doShare('" + tShareSIteArr[i] + "','" + tShareMsgUrl + "','" + tShareMsgTtl + "','" + tShareMsgDsc + "','" + tShareMsgImg + "');\" class=\"clsNada\">" + tShareSIteArr[i] + "</a> &nbsp; ";
     }
     tShareMsgStr += "</div>";
 
@@ -4063,21 +4255,136 @@ aTmpMsgBxOb["m_tmpCB"] = "doNada"; // null function as cllback
 return aTmpMsgBxOb;
 };
 
-JSSHOP.ui.showMsgBox = function(tmpMsgType, tmpMsgVal,atmpCB){
-try {
-    ttMBox = null;
-    ttMBox = "";
-ttMBox = nTmpMsgBxOb();
-ttMBox["m_val"] = tmpMsgVal;
-ttMBox["m_tmpCB"] = atmpCB;
-ttMBox["m_type"] = tmpMsgType;
-JSSHOP.ui.showNuMsgBox(ttMBox);
-} catch(e) {
-alert("no JSSHOP.ui.showMsgBox: " + e);
-}
-};
+
+function doUMsglinks(tULUID, tdivMID) {
+    tmpDOs = null;
+    tmpDOs = {};
+    tmpDOs["ws"] = "where k_userid=? and k_rtype=?";
+    tmpDOs["wa"] = [tULUID,5]; 
+    oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
+    doQComm(oi["rq"], tdivMID, "getUMsgLnkStr");
+     //  JSSHOP.ui.showMsgBox(tPPrpTy,tPPrpI,tTPcb);
+    }
+
+    var rndrUMsgBtns = function(za,zb,zc) {
+        theTRndrArr = [];
+        theTRndrArr = JSON.parse(zb);
+        var rclen = theTRndrArr.length;
+        var rciint = 0;
+        var rcsblen = 0;
+        var lastcatID = "";
+        rcts = null;
+        rcnsDv = document.createElement('div');
+        rcL = "<table style=\"width:100%;\"><tr>";
+        while(rciint < rclen) {
+        
+        rcts = theTRndrArr[rciint];
+        tKcat = rcts.k_category;
+        tKmatter = unescape(decodeURIComponent(rcts.k_matter));
+        tKshrtMatter = tKmatter;
+        tKfnlMatter = "";
+        if(tKmatter.length > 20) {
+            tKshrtMatter = tKmatter.substring(0,20) + "...";
+        }
+        /*
+        
+    // create buttons to send email or sms
+    tRSstr += "<div id=\"dvApraiseBtns\" style=\"margin:5px;\"><table><tr>";
+    if(hasGCPemail == "y") {
+        // JSSHOP.ui.setNuCBBC
+       
+    tRSstr += "<td><span class=\"form-control bkgdClrTtl brdrClrHdr txtClrRed crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'email','" + theTprfx + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_email\" title=\"email\" value=\"email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0be;</i> Email</span></td>";
+    }
+    if(hasGCPSms == "y") {
+    tRSstr += "<td>&nbsp;</td><td><span class=\"form-control bkgdClrTtl brdrClrHdr txtClrRed crsrPointer\" onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'sms','" + theTprfx + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_sms\" title=\"sms\" value=\"btn_email\" styke=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe625;</i> SMS</span></td>";
+    }
+    tRSstr += "</tr></table></div>";
+    */
+
+        switch(tKcat) {
+            case "sms":
+                rcL += "<td><span class=\"form-control bkgdClrTtl brdrClrHdr txtClrRed crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'sms','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_sms\" title=\"sms\" value=\"btn_email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe625;</i> SMS</span></td>";
+                break;
+                case "email":
+                    rcL += "<td><span class=\"form-control bkgdClrTtl brdrClrHdr txtClrRed crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'email','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_email\" title=\"email\" value=\"email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0be;</i> Email</span></td>";
+                    break;
+                    case "whatsapp":
+                        rcL += "<td><span class=\"form-control bkgdClrTtl brdrClrHdr txtClrRed crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'whatsapp','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_whatsapp\" title=\"whatsapp\" value=\"whatsapp\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe88a;</i> WhatsApp</span></td>";
+                        break;
+                    default:
+                        break;
+        }
  
-JSSHOP.ui.showNuMsgBox = function(ttMsgBxObj){
+        // rcnsDv.innerHTML = "<span class=\"txtBold\">" + rcts.k_category + "</span><br>" + rcts.k_matter;
+        rciint++;
+        }
+        rcL += "<td></td></tr></table>";
+        tRCLDv = document.createElement('div');
+        tRCLDv.innerHTML = rcL;
+        document.getElementById(za).appendChild(tRCLDv);
+
+
+        // document.getElementById(za).innerHTML = rcL;
+         };
+
+  
+  var rndrUMsgLnks = function(za,zb,zc) {
+  
+    // dvCoLinks.innerHTML = "";
+    
+    theArr = JSON.parse(zb);
+    
+    // alert("rndrCoLnks: " + theArr);
+    var rclen = theArr.length;
+    var rciint = 0;
+    var rcsblen = 0;
+    var lastcatID = "";
+    rcts = null;
+    
+    var tmpScatA = {};
+    rcnsDv = document.createElement('div');
+    rcL = "<table style=\"width:100%;\">";
+    while(rciint < rclen) {
+    rcts = theArr[rciint];
+    tKmatter = unescape(decodeURIComponent(rcts.k_matter));
+    tKshrtMatter = tKmatter;
+    tKfnlMatter = "";
+    if(tKmatter.length > 20) {
+        tKshrtMatter = tKmatter.substring(0,20) + "...";
+    
+    }
+    if(tKmatter.indexOf("http") != -1) {
+        tKfnlMatter = "<a href=\"" + tKmatter + "\" target=\"_blank\">" + tKshrtMatter + "</a>";
+    } else {
+        tKfnlMatter = tKshrtMatter;
+    }
+    
+    // rcnsDv.className = "collection-item txtDecorNone margleft"; 
+    rcL += "<tr><td><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span></td>";
+    rcL += "<td>" + tKfnlMatter;
+    
+    //rcL += "<tr><td><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span></td><td><span class=\"txtSmall txtClrGrey\">" + rcts.k_title + "</span></td><td>" + unescape(decodeURIComponent(rcts.k_matter));
+    rcL += "</td><td><button  onclick=\"javascript:doCoLinkDelete(" + rciint + "," + rcts._id + ");\" class=\"crsrPointer txtXLrg txtBold slmtable bkgdClrWhite brdrNone txtClrDrkGrn\"><i class=\"txtClrRed brdrClrWhite bkgdClrWhite menu-material-icons\" alt=\"delete\" title=\"delete\">&#xe92b;</i></button>";
+    rcL += "</td></tr>";
+    // rcnsDv.innerHTML = "<span class=\"txtBold\">" + rcts.k_category + "</span><br>" + rcts.k_matter;
+    rciint++;
+    }
+    rcL += "</table>";
+    document.getElementById(za).innerHTML = rcL;
+    rndrUMsgBtns(za,zb,zc);
+   };
+  
+  var getUMsgLnkStr = function(tCCLA, tCCLB, tCCLC) {
+    if(tCCLB.indexOf("_id") != -1) {
+        currCoLinksArr = null;
+        currCoLinksArr = [];
+    // alert("setCurrCoLinks: " + tCCLB);
+    
+    rndrUMsgLnks(tCCLA, tCCLB, tCCLC);
+    }
+    }
+ 
+ JSSHOP.ui.showNuMsgBox = function(ttMsgBxObj){
 
 tmpMsgType = ttMsgBxObj["m_type"];
 tmpMsgVal = ttMsgBxObj["m_val"];
@@ -4094,7 +4401,7 @@ tfsb.ltxt = "stxt[70]";
 tsbstr = "";
 tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){JSSHOP.ui.doMsgSave(tmpMsgType, tmpMsgVal, atmpCB)}) };
 if((boolDoAnx == "y") || (boolDoAnx == "yes")) {
-tsbstr = "<div id=\"mmprogressBar\"></div>"; 
+tsbstr += "<div id=\"mmprogressBar\"></div>"; 
 tsbstr += "<div id=\"mmprogressOuter\"></div>"; 
 tsbstr += "<div id=\"mmmsgBox\"></div>"; 
 tsbstr += "<div id=\"mmdragbox\"></div>"; 
@@ -4103,7 +4410,7 @@ tsbstr += "<div id=\"dvUploadBtn\" onclick=\"JSSHOP.shared.setFrmFieldVal('qmsgs
 
 tAllowedStr = theTStrAllwd;
 
-msgFObj =  JSSHOP.shared.rndrDynFrmVals(document["qmsgs"], "tmp_", tAllowedStr, tfsb);
+msgFObj =  JSSHOP.shared.rndrDynFrmVals(document["qmsgs"], "tmp_", tAllowedStr, "noQvalue");
 retRndrObj["rndrStr"] = tmpVstr;
 retRndrObj["rndrFobj"] = rndrFFObjArr;
 tMsgBxHdrSTr = "New Message";
@@ -4111,9 +4418,9 @@ switch(tmpMsgType) {
 case "uproperty":
 atMpPrpObj = currShopsArr[tmpMsgVal];
 tMsgBxHdrSTr = "<table><tr><td><img src=\"images/user/s_thumb" + atMpPrpObj.u_icon + "\" class=\"icnRndnUser\"></td><td>" + atMpPrpObj.u_fullname + "</td></tr></table>";
-tMsgBxHdrSTr += "<div id=\"dvMsgUlinks\"></div>";
-tMsgBxHdrSTr += "<table style=\"margin:0 auto\"><tr><td><img src=\"admin/property/s_thumb" + atMpPrpObj.pimage + "\" class=\"icnmedbtn\"></td><td>" + atMpPrpObj.ptitle + "</td></tr></table>";
+tMsgBxHdrSTr += "<table style=\"margin:0 auto\"><tr><td><img src=\"" + currPrpImgsFldr + "/s_thumb"  + atMpPrpObj.pimage + "\" class=\"icnmedbtn\"></td><td>" + atMpPrpObj.ptitle + "</td></tr></table>";
 // tMsgBxHdrSTr = atMpPrpObj.ptitle;
+tsbstr += "<div id=\"dvMsgUlinks\"></div>";
 
 break;
 case "product":
@@ -4135,9 +4442,15 @@ setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj);doMsgMediaSetup();",
 setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj);", 500);
 }
 if(tmpMsgType == "uproperty") {
+    tDefPropInqMsg = "I am interested in your property: ID: " +  atMpPrpObj._id + " - " + atMpPrpObj.ptitle;
+    tDefPropInqMsg += "link: " + "https://propsgo.com/index.html?ditemid=" + atMpPrpObj._id;
+    tDefPropInqMsg += "My question is..."
+
+    // JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_matter", tDefPropInqMsg);
+    setTimeout("JSSHOP.ui.setTinnerText('tmp_msg_matter', '" + tDefPropInqMsg + "')", 1000);
     atMpPrpObj = currShopsArr[tmpMsgVal];
-    setTimeout("doUMsglinks(atMpPrpObj.uid, 'dvMsgUlinks');", 1500);
-}
+    setTimeout("doUMsglinks(atMpPrpObj.uid, 'dvMsgUlinks');", 1000);
+ }
 // JSSHOP.ui.popAndFillLbox(JSSHOP.shared.rndrDynFrmVals(document["qmsgs"], "tmp_"));
 } catch(e) {
 alert("no JSSHOP.ui.showMsgBox: " + e);
@@ -4146,6 +4459,20 @@ alert("no JSSHOP.ui.showMsgBox: " + e);
 
 
 
+JSSHOP.ui.showMsgBox = function(tmpMsgType, tmpMsgVal,atmpCB){
+    try {
+        ttMBox = null;
+        ttMBox = "";
+    ttMBox = nTmpMsgBxOb();
+    ttMBox["m_val"] = tmpMsgVal;
+    ttMBox["m_tmpCB"] = atmpCB;
+    ttMBox["m_type"] = tmpMsgType;
+    JSSHOP.ui.showNuMsgBox(ttMBox);
+    } catch(e) {
+    alert("no JSSHOP.ui.showMsgBox: " + e);
+    }
+    };
+    
 
 
 JSSHOP.ui.showPopHelp = function(tmpHlpKey){
@@ -4220,6 +4547,15 @@ currH = theTarea.scrollHeight;
 theTarea.style.height = "1px";
 theTarea.style.height = "auto";
 theTarea.style.height = (25 + theTarea.scrollHeight);
+};
+
+JSSHOP.ui.setTinnerText = function(theElemId, theInnerText){
+try {
+document.getElementById(theElemId).innerText = theInnerText;
+} catch(e) {
+JSSHOP.logJSerror(e, arguments, "setTinnerText");
+alert("setTinnerText: " + theElemId + " :: " + theInnerText + " :: " + e);
+}
 };
 
 
@@ -4435,9 +4771,9 @@ JSSHOP.user.setCkiePrfKV('prfsSHOPuser',tglPrefKey,tmpPrvVal);
 JSSHOP.ui.setCBBClickEnd = function(theElem, theID, theCBclss, theCB) {
  try {
       theElem.className = theCBclss;
-      JSSHOP.stopIntervalEvent(trgr_bclck[theID]);
+     //  JSSHOP.stopIntervalEvent(trgr_bclck[theID]);
       theCB();
-      return;
+      // return;
     } catch(e) {
         JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.setCBBClickEnd");
         return;
@@ -4451,17 +4787,12 @@ JSSHOP.ui.setNuCBBClickClr = function(theElem, theCclss, theCBclss, theCB, theNB
     		strJobThread = JSSHOP.getUnixTimeStamp();
    		//  theMElem = document.getElementById(theElem);
     		theElem.className = theCclss;
-            if (theElem.getAttribute("data-dblclick") == null) { // preventing double clicks
-            theElem.setAttribute("data-dblclick", 1);
+ 
             setTimeout(function () {
-            if (theElem.getAttribute("data-dblclick") == 1) {
-		JSSHOP.startIntervalEvent(trgr_bclck[strJobThread], function() { JSSHOP.ui.setCBBClickEnd(theElem, strJobThread, theCBclss, theCB);}, theNBCDelay);
-            }
-            theElem.removeAttribute("data-dblclick");
-            }, 250);
-            } else {
-            theElem.removeAttribute("data-dblclick");
-            }
+                JSSHOP.ui.setCBBClickEnd(theElem, strJobThread, theCBclss, theCB);
+              
+        }, 250);
+  
     } catch(e) {
     		JSSHOP.startIntervalEvent(trgr_bclck[strJobThread], function() { JSSHOP.ui.setCBBClickEnd(theElem, strJobThread, theCBclss, theCB);}, theNBCDelay);
 
@@ -4656,7 +4987,7 @@ JSSHOP.ui.popFillObox = function(theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUse
     
     // make tmpLCbox pop in from top
      
-    JSSHOP.ui.setNuCBBClickClr(tmpLCbox, 'slmtable brdrClrHdr bkgdClrTrnsp', tmpLCbox.className, function() { donada(0,1,2); }, 700);
+    JSSHOP.ui.setNuCBBClickClr(tmpLCbox, 'slmtable brdrClrHdr bkgdClrTrnsp', tmpLCbox.className, function() { donada(0,1,2); }, 200);
     
     
     // tmpLCbox.style.position="fixed";
@@ -5297,13 +5628,19 @@ JSSHOP.ui.stringToColour = function(str) {
 
 
   
-  JSSHOP.ui.doGenBSDDcb = function(tDDCBel, tDDCBval, tDDCBtxt, thFnlcb) {
+  JSSHOP.ui.doGenBSDDcb = function(tDDPloadVal, tDDCBel, tDDCBval, tDDCBtxt, thFnlcb) {
 
     tTDHstr = "tdDD" + tDDCBel;
+    if(document.getElementById(tTDHstr)) {
     tdHel = document.getElementById(tTDHstr);
-    tMainEL = document.getElementById(tDDCBel);
+    } else {
+        tTDHstr = "tmp_" + tDDCBel;
+    tdHel = document.getElementById(tTDHstr);
+    }
     if(tDDCBel == "noQvalue") {
     } else {
+        tMainEL = document.getElementById(tDDCBel);
+
         if(tdHel.innerHTML == tDDCBtxt) {
         } else {
             /*        */
@@ -5327,7 +5664,7 @@ JSSHOP.ui.stringToColour = function(str) {
     if(thFnlcb == "noQvalue") {
     } else {
         tFnlcb = window[thFnlcb];
-        tFnlcb(tDDCBel, tDDCBval, tDDCBtxt);
+        tFnlcb(tDDPloadVal, tDDCBel, tDDCBval, tDDCBtxt);
 
     }
    //  alert("doGenDDcb: " + tDDCBel + " " + tDDCBval + " " + tDDCBtxt);
@@ -5373,6 +5710,10 @@ JSSHOP.ui.stringToColour = function(str) {
     tBSDDOptsO["horvert"] = "vertical";
     tBSDDOptsO["cb"] = "doGenDDcb";
         */
+       tBSSPload = "noQvalue";
+       if(tBBSSObj.pload) {
+        tBSSPload = tBBSSObj.pload;
+         }
         if(tBBSSObj.fld == "noQvalue") {
             tDDelem = {"value":"noQvalue"};
         } else {
@@ -5421,18 +5762,35 @@ JSSHOP.ui.stringToColour = function(str) {
             noicnBSDD = "noQvalue";
         }
 
-            tBSDDLayStr += "<li id=\"liDD" + tBBSSObj["fld"] + key + "\" class=\"" + tDDItmCls + "\"><a class=\"dropdown-item\"   href=\"javascript:JSSHOP.ui.doGenBSDDcb('" + tBBSSObj.fld + "', '" + key + "','" + tBBSSObj.kvpObj[key] +  "','" + tBBSSObj.cb + "');\">" + tSlctIcnStr + tBBSSObj.kvpObj[key] + "</a></li>";
+            tBSDDLayStr += "<li id=\"liDD" + tBBSSObj["fld"] + key + "\" class=\"" + tDDItmCls + "\"><a class=\"dropdown-item\"   href=\"javascript:JSSHOP.ui.doGenBSDDcb('" + tBSSPload + "','" + tBBSSObj.fld + "', '" + key + "','" + tBBSSObj.kvpObj[key] +  "','" + tBBSSObj.cb + "');\">" + tSlctIcnStr + tBBSSObj.kvpObj[key] + "</a></li>";
         }
         tBSDDLayStr += "</ul></td>";
         if(tBBSSObj.horvert == "vertical") {
         tBSDDLayStr += "</tr></table><table><tr>";
         }
+
+
+        // the bottom value field
+        if(tBBSSObj["fldb"]) {
+            if(tDDelem.value == "noQvalue") {
+            } else {
+                if(tBBSSObj.kvpObj[tDDelem.value]) {
+                    tBSDDLayVal = tBBSSObj.kvpObj[tDDelem.value];
+                } else {
+                    tBSDDLayVal = tDDelem.value;
+                }
+            }
+            tBSDDLayStr += "<td><input id=\"" + tBBSSObj["fldb"] + "\" class=\"clsVertBSDDiv txtBold txtClrHdr " + tBBSSObj.valcls + " form-control\" value=\"" + tBSDDLayVal + "\" contenteditable=\"true\" spellcheck=\"false\">";
+           //  tBSDDLayStr += tBSDDLayVal;
+            tBSDDLayStr += "</td>";
+        } else { // end of fldb
+
         if(tBBSSObj.ddtype == "noQvalue") {
-        tBSDDLayStr += "<td><div id=\"tdDD" + tBBSSObj.fld + "\" class=\"" + tBBSSObj.valcls + "\">";
+        tBSDDLayStr += "<td><div id=\"tdDD" + tBBSSObj.fld + "\" class=\"clsVertBSDDiv txtBold txtClrHdr " + tBBSSObj.valcls + "\">";
         if(tDDelem.value == "noQvalue") {
         } else {
             if(tBBSSObj.kvpObj[tDDelem.value]) {
-        tBSDDLayStr += tBBSSObj.kvpObj[tDDelem.value];
+                tBSDDLayStr += tBBSSObj.kvpObj[tDDelem.value];
             } else {
                 tBSDDLayStr += tDDelem.value;
             }
@@ -5443,6 +5801,9 @@ JSSHOP.ui.stringToColour = function(str) {
             tBSDDLayStr += tBBSSObj.kvpObj[tDDelem.value];
             tBSDDLayStr += "</div></td>";
         }
+    } // end of fldb
+
+
 
         tBSDDLayStr += "</tr></table>";
         tBSDDLayStr += "</li>";
@@ -6245,6 +6606,46 @@ return strHtml;
 */
 // template functions
 
+function doUpdteMDDSlct(apld, aaw,aww,cww) {
+    tPsLctPlObj = null;
+    tPsLctPlarr = [];
+    tDDiid = "";
+    tDDiidx = "";
+    if(apld.indexOf(":") != -1) {
+        tPsLctPlarr = apld.split(":");
+        tDDiid = tPsLctPlarr[0];
+        tDDiidx = tPsLctPlarr[1];
+        }
+  
+    console.log('doPrpMDDSlct: ' +  apld + " :: " + aaw + " :: " + aww);
+   switch(aww) {
+    case "edit":
+      // alert('doPrpMDDSlct - edit');
+      eindex('aa-edit-post', 'pid=aa-edit-post&tpstid=' + tDDiid);
+      break;
+    case "view":
+       eindex('aa-show-update', 'pid=aa-show-update&tupid=' + tDDiid);
+      break;
+    case "share":
+      JSSHOP.ui.showShareBox('update',  tDDiidx);
+      break;
+    case "msg":
+      JSSHOP.ui.showMsgBox('uproperty', tDDiidx, 'showMsgSave');
+      break;
+    case "fav":
+      doRecentFavorite('index.html?pid=aa-show-prop&prpid=' + tDDiid, 'noQvalue', 'noQvalue', tDDiid, 'btnFavs' + tDDiid);
+      break;
+    case "streetview":
+      tPropObj = currShopsArr[tDDiidx];
+      tSrvLLstr = tPropObj.ploclat + "," + tPropObj.ploclng;
+      window.open("http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr);
+      break;
+    default:
+      alert('doPrpMDDSlct - default');
+      break;
+  
+  }
+  }
 
 function jshp_ads_showUpdtsFeed(aaup,bbup,ccup) {
     console.log("jshp_ads_showUpdtsFeed: " + aaup + " " + bbup + " " + ccup);
@@ -6259,14 +6660,61 @@ function jshp_ads_showUpdtsFeed(aaup,bbup,ccup) {
     for(ided = 0; ided < tUdtsArr.length; ided++) {
         tUdtsObj = tUdtsArr[ided];
         tCanPost = "yes";
+        tDDUpdateStr = "";
+
+        
+tDDUdtePLdStr  = tUdtsObj._id + ":" + ided;
+
+tUpdteListObj = null;
+tUpdteListObj = "";
+tUpdteListObj = {};
+if((quid == tUdtsObj.p_uid) || (u_cat.value == "5")) {
+    tUpdteListObj["edit"] = stxt[31];
+    // tPrpMMListObj["delete"] = stxt[109];
+    // tPrpMMListObj["privacy"] = stxt[101];
+    }
+ 
+tUpdteListObj["view"] = stxt[53];
+tUpdteListObj["share"] = stxt[72];
+tUpdteListObj["fav"] = stxt[73];
+
+
+
+        tDDUdteObj = {};
+        tDDUdteObj["ddtype"] = "moreHoriz";
+        tDDUdteObj["fld"] = "noQvalue";
+        tDDUdteObj["lbl"] = stxt[101];
+        tDDUdteObj["val"] = "noQvalue";
+        tDDUdteObj["pload"] = tDDUdtePLdStr;
+        tDDUdteObj["kvpObj"] = tUpdteListObj;
+        tDDUdteObj["cb"] = "doUpdteMDDSlct";
+        tDDUdteObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+        tDDUdteObj["lblcls"] = "txtSmall txtBold txtClrGrey";
+        tDDUdteObj["valcls"] = "txtSmall txtBold txtClrGrey";
+        tDDUdteObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+        tDDUdteObj["horvert"] = "horizontal";
+        tDDUdteObj["icn"] = "noQvalue";
+        tDDUdteObj["kvIcnsObj"] = {};
+        tDDUdteObj["kvIcnsObj"]["edit"] = "&#xe3c9;";
+        tDDUdteObj["kvIcnsObj"]["view"] = "&#xe8f4;";
+        tDDUdteObj["kvIcnsObj"]["share"] = "&#xe80d;";
+        tDDUdteObj["kvIcnsObj"]["fav"] = "&#xe87d;";
+ 
+
+
+        tDDUpdateStr = JSSHOP.ui.getNuBSdropDstr(tDDUdteObj);
+
+        
         tUdtsStr += "<div class=\"col-md-6 slmtable bkgdClrWhite bottom-shadow\" style=\"float:left;margin-top:18px;padding:0px;\">";
-        tUdtsStr += "<table><tr><td style=\"min-width:40px;\">";
+        tUdtsStr += "<table style=\"width: 100%\"><tr><td style=\"min-width:40px;\">";
         tUdtsStr += "<a href=\"javascript:eindex('aa-show-user', 'pid=aa-show-user&tuid=" + tUdtsObj.p_uid + "');\" class=\"crsrPointer\">";
         tUdtsStr += "<div><img alt=\"Profile\" src=\"images/user/" + tUdtsObj.u_icon + "\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">" + tUdtsObj.u_fullname + "</span></div></a>";
         tUdtsStr += "</td><td>";
         tUdtsStr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-update','pid=aa-show-update&tupid=" + tUdtsObj._id + "')\">" + decodeURIComponent(tUdtsObj.p_title)  + "</a></h5>";
         tUdtsStr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + tUdtsObj.p_location + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + tUdtsObj.p_ptype + "</b></div></td></tr></tbody></table>";
-        tUdtsStr += "</td></tr></table>";
+        tUdtsStr += "</td>";
+        tUdtsStr += "<td style=\"vertical-align:top\">" + tDDUpdateStr + "</td>";
+        tUdtsStr += "</tr></table>";
 
 
         tUdtsStr += "<div class=\"mb-4\">";
@@ -6411,8 +6859,10 @@ function jshp_ads_showUpdtsFeed(aaup,bbup,ccup) {
         tUdtsStr += "</div>"; // end featured-thumb hover-zoomer mb-4
         tUdtsStr += "</div>";  // end col-md-6
     }
-    document.getElementById("dvMainUdtsLst").innerHTML = tUdtsStr;
-
+    tDVufeeds = document.createElement("div");
+    tDVufeeds.innerHTML = tUdtsStr;
+    // document.getElementById("dvMainUdtsLst").innerHTML = tUdtsStr;
+    document.getElementById("includedContent").appendChild(tDVufeeds);
     console.log("jshp_ads_showUpdtsFeed: " + tUdtsStr);
 
   if(tHasSlider == "yes") {
@@ -6572,7 +7022,7 @@ JSSHOP.ads.getEditorPrpStr = function(tSwUarr) {
     tSwpStr += "<div class=\"edtr-wrapper\">";
     for(i = 0; i < tSwUarr.length; i++) {
         tSwUObj = tSwUarr[i];
-        tSuTstr = "<img src=\"admin/property/" + tSwUObj.pimage + "\" style=\"width:100%\">";
+        tSuTstr = "<img src=\"" + currPrpImgsFldr + "/" + tSwUObj.pimage + "\" style=\"width:100%\">";
         tSwpStr += "<div class=\"edtr-grid rtable brdrClrHdr\" style=\"float:left;\">";
         tSwpStr += "<table class=\"table table-striped\">";
         tSwpStr += "<tr><td>" + tSuTstr + "</td></tr><tr><td>" + tSwUObj.ptitle + "</td></tr>";
@@ -6665,7 +7115,7 @@ JSSHOP.ads.getNuSwprPrpStr = function(tSwpCla, tSwParr) {
 
     for(iSS = 0; iSS < tSwParr.length; iSS++) {
         tSwPObj = tSwParr[iSS];
-        tSuTstr = "<img src=\"admin/property/" + tSwPObj.pimage + "\" style=\"width:100%;\">";
+        tSuTstr = "<img src=\"" + currPrpImgsFldr + "/" + tSwPObj.pimage + "\" style=\"width:100%;\">";
         tSwpStr += "<div class=\"swiper-slide\">";
         tSwpStr += "<table class=\"\">"; 
         tSwpStr += "<tr><td>" + tSuTstr + "</td></tr><tr><td>" + tSwPObj.ptitle + "</td></tr>";
@@ -6688,7 +7138,7 @@ JSSHOP.ads.getOldSwprPrpStr = function(tSwpCla, taSwUarr) {
     for(iAA = 0; iAA < taSwUarr.length; iAA++) {
         taSwUObj = taSwUarr[iAA];
        //  taSuTstr = "<div style=\"width:100%;max-height:290px;\"><img src=\"admin/property/" + taSwUObj.pimage + "\" style=\"width:100%;max-height:260px;\"></div>";
-        taSuTstr = "<img src=\"admin/property/" + taSwUObj.pimage + "\" style=\"width:100%;\">";
+        taSuTstr = "<img src=\"" + currPrpImgsFldr + "/" + taSwUObj.pimage + "\" style=\"width:100%;\">";
         taWSwpStr += "<div class=\"swiper-slide\">";
         taWSwpStr += "<table class=\"\">";
         taWSwpStr += "<tr><td>" + taSuTstr + "</td></tr><tr><td>" + taSwUObj.ptitle + "</td></tr>";
@@ -7241,7 +7691,7 @@ JSSHOP.ads.trnsltImgPstObj = function() {
                     tLeavesObj = "";
                     tLeavesObj = {};
                     if(tmmobj.hasOwnProperty(key)) {
-                        tLeavesObj["icn"] = "admin/property/sthumb_" + tmmobj[key].pimage;
+                        tLeavesObj["icn"] = currPrpImgsFldr + "/" + "sthumb_" + tmmobj[key].pimage;
                         tLeavesObj["title"] = tmmobj[key].ptitle;
                         tLeavesObj["lat"] = tmmobj[key].ploclat;
                         tLeavesObj["lng"] = tmmobj[key].ploclng;
@@ -7691,22 +8141,42 @@ retPlugStr = "...";
 tcanShowPlug = "yes";
 switch(pid) {
 case "index_main":
- 
+    tFpharr = [];
+tFpharr.push(cstmStr["prop1"]);
+tFpharr.push(cstmStr["prop2"]);
+tFpharr.push(cstmStr["prop3"]);
+ppshfled = shuffle(tFpharr);
+ppslectted = ppshfled.slice(0, 1);
+retPlugStr += ppslectted.join(" ");
+  //   dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"account\" title=\"account\"> &#xe851;</i>";
+// images/logo/logo-small.png
+ // imgPLicon.src = "images/logo/logo-small.png";
+  //   retPlugStr = "<div class=\"txtSmall\">" + stxt[63] + "</div>";
+  dvPartLicon.innerHTML =  "<img src=\"images/logo/logo-small.png\" style=\"margin-top: 5px;max-height:30px;max-width:30px;\" alt=\"account\" title=\"account\" class=\"account\">";
 fretPlugStr = "<div class=\"txtSmall\">" + retPlugStr + "</div>";
-tcanShowPlug = "no";
+// tcanShowPlug = "no";
 break;
 case "aa-contactus":
 fretPlugStr = "<div class=\"txtSmall\">Contacte-nos</div>";
 break;
- 
+case "aa-show-featured":
+// imgPLicon.src = "logoicon.png"; 
+dvPartLicon.innerHTML =  "<img src=\"images/logo/logo-small.png\" style=\"margin-top: 5px;max-height:30px;max-width:30px;\" alt=\"account\" title=\"account\" class=\"account\">";
+fretPlugStr = "<div class=\"txtSmall\">" + stxt[940] + "</div>";
+// fretPlugStr = doNuCollsLoad("links");
+break; 
+case "aa-show-search":
+    dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"account\" title=\"account\"> &#xe8b6;</i>";
+    fretPlugStr = "<div class=\"txtSmall\">" + stxt[936] + "</div>";
+break; 
 case "aa-edit-user":
 // imgPLicon.src = "logoicon.png"; 
-dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"account\" title=\"account\"> &#xe851;</i>";
-fretPlugStr = "<div class=\"txtSmall\">" + stxt[63] + "</div>";
+dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
+fretPlugStr = "<div class=\"txtSmall\">" + stxt[825] + "</div>";
 // fretPlugStr = doNuCollsLoad("links");
 break;
 case "aa-remove":
-imgPLicon.src = "logoicon.png";    
+// imgPLicon.src = "logoicon.png";    
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[815] + "</div>";
 break;
 default:
@@ -7797,7 +8267,7 @@ function getLeaves() {
      
 
         if(ttImgstr.indexOf(".") != -1) {
-      tIcnQcStr = "admin/property/s_thumb" + ts.pimage;
+      tIcnQcStr = currPrpImgsFldr + "/"  + ts.pimage;
         } else {
         tIcnQcStr = "images/logo_small_oct.png";
         }
@@ -8031,9 +8501,9 @@ smlspinner.stop();
             document.getElementById('includedShops').innerHTML='This is odd'; 
         }
             */
-        var map = L.map(tDNGMObj["mdvid"]).setView([39.0667, -8.6167], 13);
+        var map = L.map(tDNGMObj["mdvid"],{renderer: L.canvas()}).setView([39.0667, -8.6167], 13);
         tDGMSmrkrArr = tDNGMObj["mrkrs"];
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        L.tileLayer.canvas('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
         var bounds = L.latLngBounds() // Instantiate LatLngBounds object
@@ -9098,6 +9568,14 @@ JSSHOP.ads.getARApraseStr = function(tCoRecInc) {
     return tRSstr;
     // JSSHOP.ui.popAndFillLbox(tRSstr);
  
+};
+
+JSSHOP.ads.getUPrpAprsStr = function(tUprpAint) {
+    atMpPrpObj = currShopsArr[tUprpAint];
+tMsgBxHdrSTr = "<table><tr><td><img src=\"images/user/s_thumb" + atMpPrpObj.u_icon + "\" class=\"icnRndnUser\"></td><td>" + atMpPrpObj.u_fullname + "</td></tr></table>";
+tMsgBxHdrSTr += "<div id=\"dvMsgUlinks\"></div>";
+tMsgBxHdrSTr += "<table style=\"margin:0 auto\"><tr><td><img src=\"" + currPrpImgsFldr + "/s_thumb"  + atMpPrpObj.pimage + "\" class=\"icnmedbtn\"></td><td>" + atMpPrpObj.ptitle + "</td></tr></table>";
+JSSHOP.ui.popAndFillLbox(tMsgBxHdrSTr);
 };
 
 JSSHOP.ads.sortGenShpArr = function(thePGIdx){ 
@@ -10935,6 +11413,15 @@ function doGglImgLdErr(tCoID) {
         console.log("doGglImgLdErr: " + e);
     }
 }
+
+
+
+
+
+
+
+
+ 
  
 
 
