@@ -3,6 +3,8 @@ var euiFFObjArr = null;
 var euiFFObjArr = [];
 var tmpOldFFvals = null;
 var tmpOldFFvals = {};
+var currPgTitle = stxt[906];
+document.title = currPgTitle;
 
 var fnshProdMDel = function(aa,bb,cc) { 
     // alert(bb);
@@ -425,7 +427,8 @@ JSSHOP.shared.initFrmComps(euiFFObjArr);
 
  
 
- 
+        JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')
+
 return dmyFnishCntLoad;
 };
 

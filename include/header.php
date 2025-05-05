@@ -152,7 +152,7 @@
                                                 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-add-prop','pid=aa-add-prop');"><ti data-ison="stxt[916]" data-desc="btn_addprop">Subit Property</ti></a> </li>
 												 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-uprops', 'pid=aa-edit-uprops');"><ti data-ison="stxt[905]" data-desc="btn_yourprops">Your Properties</ti></a> </li>
                                                     <li class="nav-item"> <table><tr><td><a class="nav-link" href="javascript:eindex('aa-edit-posts', 'pid=aa-edit-posts');"><ti data-ison="stxt[100]" data-desc="btn_yourinfo">Update</ti></a></td><td><a class="nav-link" href="javascript:eindex('aa-add-post', 'pid=aa-add-post');"><ti data-ison="stxt[107]" data-desc="btn_create">Create</ti></a></td></tr></table></li>
-												<li class="nav-item"> <a class="nav-link" href="logout.php">Logout</a> </li>	
+												<li class="nav-item"> <a class="nav-link" href="javascript:JSSHOP.shared.doLogout();">Logout</a> </li>	
 											</ul>
                                         </li>
                                          

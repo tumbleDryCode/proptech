@@ -88,7 +88,7 @@ if(currUrlArr.pid){
     setTimeout("document.getElementById('tmp_msg_subject').value = 'Re: " + currUrlArr.pid + "'", 800);
 }
  
-setTimeout("JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')", 1500);
+JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks');
 return dmyFnishCntLoad;
 // setTimeout("runTNDW()", 1000);
 } catch(e) {

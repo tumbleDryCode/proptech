@@ -74,7 +74,7 @@ if(isset($_GET["ditemid"])) {
                 if(stristr($image, "http")) {
                     $image = $row["pimage"];
                 } else if(stristr($image, ".")){
-                    $image = "https://propsgo.com/images/property/" . $row["pimage"];
+                    $image = "https://dev.propsgo.com/images/property/" . $row["pimage"];
                 } else {
                     $image = "https://propsgo.com/images/logo_og.png";
                 }   
@@ -113,6 +113,8 @@ $tMOGstr .= "<meta property=\"og:site_name\" content=\"propsgo.com\">\n";
 $tMOGstr .= "<meta property=\"og:title\" content=\"" . $pgTitle . "\">\n";
 $tMOGstr .= "<meta property=\"og:type\" content=\"website\">\n";
 $tMOGstr .= "<meta property=\"og:url\" content=\"" . $oglocation . "\">\n";
+// appID
+$tMOGstr .= "<meta property=\"fb:app_id\" content=\"1814864155722452\">\n";
 $tMOGstr .= "<title>" . $pgTitle . "</title>\n";
 echo $tMOGstr;
 ?>

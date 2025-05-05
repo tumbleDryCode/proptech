@@ -2239,7 +2239,6 @@ alert("doRespConstruct: " + e + " :: " + tmpRCstr);
 
 JSSHOP.ajax.doNurAjaxPipe = function(theAxObj) {
 console.log("doNurAjaxPipe: " + theAxObj.cb + " : " + theAxObj.q);
-// going to stop spinner here
 hasLclStrg = "n";
 
 aRespArr = null;
@@ -2425,8 +2424,9 @@ JSSHOP.ajax.doNuAjaxPost = function(theFval, theNAPcb) {
 
 	xhr.onload = function(e) {
 	currVRPCLIresp = xhr.responseText;
-    theNAPcb(currVRPCLIresp);
     console.log("doNuAjaxPost.resp: " + currVRPCLIresp);
+
+    theNAPcb(currVRPCLIresp);
 
 	};
 
@@ -2710,6 +2710,7 @@ alert("JSSHOP.ajax.doAjaxGVals: " + e);
 */
  
 
+
 function eindex(tDlMStr, tDlMUstr) {
 try {
     imgPLicon.src = "images/trans.gif";
@@ -2740,6 +2741,10 @@ alert("eindex: " + e);
 }
 
  
+function doMLinkM(tMDlMStr, tMDlMUstr) {
+    eindex(tMDlMStr, tMDlMUstr)
+}
+
 
 
 
@@ -3910,11 +3915,18 @@ try {
             case "property":
                 tmpPrpObj = currShopsArr[tmpMsgVal];
                 tShareMsgSTr = stxt[72] + " " + stxt[19];
-                tShareMsgUrl = currWebHome + "index.html?ditemid=" + tmpMsgVal;
+                tShareMsgUrl = currWebHome + "index.html?ditemid=" + tmpPrpObj._id;
                 tShareMsgImg = currWebHome + "images/property/" + tmpPrpObj.pimage;
                 tShareThmbImg = currPrpImgsFldr + "/" + "s_thumb" + tmpPrpObj.pimage;
-                tShareMsgTtl = tmpPrpObj.ptitle;
-                tShareMsgDsc = tmpPrpObj.pcontent;
+                // tShareMsgTtl = tmpPrpObj.ptitle;
+                // tShareMsgDsc = tmpPrpObj.pcontent;
+                // clean and cut both title and content at 100 chars
+                tUnzpdMsgDsc =  LZString.decompressFromEncodedURIComponent(tmpPrpObj.pcontent);
+                tCleanMsgTtl = tmpPrpObj.ptitle.replace(/<\/?[^>]+(>|$)/g, "");
+                tCleanMsgDsc = tUnzpdMsgDsc.replace(/<\/?[^>]+(>|$)/g, "");
+                tShareMsgTtl = tCleanMsgTtl.substring(0, 100);
+                tShareMsgDsc = tCleanMsgDsc.substring(0, 100);
+
                 break;
         case "category":
             tShareMsgSTr = "Category";
@@ -3976,7 +3988,8 @@ tClogoimg = c_logoimg.value;
     tShareMsgStr += "<div class=\"txtClrHdr txtBold\">" + stxt[141] + "</div>";
     tShareMsgStr += "<div class=\"txtClrHdr\">";
     for(var i = 0; i < tShareSIteArr.length; i++) {
-          tShareMsgStr += "<a href=\"javascript:JSSHOP.ui.doShare('" + tShareSIteArr[i] + "','" + tShareMsgUrl + "','" + tShareMsgTtl + "','" + tShareMsgDsc + "','" + tShareMsgImg + "');\" class=\"clsNada\">" + tShareSIteArr[i] + "</a> &nbsp; ";
+        tShareMsgStr += "<a href=\"javascript:JSSHOP.ui.doShare('" + tShareSIteArr[i] + "','" + tShareMsgUrl + "','" + tShareMsgTtl + "','" + tShareMsgDsc + "','" + tShareMsgImg + "');\" class=\"clsNada\">" + tShareSIteArr[i] + "</a> &nbsp; ";
+
     }
     tShareMsgStr += "</div>";
 
@@ -5689,8 +5702,7 @@ JSSHOP.ui.stringToColour = function(str) {
     tBSDDOptsO["horvert"] = "vertical";
     tBSDDOptsO["cb"] = "doGenDDcb";
    //  tDDBojA["kvIcnsObj"] =  {"public":"&#xe5cd;","private":"&#xe5cd;","members":"noQvalue"};
-
-    tBSDDOptsO["horvert"] = "vertical";
+ 
     return tBSDDOptsO;
     };
 
@@ -8129,7 +8141,7 @@ tmpTDQI.insertBefore(newel, tmpTDQI.firstChild);
 
 
 
- 
+ // slmtable bkgdClrWhite brdrClrRed txtBold txtClrRed crsrPointer
 
 JSSHOP.ads.doGenericPlug = function(tPtype, tPresQty, tPtDiv) {
 console.log("JSSHOP.ads.doGenericPlug: " + tPtype + " " + tPresQty + " " + tPtDiv);
@@ -8159,6 +8171,11 @@ break;
 case "aa-contactus":
 fretPlugStr = "<div class=\"txtSmall\">Contacte-nos</div>";
 break;
+case "aa-contact-us":
+    dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"account\" title=\"account\"> &#xe8b6;</i>";
+fretPlugStr = "<div class=\"txtSmall\">Contacte-nos</div>";
+break;
+
 case "aa-show-featured":
 // imgPLicon.src = "logoicon.png"; 
 dvPartLicon.innerHTML =  "<img src=\"images/logo/logo-small.png\" style=\"margin-top: 5px;max-height:30px;max-width:30px;\" alt=\"account\" title=\"account\" class=\"account\">";
@@ -8178,6 +8195,36 @@ break;
 case "aa-remove":
 // imgPLicon.src = "logoicon.png";    
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[815] + "</div>";
+break;
+case "aa-edit-prop":
+// imgPLicon.src = "logoicon.png"; 
+dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
+fretPlugStr = "<div class=\"txtSmall\">" + stxt[985] + "</div>";
+// fretPlugStr = doNuCollsLoad("links");
+break;
+case "aa-add-prop":
+// imgPLicon.src = "logoicon.png"; 
+dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
+fretPlugStr = "<div class=\"txtSmall\">" + stxt[906] + "</div>";
+// fretPlugStr = doNuCollsLoad("links");
+break;
+case "aa-edit-posts":
+// imgPLicon.src = "logoicon.png"; 
+dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
+fretPlugStr = "<div class=\"txtSmall\">" + stxt[402] + "</div>";
+// fretPlugStr = doNuCollsLoad("links");
+break;
+case "aa-show-prop":
+// imgPLicon.src = "logoicon.png"; 
+dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
+fretPlugStr = "<div class=\"txtSmall\">" + stxt[118] + "</div>";
+// fretPlugStr = doNuCollsLoad("links");
+break;
+case "aa-show-update":
+// imgPLicon.src = "logoicon.png"; 
+dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
+fretPlugStr = "<div class=\"txtSmall\">" + stxt[100] + "</div>";
+// fretPlugStr = doNuCollsLoad("links");
 break;
 default:
  

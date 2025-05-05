@@ -1506,6 +1506,9 @@ function getTCtryKeyValArr() {
     * Function to get the country code
     */
 function getCountryCode(pCountryName) {
+    if(pCountryName == null || pCountryName == "Espana") {
+        pCountryName = "Spain";
+    }
     console.log("getCountryCode: " + pCountryName);
     return tLocCccodeObj[pCountryName].ccode;
 }
@@ -1660,7 +1663,7 @@ function setLocltyDD(tudsA, tudsB, tudsC) {
             tDDXtraCntObj["ddtype"] = "noQvalue";
             tDDXtraCntObj["fld"] = tmpLocltyField.id;
             tDDXtraCntObj["fldb"] = "tmp_" + tudsA;
-            tDDXtraCntObj["lbl"] = "Locality";
+            tDDXtraCntObj["lbl"] = stxt[203];
             tDDXtraCntObj["val"] = tmpLocltyField.value;
             tDDXtraCntObj["kvpObj"] = tDDlocObj;
             tDDXtraCntObj["cb"] = "doLocltyPckChg";
@@ -1742,7 +1745,7 @@ function setUregionDD(tudsA, tudsB, tudsC) {
             tDDXtraCntObj["ddtype"] = "noQvalue";
             tDDXtraCntObj["fld"] = tmpRegionFid;
             tDDXtraCntObj["fldb"] = tmpTRegionFid;
-            tDDXtraCntObj["lbl"] = "Region";
+            tDDXtraCntObj["lbl"] = stxt[204];
             tDDXtraCntObj["val"] = "Lisboa";
             tDDXtraCntObj["kvpObj"] = tDDregObj;
             tDDXtraCntObj["cb"] = "doRegionPckChg";
@@ -1770,6 +1773,12 @@ function setUregionDD(tudsA, tudsB, tudsC) {
 }
 
 function getRegionDropStr(tRDCountry, tRDDel,  tRddcb) {
+    console.log("getRegionDropStr: " + tRDCountry + " :: " + tRDDel + " :: " + tRddcb);
+    tRDCountry = tRDCountry.replace(/[\n\r]/g, '');
+    tRDCountry = tRDCountry.replace(/[\t]/g, '');
+    tRDCountry = tRDCountry.replace(/[\']/g, ' ');
+    tRDCountry = tRDCountry.replace(/[\\]/g, ' ');
+    console.log("getRegionDropStr: " + tRDCountry);
     tmpFobj = null;
     tCCcode = getCountryCode(tRDCountry);
     tmpFobj = {};
@@ -1807,7 +1816,7 @@ function getCountryDropStr(tCDSfld, tCDScb)  {
     tDDXtraCntObj["ddtype"] = "noQvalue";
     tDDXtraCntObj["fld"] = tCDSfld;
     tDDXtraCntObj["fldb"] = "tmp_" + tCDSfld;    
-    tDDXtraCntObj["lbl"] = "Country";
+    tDDXtraCntObj["lbl"] = stxt[205];
     tDDXtraCntObj["val"] = "United States";
     tDDXtraCntObj["kvpObj"] = getTCtryKeyAsVal();
     tDDXtraCntObj["cb"] = tCDScb;

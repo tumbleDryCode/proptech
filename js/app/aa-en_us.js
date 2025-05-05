@@ -107,7 +107,7 @@ stxt[106] = "Relevance";
 stxt[107] = "Create";
 stxt[108] = "Create new Update";
 stxt[109] = "Visibility";
-stxt[110] = "more...";
+stxt[110] = "Show more...";
 stxt[111] = "Templates";
 stxt[112] = "Snippets";
 stxt[113] = "Latitude";
@@ -115,6 +115,9 @@ stxt[114] = "Longitude";
 stxt[115] = "Select type of contact or link";
 stxt[116] = "Add new contact";
 stxt[117] = "Mark a Visit";
+stxt[118] = "View this Magnificent Listing";
+stxt[119] = "Update";
+stxt[120] = "Saved";
 
 
 // user strings 
@@ -174,13 +177,14 @@ stxt[312] = "Billing";
 stxt[313] = "Shipping";
 stxt[314] = "Receiving";
  
-// fleet
-stxt[400] = "Fleet";
-stxt[401] = "Truck";
-stxt[402] = "Trailer";
-stxt[403] = "Tractor";
-stxt[404] = "Inspection Date";
-stxt[405] = "Insurance Date";
+// Posts
+stxt[400] = "Edit Post";
+stxt[401] = "Add Post";
+stxt[402] = "Edit Posts";
+
+
+
+
 // items and categories
 stxt[500] = "Add New Category";
 stxt[501] = "Goes in category";
@@ -254,6 +258,9 @@ stxt[568] = "Disabled";
 stxt[569] = "for a cadillac eldorado";
 stxt[570] = "Inquire about this item";
 stxt[571] = "Clear All";
+stxt[572] = "Show Seller";
+stxt[573] = "Show Location";
+stxt[574] = "Show Featured";
 
 
 
@@ -279,7 +286,7 @@ stxt[616] = "Edit Drivers";
 stxt[617] = "Users";
 stxt[618] = "Favorites";
 stxt[619] = "List Trips";
-stxt[620] = "Title, Price...";
+stxt[620] = "Type, Price...";
 stxt[621] = "Social";
 stxt[622] = "add Social Content";
 stxt[623] = "edit profile details";
@@ -287,7 +294,11 @@ stxt[624] = "Add title and link to your social content";
 stxt[625] = "Link-Url of social post or content";
 stxt[626] = "Current links:";
 stxt[627] = "View Property";
- 
+stxt[628] = "Title and Description";
+stxt[629] = "Select Language";
+stxt[630] = "Translate";
+stxt[631] = "Translations";
+stxt[632] = "Translate the current title and description to the selected language";
 
  
 // messaging strings
@@ -450,6 +461,11 @@ stxt[989] = "For Lease";  // Para arrendar
 stxt[990] = "For Auction";  // Para leilão
 stxt[991] = "For Foreclosure";  // Para execução
 stxt[992] = "Type";  // Tipo
+stxt[993] = "Title and Description"; 
+stxt[994] = "title, description of property";
+stxt[995] = "Image Type"; 
+stxt[996] = "Image Title"; 
+stxt[997] = "Save Title"; 
 
 // valdiation error messages
 stxt[1001] = "Username must be good.";
@@ -526,24 +542,7 @@ tmmftxt["super"] = "Super";
 tmmftxt["opera"] = "Operations";
 tmmftxt["user"] = "User";
 svftObj["mmenu"] = tmmftxt;
-
-// fleet vehicle types
-tfvftxt = null;
-tfvftxt = "";
-tfvftxt = {};
-tfvftxt["1"] = "Passenger";
-tfvftxt["2"] = "Van";
-tfvftxt["3"] = "Van Bi Temp";
-tfvftxt["4"] = "Van Tri Temp";
-tfvftxt["5"] = "Truck";
-tfvftxt["6"] = "Truck Bi Temp";
-tfvftxt["7"] = "Truck Tri Temp";
-tfvftxt["8"] = "Trailer";
-tfvftxt["9"] = "Trailer Bi Temp";
-tfvftxt["10"] = "Trailer Tri Temp";
-tfvftxt["11"] = "Tractor";
-svftObj["f_vtype"] = tfvftxt;
-
+ 
 tDBcritObj = null;
 tDBcritObj = "";
 tDBcritObj = {};
@@ -555,6 +554,35 @@ tDBcritObj["ends"] = "Ends With";
 tDBcritObj["greater"] = "Greater Than";
 tDBcritObj["less"] = "Less Than";
 svftObj["xss_crit"] = tDBcritObj;
+
+
+
+tPropImgTypeObj = null;
+tPropImgTypeObj = "";
+tPropImgTypeObj = {};
+tPropImgTypeObj["hall"] = "Hall";
+tPropImgTypeObj["kitchen"] = "Kitchen";
+tPropImgTypeObj["living"] = "Living Room";
+tPropImgTypeObj["bedroom"] = "Bedroom";
+tPropImgTypeObj["bathroom"] = "Bathroom";
+tPropImgTypeObj["balcony"] = "Balcony";
+tPropImgTypeObj["garage"] = "Garage";
+tPropImgTypeObj["garden"] = "Garden";
+tPropImgTypeObj["pool"] = "Pool";
+tPropImgTypeObj["roof"] = "Roof";
+tPropImgTypeObj["basement"] = "Basement";
+tPropImgTypeObj["ground"] = "Ground";
+tPropImgTypeObj["exterior"] = "Exterior";
+tPropImgTypeObj["interior"] = "Interior";
+tPropImgTypeObj["front"] = "Front";
+tPropImgTypeObj["back"] = "Back";
+tPropImgTypeObj["side"] = "Side";
+tPropImgTypeObj["entrance"] = "Entrance";
+tPropImgTypeObj["driveway"] = "Driveway";
+tPropImgTypeObj["yard"] = "Yard";
+tPropImgTypeObj["floorplan"] = "Floor Plan";
+tPropImgTypeObj["5"] = "Other";
+svftObj["propimgtype"] = tPropImgTypeObj;
 
 
 

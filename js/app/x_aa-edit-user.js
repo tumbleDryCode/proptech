@@ -513,6 +513,8 @@ fnishCntLoad = function() {
     if((quid == 0) || (quid == "noQvalue")) {
          document.location.href = "index.html?pid=login";
     }  else { 
+        JSSHOP.shared.setDynFrmVals(document["quser"], "tmp_");
+
         // tEUhdrStr = "Edit User - more options coming soon.";
         // document.getElementById("dvPartLinks").innerHTML = tEUhdrStr;
 
@@ -571,9 +573,9 @@ euiFFObjArr.push(tfsb);
 JSSHOP.shared.initFrmComps(euiFFObjArr);
 //
 if(arrAllForms.quser) {
-    JSSHOP.shared.setFrmVals("quser",arrAllForms.quser.v[0],function() { void(0) });
-
-JSSHOP.shared.setDynFieldVals(arrAllForms.quser.v[0],"tmp_");
+// JSSHOP.shared.setFrmVals("quser",arrAllForms.quser.v[0],function() { JSSHOP.shared.setDynFieldVals(JSSHOP.shared.getDynFrmVals(document["quser"], ""),"tmp_"); });
+ 
+// JSSHOP.shared.setDynFieldVals(arrAllForms.quser.v[0],"tmp_");
 } else {
     // tmp_u_name.value = u_name.value;
     // tmp_u_pass.value = u_pass.value;

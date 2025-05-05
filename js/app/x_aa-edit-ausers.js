@@ -41,14 +41,14 @@ var doAUsersList = function(a,rfb,c) {
         tsrtUT = tsuar.u_cat; 
           
          
-        atstr += "<td style=\"text-align: left\"><a href=\"javascript:doMLinkM('aa-edit-worker','pid=aa-edit-worker&tuid=" + tsuar._id + "');\">" + tsuar._id + "</a></td>";
-        atstr += "<td style=\"text-align: left\"><a href=\"javascript:doMLinkM('aa-edit-users','pid=aa-edit-users&tujsector=" + tsuar.u_cat + "');\">" + tsuar.u_cat + "</a></td>";
+        atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-auser','pid=aa-edit-auser&tuid=" + tsuar._id + "');\">" + tsuar._id + "</a></td>";
+        atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-ausers','pid=aa-edit-ausers&tujsector=" + tsuar.u_cat + "');\">" + tsuar.u_cat + "</a></td>";
         
          
         
         atstr += "<td style=\"text-align: left\"  nowrap=\"nowrap\">";
         // atstr += "<div  onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\" class=\"crsrPointer\"><img alt=\"Profile\" src=\"images/user/" + aprpObj.u_icon + "\"  class=\"icnRndSmUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">Edit</span></div>";
-        atstr += "<div onclick=\"javascript:eindex('aa-edit-auser','pid=aa-edit-auser&tuid=" + tsuar._id + "')\" class=\"crsrPointer\"><img alt=\"Profile\" src=\"images/user/" + tsuar.u_icon + "\"  class=\"icnRndDSmUser\" align=\"absmiddle\">&nbsp;";
+        atstr += "<div onclick=\"javascript:eindex('aa-show-user','pid=aa-show-user&tuid=" + tsuar._id + "')\" class=\"crsrPointer\"><img alt=\"Profile\" src=\"images/user/" + tsuar.u_icon + "\"  class=\"icnRndDSmUser\" align=\"absmiddle\">&nbsp;";
         atstr +=  "<span class=\"txtBold txtCLrHdr\">" +  tsuar.u_fullname +  "</span></div></td>";
        
  

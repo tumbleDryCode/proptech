@@ -43,6 +43,7 @@
 <input type="hidden" name="m_file" id="m_file" value="5" data-prval="disnull">
 <input type="hidden" name="m_file_thumb" id="m_file_thumb" value="5" data-prval="disnull">
 <input type="hidden" name="m_data" id="m_data" value="5" data-prval="disnull">
+<input type="hidden" name="m_title" id="m_title" value="5" data-prval="disnull">
 <input type="hidden" name="m_vala" id="m_vala" value="5" data-prval="disnull">
 <input type="hidden" name="m_valb" id="m_valb" value="5" data-prval="disnull">
 <input type="hidden" name="m_valc" id="m_valc" value="5" data-prval="disnull">
@@ -247,6 +248,19 @@
 <input type="hidden" name="groundmapimage" id="groundmapimage" value="5" data-prval="disnull">
 <input type="hidden" name="totalfloor" id="totalfloor" value="2" data-prval="disnull">
 <input type="hidden" name="pdadded" id="pdadded" value="5" data-prval="disnull">
+</form>
+
+<form name="propdescs">
+<input type="hidden" name="_id" value="" data-prval="disnull">
+<input type="hidden" name="pd_rtype" id="pd_rtype" value="5" data-prval="disnull">
+<input type="hidden" name="pd_uid" id="pd_uid" value="5" data-prval="disnull">
+<input type="hidden" name="pd_coid" id="pd_coid" value="5" data-prval="disnull">
+<input type="hidden" name="pd_prpid" id="pd_prpid" value="5" data-prval="disnull">
+<input type="hidden" name="pd_prptlng" id="pd_prptlng" value="en_us" data-prval="disnull">
+<input type="hidden" name="pd_prptype" id="pd_prptype" value="5" data-prval="disnull">
+<input type="hidden" name="pd_prptitle" id="pd_prptitle" value="5" data-prval="disnull">
+<input type="hidden" name="pd_prpdesc" id="pd_prpdesc" value="5" data-prval="disnull">
+<input type="hidden" name="pd_dadded" id="pd_dadded" value="5" data-prval="disnull">
 </form>
 </div>
 

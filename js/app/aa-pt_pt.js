@@ -40,7 +40,7 @@ stxt[36] = "Registe-se";
 stxt[37] = "Entroduza seu email e password para login ou registar-se";
 stxt[38] = "ou";
 stxt[39] = "Logout";
-stxt[40] = "Descricao";
+stxt[40] = "Descri\u00e7ao";
 stxt[41] = "Enviar Encomenda";
 stxt[42] = "Eliminar";
 stxt[43] = "Tasca do Fred";
@@ -110,7 +110,7 @@ stxt[106] = "Relevancia";
 stxt[107] = "Criar";
 stxt[108] = "Criar novo Update";
 stxt[109] = "Visibilidade";
-stxt[110] = "mais...";
+stxt[110] = "Amostrar mais...";
 stxt[111] = "Modelos";
 stxt[112] = "Snippets";
 stxt[113] = "Latitude";
@@ -120,14 +120,16 @@ stxt[115] = "Selecione o tipo de contato ou link";
 // stxt[117] = "Mark a Visit";
 stxt[116] = "Adicionar novo contato";
 stxt[117] = "Marcar uma Visita";
- 
+stxt[118] = "Ver esta Listagem Magnifica";
+stxt[119] = "Update";
+stxt[120] = "Guardado";
 
 // user strings 
 stxt[201] = "First Name";
 stxt[202] = "Last Name";
 stxt[203] = "Morada";
-stxt[204] = "Region";
-stxt[205] = "Country";
+stxt[204] = "Distrito";
+stxt[205] = "Pais";
 stxt[206] = "Phone";
 stxt[207] = "Mobile";
 stxt[208] = "Fax";	
@@ -182,13 +184,15 @@ stxt[312] = "Billing";
 stxt[313] = "Shipping";
 stxt[314] = "Receiving";
  
-// fleet
-stxt[400] = "Fleet";
-stxt[401] = "Truck";
-stxt[402] = "Trailer";
-stxt[403] = "Tractor";
-stxt[404] = "Inspection Date";
-stxt[405] = "Insurance Date";
+ 
+
+// ActualizaÁoes
+stxt[400] = "Editar Post";
+stxt[401] = "Adicionar Post";
+stxt[402] = "Editar Posts";
+ 
+
+
 // items and categories
 stxt[513] = "Editar sua loja, descriaßa£o e logo..";
 stxt[514] = "Horario";
@@ -249,7 +253,9 @@ stxt[568] = "Desativado";
 stxt[569] = "para um cadillac eldorado";
 stxt[570] = "Inquirir sobre este item";
 stxt[571] = "Limpar Tudo";
-
+stxt[572] = "Mostrar Vendedor";
+stxt[573] = "Mostrar Localiza\u00e7\u00e3o";
+stxt[574] = "Mostrar Destaque";
 
 // admin strings
 stxt[600] = "Click to run Query";
@@ -281,7 +287,7 @@ stxt[625] = "Link-Url of social post or content";
 stxt[626] = "Current links:";
 stxt[627] = "View Property";
 */
-stxt[620] = "Titulo, Pre\u00e7o...";
+stxt[620] = "Tipo, Pre\u00e7o...";
 stxt[621] = "Social";
 stxt[622] = "adicionar Conteudo Social";
 stxt[623] = "editar detalhes do perfil";
@@ -289,15 +295,11 @@ stxt[624] = "Adicionar titulo e link ao seu conteudo social";
 stxt[625] = "Link-Url do post ou conteudo social";
 stxt[626] = "Links atuais:";
 stxt[627] = "Ver Propriedade";
-
-/*
-stxt[620] = "Title, Price...";
-stxt[621] = "Social";
-stxt[622] = "add Social Content";
-*/
-stxt[620] = "Titulo, Preco...";
-stxt[621] = "Social";
-stxt[622] = "adicionar Conteudo Social";
+stxt[628] = "Titulo e Descricao";
+stxt[629] = "Selecionar Idioma";
+stxt[630] = "Traduzir";
+stxt[631] = "Tradu\u00e7\u00f5es";
+stxt[632] = "Traduzir o titulo e a descricao atuais para o idioma selecionado";
 
 
 stxt[700] = "Tem uma pergunta?";
@@ -470,9 +472,11 @@ stxt[989] = "Para arrendar";  // Para arrendar
 stxt[990] = "Para leilao";  // Para leil√£o
 stxt[991] = "Para execu√ß√£o";  // Para execu√ß√£o
 stxt[992] = "Tipo";  // Tipo
-
-
-
+stxt[993] = "Titulo e Descri\u00e7\u00e3o";  // Titulo e Descricao
+stxt[994] = "titulo e descricao";  // titulo e descricao
+stxt[995] = "Tipo de Imagem";  // Tipo de Imagem
+stxt[996] = "Titulo de Imagem"; 
+stxt[997] = "Guardar Titulo";
 
 
 
@@ -589,6 +593,34 @@ tDBcritObj["ends"] = "Ends With";
 tDBcritObj["greater"] = "Greater Than";
 tDBcritObj["less"] = "Less Than";
 svftObj["xss_crit"] = tDBcritObj;
+
+
+tPropImgTypeObj = null;
+tPropImgTypeObj = "";
+tPropImgTypeObj = {};
+tPropImgTypeObj["hall"] = "Hall";
+tPropImgTypeObj["kitchen"] = "Cozinha";
+tPropImgTypeObj["living"] = "Sala de Estar";
+tPropImgTypeObj["bedroom"] = "Quarto";
+tPropImgTypeObj["bathroom"] = "Casa de Banho";
+tPropImgTypeObj["balcony"] = "Varanda";
+tPropImgTypeObj["garage"] = "Garagem";
+tPropImgTypeObj["garden"] = "Jardim";
+tPropImgTypeObj["pool"] = "Piscina";
+tPropImgTypeObj["roof"] = "Telhado";
+tPropImgTypeObj["basement"] = "Cave";
+tPropImgTypeObj["ground"] = "Res do Chao";
+tPropImgTypeObj["exterior"] = "Exterior";
+tPropImgTypeObj["interior"] = "Interior";
+tPropImgTypeObj["front"] = "Frente";
+tPropImgTypeObj["back"] = "Costas";
+tPropImgTypeObj["side"] = "Lado";
+tPropImgTypeObj["entrance"] = "Entrada";
+tPropImgTypeObj["driveway"] = "Acesso";
+tPropImgTypeObj["yard"] = "Quintal";
+tPropImgTypeObj["floorplan"] = "Planta do Andar";
+tPropImgTypeObj["5"] = "Outro";
+svftObj["propimgtype"] = tPropImgTypeObj;
 
 
 tDBHObj = null;

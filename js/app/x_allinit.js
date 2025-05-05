@@ -71,8 +71,14 @@ var currProdsPPg = 10; // pagination  - number of items per page
 var currMCollItems = {}; // the acual menu button collection links object
 var stxt = []; // languge file strings found in aa-en_us.js
 var svtxt = [];
-var usrlang = "spa_spa"; // user language
-var usrcc = "ES"; // user country code
+var deflang = "pt_pt"; // default language
+var usrlang = "pt_pt"; // user language
+var usrcc = "PT"; // user country code
+var currShopLangs = {};
+currShopLangs["en_us"] = "English";
+currShopLangs["spa_spa"] = "Spanish";
+currShopLangs["fr_fr"] = "French";
+currShopLangs["pt_pt"] = "Portuguese";
 var actbSearch;
 var actbLoaded = false; // boolean show js_actb.js  is loaded
 var shopDir = document.location.href;

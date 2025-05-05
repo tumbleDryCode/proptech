@@ -188,6 +188,8 @@ JSSHOP.ui.setNuCBBClickClr(document.getElementById('tblLRmain'),'txtBig txtBold'
 
 }
 
+
+
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
   // alert("fnishCntLoad.login");

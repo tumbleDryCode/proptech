@@ -1,22 +1,31 @@
 <?php
 
-/**
- * PDO mysql database helper class
- * 
- * @author wildantea <wildannudin@gmail.com>
- * @copyright june 2013
- */
-
-
 
 class DumDatabase {
   
     private $pdo;
+ 
 
     
     public function __construct()
     {
-	global $docroot,$dumdb,$dumhost;
+	global $docroot,$dumdb,$dumhost,$con;
+    // $con = mysqli_connect("localhost","incasa","casain","developers");
+    // $con = mysqli_connect("titan","developers","casain","developers");
+    $con = mysqli_connect("pdb1046.freehostingeu.com","3537280_incasa","casain01","3537280_incasa");
+        // check if DB_USERNAME, DB_PASSWORD, DB_NAME are defined and if not, define them
+        if(!defined('DB_USERNAME')) {
+            define('DB_USERNAME', '3537280_incasa');
+        }
+        if(!defined('DB_PASSWORD')) {
+            define('DB_PASSWORD', 'casain01');
+        }
+        if(!defined('DB_NAME')) {
+            define('DB_NAME', '3537280_incasa');
+        }
+        if(!defined('DB_DSN')) {
+            define('DB_DSN', 'mysql:host=pdb1046.freehostingeu.com;dbname=3537280_incasa');
+        }
 
         try
         {
@@ -44,6 +53,7 @@ class DumDatabase {
 
 
     public function fetch_custom( $sql,$data=null) {
+        global $con;
 		$dumhost = "pdb1046.freehostingeu.com";
 $tvalues = array();
 $data = "";
@@ -52,11 +62,11 @@ $numlines = 0;
 $numrows = 0;
 
 
-
+/*
       $dumdb = ($GLOBALS["___mysqli_ston"] = mysqli_connect($dumhost, DB_USERNAME, DB_PASSWORD)) or trigger_error(((is_object($GLOBALS["___mysqli_ston"]) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
 ((bool)mysqli_query($dumdb, "USE " . DB_USERNAME));
-
-$result = mysqli_query($dumdb, $sql) or trigger_error(((is_object($GLOBALS["___mysqli_ston"]) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
+*/
+$result = mysqli_query($con, $sql) or trigger_error(((is_object($GLOBALS["___mysqli_ston"]) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
 $colqty = (($___mysqli_tmp = mysqli_num_fields($result)) ? $___mysqli_tmp : false) or trigger_error(((is_object($GLOBALS["___mysqli_ston"]) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
 $finfo = $result->fetch_fields();
 $tvi = 0;
@@ -109,7 +119,24 @@ $data .= "]";
 
 
 
-
+    public function fetch_cstmArr( $sql,$data=null) {
+        $dumhost = "pdb1046.freehostingeu.com";
+        $tvalues = array();
+        $data = "";
+        $dbpropsString = "";
+        $numlines = 0;
+        $numrows = 0;
+        
+        
+        
+        $dumdb = ($GLOBALS["___mysqli_ston"] = mysqli_connect($dumhost, DB_USERNAME, DB_PASSWORD)) or trigger_error(((is_object($GLOBALS["___mysqli_ston"]) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
+        ((bool)mysqli_query($dumdb, "USE " . DB_NAME));
+        
+ 
+        $result = mysqli_query($dumdb, $sql) or trigger_error(((is_object($GLOBALS["___mysqli_ston"]) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
+        return $result;
+        } 
+ 
 
 
     public function edit_custom( $sql,$data=null) {
@@ -123,12 +150,31 @@ $numrows = 0;
 
 
       $dumdb = ($GLOBALS["___mysqli_ston"] = mysqli_connect($dumhost, DB_USERNAME, DB_PASSWORD)) or trigger_error(((is_object($GLOBALS["___mysqli_ston"]) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
-((bool)mysqli_query($dumdb, "USE " . DB_USERNAME));
+((bool)mysqli_query($dumdb, "USE " . DB_NAME));
 
 $result = mysqli_query($dumdb, $sql) or trigger_error(((is_object($GLOBALS["___mysqli_ston"]) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
   return $result;
     }
 
+
+
+
+
+/*
+    public function edit_custom( $sql,$data=null) {
+        global $con;
+	$dumhost = "pdb1046.freehostingeu.com";
+$tvalues = array();
+$data = "";
+$dbpropsString = "";
+$numlines = 0;
+$numrows = 0;
+
+ 
+$result = mysqli_query($con, $sql) or trigger_error(((is_object($GLOBALS["___mysqli_ston"]) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false))));
+  return $result;
+    }
+*/
 
 
 

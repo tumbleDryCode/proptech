@@ -61,8 +61,9 @@ if(iprplen > 3) {
 // alert('doMPropsList - iprplen: ' + iprplen);
 while(istrt < iprplen){
 aprpObj = fullPrpLstA[istrt];
-aprpTitle = aprpObj["ptitle"];
-aprpContent = aprpObj["pcontent"];
+nprpTitle = aprpObj["pd_prptitle"];
+aprpTitle = LZString.decompressFromEncodedURIComponent(nprpTitle);
+ aprpContent = aprpObj["pd_prpdesc"];
 aprpType = aprpObj["ptype"];
 aprpBhk = aprpObj["bhk"];
 aprpStype = aprpObj["stype"];
@@ -385,6 +386,10 @@ oia = getNuDBFnvp("property",5,null,tmpDOqs);
 newQstr = "select * from property where _id > 0 limit 45";
 // newQstr also grabs user icon from quser  u_icon field
 newQstr = "select p.*, u.u_icon, u.u_fullname from property p, quser u where p._id > 0 and p.uid = u._id  order by rand() limit 20";
+
+  newQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.uid = u._id and pd.pd_prpid = p._id and pd.pd_prptlng = '" +  usrlang + "' order by rand() limit 20";
+// also get property title and description from propdescs where propdescs.pd_prpid = p._id and propdescs.pd_lang = userLang or propdescs.pd_lang = deflang
+newQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = '" +  usrlang + "' or pd.pd_prptlng = '" + deflang + "') order by rand() limit 20";
 
  doQComm(newQstr, null, "doMPropsList");
 return dmyFnishCntLoad;

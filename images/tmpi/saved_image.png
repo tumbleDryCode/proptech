@@ -1,0 +1,739 @@
+<html>
+<head>
+ 
+        <!--	HTML Header start  -->
+		<!-- Required meta tags -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="initial-scale=1, user-scalable=no, maximum-scale=1">
+<script src="js/bootstrap5.2/bootstrap.bundle.min.js"  language="javascript" type="text/javascript"></script>
+
+<!--<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ Meta Tags -->
+<link rel="shortcut icon" href="images/favicon.ico">
+
+<link href="js/bootstrap5.2/bootstrap-multiselect.css" rel="stylesheet">  
+
+<!--	Css Link
+	========================================================-->
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
+<!-- Try without these
+
+<link rel="stylesheet" type="text/css" href="fonts/flaticon/flaticon.css">
+-->
+
+
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<link rel="stylesheet" type="text/css" href="css/x_cc.css">
+
+<!--	Plugin Css Link
+	======================================================== -->
+<link href="js/bootstrap5.2/bootstrap.min.css" rel="stylesheet"> 
+
+
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+
+<link rel="stylesheet" type="text/css" href="css/color.css" id="color-change">
+<!-- 
+<link rel="stylesheet" type="text/css" href="css/layerslider.css"> 
+<link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css"> -->
+<link rel="stylesheet" type="text/css" href="css/login.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/x_bs-fixes.css">
+ 
+	<script src="js/app/lz-string.js" language="javascript" type="text/javascript"></script>
+	<script src="js/app/x_allinit.js" type="text/javascript"></script> 
+<script>
+// JSSHOP.loadScript("js/app/aa-" + usrlang + ".js", donada,"js");
+</script>
+<script src="js/app/aa-pt_pt.js"></script> 
+ <link href="js/thirdp/swiper-bundle.min.css" rel="stylesheet"> 
+ 
+   <script src="js/thirdp/swiper-bundle.min.js" type="text/javascript"></script>    <script src="js/jquery.min.js"></script> 
+   <script src="js/thirdp/html2canvas.js" type="text/javascript"></script>    <script src="js/jquery.min.js"></script> 
+
+
+<script src="js/leaflet/leaflet.js" type="text/javascript"></script>
+<script src="js/leaflet/lcanvas.js" type="text/javascript"></script>
+<link rel="stylesheet" href="js/leaflet/leaflet.css" type="text/css" />
+<link rel="stylesheet" href="js/leaflet/easy-button.css" type="text/css" />
+
+<title>proptech</title> 
+<!-- SOCIAL MEDIA META -->
+<meta name="description" content="propsgo.com">
+<meta name="keywords" contest>
+<meta property="og:description" content="propsgo.com">
+<meta property="og:image" content="https://propsgo.com/images/logo_og.png">
+<meta property="og:site_name" content="propsgo.com">
+<meta property="og:title" content="propsgo.com ">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://titan/incasa/logo.png">
+<title>propsgo.com </title>
+         <!--	HTML Header end  -->
+
+</head>
+<body>
+
+<!--	Page Loader  -->
+<!--<div class="page-loader position-fixed z-index-9999 w-100 bg-white vh-100">
+	<div class="d-flex justify-content-center y-middle position-relative">
+	  <div class="spinner-border" role="status">
+		<span class="sr-only">Loading...</span>
+	  </div>
+	</div>
+</div>  -->
+<!--	Page Loader  -->
+
+<div id="page-wrapper">
+    <div class="row"> 
+        <!--	Header start  -->
+		<div id="lightbox" class="lightbox"   onclick="javascript:JSSHOP.ui.closePopMenus();">
+</div> <div id="lightbox_content" class="rtable bkgdClrWhite bottom-shadow" style="min-height:400px;min-width:50%;z-index: 2147483647;position:fixed;top:-700px;left:-700px;word-wrap: break-word;max-width:80%;margin: 0 auto;">
+      </div>
+
+
+
+<header id="header" class="transparent-header-modern fixed-header-bg-white w-100" style="margin:0px;padding:0px;min-width:100%">
+            <div class="top-header bg-secondary bigtable brdrClrHdr" style="margin:15px;visiility:hidden;display:none;">
+                <div class="container" style="width:100%">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <ul class="top-contact list-text-white  d-table">
+                                <li><a href="#"><i class="fas fa-phone-alt text-primary mr-1"></i>9611211215</a></li>
+                                <li><a href="#"><i class="fas fa-envelope text-primary mr-1"></i>myemail@mysite</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="top-contact float-right">
+                                <ul class="list-text-white d-table">
+								<li><i class="fas fa-user text-primary mr-1"></i>
+																<a href="login.php">Login</a>&nbsp;&nbsp;
+                                <a href="register.php"><ti data-ison="stxt[30]" data-desc="btn_register">Register</ti>
+																| </li>
+ 								</ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-nav secondary-nav hover-primary-nav py-6  bg-secondary"  style="">
+                <div class="">
+                    <div class="row">
+                        <div class="col-lg-12" style="margin:0px;">
+                            <nav class="navbar-expand-lg navbar-light p-0">
+                              <span style="float:left;text-align:left;white-space: nowrap;"><a class="breadcrumb-item active" href="javascript:eindex('index_main', 'pid=index_main');"><img id="imgMainLogo" class="slmtable" src="images/logo/logo-small.png" alt="proptech" style="max-height:40px;max-width:40px;"> <b>proptech</b></a></span>
+
+  <!-- menu icons 
+
+  <a href="javascript:void(0);" onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'kcoll-menu-item','collection-item txtClrRed', function(){JSSHOP.ui.popAndFillLbox(doFavoritesRndr('y', 'y', 'y', 60).replace(/::/g, '<br>'))});" class="collection-item txtClrRed"><span><i class="menu-material-icons collection-item txtClrRed">î¡½</i></span><span style="vertical-align:super;padding-left:12px;" class="collection-item txtClrRed">Favorites</span></a>
+
+
+			<div style="">
+ 
+			<ul class="shop-menu" > 
+
+ 
+
+ 
+<li id="ahAccountIcon"  style="float:right"><a href="javascript:JSSHOP.ui.doDefCBBCC('ahAccountIcon', null, doEditUser());"><i class="material-icons"  style="margin-top: 5px;font-size:32px;" alt="person" title="person">&#xe7fd;</i></a></li>   
+ <li id="ahNotifyIcon"  style="float:right"><span id="spnAlrtNotify" class="icnbtn slmtable txtSmall txtClrWhite bkgdClrHdr" style="float:right"></span><a href="javascript:JSSHOP.ui.doDefCBBCC('ahNotifyIcon', null, doMLinkM('aa-show-notifications', 'pid=aa-show-notifications'));"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="Notify" title="notifications">&#xe7f4;</i></a></li>   
+
+<li id="ahMsgsIcon"  style="float:right"><span id="spnMsgsNotify" class="icnbtn slmtable txtSmall txtClrWhite bkgdClrHdr" style="float:right"></span><a href="javascript:JSSHOP.ui.doDefCBBCC('ahMsgsIcon', null, doMLinkM('aa-show-messages','pid=aa-show-messages'));"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="Messages" title="Messages">&#xe0b7;</i></a></li>   
+                                </ul>
+
+			</div>
+				  -->
+
+
+
+
+
+
+<!-- recamy stuff -->
+ 
+ <!-- ols menu -->
+
+<div style="padding:0px;margin:0px;float:right;" class="newNavCls shop-menu" id="newNavDiv">   
+<ul style="" class=""> 
+
+<!-- <li id="ahAccountIcon"  style="padding:0px;margin:0px;display:inline;float:left;" class="newNavCls"><a href="javascript:JSSHOP.ui.doDefCBBCC('ahAccountIcon', null, document.location.href='index.html?pid=aa-edit-uinfo&cid=' + cuid);" style="padding:2px"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="person" title="person"></li>
+   <li id="ahSettingsIcon">  <span id="spnAlrtSettings" class="icnbtn slmtable txtSmall txtClrWhite bkgdClrHdr" style="float:right">5</span> <a href="javascript:JSSHOP.ui.doDefCBBCC('ahSettingsIcon', null, document.location.href='index.html?pid=aa-settings&cid=' + cid);"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="Settings" title="Settings">&#xe8b8;</i></a></li> 
+   <li id="ahNotifyIcon"><span id="spnAlrtNotify" class="icnbtn slmtable txtSmall txtClrWhite bkgdClrHdr" style="float:right"></span><a href="javascript:JSSHOP.ui.doDefCBBCC('ahNotifyIcon', null, document.location.href='index.html?pid=aa-show-notifications&cid=' + cid);"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="Notify" title="notifications">
+  &#59380;</i></a></li>     
+
+
+   <li id="ahCartIcon"><a href="javascript:JSSHOP.ui.doDefCBBCC('ahCartIcon', null, document.location.href='index.html?pid=aa-show-cart&cid=' + cid + '&ppid=' + ppid);"><i class="material-icons"  style="margin-top: 5px;font-size:32px;margin-right:6px;"  alt="shopping_cart" title="shopping_cart">&#xe8cc;</i></a></li>
+    
+    
+               <li id="ahMsgsIcon" style="padding:0px;margin:0px;display:inline;float:left;" class="newNavCls"><span id="spnMsgsNotify" class="icnbtn slmtable txtSmall txtClrWhite bkgdClrHdr" style="float:right"></span><a href="javascript:JSSHOP.ui.doDefCBBCC('ahMsgsIcon', null, document.location.href='index.html?pid=aa-show-messages&cid=' + cid);"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="Messages" title="Messages">
+  &#57527;</i></a></li>-->
+
+    
+   <!--  <li id="ahCartIcon" style="padding:0px;margin:0px;display:inline;float:left;"><span id="spnCIcount" class="nada" style="float:right"></span><a href="javascript:JSSHOP.ui.doDefCBBCC('ahCartIcon', null, document.location.href='index.html?pid=aa-show-cart&cid=' + cid + '&ppid=' + ppid);"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px; margin-bottom:0px;padding-bottom:0px;"  alt="shopping_cart" title="shopping_cart">
+  &#59596;</i></a></li> -->
+
+
+     <li id="ahMenuIcon"  style="padding:0px;margin:0px;display:inline;float:right;"><div class="crsrPointer hoover" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;  text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;">
+     <i class="material-icons" style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="home" title="home"  onclick="javascript:JSSHOP.ui.toggleVisibility('navbarSupportedContent');">
+     &#xe241;</i></div></li> 
+
+     <li id="ahAccnt" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:eindex('aa-edit-user','pid=aa-edit-user&cit=y');" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="account" title="account"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrHdr', 'material-icons crsrPointer hoover', function(){void(0);}, 300);">
+     &#xe7fd;</i></a></li> 
+ <!-- <li id="ahHomeIcon" style="padding:0px;margin:0px;display:inline;float:right;"><a href="index.html" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;  text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons" style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="home" title="home">
+     &#59530;</i></a></li>--> 
+     <li id="ahMsgsIcon" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:eindex('aa-show-messages','pid=aa-show-messages&cit=y');" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="messages" title="messages"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrHdr', 'material-icons crsrPointer hoover', function(){void(0);}, 300);">
+     &#57527;</i></a></li>
+  <li id="ahDeRecent" style="padding:0px;margin:0px;display:inline;float:right;"><div class="crsrPointer hoover" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;">
+  <i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="ahDeRecent" title="ahDeRecent"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrRed', 'material-icons crsrPointer hoover', function(){JSSHOP.ui.popAndFillLbox(doFavoritesRndr('y', 'y', 'y', 60).replace(/::/g, '<br>'));}, 300);">
+ &#59517;</i></div></li> 
+ <li id="ahSearch" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:eindex('aa-show-search','pid=aa-show-search&cit=y');" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="search" title="search"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrHdr', 'material-icons crsrPointer hoover', function(){void(0);}, 300);">
+ &#xe8b6;</i></a></li>
+        <!--    
+  <li id="ahAccnt" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:void(0);" onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'kcoll-menu-item','collection-item txtClrRed', function(){eindex('aa-edit-user', 'pid=aa-edit-user&cit=y')}, 20);" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="account" title="account">
+  &#xe7fd;</i></a></li> 
+               
+               
+    
+   <li id="ahMsgsIcon" style="padding:0px;margin:0px;display:inline;float:left;" class="newNavCls"><span id="spnMsgsNotify" class="icnbtn slmtable txtSmall txtClrWhite" style="float:right"></span><div class="crsrPointer hoover" id="dvBtnNavMsg" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="Messages" title="Messages"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrHdr', 'material-icons crsrPointer hoover', function(){eindex('aa-show-messages', 'pid=aa-show-messages')}, 300);"  >
+  &#57527;</i></div></li>   -->
+</ul>
+ 
+</div>
+
+      <!-- end ols menu -->
+
+<!-- end recamy stuff -->
+
+
+
+                  
+                              <!--  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"0% aria-label="Toggle navigation" style="padding: 2px;background-color: #fff;border:0px;"> <span class="navbar-toggler-icon"></span> </button> -->
+                                
+                            </nav>
+                        </div>
+
+                       
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="clearfix"></div>
+        <div> 
+            <table style="width:100%;"><tr><td style="width:90%"> </td><td style="min-width:300px;">
+        <div class="txtClrWhite bg-secondary" id="navbarSupportedContent" style="visibility:hidden;display:none;min-width:300px;max-width:350px;float:right;position:fixed;z-index: 2147483649;max-height:90%;overflow:scroll;">
+                                    <ul>
+                                        <li class="nav-item"> <a class="nav-link" href="./" role="button" aria-haspopup="true" aria-expanded="false">Home</a></li>
+										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-featured','pid=aa-show-featured');"><ti data-ison="stxt[940]" data-desc="btn_properties">Properties</ti></a> </li>					 
+										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-search','pid=aa-show-search&cit=y');"><ti data-ison="stxt[936]" data-desc="btn_searchprops">Search Properties</ti></a> </li>
+										<!-- <li class="nav-item"> <a class="nav-link" href="agent.php"><ti data-ison="stxt[900]" data-desc="btn_agentes">Agentes</ti></a> </li> -->
+                                        <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-contact-us','pid=aa-contact-us');"><ti data-ison="stxt[902]" data-desc="btn_contacts">Contacts</ti></a> </li>
+										
+									 
+                                    										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-user','pid=aa-edit-user&cit=y');">Login</a> </li>
+                                        <li class="nav-item"> <a class="nav-link"  href="javascript:eindex('register','pid=register&cit=y');"><ti data-ison="stxt[961]" data-desc="btn_register">Register</ti></a></li>
+										
+
+										
+                                    </ul>
+                                    
+									
+									<!-- <a class="btn btn-primary d-none d-xl-block" href="submitproperty.php"><ti data-ison="stxt[90]" data-desc="btn_about">About</ti></a> -->
+                                    
+        <!-- start of dvAlist -->                      
+<div id="dvAMnuLnks" style="visibility:hidden;display:none;margin:0px;padding:0px;" class="bkgdClrHdr">
+ <ul>
+ <li class="" style="margin-top:10px;padding-left:8px;padding-top:5px;">
+											 <ti data-ison="stxt[83]" data-desc="btn_account">Admin</ti>
+											<ul class="">
+												<!-- <li class="nav-item"> <a class="nav-link" href="profile.php"><ti data-ison="stxt[903]" data-desc="btn_profile">Profile</ti></a> </li> -->
+                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-place','pid=aa-edit-place');"><ti data-ison="stxt[68]" data-desc="btn_shpsettinhs">Shop Settings</ti></a> </li>
+
+                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-aprops','pid=aa-edit-aprops');"><ti data-ison="stxt[901]" data-desc="btn_addprop">Properties</ti></a> </li>
+												 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-ausers', 'pid=aa-edit-ausers');"><ti data-ison="stxt[80]" data-desc="btn_yourprops">Users</ti></a> </li>
+											</ul>
+                                        </li>
+    </ul>
+</div> <!-- end of dvAMnuLnks -->  
+
+
+
+</div> <!-- end of navbar-collapse -->
+                                </td></tr></table>
+        </div>
+
+<div class="txtSmall txtClrWhite">.</div>        <!--	Header end  -->
+		<!--	newbanner start  -->
+            <table style="margin:0 auto;max-width:90%" class="slmtable bkgdClrWhite bottom-shadow"><tr><td>
+        <table>
+			<tbody><tr>
+		<td style="width: 37px"><div id="dvPartLicon"></div><div id="dvPLicon" style="visibility:hidden;display:none;"><img id="imgPLicon" src="images/mech_logo_small.png" style="max-width:40px;max-height:40px;"></div></td>
+		<td>&nbsp;</td>
+		<td style="width: 100%"><div id="dvPartLinks" style="max-width:90%; word-wrap:break-word;"><div class="txtSmall">...</div></div></td>
+        <td style="vertical-align:middle;">
+           <!-- <div><a class="txtBold" href="javascript:JSSHOP.ui.popAndFillLbox(JSSHOP.ui.getMorBxStr('mmDdown'));" style="text-transform:none;visibility:visible;display: block;"><i class="material-icons txtClrHdr txtBold" style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="More" title="More">
+            &#xe5d4;</i></a></div>-->
+        </td>
+			</tr>
+			</tbody></table>
+        </td></tr>
+        <tr><td>
+        <!-- <table style="margin:0 auto;max-width:80%"><tr>
+            <td style="text-align:center;"><ti data-ison="tmpContType['buy']">Buy</ti> </td><td style="text-align:center;"><ti data-ison="tmpContType['sell']">Sell</ti></td>
+        </tr></table> -->
+        </td>
+        </tr></table>
+        <!--	newbanner end  -->
+        <!--	Banner Start   
+  
+        <div class="rtable brdrClrHdr" style="background-image: url('images/banner/04.jpg'); min-width: 95%; max-width: 95%;min-height: 105%;margin:0 auto;margin-top:2px;">
+
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+
+               
+                    <div class="col-lg-12">
+                        <div>
+                            <span class="text-primary txtBig"><ti data-ison="stxt[971]" data-desc="btn_find">Find</ti></span><br>
+                           <span class="txtClrWhite txtBigger"> <ti data-ison="stxt[972]" data-desc="btn_dreamhome"> your dream home</ti></span><br>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+           Banner End  -->
+ 
+        <!--	Text Block One
+		======================================================-->
+		<!-----  Our Services  ---->
+		
+        <!--	Recent Properties  -->
+         
+        <div id="includedContent" style="min-height:300px">
+</div>
+
+<div id="dvDynCtt" style="max-width:200px">
+<IFRAME width="200px" height="10px" frameborder="0" border="0" src="blank.html" marginwidth="0" marginheight="0" id="ifrmDynCtt" name="ifrmDynCtt" title="DynContent Iframe">
+</IFRAME>
+</div>
+<div id="dvSandMap"  style="margin: 0 auto;min-height:300px;min-width:95%;z-index:999999999;position:fixed;top:-500px;word-wrap: break-word;" class="bigtable brdrClrRed gradient-pop bkgdClrWhite"  align="center">
+<div id="map" style="margin: 0 auto;min-height:400px;min-width:98%; max-width:98%;"></div>
+</div>	
+
+<div id="dvDummy"  class="zntainer"></div>
+
+
+ 
+
+	<script src="js/app/x_last.js"></script> 
+<script src="js/app/x_all.js"></script> 
+<script src="js/app/x_booter.js"></script>
+<script src="js/app/x_admin.js"></script>
+  		<footer class="full-row bg-secondary p-0">
+            <div class="container">
+                <div  class="row">
+                    <div class="col-lg-12">
+                        <div class="divider py-1">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-4" style="padding:0px;">
+                                    <div class="footer-widget mb-4"  style="padding:0px;">
+                                        <div class="footer-logo mb-4" style="padding: 0px;">
+                                        <table style="border:0px;">
+											<tr>
+												<td><a href="#"><img src="images/logo/logo-white.png" alt="image" style="max-width:60px"  class="smltable"></a></td>
+												<td style="text-align:left;padding:0px;"><span class="text-primary txtBig">proptech</span></td>
+											</tr>
+											</table>
+										</div>
+ 
+                                        </div>
+                                </div>
+                                <div class="col-md-12 col-lg-8">
+                                    <div class="row">
+
+                                    <div class="col-md-4 col-lg-4">
+                                            <div class="footer-widget footer-nav mb-4">
+                                                <h4 class="widget-title text-white double-down-line-left position-relative">Quick Links</h4>
+                                                <ul class="hover-text-primary">
+                                                    <li><a href="about.php" class="text-white"><ti data-ison="stxt[913]" data-desc="btn_about">About Us</ti></a></li>
+                                                    <li><a href="javascript:eindex('aa-show-featured','pid=aa-show-featured');" class="text-white"><ti data-ison="stxt[914]" data-desc="btn_featured">Featured Property</ti></a></li>
+                                                    <!--
+                                                    <li><a href="#" class="text-white"><ti data-ison="stxt[915]" data-desc="btn_member">Become A Member</ti></a></li>
+                                                    <li><a href="submitproperty.php" class="text-white"><ti data-ison="stxt[916]" data-desc="btn_addprop">Submit Property</ti></a></li>
+                                                    <li><a href="#" class="text-white"><ti data-ison="stxt[917]" data-desc="btn_how">How It Works</ti></a></li>
+                                                    <li><a href="#" class="text-white"><ti data-ison="stxt[918]" data-desc="btn_ouragentes">Our Agentes</ti></a></li>
+                                                    
+                                                    -->
+                                                </ul>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-4 col-lg-4">
+                                            <div class="footer-widget footer-nav mb-4">
+                                                <h4 class="widget-title text-white double-down-line-left position-relative"><ti data-ison="stxt[910]" data-desc="btn_support">Get Support</ti></h4>
+                                                <ul class="hover-text-primary">
+                                                    <!--
+                                                    <li><a href="#" class="text-white"><ti data-ison="stxt[910]" data-desc="btn_support">Get Support</ti></a></li>
+                                                    <li><a href="#" class="text-white"><ti data-ison="stxt[911]" data-desc="btn_faqs">Freequenly Ask Question</ti></a></li>
+                                                    <li><a href="#" class="text-white"><ti data-ison="stxt[907]" data-desc="btn_forum">Forum</ti></a></li>
+                                                    <li><a href="#" class="text-white"><ti data-ison="stxt[908]" data-desc="btn_statistics">Statistics</ti></a></li>
+                                                    -->
+
+                                                    <li><a href="index.html?pid=aa-contactus" class="text-white"><ti data-ison="stxt[912]" data-desc="btn_contact">Contact</ti></a></li>
+                                                    <li><a href="https://www.livroreclamacoes.pt/" class="text-white" target="_blank"><ti data-ison="stxt[973]" data-desc="btn_complaint">Report Issue</ti></a></li>
+                                                    <li><a href="javascript:eindex('aa-terms_privacy','pid=aa-terms_privacy&td=t');" class="text-white"><ti data-ison="stxt[909]" data-desc="btn_terms">Terms and Condition</ti></a></li>
+                                                    <li><a href="javascript:eindex('aa-terms_privacy','pid=aa-terms_privacy&tp=p');" class="text-white"><ti data-ison="stxt[919]" data-desc="btn_privacy">Privacy Policy</ti></a></li>
+
+
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+
+
+
+
+                                        <!--
+                                        <div class="col-md-4 col-lg-4">
+                                            <div class="footer-widget">
+                                                <h4 class="widget-title text-white double-down-line-left position-relative"><ti data-ison="stxt[912]" data-desc="btn_contactus">Contact Us</ti></h4>
+                                                <ul class="text-white">
+                                                    <li class="hover-text-primary">
+													Portugal</li>
+                                                    <li class="hover-text-primary">
+													in.casa22@sapo.pt</li>
+                                                </ul>
+                                            </div>
+                                             <div class="footer-widget media-widget mt-4 text-white hover-text-primary"> <a href="#"><i class="fab fa-facebook-f txtClrWhite"></i></a> <a href="#"><i class="fab fa-twitter"></i></a> <a href="#"><i class="fab fa-google-plus-g"></i></a> <a href="#"><i class="fab fa-linkedin-in"></i></a> <a href="admin/dashboard.php"><i class="fas fa-rss"></i></a> </div> 
+                                        </div>
+                                        -->
+
+                                       
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- copyright not needed for now
+                <div class="row copyright">
+                    <div class="col-sm-6">
+                        <ul class="line-menu text-white hover-text-primary float-right">
+                            <li><a href="#"><ti data-ison="stxt[919]" data-desc="btn_privacy">Privacy & Policy</ti></a></li>
+                            <li>|</li>
+                            <li><a href="#"> Site Map</a></li>
+                        </ul>
+                    </div>
+                </div>
+                 -->
+
+            <div style=""  class="copyright col-sm-6">
+            <a class="txtSmall txtClrWhite txtDecorNone" href="javascript:JSSHOP.cookies.setCookie('usrlang','en_us','130','','','');document.location.href='index.php?nls=y';">
+			English</a>&nbsp; |&nbsp;
+			<a class="txtSmall txtClrWhite txtDecorNone" href="javascript:JSSHOP.cookies.setCookie('usrlang','spa_spa','130','','','');document.location.href='index.php?nls=y';">
+			Spanish</a>&nbsp; |&nbsp;
+			<a class="txtSmall txtClrWhite txtDecorNone"  href="javascript:JSSHOP.cookies.setCookie('usrlang','pt_pt','130','','','');document.location.href='index.php?nls=y';">
+			Portuguese</a>
+            </div>
+
+            
+            </div>
+           
+        </footer>
+
+
+  		<!--	Footer   start-->
+        
+        
+        <!-- Scroll to top 
+        <a href="#" class="bg-primary text-white hover-text-secondary" id="scroll"><i class="fas fa-angle-up"></i></a> 
+          End Scroll To top --> 
+    </div>
+</div>
+<!-- Wrapper End --> 
+        <!--	HTML footer start  -->
+		 
+<!-- jQuery Layer Slider 
+ 
+<script src="js/greensock.js"></script>
+ 
+<script src="js/layerslider.transitions.js"></script> 
+<script src="js/layerslider.kreaturamedia.jquery.js"></script> 
+ --> <!--
+
+<script src="js/bootstrap.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/tmpl.js"></script>
+<script src="js/jquery.dependClass-0.1.js"></script>
+<script src="js/draggable-0.1.js"></script>
+<script src="js/wow.js"></script>
+<script src="js/custom.js"></script>
+-->
+
+<!-- <script src="js/jquery.slider.js"></script> -->
+<input type="hidden" name="fldChallArray" id="fldChallArray" value="noQvalue">
+<div id="includedForms" style="position:fixed;top:-400px;">
+
+<form name="qlinks">
+<input type="hidden" name="_id" value="" data-prval="disnull">
+<input type="hidden" name="k_rtype" id="k_rtype" value="5" data-prval="disnull">
+<input type="hidden" name="k_userid" id="k_userid" value="5" data-prval="disnull">
+<input type="hidden" name="k_coid" id="k_coid" value="" data-prval="disnull">
+<input type="hidden" name="k_category" id="k_category" value="Select" data-prval="disnull">
+<input type="hidden" name="k_title" id="k_title" value="" data-prval="disnull">
+<input type="hidden" name="k_matter" id="k_matter" value="" data-prval="disnull">
+<input type="hidden" name="k_privacy" id="k_privacy" value="aa" data-prval="disnull">
+<input type="hidden" name="k_dadded" id="k_dadded" value="" data-prval="disnull">
+</form>
+
+
+<form name="qmedia">
+<input type="hidden" name="_id" value="" data-prval="disnull">
+<input type="hidden" name="m_rtype" id="m_rtype" value="5" data-prval="disnull">
+<input type="hidden" name="m_uid" id="m_uid" value="5" data-prval="disnull">
+<input type="hidden" name="m_coid" id="m_coid" value="5" data-prval="disnull">
+<input type="hidden" name="m_catid" id="m_catid" value="5" data-prval="disnull">
+<input type="hidden" name="m_pid" id="m_pid" value="5" data-prval="disnull">
+<input type="hidden" name="m_file" id="m_file" value="5" data-prval="disnull">
+<input type="hidden" name="m_file_thumb" id="m_file_thumb" value="5" data-prval="disnull">
+<input type="hidden" name="m_data" id="m_data" value="5" data-prval="disnull">
+<input type="hidden" name="m_vala" id="m_vala" value="5" data-prval="disnull">
+<input type="hidden" name="m_valb" id="m_valb" value="5" data-prval="disnull">
+<input type="hidden" name="m_valc" id="m_valc" value="5" data-prval="disnull">
+<input type="hidden" name="m_dadded" id="m_dadded" value="5" data-prval="disnull">
+</form>
+
+
+
+
+<form name="quser">
+<input type="hidden" name="_id" value="0" data-prval="disnull">
+<input type="hidden" name="u_rtype" id="u_rtype" value="5" data-prval="disnull">
+<input type="hidden" name="u_cat" id="u_cat" value="1" data-prval="disnull">
+
+<input type="hidden" name="u_name" id="u_name" value="" data-prval="disnull">
+<input type="hidden" name="u_fullname" id="u_fullname" value="" data-prval="disnull">
+<input type="hidden" name="u_location" id="u_location" value="" data-prval="disnull">
+<input type="hidden" name="u_region" id="u_region" value="Lisboa" data-prval="disnull">
+<input type="hidden" name="u_country" id="u_country" value="Portugal" data-prval="disnull">
+<input type="hidden" name="u_loclat" id="u_loclat" value="38.71667" data-prval="disnull">
+<input type="hidden" name="u_loclng" id="u_loclng" value="-9.13333" data-prval="disnull">
+
+<input type="hidden" name="u_email" id="u_email" value="" data-prval="disnull">
+<input type="hidden" name="u_pass" id="u_pass" value="" data-prval="disnull">
+<input type="hidden" name="u_header" id="u_header" value="" data-prval="disnull">
+<input type="hidden" name="u_desc" id="u_desc" value="" data-prval="disnull">
+<input type="hidden" name="u_icon" id="u_icon" value="default_user.png" data-prval="disnull">
+<input type="hidden" name="u_privacy" id="u_privacy" value="public" data-prval="disnull">
+<input type="hidden" name="u_prfs" id="u_prfs" value="public" data-prval="disnull">
+
+<input type="hidden" name="u_socauthtype" id="u_socauthtype" value="5" data-prval="disnull">
+<input type="hidden" name="u_socauthid" id="u_socauthid" value="5" data-prval="disnull">
+<input type="hidden" name="u_socauthtoke" id="u_socauthtoke" value="5" data-prval="disnull">
+<input type="hidden" name="u_dadded" id="u_dadded" value="5" data-prval="disnull">
+</form>
+
+<form name="qco">
+<input type="hidden" name="_id" value="" data-prval="disnull">
+<input type="hidden" name="c_rtype" id="c_rtype" value="5" data-prval="disnull">
+<input type="hidden" name="c_coid" id="c_coid" value="5" data-prval="disnull">
+
+<input type="hidden" name="c_category" id="c_category" value="101" data-prval="disnull">
+
+<input type="hidden" name="c_uid" id="c_uid" value="0" data-prval="disnull">
+<input type="hidden" name="c_internal" id="c_internal" value="5" data-prval="disnull">
+
+<input type="hidden" name="c_name" id="c_name" value="recamby" data-prval="disnull">
+<input type="hidden" name="c_header" id="c_header" value="..." data-prval="disnull">
+
+<input type="hidden" name="c_desc" id="c_desc" value="..." data-prval="disnull">
+<input type="hidden" name="c_tel" id="c_tel" value="noQvalue" data-prval="disnull">
+<input type="hidden" name="c_contact" id="c_contact" value="noQvalue" data-prval="disnull">
+
+<input type="hidden" name="c_web" id="c_web" value="noQvalue" data-prval="disnull">
+<input type="hidden" name="c_email" id="c_email" value="noQvalue" data-prval="disnull"> 
+<input type="hidden" name="c_logoimg" id="c_logoimg" value="noQvalaue" data-prval="disnull"> 
+
+<input type="hidden" name="c_zipcode" id="c_zipcode" value="1" data-prval="disnull"> 
+<input type="hidden" name="c_zp" id="c_zp" value="1" data-prval="disnull"> 
+<input type="hidden" name="c_door" id="c_door" value="1" data-prval="disnull"> 
+
+<input type="hidden" name="c_street" id="c_street" value="1" data-prval="disnull"> 
+<input type="hidden" name="c_location" id="c_location" value="1" data-prval="disnull"> 
+<input type="hidden" name="c_region" id="c_region" value="1" data-prval="disnull"> 
+<input type="hidden" name="c_country" id="c_country" value="1" data-prval="disnull"> 
+
+<input type="hidden" name="c_ccode" id="c_ccode" value="1" data-prval="disnull"> 
+<input type="hidden" name="c_placeid" id="c_placeid" value="1" data-prval="disnull"> 
+<input type="hidden" name="c_loc_lat" id="c_loc_lat" value="40.2" data-prval="disnull">
+<input type="hidden" name="c_loc_lng" id="c_loc_lng" value="-8.1" data-prval="disnull">
+<input type="hidden" name="c_google_url" id="c_google_url" value="1" data-prval="disnull"> 
+<input type="hidden" name="c_rating" id="c_rating" value="1" data-prval="disnull"> 
+<input type="hidden" name="c_revs" id="c_revs" value="1" data-prval="disnull"> 
+<input type="hidden" name="c_msg" id="c_msg" value="1" data-prval="disnull"> 
+<input type="hidden" name="c_privacy" id="c_privacy" value="5" data-prval="disnull">
+
+<input type="hidden" name="c_whours" id="c_whours" value="1" data-prval="disnull"> 
+
+
+<input type="hidden" name="c_vala" id="c_vala" value="" data-prval="disnull">
+<input type="hidden" name="c_valb" id="c_valb" value="" data-prval="disnull">
+<input type="hidden" name="c_dadded" id="c_dadded" value="" data-prval="disnull">
+</form>
+
+<form name="qextras">
+<input type="hidden" name="_id" value="" data-prval="disnull">
+<input type="hidden" name="e_rtype" id="e_rtype" value="5" data-prval="disnull">
+<input type="hidden" name="e_uid" id="e_uid" value="5" data-prval="disnull">
+<input type="hidden" name="e_vala" id="e_vala" value="noQvalue" data-prval="disnull">
+<input type="hidden" name="e_valb" id="e_valb" value="" data-prval="disnull">
+<input type="hidden" name="e_valc" id="e_valc" value="" data-prval="disnull">
+<input type="hidden" name="e_vald" id="e_vald" value="" data-prval="disnull">
+<input type="hidden" name="e_vale" id="e_vale" value="" data-prval="disnull">
+<input type="hidden" name="e_valf" id="e_valf" value="" data-prval="disnull">
+<input type="hidden" name="e_dadded" id="e_dadded" value="" data-prval="disnull">
+</form>
+ 
+
+<form name="qmsgs">
+<input type="hidden" name="_id" value="" data-prval="disnull">
+<input type="hidden" name="msg_rtype" id="msg_rtype" value="5" data-prval="disnull" data-flbl="ID" data-ftype="span" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="msg_threadid" id="msg_threadid" value="0" data-prval="disnull">
+<input type="hidden" name="msg_cartid" id="msg_cartid" value="noQvalue" data-prval="disnull" data-flbl="CartID" data-ftype="span" data-fval="thisval">
+<input type="hidden" name="msg_prodid" id="msg_prodid" value="noQvalue" data-prval="disnull" data-flbl="ProductID" data-ftype="span" data-fval="thisval">
+<input type="hidden" name="msg_userid" id="msg_userid" value="noQvalue" data-prval="disnull" data-flbl="UserID" data-ftype="span" data-fval="thisval">
+<input type="hidden" name="msg_viewed" id="msg_viewed" value="-" data-prval="disnull"  data-flbl="Viewed" data-ftype="span" data-fval="thisval">
+<input type="hidden" name="msg_from" id="msg_from" value="" data-prval="disnull" data-flbl="stxt[703]" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="msg_fromsg_email" id="msg_fromsg_email" value="" data-prval="disnull" data-flbl="stxt[704]" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="msg_fromsg_tel" id="msg_fromsg_tel" value="" data-prval="disnull" data-flbl="Tel" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="msg_fromsg_ip" id="msg_fromsg_ip" value="" data-prval="disnull">
+<input type="hidden" name="msg_to" id="msg_to" value="" data-prval="disnull"  data-flbl="stxt[106]" data-ftype="span" data-fval="thisval">
+<input type="hidden" name="msg_to_email" id="msg_to_email" value="" data-prval="disnull"  data-flbl="stxt[26]" data-ftype="span" data-fval="thisval">
+<input type="hidden" name="msg_subject" id="msg_subject" value="" data-prval="disnull" data-flbl="stxt[705]" data-ftype="tdiv" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="msg_matter" id="msg_matter" value="" data-prval="disnull" data-flbl="stxt[706]" data-ftype="tdivarea" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="msg_media" id="msg_media" value="normal" data-prval="disnull">
+<input type="hidden" name="msg_priority" id="msg_priority" value="" data-prval="disnull">
+<input type="hidden" name="msg_status" id="msg_status" value="open" data-prval="disnull">
+<input type="hidden" name="msg_docomments" id="msg_docomments" value="open" data-prval="disnull">
+<input type="hidden" name="msg_privacy" id="msg_privacy" value="0" data-prval="disnull">
+<input type="hidden" name="msg_dadded" id="msg_dadded" value="" data-prval="disnull">
+<input type="hidden" name="msg_dmodified" id="msg_dmodified" value="" data-prval="disnull">
+<input type="hidden" name="msg_modifiedby" id="msg_modifiedby" value="" data-prval="disnull">
+</form>
+
+
+<form name="qmsg">
+<input type="hidden" name="_id" value="" data-prval="disnull">
+<input type="hidden" name="ms_rtype" id="ms_rtype" value="0" data-prval="disnull" data-flbl="ID" data-ftype="span" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_threadid" id="ms_threadid" value="0" data-prval="disnull">
+<input type="hidden" name="ms_viewed" id="ms_viewed" value="-" data-prval="disnull"  data-flbl="Viewed" data-ftype="span" data-fval="thisval">
+<input type="hidden" name="ms_from" id="ms_from" value="" data-prval="disnull" data-flbl="From" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_to" id="ms_to" value="" data-prval="disnull" data-flbl="To" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_matter" id="ms_matter" value="" data-prval="disnull" data-flbl="stxt[706]" data-ftype="tarea" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_media" id="ms_media" value="" data-prval="disnull" data-flbl="Media" data-ftype="hidden" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_wildkey" id="ms_wildkey" value="" data-prval="disnull" data-flbl="Wildkey" data-ftype="hidden" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_rating" id="ms_rating" value="5" data-prval="disnull" data-flbl="Rating" data-ftype="hidden" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_vala" id="ms_vala" value="" data-prval="disnull" data-flbl="ms_vala" data-ftype="hidden" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_valb" id="ms_valb" value="" data-prval="disnull" data-flbl="ms_vala" data-ftype="hidden" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_dadded" id="ms_dadded" value="" data-prval="disnull">
+</form>
+
+ 
+<form name="qposts">
+<input type="hidden" name="_id" value="" data-prval="disnull">
+<input type="hidden" name="p_rtype" id="p_rtype" value="5" data-prval="disnull">
+<input type="hidden" name="p_coid" id="p_coid" value="5" data-prval="disnull">
+<input type="hidden" name="p_uid" id="p_uid" value="5" data-prval="disnull">
+<input type="hidden" name="p_cat" id="p_cat" value="def" data-prval="disnull">
+<input type="hidden" name="p_ptype" id="p_ptype" value="ppost" data-prval="disnull">
+<input type="hidden" name="p_ppage" id="p_ppage" value="main" data-prval="disnull">
+<input type="hidden" name="p_pos" id="p_pos" value="top" data-prval="disnull">
+
+<input type="hidden" name="p_title" id="p_title" value="" data-prval="disnull">
+<input type="hidden" name="p_content" id="p_content" value="" data-prval="disnull">
+<input type="hidden" name="p_image" id="p_image" value="default.jpg" data-prval="disnull">
+<input type="hidden" name="p_privacy" id="p_privacy" value="members" data-prval="disnull">
+<input type="hidden" name="p_author" id="p_author" value="user" data-prval="disnull">
+<input type="hidden" name="p_stat" id="p_stat" value="normal" data-prval="disnull">
+<input type="hidden" name="p_vars" id="p_vars" value="5" data-prval="disnull">
+<input type="hidden" name="p_ready" id="p_ready" value="5" data-prval="disnull">
+<input type="hidden" name="p_vala" id="p_vala" value="" data-prval="disnull">
+<input type="hidden" name="p_dmodified" id="p_dmodified" value="" data-prval="disnull">
+<input type="hidden" name="p_dadded" id="p_dadded" value="" data-prval="disnull">
+</form>
+<form name="property">
+<input type="hidden" name="_id" value="" data-prval="disnull">
+<input type="hidden" name="prtype" id="prtype" value="5" data-prval="disnull">
+<input type="hidden" name="pcoid" id="pcoid" value="5" data-prval="disnull">
+<input type="hidden" name="ptitle" id="ptitle" value="Titulo.. Moradia... " data-prval="disnull">
+<input type="hidden" name="pcontent" id="pcontent" value="Descriçao.. Moradia... Descriçao.. " data-prval="disnull">
+<input type="hidden" name="ptype" id="ptype" value="house" data-prval="disnull">
+<input type="hidden" name="bhk" id="bhk" value="1" data-prval="disnull">
+<input type="hidden" name="stype" id="stype" value="sell" data-prval="disnull">
+<input type="hidden" name="bedroom" id="bedroom" value="5" data-prval="disnull">
+<input type="hidden" name="bathroom" id="bathroom" value="2" data-prval="disnull">
+<input type="hidden" name="balcony" id="balcony" value="1" data-prval="disnull">
+<input type="hidden" name="kitchen" id="kitchen" value="1" data-prval="disnull">
+<input type="hidden" name="hall" id="hall" value="1" data-prval="disnull">
+<input type="hidden" name="pfloors" id="pfloors" value="2" data-prval="disnull">
+<input type="hidden" name="size" id="size" value="125" data-prval="disnull">
+<input type="hidden" name="price" id="price" value="199.000" data-prval="disnull">
+<input type="hidden" name="pdoornum" id="pdoornum" value="1" data-prval="disnull">
+<input type="hidden" name="pstreet" id="pstreet" value="Avenida 25 Abril" data-prval="disnull">
+<input type="hidden" name="location" id="location" value="Sacavem" data-prval="disnull">
+<input type="hidden" name="city" id="city" value="Lisboa" data-prval="disnull">
+<input type="hidden" name="state" id="state" value="Lisboa" data-prval="disnull">
+<input type="hidden" name="country" id="country" value="Portugal" data-prval="disnull">
+<input type="hidden" name="pzipcode" id="pzipcode" value="1200" data-prval="disnull">
+
+<input type="hidden" name="ploclat" id="ploclat" value="38.78440225175098" data-prval="disnull">
+<input type="hidden" name="ploclng" id="ploclng" value="-9.122766726227416" data-prval="disnull">
+<input type="hidden" name="feature" id="feature" value="5" data-prval="disnull">
+<input type="hidden" name="pimage" id="pimage" value="default.jpg" data-prval="disnull">
+<input type="hidden" name="pprf_showslr" id="pprf_showslr" value="5" data-prval="disnull">
+<input type="hidden" name="pprf_showftd" id="pprf_showftd" value="5" data-prval="disnull">
+<input type="hidden" name="pprf_showloc" id="pprf_showloc" value="5" data-prval="disnull">
+<input type="hidden" name="pprf_prvcy" id="pprf_prvcy" value="5" data-prval="disnull">
+<input type="hidden" name="uid" id="uid" value="5" data-prval="disnull">
+<input type="hidden" name="pstatus" id="pstatus" value="pending" data-prval="disnull">
+<input type="hidden" name="mapimage" id="mapimage" value="5" data-prval="disnull">
+<input type="hidden" name="topmapimage" id="topmapimage" value="5" data-prval="disnull">
+<input type="hidden" name="groundmapimage" id="groundmapimage" value="5" data-prval="disnull">
+<input type="hidden" name="totalfloor" id="totalfloor" value="2" data-prval="disnull">
+<input type="hidden" name="pdadded" id="pdadded" value="5" data-prval="disnull">
+</form>
+
+<form name="propdescs">
+<input type="hidden" name="_id" value="" data-prval="disnull">
+<input type="hidden" name="pd_prpid" id="pd_prpid" value="5" data-prval="disnull">
+<input type="hidden" name="pd_prptlng" id="pd_prptlng" value="en_us" data-prval="disnull">
+<input type="hidden" name="pd_prptype" id="pd_prptype" value="5" data-prval="disnull">
+<input type="hidden" name="pd_prptitle" id="pd_prptitle" value="5" data-prval="disnull">
+<input type="hidden" name="pd_prpdesc" id="pd_prpdesc" value="5" data-prval="disnull">
+<input type="hidden" name="pd_dadded" id="pd_dadded" value="5" data-prval="disnull">
+</form>
+</div>
+
+<script src="js/js_cc.js"></script>
+<script src="js/js_cci.js"></script>
+<script src="js/app/sau.js"></script>
+<script src="js/app/js_spinner.js"  language="javascript" type="text/javascript"></script>
+<script src="js/app/x_menu.js"  language="javascript" type="text/javascript"></script>
+        <!--	HTML footer end  -->
+<!-- facebook post and video embedd  
+        <script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>  
+        <div class="fb-post" 
+            data-href="https://www.facebook.com/416576078105629/posts/416576594772244/"
+            data-width="500"></div>
+
+
+ facebook post and video embedd -->
+
+</body>
+</html>

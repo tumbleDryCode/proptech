@@ -1,9 +1,13 @@
-currIContent == "y"
+currIContent = "y"
 var euiFFObjArr = null;
 var euiFFObjArr = [];
 var tmpOldFFvals = null;
 var tmpOldFFvals = {};
 var tmpSvBtnObj = null;
+var tmpPropImgsArr = null;
+var tmpPropImgsArr = [];
+var tmpPrpMediaObj = null;
+var tmpPrpMediaObj = {};
 var tmpPrpLinksArr = null;
 var tmpPrpLinksArr = [];
 var tmpMapUmrkdObj = null;
@@ -11,7 +15,310 @@ var tmpMapUmrkdObj = {};
 var tmpSVpos = "";
 var tmpSVheading = "";
 var tmpSVpitch = "";
+var tmpSaveBtnID = null;
 var gpmap = null;
+var currPgTitle = stxt[985];
+var threedmap = null;
+
+var tPrpLngCds = {};
+tPrpLngCds["en_us"] = {"lang":"English","trnscode":"en"};
+tPrpLngCds["spa_spa"] = {"lang":"Spanish","trnscode":"es"};
+tPrpLngCds["fr_fr"] = {"lang":"French","trnscode":"fr"};
+tPrpLngCds["pt_pt"] = {"lang":"Portuguese","trnscode":"pt"};
+ 
+var tPrpLngs = {};
+tPrpLngs["en_us"] = "English";
+tPrpLngs["spa_spa"] = "Spanish";
+tPrpLngs["fr_fr"] = "French";
+tPrpLngs["pt_pt"] = "Portuguese";
+
+var BaseUrl = window.location.protocol + "//" + window.location.host + "" ;
+var htmlRegex = /<(.*)>.*?|<(.*)\/>/;
+var tmpPrpLngArr = null;
+var tmpPrpLngArr = [];
+var tmpPrpLngObj = null;
+var tmpPrpLngObj = {};
+// make AdvancedMarkerElement available globally
+var AdvancedMarkerElement, Marker3DElement, PinElement, interactiveMarker, DrawingLibrary;
+
+var circles = [];
+var rectangles = [];
+var polygons = [];
+var polylines = [];
+var markers = [];
+var currthreeDstr = "";
+var tmpThreeDLat, tmpThreeDLng = 0, tmpThreeDAlt = 0;
+
+/* These are the functions that are used to set the property descriptions and titles in multiple languages
+// propdescs table is used to store property descriptions and titles in multiple languages
+// this should be used in conjunction with the property table
+// pd_prpid is the property id from the property table
+// pd_prptlng is the language code
+// pd_prptype is the type of description or title
+// pd_prptitle is the  title
+// pd_prpdesc is the description
+// pd_dadded is the date added
+*/
+function closeLangTrnsBx() {
+    try {
+        document.getElementById('ltboxLTns').style.top='-800px';
+       document.getElementById('ltboxLTns').style.display='none';
+         document.getElementById('dvLTPopCntr').style.display='none';
+        document.getElementById('dvLTPopCntr').style.top='-800px';
+     } catch(e) {
+        alert("closeLangTrnsBx: " + e);
+    }
+    }
+        
+function popLangTrnsBx() {
+ 
+    try {
+
+    tmpLTrnsbox = document.getElementById('ltboxLTns');
+    tmpLCTrnsbox = document.getElementById('dvLTPopCntr');
+    // tmpLTrnsbox is the lightbox and tmpLCTrnsbox is the content
+    // pop them up
+    tmpLTrnsbox.style.top='0px';
+    tmpLTrnsbox.style.display='block';
+    tmpLCTrnsbox.style.display='block';
+
+
+
+    tmpLCTrnsbox.style.top='10px';
+
+
+    iMdl = Math.round((getViewportWidth() - tmpLCTrnsbox.clientWidth) / 2);
+    tmpLCTrnsbox.style.left=iMdl+"px";
+
+   
+
+
+    tmpLCTrnsbox.style.position='absolute';
+    
+
+    // set left and right to 0px
+    tmpLTrnsbox.style.left='0px';
+    tmpLTrnsbox.style.right='0px';
+    // set the width and height to 100%
+    tmpLTrnsbox.style.width='100%';
+    tmpLTrnsbox.style.height='100%';
+    // set the background color to white
+    
+    window.scrollTo(0,0);
+    scrollTo(0,0);
+    scrollToElement("dvHdr");
+    // set cursor on tmp_pd_prpdesc
+    //document.getElementById("tmp_pd_prpdesc").focus();
+     
+
+
+    } catch(e) {
+    alert("popLangTrnsBx: " + e);
+    }
+    }
+
+
+    
+
+function doTransPost() {
+     BaseUrl = "http://127.0.0.1:5000";
+ 
+        var request = new XMLHttpRequest();
+        tFullTrnsStr = "";
+        tDTrnsTtl = document.getElementById("tmp_pd_prptitle").value;
+        // tDTrnsDsc = document.getElementById("tmp_pd_prpdesc").value;
+        tDTrnsDsc =  document.getElementById("tmp_pd_prpdesc_ifr").contentWindow.document.body.innerHTML;
+        tTransStrArr = [];
+        tTransStrArr.push(tDTrnsTtl);
+        tTransStrArr.push(tDTrnsDsc);
+        // tDTrnsDsc = tinyMCE.activeEditor.getContent();
+        tDTrnsLngStr = tDTrnsTtl + " qqq " + tDTrnsDsc;
+        console.log("doTransPost.tDTrnsLngStr: " + tDTrnsLngStr);
+        var data = new FormData();
+        // data.append("q", JSON.stringify(tTransStrArr));
+        data.append("q", tDTrnsLngStr);
+        data.append("source", tPrpLngCds[document.getElementById("pd_prptlng").value]["trnscode"]);
+        data.append("target", tPrpLngCds[document.getElementById("inpTgtLang").value]["trnscode"]);
+        data.append("format", "text");
+        // data.append("alternatives", 3);
+        data.append("api_key", localStorage.getItem("api_key") || "");
+        // if (apiSecret) data.append("secret", atob(self.apiSecret));
+
+        request.open('POST', BaseUrl + '/translate', true);
+
+        request.onload = function() {
+            try{
+                
+ 
+                
+
+                var res = JSON.parse(request.response);
+                // Success!
+                if (res.translatedText !== undefined){
+                    ttranslatedText = res.translatedText;
+                    console.log("doTransPost: " + ttranslatedText); 
+                    // escape the text to be parsed as JSON
+                     // ttranslatedText = ttranslatedText.replace(/\\/g, "\\\\").replace(/\"/g, "\\\"").replace(/\r\n/g, "\\r\\n").replace(/\n/g, "\\n");
+            
+   
+                    loadingTranslation = false;
+                    output = JSON.stringify(res);
+                    console.log("doTransPost: " + output);
+                    tTransArr = [];
+                    tTransArr = ttranslatedText.split("qqq");
+                    // tTransArr = JSON.parse(ttranslatedText);
+                    console.log("doTransPost.title: " + tTransArr[0]);
+                    console.log("doTransPost.desc: " + tTransArr[1]);
+                    // JSSHOP.ui.doGenBSDDcb('noQvalue','pd_prptlng', 'spa_spa','Spanish','doLangSlct');
+                    JSSHOP.ui.doGenBSDDcb('noQvalue','pd_prptlng', document.getElementById("inpTgtLang").value, tPrpLngs[document.getElementById("inpTgtLang").value], 'donada');
+                    document.getElementById("tmp_pd_prptitle").value = tTransArr[0];
+                    document.getElementById("tmp_pd_prpdesc").value = tTransArr[1];
+                    tinyMCE.get('tmp_pd_prpdesc').setContent(tTransArr[1]);
+                    tinyMCE.activeEditor.setContent(tTransArr[1]);
+                // set the value of the pd_prpdesc field to the selected language
+                    closeLangTrnsBx();
+                    // focus on the dvLangSlct 
+                    document.getElementById("dvLangSlct").focus();
+                    scrollToElement("dvLangSlct");
+                 } else{
+                    throw new Error(res.error || "Unknown error");
+                }
+            } catch (e) {
+                error = e.message;
+                loadingTranslation = false;
+                console.error("doTransPost.Error: " + error);
+                alert("libreTranslate.Error: " + error);
+            }
+        };
+
+        request.onerror = function() {
+            error = "Cannot load /translate";
+            loadingTranslation = false;
+            alert("libreTranslate.Error: " + error);
+
+        };
+
+        request.send(data);
+    }
+ 
+
+function setPrpDescLngs(rsplA, rsplB, rsplC) {
+    console.log("setPrpDescLngs: " + rsplA + " " + rsplB + " " + rsplC);
+    tmpPrpLngArr = null;
+    tmpPrpLngArr = "";
+    tmpPrpLngArr = [];
+    tmpPrpLngObj = null;
+    tmpPrpLngObj = "";
+    tmpPrpLngObj = {};
+    tmpPrpLngArr = JSON.parse(rsplB);
+    var len = tmpPrpLngArr.length;
+    iint = 0;
+    // loop through to fill the tmpPrpLngObj object with the values from the tmpPrpLngArr array 
+    for (iint = 0; iint < len; iint++) {
+        tmpPobj = tmpPrpLngArr[iint];
+        tmpPrpLngObj[tmpPobj["pd_prptlng"]] = tmpPobj;
+    }
+    theLSaveBtn = document.getElementById("btnDEsave");
+    JSSHOP.ui.setCBBClickClr(theLSaveBtn,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium  bkgdClrHdr txtClrWhite', function(){theLSaveBtn.innerHTML=stxt[21];theLSaveBtn.disabled=false;});
+
+
+}
+ 
+function getPrpDescLangs(thCBText) {
+tmpDOqs = null;
+tmpDOqs = {};
+tmpDOqs["ws"] = "where pd_prpid=?";
+tmpDOqs["wa"] = [currUrlArr.prpid];
+tmpDOqs["l"] = 45;
+oia = getNuDBFnvp("propdescs",5,null,tmpDOqs);
+doQComm(oia["rq"], null, "setPrpDescLngs");
+}
+
+function  setPDescTransJS(theRa, theRb, theRc) {
+    document.getElementById(theRa).innerHTML = theRb;
+    console.log("setPrpJS: " + theRa + " " + theRb + " " + theRc);
+
+    JSSHOP.loadScript("js/app/x_aa-mod-propdescs.js", loadTnyI, "js");
+   
+}  
+
+ function popPDescTrans() {
+    JSSHOP.ui.popAndFillLbox("noQvalue");
+  JSSHOP.ajax.doNuAjaxPipe("lightbox_content", "tplates/aa-mod-propdescs.html", setPDescTransJS);
+}
+
+function savePDescTrans(theSPDBtn) {
+    tmpSaveBtnID = theSPDBtn.id;
+    tmpSaveBtnObj = document.getElementById(tmpSaveBtnID);
+    theSPDBtn.innerHTML = "";
+    theSPDBtn.disabled=true;
+    doSpinSet(theSPDBtn.id, "small", null);
+
+     // JSSHOP.shared.getDynFrmVals(document["propdescs"], "tmp_");
+
+tDescLZd = LZString.compressToEncodedURIComponent(tinyMCE.activeEditor.getContent());   
+    // tDescLZd = LZString.compressToEncodedURIComponent(document.getElementById("tmp_pd_prpdesc").value);
+    document.getElementById("pd_prpdesc").value = tDescLZd;
+    tTitleLZd = LZString.compressToEncodedURIComponent(document.getElementById("tmp_pd_prptitle").value);
+    document.getElementById("pd_prptitle").value = tTitleLZd;
+    // get the values from the textareas and set them to the tmpPrpLngObj object
+    // tmpPrpLngObj["pd_prpid"] = currUrlArr.prpid;
+    // tmpPrpLngObj["pd_prptlng"] = document.getElementById("pd_prptlng").value;
+    // tmpPrpLngObj["pd_prptype"] = document.getElementById("pd_prptype").value;
+    tmpDOLP = null;
+    tmpDOLP = {};
+    tmpDOLP["knvp"] = JSSHOP.shared.getFrmVals(document["propdescs"], "nada");
+ 
+    // check if tmpPrpLngObj["pd_prpid"] is not null
+    if(tmpPrpLngObj[document.getElementById("pd_prptlng").value] != null) {
+        // update the record
+        tmpDOLP["ws"] = "where pd_prpid=? and pd_prptlng=?";
+        tmpDOLP["wa"] = [currUrlArr.prpid, document.getElementById("pd_prptlng").value];
+        oi = getNuDBFnvp("propdescs", 7, null, tmpDOLP);
+    } else {
+        // insert the record
+        oi = getNuDBFnvp("propdescs", 6, null, tmpDOLP);
+    }
+    // close the lightbox
+    JSSHOP.ui.closeLbox();
+    // doQComm(oi["rq"], null, "getPrpDescLangs");
+    JSSHOP.ajax.doNuAjaxPost(oi["rq"], getPrpDescLangs);
+
+}
+
+function doLangSlct(dlsA, dlsB, dlsC) {
+    console.log("doLangSlct: " + dlsA + " " + dlsB + " " + dlsC);
+    tSlecyedLang = dlsC;
+    if(tmpPrpLngObj[dlsC] != null) {
+        tUNLZd = LZString.decompressFromEncodedURIComponent(tmpPrpLngObj[dlsC]["pd_prpdesc"]);
+        // document.getElementById("tmp_pd_prpdesc").value = tUNLZd;
+        tUNLZdttl = LZString.decompressFromEncodedURIComponent(tmpPrpLngObj[dlsC]["pd_prptitle"]);
+         document.getElementById("tmp_pd_prptitle").value = tUNLZdttl;
+       //  tinyMCE.activeEditor.setContent(tUNLZd);
+        document.getElementById("tmp_pd_prpdesc").value = tUNLZd;
+    // focus on the textarea
+        document.getElementById("tmp_pd_prpdesc").focus();
+        // set the value of the pd_prptlng field to the selected language
+         tinyMCE.activeEditor.setContent(tUNLZd);
+
+    }
+}
+
+function doTgtLangSlct(dlsA, dlsB, dlsC) {
+    console.log("doTgtLangSlct: " + dlsA + " " + dlsB + " " + dlsC);
+    tSlecyedLang = dlsC;
+    // set the value of the pd_prptlng field to the selected language
+    document.getElementById("inpTgtLang").value = dlsC;
+}
+
+function doPropPrvSlct(dlsA, dlsB, dlsC) {
+    console.log("doPropPrvSlct: " + dlsA + " " + dlsB + " " + dlsC);
+    tSlctdPrv = dlsC;
+    procNuUIitem("property","pprf_prvcy",currUrlArr.prpid,tSlctdPrv,"doPrpSType");
+ 
+}
+
+
 
 
 
@@ -33,10 +340,14 @@ var fnshProdMDel = function(aa,bb,cc) {
 
 
 
+
+
+
+
         function showStrtVwPop(tLocLat, tLocLng) {
             var panorama;
-            tprpLocLat = tmp_ploclat.value;
-            tprpLocLng = tmp_ploclng.value;
+            tprpLocLat = tLocLat;
+            tprpLocLng = tLocLng;
             var svLoc = {lat: parseFloat(tprpLocLat), lng: parseFloat(tprpLocLng)};
             panorama = new google.maps.StreetViewPanorama(  
                 document.getElementById("dvStrtVwPop"), {
@@ -58,24 +369,85 @@ var fnshProdMDel = function(aa,bb,cc) {
                     showHeading: false,
                     showPanoProvider: false,
                     showZoomControl: false,
-                    showPanControl: false
+                    showPanControl: false,
+                    mapId: 'YOUR_MAP_ID'
 
                 });
 
+                var position = new google.maps.LatLng(parseFloat(tprpLocLat), parseFloat(tprpLocLng));
+                // var marker_position = new google.maps.LatLng(parseFloat(tprpLocLat), parseFloat(tprpLocLng));
+                /*
+
+                var marker_position = new google.maps.geometry.spherical.computeOffset(position, 10, panorama.getPov().heading);
+                var marker_pano = new google.maps.Marker({
+                    map: panorama,
+                    position: marker_position,
+                    title: 'test',
+                    draggable: false,
+                    animation: google.maps.Animation.DROP,
+                    icon: 'https://titan/incasa/images/logo/logo.png',
+                    label: 'testerr',
+                    labelClass: "labels",
+                    // labelAnchor: new google.maps.Point(22, 0),
+                    labelStyle: {opacity: 0.75},
+                    // icon: 'https://titan/incasa/images/logo/logo.png',
+                    // give icon a class
+                    iconClass: 'icnRndnUser',
+
+                    // anchorPoint: new google.maps.Point(0, -29),
+ 
+                    optimized: false,
+                    visible: true,
+                    clickable: true,
+                    crossOnDrag: false,
+                    cursor: 'pointer',
+                    opacity: 1,
+                    shape: null,
+                    title: 'test test test',
+                    zIndex: 1
+
+                  });
+                    marker_pano.addListener('click', function() {
+                    alert('You clicked the marker!');
+                    });
+
+                    */
+                    
+
                 panorama.addListener("position_changed", () => {
+                   
+                    tmpSVpos = "";
                     tmpSVpos = panorama.getPosition();
+                    // console.log("showStrtVwPop.pos: " + tmpSVpos.lat() + " " + tmpSVpos.lng());
+                   // console.log("showStrtVwPop.pov: " + panorama.getPov().heading + " " + panorama.getPov().pitch);
+                  //  console.log("showStrtVwPop.zoom: " + panorama.getPov().zoom);
+                    console.log("showStrtVwPop.tilt: " + panorama.getPov().tilt);
+
                   });
                     panorama.addListener("pov_changed", () => {
                     tmpSVheading = panorama.getPov().heading;
                     tmpSVpitch = panorama.getPov().pitch;
+                    tmpSVpos = panorama.getPosition();
+                    console.log("showStrtVwPop.povChanged.pos: " + tmpSVpos.lat() + " " + tmpSVpos.lng());
+                    console.log("showStrtVwPop.povChanged.hpitch: " + tmpSVheading + " : " + tmpSVpitch);  
+                    console.log("showStrtVwPop.povChanged.zoom: " + panorama.getPov().zoom);
+                    console.log("showStrtVwPop.povChanged.tilt: " + panorama.getPov().tilt); 
 
                     });
+
+               
+
 
             }
 
 
  
             function getCurrSVImgUrl(tIUwidth, tIUheight) {
+                tmpSVpos = panorama.getPosition();
+                console.log("getCurrSVImgUrl.pos: " + tmpSVpos.lat() + " " + tmpSVpos.lng());
+                console.log("getCurrSVImgUrl.pov: " + panorama.getPov().heading + " " + panorama.getPov().pitch);
+                console.log("getCurrSVImgUrl.zoom: " + panorama.getPov().zoom);
+                console.log("getCurrSVImgUrl.tilt: " + panorama.getPov().tilt);
                 tmpSVurl = "https://maps.googleapis.com/maps/api/streetview?size=" + tIUwidth + "x" + tIUheight + "&location=" + tmpSVpos.lat() + "," + tmpSVpos.lng() + "&heading=" + tmpSVheading + "&pitch=" + tmpSVpitch + "&key=" + gglSKey;
                 return tmpSVurl;
             }
@@ -93,7 +465,7 @@ var fnshProdMDel = function(aa,bb,cc) {
                         tLZuncomp = LZString.decompressFromEncodedURIComponent(tThumbImg);
                         //  			tstr += "<img src=\"images/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
 
-                        tSVImgStr += "<img src=\"" + tLZuncomp + "\" class=\"icnmedbtn slmtable\" onclick=\"JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tNrmlImg + "'));\">";
+                        tSVImgStr += "<img src=\"" + tLZuncomp + "\" class=\"icnmedbtn slmtable\" onclick=\"JSSHOP.ui.popAndFillLbox(getPrdImgEditDv('" + tAiretArr[iint]["_id"] + "','" + tThumbImg + "'));\">";
                         iint++;
                     }
                     document.getElementById("dvSVimgs").innerHTML = tSVImgStr;
@@ -114,8 +486,14 @@ function fnishSVImgAdd(aa,bb,cc) {
     };
 
             function saveCurrSVImgUrl() {
-                tSVIurl = getCurrSVImgUrl("640", "480");
-                tSVIthmburl = getCurrSVImgUrl("320", "240");
+                tmpSVpos = panorama.getPosition();
+                console.log("saveCurrSVImgUrl.pos: " + tmpSVpos.lat() + " " + tmpSVpos.lng());
+                console.log("saveCurrSVImgUrl.pov: " + panorama.getPov().heading + " " + panorama.getPov().pitch);
+                console.log("saveCurrSVImgUrl.zoom: " + panorama.getPov().zoom);
+                console.log("saveCurrSVImgUrl.tilt: " + panorama.getPov().tilt);
+
+                tSVIurl = getCurrSVImgUrl("240", "180");
+                tSVIthmburl = getCurrSVImgUrl("100", "80");
                 tmpSVurl = LZString.compressToEncodedURIComponent(tSVIurl);
                 tmpSVthmburl = LZString.compressToEncodedURIComponent(tSVIthmburl);
                 JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tmpSVurl);
@@ -125,6 +503,7 @@ function fnishSVImgAdd(aa,bb,cc) {
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_pid", prpid);
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_dadded", JSSHOP.getUnixTimeStamp());
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_catid", 20);
+
  
 
         tmpDOs = null;
@@ -137,6 +516,8 @@ function fnishSVImgAdd(aa,bb,cc) {
 
             
 var doStrtVwPop = function() {
+    tLocLat = document.getElementById("tmp_ploclat").value;
+    tLocLng = document.getElementById("tmp_ploclng").value;
     tSVpopStr = "<div id=\"dvStrtVwPop\" style=\"width:100%;height:100%;min-height:300px;\"><img src=\"images/misc/loading.gif\"></div>";
     // create a div that has a the camera material.icon to call getCurrSVImgUrl
     tSVpopStr += "<i class=\"txtClrRed brdrClrWhite bkgdClrWhite menu-material-icons\" alt=\"delete\" title=\"delete\">&#xe92b;</i>";
@@ -145,18 +526,308 @@ var doStrtVwPop = function() {
 
     if(currGglSVloaded == "no") {
         currGglSVloaded = "y";
-        JSSHOP.loadScript("https://maps.googleapis.com/maps/api/js?key=" + gglSKey, showStrtVwPop,"js");
+       // JSSHOP.loadScript("https://maps.googleapis.com/maps/api/js?libraries=marker,geometry,drawing&key=" + gglSKey, showStrtVwPop,"js");
+        showStrtVwPop(tLocLat, tLocLng);
+
         } else {
-            tLocLat = tmp_ploclat.value;
-            tLocLng = tmp_ploclng.value;
+           //  tLocLat = tmp_ploclat.value;
+           //  tLocLng = tmp_ploclng.value;
             showStrtVwPop(tLocLat, tLocLng);
         }
  
      };
+
+
+
+/* 3d maps in experimental phase
+* refrence: https://developers.google.com/maps/documentation/javascript/examples/marker-simple
+* refrence: https://developers.google.com/maps/documentation/javascript/3d-maps-getting-started
+  <body>
+    <gmp-map-3d mode="hybrid" center="37.841157, -122.551679" range="2000" tilt="75" heading="330"></gmp-map-3d>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=<YOUR_KEY>&v=alpha&libraries=maps3d"></script>
+  </body>
+  */
+
+  var saveCurr3DImgUrl = function() {
+    t3DImgUrlStr = tmpThreeDLat + "|" + tmpThreeDLng + "|" + tmpThreeDAlt;
+ 
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", t3DImgUrlStr);
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_file_thumb", t3DImgUrlStr);
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_coid", prpid);
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_uid", quid);
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_pid", prpid);
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_dadded", JSSHOP.getUnixTimeStamp());
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_catid", 30);
+    tmpDOs = null;
+    tmpDOs = {};
+    tmpDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qmedia"], "nada");
+    oi = getNuDBFnvp("qmedia", 6, null, tmpDOs);
+    doQComm(oi["rq"], null, "fnish3DImgAdd");
+    };
+function fnish3DImgAdd(aa,bb,cc) {
+    JSSHOP.ui.closeLbox();
+    get3DImages();
+    tmpDOs = null;
+    tmpDOs = {};
+    tmpDOs["ws"] = "where m_pid=? and m_rtype=? and m_catid=?";
+    tmpDOs["wa"] = [prpid, 5, 30];
+    tmpDOs["o"] = "m_vala desc";
+    oi = getNuDBFnvp("qmedia", 5, null, tmpDOs);
+    doQComm(oi["rq"], null, "show3DImages");
+    };
+function getCurr3DImgUrl(tIUwidth, tIUheight) {
+    // get the center of the map
+    tCntrMap = gpmap.getCenter();
+    // tCntrMapLat = tCntrMap.lat();
+    // tCntrMapLng = tCntrMap.lng();
+    // adjust the lat lang to 10 meters south of the center of the map
+    tCntrMapLat = tCntrMap.lat() - 0.0001;
+    tCntrMapLng = tCntrMap.lng();
+    // get the zoom level of the map
+    tZmLvl = gpmap.getZoom();
+    // get the map type of the map
+    tMpType = gpmap.getMapTypeId();
+    // tWdth = tIUwidth;
+    // tHght = tIUheight;
+    // get the size of the map
+    tIUwidth = gpmap.getDiv().offsetWidth;
+    tIUheight = gpmap.getDiv().offsetHeight;
+    t3DImgUstr = "https://maps.googleapis.com/maps/api/staticmap?size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng + "&zoom=" + tZmLvl + "&maptype=" + tMpType + "&key=" + gglSKey;
+    // t3DImgUstr = "https://maps.googleapis.com/maps/api/staticmap?size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng + "&zoom=" + tZmLvl + "&maptype=" + tMpType + "&key=" + gglSKey;
+    // t3DImgUstr = "https://maps.googleapis.com/maps/api/staticmap?size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng + "&zoom=" + tZmLvl + "&maptype=" + tMpType + "&key=" + gglSKey;
+    // t3DImgUstr = "https://maps.googleapis.com/maps/api/staticmap?size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng + "&zoom=" + tZmLvl + "&maptype=" + tMpType + "&key=" + gglSKey;
+    return t3DImgUstr;
+    }
+function show3DImages(a,b,c) {
+    t3DImgStr = "";
+    if(b.indexOf("_id") != -1) {
+        tAiretArr = JSON.parse(b);
+        var len = tAiretArr.length;
+        iint = 0;
+        while (iint < len) {
+            tNrmlImg = tAiretArr[iint]["m_file"];
+            // tLZuncompD = LZString.decompressFromEncodedURIComponent(tNrmlImg);
+            tThumbImg = tAiretArr[iint]["m_file_thumb"];
+            theSplitThmnb = tThumbImg.split("|");
+            theTmnbLat = theSplitThmnb[0];
+            theTmnbLng = theSplitThmnb[1];
+            theTmnbAlt = theSplitThmnb[2];
+            // tMpType = "hybrid";
+            tMpType = "satellite";
+            console.log("show3DImages: " + theTmnbLat + " " + theTmnbLng + " " + theTmnbAlt);   
+            tCntrMapLat = theTmnbLat - 0.0001;
+            tCntrMapLng = theTmnbLng;
+            tZmLvl = 20;
+            tIUwidth = 240;
+            tIUheight = 180;
+
+            // tLZuncomp = LZString.decompressFromEncodedURIComponent(tThumbImg);
+            //  			tstr += "<img src=\"images/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
+             tAVImgUstr = "https://maps.googleapis.com/maps/api/staticmap?key=" + gglSKey + "&size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng + "&zoom=" + tZmLvl + "&maptype=" + tMpType;
+
+            t3DImgStr += "<img src=\"" + tAVImgUstr + "\" class=\"icnmedbtn slmtable\" onclick=\"JSSHOP.ui.popAndFillLbox(getPrdImgEditDv('" + tAiretArr[iint]["_id"] + "','" + tAVImgUstr + "'));\">";
+            iint++;
+        }
+        document.getElementById("dv3Dimgs").innerHTML = t3DImgStr;
+    }
+}
+function get3DImages() {
+    tmpDOs = null;
+    tmpDOs = {};
+    tmpDOs["ws"] = "where m_pid=? and m_rtype=? and m_catid=?";
+    tmpDOs["wa"] = [prpid, 5, 30];
+    tmpDOs["o"] = "m_vala desc";
+    oi = getNuDBFnvp("qmedia", 5, null, tmpDOs);
+    doQComm(oi["rq"], null, "show3DImages");
+    // doQComm(oi["rq"], null, "show3DImages");
+    // doQComm(oi["rq"], null, "show3DImages");
+}
+
+
+var doThreeDPop = function() {
+
+  
+    // t3DpopStr = "<div id=\"dv3DPop\" style=\"width:100%;height:100%;min-height:300px;\"><img src=\"images/misc/loading.gif\"></div>";
+    // <gmp-map-3d mode="hybrid" center="37.841157, -122.551679" range="2000" tilt="75" heading="330"></gmp-map-3d>
+    t3DpopStr = "<div id=\"dvThreeDPop\" style=\"height:300px;\">";
+     // t3DpopStr += "<gmp-map-3d id=\"dvTDPop\" mode=\"hybrid\" center=\"" + tmp_ploclat.value  + "," + tmp_ploclng.value  + "\" range=\"2000\" tilt=\"75\" heading=\"330\"></gmp-map-3d>";
+    t3DpopStr += "</div>";
+    // create a div that has a the camera material.icon to call getCurrSVImgUrl
+    t3DpopStr += "<i class=\"txtClrRed brdrClrWhite bkgdClrWhite menu-material-icons\" alt=\"delete\" title=\"delete\">&#xe92b;</i>";
+    t3DpopStr += "<div class=\"dvTxtBtns\"><input type=\"button\" class=\"btnTxtLabel\" value=\"Get Image URL\" onclick=\"javascript:saveCurr3DImgUrl();\"></div>";
+    JSSHOP.ui.popAndFillLbox(t3DpopStr);
+    if(currGglSVloaded == "no") {
+        currGglSVloaded = "y";
+        console.log("doThreeDPop:script load " + gglSKey);
+        tLocLat = tmp_ploclat.value;
+tLocLng = tmp_ploclng.value;
+        showThreeDPop(tLocLat, tLocLng);
+        //  JSSHOP.loadScript("https://maps.googleapis.com/maps/api/js?key=" + gglSKey + "&v=alpha&libraries=maps3d", showThreeDPop,"js");
+        } else {
+  
+            showThreeDPop(tLocLat, tLocLng);
+        }
+    };
+
+
+    function doThreeDAnim(fLocLat, fLocLng, fLocAlt) {
+        // threedmap.append(xMarker3DElement);
+    // const beachFlagImg = document.createElement('img');
+
+  // set interactiveMarker position to fLocLat and fLocLng
+    // set interactiveMarker position to fLocLat and fLocLng
+    
+    interactiveMarker.position = { lat: fLocLat, lng: fLocLng, altitude: 10 };
+      threedmap.append(interactiveMarker);
+
+  
+    // threedmap.append(beachFlagMarker);
+    threedmap.flyCameraTo({
+      endCamera: {
+        center: { lat: fLocLat, lng:  fLocLng, altitude: fLocAlt },
+        tilt: 70.5,
+        range: 200,
+
+ 
+      },
+      durationMillis: 3000
+    });
+    threedmap.addEventListener('gmp-animationend', () => {
+
+        threedmap.flyCameraAround({
+        camera: {
+          center: { lat: fLocLat, lng:  fLocLng, altitude: fLocAlt },
+          tilt: 70.5,
+            range: 70,
+    
+      
+        },
+        durationMillis: 7000,
+        rounds: 1
+      });
+    }, {once: true});
+
+    tmpThreeDLat = fLocLat;
+    tmpThreeDLng = fLocLng;
+    tmpThreeDAlt = fLocAlt;
+ 
+    }
+
+
+    
+    async function showThreeDPop(tLocLat, tLocLng) {
+    console.log("showThreeDPop: " + tLocLat + " " + tLocLng);
+    var mapthree;
+    var flyToCamera;
+    var dvThreeDPop;
+    fltdLat = parseFloat(tLocLat);
+    fltdLng = parseFloat(tLocLng);
+    // set lat and lng to 10 meters south of the center of the map
+    xfltdLat = fltdLat - 0.0101;
+    xfltdLng = fltdLng - 0.0101;
+    advThreeDPop = document.getElementById('dvThreeDPop');
+    // dvThreeDPop = document.getElementById('dvThreeDPop');
+    // dvThreeDPop = document.getElementById('dvThreeDPop');
+ // Maps JS API is loaded using Dynamic Library import https://developers.google.com/maps/documentation/javascript/load-maps-js-api#dynamic-library-import
+
+ 
+ var { Map3DElement, MapMode, Marker3DElement, Marker3DInteractiveElement } = await google.maps.importLibrary("maps3d");
+ var { PinElement } = await google.maps.importLibrary("marker");
+     threedmap = new Map3DElement({
+      center: { lat: xfltdLat, lng: xfltdLng,  altitude: 540 },
+      tilt: 67.5,
+      range: 500,
+      mode: MapMode.HYBRID,
+      defaultUIDisabled: true,
+  
+    });
+     // threedmap.bounds = {south: -48.30, west: 163.56, north: -32.86, east: -180};
+     threedmap.addEventListener('gmp-click', (event) => {
+        console.log("threedmap: " + JSON.stringify(event.position));
+        tLocAlt = 30;
+        if(event.position == null) {
+            console.log("threedmap: event.position is null");
+            return;
+        }  else {
+            if(event.position.altitude) {
+                tLocAlt = event.position.altitude;
+            }
+           
+            console.log("threedmap: event.position is not null");
+         // threedmap.flyCameraTo({endCamera:{center:{lat:event.position.lat,lng:event.position.lng,altitude:50},tilt:70.5,range:200}});
+        doThreeDAnim(event.position.lat, event.position.lng, tLocAlt);
+        // Do something with event.position.
+        }
+      });
+
+
+      advThreeDPop.append(threedmap);
+        // creat a save, play and stop button html string and append it to the dvThreeDPop div
+        var t3DpopStr = "";
+        t3DpopStr += "<div class=\"dvTxtBtns\">";
+        t3DpopStr += "<input id=\"btnAEPadd\" type=\"button\" class=\"btnTxtLabel\" value=\"Save Image\" onclick=\"javascript:saveCurr3DImgUrl();\">";
+        t3DpopStr += "<input id=\"btnAEPplay\" type=\"button\" class=\"btnTxtLabel\" value=\"Play\" onclick=\"javascript:doThreeDAnim(" + fltdLat + "," + fltdLng + "," + 30 + ");\">";
+        t3DpopStr += "<input id=\"btnAEPfly\" type=\"button\" class=\"btnTxtLabel\" value=\"Fly\" onclick=\"javascript:threedmap.flyCameraTo({endCamera:{center:{lat:" + fltdLat + ",lng:" + fltdLng + ",altitude:50},tilt:70.5,range:200}});\">";
+        t3DpopStr += "<input id=\"btnAEPanim\" type=\"button\" class=\"btnTxtLabel\" value=\"Animate\" onclick=\"javascript:threedmap.flyCameraAround({camera:{center:{lat:" + fltdLat + ",lng:" + fltdLng + ",altitude:50},tilt:70.5,range:100},durationMillis:7000,rounds:1});\">";
+        t3DpopStr += "<input id=\"btnAEPreset\" type=\"button\" class=\"btnTxtLabel\" value=\"Reset\" onclick=\"javascript:threedmap.setCamera({center:{lat:" + fltdLat + ",lng:" + fltdLng + ",altitude:540},tilt:67.5,range:500});\">";
+ 
+        t3DpopStr += "<input id=\"btnAEPstop\"  type=\"button\" class=\"btnTxtLabel\" value=\"Stop\" onclick=\"javascript:threedmap.stopCameraAnimation();\">";
+        t3DpopStr += "</div>";
+        tHlderDiv = document.createElement("div");
+        tHlderDiv.innerHTML = t3DpopStr;
+        advThreeDPop.append(tHlderDiv);
+        /* xMarker3DElement = AdvancedMarkerElement;
+        xMarker3DElement = new Marker3DElement({
+            position: { lat: fltdLat, lng: fltdLng, altitude: 10 },
+            label: tmp_ptitle.value,
+            extruded: true,
+            altitudeMode: "RELATIVE_TO_MESH",
+
+        });
+        threedmap.append(xMarker3DElement);
+            */
+  // beachFlagImg.src = 'images/logo/logo.png';
+   
+  const pinBackground = new PinElement({
+    background: '#FBBC04',
+    glyph: '*',
+    glyphColor: 'white',
+    scale: .5,
+
+  });
+
+ interactiveMarker = new Marker3DInteractiveElement({
+    position: { lat: fltdLat, lng: fltdLng, altitude: 10 },
+    label: tmp_pd_prptitle.value,
+    extruded: true,
+    altitudeMode: "RELATIVE_TO_MESH",
+  });
+
+
+  interactiveMarker.addEventListener('gmp-click', (event) => {
+    console.log("interactiveMarker: " + JSON.stringify(event.position));
+    doThreeDAnim(fltdLat, fltdLng, 10);
+  });
+  interactiveMarker.append(pinBackground);
+
+
+    }
+
+
+    
+ 
+
+
+
+
+
+
+
+
  
      function saveArialVwImgUrl() {
-        tAVIurl = getCurrAVImgUrl("640", "480");    
-        tAVIthmburl = getCurrAVImgUrl("320", "240");
+        tAVIurl = getCurrAVImgUrl("240", "180");   
+        tAVIthmburl = getCurrAVImgUrl("100", "80");
         tmpAVurl = LZString.compressToEncodedURIComponent(tAVIurl);
         tmpAVthmburl = LZString.compressToEncodedURIComponent(tAVIthmburl);
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tmpAVurl);
@@ -184,73 +855,45 @@ var doStrtVwPop = function() {
         doQComm(oi["rq"], null, "showAVImages");
     }
     function getCurrAVImgUrl(tIUwidth, tIUheight) {
-        // get the center of the map
+        tLatLngStr = "";
+        // get the static map image url including the center of the map and all polyline points
         tCntrMap = gpmap.getCenter();
-        // tCntrMapLat = tCntrMap.lat();
-        // tCntrMapLng = tCntrMap.lng();
+        tCntrMapLat = tCntrMap.lat();
+        tCntrMapLng = tCntrMap.lng();
         // adjust the lat lang to 10 meters south of the center of the map
         tCntrMapLat = tCntrMap.lat() - 0.0001;
-        tCntrMapLng = tCntrMap.lng();
-
-
-
+        tCntrMapLng = tCntrMap.lng() - 0.0001;
         // get the zoom level of the map
         tZmLvl = gpmap.getZoom();
         // get the map type of the map
         tMpType = gpmap.getMapTypeId();
-
-    
-        // tWdth = tIUwidth;
-        // tHght = tIUheight;
-                // get the size of the map
+   
+        // get the size of the map
         tIUwidth = gpmap.getDiv().offsetWidth;
-         tIUheight = gpmap.getDiv().offsetHeight;
-
-      
-        tAVImgUstr = "https://maps.googleapis.com/maps/api/staticmap?zoom=" + tZmLvl + "&size=" + tIUwidth + "x" + tIUheight + "&maptype=" + tMpType + "&key=" + gglSKey;
-        //     zoom=" + tZmLvl + "&size=" + tIUwidth + "x" + tIUheight + "&maptype=" + tMpType + "&key=" + gglSKey;
-/*
-        // tAVImgUstr = "https://maps.googleapis.com/maps/api/staticmap?center=" + tCntrMapLat + "," + tCntrMapLng + "&zoom=" + tZmLvl + "&size=" + tIUwidth + "x" + tIUheight + "&maptype=" + tMpType + "&key=" + gglSKey;
- // Check if there are any markers in gpmap
-    if(Object.keys(tmpMapUmrkdObj).length > 0) {
-    // if(Object.keys(tmpMapUmrkdObj).length > 0) {
-        tAVImgUstr += "&path=color:0xff0000ff|weight:5";
-        incAVMrs = 0;
-        tfnalpntstr = "";
-        for(var tmpMkey in tmpMapUmrkdObj) {
-            // create a closed path with the markers
-            if(incAVMrs == 0) {
-                tfnalpntstr = "|" + tmpMapUmrkdObj[tmpMkey].lat + "," + tmpMapUmrkdObj[tmpMkey].lng; 
-                tAVImgUstr += "|" + tmpMapUmrkdObj[tmpMkey].lat + "," + tmpMapUmrkdObj[tmpMkey].lng;
-            } else {
-                tAVImgUstr += "|" + tmpMapUmrkdObj[tmpMkey].lat + "," + tmpMapUmrkdObj[tmpMkey].lng;
+        tIUheight = gpmap.getDiv().offsetHeight;
+        // get all the points of the polyline in the polylines array
+        for (var i = 0; i < polylines.length; i++) {
+            var path = polylines[i].getPath();
+            // get the points of the polyline
+            for (var j = 0; j < path.getLength(); j++) {
+                var point = path.getAt(j);
+                // add the point to the string
+                tLatLngStr += point.lat() + "," + point.lng() + "|";
             }
-
-            
-            // tAVImgUstr += "|" + tmpMapUmrkdObj[tmpMkey].lat + "," + tmpMapUmrkdObj[tmpMkey].lng;
-            incAVMrs++;
         }
-        tAVImgUstr += tfnalpntstr;
+        // remove the last | from the string
+        tLatLngStr = tLatLngStr.substring(0, tLatLngStr.length - 1);
+
+        // get the static map thumbnail image url
+     
+
+        // get the static map image url
+        tAVImgUstr = "https://maps.googleapis.com/maps/api/staticmap?key=" + gglSKey + "&size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng + "&zoom=" + tZmLvl + "&maptype=" + tMpType + "&path=color:0x0000ff|weight:5|" + tLatLngStr;
         
-    }
-    */
-   // get path of polyline on map and add to url
-    if(poly != null) {
-        tAVImgUstr += "&path=color:0xff0000ff|weight:5";
-        const path = poly.getPath();
-        // get the length of the path
-        const len = path.getLength();
-        // loop through all points
-        for (var i = 0; i < len; i++) {
-            // get the lat/lng of the point
-            var pos = path.getAt(i);
-            // add the lat/lng of the point to the path
-            tAVImgUstr += "|" + pos.lat() + "," + pos.lng();
-        }
-    }
-    
 
-        console.log("getCurrAVImgUrl: " + tAVImgUstr);
+        // tAVImgUstr = "https://maps.googleapis.com/maps/api/staticmap?size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng + "&zoom=" + tZmLvl + "&maptype=" + tMpType + "&key=" + gglSKey;
+        // get the center of the map
+          console.log("getCurrAVImgUrl: " + tAVImgUstr);
          return tAVImgUstr;
     }
     function showAVImages(a,b,c) {
@@ -264,7 +907,8 @@ var doStrtVwPop = function() {
                 tLZuncompD = LZString.decompressFromEncodedURIComponent(tNrmlImg);
                 tThumbImg = tAiretArr[iint]["m_file_thumb"];
                 tLZuncomp = LZString.decompressFromEncodedURIComponent(tThumbImg);
-                tAVImgStr += "<img src=\"" + tLZuncomp + "\" class=\"icnmedbtn slmtable\" onclick=\"JSSHOP.ui.popAndFillLbox(getPrdImgEditDv('" + tAiretArr[iint]["_id"] + "','" + tNrmlImg + "'));\">";
+                console.log("showAVImages: " + tLZuncomp);
+                tAVImgStr += "<img src=\"" + tLZuncomp + "\" class=\"icnmedbtn slmtable\" onclick=\"JSSHOP.ui.popAndFillLbox(getPrdImgEditDv('" + tAiretArr[iint]["_id"] + "','" + tThumbImg + "'));\">";
                 iint++;
             }
             document.getElementById("dvAVimgs").innerHTML = tAVImgStr;
@@ -273,7 +917,7 @@ var doStrtVwPop = function() {
 
 
 
-    function addLatLng(event) {
+    function OLdaddLatLng(event) {
         const path = poly.getPath();
       
         // Because path is an MVCArray, we can simply append a new coordinate
@@ -303,7 +947,7 @@ var doStrtVwPop = function() {
             // hide the zoom control
             zoomControl: true,
             // hide the scale control
-            scaleControl: false,
+            scaleControl: true,
             // hide the street view control
             streetViewControl: false,
             // enale the rotate control
@@ -311,55 +955,58 @@ var doStrtVwPop = function() {
 
         });
 
-        poly = new google.maps.Polyline({
-            strokeColor: "#000000",
-            strokeOpacity: 1.0,
-            strokeWeight: 3,
-          });
-          poly.setMap(gpmap);
-       // add event listener to map to get the lat/lng of click
-         google.maps.event.addListener(gpmap, "click", function(event) {
-            // get lat/lng of click
-            var clickLat = event.latLng.lat();
-            var clickLng = event.latLng.lng();
-
-            tmpMapUmrkdObj["mrk" + clickLat] = {lat: clickLat, lng: clickLng};
-
-            // add marker to map
-            var marker = new google.maps.Marker({
-                position: { lat: clickLat, lng: clickLng },
-                map: gpmap
-            });
-            // add click event to marker
-            google.maps.event.addListener(marker, "click", function() {
-                // remove marker from map
-                // tmpMapUmrkdObj["mrk" + clickLat] = null;
-                // tmpMapUmrkdObj["mrk" + clickLat] = "";
-                marker.setMap(null);
-                // remove point from polyline
-                const path = poly.getPath();
-                // get the length of the path
-                const len = path.getLength();
-                // loop through all points
-                for (var i = 0; i < len; i++) {
-                    // get the lat/lng of the point
-                    var pos = path.getAt(i);
-                    // if the lat/lng of the point is the same as the lat/lng of the click
-                    if (pos.lat() == clickLat && pos.lng() == clickLng) {
-                        // remove the point from the polyline
-                        path.removeAt(i);
-                        // exit the loop
-                        break;
-                    }
-                }
+ 
+        const drawingManager = new google.maps.drawing.DrawingManager({
+            drawingMode: google.maps.drawing.OverlayType.POLYLINE,
+            drawingControl: true,
+            drawingControlOptions: {
+              position: google.maps.ControlPosition.TOP_CENTER,
+              drawingModes: [
+               // google.maps.drawing.OverlayType.MARKER,
+               // google.maps.drawing.OverlayType.CIRCLE,
+              //  google.maps.drawing.OverlayType.POLYGON,
+               google.maps.drawing.OverlayType.POLYLINE,
+              //  google.maps.drawing.OverlayType.RECTANGLE,
+            
+ 
+              ],
+                // add a clear button
 
 
-            });
-            // add marker to map
-            addLatLng(event);
-        });
-        // set tilt of map
+            },
+
     
+   
+            // set the polyline as the default drawing mode
+            polylineOptions: {
+              strokeColor: "#ff0000",
+              strokeOpacity: 1.0,
+              strokeWeight: 3,
+              editable: true,
+              zIndex: 0,
+
+            },
+          });
+
+
+          
+  google.maps.event.addListener(drawingManager, 'circlecomplete', updateDrawings);
+  google.maps.event.addListener(drawingManager, 'rectanglecomplete', updateDrawings);
+    google.maps.event.addListener(drawingManager, 'polylinecomplete', updateDrawings);
+  //   google.maps.event.addListener(drawingManager, 'markercomplete', updateDrawings);
+    google.maps.event.addListener(drawingManager, 'polygoncomplete', updateDrawings);
+ 
+
+
+  var eraseControlDiv = document.createElement('div');
+  var eraseControl = new EraseButton(eraseControlDiv,gpmap);
+
+  eraseControlDiv.index = 1;
+  gpmap.controls[google.maps.ControlPosition.TOP_CENTER].push(eraseControlDiv);
+
+ 
+          drawingManager.setMap(gpmap);
+           
         gpmap.setTilt(45);
     }
     function getArialVwPop(tLocLat, tLocLng) {
@@ -374,59 +1021,89 @@ var doStrtVwPop = function() {
 var         tmpMapUmrkdObj = {};
         if(currGglSVloaded == "no") {
             currGglSVloaded = "y";
-            JSSHOP.loadScript("https://maps.googleapis.com/maps/api/js?key=" + gglSKey, showArialVwPop,"js");
+            tLocLat = tmp_ploclat.value;
+            tLocLng = tmp_ploclng.value;
+            showArialVwPop(tLocLat, tLocLng);
+            // JSSHOP.loadScript("https://maps.googleapis.com/maps/api/js?libraries=drawing&key=" + gglSKey, showArialVwPop,"js");
             } else {
                 tLocLat = tmp_ploclat.value;
                 tLocLng = tmp_ploclng.value;
                 showArialVwPop(tLocLat, tLocLng);
             }
     }
+
+    function EraseButton(controlDiv, map) {
+        var controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = '#fff';
+        controlUI.style.border = '2px solid #fff';
+        controlUI.style.borderRadius = '3px';
+        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.marginBottom = '20px';
+        controlUI.style.textAlign = 'center';
+        controlUI.title = 'Click to clear map';
+        controlDiv.appendChild(controlUI);
+      
+        var controlText = document.createElement('div');
+        controlText.style.color = 'rgb(25,25,25)';
+        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+        controlText.style.fontSize = '12px';
+        controlText.style.lineHeight = '38px';
+        controlText.style.paddingLeft = '5px';
+        controlText.style.paddingRight = '5px';
+        controlText.innerHTML = 'Empty Map';
+        controlUI.appendChild(controlText);
+      
+        controlUI.addEventListener('click', emptyMap);
+      
+      }
+
+      function updateDrawings(shape){
+        if(shape == null) return;
+      
+        if(shape instanceof google.maps.Circle){
+          circles.push(shape);
+        }
+        else if (shape instanceof google.maps.Rectangle) {
+          rectangles.push(shape);
+        } else if (shape instanceof google.maps.Polyline) {
+            polylines.push(shape);
+        } else if (shape instanceof google.maps.Marker) {
+            markers.push(shape);
+        } 
+      }
+
+      function emptyMap(){
+        circles.forEach(function(e){
+          e.setMap(null);
+        });
+        rectangles.forEach(function(e){
+          e.setMap(null);
+        });
+        polylines.forEach(function(e){
+            e.setMap(null);
+        });
+        markers.forEach(function(e){
+            e.setMap(null);
+        });
+        circles = [];
+        rectangles = [];
+        polylines = [];
+        markers = [];
+        tmpMapUmrkdObj = {};
+        poly = null;
+
+ 
+      }
+
+
+
+
         // create a div that has a the camera material.icon to call getCurrSVImgUrl
 
-var doPrdMDelete = function() { 
-    if(confirm(stxt[42] + " " + stxt[19] + "?")) {
-    procNuUIitem("qmedia","m_rtype",JSSHOP.shared.getFrmFieldVal("qmedia", "_id", 0),"0","fnshProdMDel");
-    }
-};
 
 
 
-var fnshProdMMain = function(aa,bb,cc) { 
-// alert(bb);
-getPropImgs();
-JSSHOP.ui.closeLbox();
-
-};
-
-
-var doPrdMMain = function() { 
-if(confirm("Set as main product picture?" + JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0))) {
-procNuUIitem("property","pimage",prpid,JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0),"fnshProdMMain");
-    }
-};
- 
-
-var getPrdImgEditDv = function(tpIncrNPI, tpFImg) {
-tpPIEDv = document.createElement('div');
-JSSHOP.shared.setFrmFieldVal("qmedia", "_id", tpIncrNPI);
-JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tpFImg);
- if(tpFImg.indexOf(".") != -1) {
-tmpRetStr = "<img src=\"images/property/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
-} else {
-    tLZdecd = LZString.decompressFromEncodedURIComponent(tpFImg);
-tmpRetStr = "<img src=\"" + tLZdecd +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
-}
- try {
-tmpRetStr += "<div class=\"dvTxtBtns\"><input type=\"button\" class=\"btnTxtLabel\" value=\"Set as Main\" onclick=\"javascript:doPrdMMain();\">   |   <input type=\"button\" class=\"btnTxtLabel\" value=\"Delete\" onclick=\"javascript:doPrdMDelete();\"></div>";
-tmpRetStr += "<br><br>";
- 
-return tmpRetStr;
-} catch(e) {
-alert("getPrdImgEditDv " + e);
-tmpRetStr = "oops. something wrong..";
-return tmpRetStr;
-}
-};
 
 var setSliderPropImgs = function(theAIa, theAIb, theAIc) {
     console.log("setPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
@@ -471,24 +1148,6 @@ var doSwipe = function() {
 
 
 
-var getPropIEditDv = function(tpIncrNPI, tpFImg) {
-	console.log("getPrdImgEditDv " + tpIncrNPI + " " + tpFImg);
-tpPIEDv = document.createElement('div');
-JSSHOP.shared.setFrmFieldVal("qmedia", "_id", tpIncrNPI);
-JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tpFImg);
- 
-tmpRetStr = "<img src=\"images/property/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
- try {
-tmpRetStr += "<div class=\"dvTxtBtns\"><input type=\"button\" class=\"btnTxtLabel\" value=\"" + stxt[521] + "\" onclick=\"javascript:doPrdMMain();\">   |   <input type=\"button\" class=\"btnTxtLabel\" value=\"" + stxt[42] + "\" onclick=\"javascript:doPrdMDelete();\"></div>";
-tmpRetStr += "<br><br>";
- 
-return tmpRetStr;
-} catch(e) {
-alert("getPrdImgEditDv " + e);
-tmpRetStr = "oops. something wrong..";
-return tmpRetStr;
-}
-};
 
 
 var getSocLinksStr = function(tSLurl) {
@@ -542,7 +1201,8 @@ var rndrPrpSocLnks = function(a,b,c) {
     JSSHOP.ui.setCBBClickClr(dvPrpSocLinks,'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr bkgdClrWhite', function(){JSSHOP.ui.closeLbox()});
 
 };
-        
+      
+
 
 var doPrpSocLnkDel = function(tmpCLindex, tmpQlid) {
     tPSLarr = null;
@@ -556,6 +1216,153 @@ var doPrpSocLnkDel = function(tmpCLindex, tmpQlid) {
     procNuUIitem("qmedia","m_rtype",tmpQlid,"0","rndrPrpSocLnks");
 };
 
+function fnsihPrpITtlSave(aa,bb,cc) {
+    tMediaOid = JSSHOP.shared.getFrmFieldVal("qmedia", "_id", 0);
+    console.log("fnshPrpTitleSave: " + aa + " " + bb + " " + cc);
+    btnPrpImgTsave = document.getElementById("btnPrpImgTsave");
+    // set the innerHTML of the button to the success message
+    tmpPrpMediaObj["prp" + tMediaOid]["m_title"] = document.getElementById("tmp_m_title").value;    
+    btnPrpImgTsave.innerHTML =  stxt[120] + "!";
+    setTimeout(function(){ btnPrpImgTsave.innerHTML = stxt[997]; }, 3000);
+}
+
+var doPrpITtlSave = function() {
+    console.log("doPrpTitleSave: " + prpid);
+   //  document.getElementById("m_title").value = 
+    procNuUIitem("qmedia","m_title",JSSHOP.shared.getFrmFieldVal("qmedia", "_id", 0),document.getElementById("tmp_m_title").value,"fnsihPrpITtlSave");
+};
+
+var doPrpCkckdIMain = function() {
+    console.log("doPrpCkckdIMain: " + prpid);
+    document.getElementById("pimage").value = JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0);
+    procNuUIitem("property","pimage",prpid,JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0),"donada");
+};
+
+var doPrdMDelete = function() { 
+    if(confirm(stxt[42] + " " + stxt[19] + "?")) {
+    procNuUIitem("qmedia","m_rtype",JSSHOP.shared.getFrmFieldVal("qmedia", "_id", 0),"0","fnshProdMDel");
+    }
+};
+
+
+
+var fnshProdMMain = function(aa,bb,cc) { 
+// alert(bb);
+// getPropImgs();
+JSSHOP.ui.closeLbox();
+
+};
+
+
+var doPrdMMain = function() { 
+if(confirm("Set as main product picture?" + JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0))) {
+procNuUIitem("property","pimage",prpid,JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0),"fnshProdMMain");
+    } 
+};
+ 
+
+
+
+function doChkdPrpMImg(tCPIelem) {
+    if(tCPIelem.checked) {
+        doPrpCkckdIMain();
+    } else {
+        tIDKV = "";
+        // doPrdMDelete();
+    }
+}
+function fnshPcPrpIType(aa,bb,cc) {
+    console.log("fnshPcPrpIType: " + aa + " " + bb + " " + cc);
+    // JSSHOP.ui.closeLbox();
+    tthePropImgId = JSSHOP.shared.getFrmFieldVal("qmedia", "_id", 0);
+    tthePropImgType = JSSHOP.shared.getFrmFieldVal("qmedia", "m_data", 0);
+    console.log("fnshPcPrpIType: " + tthePropImgId + " - " + tthePropImgType);
+    tPrpImgPopObj = tmpPrpMediaObj["prp" + tthePropImgId];
+    console.log("fnshPcPrpIType: " + JSON.stringify(tPrpImgPopObj));
+    tPrpImgPopObj["m_data"] = tthePropImgType;
+    console.log("fnshPcPrpIType: " + JSON.stringify(tPrpImgPopObj));
+    tmpPrpMediaObj["prp" + tthePropImgId] = tPrpImgPopObj;
+    console.log("fnshPcPrpIType: " + JSON.stringify(tmpPrpMediaObj));
+    dvPrpImgTsave = document.getElementById("dvPrpImgTsave");
+    dvPrpImgTsave.innerHTML = "<div>" + stxt[120] + "!</div>";
+    setTimeout(function(){ dvPrpImgTsave.innerHTML = ""; }, 3000);
+}
+
+var procPrpImgType = function(thePITa, thePITb, thePITc) {
+    console.log("procPrpImgType: " + thePITa + " - " + thePITb + " - " + thePITc); 
+    tthePropImgId = JSSHOP.shared.getFrmFieldVal("qmedia", "_id", 0);
+    procNuUIitem("qmedia","m_data",tthePropImgId,thePITc,"fnshPcPrpIType"); 
+    
+}
+
+
+
+var getPropIEditDv = function(tpIncrNPI, tpFImg) {
+	console.log("getPropIEditDv " + tpIncrNPI  + tpFImg);
+    tPrpImgPopObj = {};
+tPrpImgPopObj = tmpPrpMediaObj["prp" + tpIncrNPI];
+console.log("getPropIEditDv: " + JSON.stringify(tPrpImgPopObj));
+
+tpPIEDv = document.createElement('div');
+JSSHOP.shared.setFrmFieldVal("qmedia", "_id", tpIncrNPI);
+JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tpFImg);
+JSSHOP.shared.setFrmFieldVal("qmedia", "m_data", tPrpImgPopObj["m_data"]);
+if(tPrpImgPopObj["m_title"] == "") {
+tPrpImgPopObj["m_title"] = stxt[996];
+} else {
+JSSHOP.shared.setFrmFieldVal("qmedia", "m_title", tPrpImgPopObj["m_title"]);
+}
+tImgTypeDDObg = {}
+tImgTypeDDObg["ddtype"] = "noQvalue";
+tImgTypeDDObg["fld"] = "m_data";
+tImgTypeDDObg["lbl"] = stxt[995];
+// tImgTypeDDObg["val"] = document.getElementById("m_data").value;
+tImgTypeDDObg["val"] = tPrpImgPopObj["m_data"];
+tImgTypeDDObg["kvpObj"] = svftObj["propimgtype"];
+tImgTypeDDObg["cb"] = "procPrpImgType";
+tImgTypeDDObg["fldcls"] = "nav-link dropdown-toggle txtSmall";
+tImgTypeDDObg["lblcls"] = "txtSmall";
+tImgTypeDDObg["valcls"] = "txtSmall";
+tImgTypeDDObg["icncls"] = "nav-material-icons txtBold txtClrGrey";
+tImgTypeDDObg["horvert"] = "vertical";
+tImgTypeDDObg["icn"] = "noQvalue";
+tImgTypeDDstr = JSSHOP.ui.getNuBSdropDstr(tImgTypeDDObg);
+ 
+tmpRetStr = "";
+tmpRetStr += tImgTypeDDstr;
+tmpRetStr += "<div id=\"dvPrpImgTsave\" class=\"txtClrDGreen txtSmall\"></div>";
+// title div
+tmpRetStr += "<div class=\"txtClrHdr txtSmall\">";
+tmpRetStr += "<span class=\"txtClrHdr\" id=\"lbl_m_title\">" + stxt[996] + "</span>";
+tmpRetStr += "<table><tr><td>";
+tmpRetStr += "<input type=\"text\" id=\"tmp_m_title\" name=\"tmp_m_title\" value=\"" + tPrpImgPopObj["m_title"] + "\" class=\"form-control txtSmall txtClrHdr\" style=\"width:100%;\">";
+tmpRetStr += "</td></tr><tr><td>";
+tmpRetStr += "<button id=\"btnPrpImgTsave\" class=\"crsrPointer txtSmall txtClrHdr\" onclick=\"javascript:doPrpITtlSave();\" style=\"text-decoration:underline;\">" + stxt[997] + "</button>";
+tmpRetStr += "</td></tr></table>";
+tmpRetStr += "</div>";
+tmpRetStr += "<br>";
+tmpRetStr += "<img src=\"images/property/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
+ try {
+// tmpRetStr += "<div class=\"dvTxtBtns\"><input type=\"button\" class=\"btnTxtLabel\" value=\"" + stxt[521] + "\" onclick=\"javascript:doPrdMMain();\">   |   <input type=\"button\" class=\"btnTxtLabel\" value=\"" + stxt[42] + "\" onclick=\"javascript:doPrdMDelete();\"></div>";
+ 
+tmpRetStr += "<table style=\"width:100%;\">";
+tmpRetStr += "<tr><td style=\"min-width: 100%\"><label class=\"txtClrHdr\" id=\"lbl_setmpropimg\">" + stxt[521] + "</label></td>";
+tmpRetStr += "<td><div class=\"switch\"><label>";
+tmpRetStr += "<input type=\"checkbox\" id=\"tmp_setmpropimg\" name=\"tmp_setmpropimg\" value=\"10\" onchange=\"javascript:doChkdPrpMImg(this);\">";
+tmpRetStr += "<span class=\"lever\" style=\"float:right\"></span>";
+tmpRetStr += "</label></div></td></tr>";
+tmpRetStr += "<tr><td style=\"min-width: 100%\"><label class=\"txtClrHdr\" id=\"lbl_delimgae\">" + stxt[42] + "</label></td>";
+tmpRetStr += "<td><div class=\"switch\">X</div></td></tr>";
+tmpRetStr += "</table>";
+ 
+return tmpRetStr;
+} catch(e) {
+alert("getPropIEditDv " + e);
+tmpRetStr = "oops. something wrong..";
+return tmpRetStr;
+}
+};
+
 var setPropImgs = function(theAIa, theAIb, theAIc) {
 	try {
         tmpPrpLinksArr = null;
@@ -564,6 +1371,8 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
         tSocStr = "";
         tSVImgDarr = [];
         tAVImgDarr = [];
+        tThreeDarr = [];
+        tFllSocStr = "";
     if(theAIb.indexOf("_id") != -1) {
 
 		tAiretArr = JSON.parse(theAIb);
@@ -584,10 +1393,22 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
  
  			tstr += "<img src=\"images/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
 			tstr += "</div>";
+            tmpPrpMediaObj["prp" + tAiretArr[iint]["_id"]] = tAiretArr[iint];
+            // tmpPropImgsArr.push(tAiretArr[iint]);
         } else if(tAiretArr[iint]["m_catid"] == "20") {
             tSVImgDarr.push(tAiretArr[iint]);
         }  else if(tAiretArr[iint]["m_catid"] == "25") {
             tAVImgDarr.push(tAiretArr[iint]);
+        } else if(tAiretArr[iint]["m_catid"] == "30") {
+            tThreeDarr.push(tAiretArr[iint]);
+            tLocLat = tAiretArr[iint]["m_vala"];
+            tLocLng = tAiretArr[iint]["m_valb"];
+            tLocAlt = tAiretArr[iint]["m_valc"];
+            // showThreeDPop(tLocLat, tLocLng, tLocAlt);
+            // getArialVwPop(tLocLat, tLocLng);
+            // showThreeDPop(tLocLat, tLocLng, 10);
+            // setTimeout(function(){ showThreeDPop(tLocLat, tLocLng, 10); }, 3000);
+            // setTimeout(function(){ getArialVwPop(tLocLat, tLocLng); }, 3000);
         }  else {
 
             tmpPrpLinksArr.push(tAiretArr[iint]);
@@ -625,17 +1446,35 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
         showSVImages(1, tJSONstr, 1);
     }
     if(tAVImgDarr.length > 0) {
-        tJSONstr = JSON.stringify(tAVImgDarr);
-        showAVImages(1, tJSONstr, 1);
+        tJSONAstr = JSON.stringify(tAVImgDarr);
+        showAVImages(1, tJSONAstr, 1);
     }
     if(tAVImgDarr.length > 0) {
-        tJSONstr = JSON.stringify(tAVImgDarr);
-        showAVImages(1, tJSONstr, 1);
+        tJSONBstr = JSON.stringify(tAVImgDarr);
+        showAVImages(1, tJSONBstr, 1);
+    }
+    if(tThreeDarr.length > 0) {
+        tJSONCstr = JSON.stringify(tThreeDarr);
+        show3DImages(1, tJSONCstr, 1);
     }
 	} catch(e) {
 		alert("setPropImgs: " + e);
 	}
 };
+
+
+
+var getPropImgs = function() {
+tmpFobj = null;
+tmpFobj = {};
+tmpFobj["ws"] = "where m_pid=? and m_rtype=?";
+tmpFobj["wa"] = [prpid, 5];
+tmpFobj["o"] = "m_vala desc";
+oi = getNuDBFnvp("qmedia", 5, null, tmpFobj);
+doQComm(oi["rq"], null, "setPropImgs");
+};
+
+
 
 function fnishMMadd(aa,bb,cc) { 
     getPropImgs();
@@ -674,15 +1513,7 @@ var finishMPupload = function(theMMum) {
         }
     };
 
-var getPropImgs = function() {
-    tmpFobj = null;
-    tmpFobj = {};
-    tmpFobj["ws"] = "where m_pid=? and m_rtype=?";
-    tmpFobj["wa"] = [prpid, 5];
-	tmpFobj["o"] = "m_vala desc";
-    oi = getNuDBFnvp("qmedia", 5, null, tmpFobj);
-    doQComm(oi["rq"], null, "setPropImgs");
-};
+   
 
  
  function fnshPrpImgLd(theIMgNum)   {
@@ -865,8 +1696,75 @@ tQuantValObj = {"1":"1","2":"2","3":"3","4":"4","5":"5","6":"6","7":"7","8":"8",
 
 
 
+    tLangDDObj = {};
+    tLangDDObj["ddtype"] = "noQvalue";
+    tLangDDObj["fld"] = "pd_prptlng";
+    tLangDDObj["lbl"] =  stxt[629]; // select language
+    tLangDDObj["val"] = usrlang;
+    tLangDDObj["kvpObj"] = tPrpLngs;
+    tLangDDObj["cb"] = "doLangSlct";
+    tLangDDObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tLangDDObj["lblcls"] = "txtSmall";
+    tLangDDObj["valcls"] = "txtSmall";
+    tLangDDObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+    tLangDDObj["horvert"] = "horizontal";
+    tLangDDObj["icn"] = "noQvalue";
+    tLangDDObj["kvIcnsObj"] = {};
+    tLangDDObj["kvIcnsObj"]["en_us"] = "&#xe5cd;";
+    tLangDDObj["kvIcnsObj"]["spa_spa"] = "&#xe5cd;";
+    tLangDDObj["kvIcnsObj"]["fr_fr"] = "&#xe5cd;";
+    tLangDDObj["kvIcnsObj"]["pt_pt"] = "&#xe5cd;";
 
+    tLangDDStr = JSSHOP.ui.getNuBSdropDstr(tLangDDObj);
+    document.getElementById("dvLangSlct").innerHTML = tLangDDStr;
 
+    tLangDDObj = {};
+    tLangDDObj["ddtype"] = "noQvalue";
+    tLangDDObj["fld"] = "inpTgtLang";
+    tLangDDObj["lbl"] =  stxt[629]; // select language
+    tLangDDObj["val"] = usrlang;
+    tLangDDObj["kvpObj"] = tPrpLngs;
+    tLangDDObj["cb"] = "doTgtLangSlct";
+    tLangDDObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tLangDDObj["lblcls"] = "txtSmall";
+    tLangDDObj["valcls"] = "txtSmall";
+    tLangDDObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+    tLangDDObj["horvert"] = "vertical";
+    tLangDDObj["icn"] = "noQvalue";
+    tLangDDObj["kvIcnsObj"] = {};
+    tLangDDObj["kvIcnsObj"]["en_us"] = "&#xe5cd;";
+    tLangDDObj["kvIcnsObj"]["spa_spa"] = "&#xe5cd;";
+    tLangDDObj["kvIcnsObj"]["fr_fr"] = "&#xe5cd;";
+    tLangDDObj["kvIcnsObj"]["pt_pt"] = "&#xe5cd;";
+
+    tLangDDStr = JSSHOP.ui.getNuBSdropDstr(tLangDDObj);
+    document.getElementById("dvTgtLangSlct").innerHTML = tLangDDStr;
+
+    tPPrivacyObj = JSSHOP.ui.getBSDDOptsO();
+    tPPrivacyObj["ddtype"] = "noQvalue";
+    tPPrivacyObj["fld"] = "pprf_prvcy";
+    tPPrivacyObj["lbl"] = stxt[101]; // select language
+    tPPrivacyObj["val"] = pprf_prvcy.value;
+    tPPrivacyObj["kvpObj"] = svftObj["userpriv"];
+    tPPrivacyObj["cb"] = "doPropPrvSlct";
+    tPPrivacyObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tPPrivacyObj["lblcls"] = "txtSmall";
+    tPPrivacyObj["valcls"] = "txtSmall";
+    tPPrivacyObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+    tPPrivacyObj["horvert"] = "horizontal";
+    tPPrivacyObj["icn"] = "noQvalue";
+    tPPrivacyStr = JSSHOP.ui.getNuBSdropDstr(tPPrivacyObj);
+    document.getElementById("dvPrpPrvSlct").innerHTML = tPPrivacyStr;
+
+    if(document.getElementById("pprf_showloc").value == "5") {
+        document.getElementById("tmp_pprf_showloc").checked = true;
+    }
+    if(document.getElementById("pprf_showslr").value == "5") {
+        document.getElementById("tmp_pprf_showslr").checked = true;
+    }
+    if(document.getElementById("pprf_showftd").value == "5") {
+        document.getElementById("tmp_pprf_showftd").checked = true;
+    }
 /*
 istype = document.getElementById("tmp_stype");
 iptype = document.getElementById("tmp_ptype");
@@ -879,7 +1777,7 @@ JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue
 */
 
 
-tmp_pcontent.value = LZString.decompressFromEncodedURIComponent(pcontent.value);
+// tmp_pd_prpdesc.value = LZString.decompressFromEncodedURIComponent(pcontent.value);
 
 getPropImgs();
 currMediaID = prpid;
@@ -888,6 +1786,7 @@ doMediaBtnSetup('uploadBtn', '', 'finishMPupload', currPrpImgsFldr);
 //JSSHOP.loadScript("js/thirdp/tinymce/js/tinymce/tinymce.js", donada, "js");
 
 JSSHOP.loadScript("js/tinymce/tinymce.min.js", loadTnyI, "js");
+
 }
 function doMPropForm(aaw,aww,cww) {
     console.log('doMPropForm - aww: ' + aww);
@@ -902,8 +1801,11 @@ function doMPropForm(aaw,aww,cww) {
         tmpOldFFvals[gkey] = thePRetObj[gkey];
  
         } 
+
+        getPrpDescLangs("noQvalue");
 setTimeout(function(){ fillPpropFields(); }, 300);
  
+
 }
 
 
@@ -955,23 +1857,32 @@ JSSHOP.ui.setCBBClickClr(tmpSvBtnObj,'cls_button cls_button-medium  bkgdClrDGree
 };
 
 function cbNuPropEdit(theTCBtxt) {
-    console.log("cbNuPropEdit: " + theTCBtxt);
-    tmpSvBtnObj.innerHTML=stxt[21];
-    tmpSvBtnObj.disabled=false;
-    JSSHOP.ui.popAndFillLbox("Property saved. " + theTCBtxt);
+     ajxspinner.stop();
+    spinner.stop();
+    theSvdObj = null;
+    theSvdObj = document.getElementById(tmpSaveBtnID);
+    theSvdObj.innerHTML = stxt[21];
+    theSvdObj.disabled = false;
+    theSvdObj.className = "cls_button cls_button-medium  bkgdClrHdr txtClrWhite";
+    JSSHOP.ui.setCBBClickClr(tmpSvBtnObj,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium  bkgdClrHdr txtClrWhite', function(){tmpSvBtnObj.innerHTML=stxt[21];tmpSvBtnObj.disabled=false;});
+    // JSSHOP.ui.popAndFillLbox("Property saved. " + theTCBtxt);
 }
 
-var doNPropEdit = function() {
-
+var doNPropEdit = function(tSbtnObj) {
+    tmpSaveBtnID = tSbtnObj.id;
+    tmpSaveBtnObj = document.getElementById(tmpSaveBtnID);
+    tSbtnObj.innerHTML = "";
+    tSbtnObj.disabled=true;
+    doSpinSet(tSbtnObj.id, "small", null);
     // JSSHOP.shared.setFrmFieldVal("property", "uid", quid);
 
     JSSHOP.shared.setFrmFieldVal("property", "pdadded", JSSHOP.getUnixTimeStamp());
     // document.getElementById("uid").value = quid;
     tmpFobj = null;
     tmpFobj = {};
-    tTMCcntStr = tinyMCE.activeEditor.getContent();
-    tLZenced = LZString.compressToEncodedURIComponent(tTMCcntStr);
-    tmp_pcontent.value = tLZenced;
+    // tTMCcntStr = tinyMCE.activeEditor.getContent();
+    // tLZenced = LZString.compressToEncodedURIComponent(tTMCcntStr);
+    // tmp_pcontent.value = tLZenced;
     // alert("tmp_pcontent.value: " + tmp_pcontent.value);
        // alert("c_whours.value: " + c_whours.value);
     tmpFobj["knvp"] = JSSHOP.shared.getNuKNVParr(JSSHOP.shared.getDynFrmVals(document["property"], "tmp_"), tmpOldFFvals);
@@ -981,13 +1892,13 @@ var doNPropEdit = function() {
 if(currUrlArr.prpid) {
 	    tmpFobj["ws"] = "where _id=?";
     tmpFobj["wa"] = [currUrlArr.prpid];
-    oi = getNuDBFnvp("property", 7, null, tmpFobj);
+    oi = getNuDBFnvp("property", 7, tSbtnObj.id, tmpFobj);
     
 } else {
 
-	    oi = getNuDBFnvp("property", 6, null, tmpFobj);
+	    oi = getNuDBFnvp("property", 6, tSbtnObj.id, tmpFobj);
 }
-alert("OI: " + oi["rq"]);
+// alert("OI: " + oi["rq"]);
 	// alert("OI: " + oi["rq"]);
     console.log("OI: " + oi["rq"]);
      // doQComm(oi["rq"], null, "cbPrpedit");
@@ -1008,14 +1919,15 @@ function getTinyPropDesc() {
     tinyMCE.activeEditor.setContent(tTnyPropDSTr);
 
 }
-var doPropEdit = function() {
-doNPropEdit();
+var doPropEdit = function(tmpNsaveBtn) {
+doNPropEdit(tmpNsaveBtn);
 }
 
 
 
 var doPrpSType = function(tta, ttn, ttc) {
-    alert("Saved");
+    console.log("doPrpSType: " + tta + " - " + ttn + " - " + ttc);  
+
 };
 
 var procPrpType = function(theTmpTCB) {
@@ -1031,15 +1943,69 @@ var procPrpType = function(theTmpTCB) {
 
 
 
+var procPrpSettings = function(theFldID) {
+    console.log("procPrpSettings: " + theFldID);
+    theMFldID = theFldID.replace("tmp_","");
+
+    if(document.getElementById(theFldID).checked) {
+        JSSHOP.shared.setFrmFieldVal("property", theMFldID, "5");
+        procNuUIitem("property",theMFldID,currUrlArr.prpid,"5","doPrpSType");
+    } else {
+        JSSHOP.shared.setFrmFieldVal("property", theMFldID, "10");
+        procNuUIitem("property",theMFldID,currUrlArr.prpid,"10","doPrpSType");
+    }
+    console.log("procPrpSettings: " + theFldID + " - " + document.getElementById(theFldID).checked);
+    // append a span with saved text to the label of the field and have it fade out in 2 seconds
+    tMLblID = theFldID.replace("tmp_","lbl_");
+    tMLblObj = document.getElementById(tMLblID);
+    // append a span with saved text to the label of the field and have it fade out in 2 seconds
+    tMLblObj.innerHTML += "<span id='tmpSavedSpan' class='txtSmall'> " + stxt[120] + "!</span>";
+    tMSavedSpan = document.getElementById("tmpSavedSpan");
+    tMSavedSpan.style.opacity = 1;
+    setTimeout(function(){tMSavedSpan.style.opacity = 0;}, 2000);
+    setTimeout(function(){tMSavedSpan.remove();}, 3000);
+
+
+ 
+
+
+}
+
+
+
+
+
 /* finish editing and adding properties */
 
 
+var doGmapScrptLoad = async function() { 
+try { 
+// google script loader
+tLocLat = tmp_ploclat.value;
+tLocLng = tmp_ploclng.value;
+(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+    key: gglSKey,
+    v: "alpha",
+    // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+    // Add other bootstrap parameters as needed, using camel case.
+  });
 
 
+      var { Map3DElement, MapMode, Marker3DElement, Marker3DInteractiveElement } = await google.maps.importLibrary("maps3d");
+ 
+    var { LatLng } = await google.maps.importLibrary("geometry");
+     var { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+     var { PinElement } = await google.maps.importLibrary("marker");
+    var { DrawingLibrary } = await google.maps.importLibrary("drawing");
+} catch(e) {
+    console.log("doGmapScrpLoad: " + e);
+}
+}
 
 
 var dmyFnishCntLoad = fnishCntLoad;
-fnishCntLoad = function() {
+fnishCntLoad =  function() {
+    doGmapScrptLoad();
 
 /* // fb plugin 
 tarfsb = nCurrFFieldOb();
@@ -1053,25 +2019,31 @@ euiFFObjArr.push(tarfsb);
 tafsb = nCurrFFieldOb();
 tafsb.fid = "btnBIsave";
 tafsb.fty = "button";
-tafsb.fcl = function() { tmpSvBtnObj=this;doPropEdit();};
+tafsb.fcl = function() { tmpSvBtnObj=this;doPropEdit(this);};
 euiFFObjArr.push(tafsb);
 
 tcfsb = nCurrFFieldOb();
 tcfsb.fid = "btnDEsave";
 tcfsb.fty = "button";
-tcfsb.fcl = function() { tmpSvBtnObj=this;doPropEdit(); };
+tcfsb.fcl = function() { savePDescTrans(this); };
 euiFFObjArr.push(tcfsb);
 
 tifsb = nCurrFFieldOb();
 tifsb.fid = "btnPIsave";
 tifsb.fty = "button";
-tifsb.fcl = function() { tmpSvBtnObj=this;doPropEdit(); };
+tifsb.fcl = function() { tmpSvBtnObj=this;doPropEdit(this); };
+euiFFObjArr.push(tifsb);
+
+tifsb = nCurrFFieldOb();
+tifsb.fid = "btnDoTrans";
+tifsb.fty = "button";
+tifsb.fcl = function() { doTransPost(); };
 euiFFObjArr.push(tifsb);
 
 tofsb = nCurrFFieldOb();
 tofsb.fid = "btnLOsave";
 tofsb.fty = "button";
-tofsb.fcl = function() { tmpSvBtnObj=this;doPropEdit(); };
+tofsb.fcl = function() { tmpSvBtnObj=this;doPropEdit(this); };
 euiFFObjArr.push(tofsb);
 
 tfok = nCurrFFieldOb();
@@ -1082,9 +2054,40 @@ tfok.fcl = function() { procPrpType(document.getElementById("tmp_bhk")); };
 euiFFObjArr.push(tfok); 
 
  
+/*
+  `pprf_showslr` varchar(12) NOT NULL,
+  `pprf_showftd` varchar(12) NOT NULL,
+  `pprf_showloc` varchar(12) NOT NULL,
+  */
+  tshowslr = nCurrFFieldOb();
+    tshowslr.fid = "tmp_pprf_showslr";
+    tshowslr.lid = "lbl_pprf_showslr";
+    tshowslr.ltxt = stxt[572]; // show slider
+    tshowslr.fcl = function() { procPrpSettings("tmp_pprf_showslr"); };
+    euiFFObjArr.push(tshowslr);
+
+    tshowftd = nCurrFFieldOb();
+    tshowftd.fid = "tmp_pprf_showftd";
+    tshowftd.lid = "lbl_pprf_showftd";
+    tshowftd.ltxt = stxt[574]; // show featured
+    tshowftd.fcl = function() { procPrpSettings("tmp_pprf_showftd"); };
+    euiFFObjArr.push(tshowftd);
+
+    tshowloc = nCurrFFieldOb();
+    tshowloc.fid = "tmp_pprf_showloc";
+    tshowloc.lid = "lbl_pprf_showloc";
+    tshowloc.ltxt = stxt[573]; // show location
+    tshowloc.fcl = function() { procPrpSettings("tmp_pprf_showloc"); };
+    euiFFObjArr.push(tshowloc);
+
+
+ 
 JSSHOP.shared.initFrmComps(euiFFObjArr);
-
-
+// set pd_prptlng field to user language
+JSSHOP.shared.setFrmFieldVal("propdescs", "pd_prptlng", usrlang);
+JSSHOP.shared.setFrmFieldVal("propdescs", "pd_prpid", currUrlArr.prpid);
+JSSHOP.shared.setFrmFieldVal("propdescs", "pd_coid", cid);
+JSSHOP.shared.setFrmFieldVal("propdescs", "pd_uid", quid);
     if(currUrlArr.prpid) {
   // alert('fnishCntLoad');
   JSSHOP.ui.showHideElement("dvPrpImgs", "show");
@@ -1100,7 +2103,7 @@ doQComm(oia["rq"], null, "doMPropForm");
         JSSHOP.ui.popAndFillLbox("No property ID found. Please try again.");
     }
     if(u_cat.value == "5") {
-        JSSHOP.ui.showHideElement("dvBHKswitch", "show");
+        // JSSHOP.ui.showHideElement("dvBHKswitch", "show");
     }
 
 // JSSHOP.shared.setDynFrmVals(document["property"], "tmp_");
@@ -1108,12 +2111,16 @@ doQComm(oia["rq"], null, "doMPropForm");
 // getPropImgs();
 // doWinLoad();
 // 
- 
+document.title = currPgTitle;
+JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')
+
 return dmyFnishCntLoad;
 };
 
 
 function doPropZoneDD(thePrx, theSTat) {
+    doLangSlct("noQvalue", "pd_prptlng", usrlang);
+
     try {        } catch(e) {
         alert("doPropZoneDD: " + e);
     }
@@ -1546,10 +2553,10 @@ currMapMrkrArr.push(tMrkr);
     }
   
     
-
+    console.log("setPrpAdrsFlds: " + tExtrTstr);
     // set value of textarea tmp_pcontent to tExtrTstr
-    tmp_pcontent.value = tmp_pcontent.value + tExtrTstr;
-    tinyMCE.activeEditor.setContent(tinyMCE.activeEditor.getContent() + "<br><br>" + tExtrTstr);
+   //  tmp_pcontent.value = tmp_pcontent.value + tExtrTstr;
+    // tinyMCE.activeEditor.setContent(tinyMCE.activeEditor.getContent() + "<br><br>" + tExtrTstr);
     JSSHOP.ui.closePopMenus();
 }
 
@@ -2030,3 +3037,51 @@ var LeafIcon = L.Icon.extend({
     }
     }
 }
+
+
+
+// database table property structure
+/*
+CREATE TABLE `property` (
+  `_id` int(50) NOT NULL,
+  `prtype` int(6) NOT NULL,
+  `pcoid` int(8) NOT NULL,
+  `ptitle` varchar(200) NOT NULL,
+  `pcontent` longtext NOT NULL,
+  `ptype` varchar(100) NOT NULL,
+  `bhk` varchar(50) NOT NULL,
+  `stype` varchar(100) NOT NULL,
+  `bedroom` int(50) NOT NULL,
+  `bathroom` int(50) NOT NULL,
+  `balcony` int(50) NOT NULL,
+  `kitchen` int(50) NOT NULL,
+  `hall` int(50) NOT NULL,
+  `pfloors` varchar(50) NOT NULL,
+  `size` int(50) NOT NULL,
+  `price` int(50) NOT NULL,
+  `pdoornum` varchar(12) NOT NULL,
+  `pstreet` varchar(212) NOT NULL,
+  `location` varchar(200) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `state` varchar(100) NOT NULL,
+  `country` varchar(64) NOT NULL,
+  `pzipcode` varchar(12) NOT NULL,
+  `ploclat` varchar(64) NOT NULL,
+  `ploclng` varchar(64) NOT NULL,
+  `feature` longtext NOT NULL,
+  `pimage` varchar(300) NOT NULL,
+  `pprf_showslr` varchar(12) NOT NULL,
+  `pprf_showftd` varchar(12) NOT NULL,
+  `pprf_showloc` varchar(12) NOT NULL,
+  `pprf_prvcy` varchar(12) NOT NULL,
+  `uid` int(50) NOT NULL,
+  `pstatus` varchar(50) NOT NULL,
+  `mapimage` varchar(300) NOT NULL,
+  `topmapimage` varchar(300) NOT NULL,
+  `groundmapimage` varchar(300) NOT NULL,
+  `totalfloor` varchar(50) NOT NULL,
+  `pdadded` varchar(24) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ */
+
+ 

@@ -108,22 +108,32 @@ stxt[106] = "Relevancia";
 stxt[107] = "Crear";
 stxt[108] = "Crear nuevo Update";
 stxt[109] = "Visibilidad";
-stxt[110] = "mas...";
+stxt[110] = "Amuestrar mas...";
 stxt[111] = "Modelos";
 stxt[112] = "Snippets";
 stxt[113] = "Latitude";
 stxt[114] = "Longitude";
-stxt[115] = "Selecione o tipo de contato ou link";
-stxt[116] = "Adicionar novo contato";
-stxt[117] = "Marcar uma Visita";
-
+/*
+stxt[115] = "Select type of contact or link";
+stxt[116] = "Add new contact";
+stxt[117] = "Mark a Visit";
+stxt[118] = "View this Magnificent Listing";
+stxt[119] = "Update";
+stxt[120] = "Saved";
+*/
+stxt[115] = "Seleccione tipo de contacto o enlace";
+stxt[116] = "Agregar nuevo contacto";
+stxt[117] = "Marcar una visita";
+stxt[118] = "Ver este magnifico listado";
+stxt[119] = "Actualizar";
+stxt[120] = "Guardado";
 
 // user strings 
 stxt[201] = "First Name";
 stxt[202] = "Last Name";
-stxt[203] = "Location";
+stxt[203] = "Morada";
 stxt[204] = "Region";
-stxt[205] = "Country";
+stxt[205] = "Pais";
 stxt[206] = "Phone";
 stxt[207] = "Mobile";
 stxt[208] = "Fax";	
@@ -269,7 +279,9 @@ stxt[568] = "Deshabilitado";
 stxt[569] = "para un";
 stxt[570] = "Consultar sobre este item";
 stxt[571] = "Limpiar Todo";
-
+stxt[572] = "Mostrar Vendedor";
+stxt[573] = "Mostrar Ubicacion";
+stxt[574] = "Mostrar Destacado";
 
 // admin strings
 stxt[600] = "Click to run Query";
@@ -292,16 +304,19 @@ stxt[616] = "Edit Drivers"; // Editar conductores
 stxt[617] = "Usuarios"; // Usuarios
 stxt[618] = "Favorites";
 stxt[619] = "List Trips";
-stxt[620] = "Titulo, Precio...";
+stxt[620] = "Tipo, Precio...";
 stxt[621] = "Social";
 stxt[622] = "Agregar Contenido Social";
 stxt[623] = "editar detalles del perfil";
-stxt[624] = "Agregar t√≠tulo y enlace a su contenido social";
+stxt[624] = "Agregar ti≠tulo y enlace a su contenido social";
 stxt[625] = "Link-Url de la publicaci\u00f3n o contenido social";
 stxt[626] = "Enlaces actuales:";
 stxt[627] = "Ver Propiedad";
-
-
+stxt[628] = "Titulo y Descripcion";
+stxt[629] = "Seleccionar idioma";
+stxt[630] = "Traducir";
+stxt[631] = "Traducciones";
+stxt[632] = "Traducir el titulo y la descripcion actuales al idioma seleccionado";
 /*
 
 // messaging strings
@@ -492,9 +507,11 @@ stxt[989] = "Arrendamiento"; // Arrendamiento
 stxt[990] = "Subasta";
 stxt[991] = "Ejecucion"; // ejecucion
 stxt[992] = "Type"; 
-
-
-
+stxt[993] = "Titulo y Dscripcion"; // Titulo y descripcion
+stxt[994] = "titulo y descripcion de la propiedad"; // titulo y descripcion de la propiedad
+stxt[995] = "Tipo de imagen"; // Tipo de imagen
+stxt[996] = "Titulo de Imagen"; // Titulo de la imagen
+stxt[997] = "Guardar Titulo"; // Guardar Titulo
 
 
 
@@ -612,6 +629,69 @@ tDBcritObj["greater"] = "Greater Than";
 tDBcritObj["less"] = "Less Than";
 svftObj["xss_crit"] = tDBcritObj;
 
+
+
+
+/*
+
+tPropImgTypeObj = null;
+tPropImgTypeObj = "";
+tPropImgTypeObj = {};
+tPropImgTypeObj["hall"] = "Hall";
+tPropImgTypeObj["kitchen"] = "Kitchen";
+tPropImgTypeObj["living"] = "Living Room";
+tPropImgTypeObj["bedroom"] = "Bedroom";
+tPropImgTypeObj["bathroom"] = "Bathroom";
+tPropImgTypeObj["balcony"] = "Balcony";
+tPropImgTypeObj["garage"] = "Garage";
+tPropImgTypeObj["garden"] = "Garden";
+tPropImgTypeObj["pool"] = "Pool";
+tPropImgTypeObj["roof"] = "Roof";
+tPropImgTypeObj["basement"] = "Basement";
+tPropImgTypeObj["ground"] = "Ground";
+tPropImgTypeObj["exterior"] = "Exterior";
+tPropImgTypeObj["interior"] = "Interior";
+tPropImgTypeObj["front"] = "Front";
+tPropImgTypeObj["back"] = "Back";
+tPropImgTypeObj["side"] = "Side";
+tPropImgTypeObj["entrance"] = "Entrance";
+tPropImgTypeObj["driveway"] = "Driveway";
+tPropImgTypeObj["yard"] = "Yard";
+tPropImgTypeObj["floorplan"] = "Floor Plan";
+tPropImgTypeObj["other"] = "Other";
+svftObj["propimgtype"] = tPropImgTypeObj;
+*/
+// copy the above to spanish key values nand use unicode \u
+// for special characters
+tPropImgTypeObj = null;
+tPropImgTypeObj = "";
+tPropImgTypeObj = {};
+tPropImgTypeObj["hall"] = "Pasillo";
+tPropImgTypeObj["kitchen"] = "Cocina";
+tPropImgTypeObj["living"] = "Sala de estar";
+tPropImgTypeObj["bedroom"] = "Dormitorio";
+tPropImgTypeObj["bathroom"] = "Bano";
+tPropImgTypeObj["balcony"] = "Balcon";
+tPropImgTypeObj["garage"] = "Garaje";
+tPropImgTypeObj["garden"] = "Jardin";
+tPropImgTypeObj["pool"] = "Piscina";
+tPropImgTypeObj["roof"] = "Techo";
+tPropImgTypeObj["basement"] = "Sotano";
+tPropImgTypeObj["ground"] = "Suelo";
+tPropImgTypeObj["exterior"] = "Exterior";
+tPropImgTypeObj["interior"] = "Interior";
+tPropImgTypeObj["front"] = "Frente";
+tPropImgTypeObj["back"] = "Detras";
+tPropImgTypeObj["side"] = "Lado";
+tPropImgTypeObj["entrance"] = "Entrada";
+tPropImgTypeObj["driveway"] = "Camino de entrada";
+tPropImgTypeObj["yard"] = "Patio";
+tPropImgTypeObj["floorplan"] = "Plano de planta";
+tPropImgTypeObj["5"] = "Otro";
+svftObj["propimgtype"] = tPropImgTypeObj;
+
+
+
 tDBHObj = null;
 tDBJObj = "";
 tDBHObj = {};
@@ -619,8 +699,8 @@ tDBHObj["house"] = "Casa";
 tDBHObj["apartment"] = "Apartamento";
 tDBHObj["condo"] = "Condominio";
 tDBHObj["townhouse"] = "Casa Adosada";
-tDBHObj["duplex"] = "D√∫plex";
-tDBHObj["triplex"] = "Tr√≠plex";
+tDBHObj["duplex"] = "Duplex";
+tDBHObj["triplex"] = "Tri≠plex";
 tDBHObj["fourplex"] = "Fourplex";
 tDBHObj["mobile"] = "Movil";
 tDBHObj["manufactured"] = "Fabricado";

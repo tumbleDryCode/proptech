@@ -246,7 +246,7 @@ istrt++;
 // return retPLstSTr;
 JSSHOP.ui.setTinnerHTML("dvMainPrpsLst",retPLstSTr);
  
- JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')
+ // JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')
  }
 
 
@@ -529,7 +529,7 @@ tmpDOqs["ws"] = "where _id>?";
 tmpDOqs["wa"] = [0];
 tmpDOqs["l"] = 45;
 oia = getNuDBFnvp("property",5,null,tmpDOqs);
-newQstr = "select * from property where _id > 0 limit 45";
+// newQstr = "select * from property where _id > 0 limit 45";
 // newQstr also grabs user icon from quser  u_icon field
 newQstr = "select p.*, u.u_icon, u.u_fullname from property p, quser u where p._id > 0 and p.uid = u._id limit 45";
 

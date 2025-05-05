@@ -1,6 +1,7 @@
 var tmpPostsArr = [];
 var tmpGPostsLArr = [];
-
+var currPgTitle = stxt[402];
+var currIContent = "y";
 
 var doPostsList = function(a,rfb,c) {
     if(rfb.indexOf("_id") != -1) {
@@ -42,14 +43,15 @@ var doPostsList = function(a,rfb,c) {
           
          tUrlDecTitle = decodeURIComponent(tsuar.p_title);
         atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-post','pid=aa-edit-post&tpstid=" + tsuar._id + "');\">" + tsuar._id + "</a></td>";
-        atstr += "<td style=\"text-align: left\"><a href=\"javascript:doMLinkM('aa-edit-users','pid=aa-edit-users&tujsector=" + tsuar.p_cat + "');\">" + tUrlDecTitle + "</a></td>";
+        atstr += "<td style=\"text-align: left\"><a href=\"javascript:doMLinkM('aa-edit-posts','pid=aa-edit-posts&tpstttpe=" + tsuar.p_ptype + "');\">" + tsuar.p_ptype + "</a></td>";
         
          
-        
+        turldecdttl = decodeURIComponent(tsuar.p_title);
         atstr += "<td style=\"text-align: left\"  nowrap=\"nowrap\">";
         // atstr += "<div  onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\" class=\"crsrPointer\"><img alt=\"Profile\" src=\"images/user/" + aprpObj.u_icon + "\"  class=\"icnRndSmUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">Edit</span></div>";
-        atstr += "<div onclick=\"javascript:eindex('aa-edit-auser','pid=aa-edit-auser&tuid=" + tsuar._id + "')\" class=\"crsrPointer\"><img alt=\"Profile\" src=\"images/user/" + tsuar.p_image + "\"  class=\"icnRndDSmUser\" align=\"absmiddle\">&nbsp;";
-        atstr +=  "<span class=\"txtBold txtCLrHdr\">" +  tsuar.p_title +  "</span></div></td>";
+        atstr += "<div onclick=\"javascript:eindex('aa-show-post','pid=aa-show-update&tupid=" + tsuar._id + "')\" class=\"crsrPointer\">";
+        // atstr += "<img alt=\"Profile\" src=\"images/user/" + tsuar.p_image + "\"  class=\"icnRndDSmUser\" align=\"absmiddle\">&nbsp;";
+        atstr +=  "<span class=\"txtBold txtCLrHdr\">" +  turldecdttl +  "</span></div></td>";
        
  
         atstr += "<td style=\"text-align: left\" class=\"txtClrHdr\"><a href=\"javascript:eindex('aa-edit-auser','pid=aa-edit-auser&tuid=" + tsuar._id + "');\"><i class=\"menu-material-icons\" alt=\"edit\">&#xe3c9;</i></a>";
@@ -82,8 +84,8 @@ tHdFObj["nm"] = "ID";
 tHdrArr.push(tHdFObj);
  
 tAHdFObj = {};	
-tAHdFObj["fld"] = "p_cat";
-tAHdFObj["nm"] = "Cat";
+tAHdFObj["fld"] = "p_ptype";
+tAHdFObj["nm"] = "Tipo";
 tHdrArr.push(tAHdFObj);
 
 tBHdFObj = {};	
@@ -165,6 +167,9 @@ CREATE TABLE `qposts` (
     var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
  //  alert('fnishCntLoad');
+ document.title = currPgTitle;
+ JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')
+
  tmpDOs = {};
  tmpDOs["ws"] = "where p_uid = ?";
  tmpDOs["wa"] = [quid];
