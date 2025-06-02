@@ -1489,9 +1489,12 @@ function setTPstUsrsArr(a,b,c) {
 
     var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
-
- 
-tafsb = nCurrFFieldOb();
+try {
+ JSSHOP.ads.doGenericPlug("posts", "edit-post", "dvPartLinks");
+} catch(e) {
+    alert("fnishCntLoad: " + e);
+}
+ tafsb = nCurrFFieldOb();
 tafsb.fid = "btnEUsave";
 tafsb.fty = "button";
 // tafsb.fcl = function() { tmpSvBtnObj=this;JSSHOP.ui.setSaveBtnClick(this, function(){doPropEdit()}) };

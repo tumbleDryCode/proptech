@@ -4,14 +4,7 @@
 		 <table style="width: 100%">
 			 <tr>
 				 <td>
-				 <table style="width: 100%">
-					 <tr>
-						 <td><ti data-ison="stxt[108]" title="Create New Update">Create New Update</ti></td>
-						 <td id="tdMorePost">&nbsp;</td>
-					 </tr>
-				 </table>
-				 </td>
-				 <td>
+				 
 				 </td>
 			 </tr>
 		 </table>
@@ -27,18 +20,15 @@
 
 
 
-												<div class="form-group row">
-													<label class="col-lg-2 col-form-label" style="font-size:14px;"><ti data-ison="stxt[10]" data-desc="btn_adminlist">Title</ti></label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control" id="tmp_p_title" name="tmp_p_title" required="">
-													</div>
-												</div>
+												
 												<!-- post type wrapper -->
 												<div class=" slmtable bottom-shadow" style="margin: 0 auto">
 										<!-- Post Type div -->
-												<table><tr><td><div id="dvPTypeFld"></div></td><td>
-													<div><a href="javascript:getPTypeChange();"><i class="menu-material-icons coll-menu-item txtClrHdr txtBold" style="vertical-align:middle;">&#xe8b8</i></a></div>
-													</td><td></td></tr></table>
+												<table><tr><td><div id="dvPTypeFld"></div></td><td>&nbsp;</td><td>
+													<!--<div><a href="javascript:getPTypeChange();" class="txtSmall txtClrHdr"><ti data-ison="stxt[61]" title="Settings" data-desc="Settings">Settings</ti></a></div>-->
+													</td><td>
+													 <a href="javascript:getPTypeChange();"><i class="menu-material-icons coll-menu-item txtClrHdr txtBold" style="vertical-align:middle;font-size:x-large">&#xe8b8</i></a>
+													</td></tr></table>
 												<!-- End Post Type div -->
 
  			<!-- map or scrooler view div -->
@@ -48,10 +38,21 @@
 			<!-- end map scroller demo view -->
 			</div> <!-- endo posttype wrapper -->
 				<hr>
+				<table style="width: 100%">
+					 <tr>
+						 <td><div class="form-group row">
+													<label class="col-lg-2 col-form-label" style="font-size:14px;"><ti data-ison="stxt[10]" data-desc="btn_adminlist">Title</ti></label>
+													<div class="col-lg-9">
+														<input type="text" class="form-control" id="tmp_p_title" name="tmp_p_title" required="">
+													</div>
+												</div></td>
+						 <td id="tdMorePost" style="vertical-align:top">&nbsp;</td>
+					 </tr>
+				 </table>
+				 <hr>
 												<div class="form-group row">
 													<table><tr><td><label class="col-lg-2 col-form-label" style="font-size:14px;"><ti data-ison="stxt[948]" data-desc="btn_desc">Content&nbsp;&nbsp;
-													</ti></label> </td><td><a href="javascript:html2canvas(tmp_p_content_ifr.contentWindow.document.body).then(function(canvas) { document.body.appendChild(canvas);alert('iscanned');})">
-													Render</a></td><td><div id="dvDDxcntnt"></div></td></tr></table>
+													</ti></label> </td><td> </td><td><div id="dvDDxcntnt"></div></td></tr></table>
 
 													<div class="col-lg-9">
 														<textarea class="tinymce form-control" name="tmp_p_content" id="tmp_p_content" rows="10" cols="30"></textarea>

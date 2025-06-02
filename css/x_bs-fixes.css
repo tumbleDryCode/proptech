@@ -56,15 +56,18 @@ btn-success {
 .cls-icn-wrap {
   margin-right: 3px;
 }
-
+ 
 .dropdown-menu {
-    max-height: 400px;
-    overflow-y: auto;
+    max-height: 300px; 
+    overflow: auto;
+    
 }
 .dropdown-menu:after, .dropdown-menu:before {
     content: none;
     display: none;
     position: relative;
+    height: 300px; 
+    overflow: scroll;
 }
 
 .dropdown-toggle, .dropdown-toggle-split {
@@ -73,6 +76,7 @@ btn-success {
 	padding-right:10px;
 	text-align: absmiddle;
 	vertical-align: absmiddle;
+
 }
 .dropdown-toggle-split {
 	color: #DEDEDE;

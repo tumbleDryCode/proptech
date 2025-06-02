@@ -185,18 +185,10 @@ stxt[312] = "Billing";
 stxt[313] = "Shipping";
 stxt[314] = "Receiving";
  
-// fleet
-stxt[400] = "Fleet";
-stxt[401] = "Truck";
-stxt[402] = "Trailer";
-stxt[403] = "Tractor";
-stxt[404] = "Inspection Date";
-stxt[405] = "Insurance Date";
+stxt[400] = "Editar Update";
+stxt[401] = "Agregar Update";
+stxt[402] = "Editar Updates";
 
-
-
-// items and categories
- 
 stxt[500] = "Adicionar Nueva Categoria";
 stxt[501] = "Vai em categoria";
 stxt[502] = "Titulo da Categoria aqui";
@@ -317,6 +309,7 @@ stxt[629] = "Seleccionar idioma";
 stxt[630] = "Traducir";
 stxt[631] = "Traducciones";
 stxt[632] = "Traducir el titulo y la descripcion actuales al idioma seleccionado";
+stxt[633] = "Comience subiendo algunas imagenes.";
 /*
 
 // messaging strings

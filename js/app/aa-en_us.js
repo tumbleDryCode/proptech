@@ -265,6 +265,7 @@ stxt[574] = "Show Featured";
 
 
 
+
 // admin strings
 stxt[600] = "Click to run Query";
 stxt[601] = "Orders";
@@ -299,6 +300,7 @@ stxt[629] = "Select Language";
 stxt[630] = "Translate";
 stxt[631] = "Translations";
 stxt[632] = "Translate the current title and description to the selected language";
+stxt[633] = "Start by uploading some images.";
 
  
 // messaging strings

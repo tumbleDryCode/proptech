@@ -1493,14 +1493,34 @@ function getTCtryKeyValArr() {
         tVCKObj[ytKeyName] = ytKeyName;
         // tResDDACstr = "<a class='acdropdown-item' href='#' onclick='doZonePckChg(this, \"" + tURResArr[iddur].geonameid + "\", \"" + tURResArr[iddur].asciiname + "\")'>" + tURResArr[iddur].asciiname + "</a>";
        //  tmpLocArr.push(tResDDACstr);
-       tResDDACstr = "<a class='acdropdown-item' href='#' onclick='doZonePckChg(this, \"" + ytKeyName + "\", \"" + ytKeyName + "\")'>" + ytKeyName + "</a>";
+       tResDDACstr = "<a class=\"acdropdown-item\" href=\"javascript:doCountryPckChg('dvCountryDD','noQvalue', '" + ytKeyName + "')\">" + ytKeyName + "</a><br>";
          tArr.push(tResDDACstr);
     }
     console.log("getTCtryKeyAsVal: " + JSON.stringify(tArr));
     return tArr;
 }
 
+function getTCtryPopStr() {
+ // alert("getTCtryPopStr");
+  try {
+    tResPpstr = "<div style=\"max-height: 390px; overflow-y: auto;\">";
 
+    for (var key in tLocCccodeObj) {
+
+      ytKeyName = key;
+      ytKeyValue = tLocCccodeObj[key].ccode;
+      tVCKObj[ytKeyName] = ytKeyName;
+
+      tResPpstr += "<a class=\"txtSmall txtBold txtClrHdr\" href=\"javascript:doZonePckChg(this, '" + ytKeyName + "', '" + ytKeyName + "')\">" + ytKeyName + "</a><br>";
+
+    }
+    tResPpstr += "</div>";
+     return tResPpstr;
+} catch(e) {
+    JSSHOP.ui.popAndFillLbox("getTCtryPopStr: " + e);
+    return "noQvalue:" + e;
+}
+}
 
 /*
     * Function to get the country code
@@ -1708,6 +1728,7 @@ function doRegionPckChg(tCRload, tZPCel, tZPVal, tZPtxt) {
 
 function setUregionDD(tudsA, tudsB, tudsC) {
     try {
+     dvRegionDD.innerHTML = "";
         tStr = "";
         tAdmin1code = "1";
         tDDregObj = "";
@@ -1732,7 +1753,7 @@ function setUregionDD(tudsA, tudsB, tudsC) {
                 tmpRegionObj[tURResArr[iddur].asciiname]["longitude"] = tURResArr[iddur].longitude;
                 tmpRegionObj[tURResArr[iddur].asciiname]["latlng"] = tURResArr[iddur].latitude + "," + tURResArr[iddur].longitude;
                 // tResDDACstr = "<a class='dropdown-item' href='#' onclick='doRegionPckChg('noQvalue','" + tmpRegionFid + "','" +  tURResArr[iddur].asciiname + "\")'>" + tURResArr[iddur].asciiname + "</a>";
-                tResDDACstr = "<a class=\"acdropdown-item\" href=\"javascript:doRegionPckChg('noQvalue','" + tmpRegionFid + "','" +  tURResArr[iddur].asciiname + "','"  +  tURResArr[iddur].asciiname + "')\">" + tURResArr[iddur].asciiname + "</a>";   
+                tResDDACstr = "<a class=\"acdropdown-item\" href=\"javascript:doRegionPckChg('noQvalue','" + tmpRegionFid + "','" +  tURResArr[iddur].asciiname + "','"  +  tURResArr[iddur].asciiname + "')\">" + tURResArr[iddur].asciiname + "</a><br>";   
                 tmpRegionArr.push(tResDDACstr);
                 if(tURResArr[iddur].asciiname == document.getElementById(tmpRegionFid).value) {
                   //   getLocltyDropStr(getCountryCode(document.getElementById(tmpCountryFid).value), tURResArr[iddur].admin1_code, "dvLocltyDD", "setLocltyDD");  
@@ -1794,7 +1815,13 @@ function getRegionDropStr(tRDCountry, tRDDel,  tRddcb) {
 
 function doCountryPckChg(tZPCel, tZPVal, tZPtxt) {
     console.log("doCountryPckChg: " + tZPCel + " " + tZPVal + " " + tZPtxt);
+
     try {
+              if(tZPCel == "noQvalue") {
+    document.getElementById(tmpRegionFid).value = "";
+    document.getElementById(tmpLocltyFid).value = "";
+    
+     }
       tmwpDOs = {};
         tmwpDOs["country"] = tZPtxt;
         tmwpDOs["latitude"] = getCountryLatitude(tZPtxt);
@@ -1804,7 +1831,7 @@ function doCountryPckChg(tZPCel, tZPVal, tZPtxt) {
         tmwpDOs["region"] = "noQvalue";
         document.getElementById(tmpTCountryFid).value = tZPtxt;
         getRegionDropStr(tZPtxt, "dvRegionDD", "setUregionDD");
- 
+
 
     } catch(e) {
       alert("doCountryPckChg: " + e);

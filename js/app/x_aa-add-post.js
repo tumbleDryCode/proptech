@@ -111,7 +111,7 @@ var doPstTypOpts = function(tPTval) {
     // use \u to escape the unicode characters for the special characters in the strings
     // document.getElementById("tmp_p_ptype").disabled=true;
     console.log("doPTypeTip: " + tMainEl + " " + tMELVal + " " + tMELTxt);
-    objVal = tMELVal;
+    objVal = tMELTxt;
     tTChngStrObj = {};
     tTChngStrObj["en_us"] = "";
     tTChngStrObj["pt_pt"] = "";
@@ -121,11 +121,11 @@ var doPstTypOpts = function(tPTval) {
         case "ppost":
         tTChngStrObj["en_us"] += "Selected Upadte type is Post. You can select various Update types such as Content, Image, Carousel, Map, etc.";
         tTChngStrObj["en_us"] += "<br>Each Update type has different options and layouts to choose from ";
-        tTChngStrObj["en_us"] += "<i class=\"nav-material-icons txtClrGrey\">&#xe8b8;</i>.";
+       //  tTChngStrObj["en_us"] += "<i class=\"nav-material-icons txtClrGrey\">&#xe8b8;</i>.";
 
         tTChngStrObj["pt_pt"] += "Tipo de Update \u00ea Post. Voc\u00ea pode selecionar v\u00e1rios tipos de Updates, como Conte\u00fado, Imagem, Carrossel, Mapa, etc.";
         tTChngStrObj["pt_pt"] += "<br>Cada tipo de atualiza\u00e7\u00e3o tem diferentes op\u00e7\u00f5es e layouts para escolher ";
-        tTChngStrObj["pt_pt"] += "<i class=\"nav-material-icons txtClrDlg\">&#xe8b8;</i>.";
+       // tTChngStrObj["pt_pt"] += "<i class=\"nav-material-icons txtClrDlg\">&#xe8b8;</i>.";
 
         // tTChngStrObj["pt_pt"] += "Tipo de post alterado para post.";
         // tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a publicacion.";
@@ -148,10 +148,12 @@ var doPstTypOpts = function(tPTval) {
         tTChngStrObj["en_us"] += "Post type changed to carousel. A sliding image gallery is created from user or property listings.";
         tTChngStrObj["pt_pt"] += "Tipo de post alterado para carrossel. Uma galeria de imagens deslizantes \u00e9 criada a partir de listagens de usuarios ou propriedades.";
         tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a carrusel. Se crea una galería de imagenes deslizantes a partir de listados de usuarios o propiedades.";
-        doPstTypOpts("users");
-        return;
-        hasSlect = "yes";
-        break;
+        // doPstTypOpts("users");
+        dvDemoView.innerHTML = tTChngStrObj[usrlang];
+       break;
+        // return;
+        //  hasSlect = "yes";
+ 
         case "pmap":
         tTChngStrObj["en_us"] += "Post type changed to map. A map is created from user or property listings.";
         tTChngStrObj["pt_pt"] += "Tipo de post alterado para mapa. Um mapa  criado a partir de listagens de usuarios ou propriedades.";
@@ -159,12 +161,12 @@ var doPstTypOpts = function(tPTval) {
         hasSlect = "yes";
         break;
         default:
-        tTChngStrObj["en_us"] += "Post type changed to post.";
-        tTChngStrObj["pt_pt"] += "Tipo de post alterado para post.";
-        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a publicacion.";
+        tTChngStrObj["en_us"] += "Update type changed to post.";
+        tTChngStrObj["pt_pt"] += "Tipo de Update alterado para post.";
+        tTChngStrObj["spa_spa"] += "Tipo de Update cambiado a publicacion.";
         break;
         }
-        if(hasSlect == "yes") {
+        if(hasSlect == "ayes") {
             tTChngStrObj["en_us"] += "Plase select layout type: ";
             tTChngStrObj["en_us"] += "<select id=\"inpPTselect\" name=\"inpPTselect\" >";
             tTChngStrObj["en_us"] += "<option value=\"props\">Properties</option>";
@@ -184,6 +186,10 @@ var doPstTypOpts = function(tPTval) {
             tTChngStrObj["spa_spa"] += "</select>";
             tTChngStrObj["spa_spa"] += "<input type=\"button\" value=\"Salvar\" onclick=\"javascript:doPstTypOpts(document.getElementById('inpPTselect'));\">";
             }
+              tTChngStrObj["en_us"] += "<a href=\"javascript:getPTypeChange();\"><i class=\"nav-material-icons txtClrGrey\">&#xe8b8;</i>.</a>";
+              tTChngStrObj["pt_pt"] += "<a href=\"javascript:getPTypeChange();\"><i class=\"nav-material-icons txtClrDlg\">&#xe8b8;</i>.</a>";
+              tTChngStrObj["spa_spa"] += "<a href=\"javascript:getPTypeChange();\"><i class=\"nav-material-icons txtClrDlg\">&#xe8b8;</i>.</a>";
+
             // tTChngStrObj["en_us"] += "<input type=\"button\" value=\"Close\" onclick=\"javascript:JSSHOP.ui.closeLbox();\">";
             // tTChngStrObj["pt_pt"] += "<input type=\"button\" value=\"Fechar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\">";
             // tTChngStrObj["spa_spa"] += "<input type=\"button\" value=\"Cerrar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\">";
@@ -194,6 +200,7 @@ var doPstTypOpts = function(tPTval) {
 
 
 var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
+    console.log("doPTypeChange: " + tMainEl + " " + tMELVal + " " + tMELTxt);
     // use \u to escape the unicode characters for the special characters in the strings
     // document.getElementById("tmp_p_ptype").disabled=true;
     objVal = tMELVal;
@@ -204,24 +211,24 @@ var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
     hasSlect = "no";
     switch(objVal) {
         case "ppost":
-        tTChngStrObj["en_us"] += "Post type changed to post.";
-        tTChngStrObj["pt_pt"] += "Tipo de post alterado para post.";
-        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a publicacion.";
+        tTChngStrObj["en_us"] += "Update type changed to post.";
+        tTChngStrObj["pt_pt"] += "Tipo de Update alterado para post.";
+        tTChngStrObj["spa_spa"] += "Tipo de Update cambiado a publicacion.";
         break;
         case "pcontent":
-        tTChngStrObj["en_us"] += "Post type changed to content. A content post is more of a blog post.";
-        tTChngStrObj["pt_pt"] += "Tipo de post alterado para conteudo. Um post de conteúdo \u00e9 mais um post de blog.";
-        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a contenido. Una publicacion de contenido es mas un blog.";
+        tTChngStrObj["en_us"] += "Update type changed to content. A content post is more of a blog post.";
+        tTChngStrObj["pt_pt"] += "Tipo de Update alterado para conteudo. Um post de conteudo \u00e9 mais um post de blog.";
+        tTChngStrObj["spa_spa"] += "Tipo de Update cambiado a contenido. Una publicacion de contenido es mas un blog.";
         break;
         case "pimage":
             JSSHOP.ads.doImgPostCnfgPop();
             return;
         tTChngStrObj["en_us"] += "Post type changed to image. The image is created from the content.";
         tTChngStrObj["en_us"] += "You can prefill content with user or property layouts.";
-        tTChngStrObj["pt_pt"] += "Tipo de post alterado para imagem. A imagem \u00e9 criada a partir do conteúdo.";
-        tTChngStrObj["pt_pt"] += "Você pode preencher o conteúdo com layouts de usuario ou propriedade.";
+        tTChngStrObj["pt_pt"] += "Tipo de post alterado para imagem. A imagem \u00e9 criada a partir do conteudo.";
+        tTChngStrObj["pt_pt"] += "Voc\u00ea pode preencher o conteudo com layouts de usuarios ou propriedades.";
         tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a imagen. La imagen se crea a partir del contenido.";
-        tTChngStrObj["spa_spa"] += "Puede rellenar el contenido con diseños de usuario o propiedad.";
+        tTChngStrObj["spa_spa"] += "Puede rellenar el contenido con diseños de usuarios o propiedades.";
         hasSlect = "yes";
         break;
         case "pcarousel":
@@ -247,7 +254,7 @@ var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
         tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a publicacion.";
         break;
         }
-        if(hasSlect == "yes") {
+        if(hasSlect == "ayes") {
             tTChngStrObj["en_us"] += "Plase select layout type: ";
             tTChngStrObj["en_us"] += "<select id=\"inpPTselect\" name=\"inpPTselect\" >";
             tTChngStrObj["en_us"] += "<option value=\"props\">Properties</option>";
@@ -267,9 +274,9 @@ var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
             tTChngStrObj["spa_spa"] += "</select>";
             tTChngStrObj["spa_spa"] += "<input type=\"button\" value=\"Salvar\" onclick=\"javascript:doPstTypOpts(document.getElementById('inpPTselect'));\">";
          }  
-            tTChngStrObj["en_us"] += "<input type=\"button\" value=\"Close\" onclick=\"javascript:JSSHOP.ui.closeLbox();\">";
-            tTChngStrObj["pt_pt"] += "<input type=\"button\" value=\"Fechar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\">";
-            tTChngStrObj["spa_spa"] += "<input type=\"button\" value=\"Cerrar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\">";
+             tTChngStrObj["en_us"] += "<br><input type=\"button\" value=\"Close\" onclick=\"javascript:JSSHOP.ui.closeLbox();\" class=\"cls_button cls_button-small bkgdClrDlg txtClrHdr txtSmall\">";
+            tTChngStrObj["pt_pt"] += "<br><input type=\"button\" value=\"Fechar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\" class=\"cls_button cls_button-small bkgdClrDlg txtClrHdr txtSmall\">";
+            tTChngStrObj["spa_spa"] += "<br><input type=\"button\" value=\"Cerrar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\" class=\"cls_button cls_button-small bkgdClrDlg txtClrHdr txtSmall\">";
             // dvDemoView.innerHTML = tTChngStrObj[usrlang];
      JSSHOP.ui.popAndFillLbox(tTChngStrObj[usrlang]);
     // procNuUIitem("qposts","p_ptype",currUrlArr.tpstid,objVal,"fnshPTypeChange");
@@ -526,7 +533,8 @@ setTimeout(function(){ fillUPostFlds(); }, 300);
 }
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
-
+ JSSHOP.ads.doGenericPlug("posts", "add-post", "dvPartLinks");
+document.getElementById("p_ptype").value = "ppost";
  
 tafsb = nCurrFFieldOb();
 tafsb.fid = "btnEUsave";
@@ -542,11 +550,11 @@ currMediaID = prpid;
          tDDPTyObj = {};
          tDDPTyObj["ddtype"] = "noQvalue";
             tDDPTyObj["fld"] = "p_ptype";
-            tDDPTyObj["lbl"] = stxt[103];
-            tDDPTyObj["val"] = document.getElementById("p_ptype").value;
+            tDDPTyObj["lbl"] = stxt[522]; // post type
+            tDDPTyObj["val"] = "ppost";
             tDDPTyObj["kvpObj"] = svftObj["posttype"];
             tDDPTyObj["cb"] = "doPTypeTip";
-            tDDPTyObj["fldcls"] = "dropdown-toggle crsrPointer txtClrHdr";
+            tDDPTyObj["fldcls"] = "dropdown-toggle crsrPointer txtClrHdr txtDecorUline";
             tDDPTyObj["lblcls"] = "txtSmall";
             tDDPTyObj["valcls"] = "slmtable bkgdClrNrml txtClrNrml txtSmall txtBold";
             tDDPTyObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
@@ -561,7 +569,7 @@ currMediaID = prpid;
             tDDPTyStr = JSSHOP.ui.getNuBSdropDstr(tDDPTyObj);
             document.getElementById("dvPTypeFld").innerHTML = tDDPTyStr;
 
-
+        /* not using this for now on add post
             tDDPrvObj = {};
             tDDPrvObj["ddtype"] = "moreHoriz";
             tDDPrvObj["fld"] = "noQvalue";
@@ -604,7 +612,9 @@ currMediaID = prpid;
             tDDXtraCntStr = JSSHOP.ui.getNuBSdropDstr(tDDXtraCntObj);
             document.getElementById("dvDDxcntnt").innerHTML = tDDXtraCntStr;
 
-            doPTypeTip("p_ptype", p_ptype.value, "noQvalue");
+*/
+
+            doPTypeTip("p_ptype", "ppost", "ppost");
 
 
         JSSHOP.loadScript("js/tinymce/tinymce.js", loadTnyI, "js");

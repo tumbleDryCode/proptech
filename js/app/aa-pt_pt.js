@@ -187,9 +187,9 @@ stxt[314] = "Receiving";
  
 
 // Actualizaçoes
-stxt[400] = "Editar Post";
-stxt[401] = "Adicionar Post";
-stxt[402] = "Editar Posts";
+stxt[400] = "Editar Update";
+stxt[401] = "Adicionar Update";
+stxt[402] = "Editar Updates";
  
 
 
@@ -300,7 +300,7 @@ stxt[629] = "Selecionar Idioma";
 stxt[630] = "Traduzir";
 stxt[631] = "Tradu\u00e7\u00f5es";
 stxt[632] = "Traduzir o titulo e a descricao atuais para o idioma selecionado";
-
+stxt[633] = "Comece fazendo o upload de algumas imagens.";
 
 stxt[700] = "Tem uma pergunta?";
 stxt[702] = " Opcional para servi\u00e7os baseados em localiza\u00e7\u00e3o ";

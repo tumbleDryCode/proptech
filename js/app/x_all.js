@@ -5021,7 +5021,7 @@ JSSHOP.ui.popNuFillLbox = function(theFill, theTofst) {
 try {
 
  
-
+ 
 tmpLbox = document.getElementById('lightbox');
 tmpLCbox = document.getElementById('lightbox_content');
 tmpLbox.style.display="inline";
@@ -5064,6 +5064,7 @@ tmpLCbox.style.top=stop+"px";
 // tmpLCbox.style.top="5px";
 if(getViewportWidth() > 500) {}
 iMdl = Math.round((getViewportWidth() - tmpLCbox.clientWidth) / 2);
+iMdl = 5;
 tmpLCbox.style.left=iMdl+"px";
 
 
@@ -5731,7 +5732,7 @@ JSSHOP.ui.stringToColour = function(str) {
         } else {
         tDDelem = document.getElementById(tBBSSObj.fld);
         }
-        tBSDDLayStr = "<div class=\"row\">";
+        tBSDDLayStr = "<div class=\"nada\">";
         tBSDDLayStr += "<ul class=\"nav nav-pills\">";
         tBSDDLayStr += "<li class=\"nav-item dropdown\">";
         tBSDDLayStr += "<table style=\"max-width:100%\"><tr>";
@@ -5752,7 +5753,7 @@ JSSHOP.ui.stringToColour = function(str) {
             tBSDDLayStr += "<td><i class=\"material-icons crsrPointer\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">&#xe5d3;</i>";
         }
 
-        tBSDDLayStr += "<ul class=\"dropdown-menu brdrClrHdr\">";
+        tBSDDLayStr += "<div class=\"dropdown-menu brdrClrHdr\"><ul>";
         for (var key in tBBSSObj.kvpObj) {
             tSlctIcnStr = "";
             tDDItmCls = "";
@@ -5776,7 +5777,7 @@ JSSHOP.ui.stringToColour = function(str) {
 
             tBSDDLayStr += "<li id=\"liDD" + tBBSSObj["fld"] + key + "\" class=\"" + tDDItmCls + "\"><a class=\"dropdown-item\"   href=\"javascript:JSSHOP.ui.doGenBSDDcb('" + tBSSPload + "','" + tBBSSObj.fld + "', '" + key + "','" + tBBSSObj.kvpObj[key] +  "','" + tBBSSObj.cb + "');\">" + tSlctIcnStr + tBBSSObj.kvpObj[key] + "</a></li>";
         }
-        tBSDDLayStr += "</ul></td>";
+        tBSDDLayStr += "</ul></div</td>";
         if(tBBSSObj.horvert == "vertical") {
         tBSDDLayStr += "</tr></table><table><tr>";
         }
@@ -6952,9 +6953,11 @@ plugins: ['textcolor colorpicker textpattern'],
 // add custom Preview button to the toolbar
 toolbar1: 'forecolor backcolor | styleselect | bold italic | preview',
 // add custom Preview button to the toolbar
-
+visual: false,
 height: 300,
-
+        content_css: [
+            'css/x_dev.css'
+        ]
         /*
         plugins: [
             'advlist autolink lists link image charmap print preview hr anchor pagebreak',
@@ -7026,9 +7029,27 @@ height: 300,
 
 
 };
-
-
 JSSHOP.ads.getEditorPrpStr = function(tSwUarr) {
+   tSwpStr = "";
+    tSwpStr += "<div class=\"edtr-container\">";
+    tSwpStr += "<div class=\"edtr-wrapper slmtable brdrCldrDlg\">";
+    for(i = 0; i < tSwUarr.length; i++) {
+        tSwUObj = tSwUarr[i];
+        tSuTstr = "<img src=\"" + currPrpImgsFldr + "/s_thumb" + tSwUObj.pimage + "\" style=\"width:100%;max-width:80px;min-width:80px\" class=\"rtable\">";
+        // create a tempate that includes the image and title in a table structure
+         tSwpStr += "<div class=\"edtr-grid rtable brdrClrHdr\" style=\"float:left;\">";
+        tSwpStr += "<table class=\"table table-striped\">";
+        tSwpStr += "<tr><td>" + tSuTstr + "</td><td>" + tSwUObj.ptitle + "</td></tr>";
+        tSwpStr += "</table>";
+        tSwpStr += "</div>";
+    }
+    tSwpStr += "</div>";
+    tSwpStr += "<div class=\"edtr-pagination\"></div>";
+    tSwpStr += "</div>";
+    return tSwpStr;
+};
+
+JSSHOP.ads.xgetEditorPrpStr = function(tSwUarr) {
     tSwpStr = "";
     tSwpStr += "<div class=\"edtr-container\">";
     tSwpStr += "<div class=\"edtr-wrapper\">";
@@ -7274,7 +7295,7 @@ JSSHOP.ads.doImgPostCnfgPop = function() {
         tDDswprCnttObj["kvIcnsObj"]["props"] = "&#xe5cd;";
         tDDswprCnttObj["kvIcnsObj"]["users"] = "&#xe5cd;";
         tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprCnttObj);
-        tSCPopStr += "<span style=\"\" class=\"cls_button cls_button-small bkgdClrHdr txtClrWhite\" onclick=\"JSSHOP.ui.closeLbox();JSSHOP.ads.trnsltImgPstObj();\">OK</span>";
+        tSCPopStr += "<br><br><span style=\"\" class=\"cls_button cls_button-small bkgdClrHdr txtClrWhite\" onclick=\"JSSHOP.ui.closeLbox();JSSHOP.ads.trnsltImgPstObj();\">OK</span>";
         tSCPopStr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-small  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";   
     
         JSSHOP.ui.popFillObox(tSCPopStr, "&#xe5cd;", "Image Update Config", "yes", "no");
@@ -7663,7 +7684,11 @@ console.log("doSwiperConfigPop: " + e);
 };
 JSSHOP.ads.trnsltImgPstObj = function() {
     tSCval = inpImgPstCntnt.value;
+   console.log("trnsltImgPstObj.tSCval: == props" + tSCval);
+
     if(tSCval == "props") {
+        tSlctdPrpsArr = null;
+        tSlctdPrpsArr = "";
         tSlctdPrpsArr = [];
         for(var key in currSlctdPrpsObj) {
             if(currSlctdPrpsObj.hasOwnProperty(key)) {
@@ -7672,6 +7697,8 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         }
         tSwprStr = JSSHOP.ads.getEditorPrpStr(tSlctdPrpsArr);
     } else if(tSCval == "users") {
+        tSlctdUsrsArr = null;
+        tSlctdUsrsArr = "";
         tSlctdUsrsArr = [];
         for(var key in currSlctdUsrObj) {
             if(currSlctdUsrObj.hasOwnProperty(key)) {
@@ -8207,6 +8234,16 @@ case "aa-add-prop":
 dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[906] + "</div>";
 // fretPlugStr = doNuCollsLoad("links");
+break;
+case "aa-edit-post":
+// imgPLicon.src = "logoicon.png";
+dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
+fretPlugStr = "<div class=\"txtSmall\">" + stxt[400] + "</div>";
+break;
+case "aa-add-post":
+// imgPLicon.src = "logoicon.png";
+dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
+fretPlugStr = "<div class=\"txtSmall\">" + stxt[401] + "</div>";
 break;
 case "aa-edit-posts":
 // imgPLicon.src = "logoicon.png"; 

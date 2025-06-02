@@ -410,7 +410,7 @@ return strTurl;
  
 try {
 pointP = app.doWVScrollY();
-isJApp = "yes";
+isJApp = "ayes";
 console.log("isDaJApp.tryP: " + isJApp + " :: " + pointP);
 JSSHOP.loadScript("css/" + jscssprefix + "x_japp.css", JSSHOP.checkLoader,'css');
 } catch(e) {
@@ -2265,7 +2265,7 @@ tFerr = "qco";
 if(arrAllForms.qco) {
     tFerr = "qco";
 
-JSSHOP.shared.setFrmVals("qco",arrAllForms.qco.v[0],function() {void(0) });
+// JSSHOP.shared.setFrmVals("qco",arrAllForms.qco.v[0],function() {void(0) });
 
 }
 if(arrAllForms.quser) {

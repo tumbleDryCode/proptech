@@ -1,5 +1,5 @@
 <div id="lightbox" class="lightbox"   onclick="javascript:JSSHOP.ui.closePopMenus();">
-</div> <div id="lightbox_content" class="rtable bkgdClrWhite bottom-shadow" style="min-height:400px;min-width:50%;z-index: 2147483647;position:fixed;top:-700px;left:-700px;word-wrap: break-word;max-width:80%;margin: 0 auto;">
+</div> <div id="lightbox_content" class="rtable bkgdClrWhite bottom-shadow" style="min-height:400px;min-width:95%;z-index: 2147483647;position:fixed;top:-700px;left:-700px;word-wrap: break-word;max-width:96%;margin-right:10px;margin: 0 auto;">
       </div>
 
 
