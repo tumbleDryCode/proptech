@@ -33,41 +33,40 @@ function makeThumbnails($updir, $img, $id)
         $imgt = "ImagePNG";
         $imgcreatefrom = "ImageCreateFromPNG";
     }
+// ...existing code...
     if ($imgt) {
         $old_image = $imgcreatefrom("$updir" . '/' . "$img");
+        // Create new image with white background (no transparency)
         $new_image = imagecreatetruecolor($thumbnail_width, $thumbnail_height);
-
-
-switch ($imgt) {
-
-    case 'ImageGIF':
-    case 'ImagePNG':
-        // integer representation of the color black (rgb: 0,0,0)
-        $background = imagecolorallocate($new_image, 0, 0, 0);
-        // removing the black from the placeholder
-        imagecolortransparent($new_image, $background);
-
-    case 'ImagePNG':
-        // turning off alpha blending (to ensure alpha channel information
-        // is preserved, rather than removed (blending with the rest of the
-        // image in the form of black))
-        imagealphablending($new_image, false);
-
-        // turning on alpha channel information saving (to ensure the full range
-        // of transparency is preserved)
-        imagesavealpha($new_image, true);
-        break;
-
-    default:
-        break;
-}
-
-
-        imagecopyresized($new_image, $old_image, $dest_x, $dest_y, 0, 0, $new_width, $new_height, $original_width, $original_height);
+        $white = imagecolorallocate($new_image, 255, 255, 255);
+        imagefilledrectangle($new_image, 0, 0, $thumbnail_width, $thumbnail_height, $white);
+        // Copy and resize original image onto white background
+        imagecopyresampled($new_image, $old_image, $dest_x, $dest_y, 0, 0, $new_width, $new_height, $original_width, $original_height);
         $imgt($new_image, "$updir" . '/' . $id . '_' . "$thumb_beforeword" . "$img");
+
+        // make a medium size thumbnail with white background
+        $medium_width = 300;
+        $medium_height = 300;
+        if ($original_width > $original_height) {
+            $new_width = $medium_width;
+            $new_height = intval($original_height * $new_width / $original_width);
+        } else {
+            $new_height = $medium_height;
+            $new_width = intval($original_width * $new_height / $original_height);
+        }
+        $dest_x = intval(($medium_width - $new_width) / 2);
+        $dest_y = intval(($medium_height - $new_height) / 2);
+        $medium_image = imagecreatetruecolor($medium_width, $medium_height);
+        $white2 = imagecolorallocate($medium_image, 255, 255, 255);
+        imagefilledrectangle($medium_image, 0, 0, $medium_width, $medium_height, $white2);
+        imagecopyresampled($medium_image, $old_image, $dest_x, $dest_y, 0, 0, $new_width, $new_height, $original_width, $original_height);
+        $imgt($medium_image, "$updir" . '/m_' . "$thumb_beforeword". "$img");
+        imagedestroy($old_image);
+        imagedestroy($new_image);
+        imagedestroy($medium_image);
     }
- echo json_encode(array('in' => $img, 'success' => true, 'msg' => 'done'));
- exit;
+echo json_encode(array('in' => $img, 'success' => true, 'msg' => 'done'));
+exit;
 }
 require(dirname(__FILE__) . '/Uploader.php');
 
@@ -92,7 +91,9 @@ $upload_dir = "../" . $ud;
 
 $uploader = new FileUpload('uploadfile');
 // create a variable with unix timestamp
-$timestamp = time();
+// $timestamp = time();
+// random string for the image name
+$timestamp = bin2hex(random_bytes(8));
 $nf = $in . '_' . $timestamp .  '.' . $uploader->getExtension();
 $uploader->setFileName($nf);
 // $uploader->setFileName($nf);

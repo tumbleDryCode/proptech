@@ -64,9 +64,8 @@ return tmpRetStr;
 };
 
 var setSliderPropImgs = function(theAIa, theAIb, theAIc) {
-    console.log("setPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
-    console.log("setPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
-    console.log("setPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
+    console.log("setSliderPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
+
 	if(theAIb.indexOf("_id") != -1) {
 		tAiretArr = JSON.parse(theAIb);
 		var len = tAiretArr.length;

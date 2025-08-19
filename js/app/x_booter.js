@@ -2527,10 +2527,19 @@ if(currUrlArr.dcid) {
 
   }
 
+
+
   if(currUrlArr.ditemid) {
+    
     prpid = currUrlArr.ditemid;
     currUrlArr.prpid = currUrlArr.ditemid;
     pid = "aa-show-prop";
+    // set a 
+    // addFrmQArr("qitem", itemid, "fnishItemForm");
+   }
+   if(currUrlArr.tupid) {
+    tupid = currUrlArr.tupid;
+    pid = "aa-show-update";
     // addFrmQArr("qitem", itemid, "fnishItemForm");
    }
 
@@ -2742,7 +2751,8 @@ content = tDlMObj.content;
 currUrlArr["content"] = content;
 }
 
-
+// to delete
+/*
 switch(tDlMStr) {
 case "aa-add-trip-pickup":
 currUrlArr.ttid = undefined;
@@ -2760,7 +2770,8 @@ break;
 default:
 break;
 }
-
+// end to delete
+*/
  
  doFrMBoolStr = "no";
 

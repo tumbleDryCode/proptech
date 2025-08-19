@@ -406,6 +406,34 @@ function setUPostSave(a,b,c) {
     }
     JSSHOP.ui.setCBBClickClr(tmpSvBtnObj,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium  bkgdClrHdr txtClrWhite', function(){tmpSvBtnObj.innerHTML=stxt[21];tmpSvBtnObj.disabled=false;});
 }
+
+function setUPostDel(a,b,c) {
+    console.log("setUPostDel: " + a + " " + b + " " + c);
+    JSSHOP.ui.popAndFillLbox("Post deleted. " + a + " " + b + " " + c);
+   // JSSHOP.ui.setCBBClickClr(tmpSvBtnObj,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium  bkgdClrHdr txtClrWhite', function(){tmpSvBtnObj.innerHTML=stxt[21];tmpSvBtnObj.disabled=false;});
+    eindex('aa-edit-posts', 'pid=aa-edit-posts');
+}
+
+function doPostDel() {
+    if(confirm("Are you sure you want to delete this post?")) {
+
+        tmpFobj = null;
+        tmpFobj = {};
+        tmpFobj["ws"] = "where _id=?";
+        tmpFobj["wa"] = [currUrlArr.tpstid];
+    
+        // oi = getNuDBFnvp("qposts", 7, null, tmpFobj);
+        procNuUIitem("qposts", "p_rtype", currUrlArr.tpstid, "10", "setUPostDel");
+        // doQComm(oi["rq"], null, "setUPostDel");
+        // JSSHOP.ui.popAndFillLbox("Post deleted.");
+       //  JSSHOP.ui.setCBBClickClr(tmpSvBtnObj,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium  bkgdClrHdr txtClrWhite', function(){tmpSvBtnObj.innerHTML=stxt[21];tmpSvBtnObj.disabled=false;});
+    } else {
+       //  JSSHOP.ui.popAndFillLbox("Post not deleted.");
+       //  JSSHOP.ui.setCBBClickClr(tmpSvBtnObj,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium  bkgdClrHdr txtClrWhite', function(){tmpSvBtnObj.innerHTML=stxt[21];tmpSvBtnObj.disabled=false;});
+    }
+
+    }
+
 function doPostEdit() {
      
     tmpSvBtnObj = btnEUsave;

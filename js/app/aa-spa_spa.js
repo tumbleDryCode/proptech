@@ -184,6 +184,9 @@ stxt[311] = "Main";
 stxt[312] = "Billing";
 stxt[313] = "Shipping";
 stxt[314] = "Receiving";
+
+// stxt[315] = "Delete this Property Listing?";
+stxt[315] = "Eliminar esta Listagem de Propriedade?";
  
 stxt[400] = "Editar Update";
 stxt[401] = "Agregar Update";

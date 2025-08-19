@@ -20,7 +20,7 @@ if(isset($_GET["ditemid"])) {
      // get record from database
     $q = "SELECT * FROM property WHERE _id = $itemid";
     // send query to do.php
-   include $_SERVER['DOCUMENT_ROOT'] . "/_p/DumDatabase.php";
+   include $_SERVER['DOCUMENT_ROOT'] . "/incasa/_p/DumDatabase.php";
             $cdbf = new DumDatabase();
             $fJSonFldQs = $cdbf->fetch_cstmArr($q);
             // $fJSonFldQs is a mysql result array
@@ -113,6 +113,8 @@ $tMOGstr .= "<meta property=\"og:site_name\" content=\"propsgo.com\">\n";
 $tMOGstr .= "<meta property=\"og:title\" content=\"" . $pgTitle . "\">\n";
 $tMOGstr .= "<meta property=\"og:type\" content=\"website\">\n";
 $tMOGstr .= "<meta property=\"og:url\" content=\"" . $oglocation . "\">\n";
+// appID
+$tMOGstr .= "<meta property=\"fb:app_id\" content=\"1814864155722452\">\n";
 $tMOGstr .= "<title>" . $pgTitle . "</title>\n";
 echo $tMOGstr;
 ?>

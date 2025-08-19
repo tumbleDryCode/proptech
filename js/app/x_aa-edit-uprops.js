@@ -182,8 +182,8 @@ fnishCntLoad = function() {
  //  alert('fnishCntLoad');
  tmpDOqs = null;
 tmpDOqs = {};
-tmpDOqs["ws"] = "where uid=?";
-tmpDOqs["wa"] = [quid];
+tmpDOqs["ws"] = "where uid=? and prtype=?";
+tmpDOqs["wa"] = [quid, "5"];
 tmpDOqs["l"] = 45;
 oia = getNuDBFnvp("property",5,null,tmpDOqs);
  doQComm(oia["rq"], null, "setUEdtPrpList");

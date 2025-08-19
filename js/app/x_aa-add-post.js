@@ -463,7 +463,12 @@ function doPostAdd() {
     // JSSHOP.ajax.doNuAjaxPost(oi["rq"], setUPostAddSave);
      switch(tSlctdPstType) {
         case "pimage":
-            html2canvas(taDemoEdtr_ifr.contentWindow.document.body).then(function(canvas) { savePstCanvasImg(canvas);})
+            // dvTDiv is a div in taDemoEdtr_ifr.contentWindow.document.body
+            daTAbod = taDemoEdtr_ifr.contentWindow.document.body;
+            daDiv = daTAbod.querySelector("#dvTMCdemo");
+           html2canvas(daDiv).then(function(canvas) { savePstCanvasImg(canvas);})
+            // html2canvas(taDemoEdtr).then(function(canvas) { savePstCanvasImg(canvas);})
+
             break;
         case "pcarousel":
             tZpd = LZString.compressToEncodedURIComponent(JSON.stringify(JSSHOP.ads.getUpdatePVrs("pcarousel")));

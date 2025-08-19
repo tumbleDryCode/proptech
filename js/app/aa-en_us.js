@@ -176,6 +176,7 @@ stxt[311] = "Main";
 stxt[312] = "Billing";
 stxt[313] = "Shipping";
 stxt[314] = "Receiving";
+stxt[315] = "Delete this Property Listing?";
  
 // Posts
 stxt[400] = "Edit Post";

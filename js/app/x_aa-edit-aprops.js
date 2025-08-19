@@ -182,8 +182,8 @@ fnishCntLoad = function() {
  //  alert('fnishCntLoad');
  tmpDOqs = null;
 tmpDOqs = {};
-tmpDOqs["ws"] = "where _id>?";
-tmpDOqs["wa"] = [0];
+tmpDOqs["ws"] = "where _id>? and prtype=?";
+tmpDOqs["wa"] = [0, "5"];
 tmpDOqs["l"] = 45;
 
 oia = getNuDBFnvp("property",5,null,tmpDOqs);

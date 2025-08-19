@@ -169,7 +169,11 @@ var currSlctdPrpsObj = {};
 var currSwpCnfgObj = {};
 var currSwpCnfgArr = [];
 var currGglSVloaded = "no";
+var currUpdateArr = [];
 var gglSKey = "AIzaSyAiBR8BEPj2YCepKplisQKK709r1TI48Vo";
+
+
+
 
 var nuDW = function(theElem) { 
 if(theElem.getAttribute("data-isscript") != null) {

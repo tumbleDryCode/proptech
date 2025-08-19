@@ -94,7 +94,7 @@ aprpTotalfloor = aprpObj["totalfloor"];
 aprpDate = aprpObj["date"];
 aprploclat = aprpObj["ploclat"];
 aprploclng = aprpObj["ploclng"];
-retPLstSTr += "<div class=\"col-md-6 slmtable bkgdClrWhite bottom-shadow\" style=\"float:left;margin-top:18px;padding:0px;\">";
+retPLstSTr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;\">";
 
  
 tPrpMMListObj = null;
@@ -154,7 +154,9 @@ retPLstSTr += "<table style=\"width: 100%\"><tr><td style=\"min-width:40px;\">";
 
 //  <div  onclick="javascript:JSSHOP.ui.toggleVisibility('tdUploadBtn');" class="crsrPointer"><img alt="User Icon" src="images/misc/default_user.png"  class="slmtable brdrClrDlg" style="minn-width:150px;max-width:160px;text-align:center;margin-right:3px" align="absmiddle" id="imgIedit"><span class="txtSmall txtClrGrey">Edit</span></div>
 retPLstSTr += "<a href=\"javascript:eindex('aa-show-user', 'pid=aa-show-user&tuid=" + aprpUid + "');\" class=\"crsrPointer\">";
-retPLstSTr += "<div><img alt=\"Profile\" src=\"images/user/" + aprpObj.u_icon + "\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">" + aprpUFlName + "</span></div></a>";
+retPLstSTr += "<div><img alt=\"Profile\" src=\"images/user/s_thumb" + aprpObj.u_icon + "\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">" + aprpUFlName + "</span></div></a>";
+
+
 retPLstSTr += "</td><td>";
 retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
  retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpLocation + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
@@ -162,7 +164,7 @@ retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" s
 retPLstSTr += "</td><td style=\"vertical-align:top\">" + tDDPrpStr + "</td></tr></table>";
 
  retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\">";
-retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"" + currPrpImgsFldr + "/" + aprpPimage + "\" alt=\"pimage\" class=\"img100p\">";
+retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"" + currPrpImgsFldr + "/m_thumb" + aprpPimage + "\" alt=\"pimage\" class=\"img100p\">";
 retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
 retPLstSTr += "<div class=\"sale bg-secondary text-white text-capitalize\">" + tDBHObj[aprpType] + "</div>";
 retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
@@ -389,7 +391,7 @@ newQstr = "select p.*, u.u_icon, u.u_fullname from property p, quser u where p._
 
   newQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.uid = u._id and pd.pd_prpid = p._id and pd.pd_prptlng = '" +  usrlang + "' order by rand() limit 20";
 // also get property title and description from propdescs where propdescs.pd_prpid = p._id and propdescs.pd_lang = userLang or propdescs.pd_lang = deflang
-newQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = '" +  usrlang + "' or pd.pd_prptlng = '" + deflang + "') order by rand() limit 20";
+newQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.prtype = '5' and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = '" +  usrlang + "' or pd.pd_prptlng = '" + deflang + "') order by rand() limit 20";
 
  doQComm(newQstr, null, "doMPropsList");
 return dmyFnishCntLoad;

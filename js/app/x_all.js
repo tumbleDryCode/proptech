@@ -1356,58 +1356,60 @@ JSSHOP.shared.getFrmFieldVal = function(theForm, theField, theVal) {
 
 
 JSSHOP.shared.sort = function(data, theIndex, theOrder) {
-  var i, j;
-  var currentValue;
-  var currentObj;
-  var compareObj;
-  var compareValue;
-    
-	if(theOrder == "sortAsc") {
-// this is where the order comparison is done:	
-// while(j >=0 && compareValue > currentValue) {
+    var i, j;
+    var currentValue;
+    var currentObj;
+    var compareObj;
+    var compareValue;
 
-  for(i=1; i<data.length;i++) {
-    currentObj = data[i];
-    currentValue = currentObj[theIndex];
-    j= i-1;
-    compareObj = data[j];
-    compareValue = compareObj[theIndex];  
-    while(j >=0 && compareValue > currentValue) {
-      data[j+1] = data[j];
-      j--;
-      if (j >=0) {
-        compareObj = data[j];
-        compareValue = compareObj[theIndex];
-      }        
+    function toNumberIfNumeric(val) {
+        var n = parseFloat(val);
+        return (!isNaN(n) && isFinite(val)) ? n : val;
     }
-    data[j+1] = currentObj;
-  }
-  
-	} else {
-	
-	
-  for(i=1; i<data.length;i++) {
-    currentObj = data[i];
-    currentValue = currentObj[theIndex];
-    j= i-1;
-    compareObj = data[j];
-    compareValue = compareObj[theIndex];  
-    while(j >=0 && compareValue < currentValue) {
-      data[j+1] = data[j];
-      j--;
-      if (j >=0) {
-        compareObj = data[j];
-        compareValue = compareObj[theIndex];
-      }        
+
+    if(theOrder == "sortAsc") {
+        for(i=1; i<data.length;i++) {
+            currentObj = data[i];
+            currentValue = toNumberIfNumeric(currentObj[theIndex]);
+            j= i-1;
+            compareObj = data[j];
+            compareValue = toNumberIfNumeric(compareObj[theIndex]);  
+            while(j >=0 && (
+                (typeof compareValue === 'number' && typeof currentValue === 'number' && compareValue > currentValue) ||
+                (typeof compareValue !== 'number' || typeof currentValue !== 'number') && compareValue > currentValue
+            )) {
+                data[j+1] = data[j];
+                j--;
+                if (j >=0) {
+                    compareObj = data[j];
+                    compareValue = toNumberIfNumeric(compareObj[theIndex]);
+                }        
+            }
+            data[j+1] = currentObj;
+        }
+    } else {
+        for(i=1; i<data.length;i++) {
+            currentObj = data[i];
+            currentValue = toNumberIfNumeric(currentObj[theIndex]);
+            j= i-1;
+            compareObj = data[j];
+            compareValue = toNumberIfNumeric(compareObj[theIndex]);  
+            while(j >=0 && (
+                (typeof compareValue === 'number' && typeof currentValue === 'number' && compareValue < currentValue) ||
+                (typeof compareValue !== 'number' || typeof currentValue !== 'number') && compareValue < currentValue
+            )) {
+                data[j+1] = data[j];
+                j--;
+                if (j >=0) {
+                    compareObj = data[j];
+                    compareValue = toNumberIfNumeric(compareObj[theIndex]);
+                }        
+            }
+            data[j+1] = currentObj;
+        }
     }
-    data[j+1] = currentObj;
-  }
-  
-	
-    }
-  
-  return data;
-   }
+    return data;
+}
 
  
 
@@ -1986,7 +1988,6 @@ tHdrStr += "<div class=\"clearfix\"></div>";
 JSSHOP.shared.getSrtdArr = function(tSortArr, tSrtIdx) {
 hasr = "n";
 fullstr = "";
-var arrToFill = "";
 var tmpSordr = "sortAsc";
 if(currSortIdx[tSrtIdx]) {
 if(currSortIdx[tSrtIdx] == "sortAsc") {
@@ -2850,6 +2851,11 @@ function setCurrUsrsArr(tCUAstrA, tCUAstrB, tCUAstrC) {
  
 function setCurrPrpsArr(tCPAstrA, tCPAstrB, tCPAstrC) {
     try {
+        currPstsPrpsArr = null;
+
+        currPstsPrpsArr = "";
+        currPstsPrpsArr = [];
+
     currPstsPrpsArr = JSON.parse(tCPAstrB);
     JSSHOP.ui.getPickerDiv("props");
     } catch (e) {
@@ -2892,7 +2898,8 @@ JSSHOP.ui.setPickerVal = function(tPVelem, tPVtype, tPVixd, tPVid) {
                 tFllPrpsObj = currPstsPrpsArr[tPVixd];
                 tShrtSlctdPObj = {};
                 tShrtSlctdPObj["_id"] = tFllPrpsObj._id;
-                tShrtSlctdPObj["ptitle"] = tFllPrpsObj.ptitle;
+                tShrtSlctdPObj["ptitle"] = tFllPrpsObj.pd_prptitle;
+                tShrtSlctdPObj["pdesc"] = tFllPrpsObj.pd_prpdesc;
                 tShrtSlctdPObj["ptype"] = tFllPrpsObj.ptype;
                 tShrtSlctdPObj["stype"] = tFllPrpsObj.stype;
                 tShrtSlctdPObj["pimage"] = tFllPrpsObj.pimage;
@@ -2938,10 +2945,14 @@ JSSHOP.ui.getPickerStr = function(tPDtype) {
         break;
         case "props":
         for(var i = 0; i < currPstsPrpsArr.length; i++) {
+            decdPttleSA = decodeURIComponent(currPstsPrpsArr[i].pd_prptitle);
+
+            lzdPrpTtl = LZString.decompressFromEncodedURIComponent(decdPttleSA);
+
             if(currSlctdPrpsObj["ob" + currPstsPrpsArr[i]["_id"]]) {
-                tGPSstr += "<div class=\"crsrPointer bkgdClrDlg\" onclick=\"JSSHOP.ui.setPickerVal(this, 'props','" + i +  "','" + currPstsPrpsArr[i]["_id"] + "');\">" + currPstsPrpsArr[i].ptitle + "</div>";
+                tGPSstr += "<div class=\"crsrPointer bkgdClrDlg\" onclick=\"JSSHOP.ui.setPickerVal(this, 'props','" + i +  "','" + currPstsPrpsArr[i]["_id"] + "');\">" + lzdPrpTtl + "</div>";
             } else {
-            tGPSstr += "<div class=\"crsrPointer bkgdClrWhite\" onclick=\"JSSHOP.ui.setPickerVal(this, 'props','" + i +  "','" + currPstsPrpsArr[i]["_id"] + "');\">" + currPstsPrpsArr[i].ptitle + "</div>";
+            tGPSstr += "<div class=\"crsrPointer bkgdClrWhite\" onclick=\"JSSHOP.ui.setPickerVal(this, 'props','" + i +  "','" + currPstsPrpsArr[i]["_id"] + "');\">" + lzdPrpTtl + "</div>";
             }
         }
         default:
@@ -2985,12 +2996,17 @@ JSSHOP.ui.getPickerDiv = function(tPDtype) {
             if(currPstsPrpsArr[0]) {
                 JSSHOP.ui.popFillObox(JSSHOP.ui.getPickerStr(tPDtype), "&#xe5cd;", "Property List", "yes", "yes");
             } else {
+                /*
                 tmpDOys = {};
                 tmpDOys["ws"] = "where _id > ?";
                 tmpDOys["wa"] = [0];
                 tmpDOys["l"] = 12;
                 oiy = getNuDBFnvp("property",5,null,tmpDOys);
-                doQComm(oiy["rq"], null, "setCurrPrpsArr");
+                */
+               newSCPArrQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = '" +  usrlang + "' or pd.pd_prptlng = '" + deflang + "') order by rand() limit 20";
+
+                // use statement to get title and descs from propdescs table
+                doQComm(newSCPArrQstr, null, "setCurrPrpsArr");
             }
             break;
             default:
@@ -3859,34 +3875,47 @@ try {
     switch(tmpSsite) {
         case "facebook":
             tSurl = "https://www.facebook.com/sharer/sharer.php?u=" + tmpSurl;
+            window.open(tSurl, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
             break;
         case "twitter":
             tSurl = "https://twitter.com/intent/tweet?text=" + tmpSttl + "&url=" + tmpSurl;
+            window.open(tSurl, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
             break;
         case "linkedin":
             tSurl = "https://www.linkedin.com/shareArticle?mini=true&url=" + tmpEncSurl + "&title=" + tmpEncSttl + "&summary=" + tmpEncSdsc + "&source=LinkedIn";
+            window.open(tSurl, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
             break;
         case "whatsapp":
             tSurl = "https://api.whatsapp.com/send?text=" + tmpSttl + " " + tmpSurl;
-             break;
+            window.open(tSurl, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+            break;
         case "pinterest":
             tSurl = "https://pinterest.com/pin/create/button/?url=" + tmpSurl + "&media=" + tmpSimg + "&description=" + tmpSttl;
-            break;
-            case "instagram":
-            tSurl = "https://www.instagram.com/pin/create/button/?url=" + tmpSurl + "&media=" + tmpSimg + "&description=" + tmpSttl;
+            window.open(tSurl, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
             break;
         case "email":
             tSurl = "mailto:?subject=" + tmpSttl + "&body=" + tmpSdsc + " " + tmpSurl;
             break;
             case "sms":
             tSurl = "sms:?body=" + tmpSttl + " " + tmpSurl;
+            window.open(tSurl, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+            break;
+        case "telegram":
+            tSurl = "https://t.me/share/url?url=" + tmpEncSurl + "&text=" + tmpEncSttl;
+            window.open(tSurl, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400")
+            break;
+            case "copy link":
+            tSurl = tmpASurl;
+            // copy link to clipboard
+            navigator.clipboard.writeText(tSurl).then(() => {
+                alert("Link copied to clipboard");
+            });
             break;
         default:
             break;
     }
     JSSHOP.ui.closeLbox();
    //  document.location.href = tmpSurl;
-    window.open(tSurl, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
 } catch(e) {
 alert("no JSSHOP.ui.doShare: " + e);
 }
@@ -3895,7 +3924,10 @@ alert("no JSSHOP.ui.doShare: " + e);
 
 
 JSSHOP.ui.showShareBox = function(tmpMsgType, tmpMsgVal){
-try {
+    console.log("showShareBox: " + tmpMsgType + " :: " + tmpMsgVal);
+try {} catch(e) {
+alert("no JSSHOP.ui.showShareBox: " + " " + tmpMsgType + " " + e);
+}
     tShareMsgSTr = "";
     tShareMsgUrl = "";
     tShareMsgImg = "";
@@ -3921,7 +3953,7 @@ try {
                 // tShareMsgTtl = tmpPrpObj.ptitle;
                 // tShareMsgDsc = tmpPrpObj.pcontent;
                 // clean and cut both title and content at 100 chars
-                tUnzpdMsgDsc =  LZString.decompressFromEncodedURIComponent(tmpPrpObj.pcontent);
+                tUnzpdMsgDsc =  LZString.decompressFromEncodedURIComponent(tmpPrpObj.pd_prpdesc);
                 tCleanMsgTtl = tmpPrpObj.ptitle.replace(/<\/?[^>]+(>|$)/g, "");
                 tCleanMsgDsc = tUnzpdMsgDsc.replace(/<\/?[^>]+(>|$)/g, "");
                 tShareMsgTtl = tCleanMsgTtl.substring(0, 100);
@@ -3959,13 +3991,33 @@ tClogoimg = c_logoimg.value;
             tShareMsgImg = tClogoimg;
             tShareMsgTtl = c_name.value;
             tShareMsgDsc = tCdescStr;
-            break;           
+            break;  
+            case "update":
+                tUpdateObj  = currUpdateArr[tmpMsgVal];
+                console.log("tUpdateObj: " + JSON.stringify(tUpdateObj));
+            tShareMsgSTr = stxt[72] + " " + stxt[19];
+            tShareMsgUrl = currWebHome + "index.html?tupid=" + tUpdateObj._id;
+            tShareMsgImg = currWebHome + "images/ucontent/" + tUpdateObj.p_image;
+            tShareThmbImg = "images/ucontent/s_thumb" + tUpdateObj.p_image;       
+            tmShareMsgTtl = tUpdateObj.p_title;
+            tShareMsgTtl = /* url decoded */ decodeURIComponent(tmShareMsgTtl);
+            if(tShareMsgTtl.length < 1) {
+                tShareMsgTtl = "Check out this update on 1Place4Ads";
+            }
+            tUnzpdMsgDsc = LZString.decompressFromEncodedURIComponent(tUpdateObj.p_content);
+            tCleanMsgDsc = tUnzpdMsgDsc.replace(/<\/?[^>]+(>|$)/g, "");
+            tShareMsgDsc = tCleanMsgDsc.substring(0, 100);
+            if(tShareMsgDsc.length < 1) {
+                tShareMsgDsc = "Check out this update on 1Place4Ads";
+            }
+
+            break;         
             default:
             break;
     }
     tShareMsgSTr += " :: " + tmpMsgVal;
-    tShareSIteArr = ["facebook","whatsapp","twitter","linkedin","pinterest","email","sms"];
- 
+    tShareSIteArr = ["facebook","whatsapp","twitter","linkedin","pinterest","email","sms","telegram","copy link"];
+
     tShareMsgStr = "<div class=\"collection\">";
     tShareMsgStr += "<div class=\"\">";
 
@@ -3997,9 +4049,7 @@ tClogoimg = c_logoimg.value;
     tShareMsgStr += "</div>";
     JSSHOP.ui.popAndFillLbox(tShareMsgStr);
 // JSSHOP.ui.popAndFillLbox(tmpMsgType + " :: " + tmpMsgVal);
-} catch(e) {
-alert("no JSSHOP.ui.showShareBox: " + e);
-}
+
 };
 
 var finishMMupload = function(theMMum) {
@@ -6620,6 +6670,7 @@ return strHtml;
 // template functions
 
 function doUpdteMDDSlct(apld, aaw,aww,cww) {
+    console.log("doUpdteMDDSlct: " + apld + " " + aaw + " " + aww + " " + cww);
     tPsLctPlObj = null;
     tPsLctPlarr = [];
     tDDiid = "";
@@ -6669,7 +6720,13 @@ function jshp_ads_showUpdtsFeed(aaup,bbup,ccup) {
     tUdtsStr = "";
     tUdtsArr = [];
     tUdtsArr = JSON.parse(bbup);
-     
+    tUdtsObj = null;
+    tDDUdteObj = null;
+ 
+    currUpdateArr = null;
+     currUpdateArr = "";
+    currUpdateArr = [];
+     currUpdateArr = tUdtsArr;
     for(ided = 0; ided < tUdtsArr.length; ided++) {
         tUdtsObj = tUdtsArr[ided];
         tCanPost = "yes";
@@ -6717,8 +6774,8 @@ tUpdteListObj["fav"] = stxt[73];
 
         tDDUpdateStr = JSSHOP.ui.getNuBSdropDstr(tDDUdteObj);
 
-        
-        tUdtsStr += "<div class=\"col-md-6 slmtable bkgdClrWhite bottom-shadow\" style=\"float:left;margin-top:18px;padding:0px;\">";
+
+        tUdtsStr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;margin: 0 auto;\">";
         tUdtsStr += "<table style=\"width: 100%\"><tr><td style=\"min-width:40px;\">";
         tUdtsStr += "<a href=\"javascript:eindex('aa-show-user', 'pid=aa-show-user&tuid=" + tUdtsObj.p_uid + "');\" class=\"crsrPointer\">";
         tUdtsStr += "<div><img alt=\"Profile\" src=\"images/user/" + tUdtsObj.u_icon + "\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">" + tUdtsObj.u_fullname + "</span></div></a>";
@@ -6778,7 +6835,11 @@ tUpdteListObj["fav"] = stxt[73];
                 tUdtsStr +=  tUpPcontent;
                 break;
             case "pimage":
-                tUdtsStr += "<img src=\"images/ucontent/" + tUdtsObj.p_image + "\" alt=\"pimage\" class=\"img100p\">";
+                imgprefx = "m_thumb";
+                if(pid == "aa-show-update"){
+                imgprefx = "";
+                }
+                tUdtsStr += "<img src=\"images/ucontent/" + imgprefx + tUdtsObj.p_image + "\" alt=\"pimage\" class=\"img100p\">";
 
                 tUdtsStr += "<div class=\"bg-gray quantity px-4 pt-4\">";
 
@@ -6923,6 +6984,7 @@ JSSHOP.ads.doUpdatesFeed = function(tUFCnfObj) {
         tupuid = tUFCnfObj.upuid;
         tQstr += " and p.p_uid = " + tUFCnfObj.tupuid;
     }
+    tQstr += " and p.p_rtype = '5'";
 
 
     tQstr += " order by p._id desc";
@@ -6939,43 +7001,50 @@ JSSHOP.ads.doUpdatesFeed = function(tUFCnfObj) {
     console.log("doUpdatesFeed.tQstr: " + tQstr);
     doQComm(tQstr, null, tupcb);
 };
-
+function postInitWork()
+{
+  var editor = tinyMCE.getInstanceById('taDemoEdtr');
+  editor.getBody().style.backgroundColor = "#FFFF66";
+}
 JSSHOP.ads.intDemoEditor = function() {
+    // width is current viewport width
+    var ewidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    // set height to a 1.91:1 ratio based on the width
+    var eheight = Math.round(ewidth / 1.91);
     tinymce.init({
         selector: "textarea.inpDemoEdtr",
         theme: 'modern',
-        statusbar: false,
-        menubar: false,
+        statusbar: true,
+        menubar: true,
         branding: false,
+        // add custom Preview button to the toolbar
+        visual: false,
+        resize: true,
+        height: 500,
  
-plugins: ['textcolor colorpicker textpattern'],
-// toolbar1: 'forecolor backcolor | styleselect | bold italic',
-// add custom Preview button to the toolbar
-toolbar1: 'forecolor backcolor | styleselect | bold italic | preview',
-// add custom Preview button to the toolbar
-visual: false,
-height: 300,
-        content_css: [
+        // use tinymce in canvas
+
+        /* content_css: [
             'css/x_dev.css'
         ]
-        /*
+        */
         plugins: [
             'advlist autolink lists link image charmap print preview hr anchor pagebreak',
             'searchreplace wordcount visualblocks visualchars code fullscreen',
             'insertdatetime media nonbreaking save table contextmenu directionality',
-            'emoticons template paste textcolor colorpicker textpattern imagetools'
+            'emoticons template paste textcolor colorpicker textpattern imagetools code'
         ],
-        toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-        toolbar2: 'print preview media | forecolor backcolor emoticons',
+        toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image table',
+        toolbar2: 'print preview media | forecolor backcolor emoticons imagetools fontsizeselect | fontselect | code',
         image_advtab: true,
         templates: [
             { title: 'Test template 1', content: 'Test 1' },
             { title: 'Test template 2', content: 'Test 2' }
         ],
         content_css: [
-            '//www.tinymce.com/css/codepen.min.css'
+            'css/x_dev.css'
         ]
-            */
+            
 
         // ads custom fumction to preview the content
         // setup: function (editor) {
@@ -7027,26 +7096,117 @@ height: 300,
         }
     });
 
-
 };
-JSSHOP.ads.getEditorPrpStr = function(tSwUarr) {
-   tSwpStr = "";
-    tSwpStr += "<div class=\"edtr-container\">";
-    tSwpStr += "<div class=\"edtr-wrapper slmtable brdrCldrDlg\">";
-    for(i = 0; i < tSwUarr.length; i++) {
-        tSwUObj = tSwUarr[i];
-        tSuTstr = "<img src=\"" + currPrpImgsFldr + "/s_thumb" + tSwUObj.pimage + "\" style=\"width:100%;max-width:80px;min-width:80px\" class=\"rtable\">";
-        // create a tempate that includes the image and title in a table structure
-         tSwpStr += "<div class=\"edtr-grid rtable brdrClrHdr\" style=\"float:left;\">";
-        tSwpStr += "<table class=\"table table-striped\">";
-        tSwpStr += "<tr><td>" + tSuTstr + "</td><td>" + tSwUObj.ptitle + "</td></tr>";
-        tSwpStr += "</table>";
-        tSwpStr += "</div>";
+
+
+JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
+
+
+    tEdtrPrpsStr = "";
+    // tPrpDtarr is something like this:
+    /* {
+    "ob74": {
+        "_id": "74",
+        "ptitle": "Apartamento T2 a venda",
+        "ptype": "house",
+        "stype": "sell",
+        "pimage": "74_1742932000.jpg",
+        "price": "587",
+        "ploclat": "50.3307055",
+        "ploclng": "3.2525741611191146",
+        "location": "1",
+        "city": "Aniche",
+        "state": "Hauts-de-France"
+    },
+    "ob71": {
+        "_id": "71",
+        "ptitle": "Titulo.. Moradia... yyyyyy",
+        "ptype": "house",
+        "stype": "sell",
+        "pimage": "71_1734186393.jpg",
+        "price": "199",
+        "ploclat": "39.20830054059647",
+        "ploclng": "-8.626260302993321",
+        "location": "1",
+        "city": "Almeirim",
+        "state": "Santarem"
+    },
+    "ob70": {
+        "_id": "70",
+        "ptitle": "Titulo.. Moradia... yyyyyy",
+        "ptype": "apartment",
+        "stype": "sell",
+        "pimage": "70_1733075098.jpg",
+        "price": "199",
+        "ploclat": "39.82102676737835",
+        "ploclng": "-7.493080558612859",
+        "location": "1",
+        "city": "Castelo Branco",
+        "state": "Castelo Branco"
+    },
+    "ob69": {
+        "_id": "69",
+        "ptitle": "Titulo.. Moradia... ",
+        "ptype": "triplex",
+        "stype": "sell",
+        "pimage": "69_1730060259.jpg",
+        "price": "199",
+        "ploclat": "40.062023676257645",
+        "ploclng": "18.056985755896832",
+        "location": "",
+        "city": "Alezio",
+        "state": "Puglia"
     }
-    tSwpStr += "</div>";
-    tSwpStr += "<div class=\"edtr-pagination\"></div>";
-    tSwpStr += "</div>";
-    return tSwpStr;
+}
+    */
+    // given the class name and the array of properties, generate the editor string
+    // the editor string will be used to display the properties in the editor as a real estate property flyer
+    // using samples from the web and other sources
+    // also using bootstrap  libraries to make it look good
+    // use the example tPrpDtarr above to generate the editor string
+ // create a div string with a diagonal gradient fill from blue to white
+
+     tEdtrPrpsStr += "<div style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px;\" class=\"slmtable brdrClrDlg bkgdClrWhite\" id=\"dvTMCdemo\">";
+              tEdtrPrpsStr += "<table class=\"rtable bkgdClrWhite brdrClrDlg\" style=\"margin-bottom:10px;margin: 0 auto;\">";
+    tEdtrPrpsStr += "<tr><td class=\"txtBold txtClrHdr\" style=\"text-align:center;\">Properties</td></tr>";
+    tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\" style=\"text-align:center;\">Click on the property to view or edit</td></tr>";
+    tEdtrPrpsStr += "</table>";
+    tEdtrPrpsStr += "<hr>";
+     for(i = 0; i < tPrpDtarr.length; i++) {
+        tPrpDtObj = tPrpDtarr[i];
+        tPrpImgStr = "<img src=\"" + currPrpImgsFldr + "/" + tPrpDtObj.pimage + "\" style=\"min-width:150px;max-width:160px;text-align:center;margin-right:3px;min-height:150px;max-height:160px;\" class=\"slmtable brdrClrDlg\" alt=\"Property Image\">";
+         tEdtrPrpsStr += "<table class=\"rtable bkgdClrWhite brdrClrDlg\">";
+        tEdtrPrpsStr += "<tr><td>" + tPrpImgStr + "</td><td style=\"width:100%;vertical-align:top;\">";
+        tEdtrPrpsStr += "<div class=\"\" style=\"float:left;\">";
+        tEdtrPrpsStr += "<table class=\"\">";
+        tEdtrPrpsStr += "<tr><td class=\"txtBold txtClrHdr\">" + tPrpDtObj.ptitle + "</td></tr>";
+        tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\">" + tPrpDtObj.ptype + " - " + tPrpDtObj.stype + "</td></tr>";
+        tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\">" + tPrpDtObj.city + ", " + tPrpDtObj.state + "</td></tr>";
+        tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\">" + tPrpDtObj.price + " &euro;</td></tr>";
+        tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\">" + tPrpDtObj.location + "</td></tr>";
+
+        tEdtrPrpsStr += "</table>";
+        tEdtrPrpsStr += "</div>"; // end of edtr-grid rtable brdrClrHdr
+        tEdtrPrpsStr += "</td></tr></table>";
+        // only add <hr> if not the last property
+        if(i < tPrpDtarr.length - 1) {
+            tEdtrPrpsStr += "<hr>";
+        }
+    }
+    // add the seller information
+    tEdtrPrpsStr += "<div class=\"txtSmall txtClrHdr\" style=\"text-align:center;\">Seller Information</div>";
+    tEdtrPrpsStr += "<div class=\"edtr-grid rtable brdrClrHdr\" style=\"float:left;\">";
+    tEdtrPrpsStr += "<table class=\"table table-striped\">";
+    tEdtrPrpsStr += "<tr><td><img src=\"images/user/" + u_icon.value + "\" class=\"icnRndnUser\"></td>";
+    tEdtrPrpsStr += "<td>" + u_fullname.value + "<br>" + u_email.value + "<br>"  + "</td>";
+    tEdtrPrpsStr += "</tr></table>";
+    tEdtrPrpsStr += "</div>"; // end of edtr-grid rtable brdrClrHdr
+    // add clear fix to the end of the div
+    tEdtrPrpsStr += "<div style=\"clear:both;\"></div>";
+    tEdtrPrpsStr += "</div>"; // end of vertical gradient div
+    
+    
+    return tEdtrPrpsStr;
 };
 
 JSSHOP.ads.xgetEditorPrpStr = function(tSwUarr) {
@@ -7266,7 +7426,7 @@ function doImgPstCntntPk(tSCPel, tSCPval, tSCPtxt) {
 
         tDVa = document.createElement("div");
         tDVa.style = "float:right;margin-left:10px;";
-        tDVa.innerHTML = "<a href=\"javascript:JSSHOP.ui.getPickerDiv('" + tSCPval + "');\">" + " Select  "  + " (" + numOfSlctdKeys + ")</a>";
+        tDVa.innerHTML = "<a href=\"javascript:JSSHOP.ui.getPickerDiv('" + inpImgPstCntnt.value + "');\">" + " Select  "  + " (" + numOfSlctdKeys + ")</a>";
         tdDDinpImgPstCntnt.appendChild(tDVa);
     } catch(e) {
         alert("doImgPstCntntPk: " + e);
@@ -7682,6 +7842,258 @@ JSSHOP.ads.doSwprConfigPop = function() {
 console.log("doSwiperConfigPop: " + e);
 }
 };
+
+
+/*
+var setPropImgs = function(theAIa, theAIb, theAIc) {
+	try {
+        console.log("setPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
+
+    if(theAIb.indexOf("_id") != -1) {
+
+		tAiretArr = JSON.parse(theAIb);
+		var len = tAiretArr.length;
+        tstr = "";
+        iint = 0;
+        while (iint < len) {
+            if(tAiretArr[iint]["m_file"] == c_logoimg.value) {
+                tstr += "<div style=\"float:left\" class=\"crsrPointer brdrClrRed\">";
+            } else {
+			tstr += "<div style=\"float:left\" class=\"crsrPointer\">";
+            }
+ 			tstr += "<img src=\"admin/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
+			tstr += "</div>";
+ 
+			iint++;
+		}
+		document.getElementById("dvProdImgs").innerHTML = tstr;
+	}
+	} catch(e) {
+		alert("setPropImgs: " + e);
+	}
+};
+*/
+var panorama;
+
+async function initGMap() {
+    tLocLat = ploclat.value;
+tLocLng = ploclng.value;
+ 
+    if(currGglSVloaded == "no") {
+        currGglSVloaded = "yes";
+(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+    key: gglSKey,
+    v: "beta",
+    // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+    // Add other bootstrap parameters as needed, using camel case.
+  });
+    }
+
+      var { Map3DElement, MapMode, Marker3DElement, Marker3DInteractiveElement } = await google.maps.importLibrary("maps3d");
+ 
+    var { LatLng } = await google.maps.importLibrary("geometry");
+     var { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+     var { PinElement } = await google.maps.importLibrary("marker");
+    var { DrawingLibrary } = await google.maps.importLibrary("drawing");
+ 
+     
+  }
+
+var setPropertyImgs = function(theAIa, theAIb, theAIc) {
+    console.log("setPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
+    intIFrmHght = 0;
+    hasGglMap = "no";
+    tImgAdArr = null;
+    tImgAdArr = "";
+    tImgAdArr = [];
+    if(theAIb.indexOf("_id") != -1) {
+		tAiretArr = JSON.parse(theAIb);
+		awlen = tAiretArr.length;
+        tstr = "";
+        tpdSocLnksStr = "";
+        iirnt = 0;
+
+            
+            otobStr = "ob" + theAIa;
+      
+    mGPIobj = currSlctdPrpsObj[otobStr];
+    mGPIImg = mGPIobj.pimage;
+    tSPIttlStr = LZString.decompressFromEncodedURIComponent(mGPIobj.ptitle);
+   document.getElementById("tmp_p_title").value = tSPIttlStr;
+    tDesc = LZString.decompressFromEncodedURIComponent(mGPIobj.pdesc);
+    tinyMCE.activeEditor.setContent(tDesc);
+    console.log("setPropertyImgs: " + mGPIobj.ptitle + " " + mGPIImg);
+    // set pcontent editor 
+        /* get minimum width of images
+        tImage = new Image();
+        tImage.src = "images/property/" + tAiretArr[0]["m_file"];
+        tImage.onload = function() {
+            // alert("Width: " + this.width + " Height: " + this.height);
+            // alert("Width: " + this.width + " Height: " + this.height);
+        }
+            */
+        // tstr += "<div class=\"swiper\"  style=\"max-height:280px;max-width:500px;\"> <div class=\"swiper-wrapper\"  style=\"min-height:60px;max-height:280px;max-width:500px;margin: 0 auto\">";
+       tPrpFlyerMImgSTr = "<div style=\"background-color:#FFFFFF;min-height:480px;background-image:url('" + currPrpImgsFldr + "/" + mGPIImg + "');no repeat;background-size:cover;\" id=\"dvTMCdemo\">";
+
+   tPrpFlyerMImgSTr += "<table><tr><td>";
+   tPrpFlyerMImgSTr += "<span class=\"txtBig tglmtdnml\">" + mGPIobj.ptitle + "</span>";
+   tPrpFlyerMImgSTr += "</td></tr><tr><td>";
+   tstr = "<table><tr>";
+   while (iirnt < 5) {
+       tIRFname = tAiretArr[iirnt]["m_file"];
+       tIRcatid = tAiretArr[iirnt]["m_catid"];
+            if(tIRcatid == "5")  {
+            tImageFstr = "images/property/" + tAiretArr[iirnt]["m_file"];
+            tIsrcStr = "images/property/m_thumb" + tAiretArr[iirnt]["m_file"];
+            tstr += "<td><img class=\"imFlyrWttl\" src=\"images/property/m_thumb" + tAiretArr[iirnt]["m_file"] + "\"  alt=\"image\"><br><span class=\"txtSmall tglmtdnml\">" + tAiretArr[iirnt]["m_title"] + "</span></td>";
+            } else if(tIRcatid == "20") {
+                hasGglMap = "yes";
+                tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
+                tAudecd = tAiretArr[iirnt]["m_file_thumb"];
+               tUrlded = decodeURIComponent(tAudecd);
+                tLuncthm = LZString.decompressFromEncodedURIComponent(tUrlded);
+                // tUnZpd =  tLuncthm.replace("&center", "&amp;center");
+                tUnZpd =  "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+               //  tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initStreetView();\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tLuncthm + "\"  alt=\"image\"></a> </div>";
+               // doSVLoad(ploclat.value, ploclng.value);
+               tstr += "<td><img class=\"imFlyrWttl\" src=\"" + tUnZpd + "\"  alt=\"image\"><br><span class=\"txtSmall tglmtdnml\">" + tAiretArr[iirnt]["m_title"] + "</span></td>";
+            } else if(tIRcatid == "25") {
+                hasGglMap = "yes";
+                tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
+                tULchm = tAiretArr[iirnt]["m_file_thumb"];
+                tFthumb = decodeURIComponent(tAiretArr[iirnt]["m_file_thumb"]);
+                tLuncthm = LZString.decompressFromEncodedURIComponent(tFthumb);
+                tUnZpd =  tLuncthm.replace("&center", "&amp;center");
+                tUnZpd =  "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                //             tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:setPropMainImg('" + tImageFstr + "');\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"images/property/s_thumb" + tAiretArr[iirnt]["m_file"] + "\"  alt=\"image\"></a> </div>";
+                tstr += "<td><img class=\"imFlyrWttl\" src=\"" + tUnZpd + "\"  alt=\"image\"><br><span class=\"txtSmall tglmtdnml\">" + tAiretArr[iirnt]["m_title"] + "</span></td>";
+             }  else if(tIRcatid == "30") {
+                hasGglMap = "yes";
+                tLZuncd =  tIRFname;
+                tLuncthm = tAiretArr[iirnt]["m_file_thumb"];
+                tuRldssd = decodeURIComponent(tLuncthm);
+                tUnAZpd = LZString.decompressFromEncodedURIComponent(tuRldssd);
+                tUnZpd =  tUnAZpd.replace("&center", "&amp;center");
+                tUnZpd =  "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                console.log("setPropImgs: 30 " + tUnZpd);
+            tThumbImg = tLuncthm;
+            theSplitThmnb = tThumbImg.split("|");
+            theTmnbLat = theSplitThmnb[0];
+            theTmnbLng = theSplitThmnb[1];
+            theTmnbAlt = theSplitThmnb[2];
+            // tMpType = "hybrid";
+            tMpType = "satellite";
+            console.log("show3DImages: " + theTmnbLat + " " + theTmnbLng + " " + theTmnbAlt);   
+            tCntrMapLat = theTmnbLat - 0.0001;
+            tCntrMapLng = theTmnbLng;
+            tZmLvl = 20;
+            tIUwidth = 240;
+            tIUheight = 180;
+
+            // tLZuncomp = LZString.decompressFromEncodedURIComponent(tThumbImg);
+            //  			tstr += "<img src=\"images/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
+             // tAVImgUstr = "https://maps.googleapis.com/maps/api/staticmap?key=" + gglSKey + "&size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng + "&zoom=" + tZmLvl + "&maptype=" + tMpType;
+            tAVImgUstr = tUnZpd;
+            tstr += "<td><img class=\"imFlyrWttl\" src=\"" + tAVImgUstr + "\" ><br><span class=\"txtSmall tglmtdnml\">" + tAiretArr[iirnt]["m_title"] + "</span></td>";
+            // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initThreeDView(" + theTmnbLat + "," + theTmnbLng + "," + theTmnbAlt + ");\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tAVImgUstr + "\"  alt=\"image\"></a> </div>";
+            // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initNuThreeDView('"  + tAVImgUstr + "');\">" + t3DImgStr + "</a> </div>";
+              } else {
+                // alert("setPropImgs: " + tIRFname + " " + tIRcatid);
+                intIFrmHght += 1000;
+         // tmpSocLinksArr.push(tIRFname);
+            tmpSocLinksArr.push(tAiretArr[iirnt]);
+             }
+            
+    
+			iirnt++;
+		}
+ 
+        tstr += "</tr></table>";
+   tPrpFlyerMImgSTr += tstr;
+   tPrpFlyerMImgSTr += "</td></tr></table>";
+   tPrpFlyerMImgSTr += "</div>";
+   
+        // using tPrpFlyerMImgSTr, create a property listing html template from the image
+        
+
+     
+          tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tPrpFlyerMImgSTr + "</textarea>";
+//tDVDstr = "<div class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" contenteditable=\"true\" spellcheck=\"false\" data-ms-editor=\"false\">" + tPrpFlyerMImgSTr + "</div>";
+     tDVDstr += "<div class=\"clearfix\"></div><br>";
+    document.getElementById("dvDemoView").innerHTML = tDVDstr;
+    setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+    
+       //  document.getElementById("single-property").appendChild(tmpItDiv);
+       // setTimeout(function(){ doSwipe(); }, 1000);
+              // JSSHOP.ads.loadNuSwiperObj(tSwpCnfgObj);
+           
+	}
+ 
+ 
+    // AIzaSyAiBR8BEPj2YCepKplisQKK709r1TI48Vo
+	// alert(inpPropCtrct.value);
+	// https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2
+   //  JSSHOP.loadScript("https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&ttime=" + JSSHOP.getUnixTimeStamp(), doFBFLoad,"js");
+};
+
+
+
+
+function old_setPropertyImgs(tspA, tspB, tspC) {
+    console.log("Setting property images for: " + tspA + ", " + tspB + ", " + tspC);
+    if(tspB.indexOf("_id") !== -1) {
+        tPrpIarr = JSON.parse(tspB);
+        spLen = tPrpIarr.length;
+        ispii = 0;
+   tPrpFlyerSTr = "";
+        while (ispii < spLen) {
+ 
+                tPrpFlyerSTr += "<div style=\"float:left\" class=\"crsrPointer\">";
+     
+            tPrpFlyerSTr += "<img src=\"" + currPrpImgsFldr + "/" + tPrpIarr[ispii]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tPrpIarr[ispii]["_id"] + "','" + tPrpIarr[ispii]["m_file"] + "'));\">";
+            tPrpFlyerSTr += "</div>";
+            ispii++;
+        }
+ 
+        console.log("tPrpFlyerSTr: ", tPrpFlyerSTr);
+
+    }
+
+            otobStr = "ob" + tspA;
+      
+    mGPIobj = currSlctdPrpsObj[otobStr];
+    mGPIImg = mGPIobj.pimage;
+
+   tPrpFlyerMImgSTr = "<div style=\"float:left\" class=\"crsrPointer\">";
+   tPrpFlyerMImgSTr += "<img src=\"" + currPrpImgsFldr + "/" + mGPIImg + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + otobStr + "','" + mGPIImg + "'));\">";
+   tPrpFlyerMImgSTr += "</div>";
+    tPrpFlyerMImgSTr += tPrpFlyerSTr;
+
+
+     
+         tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tPrpFlyerMImgSTr + "</textarea>";
+     tDVDstr += "<div class=\"clearfix\"></div><br>";
+    document.getElementById("dvDemoView").innerHTML = tDVDstr;
+    setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+    
+
+}
+
+function getPropertyImages(propData) {
+    // Create a new function to get the property images from q_media
+    console.log("Getting property images for: " + JSON.stringify(propData));
+    // Add your logic to retrieve the images here
+    var ipid = propData._id;
+    console.log("getPropertyImages.ipid: " + ipid);
+    var tmpFobj = null;
+    tmpFobj = {};
+    tmpFobj["ws"] = "where m_pid=? and m_rtype=?";
+    tmpFobj["wa"] = [ipid, 5];
+	tmpFobj["o"] = "m_vala desc";
+    oi = getNuDBFnvp("qmedia", 5, null, tmpFobj);
+    doQComm(oi["rq"], ipid, "setPropertyImgs");
+}
+
 JSSHOP.ads.trnsltImgPstObj = function() {
     tSCval = inpImgPstCntnt.value;
    console.log("trnsltImgPstObj.tSCval: == props" + tSCval);
@@ -7695,7 +8107,10 @@ JSSHOP.ads.trnsltImgPstObj = function() {
                 tSlctdPrpsArr.push(currSlctdPrpsObj[key]);
             }
         }
+        // if tSlctdPrpsArr has only one property, create a new function to get the property images from q_media
+    
         tSwprStr = JSSHOP.ads.getEditorPrpStr(tSlctdPrpsArr);
+     
     } else if(tSCval == "users") {
         tSlctdUsrsArr = null;
         tSlctdUsrsArr = "";
@@ -7708,11 +8123,15 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         tSwprStr = JSSHOP.ads.getEditorUStr(tSlctdUsrsArr);
     }
     // create new editor in dvDemoView
-    
+        if (tSlctdPrpsArr.length === 1) {
+        getPropertyImages(tSlctdPrpsArr[0]);
+        
+        } else {
      tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tSwprStr + "</textarea>";
      tDVDstr += "<div class=\"clearfix\"></div><br>";
     document.getElementById("dvDemoView").innerHTML = tDVDstr;
     setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+        }
     // tinyMCE.activeEditor.setContent(tSwprStr);
  };
 
@@ -9525,7 +9944,7 @@ JSSHOP.ads.getCoAprsDiv = function(tPlcObj, theTprfx) {
 
     
 
-        tRSstr += "<div  id=\"" + theTprfx + "dvAprsMsg\" class=\"form-control bkgdClrTtl\" contenteditable=\"true\" spellckeck=\"false\" data-ms-editor=\"false\">";
+        tRSstr += "<div  id=\"" + theTprfx + "dvAprsMsg\" class=\"form-control bkgdClrTtl\" contenteditable=\"true\" spellcheck=\"false\" data-ms-editor=\"false\">";
     if(JSSHOP.ads.getPrtsPrefCC("mk") == "noQvalue") {
     tnkMane = "[" + stxt[102] + " " + stxt[44] + "]";
     } else {

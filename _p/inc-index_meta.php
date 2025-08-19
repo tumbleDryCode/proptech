@@ -12,16 +12,27 @@
  $pgDesc =  "propsgo.com";
  $siteTitle = "propsgo.com";
  $pgTitle = "propsgo.com ";
+ $pgType = "website";
+ $usrlang = "pt_pt";
+ $deflang = "pt_pt";
+ // if cookie usrlang
+ if(isset($_COOKIE["usrlang"])) {
+     $usrlang = $_COOKIE["usrlang"];
+     $deflang = $_COOKIE["usrlang"];
+ }
  
 
  // include $_SERVER['DOCUMENT_ROOT'] . "/incasa/_p/DumDatabase.php";
 // $_SERVER['DOCUMENT_ROOT'] does not work in this context, use relative path to _p/DumDatabase.php
-require_once dirname(__FILE__) . '/_p/DumDatabase.php';
+require_once dirname(__FILE__) . '/DumDatabase.php';
 if(isset($_GET["ditemid"])) {
     try {
      $itemid = $_GET["ditemid"];
      // get record from database
-    $q = "SELECT * FROM property WHERE _id = $itemid";
+   //  $q = "SELECT * FROM property WHERE _id = $itemid";
+   // anewQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id = " + prpid + " and p.prtype = '5' and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = '" +  usrlang + "' or pd.pd_prptlng = '" + deflang + "')";
+   $q = "SELECT p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc FROM property p, quser u, propdescs pd WHERE p._id = $itemid AND p.prtype = '5' AND p.uid = u._id AND pd.pd_prpid = p._id AND (pd.pd_prptlng = '$usrlang' OR pd.pd_prptlng = '$deflang')";
+
     // send query to do.php
             $cdbf = new DumDatabase();
             $fJSonFldQs = $cdbf->fetch_cstmArr($q);
@@ -29,7 +40,7 @@ if(isset($_GET["ditemid"])) {
             // convert to json
             $tJsonSTr = "";
              while($row = $fJSonFldQs->fetch_assoc()) {
-                $title = $row["ptitle"];
+                $title = $row["pd_prptitle"];
                 /*
 
          
@@ -37,19 +48,19 @@ if(isset($_GET["ditemid"])) {
                     $description = $title;
                 }
                 */
-                $adescription = $row["pcontent"];
+                $adescription = $row["pd_prpdesc"];
                 if($adescription == "ns") {
                     $adescription = $title;
                 }
                 $unencdDesc = urldecode($adescription);
                 
                 // Include the LZString class
-                include_once '_p/LZCompressor/LZString.php';
-                include_once '_p/LZCompressor/LZData.php';
-                include_once '_p/LZCompressor/LZReverseDictionary.php';
-                include_once '_p/LZCompressor/LZUtil.php';
-                include_once '_p/LZCompressor/LZUtil16.php';
-                include_once '_p/LZCompressor/LZContext.php';
+                include_once 'LZCompressor/LZString.php';
+                include_once 'LZCompressor/LZData.php';
+                include_once 'LZCompressor/LZReverseDictionary.php';
+                include_once 'LZCompressor/LZUtil.php';
+                include_once 'LZCompressor/LZUtil16.php';
+                include_once 'LZCompressor/LZContext.php';
 
                 // Instantiate the LZString class
                 $lsDCls = new \LZCompressor\LZString();
@@ -67,10 +78,11 @@ if(isset($_GET["ditemid"])) {
                 $description = substr($strpDesc, 0, 160);
                 $pgDesc = $description;
 
- 
-                $pgTitle = $title;
-                $pgKeywords = $title;
-                $siteTitle = $title;
+                $udecodPgTtle = urldecode($title);
+                $LzdPgTtle = $lsDCls->decompressFromEncodedURIComponent($udecodPgTtle);
+                $pgTitle = $LzdPgTtle;
+                $pgKeywords = $pgTitle;
+                $siteTitle = $pgTitle;
 
                 $image = $row["pimage"];
                 if(stristr($image, "http")) {
@@ -110,6 +122,7 @@ if(isset($_GET["tupid"])) {
                 $tJsonSTr = "";
                  while($row = $fJSonFldQs->fetch_assoc()) {
                  $title = $row["p_title"];
+                 $pgTitle = $title;
                  /*
                  if($description == "ns") {
                       $description = $title;
@@ -122,12 +135,12 @@ if(isset($_GET["tupid"])) {
                  $unencdDesc = urldecode($adescription);
                  
                  // Include the LZString class
-                 include_once '_p/LZCompressor/LZString.php';
-                 include_once '_p/LZCompressor/LZData.php';
-                 include_once '_p/LZCompressor/LZReverseDictionary.php';
-                 include_once '_p/LZCompressor/LZUtil.php';
-                 include_once '_p/LZCompressor/LZUtil16.php';
-                 include_once '_p/LZCompressor/LZContext.php';
+                 include_once 'LZCompressor/LZString.php';
+                 include_once 'LZCompressor/LZData.php';
+                 include_once 'LZCompressor/LZReverseDictionary.php';
+                 include_once 'LZCompressor/LZUtil.php';
+                 include_once 'LZCompressor/LZUtil16.php';
+                 include_once 'LZCompressor/LZContext.php';
     
                  // Instantiate the LZString class
                  $lsDCls = new \LZCompressor\LZString();
@@ -146,12 +159,17 @@ if(isset($_GET["tupid"])) {
                     $siteTitle = $title;
                     $image = $row["p_image"];
                     if(stristr($image, "http")) {
-                        $image = $row["uimage"];
+                        $image = $row["p_image"];
                     } else if(stristr($image, ".")){
-                        $image = "https://dev.propsgo.com/images/updates/" . $row["p_image"];
+                        $image = "https://dev.propsgo.com/images/ucontent/" . $row["p_image"];
                     } else {
                         $image = "https://dev.propsgo.com/images/logo_og.png";
                     }
+                    if($row["p_ptype"] == "pimage") {
+                        $pgType = "image";
+                    } else {
+                        $pgType = "website";
+                    }   
                     $tJsonSTr = '{"ditemid":"' . $row["_id"] . '","ptitle":"' . $title . '","pdesc":"' .  $description . '","i_img":"' . $image . '"}';
                     }   //
                  } catch(Exception $ex) {
@@ -166,8 +184,9 @@ $oglocation = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
 $oglocation .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
 
 
-
- 
+$udecdPgTtle = urldecode($pgTitle);
+$pgTitle = $udecdPgTtle;
+ // encode the description
 
 $tMOGstr = "<meta name=\"description\" content=\"" . $pgDesc . "\">\n";
 $tMOGstr .= "<meta name=\"keywords\" contest>\n";
@@ -175,10 +194,10 @@ $tMOGstr .= "<meta property=\"og:description\" content=\"" . $pgDesc . "\">\n";
 $tMOGstr .= "<meta property=\"og:image\" content=\"" . $image . "\">\n";
 $tMOGstr .= "<meta property=\"og:site_name\" content=\"propsgo.com\">\n";
 $tMOGstr .= "<meta property=\"og:title\" content=\"" . $pgTitle . "\">\n";
-$tMOGstr .= "<meta property=\"og:type\" content=\"website\">\n";
+$tMOGstr .= "<meta property=\"og:type\" content=\"" . $pgType . "\">\n";
 $tMOGstr .= "<meta property=\"og:url\" content=\"" . $oglocation . "\">\n";
 // appID
-$tMOGstr .= "<meta property=\"fb:app_id\" content=\"1814864155722452\">\n";
+// $tMOGstr .= "<meta property=\"fb:app_id\" content=\"1814864155722452\">\n";
 $tMOGstr .= "<title>" . $pgTitle . "</title>\n";
 echo $tMOGstr;
 ?>

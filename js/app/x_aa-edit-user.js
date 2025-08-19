@@ -58,13 +58,14 @@ var doShopsList = function(a,theResp,c) {
 hasr = "n";
 fullstr = "";
 tFullTknCoSTr = "";
-var arrToFill = JSON.parse(theResp);
-var len = arrToFill.length;
+var arrUsrsEd = JSON.parse(theResp);
+ 
+var len = arrUsrsEd.length;
 var iint = 0;
 var pcid = 0;
 tstr = "";
 while(iint < len) {
-tssl = arrToFill[iint];
+tssl = arrUsrsEd[iint];
 tFullTknCoSTr += ":" + tssl._id + ":";
 tstr += "<tr>";
 // tstr += "<td>" + tssl._id + "</td>";
@@ -95,7 +96,7 @@ newel = document.createElement('div');
 
 tAddCoUrlSTr = "<span class=\"txtBold txctClrHdr bkgdClrNrml\"><a href=\"javascript:eindex('aa-edit-place','pid=aa-edit-place');\" class=\"txtBold txctClrHdr bkgdClrNrml\">+" + stxt[70] + "</a></span>";
 
-if(arrToFill[0]) {
+if(arrUsrsEd[0]) {
 strTHhtml = "<th><span style=\"margin-right: 10px; margin-top: 10px\" class=\"txtBold\">ID</span></th>";
 strTHhtml += "<th><span style=\"margin-right: 10px; margin-top: 10px\" class=\"txtBold\">ID</span></th>";
 

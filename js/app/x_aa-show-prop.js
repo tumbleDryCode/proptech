@@ -10,22 +10,41 @@ var tmpSVloclng = "0";
 var threedvmap = null;
 var tmpPrpDscsObj = null;
 var tmpPrpDscsObj = {};
+var tmpSVzoom = "";
+var tmpSaveBtnID = null;
+var gpmap = null;
+var currPgTitle = stxt[985];
+var threedmap = null;
+var isThreeDrun = "no";
+var currGglSVloaded = "no";
+
+var tmpMFarrObj = null;
+var tmpMFarrObj = {};
 // https://developers.google.com/maps/documentation/streetview/request-streetview
 if(currUrlArr.prpid) {
     prpid = currUrlArr.prpid;
 }
+if(currUrlArr.ditemid) {
+    prpid = currUrlArr.ditemid;
+    currUrlArr.prpid = prpid;
+}
+
+
 var panorama;
 
 async function initGMap() {
     tLocLat = ploclat.value;
 tLocLng = ploclng.value;
+ 
+    if(currGglSVloaded == "no") {
+        currGglSVloaded = "yes";
 (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
     key: gglSKey,
-    v: "alpha",
+    v: "beta",
     // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
     // Add other bootstrap parameters as needed, using camel case.
   });
-
+    }
 
       var { Map3DElement, MapMode, Marker3DElement, Marker3DInteractiveElement } = await google.maps.importLibrary("maps3d");
  
@@ -118,6 +137,8 @@ tmpThreeDLng = fLocLng;
 tmpThreeDAlt = fLocAlt;
 
 }
+
+/* */
 async function initNuThreeDView(tImgSrc) {
     tAVImgUstr = tUnZpd;
     console.log("initNuThreeDView: " + tImgSrc);
@@ -126,10 +147,239 @@ async function initNuThreeDView(tImgSrc) {
     JSSHOP.ui.showHideElement("dvThreeDView", "show");
     document.getElementById("dvThreeDView").innerHTML = "";
     advThreeView = document.getElementById('dvThreeDView');
-    advThreeView.innerHTML = "<img src=\"" + tImgSrc + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:setPropMainImg(this.src);\">";
-    advThreeView.innerHTML += "<div class=\"dvTxtBtns\"><input id=\"btnAEPadd\" type=\"button\" class=\"btnTxtLabel\" value=\"Save Image\" onclick=\"javascript:saveCurr3DImgUrl();\">";
-     
+    // advThreeView.innerHTML = "<img src=\"" + tImgSrc + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:setPropMainImg(this.src);\">";
+    // advThreeView.innerHTML += "<div class=\"dvTxtBtns\"><input id=\"btnAEPadd\" type=\"button\" class=\"btnTxtLabel\" value=\"Save Image\" onclick=\"javascript:saveCurr3DImgUrl();\">";
+     // set the 3d view to the image src
 }
+    
+
+
+    function doNuThreeDAnim(tNTDAurl) {
+        // remove the event gmp-animationend event listener
+        threedmap.removeEventListener('gmp-animationend', () => {
+            donada = "yes";});
+     
+        console.log("doNuThreeDAnim: " + tNTDAurl);
+        tNTDAobj = JSSHOP.shared.urlToArray(tNTDAurl);
+        tNTDAlat = tNTDAobj["center"].split(",")[0];
+        tNTDAlng = tNTDAobj["center"].split(",")[1];
+        tNTDAalt = tNTDAobj["altitude"];
+        tNTDAlat = parseFloat(tNTDAlat);
+        tNTDAlng = parseFloat(tNTDAlng);
+        tNTDAalt = parseFloat(tNTDAalt);
+        tNTtilt = tNTDAobj["tilt"];
+        tNTDheading = tNTDAobj["heading"];
+        tNTrange = tNTDAobj["range"];
+        tFNTrange = parseFloat(tNTrange);
+        tNTDtilt = parseFloat(tNTtilt);
+        tNTDheading = parseFloat(tNTDheading);
+        // set camera to tNTDAlat, tNTDAlng, tNTDAalt, tNTDtilt, tFNTrange
+        // set camera to tNTDAlat, tNTDAlng, tNTDAalt, tNTDtilt, tFNTrange
+
+        console.log("doNuThreeDAnim: " + tNTDAlat + " " + tNTDAlng + " " + tNTDAalt);
+        threedmap.flyCameraTo({
+            endCamera: {
+                center: { lat: tNTDAlat, lng: tNTDAlng, altitude: tNTDAalt },
+                tilt: tNTDtilt,
+                range: tFNTrange,
+            },
+            durationMillis: 2000
+        });
+        threedmap.addEventListener('gmp-animationend', () => {
+            threedmap.flyCameraAround({
+                camera: {
+                    center: { lat: tNTDAlat, lng: tNTDAlng, altitude: tNTDAalt },
+                    tilt: tNTDtilt,
+                    range: tFNTrange,
+                },
+                durationMillis: 8000,
+                rounds: 1
+            });
+        }, {once: true});
+        tmpThreeDLat = tNTDAlat;
+        tmpThreeDLng = tNTDAlng;
+        tmpThreeDAlt = tNTDAalt;
+        console.log("doNuThreeDAnim: " + tmpThreeDLat + " " + tmpThreeDLng + " " + tmpThreeDAlt);
+        isThreeDrun = "yes";
+    }
+
+
+
+    async function initNurThreeDView(tThreedPurl, tMdiaID) {
+            JSSHOP.ui.showHideElement("dvAPrpImg", "hide");
+    JSSHOP.ui.showHideElement("street-view", "hide");
+    JSSHOP.ui.showHideElement("dvThreeDView", "show");
+    // document.getElementById("dvThreeDView").innerHTML = "";
+    advThreeView = document.getElementById('dvThreeDView');
+   
+        
+        doNuSpinSet("dvThreeDCntnr", "big", null, "...");
+        if(tThreedPurl == "noQvalue") {
+            tLocLat = tmp_ploclat.value;
+            tLocLng = tmp_ploclng.value;
+            tLocAlt = 10;
+            tZmLvl = 16;
+            tMpType = "SATELLITE";
+            tCntrMapLat = tLocLat;
+            tCntrMapLng = tLocLng;
+            tCntrMapAlt = tLocAlt;
+            tFldHeading = 0;
+            tFldTilt = 67.5;
+            tFldRange = 500;
+            tFldAlt = 10;
+            tFldZoom = 16;
+             
+        } else {
+            // example 3d pop url:
+            // https://maps.googleapis.com/maps/api/staticmap?size=240x180&center=41.23088623703162,-8.536864106855056&key=AIzaSyAiBR8BEPj2YCepKplisQKK709r1TI48Vo&heading=0.00033512782688252757&tilt=67.49679872048947&iid=471&altitude=103.28568490813657&zoom=16&maptype=satellite
+            console.log("showNuThreeDPop: " + tThreedPurl);
+            tTDpopObj = JSSHOP.shared.urlToArray(tThreedPurl);
+            tLocLat = tTDpopObj["center"].split(",")[0];
+            tLocLng = tTDpopObj["center"].split(",")[1];
+            tLocAlt = tTDpopObj["altitude"];
+            tZmLvl = tTDpopObj["zoom"];
+            tMpType = tTDpopObj["maptype"];
+            tCntrMapLat = tLocLat;
+        tCntrMapLng = tLocLng;
+        tCntrMapAlt = tLocAlt;
+            tFldHeading = tTDpopObj["heading"];
+            tFldTilt = tTDpopObj["tilt"];
+            tFldRange = tTDpopObj["range"];
+            tFldAlt = tTDpopObj["altitude"];
+            tFldZoom = tTDpopObj["zoom"];
+           
+        }
+        fltdLat = parseFloat(tLocLat);
+        fltdLng = parseFloat(tLocLng);
+        fltheading = parseFloat(tFldHeading);
+        flttilt = parseFloat(tFldTilt);
+        fltzoom = parseFloat(tFldZoom);
+        fltdrange = parseFloat(tFldRange);
+        fltdaltitude = parseFloat(tFldAlt);
+        // set lat and lng to 10 meters south of the center of the map
+        xfltdLat = fltdLat;
+        xfltdLng = fltdLng;
+        advThreeDPop = document.getElementById('dvThreeDCntnr');
+
+
+        console.log("showNuThreeDPop: " + tLocLat + " " + tLocLng);
+        var mapthree;
+        var flyToCamera;
+        var dvThreeDView;
+ 
+
+     if(threedmap != null && threedmap != undefined && threedmap != "") {
+                    // append the map to the dvThreeDView div
+                    threedmap.stopCameraAnimation();
+                    threedmap.removeEventListener('gmp-animationend', () => {
+                        donada = "yes";});
+                        isThreeDrun = "no";
+                    advThreeDPop.innerHTML = "";
+                    advThreeDPop.append(threedmap);
+     } else {
+                     t3DBtnStr = "";
+            t3DBtnStr += "<div class=\"dvTxtBtns\">";
+            t3DBtnStr += "<table><tr><td>";
+            t3DBtnStr += "<input id=\"btnAEPplay\" type=\"button\" class=\"cls_button cls_button-small  txtSmall bkgdClrHdr txtClrWhite\" value=\"Play\" onclick=\"javascript:strtStpNuTDAnm('" + tThreedPurl + "');\">";
+            t3DBtnStr += "</td><td>";
+ 
+            t3DBtnStr += "</td></tr></table>";
+            t3DBtnStr += "</div>";
+        ttdBdv = document.createElement("div");
+        ttdBdv.innerHTML = t3DBtnStr;
+        advThreeView.appendChild(ttdBdv);
+      var { Map3DElement, MapMode, Marker3DElement, Marker3DInteractiveElement } = await google.maps.importLibrary("maps3d");
+      var { PinElement } = await google.maps.importLibrary("marker");
+         threedmap = new Map3DElement({
+          center: { lat: xfltdLat, lng: xfltdLng,  altitude: fltdaltitude },
+          tilt: flttilt,
+          range: fltdrange,
+          mode: MapMode.SATELLITE,
+          defaultUIDisabled: true,
+      
+        });
+
+            advThreeDPop.innerHTML = "";
+          advThreeDPop.append(threedmap);
+         // threedmap.bounds = {south: -48.30, west: 163.56, north: -32.86, east: -180};
+         threedmap.addEventListener('gmp-click', (event) => {
+            console.log("threedmap: " + JSON.stringify(event.position));
+
+            strtStpNuTDAnm(tThreedPurl);
+           // strtStpNuTDAnm(getCurr3DImgUrl(280,140));
+          });
+    
+          // add listener to log the range, tilt and heading of the map
+            threedmap.addEventListener('gmp-camera-changed', (event) => {
+                console.log("threedmap: camera changed: " + JSON.stringify(event.camera));
+            });
+
+
+
+    
+        }
+
+            // creat a save, play and stop button html string and append it to the dvThreeDPop div
+
+  
+        }
+
+
+
+    function startNuTDAnim(tNTDAurl) {
+        console.log("doNuThreeDAnim: " + tNTDAurl);
+        tNTDAobj = JSSHOP.shared.urlToArray(tNTDAurl);
+        tNTDAlat = tNTDAobj["center"].split(",")[0];
+        tNTDAlng = tNTDAobj["center"].split(",")[1];
+        tNTDAalt = tNTDAobj["altitude"];
+        tNTDAlat = parseFloat(tNTDAlat);
+        tNTDAlng = parseFloat(tNTDAlng);
+        tNTDAalt = parseFloat(tNTDAalt);
+        tNTtilt = tNTDAobj["tilt"];
+        tNTDheading = tNTDAobj["heading"];
+        tNTrange = tNTDAobj["range"];
+        tFNTrange = parseFloat(tNTrange);
+        tNTDtilt = parseFloat(tNTtilt);
+        tNTDheading = parseFloat(tNTDheading);
+        // set camera to 
+        console.log("doNuThreeDAnim: " + tNTDAlat + " " + tNTDAlng + " " + tNTDAalt);
+        threedmap.flyCameraTo({
+            endCamera: {
+                center: { lat: tNTDAlat, lng: tNTDAlng, altitude: 500 },
+                tilt: tNTDtilt,
+                range: tFNTrange,
+            },
+            durationMillis: 1000
+        }, {once: true});
+        threedmap.addEventListener('gmp-animationend', () => {
+            doNuThreeDAnim(tNTDAurl);
+        });
+        }
+
+
+    function strtStpNuTDAnm(tNTDAurl) {
+        console.log("strtStpNuTDAnm: " + tNTDAurl);
+        // check if animation is running
+ if(isThreeDrun == "no") {
+            isThreeDrun = "yes";
+            document.getElementById("btnAEPplay").value = "Stop";
+            startNuTDAnim(tNTDAurl);
+            // put the Stop word in the button
+
+        } else {
+            isThreeDrun = "no";
+            threedmap.removeEventListener('gmp-animationend', () => {
+                donada = "yes";
+            });
+            threedmap.stopCameraAnimation();
+            // put the Play word in the button
+            document.getElementById("btnAEPplay").value = "Play";
+
+        }
+    }
+
+ 
+// start the 3d view
   async function initThreeDView(tdvLat, tdvLng, tdvAlt) {
     // JSSHOP.ui.closeLbox();
     JSSHOP.ui.showHideElement("dvAPrpImg", "hide");
@@ -198,6 +448,7 @@ async function initNuThreeDView(tImgSrc) {
     advThreeView.append(tHlderDiv);
       setTimeout(function(){ doThreeDVAnim(xfltdLat, xfltdLng, tdvAlt); }, 1000);
   }
+ 
 
 function initStreetView() {
     // JSSHOP.ui.closeLbox();
@@ -271,6 +522,16 @@ function doSVLoad(tlat, tlng) {
         } else {
             initStreetView();
         }
+
+        if(isThreeDrun == "yes") {
+            isThreeDrun = "no";
+            threedmap.removeEventListener('gmp-animationend', () => {
+                donada = "yes";
+            });
+            threedmap.stopCameraAnimation();
+            // put the Play word in the button
+            document.getElementById("btnAEPplay").value = "Play";
+        }
 }
 
 
@@ -278,6 +539,18 @@ function doSVLoad(tlat, tlng) {
 
 
 function setPropMainImg(tPMImgSRC) {
+
+            if(isThreeDrun == "yes") {
+            isThreeDrun = "no";
+            threedmap.removeEventListener('gmp-animationend', () => {
+                donada = "yes";
+            });
+            threedmap.stopCameraAnimation();
+            // put the Play word in the button
+            document.getElementById("btnAEPplay").value = "Play";
+        }
+
+        
     console.log("setPropMainImg: " + tPMImgSRC);
     JSSHOP.ui.showHideElement("dvAPrpImg", "show");
     JSSHOP.ui.showHideElement("street-view", "hide");
@@ -387,9 +660,7 @@ return tmpRetStr;
 };
 
 var setSliderPropImgs = function(theAIa, theAIb, theAIc) {
-    console.log("setPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
-    console.log("setPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
-    console.log("setPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
+    console.log("setSliderPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
 	if(theAIb.indexOf("_id") != -1) {
 		tAiretArr = JSON.parse(theAIb);
 		var len = tAiretArr.length;
@@ -545,9 +816,10 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
             //  			tstr += "<img src=\"images/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
              // tAVImgUstr = "https://maps.googleapis.com/maps/api/staticmap?key=" + gglSKey + "&size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng + "&zoom=" + tZmLvl + "&maptype=" + tMpType;
 tAVImgUstr = tUnZpd;
-            t3DImgStr = "<img src=\"" + tAVImgUstr + "\" class=\"icnmedbtn slmtable\" onclick=\"JSSHOP.ui.popAndFillLbox(getPrdImgEditDv('" + tAiretArr[iint]["_id"] + "','" + tAVImgUstr + "'));\">";
+            t3DImgStr = "<img src=\"" + tAVImgUstr + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:initNurThreeDView('" + tAVImgUstr + "','" + tAiretArr[iint]["_id"] + "');\">";
             // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initThreeDView(" + theTmnbLat + "," + theTmnbLng + "," + theTmnbAlt + ");\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tAVImgUstr + "\"  alt=\"image\"></a> </div>";
-            tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initNuThreeDView('"  + tAVImgUstr + "');\">" + t3DImgStr + "</a> </div>";
+            // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initNuThreeDView('"  + tAVImgUstr + "');\">" + t3DImgStr + "</a> </div>";
+            tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initNurThreeDView('"  + tAVImgUstr + "','"+ /* qmedia _id */ tAiretArr[iirnt]["_id"] + "');\">" + t3DImgStr + "</a> </div>";
              } else {
                 // alert("setPropImgs: " + tIRFname + " " + tIRcatid);
                 intIFrmHght += 1000;
@@ -653,6 +925,46 @@ var getPropImgs = function() {
 
     }
 
+function doPrpMDDSlct(apld, aaw,aww,cww) {
+  tPsLctPlObj = null;
+  tPsLctPlarr = [];
+  tDDiid = "";
+  tDDiidx = "";
+  if(apld.indexOf(":") != -1) {
+      tPsLctPlarr = apld.split(":");
+      tDDiid = tPsLctPlarr[0];
+      tDDiidx = tPsLctPlarr[1];
+      }
+
+  console.log('doPrpMDDSlct: ' +  apld + " :: " + aaw + " :: " + aww);
+ switch(aww) {
+  case "edit":
+    // alert('doPrpMDDSlct - edit');
+    eindex('aa-edit-prop', 'pid=aa-edit-prop&prpid=' + tDDiid);
+    break;
+  case "view":
+     eindex('aa-show-prop', 'pid=aa-show-prop&prpid=' + tDDiid);
+    break;
+  case "share":
+    JSSHOP.ui.showShareBox('property',  tDDiidx);
+    break;
+  case "msg":
+    JSSHOP.ui.showMsgBox('uproperty', tDDiidx, 'showMsgSave');
+    break;
+  case "fav":
+    doRecentFavorite('index.html?pid=aa-show-prop&prpid=' + tDDiid, 'noQvalue', 'noQvalue', tDDiid, 'btnFavs' + tDDiid);
+    break;
+  case "streetview":
+    tPropObj = currShopsArr[tDDiidx];
+    tSrvLLstr = tPropObj.ploclat + "," + tPropObj.ploclng;
+    window.open("http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr);
+    break;
+  default:
+    alert('doPrpMDDSlct - default');
+    break;
+
+}
+}
 
     function doMPropDeatils(aaw,aww,cww) {
         console.log('doMPropsList - aww: ' + aww);
@@ -778,7 +1090,12 @@ var getPropImgs = function() {
      retPLstSTr += "<div class=\"\">";
 //   <div id="street-view" style="min-height:400px;min-width:99%;max-width:99%;position:absolute;visibility:visible;display:block;"></div>
     retPLstSTr += "<div id=\"street-view\" style=\"min-height:300px;min-width:99%;max-width:99%;visibility:hidden;display:none;z-index:99999990\"></div>";
-    retPLstSTr += "<div id=\"dvThreeDView\" style=\"min-height:300px;min-width:99%;max-width:99%;visibility:hidden;display:none;z-index:99999990;height:300px;\"></div>";      
+    retPLstSTr += "<div id=\"dvThreeDView\"  style=\"min-height:300px;min-width:99%;max-width:99%;visibility:hidden;display:none;z-index:99999990;max-height:500px;\">"; // start 3d view div
+    retPLstSTr += "<div  id=\"dvThreeDCntnr\" style=\"min-height:300px;min-width:99%;max-width:99%;z-index:99999990;height:300px;\"></div>";
+
+    // add clear fix
+    retPLstSTr += "<div class=\"clearfix\"></div>";
+    retPLstSTr += "</div>"; // end 3d view div 
     retPLstSTr += "<div id=\"dvAPrpImg\" class=\"overlay-black overflow-hidden position-relative crsrPointer hover-zoomer\"> <img src=\"" + currPrpImgsFldr + "/" + aprpPimage + "\" alt=\"pimage\" class=\"img100p\" id=\"imgAPrpMain\">";
     retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
     retPLstSTr += "<div class=\"sale bg-secondary text-white text-capitalize\">" + tDBHObj[aprpType] + "</div>";
@@ -916,7 +1233,11 @@ function setPropTandD(aapa,apaphh,apaprt) {
         
     }
 } else {
-    alert("NO-setPropTandD: " + aapa + " " + apaphh + " " +apaprt);
+    console.log("NO-setPropTandD: " + aapa + " " + apaphh + " " +apaprt);
+    tTitle = stxt[3001];
+    tDesc = stxt[983];
+    document.getElementById("dvPrpCntnt").innerHTML = tDesc;
+    document.getElementById("dvPrpTtl").innerHTML = tTitle;
 }
 getPropImgs();
 }
@@ -974,6 +1295,8 @@ if(tCntntStr.indexOf("page.php?href=") != -1) {
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
     JSSHOP.ads.doGenericPlug("prop", "single-property", "dvPartLinks");
+
+
   // alert('fnishCntLoad');
  tmpDOqs = null;
 tmpDOqs = {};
@@ -981,7 +1304,8 @@ tmpDOqs["ws"] = "where _id=?";
 tmpDOqs["wa"] = [prpid];
 tmpDOqs["l"] = 45;
 oia = getNuDBFnvp("property",5,null,tmpDOqs);
-anewQstr = "select p.*, u.u_icon, u.u_fullname from property p, quser u where p._id = " + prpid + " and p.uid = u._id";
+// anewQstr = "select p.*, u.u_icon, u.u_fullname from property p, quser u where p._id = " + prpid + " and p.uid = u._id";
+anewQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id = " + prpid + " and p.prtype = '5' and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = '" +  usrlang + "' or pd.pd_prptlng = '" + deflang + "')";
 
 doQComm(anewQstr, null, "doMPropDeatils");
 

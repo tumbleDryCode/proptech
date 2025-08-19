@@ -11,8 +11,13 @@ var doPostsList = function(a,rfb,c) {
  
   rnderPostsTbl("_id");
     } else {
-        alert("doAUsersList: " + rfb);
-        // document.getElementById("divQitems").innerHTML = stxt[508];
+      // create a new div informing that you have no posts
+      var noPostsDiv = document.createElement("div");
+      // align
+      noPostsDiv.style.textAlign = "center";
+      //  eindex('aa-add-post', 'pid=aa-add-post');
+      noPostsDiv.innerHTML = "<a href=\"javascript:eindex('aa-add-post', 'pid=aa-add-post');\"><u>" + stxt[108] + "</u></a>";
+      document.getElementById("includedContent").appendChild(noPostsDiv);
     }
   };
 
@@ -115,8 +120,8 @@ currACTblCnt = tHdrArr.length;
     // currGSarr = currUzsarr;
  
     
-    
-    tSrtIdx = "p_dadded";
+    tSrtIdx = "_id";
+    // tSrtIdx = "p_dadded";
     tmpGPostsLArr = JSSHOP.shared.getSrtdArr(tmpPostsArr, tSrtIdx);
     tRndrINGARr = tmpGPostsLArr;
     tRndrStr = getPostsLst(tRndrINGARr);
@@ -176,8 +181,9 @@ fnishCntLoad = function() {
  JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')
 
  tmpDOs = {};
- tmpDOs["ws"] = "where p_uid = ?";
- tmpDOs["wa"] = [quid];
+ tmpDOs["ws"] = "where p_uid = ? and p_rtype = ?";
+ tmpDOs["wa"] = [quid, 5];
+ // tmpDOs["o"] = "_id desc";
  
  oi = getNuDBFnvp("qposts",5,null,tmpDOs);
  currRQtable = "qposts";

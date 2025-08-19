@@ -664,6 +664,8 @@ tSVpopStr += tmpRetStr;
  
     tUTDimgUrl = getCurr3DImgUrl("240", "180");
     tFUTDimgUrl = LZString.compressToEncodedURIComponent(tUTDimgUrl);
+        tTimeRand = quid + "_" + Math.floor(Math.random() * 1000000);
+    tFAUstr  = tTimeRand + ":" + tFUTDimgUrl;
     JSSHOP.shared.setFrmFieldVal("qmedia", "_id", ttPMId);
     JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tFUTDimgUrl);
     JSSHOP.shared.setFrmFieldVal("qmedia", "m_file_thumb", tFUTDimgUrl);
@@ -673,6 +675,7 @@ tSVpopStr += tmpRetStr;
     JSSHOP.shared.setFrmFieldVal("qmedia", "m_dadded", JSSHOP.getUnixTimeStamp());
     JSSHOP.shared.setFrmFieldVal("qmedia", "m_catid", 30);
     JSSHOP.shared.setFrmFieldVal("qmedia", "m_title", document.getElementById("tmp_m_title").value);
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_vala", tTimeRand);
     tmpADOs = null;
     tmpADOs = {};
      tmpADOs["knvp"] = JSSHOP.shared.getFrmVals(document["qmedia"], "nada");
@@ -684,15 +687,18 @@ tSVpopStr += tmpRetStr;
         tmpADOs["wa"] = [ttPMId];
         oaqi = getNuDBFnvp("qmedia", 7, null, tmpADOs);
     }
-        doQComm(oaqi["rq"], null, "fnish3DImgAdd");
+        doQComm(oaqi["rq"], tFAUstr     , "fnish3DImgAdd");
     };
 
 
   var saveCurr3DImgUrl = function() {
    //  t3DImgUrlStr = tmpThreeDLat + "|" + tmpThreeDLng + "|" + tmpThreeDAlt;
     tA3DImgUrlStr = getCurr3DImgUrl("240", "180");
+  
     console.log("saveCurr3DImgUrl.tA3DImgUrlStr: " + tA3DImgUrlStr);
     t3DImgUrlStr = LZString.compressToEncodedURIComponent(tA3DImgUrlStr);
+    tTimeRand = quid + "_" + Math.floor(Math.random() * 1000000);
+    tFAUstr  = tTimeRand + ":" + t3DImgUrlStr;
     JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", t3DImgUrlStr);
     JSSHOP.shared.setFrmFieldVal("qmedia", "m_file_thumb", t3DImgUrlStr);
     JSSHOP.shared.setFrmFieldVal("qmedia", "m_coid", prpid);
@@ -700,15 +706,25 @@ tSVpopStr += tmpRetStr;
     JSSHOP.shared.setFrmFieldVal("qmedia", "m_pid", prpid);
     JSSHOP.shared.setFrmFieldVal("qmedia", "m_dadded", JSSHOP.getUnixTimeStamp());
     JSSHOP.shared.setFrmFieldVal("qmedia", "m_catid", 30);
+    JSSHOP.shared.setFrmFieldVal("qmedia", "m_vala", tTimeRand);
     tmpDOs = null;
     tmpDOs = {};
     tmpDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qmedia"], "nada");
     oi = getNuDBFnvp("qmedia", 6, null, tmpDOs);
-    doQComm(oi["rq"], null, "fnish3DImgAdd");
+    doQComm(oi["rq"], tFAUstr, "fnish3DImgAdd");
     };
-function fnish3DImgAdd(aa,bb,cc) {
+
+
+function fnish3DImgAdd(aaDI,bbDI,ccDI) {
     JSSHOP.ui.closeLbox();
-    get3DImages();
+            console.log("fnish3DImgAdd: " + aaDI + " " + bbDI + " " + ccDI);
+            tSplitStr = aaDI.split(":");
+            tFileName = tSplitStr[0];
+            tFileUrl = tSplitStr[1];
+              JSSHOP.ajax.doNuAjaxPipe(aaDI, "_p/file_imgurl.php?wu=" + tFileUrl + "&in=" + tFileName, get3DImages);
+
+ 
+    /*
     tmpDOs = null;
     tmpDOs = {};
     tmpDOs["ws"] = "where m_pid=? and m_rtype=? and m_catid=?";
@@ -716,6 +732,7 @@ function fnish3DImgAdd(aa,bb,cc) {
     // tmpDOs["o"] = "m_vala desc";
     oi = getNuDBFnvp("qmedia", 5, null, tmpDOs);
     doQComm(oi["rq"], null, "show3DImages");
+    */
     };
  
 function getCurr3DImgUrl(tIUwidth, tIUheight) {
@@ -1101,6 +1118,8 @@ var doThreeDPop = function() {
      function saveArialVwImgUrl(tSAVIid) {
         tAVIurl = getCurrAVImgUrl("240", "180");   
         tAVIthmburl = getCurrAVImgUrl("100", "80");
+        tTimeRand = quid + "_" + Math.floor(Math.random() * 1000000);
+ 
         tmpAVurl = LZString.compressToEncodedURIComponent(tAVIurl);
         tmpAVthmburl = LZString.compressToEncodedURIComponent(tAVIthmburl);
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tmpAVurl);
@@ -1112,6 +1131,8 @@ var doThreeDPop = function() {
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_title", document.getElementById("tmp_m_title").value);
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_dadded", JSSHOP.getUnixTimeStamp());
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_catid", 25);
+        JSSHOP.shared.setFrmFieldVal("qmedia", "m_vala", tTimeRand);
+
         tmpDOs = null;
         tmpDOs = {};
         tmpDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qmedia"], "nada");
@@ -1122,19 +1143,23 @@ var doThreeDPop = function() {
         tmpDOs["wa"] = [tSAVIid];
         oi = getNuDBFnvp("qmedia", 7, null, tmpDOs);
         }
-        console.log("saveArialVwImgUrl: " + JSON.stringify(oi));
-        doQComm(oi["rq"], null, "fnishAVImgAdd");
+        
+        tImgNUstr = tTimeRand + ":" + tmpAVthmburl;
+        console.log("saveArialVwImgUrl.tImgNUstr: " + tImgNUstr);
+        doQComm(oi["rq"], tImgNUstr, "fnishAVImgAdd");
     }
+
+
     function fnishAVImgAdd(aa,bb,cc) {
         JSSHOP.ui.closeLbox();
-        // getAVImages();
-        tmpDOs = null;
-        tmpDOs = {};
-        tmpDOs["ws"] = "where m_pid=? and m_rtype=? and m_catid=?";
-        tmpDOs["wa"] = [prpid, 5, 25];
-        tmpDOs["o"] = "m_vala desc";
-        oi = getNuDBFnvp("qmedia", 5, null, tmpDOs);
-        doQComm(oi["rq"], null, "showAVImages");
+        // make connection to _p/file_imgurl.php
+            console.log("fnishAVImgAdd: " + aa + " " + bb + " " + cc);
+            tSplitStr = aa.split(":");
+            tFileName = tSplitStr[0];
+            tFileUrl = tSplitStr[1];
+              JSSHOP.ajax.doNuAjaxPipe(aa, "_p/file_imgurl.php?wu=" + tFileUrl + "&in=" + tFileName, getAVImages);
+
+ 
     }
     function getCurrAVImgUrl(tIUwidth, tIUheight) {
         tLatLngStr = "";
@@ -2557,7 +2582,17 @@ var doPropEdit = function(tmpNsaveBtn) {
 doNPropEdit(tmpNsaveBtn);
 }
 
+var setUPrpDel = function(a, b, c) {
+    console.log("setUPrpDel: " + a + " - " + b + " - " + c);
+    eindex("pid=aa-edit-uprops", "pid=aa-edit-uprops");
+}
+var doPropDel = function() {
+    if(confirm(stxt[315])) {
+              //   procNuUIitem("qposts", "p_rtype", currUrlArr.tpstid, "10", "setUPostDel");
+              procNuUIitem("property", "prtype", currUrlArr.prpid, "10", "setUPrpDel");
 
+    } 
+};
 
 var doPrpSType = function(tta, ttn, ttc) {
     console.log("doPrpSType: " + tta + " - " + ttn + " - " + ttc);  
@@ -2612,36 +2647,37 @@ var procPrpSettings = function(theFldID) {
 /* finish editing and adding properties */
 
 
+
 var doGmapScrptLoad = async function() { 
 tLocLat = tmp_ploclat.value;
 tLocLng = tmp_ploclng.value;
 try { 
-
+// only if location includes propsgo or titan
+ 
     if(currGglSVloaded == "no") {
         currGglSVloaded = "yes";
 // google script loader
 (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
     key: gglSKey,
-    v: "alpha",
+    v: "beta",
   });
-
+}
 
       var { Map3DElement, MapMode, Marker3DElement, Marker3DInteractiveElement } = await google.maps.importLibrary("maps3d");
     var { LatLng } = await google.maps.importLibrary("geometry");
      var { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
      var { PinElement } = await google.maps.importLibrary("marker");
     var { DrawingLibrary } = await google.maps.importLibrary("drawing");
-}
+
 } catch(e) {
     console.log("doGmapScrpLoad: " + e);
 }
 }
 
-
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad =  function() {
     doGmapScrptLoad();
-
+    
 /* // fb plugin 
 tarfsb = nCurrFFieldOb();
 tarfsb.fid = "btnAddPrpSoM";
@@ -3099,11 +3135,11 @@ currMapMrkrArr.push(tMrkr);
             tcXccode = tAOBjVobj["country_code"];
             tcXccodUppe = tcXccode.toUpperCase();
             tCCPckSTr = tLocCCTCtryObj[tcXccodUppe];
-            document.getElementById("tmp_country").value  = tCCPckSTr;
+           // document.getElementById("tmp_country").value  = tCCPckSTr;
         
         }
         if(tAOBjVobj["country"]) {
-            tmp_country.value  = tAOBjVobj["country"];
+          //   tmp_country.value  = tAOBjVobj["country"];
         }
         if(tAOBjVobj["shop"]) {
             tExtrTstr  += tAOBjVobj["shop"];
