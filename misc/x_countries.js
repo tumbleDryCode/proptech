@@ -1737,12 +1737,12 @@ function setUregionDD(tudsA, tudsB, tudsC) {
         tURResArr = [];
         if(tudsB.indexOf("geonameid") != -1) {
             cleanTudsB = tudsB.replace(/[\n\r]/g, '');
-            cleanTudsB = cleanTudsB.replace(/[\t]/g, '');
-            cleanTudsB = cleanTudsB.replace(/[\']/g, ' ');
-            cleanTudsB = cleanTudsB.replace(/[\\]/g, ' ');
+            cleanTudsC = cleanTudsB.replace(/[\t]/g, '');
+            cleanTudsD = cleanTudsC.replace(/[\']/g, ' ');
+            cleanTudsE = cleanTudsD.replace(/[\\]/g, ' ');
             // cleanForJson = cleanTudsB.replace(/[\n\r]/g, '');
-            console.log("setUregionDD: " + cleanTudsB);
-            tURResArr = JSON.parse(cleanTudsB);
+            console.log("setUregionDD: " + cleanTudsE);
+            tURResArr = JSON.parse(cleanTudsE);
             for(var iddur=0; iddur<tURResArr.length; iddur++) {
                 tDDregObj[tURResArr[iddur].asciiname] = tURResArr[iddur].asciiname;
                
@@ -1794,6 +1794,7 @@ function setUregionDD(tudsA, tudsB, tudsC) {
 }
 
 function getRegionDropStr(tRDCountry, tRDDel,  tRddcb) {
+    tPopNumber = 10000;
     console.log("getRegionDropStr: " + tRDCountry + " :: " + tRDDel + " :: " + tRddcb);
     tRDCountry = tRDCountry.replace(/[\n\r]/g, '');
     tRDCountry = tRDCountry.replace(/[\t]/g, '');
@@ -1803,8 +1804,19 @@ function getRegionDropStr(tRDCountry, tRDDel,  tRddcb) {
     tmpFobj = null;
     tCCcode = getCountryCode(tRDCountry);
     tmpFobj = {};
+    switch(tRDCountry) {
+        case "France":
+            tPopNumber = 20000;
+            break;
+            case "Spain":
+            tPopNumber = 15000;
+            break;
+            default:
+            tPopNumber = 10000;
+    }
+
     tmpFobj["ws"] = "where country_code=? and  (feature_code=? or feature_code=? or population >?)";
-    tmpFobj["wa"] = [tCCcode, "PPL", "PPLA", 10000];
+    tmpFobj["wa"] = [tCCcode, "PPL", "PPLA", tPopNumber];
     tmpFobj["o"] = "asciiname asc";
     tmpFobj["l"] = 1000;
     // tStr = "select * from countries where country_code=? and  feature_code= 'PLA' or feature_code= 'PPLA' order by m_vala desc";

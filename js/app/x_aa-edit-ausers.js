@@ -3,6 +3,7 @@ var tmpAGUsrsLArr = [];
 
 
 var doAUsersList = function(a,rfb,c) {
+    console.log("doAUsersList: " + rfb);
     if(rfb.indexOf("_id") != -1) {
   tmpAUsrsLArr = "";
   tmpAUsrsLArr = [];
@@ -15,8 +16,13 @@ var doAUsersList = function(a,rfb,c) {
     }
   };
 
- 
 
+var doTUserLgin = function(tlouid) {
+  // delete uid cookie
+JSSHOP.cookies.deleteCookie('quid','','');
+JSSHOP.cookies.deleteCookie('cuid','','');
+document.location.href = "index.html?pid=login&tq=" + tlouid + "&tcid=" + cid;
+}
  
 
  var getAUItmsLst = function(tPrpIarr) {
@@ -39,9 +45,9 @@ var doAUsersList = function(a,rfb,c) {
         
         tsUT = tsuar.u_cat;
         tsrtUT = tsuar.u_cat; 
-          
-         
-        atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-auser','pid=aa-edit-auser&tuid=" + tsuar._id + "');\">" + tsuar._id + "</a></td>";
+
+
+        atstr += "<td style=\"text-align: left\"><a href=\"javascript:doTUserLgin(" + tsuar._id + ");\">" + tsuar._id + "</a></td>";
         atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-ausers','pid=aa-edit-ausers&tujsector=" + tsuar.u_cat + "');\">" + tsuar.u_cat + "</a></td>";
         
          
@@ -52,7 +58,7 @@ var doAUsersList = function(a,rfb,c) {
         atstr +=  "<span class=\"txtBold txtCLrHdr\">" +  tsuar.u_fullname +  "</span></div></td>";
        
  
-        atstr += "<td style=\"text-align: left\" class=\"txtClrHdr\"><a href=\"javascript:eindex('aa-edit-auser','pid=aa-edit-auser&tuid=" + tsuar._id + "');\"><i class=\"menu-material-icons\" alt=\"edit\">&#xe3c9;</i></a>";
+        atstr += "<td style=\"text-align: left\" class=\"txtClrHdr\"><a href=\"javascript:doTUserLgin('" + tsuar._id + "');\"><i class=\"menu-material-icons\" alt=\"edit\">&#xe3c9;</i></a>";
          atstr += "</td>";
         atstr += "</tr>";
         autstr += atstr;

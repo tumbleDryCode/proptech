@@ -7,11 +7,18 @@ var tmpFBIDvsArr = [];
 var tmpFBscrLdd = "n";
 var tmpSVloclat = "0";
 var tmpSVloclng = "0";
+var tmpSVurl = "";
 var threedvmap = null;
 var tmpPrpDscsObj = null;
 var tmpPrpDscsObj = {};
 var tmpSVzoom = "";
+var tmpSVpov = "";
+var tmpSVheading = "";
+var tmpSVpitch = "";
 var tmpSaveBtnID = null;
+var tmpPropImgArr = null;
+var tmpPropImgArr = "";
+var tmpPropImgArr = [];
 var gpmap = null;
 var currPgTitle = stxt[985];
 var threedmap = null;
@@ -211,7 +218,8 @@ async function initNuThreeDView(tImgSrc) {
     JSSHOP.ui.showHideElement("dvThreeDView", "show");
     // document.getElementById("dvThreeDView").innerHTML = "";
     advThreeView = document.getElementById('dvThreeDView');
-   
+           document.getElementById("dvPropFooter").innerHTML = "3D View";
+
         
         doNuSpinSet("dvThreeDCntnr", "big", null, "...");
         if(tThreedPurl == "noQvalue") {
@@ -301,6 +309,7 @@ async function initNuThreeDView(tImgSrc) {
 
             advThreeDPop.innerHTML = "";
           advThreeDPop.append(threedmap);
+ 
          // threedmap.bounds = {south: -48.30, west: 163.56, north: -32.86, east: -180};
          threedmap.addEventListener('gmp-click', (event) => {
             console.log("threedmap: " + JSON.stringify(event.position));
@@ -314,10 +323,9 @@ async function initNuThreeDView(tImgSrc) {
                 console.log("threedmap: camera changed: " + JSON.stringify(event.camera));
             });
 
-
-
-    
+            
         }
+    window.scrollTo(0, document.getElementById("dvThreeDView").offsetTop - 100);
 
             // creat a save, play and stop button html string and append it to the dvThreeDPop div
 
@@ -455,18 +463,23 @@ function initStreetView() {
     JSSHOP.ui.showHideElement("dvAPrpImg", "hide");
     JSSHOP.ui.showHideElement("dvThreeDView", "hide");
     JSSHOP.ui.showHideElement("street-view", "show");
- 
+    window.scrollTo(0, document.getElementById("street-view").offsetTop - 100);
+    document.getElementById("dvPropFooter").innerHTML = "Street View";
     console.log("initStreetView: " + tmpSVloclat + " :: " + tmpSVloclng);
     // latpos = ploclat.value;
     // lngpos = ploclng.value;
  // 37.86926 -122.254811
     tFltdSVlat = parseFloat(tmpSVloclat);
     tFltdSVlng = parseFloat(tmpSVloclng);
+    if(tmpSVheading == "") {
+        tmpSVheading = 165;
+        tmpSVpitch = 0;
+    }
     panorama = new google.maps.StreetViewPanorama(
         document.getElementById("street-view"),
         {
           position: { lat: tFltdSVlat, lng:  tFltdSVlng },
-          pov: { heading: 165, pitch: 0 },
+          pov: { heading: tmpSVheading, pitch: tmpSVpitch },
           fullscreenControl: false,
           panControl: false,
           zoomControl: false,
@@ -509,6 +522,30 @@ function initStreetView() {
     initStreetView();
     }
 
+
+function doNuSVLoad(tSVLUstr) {
+
+    tmpSVurl = tSVLUstr;
+    console.log("doNuSVLoad: " + tmpSVurl);
+    tLZdecdUstr = LZString.decompressFromEncodedURIComponent(tmpSVurl);
+    console.log("doNuSVLoad: " + tLZdecdUstr);
+    // TODO: Implement loading of Street View using tLZdecdUstr
+ 
+                     TSsvuOBJ = JSSHOP.shared.urlToArray(tLZdecdUstr);
+                    tSLocLat = TSsvuOBJ["location"].split(",")[0];
+                    tSLocLng = TSsvuOBJ["location"].split(",")[1];
+                    tSSVzoom = TSsvuOBJ["zoom"];
+                    tSVheading = TSsvuOBJ["heading"];
+                    tSVpitch = TSsvuOBJ["pitch"];
+                    tSVpopStr = "";
+                    tmpSVloclat = tSLocLat;
+                    tmpSVloclng = tSLocLng;
+                    tmpSVzoom = parseFloat(tSSVzoom);
+                    tmpSVheading = parseFloat(tSVheading);
+                    tmpSVpitch = parseFloat(tSVpitch);
+                    console.log("doNuSVLoad: " + tmpSVloclat + " :: " + tmpSVloclng + " :: " + tmpSVheading + " :: " + tmpSVpitch);
+                    initStreetView();
+}
 function doSVLoad(tlat, tlng) {
     console.log("doSVLoad");
     tmpSVloclat = tlat;
@@ -535,8 +572,45 @@ function doSVLoad(tlat, tlng) {
 }
 
 
+function setNuPropMainImg(tPrpIarrIndx) {
+       console.log("setNuPropMainImg: " + tPrpIarrIndx);
 
+                if(isThreeDrun == "yes") {
+            isThreeDrun = "no";
+            threedmap.removeEventListener('gmp-animationend', () => {
+                donada = "yes";
+            });
+            threedmap.stopCameraAnimation();
+            // put the Play word in the button
+            document.getElementById("btnAEPplay").value = "Play";
+        }
 
+    if(tmpPropImgArr && tmpPropImgArr.length > 0) {
+ tPrpImgObj = tmpPropImgArr[tPrpIarrIndx];
+    JSSHOP.ui.showHideElement("dvAPrpImg", "show");
+    JSSHOP.ui.showHideElement("street-view", "hide");
+    JSSHOP.ui.showHideElement("dvThreeDView", "hide");
+    document.getElementById("imgAPrpMain").src = "images/misc/loading.gif";
+    tLderIMG = new Image();
+    tPIOcatid = tPrpImgObj.m_catid;
+    if(tPIOcatid == 5) {
+        tLderIMG.src = "images/property/m_thumb" + tPrpImgObj.m_file;
+    } else {
+        tSPIimg = tPrpImgObj.m_file_thumb;
+        tUNLZdimg = LZString.decompressFromEncodedURIComponent(tSPIimg);
+        tLderIMG.src = tUNLZdimg;
+        console.log("setNuPropMainImg: " + tUNLZdimg);
+    }
+    tLderIMG.onload = function() {
+        document.getElementById("imgAPrpMain").src = tLderIMG.src;
+        document.getElementById("dvPropFooter").innerHTML = tPrpImgObj.m_title;
+    }
+       window.scrollTo(0, document.getElementById("imgAPrpMain").offsetTop - 100);
+
+} else {
+    console.log("setNuPropMainImg: No image found");
+}
+}
 
 function setPropMainImg(tPMImgSRC) {
 
@@ -757,6 +831,7 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
     intIFrmHght = 0;
     hasGglMap = "no";
     if(theAIb.indexOf("_id") != -1) {
+        tmpPropImgArr = JSON.parse(theAIb);
 		tAiretArr = JSON.parse(theAIb);
 		var awlen = tAiretArr.length;
         tstr = "";
@@ -777,22 +852,24 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
             tIRFname = tAiretArr[iirnt]["m_file"];
             tIRcatid = tAiretArr[iirnt]["m_catid"];
             if(tIRcatid == "5")  {
-                tImageFstr = "images/property/" + tAiretArr[iirnt]["m_file"];
+                tImageFstr = "images/property/m_thumb" + tAiretArr[iirnt]["m_file"];
 
-            tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:setPropMainImg('" + tImageFstr + "');\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"images/property/s_thumb" + tAiretArr[iirnt]["m_file"] + "\"  alt=\"image\"></a> </div>";
+            tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:setNuPropMainImg('" + iirnt + "');\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"images/property/s_thumb" + tAiretArr[iirnt]["m_file"] + "\"  alt=\"image\"></a> </div>";
             } else if(tIRcatid == "20") {
                 hasGglMap = "yes";
                 tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
                 tLuncthm = LZString.decompressFromEncodedURIComponent(tAiretArr[iirnt]["m_file_thumb"]);
                //  tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initStreetView();\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tLuncthm + "\"  alt=\"image\"></a> </div>";
                // doSVLoad(ploclat.value, ploclng.value);
-               tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:doSVLoad(" + ploclat.value + "," + ploclng.value + ");\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tLuncthm + "\"  alt=\"image\"></a> </div>";
+               tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:doNuSVLoad('" + tAiretArr[iirnt]["m_file_thumb"]+ "');\"><img class=\"rtable\" style=\"width: 100%;min-height:100px;\"  src=\"" + tLuncthm + "\"  alt=\"image\"></a>";
+               tstr += "<div style=\"text-align: center;\" class=\"txtSmall txtBold txtClrBlue\"><a href=\"javascript:doNuSVLoad('" + tAiretArr[iirnt]["m_file_thumb"]+ "');\">Street View</a></div>";
+               tstr += "</div>";
             } else if(tIRcatid == "25") {
                 hasGglMap = "yes";
                 tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
                 tLuncthm = LZString.decompressFromEncodedURIComponent(tAiretArr[iirnt]["m_file_thumb"]);
                 //             tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:setPropMainImg('" + tImageFstr + "');\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"images/property/s_thumb" + tAiretArr[iirnt]["m_file"] + "\"  alt=\"image\"></a> </div>";
-                tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:setPropMainImg('" + tLZuncd + "');\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tLuncthm + "\"  alt=\"image\"></a> </div>";
+                tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:setNuPropMainImg('" + iirnt + "');\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tLuncthm + "\"  alt=\"image\"></a> </div>";
              }  else if(tIRcatid == "30") {
                 hasGglMap = "yes";
                 tLZuncd =  tIRFname;
@@ -819,7 +896,11 @@ tAVImgUstr = tUnZpd;
             t3DImgStr = "<img src=\"" + tAVImgUstr + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:initNurThreeDView('" + tAVImgUstr + "','" + tAiretArr[iint]["_id"] + "');\">";
             // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initThreeDView(" + theTmnbLat + "," + theTmnbLng + "," + theTmnbAlt + ");\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tAVImgUstr + "\"  alt=\"image\"></a> </div>";
             // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initNuThreeDView('"  + tAVImgUstr + "');\">" + t3DImgStr + "</a> </div>";
-            tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initNurThreeDView('"  + tAVImgUstr + "','"+ /* qmedia _id */ tAiretArr[iirnt]["_id"] + "');\">" + t3DImgStr + "</a> </div>";
+            // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initNurThreeDView('"  + tAVImgUstr + "','"+ /* qmedia _id */ tAiretArr[iirnt]["_id"] + "');\">" + t3DImgStr + "</a>";
+            // add the words 3D view at the bottom of this div
+            tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initNurThreeDView('"  + tAVImgUstr + "','"+ /* qmedia _id */ tAiretArr[iirnt]["_id"] + "');\">" + t3DImgStr + "</a>";
+            tstr += "<div class=\"txtBold txtSmall txtClrBlue\" style=\"text-align: center;\"><a href=\"javascript:initNurThreeDView('"  + tAVImgUstr + "','"+ /* qmedia _id */ tAiretArr[iirnt]["_id"] + "');\">3D View</a></div>";
+            tstr += "</div>";
              } else {
                 // alert("setPropImgs: " + tIRFname + " " + tIRcatid);
                 intIFrmHght += 1000;
@@ -1034,8 +1115,8 @@ function doPrpMDDSlct(apld, aaw,aww,cww) {
     tPrpMMListObj["view"] = stxt[53];
     tPrpMMListObj["share"] = stxt[72];
     tPrpMMListObj["msg"] = stxt[117];
-    tPrpMMListObj["fav"] = stxt[21];
-    tPrpMMListObj["streetview"] = "Street View";
+    // tPrpMMListObj["fav"] = stxt[21];
+    // tPrpMMListObj["streetview"] = "Street View";
     
     
     tDDPrpStr = "";
@@ -1064,7 +1145,24 @@ function doPrpMDDSlct(apld, aaw,aww,cww) {
     tDDPrpObj["kvIcnsObj"]["streetview"] = "&#xe56e;";
     
     tDDPrpStr = JSSHOP.ui.getNuBSdropDstr(tDDPrpObj);
-    
+    tLocationStr = "";
+    if(aprpLocation.length < 3) {
+  // check aprpCity and aprpSTate to make a full location string
+  if(aprpCity.length > 0) {
+    tLocationStr += aprpCity;
+  }
+  if(aprpState.length > 0) {
+    if(tLocationStr.length > 0) {
+      tLocationStr += ", ";
+    }
+    tLocationStr += aprpState;
+  }
+  if(tLocationStr.length == 0) {
+    tLocationStr = "Unknown Location";
+  }
+} else {
+  tLocationStr = aprpLocation;
+}
     
     /*
     retPLstSTr += "<div tid=\"dvCoFavBtn\" style=\"float: right\"></div>";
@@ -1083,8 +1181,8 @@ function doPrpMDDSlct(apld, aaw,aww,cww) {
     retPLstSTr += "<div><img alt=\"Profile\" src=\"images/user/" + aprpObj.u_icon + "\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">" + aprpUFlName + "</span></div></a>";
     retPLstSTr += "</td><td>";
     retPLstSTr += "<div id=\"dvPrpTtl\" class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></div>";
-     retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpLocation + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
-     
+     retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe0c8;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + tLocationStr + "</span></td><td class=\"txtBold txtBig\" nowrap=\"nowrap\">" + aprpPrice + "<span style=\"vertical-align:center;font-size:smaller;align: absmiddle\" class=\"txtClrGrey\">&euro;</span></td></tr></tbody></table>";
+
     retPLstSTr += "</td><td style=\"vertical-align:top\">" + tDDPrpStr + "</td></tr></table>";
     
      retPLstSTr += "<div class=\"\">";
@@ -1097,10 +1195,10 @@ function doPrpMDDSlct(apld, aaw,aww,cww) {
     retPLstSTr += "<div class=\"clearfix\"></div>";
     retPLstSTr += "</div>"; // end 3d view div 
     retPLstSTr += "<div id=\"dvAPrpImg\" class=\"overlay-black overflow-hidden position-relative crsrPointer hover-zoomer\"> <img src=\"" + currPrpImgsFldr + "/" + aprpPimage + "\" alt=\"pimage\" class=\"img100p\" id=\"imgAPrpMain\">";
-    retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
-    retPLstSTr += "<div class=\"sale bg-secondary text-white text-capitalize\">" + tDBHObj[aprpType] + "</div>";
+    // retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
     retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
- 
+     retPLstSTr += "<div id=\"dvPropFooter\" style=\"text-align:center;\" class=\"sale bg-secondary text-white text-capitalize\">" + tDBHObj[aprpType] + "</div>";
+
     retPLstSTr += "<div id=\"singlerproperty\" class=\"\"></div>";
 
     retPLstSTr += "<div class=\"featured-thumb-data shadow-one\">";
@@ -1115,22 +1213,47 @@ function doPrpMDDSlct(apld, aaw,aww,cww) {
     */
     
     
-    retPLstSTr += "<div class=\"bg-gray quantity px-4 pt-4\">";
-    retPLstSTr += "<ul>";
-    retPLstSTr += "<li><b>" + aprpSize + "</b> Area m2</li>";
-    retPLstSTr += "<li><b>" + aprpBedroom + "</b>" + stxt[922] + "</li>";
-    retPLstSTr += "<li><b>" + aprpBathroom + "</b>" + stxt[923] + "</li>"
-    retPLstSTr += "<li><b>" + aprpKitchen + "</b>" + stxt[926] + "</li>"; 
-    retPLstSTr += "</ul>";
+  
     
     
+ 
+// retBedBathstr += "<li><div style=\"float:left;\"><b>" + aprpSize + " </b>  <span class=\"txtSmall\">" + stxt[953] + "</span></div></li>";
+retBedBathstr = "<table style=\"margin:0 auto;\"><tr><td><div style=\"float:left;margin-right:10px;\"><b>" + aprpBedroom + " </b> <span class=\"txtSmall\">" + stxt[922] + "</span>&nbsp;</div></td>";
+retBedBathstr += "<td><div style=\"float:left;margin-right:10px;\"><b>" + aprpBathroom + " </b> <span class=\"txtSmall\">" + stxt[923] + "</span>&nbsp;</div></td>";
+retBedBathstr += "<td><div style=\"float:left;\"><b>" + aprpKitchen + " </b> <span class=\"txtSmall\">" + stxt[926] + "</span>&nbsp;</div></td></tr></table>";
+
+
+ 
+retPLstSTr += retBedBathstr;
+
     
     
     retPLstSTr += "</div>"; // end bg-gray quantity px-4 pt-4
     retPLstSTr += "<div class=\"bkgdClrWhite\">";
-    retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></span>";
-    retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
-    retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','noQvalue','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
+
+
+
+    retPLstSTr += "<table style=\"margin:0 auto;\"><tr><td>";
+retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrLtBlue\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
+retPLstSTr += "</td>";
+retPLstSTr += "<td>";
+retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrLtBlue\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
+retPLstSTr += "</td>";
+retPLstSTr += "<td>";
+// retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"" + currFTclr + "\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','" +"','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
+// check if already a favorite and make it red if so
+currFTclr = "material-icons txtClrTtl";
+ if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {
+currFTclr = "material-icons txtClrRed";
+}
+retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrLtBlue\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','images/property/s_thumb" + aprpPimage + "','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
+
+retPLstSTr += "</td></tr></table>";
+
+
+    // retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></span>";
+    // retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
+    // retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','noQvalue','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
     // streetview link http://maps.google.com/maps?q=&layer=c&cbll=
     tSrvLLstr = aprploclat + "," + aprploclng;
 
@@ -1142,10 +1265,14 @@ function doPrpMDDSlct(apld, aaw,aww,cww) {
     }
     tmpSVloclat = aprploclat;
     tmpSVloclng = aprploclng;
-    retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\"><a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr + "\"><i class=\"material-icons txtClrTtl\" alt=\"streetview\" title=\"streetview\" value=\"streetview\">&#xe56e;</i> Street View</a></span>";
+   //  retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\"><a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr + "\"><i class=\"material-icons txtClrTtl\" alt=\"streetview\" title=\"streetview\" value=\"streetview\">&#xe56e;</i> Street View</a></span>";
     
    //  retPLstSTr += "<div id=\"dvPrpCntnt\" class=\"clsPcntnt\" style=\"padding:10px;\">" + aprpContent + "</div>";
 // make dvPrpCntnt max height 300px and a show more button to expand it to automatic height
+    retPLstSTr += "<div class=\"bkgdClrWhite txtBig txtBold\" style=\"padding:3px;\">";
+    retPLstSTr += stxt[40] + ":";
+    retPLstSTr += "</div>";
+
     retPLstSTr += "<div id=\"dvPrpCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + aprpContent + "</div>";
      retPLstSTr += "<div id=\"dvPrpCntntBtn\" class=\"clsPcntnt\" style=\"padding:10px;\"><a href=\"javascript:void(0);\" class=\"txtClrHdr txtBold\" onclick=\"javascript:showMorePropCntnt('dvPrpCntnt','dvPrpCntntBtn');\">" + stxt[110] + "</a></div>";
     // show less button to hide the content again
@@ -1305,8 +1432,9 @@ tmpDOqs["wa"] = [prpid];
 tmpDOqs["l"] = 45;
 oia = getNuDBFnvp("property",5,null,tmpDOqs);
 // anewQstr = "select p.*, u.u_icon, u.u_fullname from property p, quser u where p._id = " + prpid + " and p.uid = u._id";
-anewQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id = " + prpid + " and p.prtype = '5' and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = '" +  usrlang + "' or pd.pd_prptlng = '" + deflang + "')";
-
+// anewQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id = " + prpid + " and p.prtype = '5' and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = '" +  usrlang + "' or pd.pd_prptlng = '" + deflang + "')";
+// newerQstr = "SELECT p.*, u.u_icon, u.u_fullname, COALESCE(pd_user.pd_prptitle, pd_def.pd_prptitle) AS pd_prptitle, COALESCE(pd_user.pd_prpdesc,  pd_def.pd_prpdesc)  AS pd_prpdesc FROM property p JOIN quser u ON p.uid = u._id LEFT JOIN propdescs pd_user ON pd_user.pd_prpid = p._id AND pd_user.pd_prptlng = '" +  usrlang + "' LEFT JOIN propdescs pd_def ON pd_def.pd_prpid = p._id AND pd_def.pd_prptlng = '" + deflang + "' WHERE p._id > 0 AND p.prtype = '5' ORDER BY RAND() LIMIT 20";
+anewQstr = "SELECT p.*, u.u_icon, u.u_fullname, COALESCE(pd_user.pd_prptitle, pd_def.pd_prptitle) AS pd_prptitle, COALESCE(pd_user.pd_prpdesc,  pd_def.pd_prpdesc)  AS pd_prpdesc FROM property p JOIN quser u ON p.uid = u._id LEFT JOIN propdescs pd_user ON pd_user.pd_prpid = p._id AND pd_user.pd_prptlng = '" +  usrlang + "' LEFT JOIN propdescs pd_def ON pd_def.pd_prpid = p._id AND pd_def.pd_prptlng = '" + deflang + "' WHERE p._id = " + prpid + " AND p.prtype = '5' ORDER BY RAND() LIMIT 20";
 doQComm(anewQstr, null, "doMPropDeatils");
 
 return dmyFnishCntLoad;
@@ -1317,3 +1445,151 @@ function getFIrstCanvasOnPage() {
     var canvas = document.getElementsByTagName("canvas")[0];
     return canvas;
 }
+
+
+/*
+
+
+
+
+        function showNuStrtVwPop(tSVPPobj, tSVPIid) {
+            var panorama;
+  
+            tprpLocLat = tSVPPobj["location"].split(",")[0];
+            tprpLocLng = tSVPPobj["location"].split(",")[1];
+            tSVzoom = tSVPPobj["zoom"];
+            tSVheading = tSVPPobj["heading"];
+            tSVpitch = tSVPPobj["pitch"];
+            tFSVheading = parseFloat(tSVheading);
+            tFSVpitch = parseFloat(tSVpitch);
+
+            if(tSVzoom == null || tSVzoom == "" || tSVzoom == "undefined") {
+                tSVzoom = 1.9;
+            }
+            console.log("showStrtVwPop.tSVPPobj: " + JSON.stringify(tSVPPobj));
+            
+            var svLoc = {lat: parseFloat(tprpLocLat), lng: parseFloat(tprpLocLng)};
+
+            if(panorama == null) {
+            panorama = new google.maps.StreetViewPanorama(  
+                document.getElementById("dvStrtVwPop"), {
+                    position: svLoc,
+                    pov: {heading: tFSVheading, pitch: tFSVpitch},
+                    zoom: tSVzoom,
+                    fullscreenControl: false,
+                    panControl: false,
+                    zoomControl: false,
+                    addressControl: false,
+                    enableCloseButton: false,
+                    visible: true,
+                    motionTracking: false,
+                    motionTrackingControl: false,
+                    linksControl: false,
+                    showRoadLabels: false,
+                    showLabels: false,
+                    showLocation: false,
+                    showHeading: false,
+                    showPanoProvider: false,
+                    showZoomControl: false,
+                    showPanControl: false,
+                    mapId: 'YOUR_MAP_ID'
+
+                });
+
+                var position = new google.maps.LatLng(parseFloat(tprpLocLat), parseFloat(tprpLocLng));
+
+                panorama.addListener("position_changed", () => {
+
+                    tmpSVpos = "";
+                    tmpSVpos = panorama.getPosition();
+                    // console.log("showStrtVwPop.pos: " + tmpSVpos.lat() + " " + tmpSVpos.lng());
+                   // console.log("showStrtVwPop.pov: " + panorama.getPov().heading + " " + panorama.getPov().pitch);
+                  //  console.log("showStrtVwPop.zoom: " + panorama.getPov().zoom);
+                    console.log("showStrtVwPop.tilt: " + panorama.getPov().tilt);
+
+                  });
+                    panorama.addListener("pov_changed", () => {
+                    tmpSVheading = panorama.getPov().heading;
+                    tmpSVpitch = panorama.getPov().pitch;
+                    tmpSVpos = panorama.getPosition();
+                    tmpSVposLat = tmpSVpos.lat();
+                    tmpSVzoom = panorama.getPov().zoom;
+                    tmpSVposLng = tmpSVpos.lng();
+                    console.log("showStrtVwPop.povChanged.pos: " + tmpSVpos.lat() + " " + tmpSVpos.lng());
+                    console.log("showStrtVwPop.povChanged.hpitch: " + tmpSVheading + " : " + tmpSVpitch);  
+                    console.log("showStrtVwPop.povChanged.zoom: " + panorama.getPov().zoom);
+                    console.log("showStrtVwPop.povChanged.tilt: " + panorama.getPov().tilt); 
+
+                    });
+                } else {
+                    panorama.setPosition(svLoc);
+                    panorama.setPov({heading: tFSVheading, pitch: tFSVpitch});
+                    panorama.setZoom(tSVzoom);  
+                    panorama.setVisible(true);
+                }
+                 
+            }
+
+        function showStrtVwPop(tLocLat, tLocLng) {
+            var panorama;
+            tprpLocLat = tLocLat;
+            tprpLocLng = tLocLng;
+            var svLoc = {lat: parseFloat(tprpLocLat), lng: parseFloat(tprpLocLng)};
+            panorama = new google.maps.StreetViewPanorama(  
+                document.getElementById("dvStrtVwPop"), {
+                    position: svLoc,
+                    pov: {heading: 165, pitch: 0},
+                    zoom: 10,
+                    fullscreenControl: false,
+                    panControl: false,
+                    zoomControl: false,
+                    addressControl: false,
+                    enableCloseButton: false,
+                    visible: true,
+                    motionTracking: false,
+                    motionTrackingControl: false,
+                    linksControl: false,
+                    showRoadLabels: false,
+                    showLabels: false,
+                    showLocation: false,
+                    showHeading: false,
+                    showPanoProvider: false,
+                    showZoomControl: false,
+                    showPanControl: false,
+                    mapId: 'YOUR_MAP_ID'
+
+                });
+
+                var position = new google.maps.LatLng(parseFloat(tprpLocLat), parseFloat(tprpLocLng));
+                 
+
+                panorama.addListener("position_changed", () => {
+                   
+                    tmpSVpos = "";
+                    tmpSVpos = panorama.getPosition();
+                    // console.log("showStrtVwPop.pos: " + tmpSVpos.lat() + " " + tmpSVpos.lng());
+                   // console.log("showStrtVwPop.pov: " + panorama.getPov().heading + " " + panorama.getPov().pitch);
+                  //  console.log("showStrtVwPop.zoom: " + panorama.getPov().zoom);
+                    console.log("showStrtVwPop.tilt: " + panorama.getPov().tilt);
+
+                  });
+                    panorama.addListener("pov_changed", () => {
+                    tmpSVheading = panorama.getPov().heading;
+                    tmpSVpitch = panorama.getPov().pitch;
+                    tmpSVzoom = panorama.getPov().zoom;
+                    tmpSVpos = panorama.getPosition();
+                    tmpSVposLat = tmpSVpos.lat();
+                    tmpSVposLng = tmpSVpos.lng();
+                    console.log("showStrtVwPop.povChanged.pos: " + tmpSVpos.lat() + " " + tmpSVpos.lng());
+                    console.log("showStrtVwPop.povChanged.hpitch: " + tmpSVheading + " : " + tmpSVpitch);  
+                    console.log("showStrtVwPop.povChanged.zoom: " + panorama.getPov().zoom);
+                    console.log("showStrtVwPop.povChanged.tilt: " + panorama.getPov().tilt); 
+
+                    });
+
+               
+
+
+            }
+
+*/

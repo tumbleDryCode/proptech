@@ -331,7 +331,8 @@ stxt[725] = "Voc\u00ea deve estar logado.";
 stxt[726] = "Confirmado! Seu endere\u00e7o de email foi confirmado.";
 stxt[727] = "Desculpe, ocorreu um erro. Por favor, entre em contato conosco.";
 stxt[728] = "Clique aqui para continuar";
-
+// stxt[729] = "Contact us regarding this property:";
+stxt[729] = "Entre em contato conosco sobre esta propriedade:";
 
 // coookie consent strings
 stxt[800] = "Nos usamos cookies";
@@ -704,8 +705,8 @@ tPostsTypeObj = null;
 tPostsTypeObj = "";
 tPostsTypeObj = {};
 tPostsTypeObj["ppost"] = "Post";
-tPostsTypeObj["pcontent"] = "Conteudo";
-tPostsTypeObj["pimage"] = "Imagem";
+// tPostsTypeObj["pcontent"] = "Conteudo";
+tPostsTypeObj["pimage"] = "Flyer";
 tPostsTypeObj["pcarousel"] = "Carrossel";
 tPostsTypeObj["pmap"] = "Mapa";
 svftObj["posttype"] = tPostsTypeObj;

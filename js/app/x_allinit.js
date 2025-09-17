@@ -173,7 +173,9 @@ var currUpdateArr = [];
 var gglSKey = "AIzaSyAiBR8BEPj2YCepKplisQKK709r1TI48Vo";
 
 
-
+if((currDocHref.indexOf("nls=y") != -1) || (currDocHref.indexOf("isr=y") != -1)) {
+    document.location.href = "./";
+}
 
 var nuDW = function(theElem) { 
 if(theElem.getAttribute("data-isscript") != null) {

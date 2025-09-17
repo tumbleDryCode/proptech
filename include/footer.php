@@ -106,7 +106,9 @@
 			<a class="txtSmall txtClrWhite txtDecorNone" href="javascript:JSSHOP.cookies.setCookie('usrlang','spa_spa','130','','','');document.location.href='index.php?nls=y';">
 			Spanish</a>&nbsp; |&nbsp;
 			<a class="txtSmall txtClrWhite txtDecorNone"  href="javascript:JSSHOP.cookies.setCookie('usrlang','pt_pt','130','','','');document.location.href='index.php?nls=y';">
-			Portuguese</a>
+			Portuguese</a>&nbsp; |&nbsp;
+			<a class="txtSmall txtClrWhite txtDecorNone"  href="javascript:JSSHOP.cookies.setCookie('usrlang','fr_fr','130','','','');document.location.href='index.php?nls=y';">
+			French</a>
             </div>
 
             

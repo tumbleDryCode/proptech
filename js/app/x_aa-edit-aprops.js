@@ -29,7 +29,10 @@ var setUEdtPrpList = function(a,rfb,c) {
     while(iupint < aulen) {
     aprpObj = tPrpIarr[iupint];
     apropID = aprpObj["_id"];
-    aprpTitle = aprpObj["ptitle"];
+    // aprpTitle = aprpObj["ptitle"];
+    nprpTitle = aprpObj["pd_prptitle"];
+aprpTitle = LZString.decompressFromEncodedURIComponent(nprpTitle);
+
     aprpContent = aprpObj["pcontent"];
     aprpType = aprpObj["ptype"];
     aprpBhk = aprpObj["bhk"];
@@ -187,6 +190,9 @@ tmpDOqs["wa"] = [0, "5"];
 tmpDOqs["l"] = 45;
 
 oia = getNuDBFnvp("property",5,null,tmpDOqs);
- doQComm(oia["rq"], null, "setUEdtPrpList");
+// select all from property, propdescs where propdescs.pd_prpid = property._id and property.prtype = '5'
+//oiaSTR = "SELECT * from property p JOIN propdescs pd ON pd.pd_prpid = p._id WHERE p.prtype = '5'";
+oiaSTR = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.prtype = '5' and p.uid = u._id and pd.pd_prpid = p._id and pd.pd_prptlng = '" +  usrlang + "' order by p._id desc limit 20";
+doQComm(oiaSTR, null, "setUEdtPrpList");
 return dmyFnishCntLoad;
 };

@@ -1,7 +1,99 @@
+/*
+<td style="text-align: left" nowrap="nowrap"><div onclick="javascript:eindex('aa-show-user','pid=aa-show-user&amp;tuid=46')" class="crsrPointer"><img alt="Profile" src="images/user/22_1726999049.jpg" class="icnRndDSmUser" align="absmiddle">&nbsp;<span class="txtBold txtCLrHdr">Pedro Matias</span></div></td>
+create function show users div with link to user profile
+*/
 
+var getNuIItmsLst = function(tPrpIarr) {
+    // Group users by country
+    var countryMap = {};
+    tPrpIarr.forEach(function(user) {
+        var country = user.u_country || "Unknown";
+        if (!countryMap[country]) countryMap[country] = [];
+        countryMap[country].push(user);
+    });
+    var html = "";
+    Object.keys(countryMap).forEach(function(country) {
+        html += '<div class="country-block" style="margin-bottom:24px;">';
+        html += '<h3 class="txtBold txtCLrHdr">' + country + '</h3>';
+        html += '<div class="users-row">';
+        countryMap[country].forEach(function(user) {
+            html += '<div class="user-card" style="float:left;margin:8px 16px 8px 0;text-align:center;min-width:100px;max-width:100px;max-height:80px;min-height:80px">';
+            html += '<img alt="Profile" src="images/user/s_thumb' + user.u_icon + '" class="icnRndDSmUser" style="display:block;margin:0 auto;">';
+            html += '<div class="txtSmall txtCLrHdr" style="margin-top:6px;">' + user.u_fullname + '</div>';
+            html += '</div>';
+        });
+        html += '<div style="clear:both"></div>';
+        html += '</div></div>';
+    });
+    return html;
+}
 
+ var getIItmsLst = function(tPrpIarr) {
+
+    var aulen = tPrpIarr.length;
+    var iupint = 0;
+    var pucid = 0;
+    autstr = "<table style=\"width: 100%\">";
+    tpshdSTr = "";
+    fullurpstr = "";
+    while(iupint < aulen) {
+        tsuar = tPrpIarr[iupint];
+        
+        
+        atstr = "";
+        atstr += "<tr>";
+        
+       //  tSTstr =  ts.u_name + ts.u_fullname + ts.u_cat;
+ 
+        
+        tsUT = tsuar.u_cat;
+        tsrtUT = tsuar.u_cat; 
 
  
+        atstr += "<td style=\"text-align: left\"  nowrap=\"nowrap\">";
+        // atstr += "<div  onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\" class=\"crsrPointer\"><img alt=\"Profile\" src=\"images/user/" + aprpObj.u_icon + "\"  class=\"icnRndSmUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">Edit</span></div>";
+        atstr += "<div onclick=\"javascript:eindex('aa-show-user','pid=aa-show-user&tuid=" + tsuar._id + "')\" class=\"crsrPointer\"><img alt=\"Profile\" src=\"images/user/" + tsuar.u_icon + "\"  class=\"icnRndDSmUser\" align=\"absmiddle\">&nbsp;";
+        atstr +=  "<span class=\"txtBold txtCLrHdr\">" +  tsuar.u_fullname +  "</span></div>";
+        atstr += "</td>";
+
+        atstr += "</tr>";
+        autstr += atstr;
+ 
+    iupint++;
+    }
+    autstr += "</table>";
+ 
+    return autstr;
+    };
+ 
+var doTestUList = function(a,rfb,c) {
+    console.log("doAUsersList: " + rfb);
+    if(rfb.indexOf("_id") != -1) {
+  tmpIUsrsLArr = "";
+  tmpIUsrsLArr = [];
+  tmpIUsrsLArr = JSON.parse(rfb);
+
+tFllUIstr =  getNuIItmsLst(tmpIUsrsLArr);
+document.getElementById("divIUsersList").innerHTML = tFllUIstr;
+    } else {
+        alert("doAUsersList: " + rfb);
+        // document.getElementById("divQitems").innerHTML = stxt[508];
+    }
+  };
+
+function getTestUsers() {
+   tmpDOs = {};
+ tmpDOs["ws"] = "where _id > ? and u_rtype=?";
+ tmpDOs["wa"] = [0, 5];
+ 
+ oi = getNuDBFnvp("quser",5,null,tmpDOs);
+ currRQtable = "quser";
+ currRQstr = oi["rq"];
+ // alert("edit users currRQstr: " + currRQstr);
+ doQComm(oi["rq"], null, "doTestUList");
+}
+
+
 function doPrpMDDSlct(apld, aaw,aww,cww) {
   tPsLctPlObj = null;
   tPsLctPlarr = [];
@@ -63,7 +155,8 @@ while(istrt < iprplen){
 aprpObj = fullPrpLstA[istrt];
 nprpTitle = aprpObj["pd_prptitle"];
 aprpTitle = LZString.decompressFromEncodedURIComponent(nprpTitle);
- aprpContent = aprpObj["pd_prpdesc"];
+nprpContent = aprpObj["pd_prpdesc"];
+aprpContent = LZString.decompressFromEncodedURIComponent(nprpContent);
 aprpType = aprpObj["ptype"];
 aprpBhk = aprpObj["bhk"];
 aprpStype = aprpObj["stype"];
@@ -94,6 +187,25 @@ aprpTotalfloor = aprpObj["totalfloor"];
 aprpDate = aprpObj["date"];
 aprploclat = aprpObj["ploclat"];
 aprploclng = aprpObj["ploclng"];
+tLocationStr = "";
+if(aprpLocation.length < 3) {
+  // check aprpCity and aprpSTate to make a full location string
+  if(aprpCity.length > 0) {
+    tLocationStr += aprpCity;
+  }
+  if(aprpState.length > 0) {
+    if(tLocationStr.length > 0) {
+      tLocationStr += ", ";
+    }
+    tLocationStr += aprpState;
+  }
+  if(tLocationStr.length == 0) {
+    tLocationStr = "Unknown Location";
+  }
+} else {
+  tLocationStr = aprpLocation;
+}
+// start the main div
 retPLstSTr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;\">";
 
  
@@ -108,8 +220,8 @@ tPrpMMListObj["edit"] = stxt[31];
 tPrpMMListObj["view"] = stxt[53];
 tPrpMMListObj["share"] = stxt[72];
 tPrpMMListObj["msg"] = stxt[117];
-tPrpMMListObj["fav"] = stxt[21];
-tPrpMMListObj["streetview"] = "Street View";
+// tPrpMMListObj["fav"] = stxt[21];
+// tPrpMMListObj["streetview"] = "Street View";
 
 
 tDDPrpStr = "";
@@ -145,9 +257,9 @@ retPLstSTr += "<div tid=\"dvCoFavBtn\" style=\"float: right\"></div>";
 
 <div style="float: right"><span class="cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg" onclick="javascript:doRecentFavorite('index.html?pid=aa-show-item&amp;itemid=12&amp;cid=15155&amp;catid=5','Apoyobrazos central para un BMW 2.6-','0','12','btnFavs12');"><i id="btnFavs12" class="material-icons txtClrTtl" alt="favorite" title="favorite" value="favorite">?</i></span><span class="cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg" style="margin:2px;" onclick="JSSHOP.ui.showShareBox('product',12);"><i class="material-icons txtClrTtl" alt="share" title="share" value="share">?</i></span><span class="cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg" style="margin:2px;" onclick="JSSHOP.ui.showMsgBox('product', ts._id,'showMsgSave');"><i class="material-icons txtClrTtl" alt="chat" title="messages" value="messages">?</i></span></div>
 */
-currFTclr = "material-icons txtClrTtl";
+currFTclr = "cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg";
  if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {
-currFTclr = "material-icons txtClrRed";
+currFTclr = "cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrRed";
 }
 
 retPLstSTr += "<table style=\"width: 100%\"><tr><td style=\"min-width:40px;\">";
@@ -157,16 +269,17 @@ retPLstSTr += "<a href=\"javascript:eindex('aa-show-user', 'pid=aa-show-user&tui
 retPLstSTr += "<div><img alt=\"Profile\" src=\"images/user/s_thumb" + aprpObj.u_icon + "\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">" + aprpUFlName + "</span></div></a>";
 
 
-retPLstSTr += "</td><td>";
-retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
- retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpLocation + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
- 
+retPLstSTr += "</td><td style=\"vertical-align:top;width:100%\">";
+retPLstSTr += "<span class=\"txtBold txtClrLtBlue text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
+ retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe0c8;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + tLocationStr + "</span></td>";
+retPLstSTr += "<td class=\"txtBold txtBig\" nowrap=\"nowrap\">" + aprpPrice + "<span style=\"vertical-align:center;font-size:smaller;align: absmiddle\" class=\"txtClrGrey\">&euro;</span></td></tr></tbody></table>";
+
 retPLstSTr += "</td><td style=\"vertical-align:top\">" + tDDPrpStr + "</td></tr></table>";
 
  retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\">";
 retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"" + currPrpImgsFldr + "/m_thumb" + aprpPimage + "\" alt=\"pimage\" class=\"img100p\">";
-retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
-retPLstSTr += "<div class=\"sale bg-secondary text-white text-capitalize\">" + tDBHObj[aprpType] + "</div>";
+// retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
+retPLstSTr += "<div class=\"sale  slmtable bkgdClrWhite txtClrHdr txtSmall\">ID: " + aprpObj._id + " / " + tDBHObj[aprpType] + " / " + stxt[953] + ": " + aprpSize + "</div>";
 retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
 retPLstSTr += "<div class=\"featured-thumb-data shadow-one\">";
 
@@ -180,25 +293,49 @@ retPLstSTr += "</div>";
 */
 
 
-retPLstSTr += "<div class=\"bg-gray quantity px-4 pt-4\">";
+retPLstSTr += "<div class=\"bg-gray quantity px-4 pt-4 txtSmall\" style=\"padding: 6px;\">";
+// retPLstSTr += a short version of the property aprpContent
+strpdPcontent = "";
+if(aprpContent == "" || aprpContent == null || aprpContent == undefined || aprpContent == "noQvalue") {
+  aprpContent = "Description goes here.";
+}
+  // strip html from aprpContent
+  strpdPcontent = aprpContent.replace(/<\/?[^>]+(>|$)/g, "");
+  shortPcontent = strpdPcontent.length > 100 ? strpdPcontent.substring(0, 100) + "..." : strpdPcontent;
+  retPLstSTr +=  shortPcontent;
+/*
 retPLstSTr += "<ul>";
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpSize + " </b>  <span class=\"txtSmall\">" + stxt[953] + "</span></div></li>";
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpBedroom + " </b>  <span class=\"txtSmall\">" + stxt[922] + "</span></div></li>";
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpBathroom + " </b>  <span class=\"txtSmall\">" + stxt[923] + "</span></div></li>"
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpKitchen + " </b>  <span class=\"txtSmall\">" + stxt[926] + "</span></div></li>"; 
 retPLstSTr += "</ul>";
-
-
-
-
+*/
 retPLstSTr += "</div>"; // end bg-gray quantity px-4 pt-4
+
+
+
 retPLstSTr += "<div class=\"bkgdClrWhite\">";
-retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></span>";
-retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
-retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','noQvalue','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
+// table
+retPLstSTr += "<table style=\"width:100%;margin:0 auto;\"><tr><td>";
+retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrLtBlue\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
+retPLstSTr += "</td>";
+retPLstSTr += "<td>";
+retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrLtBlue\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
+retPLstSTr += "</td>";
+retPLstSTr += "<td>";
+// retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"" + currFTclr + "\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','" +"','" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
+// check if already a favorite and make it red if so
+currFTclr = "material-icons txtClrTtl";
+ if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {
+currFTclr = "material-icons txtClrRed";
+}
+retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrLtBlue\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','images/property/s_thumb" + aprpPimage + "','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
+
+retPLstSTr += "</td></tr></table>";
 // streetview link http://maps.google.com/maps?q=&layer=c&cbll=
 tSrvLLstr = aprploclat + "," + aprploclng;
-retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\"><a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr + "\"><i class=\"material-icons txtClrTtl\" alt=\"streetview\" title=\"streetview\" value=\"streetview\">&#xe56e;</i> Street View</a></span>";
+// retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\"><a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr + "\"><i class=\"material-icons txtClrTtl\" alt=\"streetview\" title=\"streetview\" value=\"streetview\">&#xe56e;</i> Street View</a></span>";
 
  
 
@@ -231,7 +368,8 @@ tUFObj = {};
 tUFObj["uplmt"] = 15;
 tUFObj["upcb"] = "jshp_ads_showUpdtsFeed";
  JSSHOP.ads.doUpdatesFeed(tUFObj);
- JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')
+ JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks');
+ getTestUsers();
  }
 
 
@@ -387,12 +525,30 @@ tmpDOqs["o"] = " order by rand()";
 oia = getNuDBFnvp("property",5,null,tmpDOqs);
 newQstr = "select * from property where _id > 0 limit 45";
 // newQstr also grabs user icon from quser  u_icon field
-newQstr = "select p.*, u.u_icon, u.u_fullname from property p, quser u where p._id > 0 and p.uid = u._id  order by rand() limit 20";
+// newQstr = "select p.*, u.u_icon, u.u_fullname from property p, quser u where p._id > 0 and p.uid = u._id  order by rand() limit 20";
 
-  newQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.uid = u._id and pd.pd_prpid = p._id and pd.pd_prptlng = '" +  usrlang + "' order by rand() limit 20";
+//   newQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.uid = u._id and pd.pd_prpid = p._id and pd.pd_prptlng = '" +  usrlang + "' order by rand() limit 20";
 // also get property title and description from propdescs where propdescs.pd_prpid = p._id and propdescs.pd_lang = userLang or propdescs.pd_lang = deflang
-newQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.prtype = '5' and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = '" +  usrlang + "' or pd.pd_prptlng = '" + deflang + "') order by rand() limit 20";
+newerQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.prtype = '5' and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = '" +  usrlang + "' or pd.pd_prptlng = '" + deflang + "') order by p._id desc limit 20";
+// test  ..newerQstr = "FROM property p JOIN quser u ON u._id = p.uid LEFT JOIN propdescs pd_user ON pd_user.pd_prpid = p._id AND pd_user.pd_prptlng = ? -- '" +  usrlang + "' LEFT JOIN propdescs pd_def ON pd_def.pd_prpid = p._id AND pd_def.pd_prptlng = ? -- '" + deflang + "' WHERE p._id > 0 AND p.prtype = '5' ORDER BY RAND() LIMIT 20";
+/*
+SELECT p.*, u.u_icon, u.u_fullname,
+       COALESCE(pd_user.pd_prptitle, pd_def.pd_prptitle) AS pd_prptitle,
+       COALESCE(pd_user.pd_prpdesc,  pd_def.pd_prpdesc)  AS pd_prpdesc
+FROM property p
+JOIN quser u ON p.uid = u._id
+LEFT JOIN propdescs pd_user ON pd_user.pd_prpid = p._id AND pd_user.pd_prptlng = 'YOUR_USER_LANG'
+LEFT JOIN propdescs pd_def  ON pd_def.pd_prpid  = p._id AND pd_def.pd_prptlng  = 'YOUR_DEF_LANG'
+WHERE p._id > 0
+  AND p.prtype = '5'
+ORDER BY RAND()
+LIMIT 20
 
- doQComm(newQstr, null, "doMPropsList");
+// return the above as one line string for newerQstr
+
+*/
+newerQstr = "SELECT p.*, u.u_icon, u.u_fullname, COALESCE(pd_user.pd_prptitle, pd_def.pd_prptitle) AS pd_prptitle, COALESCE(pd_user.pd_prpdesc,  pd_def.pd_prpdesc)  AS pd_prpdesc FROM property p JOIN quser u ON p.uid = u._id LEFT JOIN propdescs pd_user ON pd_user.pd_prpid = p._id AND pd_user.pd_prptlng = '" +  usrlang + "' LEFT JOIN propdescs pd_def ON pd_def.pd_prpid = p._id AND pd_def.pd_prptlng = '" + deflang + "' WHERE p._id > 0 AND p.prtype = '5' ORDER BY RAND() LIMIT 20";
+
+ doQComm(newerQstr, null, "doMPropsList");
 return dmyFnishCntLoad;
 };

@@ -95,7 +95,7 @@ stxt[94] = "Sector";
 stxt[95] = "Dept";
 stxt[96] = "All Users";
 stxt[97] = "Name";
-stxt[98] = "Contactar";
+stxt[98] = "Contact";
 stxt[99] = "more details";
 stxt[100] = "Updates";
 stxt[101] = "Privacy";
@@ -333,6 +333,7 @@ stxt[725] = "You must be logged in.";
 stxt[726] = "Confirmed!  Your email address has been confirmed.";
 stxt[727] = "Sorry, an error occured.  Please contact us.";
 stxt[728] = "Click here to continue";
+stxt[729] = "Contact us regarding this property:";
 
 
 
@@ -665,8 +666,8 @@ tPostsTypeObj = null;
 tPostsTypeObj = "";
 tPostsTypeObj = {};
 tPostsTypeObj["ppost"] = "Post";
-tPostsTypeObj["pcontent"] = "Content";
-tPostsTypeObj["pimage"] = "Image";
+// tPostsTypeObj["pcontent"] = "Content";
+tPostsTypeObj["pimage"] = "Flyer";
 tPostsTypeObj["pcarousel"] = "Carousel";
 tPostsTypeObj["pmap"] = "Map";
 svftObj["posttype"] = tPostsTypeObj;

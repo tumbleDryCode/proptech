@@ -150,7 +150,7 @@ tmpUstr = document.getElementById("tmpUemail").value;
 tmpPstr = document.getElementById("tmpUpass").value;
 
 
-if((tmpUstr.length < 1) || (tmpPstr.length < 1) || (tmpUstr.indexOf("@") == -1) || (tmpPstr.length < 6) || (tmpPstr.indexOf(" ") != -1) || (tmpPstr.indexOf("@") != -1) || (tmpPstr.indexOf(".") != -1)) {
+if((tmpUstr.length < 1) || (tmpPstr.length < 1) || (tmpUstr.indexOf("@") == -1) || (tmpPstr.length < 4) || (tmpPstr.indexOf(" ") != -1) || (tmpPstr.indexOf("@") != -1) || (tmpPstr.indexOf(".") != -1)) {
 // alert("You must enter a valid email address and password");
 JSSHOP.ui.doAlertBox("error", stxt[1008], stxt[1013] + "<br>" + stxt[1014] + "<br>" + stxt[1015], "noQvalue");
 
@@ -219,7 +219,14 @@ if(currUrlArr.ltype) {
 alert("currUrlArr: " + currUrlArr.ltype);
 }
 JSSHOP.shared.initFrmComps(cueiiilobarr);
- 
+
+if(currUrlArr.tq && currUrlArr.tcid) {
+    // set quid and xid cookies
+    JSSHOP.cookies.setCookie("quid", currUrlArr.tq,"90","","","");
+    JSSHOP.cookies.setCookie("cuid", currUrlArr.tcid, "90","","","");
+    // redirect to shopDir
+    document.location.href = shopDir;
+}
 // return dmyFnishCntLoad;
 };
 

@@ -37,7 +37,6 @@
 <link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css"> -->
 <link rel="stylesheet" type="text/css" href="css/login.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/x_bs-fixes.css">
  
 	<script src="js/app/lz-string.js" language="javascript" type="text/javascript"></script>
 	<script src="js/app/x_allinit.js" type="text/javascript"></script> 
@@ -57,5 +56,6 @@ echo "<scr" . "ipt src=\"js/app/aa-" .  $usrlang . ".js\"></script>";
 <script src="js/leaflet/lcanvas.js" type="text/javascript"></script>
 <link rel="stylesheet" href="js/leaflet/leaflet.css" type="text/css" />
 <link rel="stylesheet" href="js/leaflet/easy-button.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/x_bs-fixes.css">
 
 <title>proptech</title>

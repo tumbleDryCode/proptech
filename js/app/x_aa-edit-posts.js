@@ -46,22 +46,22 @@ var doPostsList = function(a,rfb,c) {
         tsUT = tsuar.p_cat;
         tsrtUT = tsuar.p_cat; 
           
-         tUrlDecTitle = decodeURIComponent(tsuar.p_title);
+         tUrlDecTitle = " ";
         atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-post','pid=aa-edit-post&tpstid=" + tsuar._id + "');\">" + tsuar._id + "</a></td>";
         atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-post','pid=aa-edit-post&tpstid=" + tsuar._id + "');\">" + tsuar.p_ptype + "</a></td>";
 
         tdecdttl = "";
         tdecdttl = decodeURIComponent(tsuar.p_title);
         if(tdecdttl.length > 30) {
-            turldecdttl = turldecdttl.substring(0, 30) + "...";
+            tUrlDecTitle = tdecdttl.substring(0, 30) + "...";
         } else {
-            turldecdttl = tdecdttl;
+            tUrlDecTitle = tdecdttl;
         }
         atstr += "<td style=\"text-align: left\"  nowrap=\"nowrap\">";
         // atstr += "<div  onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\" class=\"crsrPointer\"><img alt=\"Profile\" src=\"images/user/" + aprpObj.u_icon + "\"  class=\"icnRndSmUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">Edit</span></div>";
         atstr += "<div onclick=\"javascript:eindex('aa-show-post','pid=aa-show-update&tupid=" + tsuar._id + "')\" class=\"crsrPointer\">";
         // atstr += "<img alt=\"Profile\" src=\"images/user/" + tsuar.p_image + "\"  class=\"icnRndDSmUser\" align=\"absmiddle\">&nbsp;";
-        atstr +=  "<span class=\"txtBold txtCLrHdr\">" +  turldecdttl +  "</span></div></td>";
+        atstr +=  "<span class=\"txtBold txtCLrHdr\">" +  tUrlDecTitle +  "</span></div></td>";
        atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-post','pid=aa-edit-post&tpstid=" + tsuar._id + "');\"><i class=\"menu-material-icons\" alt=\"edit\">&#xe3c9;</i></a></td>";
 
  

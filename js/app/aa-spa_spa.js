@@ -375,7 +375,7 @@ stxt[725] = "Debes iniciar sesion.";
 stxt[726] = "Confirmado! Su direccion de correo electronico ha sido confirmada.";
 stxt[727] = "Lo siento, se produjo un error. Por favor contactenos.";
 stxt[728] = "Haga clic aqui para continuar";
-
+stxt[729] = "Contactenos sobre esta propiedad:";
 
 
 // coookie consent strings
@@ -428,7 +428,7 @@ stxt[915] = "Hágase miembro";
 stxt[916] = "Enviar propiedad";
 stxt[917] = "Como funciona";
 stxt[918] = "Nuestros agentes";
-stxt[919] = "Política de privacidad";
+stxt[919] = "Politica de privacidad";
 stxt[920] = "Detalle de la propiedad";
 stxt[921] = "M2";
 stxt[922] = "Dormitorio";
@@ -439,7 +439,7 @@ stxt[926] = "Cocina";
 stxt[927] = "Tipo de propiedad";
 stxt[928] = "Piso";
 stxt[929] = "Piso total";
-stxt[930] = "Características";
+stxt[930] = "Caracteri�sticas";
 stxt[931] = "Planos de planta";
 stxt[932] = "Planta baja";
 stxt[933] = "Planta baja";
@@ -594,23 +594,7 @@ tmmftxt["opera"] = "Operations";
 tmmftxt["user"] = "User";
 svftObj["mmenu"] = tmmftxt;
 
-
-// fleet vehicle types
-tfvftxt = null;
-tfvftxt = "";
-tfvftxt = {};
-tfvftxt["1"] = "Passenger";
-tfvftxt["2"] = "Van";
-tfvftxt["3"] = "Van Bi Temp";
-tfvftxt["4"] = "Van Tri Temp";
-tfvftxt["5"] = "Truck";
-tfvftxt["6"] = "Truck Bi Temp";
-tfvftxt["7"] = "Truck Tri Temp";
-tfvftxt["8"] = "Trailer";
-tfvftxt["9"] = "Trailer Bi Temp";
-tfvftxt["10"] = "Trailer Tri Temp";
-tfvftxt["11"] = "Tractor";
-svftObj["f_vtype"] = tfvftxt;
+ 
 
 
 tDBcritObj = null;
@@ -797,8 +781,8 @@ tPostsTypeObj = null;
 tPostsTypeObj = "";
 tPostsTypeObj = {};
 tPostsTypeObj["ppost"] = "Publicacion";
-tPostsTypeObj["pcontent"] = "Contenido";
-tPostsTypeObj["pimage"] = "Imagen";
+// tPostsTypeObj["pcontent"] = "Contenido";
+tPostsTypeObj["pimage"] = "Flyer";
 tPostsTypeObj["pcarousel"] = "Carrusel";
 tPostsTypeObj["pmap"] = "Mapa";
 svftObj["posttype"] = tPostsTypeObj;

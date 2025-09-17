@@ -456,7 +456,7 @@ color: #294759;
 color: #005B5B;
 }
 .txtClrLtBlue {
-color: #ECECFF;
+color: #145bc7;
 }
 .txtClrDkBlue {
   color: #0c095cd8;
@@ -514,9 +514,9 @@ color: #939393;
 .txtClrLtGrey a.active {color: #939393;}
 
 
-.txtClrLtBlue a {color: #ECECFF;}
-.txtClrLtBlue a:hover {color: #ECECFF;}
-.txtClrLtBlue a.active {color: #ECECFF;}
+.txtClrLtBlue a {color: #145bc7;}
+.txtClrLtBlue a:hover {color: #145bc7}
+.txtClrLtBlue a.active {color: #145bc7}
 
 
 
@@ -1551,8 +1551,8 @@ nav ul a span.badge {
 
 .clsPcntnt {
 max-width: 100%;
-padding: 10px;
-margin: 10px;
+padding: 4px;
+margin: 4px;
 overflow: hidden;
 word-wrap: break-word;
 height: auto;

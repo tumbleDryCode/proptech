@@ -195,8 +195,8 @@ function doTransPost() {
             } catch (e) {
                 error = e.message;
                 loadingTranslation = false;
-                console.error("doTransPost.Error: " + error);
-                alert("libreTranslate.Error: " + error);
+                console.error("doTransPost.Error: " + e);
+                alert("libreTranslate.Error: " + e);
             }
         };
 
@@ -264,12 +264,15 @@ function savePDescTrans(theSPDBtn) {
     doSpinSet(theSPDBtn.id, "small", null);
 
      // JSSHOP.shared.getDynFrmVals(document["propdescs"], "tmp_");
-
-tDescLZd = LZString.compressToEncodedURIComponent(tinyMCE.activeEditor.getContent());   
+tPureDescStrng = tinyMCE.activeEditor.getContent();
+// strip html tags from tPureDescStrng
+tPurrDscStrng = tPureDescStrng.replace(/<\/?[^>]+(>|$)/g, "");
+tDescLZd = LZString.compressToEncodedURIComponent(tPurrDscStrng);   
     // tDescLZd = LZString.compressToEncodedURIComponent(document.getElementById("tmp_pd_prpdesc").value);
     document.getElementById("pd_prpdesc").value = tDescLZd;
     tTitleLZd = LZString.compressToEncodedURIComponent(document.getElementById("tmp_pd_prptitle").value);
     document.getElementById("pd_prptitle").value = tTitleLZd;
+    document.getElementById("dvPrpDTtl").value = tTitleLZd;
     // get the values from the textareas and set them to the tmpPrpLngObj object
     // tmpPrpLngObj["pd_prpid"] = currUrlArr.prpid;
     // tmpPrpLngObj["pd_prptlng"] = document.getElementById("pd_prptlng").value;
@@ -300,6 +303,7 @@ function doLangSlct(dlsA, dlsB, dlsC) {
     tSlecyedLang = dlsC;
     if(tmpPrpLngObj[dlsC] != null) {
         tUNLZd = LZString.decompressFromEncodedURIComponent(tmpPrpLngObj[dlsC]["pd_prpdesc"]);
+        console.log("doLangSlct.tUNLZd: " + tUNLZd);
         // document.getElementById("tmp_pd_prpdesc").value = tUNLZd;
         tUNLZdttl = LZString.decompressFromEncodedURIComponent(tmpPrpLngObj[dlsC]["pd_prptitle"]);
          document.getElementById("tmp_pd_prptitle").value = tUNLZdttl;
@@ -1917,8 +1921,8 @@ tmpRetStr += "<td><div class=\"switch\"><label>";
 tmpRetStr += "<input type=\"checkbox\" id=\"tmp_setmpropimg\" name=\"tmp_setmpropimg\" value=\"10\" onchange=\"javascript:doChkdPrpMImg(this);\">";
 tmpRetStr += "<span class=\"lever\" style=\"float:right\"></span>";
 tmpRetStr += "</label></div></td></tr>";
-tmpRetStr += "<tr><td style=\"min-width: 100%\"><label class=\"txtClrHdr\" id=\"lbl_delimgae\">" + stxt[42] + "</label></td>";
-tmpRetStr += "<td><div class=\"switch\">X</div></td></tr>";
+// tmpRetStr += "<tr><td style=\"min-width: 100%\"><label class=\"txtClrHdr\" id=\"lbl_delimgae\">" + stxt[42] + "</label></td>";
+// tmpRetStr += "<td><div class=\"switch\">X</div></td></tr>";
 tmpRetStr += "</table>";
  tmpRetStr += "<img src=\"images/property/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
 // put the delete button
@@ -2033,7 +2037,10 @@ var setAllPropImgs = function(theAIa, theAIb, theAIc) {
         }
 	} // end if _id
     document.getElementById("dvPrpDVID").innerHTML = stxt[985] + " ID: " + prpid;
-    document.getElementById("dvPrpDTtl").innerHTML = ptitle.value;
+    tPopTitlZpd = tmpPrpLngObj[usrlang]["pd_prptitle"];
+    tPrpTitleUnzpd = LZString.decompressFromEncodedURIComponent(tPopTitlZpd);
+    tPrpTtlClnShrt = tPrpTitleUnzpd.length > 20 ? tPrpTitleUnzpd.substring(0, 70) + "..." : tPrpTitleUnzpd;
+    document.getElementById("dvPrpDTtl").innerHTML = tPrpTtlClnShrt;
 
      if(tSVImgDarr.length > 0) {
         tJSONstr = JSON.stringify(tSVImgDarr);
@@ -2117,7 +2124,7 @@ var setPropImgs = function(tspiArr, tspiB, tspiC) {
         }
         document.getElementById("dvProdImgs").innerHTML = tstr;
         document.getElementById("dvPrpDVID").innerHTML = stxt[985] + " ID: " + prpid;
-        document.getElementById("dvPrpDTtl").innerHTML = ptitle.value;
+       //  document.getElementById("dvPrpDTtl").innerHTML = pd_prptitle.value;
 
 };
 

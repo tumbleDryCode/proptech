@@ -507,7 +507,18 @@ var finishUPupload = function(theMMum) {
         }
     };
 
-
+function fillUserFrm(arr,brr,crr) {
+           tfPobj = JSON.parse(brr);
+        tFUFMO = tfPobj[0];
+         JSSHOP.shared.setFrmVals("quser",tfPobj[0],function() {void(0)});
+        JSSHOP.shared.setDynFieldVals(tfPobj[0], "tmp_");
+tmpDOs = null;
+tmpDOs = {};
+tmpDOs["ws"] = "where k_userid=? and k_coid=? and k_rtype=?";
+tmpDOs["wa"] = [quid,quid,5]; 
+oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
+doQComm(oi["rq"], "y", "setCurrCoLinks");
+ }
 
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
@@ -585,6 +596,13 @@ if(arrAllForms.quser) {
 // JSSHOP.shared.setDynFieldVals(JSSHOP.shared.getDynFrmVals(document["quser"], ""),"tmp_");
 }
 
+    tmpDOs = null;
+    tmpDOs = {};
+    tmpDOs["ws"] = "where _id=?";
+    tmpDOs["wa"] = [quid];
+    oi = getNuDBFnvp("quser", 5, null, tmpDOs);
+    doQComm(oi["rq"],null,"fillUserFrm");
+
 JSSHOP.loadScript("misc/x_countries.js", doZoneDD,  "js");
 
 
@@ -595,27 +613,18 @@ tUcat = document.getElementById("tmp_u_cat");
 // alert("u_cat.value: " + u_cat.value);
 if((u_cat.value == "5") || (currUrlArr.da)) {
 svftObj["usercat"]["5"] = "Admin";
- 
-    // alert("Admin user");
-    tmpDOs = null;
+tmpDOs = null;
 tmpDOs = {};
 tmpDOs["ws"] = "where c_uid=? and c_rtype=?";
 tmpDOs["wa"] = [quid,5];
 tmpDOs["l"] = 45;
 oi = getNuDBFnvp("qco",5,null,tmpDOs);
 doQComm(oi["rq"], null, "doShopsList");
- 
-
 }
 JSSHOP.shared.addCurrSlctObj(svftObj["usercat"], tUcat, u_cat.value, "noQvalue", "noQvalue");
  
 
-tmpDOs = null;
-tmpDOs = {};
-tmpDOs["ws"] = "where k_userid=? and k_coid=? and k_rtype=?";
-tmpDOs["wa"] = [quid,quid,5]; 
-oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
-doQComm(oi["rq"], "y", "setCurrCoLinks");
+
 
     }
 
@@ -864,3 +873,162 @@ var doCoLinkAdd = function() {
     oi = getNuDBFnvp("qlinks", 6, null, tmpFobj);
     doQComm(oi["rq"], null, "fnshCoLinkAdd");
 };
+
+
+/*
+
+CREATE TABLE `quser` (
+  `_id` int(11) NOT NULL,
+  `u_rtype` int(11) DEFAULT NULL,
+  `u_cat` int(12) NOT NULL,
+  `u_name` varchar(64) DEFAULT NULL,
+  `u_fullname` varchar(128) NOT NULL,
+  `u_location` varchar(64) NOT NULL,
+  `u_region` varchar(64) NOT NULL,
+  `u_country` varchar(64) NOT NULL,
+  `u_loclat` varchar(24) NOT NULL,
+  `u_loclng` varchar(24) NOT NULL,
+  `u_email` varchar(128) DEFAULT NULL,
+  `u_pass` varchar(128) DEFAULT NULL,
+  `u_header` varchar(256) DEFAULT NULL,
+  `u_desc` text NOT NULL,
+  `u_icon` varchar(128) NOT NULL,
+  `u_privacy` varchar(12) NOT NULL,
+  `u_prfs` text NOT NULL,
+  `u_socauthtype` int(11) DEFAULT NULL,
+  `u_socauthid` varchar(128) DEFAULT NULL,
+  `u_socauthtoke` text DEFAULT NULL,
+  `u_dadded` varchar(14) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+
+// example rows
+(46, 5, 1, 'trtt', 'Pedro Matias', '', 'A dos Cunhados', 'Portugal', '39.1524', '-9.2972', 'trtt@', 'trtt', 'headline', 'introduction', '22_1726999049.jpg', 'private', '', 5, '5', '5', '1701509624242'),
+(47, 5, 5, '1', 'Jean Mulhouse', 'Allauch', 'Eyguieres', 'France', '43.3357', '5.48201', 'testerA@propsgo.com', 'tester', 'I am a great realtor!', 'My Realtor Description is about me loving my job at companyA, companyB,', '47_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036');
+
+// using the above database table structure for quser and example records/rows, create an insert statement where 5 random genre real estate agents in spanish with convincing headline (u_header) and description (u_desc) as an insert statement
+
+create an insert statement for the following records where the first column is unique and autoincrementing
+
+(48, 5, 1, '1', 'Juan Pérez', 'Madrid', 'Madrid', 'Spain', '40.4168', '-3.7038', 'juanp@propsgo.com', 'juanp', '¡Soy un gran agente inmobiliario!', 'Mi descripción de agente inmobiliario es sobre mi amor por ayudar a las personas a encontrar su hogar ideal.', '48_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(49, 5, 1, '1', 'María López', 'Barcelona', 'Barcelona', 'Spain', '41.3851', '2.1734', 'marial@propsgo.com', 'marial', '¡Tu sueño es mi misión!', 'Como agente inmobiliario, me apasiona ayudar a mis clientes a encontrar la propiedad perfecta.', '49_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(50, 5, 1, '1', 'Carlos García', 'Valencia', 'Valencia', 'Spain', '39.4699', '-0.3763', 'carlosg@propsgo.com', 'carlosg', '¡Experiencia y dedicación!', 'Con años de experiencia en el sector inmobiliario, estoy aquí para guiarte en cada paso del camino.', '50_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(51, 5, 1, '1', 'Laura Martínez', 'Sevilla', 'Sevilla', 'Spain', '37.3886', '-5.9823', 'lauram@propsgo.com', 'lauram', '¡Tu confianza es mi prioridad!', 'Me esfuerzo por construir relaciones sólidas con mis clientes y brindar un servicio excepcional.', '51_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(52, 5, 1, '1', 'David Sánchez', 'Bilbao', 'Bilbao', 'Spain', '43.2630', '-2.9340', 'davids@propsgo.com', 'davids', '¡Resultados que hablan por sí mismos!', 'Mi enfoque centrado en el cliente garantiza que obtendrás los mejores resultados en tu búsqueda inmobiliaria.', '52_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036');
+
+INSERT INTO `quser` (`_id`, `u_rtype`, `u_cat`, `u_name`, `u_fullname`, `u_location`, `u_region`, `u_country`, `u_loclat`, `u_loclng`, `u_email`, `u_pass`, `u_header`, `u_desc`, `u_icon`, `u_privacy`, `u_prfs`, `u_socauthtype`, `u_socauthid`, `u_socauthtoke`, `u_dadded`) VALUES
+(48, 5, 1, '1', 'Juan Pérez', 'Madrid', 'Madrid', 'Spain', '40.4168', '-3.7038', 'juanp@propsgo.com', 'juanp', '¡Soy un gran agente inmobiliario!', 'Mi descripción de agente inmobiliario es sobre mi amor por ayudar a las personas a encontrar su hogar ideal.', '48_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(49, 5, 1, '1', 'María López', 'Barcelona', 'Barcelona', 'Spain', '41.3851', '2.1734', 'marial@propsgo.com', 'marial', '¡Tu sueño es mi misión!', 'Como agente inmobiliario, me apasiona ayudar a mis clientes a encontrar la propiedad perfecta.', '49_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(50, 5, 1, '1', 'Carlos García', 'Valencia', 'Valencia', 'Spain', '39.4699', '-0.3763', 'carlosg@propsgo.com', 'carlosg', '¡Experiencia y dedicación!', 'Con años de experiencia en el sector inmobiliario, estoy aquí para guiarte en cada paso del camino.', '50_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(51, 5, 1, '1', 'Laura Martínez', 'Sevilla', 'Sevilla', 'Spain', '37.3886', '-5.9823', 'lauram@propsgo.com', 'lauram', '¡Tu confianza es mi prioridad!', 'Me esfuerzo por construir relaciones sólidas con mis clientes y brindar un servicio excepcional.', '51_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(52, 5, 1, '1', 'David Sánchez', 'Bilbao', 'Bilbao', 'Spain', '43.2630', '-2.9340', 'davids@propsgo.com', 'davids', '¡Resultados que hablan por sí mismos!', 'Mi enfoque centrado en el cliente garantiza que obtendrás los mejores resultados en tu búsqueda inmobiliaria.', '52_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036');
+
+// INSERT INTO `quser` ( for 5 new french users
+INSERT INTO `quser` (`_id`, `u_rtype`, `u_cat`, `u_name`, `u_fullname`, `u_location`, `u_region`, `u_country`, `u_loclat`, `u_loclng`, `u_email`, `u_pass`, `u_header`, `u_desc`, `u_icon`, `u_privacy`, `u_prfs`, `u_socauthtype`, `u_socauthid`, `u_socauthtoke`, `u_dadded`) VALUES
+(53, 5, 1, '1', 'Jean Dupont', 'Paris', 'Île-de-France', 'France', '48.8566', '2.3522', 'jeand@propsgo.com', 'jeand', '¡Soy un gran agente inmobiliario!', 'Mi descripción de agente inmobiliario es sobre mi amor por ayudar a las personas a encontrar su hogar ideal.', '53_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(54, 5, 1, '1', 'Marie Curie', 'Paris', 'Île-de-France', 'France', '48.8566', '2.3522', 'mariec@propsgo.com', 'mariec', '¡Tu sueño es mi misión!', 'Como agente inmobiliario, me apasiona ayudar a mis clientes a encontrar la propiedad perfecta.', '54_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(55, 5, 1, '1', 'Pierre Dupuis', 'Lyon', 'Auvergne-Rhône-Alpes', 'France', '45.7640', '4.8357', 'pierred@propsgo.com', 'pierred', '¡Experiencia y dedicación!', 'Con años de experiencia en el sector inmobiliario, estoy aquí para guiarte en cada paso del camino.', '55_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(56, 5, 1, '1', 'Simone de Beauvoir', 'Lyon', 'Auvergne-Rhône-Alpes', 'France', '45.7640', '4.8357', 'simoneb@propsgo.com', 'simoneb', '¡Tu confianza es mi prioridad!', 'Me esfuerzo por construir relaciones sólidas con mis clientes y brindar un servicio excepcional.', '56_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(57, 5, 1, '1', 'Victor Hugo', 'Marseille', 'Provence-Alpes-Côte d Azur', 'France', '43.2965', '5.3698', 'victorh@propsgo.com', 'victorh', '¡Resultados que hablan por sí mismos!', 'Mi enfoque centrado en el cliente garantiza que obtendrás los mejores resultados en tu búsqueda inmobiliaria.', '57_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036');
+
+// the following is qlinks table structure and data
+CREATE TABLE `qlinks` (
+  `_id` int(11) NOT NULL,
+  `k_rtype` int(11) DEFAULT NULL,
+  `k_userid` int(11) DEFAULT NULL,
+  `k_coid` int(11) DEFAULT NULL,
+  `k_category` varchar(56) DEFAULT NULL,
+  `k_title` varchar(128) NOT NULL,
+  `k_matter` text DEFAULT NULL,
+  `k_privacy` varchar(56) DEFAULT NULL,
+  `k_dadded` varchar(12) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+    tmpKLnksSlctObj = {};
+    tmpKLnksSlctObj["facebook"] = "Facebook";
+    tmpKLnksSlctObj["whatsapp"] = "Whatsapp";
+    tmpKLnksSlctObj["instagram"] = "Instagram";
+    tmpKLnksSlctObj["linkedin"] = "Linkedin";
+    tmpKLnksSlctObj["twitter"] = "Twitter";
+    tmpKLnksSlctObj["web"] = "Website";
+    tmpKLnksSlctObj["email"] = "Email";
+    tmpKLnksSlctObj["telephone"] = "Telephone";
+    tmpKLnksSlctObj["sms"] = "SMS";
+    tmpKLnksSlctObj["fax"] = "Fax";
+    tmpKLnksSlctObj["other"] = "Other";
+
+ 
+ // k_matter is the link type facebook, whatsapp, instagram, linkedin, twitter, web, email, telephone, sms, fax, other
+// create qlinks records with telephone, sms, whatsapp facebook and twitter records for each of the spanish users above
+
+/*
+-- QLINKS records for Spanish quser agents (Juan Pérez, María López, Carlos García, Laura Martínez, David Sánchez)
+-- Use their quser _id as k_userid and k_coid, email for facebook/twitter, and fictional Spanish phone numbers
+
+INSERT INTO `qlinks` (`k_rtype`, `k_userid`, `k_coid`, `k_category`, `k_title`, `k_matter`, `k_privacy`, `k_dadded`) VALUES
+-- Juan Pérez (quser._id = 48)
+(5, 48, 48, 'telephone', 'Teléfono', '+34 600000048', 'public', '1742930036'),
+(5, 48, 48, 'sms', 'SMS', '+34 600000148', 'public', '1742930036'),
+(5, 48, 48, 'whatsapp', 'WhatsApp', '+34 600000248', 'public', '1742930036'),
+(5, 48, 48, 'facebook', 'Facebook', 'juanp@propsgo.com', 'public', '1742930036'),
+(5, 48, 48, 'twitter', 'Twitter', 'juanp@propsgo.com', 'public', '1742930036'),
+-- María López (quser._id = 49)
+(5, 49, 49, 'telephone', 'Teléfono', '+34 600000049', 'public', '1742930036'),
+(5, 49, 49, 'sms', 'SMS', '+34 600000149', 'public', '1742930036'),
+(5, 49, 49, 'whatsapp', 'WhatsApp', '+34 600000249', 'public', '1742930036'),
+(5, 49, 49, 'facebook', 'Facebook', 'marial@propsgo.com', 'public', '1742930036'),
+(5, 49, 49, 'twitter', 'Twitter', 'marial@propsgo.com', 'public', '1742930036'),
+-- Carlos García (quser._id = 50)
+(5, 50, 50, 'telephone', 'Teléfono', '+34 600000050', 'public', '1742930036'),
+(5, 50, 50, 'sms', 'SMS', '+34 600000150', 'public', '1742930036'),
+(5, 50, 50, 'whatsapp', 'WhatsApp', '+34 600000250', 'public', '1742930036'),
+(5, 50, 50, 'facebook', 'Facebook', 'carlosg@propsgo.com', 'public', '1742930036'),
+(5, 50, 50, 'twitter', 'Twitter', 'carlosg@propsgo.com', 'public', '1742930036'),
+-- Laura Martínez (quser._id = 51)
+(5, 51, 51, 'telephone', 'Teléfono', '+34 600000051', 'public', '1742930036'),
+(5, 51, 51, 'sms', 'SMS', '+34 600000151', 'public', '1742930036'),
+(5, 51, 51, 'whatsapp', 'WhatsApp', '+34 600000251', 'public', '1742930036'),
+(5, 51, 51, 'facebook', 'Facebook', 'lauram@propsgo.com', 'public', '1742930036'),
+(5, 51, 51, 'twitter', 'Twitter', 'lauram@propsgo.com', 'public', '1742930036'),
+-- David Sánchez (quser._id = 52)
+(5, 52, 52, 'telephone', 'Teléfono', '+34 600000052', 'public', '1742930036'),
+(5, 52, 52, 'sms', 'SMS', '+34 600000152', 'public', '1742930036'),
+(5, 52, 52, 'whatsapp', 'WhatsApp', '+34 600000252', 'public', '1742930036'),
+(5, 52, 52, 'facebook', 'Facebook', 'davids@propsgo.com', 'public', '1742930036'),
+(5, 52, 52, 'twitter', 'Twitter', 'davids@propsgo.com', 'public', '1742930036');
+
+// create records for 5 new french users and respective qlinks
+-- Jean Dupont (quser._id = 53)
+INSERT INTO `qlinks` (`k_rtype`, `k_userid`, `k_coid`, `k_category`, `k_title`, `k_matter`, `k_privacy`, `k_dadded`) VALUES
+(5, 53, 53, 'telephone', 'Téléphone', '+33 600000053', 'public', '1742930036'),
+(5, 53, 53, 'sms', 'SMS', '+33 600000153', 'public', '1742930036'),
+(5, 53, 53, 'whatsapp', 'WhatsApp', '+33 600000253', 'public', '1742930036'),
+(5, 53, 53, 'facebook', 'Facebook', 'jeand@propsgo.com', 'public', '1742930036'),
+(5, 53, 53, 'twitter', 'Twitter', 'jeand@propsgo.com', 'public', '1742930036'),
+-- Marie Curie (quser._id = 54)
+(5, 54, 54, 'telephone', 'Téléphone', '+33 600000054', 'public', '1742930036'),
+(5, 54, 54, 'sms', 'SMS', '+33 600000154', 'public', '1742930036'),
+(5, 54, 54, 'whatsapp', 'WhatsApp', '+33 600000254', 'public', '1742930036'),
+(5, 54, 54, 'facebook', 'Facebook', 'mariec@propsgo.com', 'public', '1742930036'),
+(5, 54, 54, 'twitter', 'Twitter', 'mariec@propsgo.com', 'public', '1742930036'),
+-- Pierre Dupuis (quser._id = 55)
+(5, 55, 55, 'telephone', 'Téléphone', '+33 600000055', 'public', '1742930036'),
+(5, 55, 55, 'sms', 'SMS', '+33 600000155', 'public', '1742930036'),
+(5, 55, 55, 'whatsapp', 'WhatsApp', '+33 600000255', 'public', '1742930036'),
+(5, 55, 55, 'facebook', 'Facebook', 'pierred@propsgo.com', 'public', '1742930036'),
+(5, 55, 55, 'twitter', 'Twitter', 'pierred@propsgo.com', 'public', '1742930036'),
+-- Simone de Beauvoir (quser._id = 56)
+(5, 56, 56, 'telephone', 'Téléphone', '+33 600000056', 'public', '1742930036'),
+(5, 56, 56, 'sms', 'SMS', '+33 600000156', 'public', '1742930036'),
+(5, 56, 56, 'whatsapp', 'WhatsApp', '+33 600000256', 'public', '1742930036'),
+(5, 56, 56, 'facebook', 'Facebook', 'simoneb@propsgo.com', 'public', '1742930036'),
+(5, 56, 56, 'twitter', 'Twitter', 'simoneb@propsgo.com', 'public', '1742930036'),
+-- Victor Hugo (quser._id = 57)
+(5, 57, 57, 'telephone', 'Téléphone', '+33 600000057', 'public', '1742930036'),
+(5, 57, 57, 'sms', 'SMS', '+33 600000157', 'public', '1742930036'),
+(5, 57, 57, 'whatsapp', 'WhatsApp', '+33 600000257', 'public', '1742930036'),
+(5, 57, 57, 'facebook', 'Facebook', 'victorh@propsgo.com', 'public', '1742930036'),
+(5, 57, 57, 'twitter', 'Twitter', 'victorh@propsgo.com', 'public', '1742930036');
+// create the quser records for the new french users using the quser table structure found on this page
+
+
+*/

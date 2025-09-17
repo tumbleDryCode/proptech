@@ -116,24 +116,22 @@ var doPstTypOpts = function(tPTval) {
     tTChngStrObj["en_us"] = "";
     tTChngStrObj["pt_pt"] = "";
     tTChngStrObj["spa_spa"] = "";
+    tTChngStrObj["fr_fr"] = "";
     hasSlect = "no";
     switch(objVal) {
         case "ppost":
         tTChngStrObj["en_us"] += "Selected Upadte type is Post. You can select various Update types such as Content, Image, Carousel, Map, etc.";
         tTChngStrObj["en_us"] += "<br>Each Update type has different options and layouts to choose from ";
-       //  tTChngStrObj["en_us"] += "<i class=\"nav-material-icons txtClrGrey\">&#xe8b8;</i>.";
-
         tTChngStrObj["pt_pt"] += "Tipo de Update \u00ea Post. Voc\u00ea pode selecionar v\u00e1rios tipos de Updates, como Conte\u00fado, Imagem, Carrossel, Mapa, etc.";
         tTChngStrObj["pt_pt"] += "<br>Cada tipo de atualiza\u00e7\u00e3o tem diferentes op\u00e7\u00f5es e layouts para escolher ";
-       // tTChngStrObj["pt_pt"] += "<i class=\"nav-material-icons txtClrDlg\">&#xe8b8;</i>.";
-
-        // tTChngStrObj["pt_pt"] += "Tipo de post alterado para post.";
-        // tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a publicacion.";
+        tTChngStrObj["fr_fr"] += "Type de mise \u00e0 jour s\u00e9lectionn\u00e9 : Publication. Vous pouvez choisir parmi plusieurs types de mises \u00e0 jour comme Contenu, Image, Carrousel, Carte, etc.";
+        tTChngStrObj["fr_fr"] += "<br>Chaque type de mise \u00e0 jour propose des options et des mises en page diff\u00e9rentes.";
         break;
         case "pcontent":
         tTChngStrObj["en_us"] += "Post type changed to content. A content post is more of a blog post.";
         tTChngStrObj["pt_pt"] += "Tipo de post alterado para conteudo. Um post de conteudo \u00e9 mais um post de blog.";
         tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a contenido. Una publicacion de contenido es mas un blog.";
+        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en contenu. Une publication de contenu est similaire \u00e0 un article de blog.";
         break;
         case "pimage":
         tTChngStrObj["en_us"] += "Post type changed to image. The image is created from the content.";
@@ -142,28 +140,28 @@ var doPstTypOpts = function(tPTval) {
         tTChngStrObj["pt_pt"] += "Vocw pode preencher o conteudo com layouts de usuario ou propriedade.";
         tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a imagen. La imagen se crea a partir del contenido.";
         tTChngStrObj["spa_spa"] += "Puede rellenar el contenido con disenos de usuario o propiedad.";
+        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en image. L'image est cr\u00e9\u00e9e \u00e0 partir du contenu.";
+        tTChngStrObj["fr_fr"] += "Vous pouvez pr\u00e9remplir le contenu avec des mises en page utilisateur ou propri\u00e9t\u00e9.";
         hasSlect = "yes";
         break;
         case "pcarousel":
         tTChngStrObj["en_us"] += "Post type changed to carousel. A sliding image gallery is created from user or property listings.";
         tTChngStrObj["pt_pt"] += "Tipo de post alterado para carrossel. Uma galeria de imagens deslizantes \u00e9 criada a partir de listagens de usuarios ou propriedades.";
-        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a carrusel. Se crea una galería de imagenes deslizantes a partir de listados de usuarios o propiedades.";
-        // doPstTypOpts("users");
-        dvDemoView.innerHTML = tTChngStrObj[usrlang];
-       break;
-        // return;
-        //  hasSlect = "yes";
- 
+        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a carrusel. Se crea una galer\u00eda de imagenes deslizantes a partir de listados de usuarios o propiedades.";
+        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en carrousel. Une galerie d'images d\u00e9filantes est cr\u00e9\u00e9e \u00e0 partir des utilisateurs ou des propri\u00e9t\u00e9s.";
+        break;
         case "pmap":
         tTChngStrObj["en_us"] += "Post type changed to map. A map is created from user or property listings.";
         tTChngStrObj["pt_pt"] += "Tipo de post alterado para mapa. Um mapa  criado a partir de listagens de usuarios ou propriedades.";
         tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a mapa. Se crea un mapa a partir de listados de usuarios o propiedades.";
+        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en carte. Une carte est cr\u00e9\u00e9e \u00e0 partir des utilisateurs ou des propri\u00e9t\u00e9s.";
         hasSlect = "yes";
         break;
         default:
         tTChngStrObj["en_us"] += "Update type changed to post.";
         tTChngStrObj["pt_pt"] += "Tipo de Update alterado para post.";
         tTChngStrObj["spa_spa"] += "Tipo de Update cambiado a publicacion.";
+        tTChngStrObj["fr_fr"] += "Type de mise \u00e0 jour chang\u00e9 en publication.";
         break;
         }
         if(hasSlect == "ayes") {
@@ -208,17 +206,20 @@ var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
     tTChngStrObj["en_us"] = "";
     tTChngStrObj["pt_pt"] = "";
     tTChngStrObj["spa_spa"] = "";
+    tTChngStrObj["fr_fr"] = "";
     hasSlect = "no";
     switch(objVal) {
         case "ppost":
         tTChngStrObj["en_us"] += "Update type changed to post.";
         tTChngStrObj["pt_pt"] += "Tipo de Update alterado para post.";
         tTChngStrObj["spa_spa"] += "Tipo de Update cambiado a publicacion.";
+        tTChngStrObj["fr_fr"] += "Type de mise \u00e0 jour chang\u00e9 en publication.";
         break;
         case "pcontent":
         tTChngStrObj["en_us"] += "Update type changed to content. A content post is more of a blog post.";
         tTChngStrObj["pt_pt"] += "Tipo de Update alterado para conteudo. Um post de conteudo \u00e9 mais um post de blog.";
         tTChngStrObj["spa_spa"] += "Tipo de Update cambiado a contenido. Una publicacion de contenido es mas un blog.";
+        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en contenu. Une publication de contenu est similaire \u00e0 un article de blog.";
         break;
         case "pimage":
             JSSHOP.ads.doImgPostCnfgPop();
@@ -229,6 +230,8 @@ var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
         tTChngStrObj["pt_pt"] += "Voc\u00ea pode preencher o conteudo com layouts de usuarios ou propriedades.";
         tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a imagen. La imagen se crea a partir del contenido.";
         tTChngStrObj["spa_spa"] += "Puede rellenar el contenido con diseños de usuarios o propiedades.";
+        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en image. L'image est cr\u00e9\u00e9e \u00e0 partir du contenu.";
+        tTChngStrObj["fr_fr"] += "Vous pouvez pr\u00e9remplir le contenu avec des mises en page utilisateur ou propri\u00e9t\u00e9.";
         hasSlect = "yes";
         break;
         case "pcarousel":
@@ -237,6 +240,7 @@ var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
         tTChngStrObj["en_us"] += "Post type changed to carousel. A sliding image gallery is created from user or property listings.";
         tTChngStrObj["pt_pt"] += "Tipo de post alterado para carrossel. Uma galeria de imagens deslizantes \u00e9 criada a partir de listagens de usuarios ou propriedades.";
         tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a carrusel. Se crea una galería de imagenes deslizantes a partir de listados de usuarios o propiedades.";
+        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en carrousel. Une galerie d'images d\u00e9filantes est cr\u00e9\u00e9e \u00e0 partir des utilisateurs ou des propri\u00e9t\u00e9s.";
         hasSlect = "yes";
         break;
         case "pmap":
@@ -246,12 +250,15 @@ var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
         tTChngStrObj["en_us"] += "Post type changed to map. A map is created from user or property listings.";
         tTChngStrObj["pt_pt"] += "Tipo de post alterado para mapa. Um mapa  criado a partir de listagens de usuarios ou propriedades.";
         tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a mapa. Se crea un mapa a partir de listados de usuarios o propiedades.";
+        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en carte. Une carte est cr\u00e9\u00e9e \u00e0 partir des utilisateurs ou des propri\u00e9t\u00e9s.";
+        // use \unicode characters for quotes and accents on all translation strings for eterninty
         hasSlect = "yes";
         break;
         default:
         tTChngStrObj["en_us"] += "Post type changed to post.";
         tTChngStrObj["pt_pt"] += "Tipo de post alterado para post.";
         tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a publicacion.";
+        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en publication.";
         break;
         }
         if(hasSlect == "ayes") {
@@ -273,12 +280,22 @@ var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
             tTChngStrObj["spa_spa"] += "<option value=\"users\">Usuarios</option>";
             tTChngStrObj["spa_spa"] += "</select>";
             tTChngStrObj["spa_spa"] += "<input type=\"button\" value=\"Salvar\" onclick=\"javascript:doPstTypOpts(document.getElementById('inpPTselect'));\">";
-         }  
+            tTChngStrObj["fr_fr"] += "Veuillez sélectionner le type de mise en page : ";
+            tTChngStrObj["fr_fr"] += "<select id=\"inpPTselect\" name=\"inpPTselect\" >";
+            tTChngStrObj["fr_fr"] += "<option value=\"props\">Propriétés</option>";
+            tTChngStrObj["fr_fr"] += "<option value=\"users\">Utilisateurs</option>";
+            tTChngStrObj["fr_fr"] += "</select>";
+            tTChngStrObj["fr_fr"] += "<input type=\"button\" value=\"Enregistrer\" onclick=\"javascript:doPstTypOpts(document.getElementById('inpPTselect'));\">";
+         }
              tTChngStrObj["en_us"] += "<br><input type=\"button\" value=\"Close\" onclick=\"javascript:JSSHOP.ui.closeLbox();\" class=\"cls_button cls_button-small bkgdClrDlg txtClrHdr txtSmall\">";
             tTChngStrObj["pt_pt"] += "<br><input type=\"button\" value=\"Fechar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\" class=\"cls_button cls_button-small bkgdClrDlg txtClrHdr txtSmall\">";
             tTChngStrObj["spa_spa"] += "<br><input type=\"button\" value=\"Cerrar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\" class=\"cls_button cls_button-small bkgdClrDlg txtClrHdr txtSmall\">";
+            tTChngStrObj["fr_fr"] += "<br><input type=\"button\" value=\"Fermer\" onclick=\"javascript:JSSHOP.ui.closeLbox();\" class=\"cls_button cls_button-small bkgdClrDlg txtClrHdr txtSmall\">";
             // dvDemoView.innerHTML = tTChngStrObj[usrlang];
-     JSSHOP.ui.popAndFillLbox(tTChngStrObj[usrlang]);
+            if(tMELVal == "ppost" || tMELVal == "pcontent") {
+                  JSSHOP.ui.popAndFillLbox(tTChngStrObj[usrlang]);
+
+            }
     // procNuUIitem("qposts","p_ptype",currUrlArr.tpstid,objVal,"fnshPTypeChange");
     };
 
@@ -474,7 +491,7 @@ function doPostAdd() {
             tZpd = LZString.compressToEncodedURIComponent(JSON.stringify(JSSHOP.ads.getUpdatePVrs("pcarousel")));
             p_vars.value = tZpd;    
             setPostAdd();    
-            JSSHOP.ads.doSwprConfigPop();
+            // JSSHOP.ads.doSwprConfigPop();
             break;
         case "pmap":
             tZpd = LZString.compressToEncodedURIComponent(JSON.stringify(JSSHOP.ads.getUpdatePVrs("pmap")));
@@ -574,7 +591,6 @@ currMediaID = prpid;
             tDDPTyStr = JSSHOP.ui.getNuBSdropDstr(tDDPTyObj);
             document.getElementById("dvPTypeFld").innerHTML = tDDPTyStr;
 
-        /* not using this for now on add post
             tDDPrvObj = {};
             tDDPrvObj["ddtype"] = "moreHoriz";
             tDDPrvObj["fld"] = "noQvalue";
@@ -593,7 +609,7 @@ currMediaID = prpid;
             tDDPrvObj["kvIcnsObj"]["visibility"] = "&#xe5cd;";
             tDDPrvStr = JSSHOP.ui.getNuBSdropDstr(tDDPrvObj);
             document.getElementById("tdMorePost").innerHTML = tDDPrvStr;
-
+ 
             // div dvDDxcntnt
             // dvDDxcntnt = array drowpdown content i.e. Images, Templates, etc.
             tDDXtraCntObj = {};
@@ -617,7 +633,7 @@ currMediaID = prpid;
             tDDXtraCntStr = JSSHOP.ui.getNuBSdropDstr(tDDXtraCntObj);
             document.getElementById("dvDDxcntnt").innerHTML = tDDXtraCntStr;
 
-*/
+ 
 
             doPTypeTip("p_ptype", "ppost", "ppost");
 
@@ -635,7 +651,7 @@ console.log("doPrivVizPop: " + tPVel + " " + tPVval + " " + tPVtxt);
 
 tDDPStr = "";   
 document.getElementById("lightbox_content").innerHTML = "";
-if(tPVval == "privacy") {
+if(tPVtxt == "privacy") {
 tDDBojA = {};
     tDDBojA = JSSHOP.ui.getBSDDOptsO();
     tDDBojA["ddtype"] = "noQvalue";

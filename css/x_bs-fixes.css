@@ -219,3 +219,20 @@ table.tfixed td:nth-of-type(2) {width:200px;}/*Setting the width of column 2.*/
 .form-control {
   height: auto;
 }
+
+.swiper-button-next {
+
+  background: rgba(236, 236, 255, .6);
+  box-shadow: none;
+  color:rgba(9, 9, 75, 0.6);
+}
+
+.swiper-button-prev {
+  background: rgba(236, 236, 255, .6);
+  box-shadow: none;
+  color:rgba(9, 9, 75, 0.6);
+}
+
+.swiper-pagination-bullet-active {
+  background: #294759;
+}

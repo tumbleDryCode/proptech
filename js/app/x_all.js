@@ -2931,7 +2931,7 @@ JSSHOP.ui.setPickerVal = function(tPVelem, tPVtype, tPVixd, tPVid) {
 };
 
 JSSHOP.ui.getPickerStr = function(tPDtype) {
-    tGPSstr = "<div style=\"padding: 5px;max-height:90%;overflow:auto;\"> ";
+    tGPSstr = "<div style=\"padding: 1px;max-height:90%;overflow:auto;\"> ";
     try {
     switch(tPDtype) {
         case "users":
@@ -2944,6 +2944,7 @@ JSSHOP.ui.getPickerStr = function(tPDtype) {
         }   
         break;
         case "props":
+            /* 
         for(var i = 0; i < currPstsPrpsArr.length; i++) {
             decdPttleSA = decodeURIComponent(currPstsPrpsArr[i].pd_prptitle);
 
@@ -2954,10 +2955,46 @@ JSSHOP.ui.getPickerStr = function(tPDtype) {
             } else {
             tGPSstr += "<div class=\"crsrPointer bkgdClrWhite\" onclick=\"JSSHOP.ui.setPickerVal(this, 'props','" + i +  "','" + currPstsPrpsArr[i]["_id"] + "');\">" + lzdPrpTtl + "</div>";
             }
+            tGPSstr += "<hr>";
         }
+        */
+        // create a more complex property picker with images and descs
+        for(var i = 0; i < currPstsPrpsArr.length; i++) {
+            decdPttleSA = decodeURIComponent(currPstsPrpsArr[i].pd_prptitle);
+            lzdPrpTtl = LZString.decompressFromEncodedURIComponent(decdPttleSA);
+            decdPrpDescSA = decodeURIComponent(currPstsPrpsArr[i].pd_prpdesc);
+            lzdPrpDesc = LZString.decompressFromEncodedURIComponent(decdPrpDescSA);
+            if(currSlctdPrpsObj["ob" + currPstsPrpsArr[i]["_id"]]) {
+                tGPSstr += "<div class=\"crsrPointer bkgdClrDlg\" style=\"border: 1px solid #ccc;padding:5px;margin-bottom:5px;\" onclick=\"JSSHOP.ui.setPickerVal(this, 'props','" + i +  "','" + currPstsPrpsArr[i]["_id"] + "');\">";
+            } else {    
+            tGPSstr += "<div class=\"crsrPointer bkgdClrWhite\" style=\"border: 1px solid #ccc;padding:5px;margin-bottom:5px;\" onclick=\"JSSHOP.ui.setPickerVal(this, 'props','" + i +  "','" + currPstsPrpsArr[i]["_id"] + "');\">";
+            }
+            // wrap the image and title, a short 200 char desc, and price in a div with border and make it look like a list with the image on the left and the text on the right
+            tGPSstr += "<div style=\"float:left;width:30%;max-width:100px;margin-right:10px;\">";
+            if(currPstsPrpsArr[i].pimage) {
+                tGPSstr += "<img src=\"images/property/s_thumb" + currPstsPrpsArr[i].pimage + "\" alt=\"" + lzdPrpTtl + "\" title=\"" + lzdPrpTtl + "\" style=\"max-width:100%;height:auto;\" />";
+            } else {
+                tGPSstr += "<img src=\"images/default.png\" alt=\"" + lzdPrpTtl + "\" title=\"" + lzdPrpTtl + "\" style=\"max-width:100%;height:auto;\" />";
+            }
+            tGPSstr += "</div>"; // end of image div
+            tGPSstr += "<div style=\"float:left;width:65%;\">";
+            tGPSstr +=  "<span class=\"txtBold txtClrHdr\">" + lzdPrpTtl + "</span>";
+            tGPSstr += "<br>" + currPstsPrpsArr[i].state;
+            tGPSstr += "<br>" + stxt[18] +": " + currPstsPrpsArr[i].price;
+            tGPSstr += "</div>"; // end of text div
+            tGPSstr += "<div style=\"clear:both;\"></div>";
+            tGPSstr += "</div>"; // end of property div
+        }
+        // wrap it all in a div that has a max height and scrolls
+        tAGPSstr = "<div style=\"max-height:400px;overflow-y:auto;\">" + tGPSstr + "</div>";
+        tGPSstr = tAGPSstr;
+        break;
         default:
         break;
     }
+tGPSstr += "</div>";
+tGPSstr += "<br>";
+    tGPSstr += "<div style=\"margin: 10px\">";
     tGPSstr += "<span style=\"\" class=\"cls_button cls_button-medium bkgdClrHdr txtClrWhite\" onclick=\"getPTypeChange();\">OK</span>";
     tGPSstr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-medium  bkgdClrGrey txtClrHdr\" onclick=\"getPTypeChange();\">Cancel</span>";   
     tGPSstr += "</div>";
@@ -4037,10 +4074,10 @@ tClogoimg = c_logoimg.value;
     tShareMsgStr += "</div>";
     
     tShareMsgStr += "<div class=\"collection-item\">";
-    tShareMsgStr += "<div class=\"txtClrHdr txtBold\">" + stxt[141] + "</div>";
+    tShareMsgStr += "<div class=\"txtClrHdr txtBold\">" + stxt[72] + "</div>";
     tShareMsgStr += "<div class=\"txtClrHdr\">";
     for(var i = 0; i < tShareSIteArr.length; i++) {
-        tShareMsgStr += "<a href=\"javascript:JSSHOP.ui.doShare('" + tShareSIteArr[i] + "','" + tShareMsgUrl + "','" + tShareMsgTtl + "','" + tShareMsgDsc + "','" + tShareMsgImg + "');\" class=\"clsNada\">" + tShareSIteArr[i] + "</a> &nbsp; ";
+        tShareMsgStr += "<a href=\"javascript:JSSHOP.ui.doShare('" + tShareSIteArr[i] + "','" + tShareMsgUrl + "','" + tShareMsgTtl + "','" + tShareMsgDsc + "','" + tShareMsgImg + "');\" class=\"txtDecorUline\">" + tShareSIteArr[i] + "</a> &nbsp; ";
 
     }
     tShareMsgStr += "</div>";
@@ -4330,6 +4367,7 @@ function doUMsglinks(tULUID, tdivMID) {
     }
 
     var rndrUMsgBtns = function(za,zb,zc) {
+        console.log("rndrUMsgBtns: " + zb);
         theTRndrArr = [];
         theTRndrArr = JSON.parse(zb);
         var rclen = theTRndrArr.length;
@@ -4337,8 +4375,9 @@ function doUMsglinks(tULUID, tdivMID) {
         var rcsblen = 0;
         var lastcatID = "";
         rcts = null;
+        raqcL = "";
         rcnsDv = document.createElement('div');
-        rcL = "<table style=\"width:100%;\"><tr>";
+        // rcL = "<table style=\"width:100%;\"><tr>";
         while(rciint < rclen) {
         
         rcts = theTRndrArr[rciint];
@@ -4366,14 +4405,16 @@ function doUMsglinks(tULUID, tdivMID) {
 
         switch(tKcat) {
             case "sms":
-                rcL += "<td><span class=\"form-control bkgdClrTtl brdrClrHdr txtClrRed crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'sms','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_sms\" title=\"sms\" value=\"btn_email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe625;</i> SMS</span></td>";
+                raqcL += "<span style=\"float:left;padding: 2px;margin:7px;\" class=\"slmtable bkgdClrTtl brdrClrHdr crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'sms','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_sms\" title=\"sms\" value=\"btn_email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe625;</i> SMS</span>";
                 break;
                 case "email":
-                    rcL += "<td><span class=\"form-control bkgdClrTtl brdrClrHdr txtClrRed crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'email','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_email\" title=\"email\" value=\"email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0be;</i> Email</span></td>";
+                   raqcL += "<span style=\"float:left;padding: 7px;margin:7px;\"  class=\"slmtable bkgdClrTtl brdrClrHdr crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'email','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_email\" title=\"email\" value=\"email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0be;</i> Email</span>";
                     break;
                     case "whatsapp":
-                        rcL += "<td><span class=\"form-control bkgdClrTtl brdrClrHdr txtClrRed crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'whatsapp','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_whatsapp\" title=\"whatsapp\" value=\"whatsapp\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe88a;</i> WhatsApp</span></td>";
+                       raqcL += "<span  style=\"float:left;padding: 7px;margin:7px;\" class=\"slmtable bkgdClrTtl brdrClrHdr crsrPointer\"  onclick=\"javascript:JSSHOP.ads.doGenShpActn(0,'whatsapp','" + tKmatter + "');\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_whatsapp\" title=\"whatsapp\" value=\"whatsapp\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe88a;</i> WhatsApp</span>";
                         break;
+                        case "telephone":
+                           raqcL += "<span style=\"float:left;padding: 7px;margin:7px;\"  class=\"slmtable bkgdClrTtl brdrClrHdr crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'tel','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_tel\" title=\"tel\" value=\"tel\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0cd;</i> Call</span>";
                     default:
                         break;
         }
@@ -4381,12 +4422,12 @@ function doUMsglinks(tULUID, tdivMID) {
         // rcnsDv.innerHTML = "<span class=\"txtBold\">" + rcts.k_category + "</span><br>" + rcts.k_matter;
         rciint++;
         }
-        rcL += "<td></td></tr></table>";
+       //  rcL += "<td></td></tr></table>";
         tRCLDv = document.createElement('div');
-        tRCLDv.innerHTML = rcL;
+        tRCLDv.innerHTML = raqcL;
         document.getElementById(za).appendChild(tRCLDv);
 
-
+        console.log("rndrUMsgBtns.za: " + za);
         // document.getElementById(za).innerHTML = rcL;
          };
 
@@ -4433,7 +4474,8 @@ function doUMsglinks(tULUID, tdivMID) {
     rciint++;
     }
     rcL += "</table>";
-    document.getElementById(za).innerHTML = rcL;
+    // just the message buttons for now 
+    // document.getElementById(za).innerHTML = rcL;
     rndrUMsgBtns(za,zb,zc);
    };
   
@@ -4481,7 +4523,8 @@ switch(tmpMsgType) {
 case "uproperty":
 atMpPrpObj = currShopsArr[tmpMsgVal];
 tMsgBxHdrSTr = "<table><tr><td><img src=\"images/user/s_thumb" + atMpPrpObj.u_icon + "\" class=\"icnRndnUser\"></td><td>" + atMpPrpObj.u_fullname + "</td></tr></table>";
-tMsgBxHdrSTr += "<table style=\"margin:0 auto\"><tr><td><img src=\"" + currPrpImgsFldr + "/s_thumb"  + atMpPrpObj.pimage + "\" class=\"icnmedbtn\"></td><td>" + atMpPrpObj.ptitle + "</td></tr></table>";
+tMsgBxHdrSTr += "<table style=\"margin:0 auto\"><tr><td><img src=\"" + currPrpImgsFldr + "/s_thumb"  + atMpPrpObj.pimage + "\" class=\"icnmedbtn\"><br>ID: " + atMpPrpObj._id + "</td><td>" + atMpPrpObj.ptitle + "</td></tr></table>";
+tMsgBxHdrSTr += "<table style=\"margin:0 auto\"><tr><td>" + stxt[729] + "</td></tr></table>";
 // tMsgBxHdrSTr = atMpPrpObj.ptitle;
 tsbstr += "<div id=\"dvMsgUlinks\"></div>";
 
@@ -4498,11 +4541,11 @@ break;
 default:
 break;
 }
-JSSHOP.ui.popAndFillLbox(tMsgBxHdrSTr + "<br>" + msgFObj.rndrStr + "<br>" + tsbstr);
+JSSHOP.ui.popAndFillLbox(tMsgBxHdrSTr + "<br>" + "<br>" + tsbstr);
 if((boolDoAnx == "y") || (boolDoAnx == "yes")) {
 setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj);doMsgMediaSetup();", 500);
 } else {
-setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj);", 500);
+// setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj);", 500);
 }
 if(tmpMsgType == "uproperty") {
     tDefPropInqMsg = "I am interested in your property: ID: " +  atMpPrpObj._id + " - " + atMpPrpObj.ptitle;
@@ -4510,7 +4553,7 @@ if(tmpMsgType == "uproperty") {
     tDefPropInqMsg += "My question is..."
 
     // JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_matter", tDefPropInqMsg);
-    setTimeout("JSSHOP.ui.setTinnerText('tmp_msg_matter', '" + tDefPropInqMsg + "')", 1000);
+     // setTimeout("JSSHOP.ui.setTinnerText('tmp_msg_matter', '" + tDefPropInqMsg + "')", 1000);
     atMpPrpObj = currShopsArr[tmpMsgVal];
     setTimeout("doUMsglinks(atMpPrpObj.uid, 'dvMsgUlinks');", 1000);
  }
@@ -5798,9 +5841,9 @@ JSSHOP.ui.stringToColour = function(str) {
         tBSDDLayStr += "<td><a class=\"" + tBBSSObj.fldcls + "\" data-bs-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-expanded=\"false\" style=\"font-size:14px;\">" + tBBSSObj.lbl + "</a>";
          // tBSDDLayStr += "<td style=\"word-wrap:break-word;word-break: break-word;\"><a class=\"nav-link dropdown-toggle txtSmall txtClrDlg crsrPointer\" data-bs-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-expanded=\"false\"  style=\"word-wrap:break-word;word-break: break-word;\">" + tBBSSObj.lbl + "</a>";
         } else if(tBBSSObj.ddtype == "moreVert") {
-         tBSDDLayStr += "<td><i class=\"material-icons crsrPointer\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">&#xe5d4;</i>";
+         tBSDDLayStr += "<td><i class=\"material-icons crsrPointer slmtable brdrClrDlg\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">&#xe5d4;</i>";
         } else {
-            tBSDDLayStr += "<td><i class=\"material-icons crsrPointer\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">&#xe5d3;</i>";
+            tBSDDLayStr += "<td><i class=\"material-icons crsrPointer slmtable brdrClrDlg\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">&#xe5d3;</i>";
         }
 
         tBSDDLayStr += "<div class=\"dropdown-menu brdrClrHdr\"><ul>";
@@ -6681,10 +6724,9 @@ function doUpdteMDDSlct(apld, aaw,aww,cww) {
         tDDiidx = tPsLctPlarr[1];
         }
   
-    console.log('doPrpMDDSlct: ' +  apld + " :: " + aaw + " :: " + aww);
+    console.log('doUpdteMDDSlct: ' +  apld + " :: " + aaw + " :: " + aww);
    switch(aww) {
     case "edit":
-      // alert('doPrpMDDSlct - edit');
       eindex('aa-edit-post', 'pid=aa-edit-post&tpstid=' + tDDiid);
       break;
     case "view":
@@ -6705,7 +6747,7 @@ function doUpdteMDDSlct(apld, aaw,aww,cww) {
       window.open("http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr);
       break;
     default:
-      alert('doPrpMDDSlct - default');
+      alert('doUpdteMDDSlct - default');
       break;
   
   }
@@ -6721,6 +6763,7 @@ function jshp_ads_showUpdtsFeed(aaup,bbup,ccup) {
     tUdtsArr = [];
     tUdtsArr = JSON.parse(bbup);
     tUdtsObj = null;
+    tUdtsObj = "";
     tDDUdteObj = null;
  
     currUpdateArr = null;
@@ -6728,6 +6771,8 @@ function jshp_ads_showUpdtsFeed(aaup,bbup,ccup) {
     currUpdateArr = [];
      currUpdateArr = tUdtsArr;
     for(ided = 0; ided < tUdtsArr.length; ided++) {
+            tUdtsObj = null;
+    tUdtsObj = "";
         tUdtsObj = tUdtsArr[ided];
         tCanPost = "yes";
         tDDUpdateStr = "";
@@ -6781,7 +6826,7 @@ tUpdteListObj["fav"] = stxt[73];
         tUdtsStr += "<div><img alt=\"Profile\" src=\"images/user/" + tUdtsObj.u_icon + "\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">" + tUdtsObj.u_fullname + "</span></div></a>";
         tUdtsStr += "</td><td>";
         tUdtsStr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-update','pid=aa-show-update&tupid=" + tUdtsObj._id + "')\">" + decodeURIComponent(tUdtsObj.p_title)  + "</a></h5>";
-        tUdtsStr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + tUdtsObj.p_location + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + tUdtsObj.p_ptype + "</b></div></td></tr></tbody></table>";
+        // tUdtsStr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + tUdtsObj.p_location + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><b>" + tPostsTypeObj[tUdtsObj.p_ptype] + "</b></div></td></tr></tbody></table>";
         tUdtsStr += "</td>";
         tUdtsStr += "<td style=\"vertical-align:top\">" + tDDUpdateStr + "</td>";
         tUdtsStr += "</tr></table>";
@@ -6854,18 +6899,42 @@ tUpdteListObj["fav"] = stxt[73];
                 console.log("tUpPvrs.pmap: " + tUpPvrs);
                 tUpPvrsObj = JSON.parse(tUpPvrs);
                 if(tUpPvrsObj) {
-                        if(tUpPvrsObj["uptype"]) {
-                        tDvMpID = "dvUpMap" + tUdtsObj._id;
-                        tUdtsStr += "<div id=\"" + tDvMpID +  "\" style=\"min-height: 240px; max-height: 240px; width: 100%;\"></div>";
-                        tLeavesObj = "";
-                        tLeavesObj = {};
-                        tLeavesObj["mrkrs"] = JSSHOP.ads.getUpdtMapMrkrs(tUpPvrsObj.uptype, tUpPvrsObj.data);
-                        tLeavesObj["mdvid"] = tDvMpID;
-                        setTimeout(function() {doNuSpinSet(tDvMpID, "small", null, "...");}, 500);
-                        setTimeout(function() {JSSHOP.ads.doNuGenMap(tLeavesObj) }, 1200);
+                    tDvaMpID = "";
+                    if(tUpPvrsObj["uptype"]) {
+                        console.log("tUpPvrsObj.uptype: " + tUpPvrsObj.uptype);
+                        tRansSTr = Math.random().toString(36).substring(2, 7);
+                        tDvaMpID = "dvUpMap" + tRansSTr;
+                        tUdtsStr += "<div id=\"" + tDvaMpID +  "\" style=\"min-height: 240px; max-height: 240px; width: 100%;\"></div>";
+                       tUdtsStr += "<div class=\"bg-gray quantity px-4 pt-4\">";
+
+                tUdtsStr += tUpPcontent;
+                tUdtsStr += "</div>"; // end bg-gray quantity px-4 pt-4
+                        tALeavesObj = null;
+                        tALeavesObj = "";
+                        tALeavesObj = {};
+                        tALeavesObj["mrkrs"] = [];
+                        tALeavesObj["mrkrs"] = JSSHOP.ads.getUpdtMapMrkrs(tUpPvrsObj.uptype, tUpPvrsObj.data);
+                        tALeavesObj["mdvid"] = tDvaMpID;
+                        tStrO = "";
+                        tStrToObj = "";
+                        tStrO = JSON.stringify(tALeavesObj);
+                        tStrToObj = JSON.parse(tStrO);
+                        console.log("jshp_ads_showUpdtsFeed.tALeavesObj: " + JSON.stringify(tALeavesObj));
+                         setTimeout(function() {doNuSpinSet(tDvaMpID, "small", null, "...");}, 500);
+                        // setTimeout(function() {JSSHOP.ads.doNurGenMap(tStrToObj, tDvaMpID) }, 1200 + (ided * 200));
+setTimeout(
+  (function(obj, id) {
+    return function() {
+      JSSHOP.ads.doNurGenMap(obj, id);
+    };
+  })(tStrToObj, tDvaMpID),
+  1200 + (ided * 200)
+);
+                        } else {
+                            console.log("tUpPvrsObj.uptype NOT FOUND: " + tUpPvrsObj.uptype);
                         }
                 }
-                tHasMap = "yes";
+               //  tHasMap = "yes";
                 } else {
                     tCanPost = "no";
                 }
@@ -6898,21 +6967,26 @@ tUpdteListObj["fav"] = stxt[73];
                             tUdtsStr +=  taNewPstr;
                         
                         }
+
+                                       
+                
                         taSwpCnfgObj = "";
                         taSwpCnfgObj = {};
                         taSwpCnfgObj["cls"] =  ".cls" + tUdtsObj._id;
-                        taSwpCnfgObj["slidesPerView"] = 1;
-                        taSwpCnfgObj["loop"] = true;
-                        taSwpCnfgObj["createElements"] = true;
+                        taSwpCnfgObj["slidesPerView"] = 3;
+                        // taSwpCnfgObj["loop"] = true;
+                        // taSwpCnfgObj["createElements"] = true;
                         taSwpCnfgObj["effect"] = "slide";
-                        taSwpCnfgObj["slide"] = {"slideShadows": true, "limitRotation": true};
-
+                       //  taSwpCnfgObj["slide"] = {"slideShadows": true, "limitRotation": true};
+                        taSwpCnfgObj["autoplayDisableOnInteraction"] = false;
                         taSwpCnfgObj["pagination"] = {el: ".clsPcls" + tUdtsObj._id, clickable: true};
-                       
-                        taSwpCnfgObj["paginationClickable"] = true;
-                           taSwpCnfgObj["navigation"] = {nextEl: ".clsBNcls" + tUdtsObj._id, prevEl: ".clsBPcls" + tUdtsObj._id};
-                           // tSwpCnfgObj["nextButton"] = ".swiper-button-next";
-                          //  tSwpCnfgObj["prevButton"] = ".swiper-button-prev";
+                       taSwpCnfgObj["paginationClickable"] = true;
+                        taSwpCnfgObj["navigation"] = {nextEl: ".clsBNcls" + tUdtsObj._id, prevEl: ".clsBPcls" + tUdtsObj._id};
+                       //  taSwpCnfgObj["grabCursor"] = true;
+                        // taSwpCnfgObj["nextButton"] = ".clsBNcls" + tUdtsObj._id;
+                        // taSwpCnfgObj["prevButton"] = ".clsBPcls" + tUdtsObj._id;
+                           //    taSwpCnfgObj["nextButton"] = ".swiper-button-next";
+                          //     taSwpCnfgObj["prevButton"] = ".swiper-button-prev";
                          //   tSwpCnfgObj["grabCursor"] = true;
                          // tIntTO = (1 + ided) * 1000;
                          // setTimeout(function() { JSSHOP.ads.loadNuSwiperObj(tSwpCnfgObj); }, tIntTO);
@@ -6932,11 +7006,13 @@ tUpdteListObj["fav"] = stxt[73];
 
         tUdtsStr += "</div>"; // end featured-thumb hover-zoomer mb-4
         tUdtsStr += "</div>";  // end col-md-6
-    }
+    }  // end of for ided
     tDVufeeds = document.createElement("div");
     tDVufeeds.innerHTML = tUdtsStr;
     // document.getElementById("dvMainUdtsLst").innerHTML = tUdtsStr;
-    document.getElementById("includedContent").appendChild(tDVufeeds);
+ 
+        document.getElementById("includedContent").appendChild(tDVufeeds);
+   
     console.log("jshp_ads_showUpdtsFeed: " + tUdtsStr);
 
   if(tHasSlider == "yes") {
@@ -6955,7 +7031,7 @@ tUpdteListObj["fav"] = stxt[73];
     }
     */
    //  JSSHOP.ads.loadNuSwiperArr(currSwpCnfgArr);
-}
+} // end of if tHasSlider
  
  
 }
@@ -7098,6 +7174,20 @@ JSSHOP.ads.intDemoEditor = function() {
 
 };
 
+JSSHOP.ads.getEdtrPrpDscStr = function(tPrpDtarr) {
+    tEdtrDescStr = "";
+    for (var key in tPrpDtarr) {
+        if (tPrpDtarr.hasOwnProperty(key)) {
+            var tPrpDtObj = tPrpDtarr[key];
+            // tEdtrDescStr += LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle) + " - " + tPrpDtObj.price + " &euro;; \r\n";
+            // use a bullet type listing with \unicode icons
+            tEdtrDescStr += "&#8226; " + LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle) + " - " + tPrpDtObj.price + " &euro; <br>";
+
+        }
+    }
+    return tEdtrDescStr;
+};
+
 
 JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
 
@@ -7165,11 +7255,12 @@ JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
     // also using bootstrap  libraries to make it look good
     // use the example tPrpDtarr above to generate the editor string
  // create a div string with a diagonal gradient fill from blue to white
-
+    // tEdtrDescStr is a string listing the titles and prices of selected properties
+   
      tEdtrPrpsStr += "<div style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px;\" class=\"slmtable brdrClrDlg bkgdClrWhite\" id=\"dvTMCdemo\">";
-              tEdtrPrpsStr += "<table class=\"rtable bkgdClrWhite brdrClrDlg\" style=\"margin-bottom:10px;margin: 0 auto;\">";
-    tEdtrPrpsStr += "<tr><td class=\"txtBold txtClrHdr\" style=\"text-align:center;\">Properties</td></tr>";
-    tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\" style=\"text-align:center;\">Click on the property to view or edit</td></tr>";
+              tEdtrPrpsStr += "<table class=\"rtable bkgdClrWhite brdrClrHdr\" style=\"margin-bottom:10px;margin: 0 auto;\">";
+    tEdtrPrpsStr += "<tr><td class=\"txtBold txtClrHdr\" style=\"text-align:center;\">" + stxt[10]+ "... " + stxt[10] + "...</td></tr>";
+    tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\" style=\"text-align:center;\">" + stxt[40]+ "... " + stxt[40] + "... " + stxt[40] + "...</td></tr>";
     tEdtrPrpsStr += "</table>";
     tEdtrPrpsStr += "<hr>";
      for(i = 0; i < tPrpDtarr.length; i++) {
@@ -7179,30 +7270,34 @@ JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
         tEdtrPrpsStr += "<tr><td>" + tPrpImgStr + "</td><td style=\"width:100%;vertical-align:top;\">";
         tEdtrPrpsStr += "<div class=\"\" style=\"float:left;\">";
         tEdtrPrpsStr += "<table class=\"\">";
-        tEdtrPrpsStr += "<tr><td class=\"txtBold txtClrHdr\">" + tPrpDtObj.ptitle + "</td></tr>";
-        tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\">" + tPrpDtObj.ptype + " - " + tPrpDtObj.stype + "</td></tr>";
+        tEdtrPrpsStr += "<tr><td class=\"txtBold txtClrHdr\">" + LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle) + "</td></tr>";
+        // tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\">" + tPrpDtObj.ptype + " - " + tPrpDtObj.stype + "</td></tr>";
         tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\">" + tPrpDtObj.city + ", " + tPrpDtObj.state + "</td></tr>";
-        tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\">" + tPrpDtObj.price + " &euro;</td></tr>";
-        tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\">" + tPrpDtObj.location + "</td></tr>";
+        tEdtrPrpsStr += "<tr><td class=\"txtBig txtBold txtClrHdr\">" + tPrpDtObj.price + " &euro;</td></tr>";
+       //  tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\">" + tPrpDtObj.location + "</td></tr>";
 
         tEdtrPrpsStr += "</table>";
         tEdtrPrpsStr += "</div>"; // end of edtr-grid rtable brdrClrHdr
         tEdtrPrpsStr += "</td></tr></table>";
-        // only add <hr> if not the last property
+         // only add <hr> if not the last property
         if(i < tPrpDtarr.length - 1) {
             tEdtrPrpsStr += "<hr>";
         }
     }
+    tEdtrPrpsStr += "<hr>";
     // add the seller information
-    tEdtrPrpsStr += "<div class=\"txtSmall txtClrHdr\" style=\"text-align:center;\">Seller Information</div>";
-    tEdtrPrpsStr += "<div class=\"edtr-grid rtable brdrClrHdr\" style=\"float:left;\">";
+    tEdtrPrpsStr += "<div class=\"slmtable brdrClrHdr bkgdClrWhite\" style=\"text-align:center;\">";
+        tEdtrPrpsStr += "<div class=\"txtBig txtBold txtClrHdr\" style=\"text-align:center;\">" + stxt[912] + "...</div>";
+
     tEdtrPrpsStr += "<table class=\"table table-striped\">";
     tEdtrPrpsStr += "<tr><td><img src=\"images/user/" + u_icon.value + "\" class=\"icnRndnUser\"></td>";
     tEdtrPrpsStr += "<td>" + u_fullname.value + "<br>" + u_email.value + "<br>"  + "</td>";
     tEdtrPrpsStr += "</tr></table>";
     tEdtrPrpsStr += "</div>"; // end of edtr-grid rtable brdrClrHdr
+    tEdtrPrpsStr += "</div>"; // end of seller information div
+
     // add clear fix to the end of the div
-    tEdtrPrpsStr += "<div style=\"clear:both;\"></div>";
+    tEdtrPrpsStr += "<div style=\"clear:both;\" class=\"clearfix\"></div>";
     tEdtrPrpsStr += "</div>"; // end of vertical gradient div
     
     
@@ -7301,18 +7396,20 @@ JSSHOP.ads.getUpdatePVrs = function(tPVUpdtType) {
 
 
 
-JSSHOP.ads.getNuSwprPrpStr = function(tSwpCla, tSwParr) {
+JSSHOP.ads.getNuxSwprPrpStr = function(tSwpCla, tSwParr) {
     tSwpStr = "";
     tSwpStr += "<div class=\"swiper " + tSwpCla + "\" style=\"max-height:220px;\">";
     tSwpStr += "<div class=\"swiper-wrapper\" style=\"min-height:60px;max-height:180px;max-width:99%;margin: 0 auto\">";
 
     for(iSS = 0; iSS < tSwParr.length; iSS++) {
         tSwPObj = tSwParr[iSS];
-        tSuTstr = "<img src=\"" + currPrpImgsFldr + "/" + tSwPObj.pimage + "\" style=\"width:100%;\">";
         tSwpStr += "<div class=\"swiper-slide\">";
+        tSuTstr = "<img class=\"rtable\" src=\"" + currPrpImgsFldr + "/m_thumb" + tSwPObj.pimage + "\" style=\"width:100%;\">";
+/*
         tSwpStr += "<table class=\"\">"; 
         tSwpStr += "<tr><td>" + tSuTstr + "</td></tr><tr><td>" + tSwPObj.ptitle + "</td></tr>";
         tSwpStr += "</table>";
+        */
         tSwpStr += "</div>";
  
     }
@@ -7324,28 +7421,38 @@ JSSHOP.ads.getNuSwprPrpStr = function(tSwpCla, tSwParr) {
     return tSwpStr;
 }
 
-JSSHOP.ads.getOldSwprPrpStr = function(tSwpCla, taSwUarr) {
+JSSHOP.ads.getNuSwprPrpStr = function(tdSwpCla, taSwUarr) {
+    console.log("JSSHOP.ads.getNuSwprPrpStr.tSwpCla: " + tdSwpCla);
     taWSwpStr = "";
-    taWSwpStr += "<div class=\"swiper " + tSwpCla + "\" style=\"max-height:220px;\">";
+    taWSwpStr += "<div class=\"swiper " + tdSwpCla + "\" style=\"max-height:220px;\">";
     taWSwpStr += "<div class=\"swiper-wrapper\" style=\"min-height:60px;max-height:180px;max-width:99%;margin: 0 auto\">";
+    
     for(iAA = 0; iAA < taSwUarr.length; iAA++) {
         taSwUObj = taSwUarr[iAA];
+        tLZunzSwpr = LZString.decompressFromEncodedURIComponent(taSwUObj.ptitle);
+        tShrtSwpStr = tLZunzSwpr;
+        if(tLZunzSwpr.length > 20) {
+            tShrtSwpStr = tLZunzSwpr.substring(0, 20) + "...";
+        }
        //  taSuTstr = "<div style=\"width:100%;max-height:290px;\"><img src=\"admin/property/" + taSwUObj.pimage + "\" style=\"width:100%;max-height:260px;\"></div>";
-        taSuTstr = "<img src=\"" + currPrpImgsFldr + "/" + taSwUObj.pimage + "\" style=\"width:100%;\">";
+        taSuTstr = "<img src=\"" + currPrpImgsFldr + "/" + taSwUObj.pimage + "\" style=\"width:100%;max-height:140px;max-width:140px;\">";
         taWSwpStr += "<div class=\"swiper-slide\">";
         taWSwpStr += "<table class=\"\">";
-        taWSwpStr += "<tr><td>" + taSuTstr + "</td></tr><tr><td>" + taSwUObj.ptitle + "</td></tr>";
+        taWSwpStr += "<tr><td>" + taSuTstr + "</td></tr><tr><td>" + tShrtSwpStr + "</td></tr>";
         taWSwpStr += "</table>";
         taWSwpStr += "</div>";
     }
 
     taWSwpStr += "</div>";
-    taWSwpStr += "<div class=\"swiper-pagination clsP" + tSwpCla + "\"></div";
-    taWSwpStr += "<div class=\"swiper-button-next clsBN" + tSwpCla + "\"></div>";
-    taWSwpStr += "<div class=\"swiper-button-prev clsBP" + tSwpCla + "\"></div>";
+    taWSwpStr += "<div class=\"swiper-pagination clsP" + tdSwpCla + "\"></div>";
+    taWSwpStr += "<div class=\"swiper-button-next clsBN" + tdSwpCla + "\"></div>";
+    taWSwpStr += "<div class=\"swiper-button-prev clsBP" + tdSwpCla + "\"></div>";
     taWSwpStr += "</div>";
     return taWSwpStr;
 };
+
+
+
 JSSHOP.ads.getSwprPrpStr = function(taSwUarr) {
     return JSSHOP.ads.getNuSwprPrpStr("", taSwUarr);
 };
@@ -7627,7 +7734,8 @@ JSSHOP.ads.doSwprConfigPop = function() {
         tDDswprTypeObj["fld"] = "inpSwprType";
         tDDswprTypeObj["lbl"] = "Swiper Type";
         tDDswprTypeObj["val"] = inpSwprType.value;
-        tDDswprTypeObj["kvpObj"] = {"cube": "Cube", "fade": "Fade", "flip": "Flip", "slide": "Slide", "coverflow": "Cover Flow"};
+       // tDDswprTypeObj["kvpObj"] = {"cube": "Cube", "fade": "Fade", "flip": "Flip", "slide": "Slide", "coverflow": "Cover Flow"};
+tDDswprTypeObj["kvpObj"] = {"slide": "Slide"};
         tDDswprTypeObj["cb"] = "donada";
         tDDswprTypeObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
         tDDswprTypeObj["lblcls"] = "txtSmall";
@@ -7918,8 +8026,10 @@ var setPropertyImgs = function(theAIa, theAIb, theAIc) {
       
     mGPIobj = currSlctdPrpsObj[otobStr];
     mGPIImg = mGPIobj.pimage;
-    tSPIttlStr = LZString.decompressFromEncodedURIComponent(mGPIobj.ptitle);
-   document.getElementById("tmp_p_title").value = tSPIttlStr;
+    tPATtls = mGPIobj.ptitle;
+    tPATtlsDecded = decodeURIComponent(tPATtls);
+    tSPIttlStr = LZString.decompressFromEncodedURIComponent(tPATtlsDecded);
+   document.getElementById("tmp_p_title").value = tSPIttlStr
     tDesc = LZString.decompressFromEncodedURIComponent(mGPIobj.pdesc);
     tinyMCE.activeEditor.setContent(tDesc);
     console.log("setPropertyImgs: " + mGPIobj.ptitle + " " + mGPIImg);
@@ -7936,7 +8046,7 @@ var setPropertyImgs = function(theAIa, theAIb, theAIc) {
        tPrpFlyerMImgSTr = "<div style=\"background-color:#FFFFFF;min-height:480px;background-image:url('" + currPrpImgsFldr + "/" + mGPIImg + "');no repeat;background-size:cover;\" id=\"dvTMCdemo\">";
 
    tPrpFlyerMImgSTr += "<table><tr><td>";
-   tPrpFlyerMImgSTr += "<span class=\"txtBig tglmtdnml\">" + mGPIobj.ptitle + "</span>";
+   tPrpFlyerMImgSTr += "<span class=\"txtBig tglmtdnml\">" + tSPIttlStr + "</span>";
    tPrpFlyerMImgSTr += "</td></tr><tr><td>";
    tstr = "<table><tr>";
    while (iirnt < 5) {
@@ -8110,7 +8220,15 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         // if tSlctdPrpsArr has only one property, create a new function to get the property images from q_media
     
         tSwprStr = JSSHOP.ads.getEditorPrpStr(tSlctdPrpsArr);
-     
+        tEdtrDstr = JSSHOP.ads.getEdtrPrpDscStr(tSlctdPrpsArr);
+        tPATtls = tSlctdPrpsArr[0].ptitle;
+        tPATtlsDecded = decodeURIComponent(tPATtls);
+        tSPIttlStr = LZString.decompressFromEncodedURIComponent(tPATtlsDecded);
+        document.getElementById("tmp_p_title").value = tSPIttlStr
+         // tDesc = LZString.decompressFromEncodedURIComponent(tSlctdPrps
+        console.log("trnsltImgPstObj.tEdtrDstr: " + tEdtrDstr);
+        tinyMCE.activeEditor.setContent(tEdtrDstr);
+
     } else if(tSCval == "users") {
         tSlctdUsrsArr = null;
         tSlctdUsrsArr = "";
@@ -8149,11 +8267,15 @@ JSSHOP.ads.trnsltImgPstObj = function() {
                     tLeavesObj = "";
                     tLeavesObj = {};
                     if(tmmobj.hasOwnProperty(key)) {
-                        tLeavesObj["icn"] = currPrpImgsFldr + "/" + "sthumb_" + tmmobj[key].pimage;
+                        console.log("getUpdtMapMrkrs: " + key + " " + tmmobj[key].ptitle + " " + tmmobj[key].ploclat + " " + tmmobj[key].ploclng);  
+                        tLeavesObj["icn"] = currPrpImgsFldr + "/" + "s_thumb" + tmmobj[key].pimage;
                         tLeavesObj["title"] = tmmobj[key].ptitle;
                         tLeavesObj["lat"] = tmmobj[key].ploclat;
                         tLeavesObj["lng"] = tmmobj[key].ploclng;
+                        tLeavesObj["price"] = tmmobj[key].price;
+                        tLeavesObj["prpid"] = tmmobj[key]._id;
                         tMapLeavesArr.push(tLeavesObj);
+                        console.log("getUpdtMapMrkrs: " + tLeavesObj["title"] + " " + tLeavesObj["lat"] + " " + tLeavesObj["lng"]);
                     }
                 }
                 break;
@@ -8205,6 +8327,9 @@ JSSHOP.ads.trnsltImgPstObj = function() {
                 tLeavesObj["title"] = currSlctdPrpsObj[key].ptitle;
                 tLeavesObj["lat"] = currSlctdPrpsObj[key].ploclat;
                 tLeavesObj["lng"] = currSlctdPrpsObj[key].ploclng;
+                tLeavesObj["price"] = currSlctdPrpsObj[key].price;
+                tLeavesObj["prpid"] = currSlctdPrpsObj[key]._id
+                tLeavesObj["pdesc"] = currSlctdPrpsObj[key].pdesc;
                 tMapLeavesArr.push(tLeavesObj);
                 // tSlctdPrpsArr.push(currSlctdPrpsObj[key]);
             }
@@ -8223,22 +8348,81 @@ JSSHOP.ads.trnsltImgPstObj = function() {
                 tLeavesObj["title"] = currSlctdUsrObj[key].u_name;
                 tLeavesObj["lat"] = currSlctdUsrObj[key].u_loclat;
                 tLeavesObj["lng"] = currSlctdUsrObj[key].u_loclng;
+                tLeavesObj["pdesc"] = currSlctdUsrObj[key].u_header;
                 tMapLeavesArr.push(tLeavesObj);
 
                 // tSlctdUsrsArr.push(currSlctdUsrObj[key]);
             }
         }
        //  tSwprStr = JSSHOP.ads.getSwiperUStr(tSlctdUsrsArr);
+     
+    }  // end if
+    // set the tmp_p_title input to the title of the first marker
+    if(tMapLeavesArr.length > 0) {
+        tPATtls = tMapLeavesArr[0].title;
+        tPATtlsDecded = decodeURIComponent(tPATtls);
+        tSPIttlStr = LZString.decompressFromEncodedURIComponent(tPATtlsDecded);
+        document.getElementById("tmp_p_title").value = tSPIttlStr
+    } else {
+        document.getElementById("tmp_p_title").value = "Map View";
     }
-    
-    tLeavesObj["mrkrs"] = tMapLeavesArr;
-    tLeavesObj["mdvid"] = "dvDMapView";
-    tNewDvStr = "<div id=\"dvDMapView\" style=\"min-height: 340px; width: 100%;\"></div>";
- 
+        // if tMapLeavesArr.length > 0, set tmp_p_title to a concatenation of all marker titles with 20 char limit on each title and separated by comma
+        if(tMapLeavesArr.length > 1) {
+            tAllTitlesStr = "";
+            for(var i = 0; i < tMapLeavesArr.length; i++) {
+                tAllTitlesStr += LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].title).substring(0, 20);
+                if(i < tMapLeavesArr.length - 1) {
+                    tAllTitlesStr += "... , ";
+                }
+            }
+
+            document.getElementById("tmp_p_title").value = tAllTitlesStr;
+        }
+
+        // set the tinymce editor to the description of the first object in currSlctdPrpsObj or currSlctdUsrObj
+        // if tMapLeavesArr.length > 0, set the editor to the description of the first object in currSlctdPrpsObj or currSlctdUsrObj
+        // if tMapLeavesArr.length == 0, set the editor to "Map View"
+
+        if(tMapLeavesArr.length > 0) {
+        tDesc = LZString.decompressFromEncodedURIComponent(tMapLeavesArr[0].pdesc || "Map View");
+        tinyMCE.activeEditor.setContent(tDesc);
+    } else {
+        tinyMCE.activeEditor.setContent("Map View");
+    }
+    // if more tnan one marker, set the editor to a concatenation of all marker descriptions with 100 char limit on each description and separated by <hr>
+    if(tMapLeavesArr.length > 1) {
+        tAllDescStr = "";
+        for(var i = 0; i < tMapLeavesArr.length; i++) {
+            // add title before description
+            tAllDescStr += "<h3>" + LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].title || "Map View").substring(0, 80) + "</h3>";
+            // link the title to the property if it exists
+            if(tMapLeavesArr[i].prpid) {
+                tAllDescStr = "<h3><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prid=" + tMapLeavesArr[i].prpid + "');\">" + LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].title || "Map View").substring(0, 80) + "</a></h3>";
+            }
+            tZAllDescStr = LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].pdesc || "Map View").substring(0, 100);
+            // strip any html tags from tAllDescStr
+            tAllDescStr += tZAllDescStr.replace(/<\/?[^>]+(>|$)/g, "");
+            // add the price if it exists
+            if(tMapLeavesArr[i].price) {
+                tAllDescStr += "Price: " + tMapLeavesArr[i].price;
+            }
+            if(i < tMapLeavesArr.length - 1) {
+                tAllDescStr += "<hr>";
+            }
+        }
+        console.log("trnsltMapPstObj.tAllDescStr: " + tAllDescStr);
+        tinyMCE.activeEditor.setContent(tAllDescStr);
+    }
+    // create random 5 char string for map div id
+    tRansSTr = Math.random().toString(36).substring(2, 7);
+    tMapFullObj["mrkrs"] = tMapLeavesArr;
+    tMapFullObj["mdvid"] = "dvMap" + tRansSTr;
+    tNewDvStr = "<div id=\"dvMap" + tRansSTr + "\" style=\"min-height: 340px; width: 100%;\"></div>";
+
     document.getElementById("dvDemoView").innerHTML = "";
     document.getElementById("dvDemoView").innerHTML = tNewDvStr;
-    setTimeout(function() {doNuSpinSet("dvDMapView", "small", null, "...");}, 200);
-    setTimeout(function() {JSSHOP.ads.doNuGenMap(tLeavesObj) }, 1000);
+    setTimeout(function() {doNuSpinSet("dvMap" + tRansSTr, "small", null, "...");}, 200);
+    setTimeout(function() {JSSHOP.ads.doNuGenMap(tMapFullObj, "dvMap" + tRansSTr) }, 1000);
     // document.getElementById("dvDemoView").innerHTML = tSwprStr;
 };
 
@@ -8252,7 +8436,7 @@ JSSHOP.ads.trnsltSwiperObj = function() {
                 tSlctdPrpsArr.push(currSlctdPrpsObj[key]);
             }
         }
-        tSwprStr = JSSHOP.ads.getSwprPrpStr(tSlctdPrpsArr);
+        tSwprStr = JSSHOP.ads.getNuSwprPrpStr("cls" + currSlctdPrpsObj[key]._id, tSlctdPrpsArr);
     } else if(tSCval == "users") {
         tSlctdUsrsArr = [];
         for(var key in currSlctdUsrObj) {
@@ -8889,123 +9073,167 @@ JSSHOP.ads.doGenMapShow = function() {
     }
  
 };
+// create async functionn to call doNuGenMap after 1 second
+async function callDoNuGenMap(tAADNGMObj) {
+    JSSHOP.ads.doNuGenMap(tAADNGMObj);
+}
 
 
-JSSHOP.ads.doNuGenMap = function(tDNGMObj) {
-    
-    try {
+JSSHOP.ads.doNurGenMap = function(tAADNGMObj, tNMOPDVID) {
+    tDNGMObj = null;
+         tDNGMObj = "";
+            tDNGMObj = tAADNGMObj;
+
+        console.log("doNuGenMap.tNMOPDVID: " + tNMOPDVID);
+        // console.log("doNuGenMap: " + JSON.stringify(tDNGMObj));
         spinner.stop();
 smlspinner.stop();
+         tDGMSmrkrArr = null;
+         tDGMSmrkrArr = [];
+        map = L.map(tNMOPDVID,{renderer: L.canvas()}).setView([39.0667, -8.6167], 13);
+        tDGMSmrkrArr = tDNGMObj["mrkrs"];
+        console.log("doNuGenMap.tDGMSmrkrArr: " + JSON.stringify(tDGMSmrkrArr));
         /*
-        iti = 0; 
-
-    
-    
-    // check if L.map already exists
-      
-   
-        var map = L.map('smap').setView([39.0667, -8.6167], 13);
-    
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        L.tileLayer.canvas('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
+    
+        L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+        maxZoom: 18,
+        subdomains:['mt0','mt1','mt2','mt3'],
+         attribution: '&copy; <a href="http://www.google.com/maps">Google Maps</a>',
+        }).addTo(map);
+    */
+        // show a random tile layer from the ones above
+        tRantile = Math.floor(Math.random() * 3);
+        console.log("doNuGenMap.tRantile: " + tRantile);
+        switch(tRantile) {
+            case 0:
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+            break;
+            case 1:
+                L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+                maxZoom: 18,
+                subdomains:['mt0','mt1','mt2','mt3'],
+                    attribution: '&copy; <a href="http://www.google.com/maps">Google Maps</a>', 
+                }).addTo(map);
+            break;
+            case 2:
+                L.tileLayer('http://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',{
+                maxZoom: 18,
+                subdomains:['mt0','mt1','mt2','mt3'],
+                    attribution: '&copy; <a href="http://www.google.com/maps">Google Maps</a>',
+                }).addTo(map);
+            break;
+            default:
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+            break;
+        }
         var bounds = L.latLngBounds() // Instantiate LatLngBounds object
         var LeafIcon = L.Icon.extend({
             options: {
-     
                 iconSize:     [42, 42],
-     
-
-     
                 popupAnchor:  [-3, -16]
             }
         });
-    
-        if(currShopsArr.length > 0) {
-            // alert(b);
+        if(tDGMSmrkrArr.length > 0) {
             tPArr  = null;
-            tPArr = currShopsArr;
-    
-    while(iti < tPArr.length) {
-      ts = tPArr[iti];
-      tIcnQcStr = "images/logo_small_green_oct.png"
-      tLatQcStr = ts.ploclat;
-      tLngQcStr = ts.ploclng;
-     tLatQcStr = String(tLatQcStr); // convert to string
-        tLngQcStr = String(tLngQcStr);
-      // convert to float
-        tLatQcFlt = parseFloat(tLatQcStr);
-        tLngQcFlt = parseFloat(tLngQcStr);
-        ttImgstr = ts.pimage;
-        // console.log("getLeaves.ts.cccd: " + ts.cccd + " " + ttImgstr + " " + ts.c_name);
+            tPArr = tDGMSmrkrArr;
+            iti = 0;
+            while(iti < tPArr.length) {
+                ts = tPArr[iti];
+                console.log("doNuGenMap.ts: " + JSON.stringify(ts));
+                tIcnQcStr = "images/logo_small_green_oct.png"
+                tLatQcStr = ts.lat;
+                tLngQcStr = ts.lng;
+                tPrpID = ts.prpid;
+                tLatQcStr = String(tLatQcStr); // convert to string
+                tLngQcStr = String(tLngQcStr);
+                tLatQcFlt = parseFloat(tLatQcStr);
+                tLngQcFlt = parseFloat(tLngQcStr);
+                tMOPrice = ts.price;
+                tAMOttl = ts.title;
+                tUNZdttle = LZString.decompressFromEncodedURIComponent(tAMOttl);
+                tMOShortttl = tUNZdttle.substring(0,40) + "...<br><b>" + tMOPrice + "</b>";
+                tMOttl = tMOShortttl;
+                ttImgstr = ts.icn;
+                if(ttImgstr.indexOf(".") != -1) {
+                    tIcnQcStr = ttImgstr;
+                } else {
+                    tIcnQcStr = "images/logo_small_oct.png";
+                }
+
+                // ttSSurl = "javascript:JSSHOP.ads.doGenPrpPop(" + iti + ");";
+                ttSSurl = "javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + ts._id + "&cid=" + ts.coid + "&catid=" + ts.category + "');";
+                tCnameQcStr = "<a href=\"" + ttSSurl + "\">" + ts.cname + "</a>";
+                tLatQcStr =  String(tLatQcFlt);
+                tLngQcStr = String(tLngQcFlt);
+                try {
+                    if((tLatQcStr.indexOf(".") != -1) && (tLngQcStr.indexOf(".") != -1))  {
+                        tPAObj = tPArr[iti];
+                        lat_lng = [tLatQcStr,tLngQcStr];
+                        tImSStr = tIcnQcStr;
+                        redIcon = new LeafIcon({iconUrl: tImSStr, className: "btnRounded"});
+                        // add a price and title to the marker
+
+                        // make redIcon round
+                        redIcon.options.className = "btnRounded";
+
+                        // add the price and title to the marker
+                        redIcon.options.price = tMOPrice;
+                        redIcon.options.ttl = tMOttl;
+                        // add an optionid to the marker
+                        // set marker options
+                        redIcon.options.iti = iti;
+                        redIcon.options.ad = ts._id;
+                        // and a marker with the icon and price and title to the map
+                        // when the marker is clicked, call doGenPrpPop with the iti option
+                        // add a marker to the map
+                          bounds.extend(lat_lng);
+                        mRed = L.marker([tLatQcStr,tLngQcStr], {icon: redIcon, iti: iti}).bindTooltip( tMOttl, { permanent: true, direction: 'bottom', opacity: 0.8}).addTo(map).on('click', function(e) {
+                            console.log("L.marker iti: " + JSON.stringify(e.target.options.iti));
+                           //  doGenPrpPop(e.target.options.iti);
+                          eindex('aa-show-prop','pid=aa-show-prop&prpid=' + tPrpID + '&cid=' + currShopsArr[e.target.options.iti].coid);
+                        });
+        
+
+                        // add a balloon to the marker showing the price and title
+                        // mRed.bindPopup('<span class="txtBold txtClrRed">' + tCnameQcStr + '</span><br><span class="txtBold txtClrHdr">Price: ' + redIcon.options.price + '</span><br><span class="txtBold txtClrDlg">Title: ' + redIcon.options.ttl + '</span>');
+
+                      
+
+                    }
+               
+            } catch(e) {
+            console.log("getLeaves.ERROR: " + e);
+            }
+          iti++;
+          }
+           map.fitBounds(bounds);
+          
+          }
      
 
-        if(ttImgstr.indexOf(".") != -1) {
-      tIcnQcStr = "admin/property/s_thumb" + ts.pimage;
-        } else {
-        tIcnQcStr = "images/logo_small_oct.png";
-        }
-        
-      ttSSurl = "javascript:JSSHOP.ads.doGenPrpPop(" + iti + ");";
 
-      tCnameQcStr = "<a href=\"" + ttSSurl + "\">" + ts.c_name + "</a>";
-       tLatQcStr =  String(tLatQcFlt);
-      tLngQcStr = String(tLngQcFlt);
-      console.log("getLeaves: " + tLatQcStr + " " + tLngQcStr + " " + tIcnQcStr + " " + tCnameQcStr);
-      try {
-    // check if lat and lng are floats
-    if((tLatQcStr.indexOf(".") != -1) && (tLngQcStr.indexOf(".") != -1))  { 
-      // if((tLatQcStr.indexOf(".") != -1) && (tLngQcStr.indexOf(".") != -1))  {
-        console.log("getLeaves: " + tLatQcStr + " " + tLngQcStr);
+};
+JSSHOP.ads.doNuGenMap = function(tAADNGMObj) {
+       tDNGMObj = null;
+         tDNGMObj = "";
+            tDNGMObj = tAADNGMObj;
 
-    tPAObj = tPArr[iti];
-    lat_lng = [tLatQcStr,tLngQcStr];
-    tImSStr = tIcnQcStr;
-    redIcon = new LeafIcon({iconUrl: tImSStr});
-    // bindPopup('<span class="txtBold txtClrRed">' + tCnameQcStr + '</span>').
-    // add an optionid to the marker
-    // set marker options
-    mRed = L.marker([tLatQcStr,tLngQcStr], {icon: redIcon, iti: iti}).addTo(map).on('click', function(e) {
-        // print out the e.options.iti
-        console.log("L.marker iti: " + JSON.stringify(e.target.options.iti));   
-        doGenPrpPop(e.target.options.iti);
-
-    });
-  
-    bounds.extend(lat_lng);
-      }
-      } catch(e) {
-      console.log("getLeaves.ERROR: " + e);
-      }
-    iti++;
-    }
-     map.fitBounds(bounds);
-    
-    }
-    
-    // add a long press listener to the map
-    map.on('contextmenu', function(e) {
-       
-          markers = [];
-        // add a marker to show where you clicked.
-          markers.push(L.marker(e.latlng).addTo(map));
-        // get the coordinates of the point you clicked
-        var coords = e.latlng;
-        // get the lat and lng values
-        var lat = coords.lat;
-        var lng = coords.lng;
-        // 
-        JSSHOP.ads.setPrtsPrefCC("qloc", lat + "|" + lng);
-        if(pid == "aa-show-msearch") {
-            document.getElementById('includedShops').innerHTML='';window['sw']=null;currUrlArr.sw=null;JSSHOP.shared.setPrtSvsPnl('dvGetSvcsLnk', function() {eindex('aa-show-msearch','pid=aa-show-msearch&st=main')});
-        } else if(pid == "aa-show-psearch") {
-            document.getElementById('includedShops').innerHTML='';window['sw']=null;currUrlArr.sw=null;JSSHOP.shared.setPrtSvsPnl('dvGetPLnk', function() {eindex('aa-show-psearch','pid=aa-show-psearch&st=main')}); 
-        } else {
-            document.getElementById('includedShops').innerHTML='This is odd'; 
-        }
-            */
-        var map = L.map(tDNGMObj["mdvid"],{renderer: L.canvas()}).setView([39.0667, -8.6167], 13);
+        console.log("doNuGenMap.tDNGMObj[mdvid]: " + tDNGMObj["mdvid"]);
+        // console.log("doNuGenMap: " + JSON.stringify(tDNGMObj));
+        spinner.stop();
+smlspinner.stop();
+         tDGMSmrkrArr = null;
+         tDGMSmrkrArr = [];
+        map = L.map(tDNGMObj["mdvid"],{renderer: L.canvas()}).setView([39.0667, -8.6167], 13);
         tDGMSmrkrArr = tDNGMObj["mrkrs"];
+        console.log("doNuGenMap.tDGMSmrkrArr: " + JSON.stringify(tDGMSmrkrArr));
         L.tileLayer.canvas('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
@@ -9022,20 +9250,29 @@ smlspinner.stop();
             iti = 0;
             while(iti < tPArr.length) {
                 ts = tPArr[iti];
+                console.log("doNuGenMap.ts: " + JSON.stringify(ts));
                 tIcnQcStr = "images/logo_small_green_oct.png"
                 tLatQcStr = ts.lat;
                 tLngQcStr = ts.lng;
+                tPrpID = ts.prpid;
                 tLatQcStr = String(tLatQcStr); // convert to string
                 tLngQcStr = String(tLngQcStr);
                 tLatQcFlt = parseFloat(tLatQcStr);
                 tLngQcFlt = parseFloat(tLngQcStr);
+                tMOPrice = ts.price;
+                tAMOttl = ts.title;
+                tUNZdttle = LZString.decompressFromEncodedURIComponent(tAMOttl);
+                tMOShortttl = tUNZdttle.substring(0,40) + "...<br><b>" + tMOPrice + "</b>";
+                tMOttl = tMOShortttl;
                 ttImgstr = ts.icn;
                 if(ttImgstr.indexOf(".") != -1) {
                     tIcnQcStr = ttImgstr;
                 } else {
                     tIcnQcStr = "images/logo_small_oct.png";
                 }
-                ttSSurl = "javascript:JSSHOP.ads.doGenPrpPop(" + iti + ");";
+
+                // ttSSurl = "javascript:JSSHOP.ads.doGenPrpPop(" + iti + ");";
+                ttSSurl = "javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + ts._id + "&cid=" + ts.coid + "&catid=" + ts.category + "');";
                 tCnameQcStr = "<a href=\"" + ttSSurl + "\">" + ts.cname + "</a>";
                 tLatQcStr =  String(tLatQcFlt);
                 tLngQcStr = String(tLngQcFlt);
@@ -9044,12 +9281,35 @@ smlspinner.stop();
                         tPAObj = tPArr[iti];
                         lat_lng = [tLatQcStr,tLngQcStr];
                         tImSStr = tIcnQcStr;
-                        redIcon = new LeafIcon({iconUrl: tImSStr});
-                        mRed = L.marker([tLatQcStr,tLngQcStr], {icon: redIcon, iti: iti}).addTo(map).on('click', function(e) {
+                        redIcon = new LeafIcon({iconUrl: tImSStr, className: "btnRounded"});
+                        // add a price and title to the marker
+
+                        // make redIcon round
+                        redIcon.options.className = "btnRounded";
+
+                        // add the price and title to the marker
+                        redIcon.options.price = tMOPrice;
+                        redIcon.options.ttl = tMOttl;
+                        // add an optionid to the marker
+                        // set marker options
+                        redIcon.options.iti = iti;
+                        redIcon.options.ad = ts._id;
+                        // and a marker with the icon and price and title to the map
+                        // when the marker is clicked, call doGenPrpPop with the iti option
+                        // add a marker to the map
+                          bounds.extend(lat_lng);
+                        mRed = L.marker([tLatQcStr,tLngQcStr], {icon: redIcon, iti: iti}).bindTooltip( tMOttl, { permanent: true, direction: 'bottom', opacity: 0.8}).addTo(map).on('click', function(e) {
                             console.log("L.marker iti: " + JSON.stringify(e.target.options.iti));
-                            doGenPrpPop(e.target.options.iti);
+                           //  doGenPrpPop(e.target.options.iti);
+                          eindex('aa-show-prop','pid=aa-show-prop&prpid=' + tPrpID + '&cid=' + currShopsArr[e.target.options.iti].coid);
                         });
-                        bounds.extend(lat_lng);
+        
+
+                        // add a balloon to the marker showing the price and title
+                        // mRed.bindPopup('<span class="txtBold txtClrRed">' + tCnameQcStr + '</span><br><span class="txtBold txtClrHdr">Price: ' + redIcon.options.price + '</span><br><span class="txtBold txtClrDlg">Title: ' + redIcon.options.ttl + '</span>');
+
+                      
+
                     }
                
             } catch(e) {
@@ -9064,11 +9324,6 @@ smlspinner.stop();
 
 
 
-
-
-    } catch(e) {
-        console.log("doNuGenMap: " + e);
-    }
 };
 
 
@@ -10136,7 +10391,13 @@ if(hararr) {
 JSSHOP.ads.doGenShpActn = function(tmPGIdx, tmPGact, tmPrfx){
     try {
     theTmpGSAstr = tmPrfx + "dvAprsMsg";
-    dvAprsMsg = document.getElementById(theTmpGSAstr);
+    if(document.getElementById(theTmpGSAstr)){
+        dvAprsMsgDiv = document.getElementById(theTmpGSAstr);
+        dvAprsMsg = dvAprsMsgDiv.innerHTML;
+    } else {
+        dvAprsMsg ="";
+        dvAprsMsg = currShopsArr[tmPGIdx].ptitle;
+    }
     if(tmPGIdx == 0) {
         tCoARecObj = currPlaceObj;
     } else {
@@ -10147,20 +10408,25 @@ JSSHOP.ads.doGenShpActn = function(tmPGIdx, tmPGact, tmPrfx){
     case "tel":
         window.location.href = "tel:" + tCoARecObj.c_tel;
     break;
+    case "whatsapp":
+        //             tSurl = "https://api.whatsapp.com/send?text=" + tmpSttl + " " + tmpSurl;
+
+        window.location.href = "https://api.whatsapp.com/send?phone=" + tCoARecObj.c_tel + "&text=" + dvAprsMsg;
+        break;
     case "sms":
         // check if device is mobile
         if(JSSHOP.shared.isMobile()) {
-        window.location.href = "sms:" + tCoARecObj.c_tel + "?body=" + dvAprsMsg.innerText;
+        window.location.href = "sms:" + tCoARecObj.c_tel + "?body=" + dvAprsMsg;
         } else {
-            tTryAnyWUrl = "sms:" + tCoARecObj.c_tel + "?body=" + dvAprsMsg.innerText;
-            tTryAnyWLink = "<a href=\"sms:" + tCoARecObj.c_tel + "?body=" + dvAprsMsg.innerText + "\">" + stxt[137] + "</a>";
+            tTryAnyWUrl = "sms:" + tCoARecObj.c_tel + "?body=" + dvAprsMsg;
+            tTryAnyWLink = "<a href=\"sms:" + tCoARecObj.c_tel + "?body=" + dvAprsMsg + "\">" + stxt[137] + "</a>";
             JSSHOP.ui.popAndFillLbox(stxt[136] + "<br>Link: " + tTryAnyWUrl.substring(0, 15) + ".....<br>" + tTryAnyWLink);
         }
     break;
     case "email":
-    if(tss.c_email) {
-    window.location.href = "mailto:" + tCoARecObj.c_email + "?subject=" + stxt[134] + "&body=" + dvAprsMsg.innerText;
-    }
+   
+    window.location.href = "mailto:" + tCoARecObj.c_email + "?subject=" + stxt[134] + "&body=" + dvAprsMsg;
+ 
     break;
     case "web":
     if(tss.c_web) {
@@ -10338,7 +10604,9 @@ tmpACarr = [];
         tAesShpStr += "</div>";
         // tAesShpStr += "<br>";
         tCResShpStr += tAesShpStr;  
-
+        
+        // not showing map
+        /*
         tCResShpStr += "<div class=\"prodRowBox slmtable brdrClrRed gradient-color\" style=\"max-width: 95%;word-wrap: break-word;margin-top:0px;padding-right:9px;max-height:100%;min-height:15px;\">";
         tCResShpStr += "<a href=\"javascript:JSSHOP.ads.doGenMapShow();\"  class=\"txtClrWhite txtDecorNone\" style=\"color:white\"><div><table style=\"width:100%\"><tr><td><div style=\"padding-right:8px;\" >";
         tCResShpStr += "<i class=\"small-material-icons slmtable gradient-pop txtClrWhite bkgdClrDGreen\" style=\"margin:3px;\" alt=\"map\" title=\"map\">&#xe0c8;</i></div></td><td style=\"width:90%\" class=\"txtClrWhite\"><span class=\"txtClrWhite txtBold\">" + stxt[124] + "</span></td>";
@@ -10353,10 +10621,9 @@ tmpACarr = [];
         tCResShpStr += "<div class=\"txtClrWhite\">" + stxt[556] + "</div>"; 
 
         tCResShpStr += "</div>";
-
-
         tCResShpStr += "</div>";
-
+        // end of not showing map
+        */
 
         tCResBStr += "<div id=\"dvResWrap\" class=\"dummycls\">"; // res wrapper
 
