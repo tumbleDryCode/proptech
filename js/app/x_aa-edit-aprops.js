@@ -182,6 +182,7 @@ aprpTitle = LZString.decompressFromEncodedURIComponent(nprpTitle);
     
     var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
+   JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks');
  //  alert('fnishCntLoad');
  tmpDOqs = null;
 tmpDOqs = {};

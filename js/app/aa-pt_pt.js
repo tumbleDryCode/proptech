@@ -28,9 +28,6 @@ stxt[27] = "Editar seus Shops";
 stxt[28] = "adminApp Query";
 stxt[29] = "Login";
 stxt[30] = "Info";
-stxt[40] = "Descricao";
-stxt[41] = "Enviar Encomenda";
-stxt[42] = "Eliminar";
 stxt[31] = "Editar";
 stxt[32] = "Categorias";
 stxt[33] = "Items em breve";
@@ -302,6 +299,8 @@ stxt[630] = "Traduzir";
 stxt[631] = "Tradu\u00e7\u00f5es";
 stxt[632] = "Traduzir o titulo e a descricao atuais para o idioma selecionado";
 stxt[633] = "Comece fazendo o upload de algumas imagens.";
+stxt[634] = "Editar todas as Propriedades";
+
 
 stxt[700] = "Tem uma pergunta?";
 stxt[702] = " Opcional para servi\u00e7os baseados em localiza\u00e7\u00e3o ";
@@ -374,10 +373,10 @@ stxt[823] = "Tambem remover todas as minhas listagens de loja";
 stxt[824] = "Clique no link abaixo para remover sua conta.";
 // stxt[825] = "Edit your account details";
 stxt[825] = "Editar detalhes da sua conta";
-
-
-
-
+// use unicode \u... for special chars
+stxt[826] = "Este software est\u00e1 em beta-demo. Para explorar o site, voc\u00ea pode usar um dos usu\u00e1rios de teste abaixo para fazer login.";
+stxt[827] = "Voc\u00ea pode usar os seguintes usu\u00e1rios-admin de teste para explorar os recursos mais recentes e melhores. Voc\u00ea pode editar esses usu\u00e1rios, propriedades, atualiza. Sinta-se \u00e0 vontade para experimentar. quebrar coisas. Redefinimos o banco de dados a cada hora.";
+stxt[828] = "Clique em um usu\u00e1rio para fazer login como esse usu\u00e1rio-admin.";
 
 stxt[900] = "Agentes";
 stxt[901] = "Propriedades";

@@ -302,7 +302,7 @@ stxt[630] = "Translate";
 stxt[631] = "Translations";
 stxt[632] = "Translate the current title and description to the selected language";
 stxt[633] = "Start by uploading some images.";
-
+stxt[634] = "Edit all Properties";
  
 // messaging strings
 stxt[700] = "Have a Question?";
@@ -368,6 +368,10 @@ stxt[822] = "Action confirmed. We are sorry to see you go. If you have any quest
 stxt[823] = "Also remove all my shop listings";
 stxt[824] = "Click on the link below to remove your account.";
 stxt[825] = "Edit your account details";
+// Demo Test User string for show user and show messages
+stxt[826] = "This software is in beta-demo. To explore the site, you can use one of the test users below to login.";
+stxt[827] = "You can use the following test users-admin to explore the latest-greatest features. You can edit these users, properties, updates. Feel free to experiment. break things. We reset the database every hour.";
+stxt[828] = "Click on a user to login as that user-admin.";
 
 
 stxt[900] = "Agentes";

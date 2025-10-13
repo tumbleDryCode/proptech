@@ -192,6 +192,11 @@ var doPstTypOpts = function(tPTval) {
             // tTChngStrObj["pt_pt"] += "<input type=\"button\" value=\"Fechar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\">";
             // tTChngStrObj["spa_spa"] += "<input type=\"button\" value=\"Cerrar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\">";
             dvDemoView.innerHTML = tTChngStrObj[usrlang];
+            if(objVal == "ppost") {
+                dumiu = "yes";
+            } else {
+             getPTypeChange();
+            }
         // JSSHOP.ui.popAndFillLbox(tTChngStrObj[usrlang]);
     // procNuUIitem("qposts","p_ptype",currUrlArr.tpstid,objVal,"fnshPTypeChange");
     };

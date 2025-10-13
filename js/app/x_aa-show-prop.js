@@ -1,4 +1,4 @@
-currIContent == "y";
+currIContent = "y";
 var tmpSocLinksArr = null;
 var tmpSocLinksArr = "";
 var tmpSocLinksArr = [];
@@ -135,7 +135,7 @@ threedvmap.addEventListener('gmp-animationend', () => {
   
     },
     durationMillis: 7000,
-    rounds: 1
+    repeatCount: 1
   });
 }, {once: true});
 
@@ -200,7 +200,7 @@ async function initNuThreeDView(tImgSrc) {
                     range: tFNTrange,
                 },
                 durationMillis: 8000,
-                rounds: 1
+                repeatCount: 1
             });
         }, {once: true});
         tmpThreeDLat = tNTDAlat;
@@ -446,7 +446,7 @@ async function initNuThreeDView(tImgSrc) {
     t3DpopStr += "<input id=\"btnAEPadd\" type=\"button\" class=\"btnTxtLabel\" value=\"Save Image\" onclick=\"javascript:saveCurr3DImgUrl();\">";
     t3DpopStr += "<input id=\"btnAEPplay\" type=\"button\" class=\"btnTxtLabel\" value=\"Play\" onclick=\"javascript:doThreeDAnim(" + fltdLat + "," + fltdLng + "," + 30 + ");\">";
     t3DpopStr += "<input id=\"btnAEPfly\" type=\"button\" class=\"btnTxtLabel\" value=\"Fly\" onclick=\"javascript:threedmap.flyCameraTo({endCamera:{center:{lat:" + fltdLat + ",lng:" + fltdLng + ",altitude:50},tilt:70.5,range:200}});\">";
-    t3DpopStr += "<input id=\"btnAEPanim\" type=\"button\" class=\"btnTxtLabel\" value=\"Animate\" onclick=\"javascript:threedmap.flyCameraAround({camera:{center:{lat:" + fltdLat + ",lng:" + fltdLng + ",altitude:50},tilt:70.5,range:100},durationMillis:7000,rounds:1});\">";
+    t3DpopStr += "<input id=\"btnAEPanim\" type=\"button\" class=\"btnTxtLabel\" value=\"Animate\" onclick=\"javascript:threedmap.flyCameraAround({camera:{center:{lat:" + fltdLat + ",lng:" + fltdLng + ",altitude:50},tilt:70.5,range:100},durationMillis:7000,repeatCount:1});\">";
     t3DpopStr += "<input id=\"btnAEPreset\" type=\"button\" class=\"btnTxtLabel\" value=\"Reset\" onclick=\"javascript:threedmap.setCamera({center:{lat:" + fltdLat + ",lng:" + fltdLng + ",altitude:540},tilt:67.5,range:500});\">";
 
     t3DpopStr += "<input id=\"btnAEPstop\"  type=\"button\" class=\"btnTxtLabel\" value=\"Stop\" onclick=\"javascript:threedmap.stopCameraAnimation();\">";
@@ -1216,40 +1216,39 @@ function doPrpMDDSlct(apld, aaw,aww,cww) {
   
     
     
- 
-// retBedBathstr += "<li><div style=\"float:left;\"><b>" + aprpSize + " </b>  <span class=\"txtSmall\">" + stxt[953] + "</span></div></li>";
-retBedBathstr = "<table style=\"margin:0 auto;\"><tr><td><div style=\"float:left;margin-right:10px;\"><b>" + aprpBedroom + " </b> <span class=\"txtSmall\">" + stxt[922] + "</span>&nbsp;</div></td>";
-retBedBathstr += "<td><div style=\"float:left;margin-right:10px;\"><b>" + aprpBathroom + " </b> <span class=\"txtSmall\">" + stxt[923] + "</span>&nbsp;</div></td>";
-retBedBathstr += "<td><div style=\"float:left;\"><b>" + aprpKitchen + " </b> <span class=\"txtSmall\">" + stxt[926] + "</span>&nbsp;</div></td></tr></table>";
 
 
  
-retPLstSTr += retBedBathstr;
+
 
     
     
     retPLstSTr += "</div>"; // end bg-gray quantity px-4 pt-4
+
+
+
     retPLstSTr += "<div class=\"bkgdClrWhite\">";
 
-
-
-    retPLstSTr += "<table style=\"margin:0 auto;\"><tr><td>";
-retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrLtBlue\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
+retPLstSTr += "<div class=\"slmtable bkgdClrWhite brdrClrHdr\" style=\"padding:4px;margin:2px;\">";
+    retPLstSTr += "<table style=\"margin:0 auto;width:100%;\"><tr><td>";
+retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"menu-material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
 retPLstSTr += "</td>";
 retPLstSTr += "<td>";
-retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrLtBlue\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
+// retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
+// JSSHOP.ui.prepMsgBox(" + aprpUid + ",'" + aprpUFlName + "','" + aprpObj.u_icon + "','" + istrt + "','showMsgSave');
+retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.prepMsgBox(" + aprpUid + ",'" + aprpUFlName + "','" + aprpObj.u_icon + "','" + istrt + "','showMsgSave');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[117] + "</span>";
 retPLstSTr += "</td>";
 retPLstSTr += "<td>";
 // retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"" + currFTclr + "\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','" +"','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
 // check if already a favorite and make it red if so
-currFTclr = "material-icons txtClrTtl";
+currFTclr = "menu-material-icons txtClrTtl";
  if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {
-currFTclr = "material-icons txtClrRed";
+currFTclr = "menu-material-icons txtClrRed";
 }
-retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrLtBlue\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','images/property/s_thumb" + aprpPimage + "','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
+retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','images/property/s_thumb" + aprpPimage + "','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
 
 retPLstSTr += "</td></tr></table>";
-
+retPLstSTr += "</div>"; // end slmtable bkgdClrWhite brdrClrHdr
 
     // retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></span>";
     // retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
@@ -1272,6 +1271,16 @@ retPLstSTr += "</td></tr></table>";
     retPLstSTr += "<div class=\"bkgdClrWhite txtBig txtBold\" style=\"padding:3px;\">";
     retPLstSTr += stxt[40] + ":";
     retPLstSTr += "</div>";
+
+
+     
+// retBedBathstr += "<li><div style=\"float:left;\"><b>" + aprpSize + " </b>  <span class=\"txtSmall\">" + stxt[953] + "</span></div></li>";
+retBedBathstr = "<table style=\"margin:0 auto;\"><tr><td><div style=\"float:left;margin-right:10px;\"><b>" + aprpBedroom + " </b> <span class=\"txtSmall\">" + stxt[922] + "</span>&nbsp;</div></td>";
+retBedBathstr += "<td><div style=\"float:left;margin-right:10px;\"><b>" + aprpBathroom + " </b> <span class=\"txtSmall\">" + stxt[923] + "</span>&nbsp;</div></td>";
+retBedBathstr += "<td><div style=\"float:left;\"><b>" + aprpKitchen + " </b> <span class=\"txtSmall\">" + stxt[926] + "</span>&nbsp;</div></td></tr></table>";
+ 
+retPLstSTr += retBedBathstr;
+
 
     retPLstSTr += "<div id=\"dvPrpCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + aprpContent + "</div>";
      retPLstSTr += "<div id=\"dvPrpCntntBtn\" class=\"clsPcntnt\" style=\"padding:10px;\"><a href=\"javascript:void(0);\" class=\"txtClrHdr txtBold\" onclick=\"javascript:showMorePropCntnt('dvPrpCntnt','dvPrpCntntBtn');\">" + stxt[110] + "</a></div>";

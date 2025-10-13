@@ -88,7 +88,7 @@ if(shopDir.indexOf("titan") != -1) {
 } else {
     currWebHome = "https://dev.propsgo.com/";
 }
-currWebHome = "https://dev.propsgo.com/";
+// currWebHome = "https://dev.propsgo.com/";
 var spinTextDiv = document.createElement("div");
 var currSpinText = "noQvalue";
 var currSpinType = "small";
@@ -165,6 +165,7 @@ var currFBPlgObj = {};
 var currPstsUsrArr = [];
 var currPstsPrpsArr = [];
 var currSlctdUsrObj = {};
+var currQUsrObj = {};
 var currSlctdPrpsObj = {};
 var currSwpCnfgObj = {};
 var currSwpCnfgArr = [];
@@ -332,7 +333,20 @@ var getCurrUrl = function() {
     
                     //  return oReq.responseText;
                   if(theElem == "give") {  } 
-                       tmpCB(theElem,oReq.responseText,tUTA);
+                  tCleanForJSON = oReq.responseText.replace(/[\n\r]+/g, " ");
+                  tCleanForJSON = tCleanForJSON.replace(/\t+/g, " ");
+                  tCleanForJSON = tCleanForJSON.replace(/ +/g, " ");
+                    tCleanForJSON = tCleanForJSON.replace(/\\'/g, "'");
+                    tCleanForJSON = tCleanForJSON.replace(/\\"/g, '"');
+                    tCleanForJSON = tCleanForJSON.replace(/\\&/g, "&");
+                    tCleanForJSON = tCleanForJSON.replace(/\\r/g, "");
+                    tCleanForJSON = tCleanForJSON.replace(/\\n/g, "");
+                    tCleanForJSON = tCleanForJSON.replace(/\\t/g, "");
+                    tCleanForJSON = tCleanForJSON.replace(/[\u0000-\u0019]+/g,"");
+                     tCleanForJSON = tCleanForJSON.replace(/^\s+|\s+$/g, '');
+                  //  alert("doNuAjaxPipe: " + tCleanForJSON);
+                  //  alert("doNuAjaxPipe: " + oReq.responseText);
+                       tmpCB(theElem,tCleanForJSON,tUTA);
                     }  
                 }
                 oReq.onerror = function() {
@@ -594,6 +608,7 @@ var getCurrUrl = function() {
     if(currUrlArr.debug) {
     JSSHOP.loadScript("js/fl/chrome-extension-beta/firebug-lite-beta.js", JSSHOP.checkLoader,"js");
     }
+    
     
     try {
     tmpNvstr = navigator.userAgent;

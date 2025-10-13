@@ -326,9 +326,14 @@ var finishUPupload = function(theMMum) {
 function aFillUsrFrm(a,b,c) {
     fuArr = null;
     fuArr = JSON.parse(b);
-    JSSHOP.shared.setFrmVals("quser",fuArr[0],function() {void(0)});
+   JSSHOP.shared.setFrmVals("quser",fuArr[0],function() {void(0)});
 
     JSSHOP.shared.setDynFieldVals(fuArr[0],"tmp_");
+
+    if(quid != fuArr[0]._id) {
+    document.getElementById("dvSndMsgBtn").innerHTML = "<button id=\"btnSndMsg\" class=\"cls_button cls_button-medium bkgdClrHdr txtClrWhite\" onclick=\"javascript:JSSHOP.ui.prepMsgBox('" + fuArr[0]._id + "','" + fuArr[0].u_fullname + "','" + fuArr[0].u_icon + "','showMsgSave');\"><ti data-ison=\"stxt[42]\" data-desc=\"btn_del\">" + stxt[935] + "</ti></button>";
+
+}  
     tmpDOs = null;
 tmpDOs = {};
 tmpDOs["ws"] = "where k_userid=? and k_coid=? and k_rtype=?";
@@ -341,7 +346,11 @@ getUProps();
 
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
- 
+JSSHOP.ads.doGenericPlug("usr", "single-user", "dvPartLinks");
+tuid = 0;
+tUcat = null;
+tGUKos = null;
+oi = null;
 //
 
 /*
@@ -357,6 +366,10 @@ if(currUrlArr.tuid) {
     oi = getNuDBFnvp("quser",5,null,tGUKos);
     doQComm(oi["rq"], "y", "aFillUsrFrm");
     tUcat = document.getElementById("tmp_u_cat");
+    // set the edit user link in dvUsrEditLnk div if quid == tuid or if u_cat == 5 (admin)
+    if((quid == tuid) || (JSSHOP.shared.getFrmFieldVal("quser", "u_cat", "0") == "5")) {
+        document.getElementById("dvUsrEditLnk").innerHTML = "<a href=\"javascript:eindex('aa-edit-user', 'pid=aa-edit-user&tuid=" + tuid + "');\" class=\"txtBold txctClrHdr bkgdClrNrml\">" + stxt[31] + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"javascript:removeAccount();\" class=\"txtBold txctClrRed bkgdClrWhite\">" + stxt[815] + "</a>";
+    }
  
 // JSSHOP.shared.addCurrSlctObj(svftObj["usercat"], tUcat, u_cat.value, "noQvalue", "noQvalue");
  
@@ -371,13 +384,9 @@ if(currUrlArr.umsg && currUrlArr.umsg == "remove") {
     dvPartLinks.innerHTML = "<div class=\"txtBold txtClrRed\">" + stxt[824] + "</div>";
 }
 
-
-} else {
-    alert("no user id in url");
+ 
+ 
 }
- 
- 
- 
 
  
 return dmyFnishCntLoad;
@@ -398,11 +407,18 @@ fullPrpLstA = JSON.parse(aww);
 currShopsArr = fullPrpLstA;
 iprplen = fullPrpLstA.length;
 retPLstSTr = "";
-// alert('doMPropsList - iprplen: ' + iprplen);
+retPLstSTr += "<div class=\"rtable brdrClrHdr bkgdClrWhite\">";
+// user properties title with users name
+retPLstSTr += "<div class=\"txtBold txtClrHdr\" style=\"padding:10px;\">" + tPstPgsAuthObj["prop"] + " - " + JSSHOP.shared.getFrmFieldVal("quser", "u_fullname", "") + "</div>";
+ // alert('doMPropsList - iprplen: ' + iprplen);
 while(istrt < iprplen){
 aprpObj = fullPrpLstA[istrt];
-aprpTitle = aprpObj["ptitle"];
-aprpContent = aprpObj["pcontent"];
+nprpTitle = aprpObj["pd_prptitle"];
+aprpTitle = LZString.decompressFromEncodedURIComponent(nprpTitle);
+nprpContent = aprpObj["pd_prpdesc"];
+aprpContent = LZString.decompressFromEncodedURIComponent(nprpContent);
+
+aprpContent = aprpObj["pd_desc"];
 aprpType = aprpObj["ptype"];
 aprpBhk = aprpObj["bhk"];
 aprpStype = aprpObj["stype"];
@@ -432,6 +448,7 @@ aprpTotalfloor = aprpObj["totalfloor"];
 aprpDate = aprpObj["date"];
 aprploclat = aprpObj["ploclat"];
 aprploclng = aprpObj["ploclng"];
+
 retPLstSTr += "<div class=\"col-md-6 col-lg-4\">";
 /*
 retPLstSTr += "<div tid=\"dvCoFavBtn\" style=\"float: right\"></div>";
@@ -446,66 +463,16 @@ currFTclr = "material-icons txtClrRed";
 retPLstSTr += "<table><tr><td>";
 
 //  <div  onclick="javascript:JSSHOP.ui.toggleVisibility('tdUploadBtn');" class="crsrPointer"><img alt="User Icon" src="images/misc/default_user.png"  class="slmtable brdrClrDlg" style="minn-width:150px;max-width:160px;text-align:center;margin-right:3px" align="absmiddle" id="imgIedit"><span class="txtSmall txtClrGrey">Edit</span></div>
- retPLstSTr += "<div  onclick=\"javascript:eindex('aa-pdetail','pid=aa-pdetail&prpid=" + aprpObj._id + "')\" class=\"crsrPointer\"><img src=\"admin/property/s_thumb" + aprpPimage + "\" alt=\"pimage\" class=\"slmtable brdrClrDlg\" style=\"minn-width:150px;max-width:160px;text-align:center;margin-right:3px\" align=\"absmiddle\"></div>";
+ retPLstSTr += "<div  onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\" class=\"crsrPointer\"><img src=\"images/property/s_thumb" + aprpPimage + "\" alt=\"pimage\" class=\"slmtable brdrClrDlg\" style=\"min-width:100px;max-width:100px;min-height:100px;max-height:100px;text-align:center;margin-right:3px\" align=\"absmiddle\"></div>";
 retPLstSTr += "</td>";
 retPLstSTr += "<td>";
-retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-pdetail','pid=aa-pdetail&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
- retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpLocation + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
+retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
+ retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpState + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
  
 retPLstSTr += "</td></tr></table>";
-/*
- retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\">";
-retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-pdetail','pid=aa-pdetail&prpid=" + aprpObj._id + "')\"> <img src=\"admin/property/" + aprpPimage + "\" alt=\"pimage\">";
-retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
-retPLstSTr += "<div class=\"sale bg-secondary text-white text-capitalize\">" + tDBHObj[aprpType] + "</div>";
-retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
-retPLstSTr += "<div class=\"featured-thumb-data shadow-one\">";
-
--------
-retPLstSTr += "<div class=\"p-3\">";
-retPLstSTr += "<span class=\"location text-capitalize\"><i class=\"fas fa-map-marker-alt text-primary\"></i> " + aprpLocation + "</span> </div>";
-retPLstSTr += "<div class=\"px-4 pb-4 d-inline-block w-100\">";
-retPLstSTr += "<div class=\"\"> <a href=\"propertydetail.php?pid=" + aprpUid + "\" class=\"txtSmall txtBold txtDecorNone\">" + stxt[99] + "...</a> </div>";
-retPLstSTr += "<div class=\"float-right\"><i class=\"nav-material-icons coll-menu-item txtClrHdr\" style=\"margin-right:4px;margin-top:2px;\">&#xe0b7;</i> <a href=\"contact.php?propid=" + aprpUid + "\" class=\"txtSmall txtBold txtDecorNone\">" + stxt[98] + "</a> </div>";
-retPLstSTr += "</div>";
----------
-
-
-retPLstSTr += "<div class=\"bg-gray quantity px-4 pt-4\">";
-retPLstSTr += "<ul>";
-retPLstSTr += "<li><b>" + aprpSize + "</b> Area m2</li>";
-retPLstSTr += "<li><b>" + aprpBedroom + "</b>" + stxt[922] + "</li>";
-retPLstSTr += "<li><b>" + aprpBathroom + "</b>" + stxt[923] + "</li>"
-retPLstSTr += "<li><b>" + aprpKitchen + "</b>" + stxt[926] + "</li>"; 
-retPLstSTr += "</ul>";
-
-
-
-
-retPLstSTr += "</div>"; // end bg-gray quantity px-4 pt-4
-retPLstSTr += "<div class=\"bkgdClrWhite\">";
-retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></span>";
-retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
-retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-pdetail&prpid=" + aprpObj._id + "','" + aprpTitle + "','noQvalue','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
-// streetview link http://maps.google.com/maps?q=&layer=c&cbll=
-tSrvLLstr = aprploclat + "," + aprploclng;
-retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\"><a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr + "\"><i class=\"material-icons txtClrTtl\" alt=\"streetview\" title=\"streetview\" value=\"streetview\">&#xe56e;</i> Street View</a></span>";
-
  
-
-retPLstSTr += "</div>"; // end bkgdClrWhite
-
-
-
-
-retPLstSTr += "</div>"; // end featured-thumb-data shadow-one
-retPLstSTr += "</div>"; // end featured-thumb hover-zoomer mb-4
-
-
-
-
-*/
 retPLstSTr += "</div>";  // end col-md-6 col-lg-4
+
 
 
 
@@ -514,26 +481,22 @@ retPLstSTr += "<hr>";
 
 istrt++;
 }
+retPLstSTr += "</div>";
 // return retPLstSTr;
 JSSHOP.ui.setTinnerHTML("dvUPropList",retPLstSTr);
 // alert('doMPropsList - aaw: ' + aaw);
 
 tUFObj = {};
 tUFObj["uplmt"] = 15;
-tUFObj["uppstid"] = tPropUID;
+tUFObj["upuid"] = tuid;
 tUFObj["upcb"] = "jshp_ads_showUpdtsFeed";
- JSSHOP.ads.doUpdatesFeed(tUFObj);
+JSSHOP.ads.doUpdatesFeed(tUFObj);
  }
 
 function getUProps() {
-    // alert("getUProps");
-    tmpDOs = null;
-    tmpDOs = {};
-    tmpDOs["ws"] = "where uid=?";
-    tmpDOs["wa"] = [currUrlArr.tuid];
-    tmpDOs["l"] = 5;
-    oi = getNuDBFnvp("property",5,null,tmpDOs);
-    doQComm(oi["rq"], "y", "rndrUProps");
+newerQstr = "SELECT p.*, u.u_icon, u.u_fullname, COALESCE(pd_user.pd_prptitle, pd_def.pd_prptitle) AS pd_prptitle, COALESCE(pd_user.pd_prpdesc,  pd_def.pd_prpdesc)  AS pd_prpdesc FROM property p JOIN quser u ON p.uid = u._id LEFT JOIN propdescs pd_user ON pd_user.pd_prpid = p._id AND pd_user.pd_prptlng = '" +  usrlang + "' LEFT JOIN propdescs pd_def ON pd_def.pd_prpid = p._id AND pd_def.pd_prptlng = '" + deflang + "' WHERE p.uid = " + tuid + " AND p.prtype = '5' ORDER BY RAND() LIMIT 20";
+
+ doQComm(newerQstr, null, "rndrUProps");
 }
 
 // Link adding functions

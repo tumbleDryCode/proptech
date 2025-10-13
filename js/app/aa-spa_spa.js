@@ -313,6 +313,7 @@ stxt[630] = "Traducir";
 stxt[631] = "Traducciones";
 stxt[632] = "Traducir el titulo y la descripcion actuales al idioma seleccionado";
 stxt[633] = "Comience subiendo algunas imagenes.";
+stxt[634] = "Editar todas las Propiedades";
 /*
 
 // messaging strings
@@ -406,6 +407,14 @@ stxt[823] = "Tambien elimine todos mis listados de tiendas";
 stxt[824] = "Haga clic en el enlace a continuacion para eliminar su cuenta.";
 // stxt[825] = "Edit your account details";
 stxt[825] = "Editar detalles de la cuenta";
+// stxt[826] = "This software is in beta-demo. To explore the site, you can use one of the test users below to login.";
+// stxt[827] = "You can use the following test users-admin to explore the latest-greatest features. You can edit these users, properties, updates. Feel free to experiment. break things. We reset the database every hour.";
+// stxt[828] = "Click on a user to login as that user-admin.";
+stxt[826] = "Este software esta en beta-demo. Para explorar el sitio, puede usar uno de los usuarios de prueba a continuacion para iniciar sesion.";
+stxt[827] = "Puede usar los siguientes usuarios de prueba-admin para explorar las ultimas y mejores funciones. Puede editar estos usuarios, propiedades, actualizaciones. Siéntase libre de experimentar. romper cosas. Reiniciamos la base de datos cada hora.";
+stxt[828] = "Haga clic en un usuario para iniciar sesion como ese usuario-admin.";
+
+
 
 
 

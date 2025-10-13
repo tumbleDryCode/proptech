@@ -284,7 +284,7 @@ stxt[630] = "Traduire";
 stxt[631] = "Traductions";
 stxt[632] = "Traduire le titre et la description actuels dans la langue s\u00e9lectionn\u00e9e";
 stxt[633] = "Commencez par t\u00e9l\u00e9charger quelques images.";
-
+stxt[634] = "Modifier toutes les propri\u00e9t\u00e9s";
 // messaging strings
 stxt[700] = "Vous avez une question ?";
 stxt[701] = undefined;
@@ -345,7 +345,14 @@ stxt[822] = "Action confirm\u00e9e. Nous sommes d\u00e9sol\u00e9s de vous voir p
 stxt[823] = "Supprimez aussi toutes mes annonces de magasins";
 stxt[824] = "Cliquez sur le lien ci-dessous pour supprimer votre compte.";
 stxt[825] = "Modifier les d\u00e9tails du compte";
-
+/*
+stxt[826] = "This software is in beta-demo. To explore the site, you can use one of the test users below to login.";
+stxt[827] = "You can use the following test users-admin to explore the latest-greatest features. You can edit these users, properties, updates. Feel free to experiment. break things. We reset the database every hour.";
+stxt[828] = "Click on a user to login as that user-admin.";
+*/
+stxt[826] = "Ce logiciel est en version beta-d\u00e9mo. Pour explorer le site, vous pouvez utiliser l'un des utilisateurs de test ci-dessous pour vous connecter.";
+stxt[827] = "Vous pouvez utiliser les utilisateurs de test-admin suivants pour explorer les derni\u00e8res fonctionnalit\u00e9s. Vous pouvez modifier ces utilisateurs, propri\u00e9t\u00e9s, mises \u00e0 jour. N'hésitez pas \u00e0 exp\u00e9rimenter. casser des choses. Nous r\u00e9initialisons la base de donn\u00e9es toutes les heures.";
+stxt[828] = "Cliquez sur un utilisateur pour vous connecter en tant qu'utilisateur-admin.";
 
 
 stxt[900] = "Agents";

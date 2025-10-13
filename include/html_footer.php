@@ -151,10 +151,13 @@
 <input type="hidden" name="msg_userid" id="msg_userid" value="noQvalue" data-prval="disnull" data-flbl="UserID" data-ftype="span" data-fval="thisval">
 <input type="hidden" name="msg_viewed" id="msg_viewed" value="-" data-prval="disnull"  data-flbl="Viewed" data-ftype="span" data-fval="thisval">
 <input type="hidden" name="msg_from" id="msg_from" value="" data-prval="disnull" data-flbl="stxt[703]" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="msg_from_icon" id="msg_from_icon" value="" data-prval="disnull" data-flbl="stxt[703]" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
 <input type="hidden" name="msg_fromsg_email" id="msg_fromsg_email" value="" data-prval="disnull" data-flbl="stxt[704]" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
 <input type="hidden" name="msg_fromsg_tel" id="msg_fromsg_tel" value="" data-prval="disnull" data-flbl="Tel" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
 <input type="hidden" name="msg_fromsg_ip" id="msg_fromsg_ip" value="" data-prval="disnull">
+<input type="hidden" name="msg_to_userid" id="msg_to_userid" value="" data-prval="disnull"  data-flbl="stxt[106]" data-ftype="span" data-fval="thisval">
 <input type="hidden" name="msg_to" id="msg_to" value="" data-prval="disnull"  data-flbl="stxt[106]" data-ftype="span" data-fval="thisval">
+<input type="hidden" name="msg_to_icon" id="msg_to_icon" value="" data-prval="disnull"  data-flbl="stxt[106]" data-ftype="span" data-fval="thisval">
 <input type="hidden" name="msg_to_email" id="msg_to_email" value="" data-prval="disnull"  data-flbl="stxt[26]" data-ftype="span" data-fval="thisval">
 <input type="hidden" name="msg_subject" id="msg_subject" value="" data-prval="disnull" data-flbl="stxt[705]" data-ftype="tdiv" data-fval="thisval" data-fid="tmp_">
 <input type="hidden" name="msg_matter" id="msg_matter" value="" data-prval="disnull" data-flbl="stxt[706]" data-ftype="tdivarea" data-fval="thisval" data-fid="tmp_">

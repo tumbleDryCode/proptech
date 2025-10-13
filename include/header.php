@@ -1,5 +1,5 @@
 <div id="lightbox" class="lightbox"   onclick="javascript:JSSHOP.ui.closePopMenus();">
-</div> <div id="lightbox_content" class="rtable bkgdClrWhite bottom-shadow" style="min-height:400px;min-width:95%;z-index: 2147483647;position:fixed;top:-700px;left:-700px;word-wrap: break-word;max-width:96%;margin-right:10px;margin: 0 auto;">
+</div> <div id="lightbox_content" class="rtable bkgdClrWhite bottom-shadow" style="min-height:100px;min-width:300px;width: auto;z-index: 2147483647;position:fixed;top:-700px;left:-700px;word-wrap: break-word;max-width:96%;margin-right:10px;margin: 0 auto;">
       </div>
 
 
@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-lg-12" style="margin:0px;">
                             <nav class="navbar-expand-lg navbar-light p-0">
-                              <span style="float:left;text-align:left;white-space: nowrap;"><a class="breadcrumb-item active" href="javascript:eindex('index_main', 'pid=index_main');"><img id="imgMainLogo" class="slmtable" src="images/logo/logo-small.png" alt="proptech" style="max-height:40px;max-width:40px;"> <b>proptech</b></a></span>
+                              <span style="float:left;text-align:left;white-space: nowrap;"><a class="breadcrumb-item active" href="javascript:goHome();"><img id="imgMainLogo" class="slmtable" src="images/logo/logo-small.png" alt="proptech" style="max-height:40px;max-width:40px;"> <b>proptech</b></a></span>
 
   <!-- menu icons 
 
@@ -92,8 +92,8 @@
      <i class="material-icons" style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="home" title="home"  onclick="javascript:JSSHOP.ui.toggleVisibility('navbarSupportedContent');">
      &#xe241;</i></div></li> 
 
-     <li id="ahAccnt" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:eindex('aa-edit-user','pid=aa-edit-user&cit=y');" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="account" title="account"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrHdr', 'material-icons crsrPointer hoover', function(){void(0);}, 300);">
-     &#xe7fd;</i></a></li> 
+     <li id="ahAccnt" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:JSSHOP.shared.showUserProfile(0);" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><div id="dvUMicn"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="account" title="account"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrHdr', 'material-icons crsrPointer hoover', function(){void(0);}, 300);">
+     &#xe7fd;</i></div></a></li> 
  <!-- <li id="ahHomeIcon" style="padding:0px;margin:0px;display:inline;float:right;"><a href="index.html" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;  text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons" style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="home" title="home">
      &#59530;</i></a></li>--> 
      <li id="ahMsgsIcon" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:eindex('aa-show-messages','pid=aa-show-messages&cit=y');" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="messages" title="messages"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrHdr', 'material-icons crsrPointer hoover', function(){void(0);}, 300);">
@@ -135,7 +135,7 @@
         <div class="clearfix"></div>
         <div> 
             <table style="width:100%;"><tr><td style="width:90%"> </td><td style="min-width:300px;">
-        <div class="txtClrWhite bg-secondary" id="navbarSupportedContent" style="visibility:hidden;display:none;min-width:300px;max-width:350px;float:right;position:fixed;z-index: 2147483649;max-height:90%;overflow:scroll;">
+        <div class="slmtable txtClrHdr bkgdClrWhite" id="navbarSupportedContent" style="visibility:hidden;display:none;min-width:300px;max-width:350px;float:right;position:fixed;z-index: 2147483649;max-height:90%;overflow:auto;">
                                     <ul>
                                         <li class="nav-item"> <a class="nav-link" href="./" role="button" aria-haspopup="true" aria-expanded="false">Home</a></li>
 										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-featured','pid=aa-show-featured');"><ti data-ison="stxt[940]" data-desc="btn_properties">Properties</ti></a> </li>					 
@@ -159,8 +159,8 @@
                                       
 
 										<?php } else { ?>
-										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-user','pid=aa-edit-user&cit=y');">Login</a> </li>
-                                        <li class="nav-item"> <a class="nav-link"  href="javascript:eindex('register','pid=register&cit=y');"><ti data-ison="stxt[961]" data-desc="btn_register">Register</ti></a></li>
+										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-user','pid=aa-edit-user');">Login</a> </li>
+                                        <li class="nav-item"> <a class="nav-link"  href="javascript:eindex('register','pid=register');"><ti data-ison="stxt[961]" data-desc="btn_register">Register</ti></a></li>
 										<?php } ?>
 
 

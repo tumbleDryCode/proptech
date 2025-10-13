@@ -295,7 +295,7 @@ var doNPropEdit = function() {
     tmpFobj = null;
     tmpFobj = {};
 
-    alert("tmp_pcontent.value: " + tmp_pcontent.value);
+    // alert("tmp_pcontent.value: " + tmp_pcontent.value);
        // alert("c_whours.value: " + c_whours.value);
     tmpFobj["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["property"], "tmp_"));
  
@@ -310,7 +310,7 @@ if(currUrlArr.prpid) {
 
 	    oi = getNuDBFnvp("property", 6, null, tmpFobj);
 }
-alert("OI: " + oi["rq"]);
+// alert("OI: " + oi["rq"]);
 	// alert("OI: " + oi["rq"]);
     console.log("OI: " + oi["rq"]);
      doQComm(oi["rq"], null, "cbPrpedit");

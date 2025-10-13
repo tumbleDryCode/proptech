@@ -790,6 +790,7 @@ var doPstTypOpts = function(tPTval) {
             // tTChngStrObj["pt_pt"] += "<input type=\"button\" value=\"Fechar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\">";
             // tTChngStrObj["spa_spa"] += "<input type=\"button\" value=\"Cerrar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\">";
             dvDemoView.innerHTML = tTChngStrObj[usrlang];
+          
         // JSSHOP.ui.popAndFillLbox(tTChngStrObj[usrlang]);
     // procNuUIitem("qposts","p_ptype",currUrlArr.tpstid,objVal,"fnshPTypeChange");
     };

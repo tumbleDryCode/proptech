@@ -933,7 +933,7 @@ var doThreeDPop = function() {
                     range: tFNTrange,
                 },
                 durationMillis: 8000,
-                rounds: 1
+                repeatCount: 1
             });
         }, {once: true});
         tmpThreeDLat = tNTDAlat;
@@ -977,7 +977,7 @@ var doThreeDPop = function() {
       
         },
         durationMillis: 7000,
-        rounds: 1
+        repeatCount: 1
       });
     }, {once: true});
 
@@ -1924,7 +1924,7 @@ tmpRetStr += "</label></div></td></tr>";
 // tmpRetStr += "<tr><td style=\"min-width: 100%\"><label class=\"txtClrHdr\" id=\"lbl_delimgae\">" + stxt[42] + "</label></td>";
 // tmpRetStr += "<td><div class=\"switch\">X</div></td></tr>";
 tmpRetStr += "</table>";
- tmpRetStr += "<img src=\"images/property/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
+ tmpRetStr += "<img src=\"images/property/m_thumb" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
 // put the delete button
 tmpRetStr += "<div class=\"dvTxtBtns\">";
   tmpRetStr += "<input type=\"button\" class=\"cls_button cls_button-small txtSmall bkgdClrHdr txtClrWhite\" value=\"" + stxt[42] + "\" onclick=\"javascript:doPrdMDelete();\">";
@@ -2063,7 +2063,8 @@ var setAllPropImgs = function(theAIa, theAIb, theAIc) {
     }
      show3DImages(1, tJSONCstr, 1);
 	} catch(e) {
-		alert("setAllPropImgs: " + e);
+        console.log("setAllPropImgs: " + e);
+		// alert("setAllPropImgs: " + e);
 	}
 };
 
@@ -2764,7 +2765,7 @@ JSSHOP.shared.initFrmComps(euiFFObjArr);
 // set pd_prptlng field to user language
 JSSHOP.shared.setFrmFieldVal("propdescs", "pd_prptlng", usrlang);
 JSSHOP.shared.setFrmFieldVal("propdescs", "pd_prpid", currUrlArr.prpid);
-JSSHOP.shared.setFrmFieldVal("propdescs", "pd_coid", cid);
+JSSHOP.shared.setFrmFieldVal("propdescs", "pd_coid", quid);
 JSSHOP.shared.setFrmFieldVal("propdescs", "pd_uid", quid);
     if(currUrlArr.prpid) {
   // alert('fnishCntLoad');

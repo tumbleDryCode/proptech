@@ -1393,6 +1393,7 @@ var fnishCntLoad = function() {
 var fnishCoForm = function() {
 };
 var fnishUserForm = function() {
+    console.log("fnishUserForm" );
 };
 var fnishCatForm = function() {
 };
@@ -1867,6 +1868,32 @@ document.getElementById('tdLMenu').appendChild(tmpDV);
 
 spinTextDiv.innerHTML = " ..... "; 
 if(content == "noQvalue") {
+    itDitemiD = 0;
+
+     if(JSSHOP.cookies.getCookie("cuarr") !== null) {
+         // doFrMBoolStr = "yes";
+cuarrkkit = JSSHOP.cookies.getCookie("cuarr");
+cuarrstr = LZString.decompressFromEncodedURIComponent(cuarrkkit);
+currUrlArr = JSON.parse(cuarrstr);
+// set the global vars from the cookie values by looping through the array
+for(var aRsRgkey in currUrlArr) {
+  window[aRsRgkey] = currUrlArr[aRsRgkey];
+}
+if(currUrlArr.ditemid) {
+currUrlArr.pid = "aa-show-prop";
+pid = currUrlArr.pid;
+prpid = currUrlArr.ditemid;
+currUrlArr.prpid = currUrlArr.ditemid;
+}
+if(currUrlArr.tupid) {
+currUrlArr.pid = "aa-show-update";
+pid = currUrlArr.pid;
+tupid = currUrlArr.tupid;
+}
+
+// delete the cookie
+JSSHOP.cookies.deleteCookie("cuarr", "", "");
+     }
 JSSHOP.loadScript("js/app/" + jscssprefix + "x_" + pid + ".js", doMainContent,"js");
 } else {
 doMainContent(null, null);
@@ -2271,6 +2298,9 @@ if(arrAllForms.qco) {
 if(arrAllForms.quser) {
     tFerr = "quser";
 JSSHOP.shared.setFrmVals("quser",arrAllForms.quser.v[0],function() { void(0) });
+currQUsrObj = arrAllForms.quser.v[0];
+// set div dvUMicn innerHTML to rounded s_thumb + quser.v[0].u_icon 
+document.getElementById("dvUMicn").innerHTML = "<img src=\"images/user/s_thumb" + arrAllForms.quser.v[0].u_icon + "\" class=\"icnRnd26 crsrPointer\" alt=\"User Icon\" style=\"margin-left:4px;margin-right:4px;margin-top:4px;\" title=\"" + arrAllForms.quser.v[0].u_fullname + "\">";
 }
 if(arrAllForms.qcat) {
     tFerr = "qcat";
@@ -2451,9 +2481,9 @@ console.log("setCartIArr.error: " + e);
 
 
 var doBootLoad = function() {
-  
-    console.log("doBootLoad: " + JSON.stringify(arrUprefs));
+   
 try {
+
 JSSHOP.user.doCkieUprefs('prfsSHOPuser');
  
 nShopDir = shopDir.replace("admin/", "");
@@ -2472,6 +2502,8 @@ if(tmpUrl == "noQvalue") {
 } else {
 currUrlArr = JSSHOP.shared.urlToNuArray(tmpUrl);
  
+
+
 if(currCoDcidId > 0) {
     dcid = currCoDcidId;
     currUrlArr.dcid = currCoDcidId;
@@ -2775,6 +2807,8 @@ break;
  
  doFrMBoolStr = "no";
 
+    
+
 if((currUrlArr.cuid) && (currUrlArr.cuid !== "0")){ // contact user ID
     cuid = currUrlArr.cuid;
     doFrMBoolStr = "yes";
@@ -2837,5 +2871,9 @@ tdLHR = document.location.href;
 if(tdLHR.indexOf("clean.html") != -1) {
 isAclean = "y";
 } else {
+    if(tdLHR.indexOf("?") != -1) {
+        goHome();
+    } else {
 setTimeout("doBootLoad()", 800);
+    }
 }

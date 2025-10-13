@@ -130,17 +130,38 @@ var loadPlaceLink = function(a, b, c) {
     }
 };
 
+function goHome() {
+tLocHref = document.location.href;
+
+if(tLocHref.indexOf("?") != -1) {
+    tCurllArrStr = JSON.stringify(currUrlArr);
+// set a cuarrr cookie with LZString.compressToEncodedURIComponent(tCurllArrStr);
+JSSHOP.cookies.setCookie("cuarr",LZString.compressToEncodedURIComponent(tCurllArrStr),"1","","","");
+ document.location.href = currWebHome;
+} else {
+   eindex('index_main', 'pid=index_main');
+}
+}
+
 JSSHOP.shared.showUserProfile = function(tSUPID) {
     try {  
         tFNlSPID = 0;
-       
+             
         if (tSUPID == 0) {
             tSUPID = quid;
-        } 
-        if(currUrlArr.tuid) {
-            tSUPID = currUrlArr.tuid;
+        } else {
+            if(currUrlArr.tuid) {
+                tSUPID = currUrlArr.tuid;
+            } else {
+                tSUPID = tSUPID;
+            }
         }
+// if no quid cookie and if tSUPID is 0 getTestUsers()
+        if((quid == 0) || (quid == "noQvalue")) {
+            getTestUsers("includedContent");
+        }   else {
             eindex('aa-show-user', 'pid=aa-show-user&tuid=' + tSUPID);
+        }
   } catch (e) {
          JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.showUserProfile");
     }
@@ -336,7 +357,7 @@ iint++;
 JSSHOP.shared.doLogout = function() {
 JSSHOP.cookies.deleteCookie('quid','','');
 JSSHOP.cookies.deleteCookie('cuid','','');
-document.location.href='index.html?lgo=y&cid=0';
+document.location.href='index.html?lgo=y';
 };
 
 
@@ -2469,9 +2490,9 @@ JSSHOP.ajax.xdoNuAjaxPipe = function(theElem,apUrl,tmpCB) {
             if (oReq.readyState == 4) {
  			//  return oReq.responseText;
 		  if(theElem == "give") {  } 
- 
- 
-               tmpCB(theElem,oReq.responseText,tUTA);
+                //     tCleanForJSON = oReq.responseText;
+            tCleanForJSON = oReq.responseText.replace(/\\(.)/mg, "$1");
+               tmpCB(theElem,tCleanForJSON,tUTA);
 
 		  
             }  
@@ -2588,6 +2609,7 @@ JSSHOP.loadScript("js/app/" + jscssprefix + "x_content.js", JSSHOP.ajax.mDynfnis
 
 JSSHOP.ajax.doDynMainContent = function() {
 try {
+
 // alert("JSSHOP.ajax.doDynMainContent: " + content)
 if(content == "noQvalue") {
 
@@ -2979,7 +3001,7 @@ JSSHOP.ui.getPickerStr = function(tPDtype) {
             tGPSstr += "</div>"; // end of image div
             tGPSstr += "<div style=\"float:left;width:65%;\">";
             tGPSstr +=  "<span class=\"txtBold txtClrHdr\">" + lzdPrpTtl + "</span>";
-            tGPSstr += "<br>" + currPstsPrpsArr[i].state;
+            tGPSstr += "<br>ID: " + currPstsPrpsArr[i]["_id"] + "   -  " + currPstsPrpsArr[i].state;
             tGPSstr += "<br>" + stxt[18] +": " + currPstsPrpsArr[i].price;
             tGPSstr += "</div>"; // end of text div
             tGPSstr += "<div style=\"clear:both;\"></div>";
@@ -3752,7 +3774,37 @@ JSSHOP.ui.getMorBxStr = function(theMrBxType) {
     }
     return tMorebSTr;
 };
-
+JSSHOP.ui.insertEmoji = function(editorDivId, emoji) {
+    var editorDiv = document.getElementById(editorDivId);
+    if (editorDiv) {
+        editorDiv.innerHTML += emoji;
+    }
+};
+JSSHOP.ui.getEmojiPickerHTML = function(theEEditorDiv, theEEmojiDiv) {
+    try {
+    // Create the HTML structure for the emoji picker
+    var emojiPickerHTML =  "";
+    //   var emojis = ['??', '??', '??', '??', '??'];
+    // use actual unicode characters for emojis
+    var emojis = ['\uD83D\uDE00', '\uD83D\uDE02', '\uD83D\uDE0D', '\uD83D\uDE0E', '\uD83D\uDE22'];
+    emojis.forEach(function(emoji) {
+        // also close the emoji picker after inserting the emoji
+        emojiPickerHTML += '<span class="emoji" style="font-size:24px; cursor:pointer; margin:5px;" onclick="JSSHOP.ui.insertEmoji(\'' + theEEditorDiv + '\', \'' + emoji + '\');JSSHOP.ui.toggleEmojiPicker(\'' + theEEmojiDiv + '\')">' + emoji + '</span>';
+    });
+ 
+    } catch(e) {
+        alert("getEmojiPickerHTML: " + e);
+    }
+    console.log("emojiPickerHTML: " + emojiPickerHTML);
+    return emojiPickerHTML;
+};
+JSSHOP.ui.toggleEmojiPicker = function(theEmojoDiv) {
+    // Toggle the visibility of the emoji picker
+    var tEmojoDiv = document.getElementById(theEmojoDiv);
+    if (tEmojoDiv) {
+        tEmojoDiv.style.display = tEmojoDiv.style.display === 'none' ? 'block' : 'none';
+    }
+};
 JSSHOP.ui.doTglBox = function(theTglBoxObj) {
 try {} catch(e) {
     alert("tbtmpCB: " + aTmpTglBxOb.tbtmpCB + " :: " + e);
@@ -4218,7 +4270,7 @@ tstr += "<div id=\"dvMsgT" + ts._id + "\" style=\"min-height: 45px;margin:15px;m
 tmpdate = new Date(ts.msg_dadded * 1000);
 tmpdstr = "<b>" + ("0" + tmpdate.getDate()).slice(-2) + "</b>/" + ("0" + (tmpdate.getMonth() + 1)).slice(-2);
 tstr += "<span class=\"txtClrHdr\" style=\"margin-left: 7px;\">" + tmpdstr + " : " + quid;
-if(ts.msg_to == quid ||ts.msg_from == quid || ts.msg_cartid == cartID  ) {
+if(ts.msg_userid == quid || ts.msg_to_userid == quid || ts.msg_cartid == cartID  ) {
 tstr += "<a href=\"javascript:JSSHOP.ui.showReplyMsgBox('nada','" + ts._id + "','" + ttcb + "');\">" + ts.msg_status + "</a>";
 } else {
 tstr += " - " + ts.msg_status;
@@ -4244,9 +4296,369 @@ return tstr;
 };
 
 
+JSSHOP.ui.doNuMsgList = function(a,theResp,ttcb) {
+    hasr = "n";
+    fullstr = "";
+    var arrNuMLst = null;
+    arrNuMLst = "";
+    arrNuMLst = [];
+    arrNuMLst = JSON.parse(theResp);
+    var len = arrNuMLst.length;
+    var iint = 0;
+    var pcid = 0;
+    tstr = "";
+    while(iint < len) {
+        ts = arrNuMLst[iint];
+        // Determine other party info
+        var otherUserId, otherUserName, otherUserIcon;
+        if(ts.msg_userid == quid) {
+            // Current user is sender, other party is recipient
+            otherUserId = ts.msg_to_userid;
+            otherUserName = ts.msg_to;
+            otherUserIcon = ts.msg_to_icon;
+        } else {
+            // Current user is recipient, other party is sender
+            otherUserId = ts.msg_userid;
+            otherUserName = ts.msg_from;
+            otherUserIcon = ts.msg_from_icon;
+        }
+        
+        // Facebook messenger style message list
+        tstr += "<div id=\"dvMsgT" + ts._id + "\" onclick=\"JSSHOP.ui.prepMsgBox('" + otherUserId + "','" + otherUserName + "','" + otherUserIcon + "','noQvalue','donada');\" style=\"margin:10px;padding:10px;border-radius:10px;cursor:pointer;\" class=\"bkgdClrNrml\">";
+
+        // Message header with other party info
+        tstr += "<div style=\"display:flex;align-items:center;margin-bottom:5px;\">";
+        if(otherUserIcon && otherUserIcon != "") {
+            tstr += "<img src=\"images/user/" + otherUserIcon + "\" style=\"width:30px;height:30px;border-radius:50%;margin-right:10px;\">";
+        } else {
+            tstr += "<div style=\"width:30px;height:30px;border-radius:50%;background:#ccc;margin-right:10px;display:flex;align-items:center;justify-content:center;font-weight:bold;\">" + otherUserName.charAt(0).toUpperCase() + "</div>";
+        }
+        tstr += "<div style=\"flex:1;\">";
+        tstr += "<span class=\"txtClrHdr txtBold\">" + otherUserName + "</span>";
+        tmpdate = new Date(ts.msg_dadded * 1000);
+        tmpdstr = ("0" + tmpdate.getDate()).slice(-2) + "/" + ("0" + (tmpdate.getMonth() + 1)).slice(-2) + " " + ("0" + tmpdate.getHours()).slice(-2) + ":" + ("0" + tmpdate.getMinutes()).slice(-2);
+        tstr += "<span class=\"txtSmall\" style=\"margin-left:10px;color:#666;\">" + tmpdstr + "</span>";
+        tstr += "</div>";
+        tstr += "</div>";
+
+        // Message subject and content
+        tstr += "<div style=\"margin-left:40px;\">";
+        if(ts.msg_subject && ts.msg_subject != "") {
+            tstr += "<div class=\"txtBold txtClrHdr\">" + ts.msg_subject + "</div>";
+        }
+        tNewDecdAndClnMtr = decodeURIComponent(ts.msg_matter);
+        tSHrtAndClnMtr = tNewDecdAndClnMtr.replace(/<\/?[^>]+(>|$)/g, ""); // Strip HTML tags
+        if(tSHrtAndClnMtr.length > 100) {
+            tSHrtAndClnMtr = tSHrtAndClnMtr.substring(0, 100) + "...";
+        }
+        console.log("tNewDecdAndClnMtr: " + tNewDecdAndClnMtr);
+
+        tstr += "<div id=\"dvMsgThrd" + ts._id + "\" class=\"txtClrHdr\">" + tNewDecdAndClnMtr + "</div>";
+        tstr += "</div>";
+
+        // Media if exists
+        if(ts.msg_media && ts.msg_media.indexOf(".") != -1) {
+            tstr += "<div style=\"margin-left:40px;margin-top:5px;\">";
+            tstr += "<img src=\"images/msgimgs/s_thumb" + ts.msg_media + "\" style=\"max-width:200px;max-height:200px;border-radius:5px;\">";
+            tstr += "</div>";
+        }
+
+        tstr += "</div>";
+        iint++;
+    }
+
+    if(arrNuMLst[0]) {
+    } else {
+    }
+
+    return tstr;
+};
+
+
+JSSHOP.ui.doNuMsgThread = function(a,theResp,c) {
+    console.log("doNuMsgThread:1 " + theResp);
+    annewel = document.createElement('div');
+
+    tfullstr = "";
+    var tarrToFill = null;
+    tarrToFill = "";
+    tarrToFill = [];
+    tarrToFill = JSON.parse(theResp);
+ 
+    tarrTemp = JSON.parse(theResp);
+ // tarrTemp.sort((a, b) => b.ms_dadded - a.ms_dadded); // Sort by date added descending
+    console.log("tarrTemp: " + JSON.stringify(tarrTemp));
+    // tarrTemp = tarrTemp.reverse(); // Reverse to get ascending order
+    // console.log("tarrTemp.reversed: " + JSON.stringify(tarrTemp));
+    var tlen = tarrTemp.length;
+    var tiint = 0;
+    var tpcid = 0;
+    ttstr = "";
+    var threadId = "";
+ 
+    while(tiint < tlen) {
+        ttstr = "";
+        thasr = "n";
+        tts = tarrTemp[tiint];
+        nthreadId = tts.ms_threadid; // Store thread ID for later use
+
+       
+        // Message content
+
+        tThrdMtr = tts.ms_matter;
+
+            ttmsgmatter = decodeURIComponent(tThrdMtr);
+            ttmsgmatter = ttmsgmatter.replace(/<\/?[^>]+(>|$)/g, ""); // Strip HTML tags
+            tShrtMMatter = ttmsgmatter;
+            if(tShrtMMatter.length > 100) {
+                tShrtMMatter = tShrtMMatter.substring(0, 100) + "...";
+            }
+
+            console.log("mtr-ttmsgmatter.decodeURIComponent: " + ttmsgmatter);
+        ttstr += "<div class=\"txtSmall txtClrGrey\">" + ttmsgmatter + "</div>";
+
+        // Timestamp
+        ttmpdate = new Date(tts.ms_dadded * 1000);
+        ttmpdstr = ("0" + ttmpdate.getHours()).slice(-2) + ":" + ("0" + ttmpdate.getMinutes()).slice(-2);
+        ttstr += "<div style=\"font-size:11px;margin-top:5px;opacity:0.7;\">" + ttmpdstr + "</div>";
+ 
+
+        // Media if exists
+        if(tts.ms_media && tts.ms_media.indexOf(".") != -1) {
+            if(tts.ms_from == quid) {
+                ttstr += "<div style=\"display:flex;justify-content:flex-end;margin:5px;\">";
+            } else {
+                ttstr += "<div style=\"display:flex;margin:5px;\">";
+            }
+            ttstr += "<img src=\"images/msgimgs/s_thumb" + tts.ms_media + "\" style=\"max-width:200px;max-height:200px;border-radius:10px;\">";
+            ttstr += "</div>";
+        }
+        tDStr = "dvMsgThrd" + nthreadId;
+         if(document.getElementById(tDStr)) {
+            tastmpTDQI = document.getElementById(tDStr);
+
+            tastmpTDQI.innerHTML = ttstr; // Clear previous content
+  
+        }
+        tiint++;
+    }
+
+     
+
+ 
+};
+
+ 
+
+
+function doUMsgThread(atmdiv,theResp,ttcb) {
+  console.log("doUMsgThread: " + theResp);
+    var tFllArr = JSON.parse(theResp);
+    var len = tFllArr.length;
+    if(tFllArr[0]) {
+    var iint = 0;
+    var tstr = "";
+
+    
+    /*
+    
+CREATE TABLE `qmsg` (
+  `_id` int(11) NOT NULL,
+  `ms_rtype` int(11) DEFAULT NULL,
+  `ms_threadid` varchar(12) DEFAULT NULL,
+  `ms_from` varchar(26) DEFAULT NULL,
+  `ms_to` varchar(56) DEFAULT NULL,
+  `ms_viewed` varchar(5) DEFAULT NULL,
+  `ms_matter` text DEFAULT NULL,
+  `ms_media` text DEFAULT NULL,
+  `ms_wildkey` varchar(26) DEFAULT NULL,
+  `ms_rating` int(11) DEFAULT NULL,
+  `ms_vala` varchar(56) DEFAULT NULL,
+  `ms_valb` varchar(56) DEFAULT NULL,
+  `ms_dadded` varchar(12) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `qmsg`
+--
+
+INSERT INTO `qmsg` (`_id`, `ms_rtype`, `ms_threadid`, `ms_from`, `ms_to`, `ms_viewed`, `ms_matter`, `ms_media`, `ms_wildkey`, `ms_rating`, `ms_vala`, `ms_valb`, `ms_dadded`) VALUES
+(21, 0, '48', 'pnunw1ntgxl', '', '-', 'answer from 501b', '', '', 5, '', '', '1710065651'),
+(22, 0, '48', 'wwpb5jyf82', '', '-', '601 says it sucks', '', '', 5, '', '', '1710065765'),
+(23, 0, '48', 'wwpb5jyf82', '', '-', '601 says it again', '', '', 5, '', '', '1710065829'),
+(24, 0, '48', 'pnunw1ntgxl', '', '-', 'chill 601', '', '', 5, '', '', '1710065858'),
+(25, 0, '48', 'pnunw1ntgxl', '', '-', 'chill in thread to', '', '', 5, '', '', '1710065883'),
+(26, 0, '48', 'pnunw1ntgxl', '', '-', 'chill rahboo', '', '', 5, '', '', '1710066063'),
+(27, 0, '49', 'pnunw1ntgxl', '', '-', 'what is it 601?', '', '', 5, '', '', '1710081353'),
+(28, 0, '49', 'wwpb5jyf82', '', '-', 'reply 501', '', '', 5, '', '', '1710081410');
+    */
+
+
+    while(iint < len) {
+      var ts = tFllArr[iint];
+      ttmsstr = "";
+      /*
+        tstr += "<div id=\"dvMsgT" + ts._id + "\" style=\"min-height: 45px;margin:15px;margin-bottom:18px;\" class=\"rtable bkgdClrNrml slmtblpadding\">";
+        ttmpdate = new Date(ts.ms_dadded * 1000);
+        ttmpdstr = "<b>" + ("0" + ttmpdate.getDate()).slice(-2) + "</b>/" + ("0" + (ttmpdate.getMonth() + 1)).slice(-2);
+        tstr += "<span class=\"txtClrHdr\" style=\"margin-left: 7px;\">" + ttmpdstr + " - " + ts.ms_from + "</span><br>";
+        tstr += "<div class=\"txtClrHdr\" style=\"margin-left: 7px\">" + ts.ms_matter + "</div>";
+        if(ts.ms_media.indexOf(".") != -1) {
+            tstr += "<div class=\"txtClrHdr\" style=\"margin-left: 7px\"><span><a href=\"index.html?pid=aa-show-messages&threadid=" + ts.ms_threadid + "&cid=" + cid + "\"><img src=\"images/msgimgs/s_thumb" + ts.ms_media + "\" class=\"icndbtn\"></a></span></div>";
+        }
+        tstr += "</div>";
+        */
+
+       // use facebook style colors depending on who sent the message in tstr
+       tFTMMstr = "";
+         tATMMstr = ts.ms_matter;
+        tTMMstr = "";
+        // DECODE URI COMPONENT
+        tTMMstr = decodeURIComponent(tATMMstr);
+
+        console.log("mtr-tTMMstr.decodeURIComponent: " + tTMMstr);
+       if(tTMMstr.indexOf("#PROPID:") != -1) {
+        console.log("Found #PROPID: in message matter");
+        var tpropArr = tTMMstr.split("#PROPID:");
+        var tpropid = tpropArr[1];
+ 
+        console.log("Extracted property ID:" + tpropid);
+        tATMMstr = tTMMstr.replace("#PROPID:" + tpropid, "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + tpropid + "')\"><u>#PROPID:" + tpropid + "</u></a>");
+        tFTMMstr = tATMMstr;
+    } else {
+        tFTMMstr = tTMMstr;
+    }
+    // FIND LINK URLS AND MAKE THEM CLICKABLE
+    // urlPattern = /(https?:\/\/[^\s]+)/g;
+    // THERE MAY BE HTML < after the url address so we need to exclude that from the url
+   var  urlPattern = /(https?:\/\/[^\s<]+)/g;
+    tFTMMstr = tFTMMstr.replace(urlPattern, function(url) {
+        return '<a href="' + url + '" target="_blank" class="txtDecorUline">' + url + '</a>';
+    });
+         if(ts.ms_from == quid) {
+        tstr += "<div id=\"dvMsgT" + ts._id + "\" style=\"min-height: 45px;margin:15px;margin-bottom:18px;color:#FFFFFF;\" class=\"slmtable bkgdClrHdr slmtblpadding txtClrWhite\">";
+         } else {
+        tstr += "<div id=\"dvMsgT" + ts._id + "\" style=\"min-height: 45px;margin:15px;margin-bottom:18px;\" class=\"rtable bkgdClrNrml slmtblpadding\">";
+            }
+        ttmpdate = new Date(ts.ms_dadded * 1000);
+        ttmpdstr = "<b>" + ("0" + ttmpdate.getDate()).slice(-2) + "</b>/" + ("0" + (ttmpdate.getMonth() + 1)).slice(-2);
+        // tstr += "<span class=\"txtClrHdr\" style=\"margin-left: 7px;\">" + ttmpdstr + " - " + ts.ms_from + "</span><br>";
+        tstr += "<div  style=\"margin-left: 7px\">" + tFTMMstr + "</div>";
+        if(ts.ms_media.indexOf(".") != -1) {
+            tstr += "<div class=\"txtClrHdr\" style=\"margin-left: 7px\"><span><a href=\"index.html?pid=aa-show-messages&threadid=" + ts.ms_threadid + "&cid=" + cid + "\"><img src=\"images/msgimgs/s_thumb" + ts.ms_media + "\" class=\"icndbtn\"></a></span></div>";
+        }
+        tstr += "</div>";
+
+        iint++;
+    }
+    // append to atmdiv
+    tUTdv = document.createElement('div');
+    tUTdv.innerHTML = tstr;
+    document.getElementById(atmdiv).appendChild(tUTdv);
+    tGMsgDos = null;
+    } else {
+     //    document.getElementById(atmdiv).appendChild(document.createElement('div')).innerHTML = "<div class=\"txtClrHdr\" style=\"margin-left: 7px\">No messages found</div>";
+    }
+    // scroll to bottom of atmdiv
+    var msgDiv = document.getElementById(atmdiv);
+    msgDiv.scrollTop = msgDiv.scrollHeight;
+
+}
+
+function doUMsgHdr(atmdiv,theResp,ttcb) {
+document.getElementById("ms_threadid").value = "";
+  var tFllArr = JSON.parse(theResp);
+  var len = tFllArr.length;
+  if(tFllArr[0]) {
+document.getElementById("ms_threadid").value = tFllArr[0]._id;
+document.getElementById("ms_from").value = quid;
+document.getElementById("ms_dadded").value = JSSHOP.getUnixTimeStamp();
+    
+    /* qmsgs table structure
+    CREATE TABLE `qmsgs` (
+  `_id` int(11) NOT NULL,
+  `msg_rtype` int(11) DEFAULT NULL,
+  `msg_threadid` varchar(12) DEFAULT NULL,
+  `msg_cartid` varchar(32) DEFAULT NULL,
+  `msg_prodid` varchar(32) DEFAULT NULL,
+  `msg_userid` int(12) DEFAULT NULL,
+  `msg_viewed` varchar(5) DEFAULT NULL,
+  `msg_from` varchar(26) DEFAULT NULL,
+  `msg_fromsg_email` varchar(50) DEFAULT NULL,
+  `msg_fromsg_tel` varchar(20) DEFAULT NULL,
+  `msg_fromsg_ip` varchar(22) DEFAULT NULL,
+  `msg_to_userid` int(12) DEFAULT NULL,
+  `msg_to` varchar(26) DEFAULT NULL,
+  `msg_to_icon` varchar(50) DEFAULT NULL,
+  `msg_to_email` varchar(50) DEFAULT NULL,
+  `msg_subject` varchar(60) DEFAULT NULL,
+  `msg_matter` text DEFAULT NULL,
+  `msg_media` text DEFAULT NULL,
+  `msg_priority` varchar(10) DEFAULT NULL,
+  `msg_status` varchar(10) DEFAULT NULL,
+  `msg_docomments` varchar(5) DEFAULT NULL,
+  `msg_privacy` varchar(5) DEFAULT NULL,
+  `msg_dadded` varchar(12) DEFAULT NULL,
+  `msg_dmodified` varchar(12) DEFAULT NULL,
+  `msg_modifiedby` varchar(26) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+*/
+  var iint = 0;
+  var tstr = "";
+  while(iint < len) {
+    var ts = tFllArr[iint];
+    tMsgSTR = "";
+    tmsUEgmatter = ts.msg_matter;
+
+    // urldecode message matter
+    tmsgmatter = decodeURIComponent(tmsUEgmatter);
+    if(tmsgmatter.indexOf("#PROPID:") != -1) {
+        var tpropid = tmsgmatter.split("#PROPID:")[1].split(":")[0];
+        tsmsgmatter = tmsgmatter.replace("#PROPID:"+tpropid+":", "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&propid="+tpropid+"')\">#PROPID:"+tpropid+"</a>");
+        tMsgSTR += tsmsgmatter;
+    } else {
+        tMsgSTR += tmsgmatter;
+    }
+    /*
+    tstr += "<div id=\"dvMsgHdr" + ts._id + "\" style=\"min-height: 45px;margin:15px;margin-bottom:18px;\" class=\"rtable bkgdClrNrml slmtblpadding\">";
+    tstr += "<span class=\"txtClrHdr\" style=\"margin-left: 7px;\">" + ts.msg_subject + "</span><br>";
+    tstr += "<div class=\"txtClrHdr\" style=\"margin-left: 7px\">" + ts.msg_matter + "</div>";
+    tstr += "</div>";
+    */
+   // use facebook style colors depending on who sent the message in tstr
+   if(ts.msg_userid == quid) { 
+    tstr += "<div id=\"dvMsgHdr" + ts._id + "\" style=\"min-height: 45px;margin:15px;margin-bottom:18px;\" class=\"rtable bkgdClrHdr slmtblpadding txtClrWhite\">";
+   } else {
+    tstr += "<div id=\"dvMsgHdr" + ts._id + "\" style=\"min-height: 45px;margin:15px;margin-bottom:18px;\" class=\"rtable bkgdClrNrml slmtblpadding\">";
+    }
+    ttmpdate = new Date(ts.msg_dadded * 1000);
+    ttmpdstr = "<b>" + ("0" + ttmpdate.getDate()).slice(-2) + "</b>/" + ("0" + (ttmpdate.getMonth() + 1)).slice(-2);
+    // tstr += "<span style=\"margin-left: 7px;\">" + ttmpdstr + " - " + ts.msg_from + "</span><br>";
+    tstr += "<div style=\"margin-left: 7px\">" + tMsgSTR + "</div>";
+ 
+    tstr += "</div>";
+    iint++;
+  }
+  document.getElementById(atmdiv).innerHTML = tstr;
+  tGMsgDos = null;
+  tGMsgDos = {};
+  tGMsgDos["ws"] = "where ms_threadid=?"
+  tGMsgDos["wa"] = [tFllArr[0]._id];
+    tGMsgDos["o"] = "ms_dadded ASC";
+oi = getNuDBFnvp("qmsg",5,null,tGMsgDos);
+doQComm(oi["rq"], atmdiv, "doUMsgThread");
+
+
+  } else {
+    // document.getElementById(atmdiv).innerHTML = "<div class=\"txtClrHdr\" style=\"margin-left: 7px\">No messages found</div>";
+    // show a facebook type from incom with view profile link 
+    document.getElementById(atmdiv).innerHTML = "<div class=\"rtable bkgdClrNrml slmtblpadding txtClrHdr\" style=\"min-height: 45px;margin:15px;margin-bottom:18px;\">Start a new message</div>";
+  }
 
 
 
+};
 
 function showAReplyMsgSave(tamsg, tbmsg, tcmsg){
 try {
@@ -4272,7 +4684,7 @@ JSSHOP.ui.doReplyMsgSave = function(tmpMsgType, tmpMsgVal, tTrmsCB){
 try {
 alert("JSSHOP.ui.doReplyMsgSave: " + tmpMsgType + " .." + tmpMsgVal)
 JSSHOP.shared.setFrmFieldVal("qmsg","ms_threadid", tmpMsgVal);
-JSSHOP.shared.setFrmFieldVal("qmsg", "ms_from", cartID);
+JSSHOP.shared.setFrmFieldVal("qmsg", "ms_from", quid);
 JSSHOP.shared.setFrmFieldVal("qmsg", "ms_dadded", JSSHOP.getUnixTimeStamp()); 
 
 JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_dmodified", JSSHOP.getUnixTimeStamp()); 
@@ -4316,11 +4728,15 @@ setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj)", 500);
 
 };
 
+
+
+
 function showMsgSave(tamsg, tbmsg, tcmsg){
 JSSHOP.ui.popAndFillLbox(tamsg + tbmsg + tcmsg);
 }
  
 JSSHOP.ui.doMsgSave = function(tmpMsgType, tmpMsgVal, tempCB){
+   //  JSSHOP.shared.setDynFrmVals(document["qmsgs"], "tmp_");
     console.log("doMsgSave: " + tmpMsgType + " :: " + tmpMsgVal + " :: " + tempCB);
 tmpmtid = Math.random().toString(36).slice(2);
 JSSHOP.shared.setFrmFieldVal("qmsgs","msg_threadid", tmpmtid);
@@ -4328,12 +4744,16 @@ JSSHOP.shared.setFrmFieldVal("qmsgs","msg_userid", quid);
 // JSSHOP.shared.setFrmFieldVal("qmsgs","msg_cartid", cartID);
 JSSHOP.shared.setFrmFieldVal("qmsgs","msg_prodid", itemid);
 JSSHOP.shared.setFrmFieldVal("qmsgs","msg_dmodified", JSSHOP.getUnixTimeStamp()); 
-JSSHOP.shared.setFrmFieldVal("qmsgs","msg_to", c_uid.value);
+// JSSHOP.shared.setFrmFieldVal("qmsgs","msg_to", c_uid.value);
 JSSHOP.shared.setFrmFieldVal("qmsgs","msg_dadded", JSSHOP.getUnixTimeStamp()); 
-// JSSHOP.shared.setDynFrmVals(document["qmsgs"], "tmp_");
+tChatInpstr = "chat-input-" + tmpMsgVal;
+tMsgMatter = document.getElementById(tChatInpstr).innerHTML;
+// alert("tMsgMatter: " + document.getElementById("msg_matter").value);
+// document.getElementById("msg_matter").value = tMsgMatter;
 tmpDOs = null;
 tmpDOs = {};
-tmpDOs["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qmsgs"], "tmp_"));
+// tmpDOs["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qmsgs"], "tmp_"));
+tmpDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qmsgs"], "nada");
 oi = getNuDBFnvp("qmsgs",6,null,tmpDOs);
 doQComm(oi["rq"], null, tempCB);
 // alert(oi["rq"]);
@@ -4347,13 +4767,35 @@ tAllowedStr += "msg_frommsg_emailmsg_tel";
 }
 aTmpMsgBxOb = null;
 aTmpMsgBxOb = {};
-aTmpMsgBxOb["m_type"] = "product"; // interna� msg type
+aTmpMsgBxOb["m_btn1"] = stxt[86]; // send button text
+aTmpMsgBxOb["m_btn2"] = stxt[87]; // cancel button text
+aTmpMsgBxOb["m_btn1_cl"] = "btnMsgsend"; // send button id
+aTmpMsgBxOb["m_btn2_cl"] = "btnMsgcancel"; // cancel button id
+aTmpMsgBxOb["m_btn1_fnc"] = "doNada"; // send button function
+aTmpMsgBxOb["m_btn2_fnc"] = "JSSHOP.ui.closeLbox"; // cancel button function
+     aTmpMsgBxOb["m_to_userid"] = 1; // send to user id
+    aTmpMsgBxOb["m_to"] = "msg_to"; // send to user field name
+aTmpMsgBxOb["m_to_icon"] = "&#xe0be;"; // send to user icon
+aTmpMsgBxOb["m_from_icon"] = "&#xe0be;"; // from user icon
+aTmpMsgBxOb["m_type"] = "product"; // internal msg type
 aTmpMsgBxOb["m_val"] = "1"; // internal msg token
+aTmpMsgBxOb["m_item"] = "noQvalue"; // internal msg item
 aTmpMsgBxOb["m_strAll"] = tAllowedStr; // message form values to render
 aTmpMsgBxOb["m_useAnx"] = "noAnx"; // add image upload btn
 aTmpMsgBxOb["m_tmpCB"] = "doNada"; // null function as cllback
 return aTmpMsgBxOb;
 };
+
+
+function getMsgsFromTOU(touid) {
+tmpDOs = null;
+tmpDOs = {};
+// tmpDOs["ws"] = "where msg_to_userid=? or msg_userid=?";
+tmpDOs["ws"] = "where (msg_to_userid=? and msg_userid=?) or (msg_userid=? and msg_to_userid=?)";
+tmpDOs["wa"] = [touid,quid, touid, quid];
+oi = getNuDBFnvp("qmsgs",5,null,tmpDOs);
+doQComm(oi["rq"], "chat-messages-" + touid, "doUMsgHdr");
+}
 
 
 function doUMsglinks(tULUID, tdivMID) {
@@ -4401,26 +4843,26 @@ function doUMsglinks(tULUID, tdivMID) {
     tRSstr += "<td>&nbsp;</td><td><span class=\"form-control bkgdClrTtl brdrClrHdr txtClrRed crsrPointer\" onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'sms','" + theTprfx + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_sms\" title=\"sms\" value=\"btn_email\" styke=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe625;</i> SMS</span></td>";
     }
     tRSstr += "</tr></table></div>";
-    */
-
+    
+ */
         switch(tKcat) {
             case "sms":
-                raqcL += "<span style=\"float:left;padding: 2px;margin:7px;\" class=\"slmtable bkgdClrTtl brdrClrHdr crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'sms','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_sms\" title=\"sms\" value=\"btn_email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe625;</i> SMS</span>";
+                raqcL += "<span style=\"float:left;padding: 7px;margin:7px;\" class=\"crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'sms','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrGrey\" alt=\"btn_sms\" title=\"sms\" value=\"btn_email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe625;</i> SMS</span>";
                 break;
                 case "email":
-                   raqcL += "<span style=\"float:left;padding: 7px;margin:7px;\"  class=\"slmtable bkgdClrTtl brdrClrHdr crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'email','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_email\" title=\"email\" value=\"email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0be;</i> Email</span>";
+                   raqcL += "<span style=\"float:left;padding: 7px;margin:7px;\"  class=\"crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'email','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_email\" title=\"email\" value=\"email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0be;</i> Email</span>";
                     break;
                     case "whatsapp":
-                       raqcL += "<span  style=\"float:left;padding: 7px;margin:7px;\" class=\"slmtable bkgdClrTtl brdrClrHdr crsrPointer\"  onclick=\"javascript:JSSHOP.ads.doGenShpActn(0,'whatsapp','" + tKmatter + "');\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_whatsapp\" title=\"whatsapp\" value=\"whatsapp\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe88a;</i> WhatsApp</span>";
+                       raqcL += "<span  style=\"float:left;padding: 7px;margin:7px;\" class=\"crsrPointer\"  onclick=\"javascript:JSSHOP.ads.doGenShpActn(0,'whatsapp','" + tKmatter + "');\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_whatsapp\" title=\"whatsapp\" value=\"whatsapp\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe625;</i> WhatsApp</span>";
                         break;
                         case "telephone":
-                           raqcL += "<span style=\"float:left;padding: 7px;margin:7px;\"  class=\"slmtable bkgdClrTtl brdrClrHdr crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'tel','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_tel\" title=\"tel\" value=\"tel\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0cd;</i> Call</span>";
+                           raqcL += "<span style=\"float:left;padding: 7px;margin:7px;\"  class=\"crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'tel','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_tel\" title=\"tel\" value=\"tel\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0cd;</i> Call</span>";
                     default:
                         break;
         }
+
  
-        // rcnsDv.innerHTML = "<span class=\"txtBold\">" + rcts.k_category + "</span><br>" + rcts.k_matter;
-        rciint++;
+         rciint++;
         }
        //  rcL += "<td></td></tr></table>";
         tRCLDv = document.createElement('div');
@@ -4474,6 +4916,7 @@ function doUMsglinks(tULUID, tdivMID) {
     rciint++;
     }
     rcL += "</table>";
+   
     // just the message buttons for now 
     // document.getElementById(za).innerHTML = rcL;
     rndrUMsgBtns(za,zb,zc);
@@ -4484,20 +4927,77 @@ function doUMsglinks(tULUID, tdivMID) {
         currCoLinksArr = null;
         currCoLinksArr = [];
     // alert("setCurrCoLinks: " + tCCLB);
-    
-    rndrUMsgLnks(tCCLA, tCCLB, tCCLC);
+    rndrUMsgBtns(tCCLA, tCCLB, tCCLC);
+    // rndrUMsgLnks(tCCLA, tCCLB, tCCLC);
     }
     }
  
  JSSHOP.ui.showNuMsgBox = function(ttMsgBxObj){
+
+
+    /* qmsgs table structure
+    CREATE TABLE `qmsgs` (
+  `_id` int(11) NOT NULL,
+  `msg_rtype` int(11) DEFAULT NULL,
+  `msg_threadid` varchar(12) DEFAULT NULL,
+  `msg_cartid` varchar(32) DEFAULT NULL,
+  `msg_prodid` varchar(32) DEFAULT NULL,
+  `msg_userid` int(12) DEFAULT NULL,
+  `msg_viewed` varchar(5) DEFAULT NULL,
+  `msg_from` varchar(26) DEFAULT NULL,
+  `msg_from_icon` varchar(50) DEFAULT NULL,
+  `msg_fromsg_email` varchar(50) DEFAULT NULL,
+  `msg_fromsg_tel` varchar(20) DEFAULT NULL,
+  `msg_fromsg_ip` varchar(22) DEFAULT NULL,
+  `msg_to_userid` int(12) DEFAULT NULL,
+  `msg_to` varchar(26) DEFAULT NULL,
+  `msg_to_icon` varchar(50) DEFAULT NULL,
+  `msg_to_email` varchar(50) DEFAULT NULL,
+  `msg_subject` varchar(60) DEFAULT NULL,
+  `msg_matter` text DEFAULT NULL,
+  `msg_media` text DEFAULT NULL,
+  `msg_priority` varchar(10) DEFAULT NULL,
+  `msg_status` varchar(10) DEFAULT NULL,
+  `msg_docomments` varchar(5) DEFAULT NULL,
+  `msg_privacy` varchar(5) DEFAULT NULL,
+  `msg_dadded` varchar(12) DEFAULT NULL,
+  `msg_dmodified` varchar(12) DEFAULT NULL,
+  `msg_modifiedby` varchar(26) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+*/
+JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_userid", currQUsrObj._id);
+JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_from", currQUsrObj.u_fullname);
+JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_to_userid", ttMsgBxObj["m_to_userid"]);
+JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_to", ttMsgBxObj["m_to"]);
+JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_to_icon", ttMsgBxObj["m_to_icon"]);
+JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_from_icon", ttMsgBxObj["m_from_icon"]);
+
+var tSNMBItemID = "noQvalue";
+ 
+var tmpMsgType = "";
+var tmpMsgVal = "";
+var theTStrAllwd = "";
+var boolDoAnx = "noAnx";
+var atmpCB = "doNada";
+var tMsgBxHdrSTr = "";
+var tMsgBxFtrSTr = "";
+var tfsb = null;
+var tsbstr = "";
+var tAllowedStr = "";
+var msgFObj = null;
+var tDefPropInqMsg = "";
+var antMpPrpObj = null;
+
+var tToIcn = "";
+var tToNm = "";
 
 tmpMsgType = ttMsgBxObj["m_type"];
 tmpMsgVal = ttMsgBxObj["m_val"];
 theTStrAllwd = ttMsgBxObj["m_strAll"];
 boolDoAnx = ttMsgBxObj["m_useAnx"];
 atmpCB = ttMsgBxObj["m_tmpCB"];
-tMsgBxHdrSTr = "";
-tMsgBxFtrSTr = "";
+
 try {
 tfsb = nCurrFFieldOb();
 tfsb.fid = "btnMsgsave";
@@ -4519,31 +5019,69 @@ msgFObj =  JSSHOP.shared.rndrDynFrmVals(document["qmsgs"], "tmp_", tAllowedStr, 
 retRndrObj["rndrStr"] = tmpVstr;
 retRndrObj["rndrFobj"] = rndrFFObjArr;
 tMsgBxHdrSTr = "New Message";
-switch(tmpMsgType) {
-case "uproperty":
-atMpPrpObj = currShopsArr[tmpMsgVal];
-tMsgBxHdrSTr = "<table><tr><td><img src=\"images/user/s_thumb" + atMpPrpObj.u_icon + "\" class=\"icnRndnUser\"></td><td>" + atMpPrpObj.u_fullname + "</td></tr></table>";
-tMsgBxHdrSTr += "<table style=\"margin:0 auto\"><tr><td><img src=\"" + currPrpImgsFldr + "/s_thumb"  + atMpPrpObj.pimage + "\" class=\"icnmedbtn\"><br>ID: " + atMpPrpObj._id + "</td><td>" + atMpPrpObj.ptitle + "</td></tr></table>";
-tMsgBxHdrSTr += "<table style=\"margin:0 auto\"><tr><td>" + stxt[729] + "</td></tr></table>";
-// tMsgBxHdrSTr = atMpPrpObj.ptitle;
-tsbstr += "<div id=\"dvMsgUlinks\"></div>";
+ 
+    /*
+// tMsgBxHdrSTr = "User Message";
+// tMsgBxHdrSTr is a div wuth the current tuid s_thumb u_icon on left and u_fullname on right
+tMsgBxHdrSTr = "<table><tr><td><img src=\"images/user/s_thumb" + ttMsgBxObj["m_to_icon"] + "\" class=\"icnRndnUser\"></td><td>" + ttMsgBxObj.m_to + "</td></tr></table>";
+// tMsgBdyStr = an editable div with id msg_matter
+tMsgBdyStr = "<div  name=\"tmp_msg_matter\" id=\"tmp_msg_matter\" contenteditable=\"true\" class=\"form-control\"></div>";
+// add a save button that calls JSSHOP.ui.doMsgSave('user', tmpMsgVal, atmpCB)
+tMsgBdyStr += "<button class=\"slmtable brdrClrHdr bkgdClrDlg txtClrDhr txtBold\" onclick=\"JSSHOP.ui.doMsgSave('user', '" + tmpMsgVal + "', '" + atmpCB + "');\">" + stxt[70] + "</button>";
 
-break;
-case "product":
-tMsgBxHdrSTr = stxt[570];
-break;
-case "user":
-tMsgBxHdrSTr = "User Message";
-break;
-case "order":
-tMsgBxHdrSTr = "Order Message";
-break;
-default:
-break;
+tsbstr += tMsgBdyStr;
+*/
+    tcloseBstr  = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrWhite txtBold txtBig crsrPointer\" style=\"float:right;margin-left:20px;\"><i class=\"menu-material-icons txtBold txtClrWhite\" alt=\"close\" title=\"close\" value=\"close\" style=\"font-size:24px;\">&#xe5cd;</i></div>";
+
+tMsgBxHdrSTr = '<div class="fb-chat-box" style="width:300px; height:400px; border:1px solid #ccc; border-radius:8px; overflow:hidden; display:flex; flex-direction:column;">' +
+
+'<div class="chat-header" style="background:#4267b2; color:white; padding:10px; display:flex; align-items:center;">' +
+'<table style="width:100%;"><tr><td><a href="javascript:eindex(\'aa-show-user\',\'pid=aa-show-user&tuid=' + ttMsgBxObj["m_to_userid"] + '\')"><img src="images/user/s_thumb' + ttMsgBxObj["m_to_icon"] + '" alt="User" style="width:40px; height:40px; border-radius:50%; margin-right:10px;"></a></td>' +
+// javascript:eindex('aa-show-user','pid=aa-show-user&tuid=' + ttMsgBxObj["m_to_userid"])
+'<td style="flex-grow:1;"><span style="font-weight:bold;color:white;"><a href="javascript:eindex(\'aa-show-user\',\'pid=aa-show-user&tuid=' + ttMsgBxObj["m_to_userid"] + '\')" class="txtClrWhite">' + ttMsgBxObj.m_to + '</a></span>' +
+'</td><td>' +   tcloseBstr +
+'</td></tr></table>' +
+'</div>';
+// add <div id=\"dvMsgUlinks\"></div>
+tMsgBxHdrSTr += '<div id="dvMsgUlinks" style="padding:5px; background:#f5f6f7; border-bottom:1px solid #ccc; display:flex; overflow-x:auto;"></div>';
+if(ttMsgBxObj["m_item"] != "noQvalue") {
+tIprpIdx = parseInt(ttMsgBxObj["m_item"], 10);
+    antMpPrpObj = currShopsArr[tIprpIdx];
+    if(antMpPrpObj != null) {
+        tSNMBItemID = antMpPrpObj._id;
+        console.log("showNuMsgBox.antMpPrpObj: " + JSON.stringify(antMpPrpObj));
+         JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_prodid", antMpPrpObj._id);
+        tToPrpIcn = antMpPrpObj.pimage;
+        tZpdToPrpNm = antMpPrpObj.pd_prptitle;
+        tToPrpNm = LZString.decompressFromEncodedURIComponent(tZpdToPrpNm);
+        tMsgBxHdrSTr += '<div class="chat-item-info" style="padding:10px; background:#e9ebee; border-bottom:1px solid #ccc; display:flex; align-items:center;">' +
+        '<img src="images/property/s_thumb' + tToPrpIcn + '" alt="Item" style="width:30px; height:30px; border-radius:4px; margin-right:10px;">' +
+        '<span style="font-weight:bold; font-size:14px;">' + tToPrpNm + '</span>' +
+        '</div>';
+    }
 }
-JSSHOP.ui.popAndFillLbox(tMsgBxHdrSTr + "<br>" + "<br>" + tsbstr);
+tMBemojistr = JSSHOP.ui.getEmojiPickerHTML('chat-input-' + ttMsgBxObj["m_to_userid"], 'dvEmogiList' + ttMsgBxObj["m_to_userid"]);
+tMsgBxHdrSTr += '<div class="chat-messages" id="chat-messages-' + ttMsgBxObj["m_to_userid"] + '" style="flex:1; padding:10px; overflow-y:auto; background:#f0f0f0;">' +
+'<!-- Messages will be loaded here based on qmsgs table -->' +
+'</div>' +
+'<div class="chat-input-area" style="padding:10px; background:white; border-top:1px solid #ccc; display:flex;">' +
+// add a unicode icon button to show a div of smileys and emojis
+'<button onclick="JSSHOP.ui.toggleEmojiPicker(\'dvEmogiList' + ttMsgBxObj["m_to_userid"] + '\');" style="padding:8px 12px; background:#f5f6f7; border:none; border-radius:4px; cursor:pointer; margin-right:10px;"><i class="nav-material-icons txtClrDrkGrn" style="font-size:20px;">&#xe420;</i></button>' + 
+// create dvEmogiList with a list of emojis and smileys to pick from. they will be inserted into the chat input div at cursor position
+'<div id="dvEmogiList' + ttMsgBxObj["m_to_userid"] + '" style="display:none; position:absolute; bottom:60px; background:white; border:1px solid #ccc; border-radius:4px; padding:10px; box-shadow:0 2px 8px rgba(0,0,0,0.2); max-width:280px; max-height:200px; overflow-y:auto;min-width:280px;min-height:200px;">' +
+ tMBemojistr +
+'</div>' +
+'<div contenteditable="true" id="chat-input-' + ttMsgBxObj["m_to_userid"] + '" placeholder="Type a message..." style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px; margin-right:10px; max-height:80px; overflow-y:auto;"></div>' +
+'<button onclick="JSSHOP.ui.sendChatMessage(' + ttMsgBxObj["m_to_userid"] + ',\'' + tSNMBItemID + '\')" style="padding:8px 12px; background:#4267b2; color:white; border:none; border-radius:4px; cursor:pointer;">Send</button>' +
+'</div>' +
+'</div>';
+JSSHOP.ui.popNuFillLbox(tMsgBxHdrSTr + tsbstr, 10);
+setTimeout("getMsgsFromTOU(" + ttMsgBxObj['m_to_userid'] + ");", 1000);
+setTimeout("doUMsglinks(" + ttMsgBxObj['m_to_userid'] + ", 'dvMsgUlinks');", 1400);
+
 if((boolDoAnx == "y") || (boolDoAnx == "yes")) {
-setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj);doMsgMediaSetup();", 500);
+// setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj);doMsgMediaSetup();", 500);
+setTimeout("doMsgMediaSetup();", 500);
 } else {
 // setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj);", 500);
 }
@@ -4554,8 +5092,7 @@ if(tmpMsgType == "uproperty") {
 
     // JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_matter", tDefPropInqMsg);
      // setTimeout("JSSHOP.ui.setTinnerText('tmp_msg_matter', '" + tDefPropInqMsg + "')", 1000);
-    atMpPrpObj = currShopsArr[tmpMsgVal];
-    setTimeout("doUMsglinks(atMpPrpObj.uid, 'dvMsgUlinks');", 1000);
+
  }
 // JSSHOP.ui.popAndFillLbox(JSSHOP.shared.rndrDynFrmVals(document["qmsgs"], "tmp_"));
 } catch(e) {
@@ -4563,7 +5100,162 @@ alert("no JSSHOP.ui.showMsgBox: " + e);
 }
 };
 
+JSSHOP.ui.prepMsgBox = function(vToUid,vToUFn,vToUicn,vToItem,vTcb){
+    atMBObg = null;
+    atMBObg = "";
+    atMBObg = nTmpMsgBxOb();
+    atMBObg["m_to_userid"] = vToUid; // send to user id
+    atMBObg["m_to"] = vToUFn; // send to user field name
+    atMBObg["m_to_icon"] = vToUicn; // send to user icon
+    atMBObg["m_from_icon"] = currQUsrObj.u_icon; // from user icon
+    atMBObg["m_type"] = "user"; // internal msg type
+    atMBObg["m_val"] = vToUid; // internal msg token
+    atMBObg["m_strAll"] = "msg_subjectmsg_matter"; // message form values to render
+    atMBObg["m_useAnx"] = "n"; // add image upload btn
+    atMBObg["m_tmpCB"] = vTcb; // null function as callback
+    atMBObg["m_type"] = "user"; // internal msg type
+    atMBObg["m_item"] = vToItem; // internal msg token
+    JSSHOP.ui.showNuMsgBox(atMBObg);
+};
+function fnshNuMsgIDSave(tCCLA, tCCLB, tCCLC) {
+    if(tCCLB.indexOf("Error") != -1) {
+        alert("Error saving message ID: " + tCCLB);
+    } else {
+         alert("Message ID saved: " + tCCLB);
+  
+    }
+}
 
+function getNewMsgId(tCCLA, tCCLB, tCCLC) {
+    if(tCCLB.indexOf("_id") != -1) {
+        currNewMsgArr = null;
+        currNewMsgArr = JSON.parse(tCCLB);
+        if(currNewMsgArr.length > 0) {
+            currNewMsgObj = null;
+            currNewMsgObj = currNewMsgArr[0];
+            if(currNewMsgObj != null) {
+                console.log("getNewMsgId: " + JSON.stringify(currNewMsgObj));
+                if(currNewMsgObj._id != null) {
+                // set ms_threadid to currNewMsgObj._id
+                document.getElementById("ms_threadid").value = currNewMsgObj._id;
+                tmpDOs = null;
+tmpDOs = {};
+
+tDModThreadID = document.getElementById("ms_threadid").value;
+
+tmpDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qmsg"], "nada");
+oi = getNuDBFnvp("qmsg",6,null,tmpDOs);
+doQComm(oi["rq"], null, "fnshNuMsgIDSave");
+                }
+            }
+        }
+    }
+}
+function fnishNuMsgSave(tCCLA, tCCLB, tCCLC) {
+    if(tCCLB.indexOf("Error") != -1) {
+        alert("Error saving message: " + tCCLB);
+    } else {
+        // tQryGet qmsgs id from msgs_threadid
+        tmpDOs = null;
+        tmpDOs = {};
+        tmpDOs["ws"] = "where msg_threadid=?";
+        tmpDOs["wa"] = [document.getElementById("msg_threadid").value];
+        oi = getNuDBFnvp("qmsgs",5,null,tmpDOs);
+        doQComm(oi["rq"], null, "getNewMsgId");
+    }
+}
+JSSHOP.ui.sendChatMessage = function(toUserId, tMitemID) {
+    var inputField = document.getElementById('chat-input-' + toUserId);
+    var message = inputField.innerText || inputField.textContent;
+    
+    if(tMitemID && tMitemID != "noQvalue") {
+        message += "\n\n#PROPID: " + tMitemID;
+    } 
+    
+   
+    // document.getElementById("ms_matter").value = message;
+    // document.getElementById("ms_matter").value = message;
+    document.getElementById("ms_to").value = toUserId;
+    document.getElementById("ms_from").value = quid;
+
+    if (message.trim() === "") {
+        alert("Please enter a message.");
+        return;
+    }
+    // Send the message using your preferred method (e.g., AJAX)
+    console.log("Sending message to user " + toUserId + ": " + message);
+    // Clear the input field
+    inputField.innerText = "";
+    inputField.textContent = "";
+
+    // Optionally, append the message to the chat window
+    var messagesDiv = document.getElementById('chat-messages-' + toUserId);
+
+    newMsg = /* message replace newline and break with <br> */ message.replace(/\n/g, '<br>');
+       // newMsg = newMsg.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    newMsg = newMsg.replace(/(\r\n|\n|\r)/g, '<br>');
+    newMsg = newMsg.replace(/(\uD83D[\uDE00-\uDE4F])/g, '<span class="emoji">$1</span>');
+    newMsg = newMsg.replace(/(\uD83C[\uDFFB-\uDFFF])/g, '<span class="emoji">$1</span>');
+    newMsg = newMsg.replace(/(\uD83E[\uDD00-\uDFFF])/g, '<span class="emoji">$1</span>');
+    newMsg = newMsg.replace(/(\uD83D[\uDE00-\uDE4F])/g, '<span class="emoji">$1</span>');
+    newMsg = newMsg.replace(/(\u2600-\u27BF)/g, '<span class="emoji">$1</span>');
+    newMsg = newMsg.replace(/(\uD83C[\uDFFB-\uDFFF])/g, '<span class="emoji">$1</span>');   
+    newMsg = newMsg.replace(/(\uD83E[\uDD00-\uDFFF])/g, '<span class="emoji">$1</span>');
+    newMsg = newMsg.replace(/(\uD83D[\uDE00-\uDE4F])/g, '<span class="emoji">$1</span>');
+    newMsg = newMsg.replace(/(\u2600-\u27BF)/g, '<span class="emoji">$1</span>');
+    newMsg = newMsg.replace(/(\uD83C[\uDFFB-\uDFFF])/g, '<span class="emoji">$1</span>');
+    newMsg = newMsg.replace(/(\uD83E[\uDD00-\uDFFF])/g, '<span class="emoji">$1</span>');
+    document.getElementById("ms_matter").value = encodeURIComponent(newMsg);
+        var messageElem = document.createElement('div');
+    messageElem.className = "slmtable bkgdClrHdr slmtblpadding txtClrWhite";
+    tToShowMsg = newMsg;
+    // add links to urls in tToShowMsg
+   var  urlPattern = /(https?:\/\/[^\s<]+)/g;
+   // 
+    tToShowMsg = tToShowMsg.replace(urlPattern, '<a href="$1" target="_blank">$1</a>');
+   /*
+          if(tTMMstr.indexOf("#PROPID:") != -1) {
+        console.log("Found #PROPID: in message matter");
+        var tpropArr = tTMMstr.split("#PROPID:");
+        var tpropid = tpropArr[1];
+ 
+        console.log("Extracted property ID:" + tpropid);
+        tATMMstr = tTMMstr.replace("#PROPID:" + tpropid, "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + tpropid + "')\"><u>#PROPID:" + tpropid + "</u></a>");
+        tFTMMstr = tATMMstr;
+        */
+       if(tToShowMsg.indexOf("#PROPID:") != -1) {
+
+        tToShowMsg = tToShowMsg.replace("#PROPID:"+tMitemID, "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid="+tMitemID+"')\"><u>#PROPID:"+tMitemID+"</u></a>");
+       }
+       console.log("Final message to show:", tToShowMsg);
+    messageElem.innerHTML = tToShowMsg;
+    messagesDiv.appendChild(messageElem);
+// if ms_threadid is empty, doMsgSave to create a new thread id
+if(document.getElementById("ms_threadid").value == "") {
+    // document.getElementById("msg_matter").value = message;
+    // fix message to preserve emojis and line breaks when being sent to database and not returned as something like  😂
+    document.getElementById("msg_matter").value = encodeURIComponent(newMsg);
+
+    JSSHOP.ui.doMsgSave('user', toUserId,  "donada");
+
+} else {
+
+tmpDOs = null;
+tmpDOs = {};
+
+tDModThreadID = document.getElementById("ms_threadid").value;
+
+tmpDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qmsg"], "nada");
+oi = getNuDBFnvp("qmsg",6,null,tmpDOs);
+doQComm(oi["rq"], null, "doNada");
+console.log("sendChatMessage.update: " + oi["rq"]);
+// update msg_dmodified with procNuUIitem
+  procNuUIitem("qmsgs","msg_dmodified",tDModThreadID,JSSHOP.getUnixTimeStamp(),"doNada");
+// alert(oi["rq"]);
+}
+    // Scroll to the bottom of the messages div
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+};
 
 JSSHOP.ui.showMsgBox = function(tmpMsgType, tmpMsgVal,atmpCB){
     try {
@@ -4579,7 +5271,7 @@ JSSHOP.ui.showMsgBox = function(tmpMsgType, tmpMsgVal,atmpCB){
     }
     };
     
-
+ 
 
 JSSHOP.ui.showPopHelp = function(tmpHlpKey){
 try {
@@ -5117,6 +5809,14 @@ try {
  
 tmpLbox = document.getElementById('lightbox');
 tmpLCbox = document.getElementById('lightbox_content');
+// make tmpLCbox fit to content
+
+
+// tmpLCbox.style.maxHeight = "600px";
+// center the lightbox content
+tmpLCbox.style.margin = "0 auto";
+
+
 tmpLbox.style.display="inline";
 if(theFill == "noQvalue") {
 } else if(theFill == "dbug") {
@@ -5126,9 +5826,12 @@ tmpLCbox.innerHTML= "<div style=\"overflow:auto;min-height: 231px; min-width: 36
     doNuSpinSet("lightbox_content", "big", null, "...");
 // tmpLCbox.innerHTML= "<img src=\"images/misc/loading.gif\">";
 } else {
-
+if(theTofst == 5) { 
 tmpLCbox.innerHTML= tcloseBstr +  theFill;
-
+} else {    
+tmpLCbox.innerHTML = theFill;
+}
+ 
 }
 tmpLCbox.style.position="absolute";
 tmpVheight = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight;
@@ -5152,15 +5855,18 @@ tmpLCbox.style.display='block';
 stop = getScrollTop() + 30;
 tmpLCbox.style.top=stop+"px";
 
+
 // window.scrollTo(0,0);
 // tmpLCbox.style.height="100%";
 // tmpLCbox.style.top="5px";
 if(getViewportWidth() > 500) {}
 iMdl = Math.round((getViewportWidth() - tmpLCbox.clientWidth) / 2);
-iMdl = 5;
+// iMdl = 5;
 tmpLCbox.style.left=iMdl+"px";
+tmpLCbox.style.height="auto";
+// center the lightbox_content div
 
-
+/// tmpLCbox.style.margin = "0";
 // make tmpLCbox pop in from top
  
 JSSHOP.ui.setNuCBBClickClr(tmpLCbox, 'slmtable brdrClrHdr bkgdClrTrnsp', tmpLCbox.className, function() { void(0); }, 150);
@@ -6965,6 +7671,9 @@ setTimeout(
                             
                             }
                             tUdtsStr +=  taNewPstr;
+                tUdtsStr += "<div class=\"bg-gray quantity px-4 pt-4\">";
+                tUdtsStr += tUpPcontent;
+                tUdtsStr += "</div>"; // end bg-gray quantity px-4 pt-4
                         
                         }
 
@@ -7003,6 +7712,53 @@ setTimeout(
                 break;
         }
 
+
+
+        /*
+        
+    retPLstSTr = "<div class=\"bkgdClrWhite\">";
+
+retPLstSTr += "<div class=\"slmtable bkgdClrWhite brdrClrHdr\" style=\"padding:4px;margin:2px;\">";
+    retPLstSTr += "<table style=\"margin:0 auto;width:100%;\"><tr><td>";
+retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"menu-material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
+retPLstSTr += "</td>";
+retPLstSTr += "<td>";
+// retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
+// JSSHOP.ui.prepMsgBox(" + aprpUid + ",'" + aprpUFlName + "','" + aprpObj.u_icon + "','" + istrt + "','showMsgSave');
+retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.prepMsgBox(" + aprpUid + ",'" + aprpUFlName + "','" + aprpObj.u_icon + "','" + istrt + "','showMsgSave');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[117] + "</span>";
+retPLstSTr += "</td>";
+retPLstSTr += "<td>";
+// retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"" + currFTclr + "\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','" +"','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
+// check if already a favorite and make it red if so
+currFTclr = "menu-material-icons txtClrTtl";
+ if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {
+currFTclr = "menu-material-icons txtClrRed";
+}
+retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','images/property/s_thumb" + aprpPimage + "','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
+
+retPLstSTr += "</td></tr></table>";
+retPLstSTr += "</div>"; // end slmtable bkgdClrWhite brdrClrHdr
+*/
+
+// modify returned string to add buttons and icons div here
+tUdtLnkStr = "<div class=\"bkdgClrWhite brdrClrHdr txtSmall txtBold\" style=\"padding:4px;margin:2px;\">";
+tUdtLnkStr += "<table style=\"margin:0 auto;width:100%;\"><tr><td>";
+tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('update'," + ided + ");\"><i class=\"menu-material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
+tUdtLnkStr += "</td>";  
+tUdtLnkStr += "<td>";
+tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.prepMsgBox(" + tUdtsObj.p_uid + ",'" + tUdtsObj.u_fullname + "','" + tUdtsObj.u_icon + "','" + ided + "','showMsgSave');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[117] + "</span>";
+tUdtLnkStr += "</td>";
+tUdtLnkStr += "<td>";
+// retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"" + currFTclr + "\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','" +"','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
+// check if already a favorite and make it red if so    
+currFTclr = "menu-material-icons txtClrTtl";
+ if(currFavsIdstr.indexOf(tUdtsObj._id + "::") != -1) {
+currFTclr = "menu-material-icons txtClrRed";
+}
+tUdtLnkStr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-update&tupid=" + tUdtsObj._id + "','" + tUdtsObj.p_title + "','images/ucontent/m_thumb" + tUdtsObj.p_image + "','" + tUdtsObj._id + "','btnFavs" + tUdtsObj._id + "');\"><i id=\"btnFavs" + tUdtsObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[73] + "</span>";   
+tUdtLnkStr += "</td></tr></table>";
+tUdtLnkStr += "</div>"; // end bkdgClrWhite brdrClrHdr txtSmall txtBold
+        tUdtsStr += tUdtLnkStr;
 
         tUdtsStr += "</div>"; // end featured-thumb hover-zoomer mb-4
         tUdtsStr += "</div>";  // end col-md-6
@@ -7047,23 +7803,23 @@ JSSHOP.ads.doUpdatesFeed = function(tUFCnfObj) {
     
     if(tUFCnfObj.uppstid) {
         tuppstid = tUFCnfObj.uppstid;
-        tQstr += "select p.*, u.u_icon, u.u_fullname from qposts p, quser u where p._id > 0 and p.p_uid = u._id and p._id = " + tuppstid;
+        tQstr += "select psts.*, u.u_icon, u.u_fullname from qposts psts, quser u where psts._id > 0 and psts.p_uid = u._id and psts._id = " + tuppstid;
     } else {
 
-    tQstr += "select p.*, u.u_icon, u.u_fullname from qposts p, quser u where p._id > 0 and p.p_uid = u._id";
+    tQstr += "select psts.*, u.u_icon, u.u_fullname from qposts psts, quser u where psts._id > 0 and psts.p_uid = u._id";
     // newQstr = "select p.*, u.u_icon, u.u_fullname from qposts p, quser u where p._id > 0 and p.p_uid = u._id limit 20";
     if(tUFCnfObj.uptype) {
         tuptype = tUFCnfObj.uptype;
-        tQstr += " and p.p_type = '" + tuptype + "'";
+        tQstr += " and psts.p_type = '" + tuptype + "'";
      }
     if(tUFCnfObj.upuid) {
         tupuid = tUFCnfObj.upuid;
-        tQstr += " and p.p_uid = " + tUFCnfObj.tupuid;
+        tQstr += " and psts.p_uid = " + tUFCnfObj.upuid;
     }
-    tQstr += " and p.p_rtype = '5'";
+    tQstr += " and psts.p_rtype = '5'";
 
 
-    tQstr += " order by p._id desc";
+    tQstr += " order by psts._id desc";
     if(tUFCnfObj.uplmt) {
         tuplmt = tUFCnfObj.uplmt;
         tQstr += " limit " + tuplmt; 
@@ -7429,16 +8185,22 @@ JSSHOP.ads.getNuSwprPrpStr = function(tdSwpCla, taSwUarr) {
     
     for(iAA = 0; iAA < taSwUarr.length; iAA++) {
         taSwUObj = taSwUarr[iAA];
+        console.log("JSSHOP.ads.getNuSwprPrpStr.taSwUObj: " + JSON.stringify(taSwUObj));
         tLZunzSwpr = LZString.decompressFromEncodedURIComponent(taSwUObj.ptitle);
-        tShrtSwpStr = tLZunzSwpr;
+        // tShrtSwpStr = tLZunzSwpr;
+        // tShrtSwpStr += price and state
+        tShrtSwpStr = tDBHObj[taSwUObj.ptype];
+        tShrtSwpStr += " - " + taSwUObj.price + "<span class=\"txtSmall txtClrGrey\">\u20AC</span>";
+        tShrtSwpStr += "<br>" + taSwUObj.state;  
         if(tLZunzSwpr.length > 20) {
-            tShrtSwpStr = tLZunzSwpr.substring(0, 20) + "...";
+           //  tShrtSwpStr = tLZunzSwpr.substring(0, 20) + "...";
         }
        //  taSuTstr = "<div style=\"width:100%;max-height:290px;\"><img src=\"admin/property/" + taSwUObj.pimage + "\" style=\"width:100%;max-height:260px;\"></div>";
-        taSuTstr = "<img src=\"" + currPrpImgsFldr + "/" + taSwUObj.pimage + "\" style=\"width:100%;max-height:140px;max-width:140px;\">";
-        taWSwpStr += "<div class=\"swiper-slide\">";
+
+        taSuTstr = "<img src=\"" + currPrpImgsFldr + "/m_thumb" + taSwUObj.pimage + "\" style=\"width:100%;min-height:135px;max-height:140px;max-width:180px;\">";
+        taWSwpStr += "<div class=\"swiper-slide crsrPointer\" onclick=\"javascript:eindex('aa-show-prop', 'pid=aa-show-prop&prpid=" + taSwUObj._id + "');\" style=\"text-align:center;margin:8px\">";
         taWSwpStr += "<table class=\"\">";
-        taWSwpStr += "<tr><td>" + taSuTstr + "</td></tr><tr><td>" + tShrtSwpStr + "</td></tr>";
+        taWSwpStr += "<tr><td>" + taSuTstr + "</td></tr><tr><td><span class=\"txtSmall\">" + tShrtSwpStr + "</span></td></tr>";
         taWSwpStr += "</table>";
         taWSwpStr += "</div>";
     }
@@ -7735,7 +8497,7 @@ JSSHOP.ads.doSwprConfigPop = function() {
         tDDswprTypeObj["lbl"] = "Swiper Type";
         tDDswprTypeObj["val"] = inpSwprType.value;
        // tDDswprTypeObj["kvpObj"] = {"cube": "Cube", "fade": "Fade", "flip": "Flip", "slide": "Slide", "coverflow": "Cover Flow"};
-tDDswprTypeObj["kvpObj"] = {"slide": "Slide"};
+        tDDswprTypeObj["kvpObj"] = {"slide": "Slide"};
         tDDswprTypeObj["cb"] = "donada";
         tDDswprTypeObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
         tDDswprTypeObj["lblcls"] = "txtSmall";
@@ -8397,7 +9159,7 @@ JSSHOP.ads.trnsltImgPstObj = function() {
             tAllDescStr += "<h3>" + LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].title || "Map View").substring(0, 80) + "</h3>";
             // link the title to the property if it exists
             if(tMapLeavesArr[i].prpid) {
-                tAllDescStr = "<h3><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prid=" + tMapLeavesArr[i].prpid + "');\">" + LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].title || "Map View").substring(0, 80) + "</a></h3>";
+                tAllDescStr = "<h3><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + tMapLeavesArr[i].prpid + "');\">" + LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].title || "Map View").substring(0, 80) + "</a></h3>";
             }
             tZAllDescStr = LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].pdesc || "Map View").substring(0, 100);
             // strip any html tags from tAllDescStr
@@ -8428,15 +9190,25 @@ JSSHOP.ads.trnsltImgPstObj = function() {
 
 
 JSSHOP.ads.trnsltSwiperObj = function() {
+    tSwprTtlStr = "";
+    tSwprDscStr = "";
     tSCval = inpSwprCntnt.value;
     if(tSCval == "props") {
       tSlctdPrpsArr = [];
         for(var key in currSlctdPrpsObj) {
             if(currSlctdPrpsObj.hasOwnProperty(key)) {
                 tSlctdPrpsArr.push(currSlctdPrpsObj[key]);
+                tSwprTtlStr += LZString.decompressFromEncodedURIComponent(currSlctdPrpsObj[key].ptitle).substring(0, 20);
+                tSwprTtlStr += ", ";
+                tSwprDscStr += LZString.decompressFromEncodedURIComponent(currSlctdPrpsObj[key].pdesc).substring(0, 100);
+                tSwprDscStr += "<hr>";
+
             }
         }
         tSwprStr = JSSHOP.ads.getNuSwprPrpStr("cls" + currSlctdPrpsObj[key]._id, tSlctdPrpsArr);
+        // set the tmp_p_title input to the concatenated titles without the last comma and space
+        document.getElementById("tmp_p_title").value = tSwprTtlStr.slice(0, -2);
+        tinyMCE.activeEditor.setContent(tSwprDscStr);
     } else if(tSCval == "users") {
         tSlctdUsrsArr = [];
         for(var key in currSlctdUsrObj) {
@@ -8447,6 +9219,7 @@ JSSHOP.ads.trnsltSwiperObj = function() {
         tSwprStr = JSSHOP.ads.getSwiperUStr(tSlctdUsrsArr);
     }
     document.getElementById("dvDemoView").innerHTML = tSwprStr;
+ 
       // currSlctdPrpsObj;
         
         // currPstsPrpsArr
@@ -8816,6 +9589,10 @@ case "aa-show-search":
     dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"account\" title=\"account\"> &#xe8b6;</i>";
     fretPlugStr = "<div class=\"txtSmall\">" + stxt[936] + "</div>";
 break; 
+case "aa-show-user":
+    JSSHOP.ui.showHideElement("dvTopHdrTtl", "hide");
+    break;
+
 case "aa-edit-user":
 // imgPLicon.src = "logoicon.png"; 
 dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
@@ -8852,6 +9629,13 @@ case "aa-edit-posts":
 // imgPLicon.src = "logoicon.png"; 
 dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[402] + "</div>";
+// fretPlugStr = doNuCollsLoad("links");
+break;
+case "aa-edit-uprops":
+case "aa-edit-aprops":
+// imgPLicon.src = "logoicon.png"; 
+dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
+fretPlugStr = "<div class=\"txtSmall\">" + stxt[634] + "</div>";
 // fretPlugStr = doNuCollsLoad("links");
 break;
 case "aa-show-prop":
@@ -9114,17 +9898,17 @@ smlspinner.stop();
                 }).addTo(map);
             break;
             case 1:
-                L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+                L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
                 maxZoom: 18,
                 subdomains:['mt0','mt1','mt2','mt3'],
-                    attribution: '&copy; <a href="http://www.google.com/maps">Google Maps</a>', 
+                    attribution: '&copy; <a href="https://www.google.com/maps">Google Maps</a>', 
                 }).addTo(map);
             break;
             case 2:
-                L.tileLayer('http://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',{
+                L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',{
                 maxZoom: 18,
                 subdomains:['mt0','mt1','mt2','mt3'],
-                    attribution: '&copy; <a href="http://www.google.com/maps">Google Maps</a>',
+                    attribution: '&copy; <a href="https://www.google.com/maps">Google Maps</a>',
                 }).addTo(map);
             break;
             default:
@@ -9434,6 +10218,7 @@ JSSHOP.ads.doGenCoMsgPop = function(tCowRecInc) {
      /// atmpMBobj["m_strAll"] = tAllowedStr; // message form values to render
      atmpMBobj["m_useAnx"] = "y"; // add image upload btn
      atmpMBobj["m_tmpCB"] = "doNada"; // null function as cllback
+
     // return aTmpMsgBxOb;
 
     tswq = currShopsArr[tCowRecInc];
@@ -12185,6 +12970,90 @@ function doGglImgLdErr(tCoID) {
 }
 
 
+// DEMO DEMO stuff to delete later
+
+
+
+var doTUserLgin = function(tlouid) {
+  // delete uid cookie
+JSSHOP.cookies.deleteCookie('quid','','');
+JSSHOP.cookies.deleteCookie('cuid','','');
+JSSHOP.cookies.deleteCookie('cartID','','');
+document.location.href = "index.html?pid=login&tq=" + tlouid + "&tcid=" + cid;
+}
+
+var getNuIItmsLst = function(tPrpIarr) {
+    // Group users by country
+    var countryMap = {};
+    tPrpIarr.forEach(function(user) {
+        var country = user.u_country || "Unknown";
+        if (!countryMap[country]) countryMap[country] = [];
+        countryMap[country].push(user);
+    });
+    var html = "";
+    Object.keys(countryMap).forEach(function(country) {
+        html += '<div class="country-block" style="margin-bottom:24px;">';
+        html += '<h3 class="txtBold txtCLrHdr">' + country + '</h3>';
+        html += '<div class="users-row">';
+        countryMap[country].forEach(function(user) {
+            html += '<div class="user-card crsrPointer" style="float:left;margin:8px 16px 8px 0;text-align:center;min-width:100px;max-width:100px;max-height:80px;min-height:80px">';
+            html += '<img alt="Profile" src="images/user/s_thumb' + user.u_icon + '" class="icnRndDSmUser crsrPointer" style="display:block;margin:0 auto;"  onclick="javascript:eindex(\'aa-show-user\',\'pid=aa-show-user&tuid=' + user._id + '\');">';
+            html += '<div class="txtSmall txtCLrHdr crsrPointer" style="margin-top:6px;" onclick="javascript:eindex(\'aa-show-user\',\'pid=aa-show-user&tuid=' + user._id + '\');">' + user.u_fullname + '</div>';
+            // eindex show user link with profile title
+            html += '<div class="txtSmall txtClrGrey" style="margin-top:6px;"><a href="javascript:doTUserLgin(' + user._id + ')">Demo</a></div>';
+            html += '</div>';
+        });
+        html += '<div style="clear:both"></div>';
+        html += '</div></div>';
+    });
+    return html;
+}
+
+var doTestUList = function(atudiv,rfb,c) {
+    console.log("doAUsersList: " + rfb);
+    if(rfb.indexOf("_id") != -1) {
+  tmpIUsrsLArr = "";
+  tmpIUsrsLArr = [];
+  tmpIUsrsLArr = JSON.parse(rfb);
+
+  /*
+  stxt[826] = "This software is in beta-demo. To explore the site, you can use one of the test users below to login.";
+stxt[827] = "You can use the following test users-admin to explore the latest-greatest features. You can edit these users, properties, updates. Feel free to experiment. break things. We reset the database every hour.";
+stxt[828] = "Click on a user to login as that user-admin.";
+
+tSHowTetsUTtl = "<h4 class=\"text-center text-secondary\">" + stxt[826] + "</h4><br></br><span class=\"txtSmall txtClrGrey\">" + stxt[827] + "</span>";
+tSHowTetsUTtl += "<br><br>" + stxt[828] + "<br><br>";
+*/
+// make the above tSHowTetsUTtl (uses the stxt[826.. more facebook like and use some material icons
+tSHowTetsUTtl = "<div class=\"txtCenter txtClrGrey txtSmall\" style=\"margin-bottom:16px;\">";
+tSHowTetsUTtl += "<div style=\"font-size:48px;line-height:48px;\"><i class=\"material-icons\">&#xe7fd;</i></div>";
+tSHowTetsUTtl += stxt[826] + "<br></br>";
+tSHowTetsUTtl += stxt[827] + "<br></br>";
+tSHowTetsUTtl += stxt[828] + "<br></br>";
+tSHowTetsUTtl += "</div>";
+tFllUIstr =  getNuIItmsLst(tmpIUsrsLArr);
+// tDVtestUsers = document.createElement("div");
+// tDVtestUsers.innerHTML = tFllUIstr;
+// document.getElementById("includedContent").insertBefore(tDVtestUsers, document.getElementById("includedContent").firstChild);
+document.getElementById(atudiv).innerHTML = tSHowTetsUTtl + tFllUIstr; 
+} else {
+        alert("doAUsersList: " + rfb);
+        // document.getElementById("divQitems").innerHTML = stxt[508];
+    }
+ 
+  };
+
+function getTestUsers(tTUelem) {
+   tmpDOs = {};
+ tmpDOs["ws"] = "where _id > ? and u_rtype=?";
+ tmpDOs["wa"] = [0, 5];
+ 
+ oi = getNuDBFnvp("quser",5,null,tmpDOs);
+ currRQtable = "quser";
+ currRQstr = oi["rq"];
+ // alert("edit users currRQstr: " + currRQstr);
+ doQComm(oi["rq"], tTUelem, "doTestUList");
+}
 
 
 
@@ -12480,7 +13349,6 @@ if(tTName == tLastN) {
     
     
 
-/* to delete
 
     JSSHOP.ui.getBSdropDstr = function(tBBSSObj) {
         tDDelem = document.getElementById(tBBSSObj.fld);
