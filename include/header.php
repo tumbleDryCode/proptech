@@ -171,16 +171,16 @@
 									<!-- <a class="btn btn-primary d-none d-xl-block" href="submitproperty.php"><ti data-ison="stxt[90]" data-desc="btn_about">About</ti></a> -->
                                     
         <!-- start of dvAlist -->                      
-<div id="dvAMnuLnks" style="visibility:hidden;display:none;margin:0px;padding:0px;" class="bkgdClrHdr">
+<div id="dvAMnuLnks" style="visibility:hidden;display:none;margin:0px;padding:0px;" class="bkgdClrHdr txtClrWhite">
  <ul>
  <li class="" style="margin-top:10px;padding-left:8px;padding-top:5px;">
 											 <ti data-ison="stxt[83]" data-desc="btn_account">Admin</ti>
 											<ul class="">
 												<!-- <li class="nav-item"> <a class="nav-link" href="profile.php"><ti data-ison="stxt[903]" data-desc="btn_profile">Profile</ti></a> </li> -->
-                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-place','pid=aa-edit-place');"><ti data-ison="stxt[68]" data-desc="btn_shpsettinhs">Shop Settings</ti></a> </li>
+                                                <li class="nav-item txtClrWhite"> <a class="nav-link txtClrWhite" href="javascript:eindex('aa-edit-place','pid=aa-edit-place');" style="color:white;"><ti data-ison="stxt[68]" data-desc="btn_shpsettinhs">Shop Settings</ti></a> </li>
 
-                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-aprops','pid=aa-edit-aprops');"><ti data-ison="stxt[901]" data-desc="btn_addprop">Properties</ti></a> </li>
-												 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-ausers', 'pid=aa-edit-ausers');"><ti data-ison="stxt[80]" data-desc="btn_yourprops">Users</ti></a> </li>
+                                                <li class="nav-item txtClrWhite"> <a class="nav-link txtClrWhite" href="javascript:eindex('aa-edit-aprops','pid=aa-edit-aprops');" style="color:white;"><ti data-ison="stxt[901]" data-desc="btn_addprop">Properties</ti></a> </li>
+												 <li class="nav-item txtClrWhite"> <a class="nav-link txtClrWhite" href="javascript:eindex('aa-edit-ausers', 'pid=aa-edit-ausers');" style="color:white;"><ti data-ison="stxt[80]" data-desc="btn_yourprops">Users</ti></a> </li>
 											</ul>
                                         </li>
     </ul>

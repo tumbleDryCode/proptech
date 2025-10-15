@@ -49,7 +49,7 @@
                                                     <li><a href="#" class="text-white"><ti data-ison="stxt[908]" data-desc="btn_statistics">Statistics</ti></a></li>
                                                     -->
 
-                                                    <li><a href="index.html?pid=aa-contactus" class="text-white"><ti data-ison="stxt[912]" data-desc="btn_contact">Contact</ti></a></li>
+                                                    <li><a href="javascript:eindex('aa-contact-us','pid=aa-contact-us');" class="text-white"><ti data-ison="stxt[912]" data-desc="btn_contact">Contact</ti></a></li>
                                                     <li><a href="https://www.livroreclamacoes.pt/" class="text-white" target="_blank"><ti data-ison="stxt[973]" data-desc="btn_complaint">Report Issue</ti></a></li>
                                                     <li><a href="javascript:eindex('aa-terms_privacy','pid=aa-terms_privacy&td=t');" class="text-white"><ti data-ison="stxt[909]" data-desc="btn_terms">Terms and Condition</ti></a></li>
                                                     <li><a href="javascript:eindex('aa-terms_privacy','pid=aa-terms_privacy&tp=p');" class="text-white"><ti data-ison="stxt[919]" data-desc="btn_privacy">Privacy Policy</ti></a></li>
@@ -101,13 +101,13 @@
                  -->
 
             <div style=""  class="copyright col-sm-6">
-            <a class="txtSmall txtClrWhite txtDecorNone" href="javascript:JSSHOP.cookies.setCookie('usrlang','en_us','130','','','');document.location.href='index.php?nls=y';">
+            <a class="txtSmall txtClrWhite txtDecorNone" href="javascript:JSSHOP.cookies.setCookie('usrlang','en_us','130','','','');document.location.href='index.html?nls=y';">
 			English</a>&nbsp; |&nbsp;
-			<a class="txtSmall txtClrWhite txtDecorNone" href="javascript:JSSHOP.cookies.setCookie('usrlang','spa_spa','130','','','');document.location.href='index.php?nls=y';">
+			<a class="txtSmall txtClrWhite txtDecorNone" href="javascript:JSSHOP.cookies.setCookie('usrlang','spa_spa','130','','','');document.location.href='index.html?nls=y';">
 			Spanish</a>&nbsp; |&nbsp;
-			<a class="txtSmall txtClrWhite txtDecorNone"  href="javascript:JSSHOP.cookies.setCookie('usrlang','pt_pt','130','','','');document.location.href='index.php?nls=y';">
+			<a class="txtSmall txtClrWhite txtDecorNone"  href="javascript:JSSHOP.cookies.setCookie('usrlang','pt_pt','130','','','');document.location.href='index.html?nls=y';">
 			Portuguese</a>&nbsp; |&nbsp;
-			<a class="txtSmall txtClrWhite txtDecorNone"  href="javascript:JSSHOP.cookies.setCookie('usrlang','fr_fr','130','','','');document.location.href='index.php?nls=y';">
+			<a class="txtSmall txtClrWhite txtDecorNone"  href="javascript:JSSHOP.cookies.setCookie('usrlang','fr_fr','130','','','');document.location.href='index.html?nls=y';">
 			French</a>
             </div>
 

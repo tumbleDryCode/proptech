@@ -120,13 +120,14 @@ var doPstTypOpts = function(tPTval) {
     hasSlect = "no";
     switch(objVal) {
         case "ppost":
-        tTChngStrObj["en_us"] += "Selected Upadte type is Post. You can select various Update types such as Content, Image, Carousel, Map, etc.";
-        tTChngStrObj["en_us"] += "<br>Each Update type has different options and layouts to choose from ";
-        tTChngStrObj["pt_pt"] += "Tipo de Update \u00ea Post. Voc\u00ea pode selecionar v\u00e1rios tipos de Updates, como Conte\u00fado, Imagem, Carrossel, Mapa, etc.";
-        tTChngStrObj["pt_pt"] += "<br>Cada tipo de atualiza\u00e7\u00e3o tem diferentes op\u00e7\u00f5es e layouts para escolher ";
-        tTChngStrObj["fr_fr"] += "Type de mise \u00e0 jour s\u00e9lectionn\u00e9 : Publication. Vous pouvez choisir parmi plusieurs types de mises \u00e0 jour comme Contenu, Image, Carrousel, Carte, etc.";
-        tTChngStrObj["fr_fr"] += "<br>Chaque type de mise \u00e0 jour propose des options et des mises en page diff\u00e9rentes.";
-        break;
+            // creta 3 slmtable divs floating left with eacho of the updates_map_thumb, updates_swiper_thumb, updates_flyer_thumb images and a short description of each type linked to the doPTypeChange function with the appropriate value
+
+
+        tTChngStrObj["en_us"] += "Selected Update type is Post. You can select various Update types such as Flyer, Swiper and Map";
+         tTChngStrObj["pt_pt"] += "Tipo de Update \u00ea Post. Voc\u00ea pode selecionar v\u00e1rios tipos de Updates, como Flyer, Swiper e Mapa";
+         tTChngStrObj["spa_spa"] += "El tipo de Update es Publicacion. Puedes seleccionar varios tipos de Updates, como Flyer, Swiper y Mapa";
+         tTChngStrObj["fr_fr"] += "Type de mise \u00e0 jour s\u00e9lectionn\u00e9 : Publication. Vous pouvez choisir parmi plusieurs types de mises \u00e0 jour comme Flyer, Swiper et Carte.";
+         break;
         case "pcontent":
         tTChngStrObj["en_us"] += "Post type changed to content. A content post is more of a blog post.";
         tTChngStrObj["pt_pt"] += "Tipo de post alterado para conteudo. Um post de conteudo \u00e9 mais um post de blog.";
@@ -134,27 +135,30 @@ var doPstTypOpts = function(tPTval) {
         tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en contenu. Une publication de contenu est similaire \u00e0 un article de blog.";
         break;
         case "pimage":
-        tTChngStrObj["en_us"] += "Post type changed to image. The image is created from the content.";
-        tTChngStrObj["en_us"] += "You can prefill content with user or property layouts.";
-        tTChngStrObj["pt_pt"] += "Tipo de post alterado para imagem. A imagem \u00e9 criada a partir do conteudo.";
-        tTChngStrObj["pt_pt"] += "Vocw pode preencher o conteudo com layouts de usuario ou propriedade.";
-        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a imagen. La imagen se crea a partir del contenido.";
-        tTChngStrObj["spa_spa"] += "Puede rellenar el contenido con disenos de usuario o propiedad.";
-        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en image. L'image est cr\u00e9\u00e9e \u00e0 partir du contenu.";
-        tTChngStrObj["fr_fr"] += "Vous pouvez pr\u00e9remplir le contenu avec des mises en page utilisateur ou propri\u00e9t\u00e9.";
-        hasSlect = "yes";
+
+        tTChngStrObj["en_us"] += "<img src=\"images/misc/updates_flyer_thumb.jpeg\" alt=\"Flyer\" title=\"Flyer\" style=\"float:left;margin-right:6px;max-width:86px;\">Post type changed to Flyer. The Flyer is created from the properties you selected.";
+        tTChngStrObj["en_us"] += "You can edit the Flyer and then will be converted into an image you can share.";
+        tTChngStrObj["pt_pt"] += "<img src=\"images/misc/updates_flyer_thumb.jpeg\" alt=\"Flyer\" title=\"Flyer\" style=\"float:left;margin-right:6px;max-width:86px;\">Tipo de post alterado para Flyer. O Flyer \u00e9 criado a partir das propriedades que voc\u00ea selecionou.";
+        tTChngStrObj["pt_pt"] += "Voc\u00ea pode editar o Flyer e depois ele ser\u00e1 convertido em uma imagem que voc\u00ea pode compartilhar.";
+        tTChngStrObj["spa_spa"] += "<img src=\"images/misc/updates_flyer_thumb.jpeg\" alt=\"Flyer\" title=\"Flyer\" style=\"float:left;margin-right:6px;max-width:86px;\">Tipo de publicacion cambiado a Flyer. El Flyer se crea a partir de las propriedades que seleccionaste.";
+        tTChngStrObj["spa_spa"] += "Puedes editar el Flyer y luego se convertira en una imagen que puedes compartir.";
+        tTChngStrObj["fr_fr"] += "<img src=\"images/misc/updates_flyer_thumb.jpeg\" alt=\"Flyer\" title=\"Flyer\" style=\"float:left;margin-right:6px;max-width:86px;\">Type de publication chang\u00e9 en Flyer. Le Flyer est cr\u00e9\u00e9 \u00e0 partir des propri\u00e9t\u00e9s que vous avez s\u00e9lectionn\u00e9es.";
+        tTChngStrObj["fr_fr"] += "Vous pouvez \u00e9diter le Flyer et ensuite il sera converti en une image que vous pourrez partager.";
+
+
+ hasSlect = "yes";
         break;
         case "pcarousel":
-        tTChngStrObj["en_us"] += "Post type changed to carousel. A sliding image gallery is created from user or property listings.";
-        tTChngStrObj["pt_pt"] += "Tipo de post alterado para carrossel. Uma galeria de imagens deslizantes \u00e9 criada a partir de listagens de usuarios ou propriedades.";
-        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a carrusel. Se crea una galer\u00eda de imagenes deslizantes a partir de listados de usuarios o propiedades.";
-        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en carrousel. Une galerie d'images d\u00e9filantes est cr\u00e9\u00e9e \u00e0 partir des utilisateurs ou des propri\u00e9t\u00e9s.";
+        tTChngStrObj["en_us"] += "<img src=\"images/misc/updates_swiper_thumb.jpeg\" alt=\"Swiper\" title=\"Swiper\" style=\"float:left;margin-right:6px;max-width:86px;\">Post type changed to carousel. A sliding image gallery is created from user or property listings.";
+        tTChngStrObj["pt_pt"] += "<img src=\"images/misc/updates_swiper_thumb.jpeg\" alt=\"Swiper\" title=\"Swiper\" style=\"float:left;margin-right:6px;max-width:86px;\">Tipo de post alterado para carrossel. Uma galeria de imagens deslizantes \u00e9 criada a partir de listagens de usuarios ou propriedades.";
+        tTChngStrObj["spa_spa"] += "<img src=\"images/misc/updates_swiper_thumb.jpeg\" alt=\"Swiper\" title=\"Swiper\" style=\"float:left;margin-right:6px;max-width:86px;\">Tipo de publicacion cambiado a carrusel. Se crea una galer\u00eda de imagenes deslizantes a partir de listados de usuarios o propiedades.";
+        tTChngStrObj["fr_fr"] += "<img src=\"images/misc/updates_swiper_thumb.jpeg\" alt=\"Swiper\" title=\"Swiper\" style=\"float:left;margin-right:6px;max-width:86px;\">Type de publication chang\u00e9 en carrousel. Une galerie d'images d\u00e9filantes est cr\u00e9\u00e9e \u00e0 partir des utilisateurs ou des propri\u00e9t\u00e9s.";
         break;
         case "pmap":
-        tTChngStrObj["en_us"] += "Post type changed to map. A map is created from user or property listings.";
-        tTChngStrObj["pt_pt"] += "Tipo de post alterado para mapa. Um mapa  criado a partir de listagens de usuarios ou propriedades.";
-        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a mapa. Se crea un mapa a partir de listados de usuarios o propiedades.";
-        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en carte. Une carte est cr\u00e9\u00e9e \u00e0 partir des utilisateurs ou des propri\u00e9t\u00e9s.";
+        tTChngStrObj["en_us"] += "<img src=\"images/misc/updates_map_thumb.jpeg\" alt=\"Map\" title=\"Map\" style=\"float:left;margin-right:6px;max-width:86px;\">Post type changed to map. A map is created from user or property listings.";
+        tTChngStrObj["pt_pt"] += "<img src=\"images/misc/updates_map_thumb.jpeg\" alt=\"Map\" title=\"Map\" style=\"float:left;margin-right:6px;max-width:86px;\">Tipo de post alterado para mapa. Um mapa  criado a partir de listagens de usuarios ou propriedades.";
+        tTChngStrObj["spa_spa"] += "<img src=\"images/misc/updates_map_thumb.jpeg\" alt=\"Map\" title=\"Map\" style=\"float:left;margin-right:6px;max-width:86px;\">Tipo de publicacion cambiado a mapa. Se crea un mapa a partir de listados de usuarios o propiedades.";
+        tTChngStrObj["fr_fr"] += "<img src=\"images/misc/updates_map_thumb.jpeg\" alt=\"Map\" title=\"Map\" style=\"float:left;margin-right:6px;max-width:86px;\">Type de publication chang\u00e9 en carte. Une carte est cr\u00e9\u00e9e \u00e0 partir des utilisateurs ou des propri\u00e9t\u00e9s.";
         hasSlect = "yes";
         break;
         default:
@@ -184,28 +188,59 @@ var doPstTypOpts = function(tPTval) {
             tTChngStrObj["spa_spa"] += "</select>";
             tTChngStrObj["spa_spa"] += "<input type=\"button\" value=\"Salvar\" onclick=\"javascript:doPstTypOpts(document.getElementById('inpPTselect'));\">";
             }
-              tTChngStrObj["en_us"] += "<a href=\"javascript:getPTypeChange();\"><i class=\"nav-material-icons txtClrGrey\">&#xe8b8;</i>.</a>";
-              tTChngStrObj["pt_pt"] += "<a href=\"javascript:getPTypeChange();\"><i class=\"nav-material-icons txtClrDlg\">&#xe8b8;</i>.</a>";
-              tTChngStrObj["spa_spa"] += "<a href=\"javascript:getPTypeChange();\"><i class=\"nav-material-icons txtClrDlg\">&#xe8b8;</i>.</a>";
+             // tTChngStrObj["en_us"] += "<a href=\"javascript:getPTypeChange();\"><i class=\"nav-material-icons txtClrGrey\">&#xe8b8;</i>.</a>";
+             //  tTChngStrObj["pt_pt"] += "<a href=\"javascript:getPTypeChange();\"><i class=\"nav-material-icons txtClrDlg\">&#xe8b8;</i>.</a>";
+             //  tTChngStrObj["spa_spa"] += "<a href=\"javascript:getPTypeChange();\"><i class=\"nav-material-icons txtClrDlg\">&#xe8b8;</i>.</a>";
 
             // tTChngStrObj["en_us"] += "<input type=\"button\" value=\"Close\" onclick=\"javascript:JSSHOP.ui.closeLbox();\">";
             // tTChngStrObj["pt_pt"] += "<input type=\"button\" value=\"Fechar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\">";
             // tTChngStrObj["spa_spa"] += "<input type=\"button\" value=\"Cerrar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\">";
-            dvDemoView.innerHTML = tTChngStrObj[usrlang];
+            // add this style to a Select Properties button
+            /*
+            <a class="dropdown-toggle crsrPointer txtClrHdr txtDecorUline txtBold slmtable brdrClrHdr" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" style="font-size:14px;">Selecione Tipo</a>
+            */
+
+         tFullTTTtxt = tTChngStrObj[usrlang];
             if(objVal == "ppost") {
                 dumiu = "yes";
+                            tPtypPkStr = "";
+              tPtypPkStr += "<table style=\"margin: 0 auto;cellspacing:3px;cellpadding:3px;\">";              
+            tPtypPkStr += "<tr>";
+            tPtypPkStr += "<td class=\"slmtable txtClrHdr txtBold brdrClrHdr crsrPointer\" onclick=\"javascript:JSSHOP.ui.doGenBSDDcb('noQvalue','p_ptype', 'pmap','Map','doPTypeTip');\">";
+            tPtypPkStr += "<div style=\"text-align:center;margin:6px;padding:6px;\"><img src=\"images/misc/updates_map_thumb.jpeg\" alt=\"Map\" title=\"Map\" class=\"icnRndnUser\">";
+            tPtypPkStr += "<br>" + tPostsTypeObj["pmap"] + "</div></td>";
+            tPtypPkStr += "<td class=\"slmtable txtClrHdr txtBold brdrClrHdr crsrPointer\"onclick=\"javascript:JSSHOP.ui.doGenBSDDcb('noQvalue','p_ptype', 'pcarousel','Swiper','doPTypeTip');\">";
+            tPtypPkStr += "<div style=\"text-align:center;margin:6px;padding:6px;\"><img src=\"images/misc/updates_swiper_thumb.jpeg\" alt=\"Swiper\" title=\"Swiper\" class=\"icnRndnUser\">";
+            tPtypPkStr += "<br>" + tPostsTypeObj["pcarousel"] + "</div></td>";
+            tPtypPkStr += "<td class=\"slmtable txtClrHdr txtBold brdrClrHdr crsrPointer\" onclick=\"javascript:JSSHOP.ui.doGenBSDDcb('noQvalue','p_ptype', 'pimage','Flyer','doPTypeTip');\">";
+            tPtypPkStr += "<div style=\"text-align:center;margin:6px;padding:6px;\"><img src=\"images/misc/updates_flyer_thumb.jpeg\" alt=\"Flyer\" title=\"Flyer\" class=\"icnRndnUser\">";
+            tPtypPkStr += "<br>" + tPostsTypeObj["pimage"] + "</div></td>";
+            tPtypPkStr += "</tr>";
+            tPtypPkStr += "</table>";
+
+            // fix above tPtypPkStr to wrap in a margon 0 auto table and make the divs all same height
+            tFullTTTtxt += tPtypPkStr;
             } else {
-             getPTypeChange();
+
+             tSelPropStr = "<table style=\"margin: 0 auto;\"><tr><td><div class=\"slmtable txtClrHdr txtBold brdrClrHdr crsrPointer txtSmall form-control\" onclick=\"javascript:JSSHOP.ui.getPickerDiv('props');\">" + stxt[635] + " " + tPostsTypeObj[objVal] + "</div></td></tr></table>";
+                tFullTTTtxt += tSelPropStr;
+
+   
+             // getPTypeChange();
             }
+                 
+                   dvTipTxt.innerHTML = tFullTTTtxt;
         // JSSHOP.ui.popAndFillLbox(tTChngStrObj[usrlang]);
     // procNuUIitem("qposts","p_ptype",currUrlArr.tpstid,objVal,"fnshPTypeChange");
     };
 
 
 var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
+    // doPTypeTip("p_ptype", "ppost", "ppost");
+    doPTypeTip(tMainEl, tMELVal, tMELTxt);
     console.log("doPTypeChange: " + tMainEl + " " + tMELVal + " " + tMELTxt);
     // use \u to escape the unicode characters for the special characters in the strings
-    // document.getElementById("tmp_p_ptype").disabled=true;
+    /* document.getElementById("tmp_p_ptype").disabled=true;
     objVal = tMELVal;
     tTChngStrObj = {};
     tTChngStrObj["en_us"] = "";
@@ -227,20 +262,20 @@ var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
         tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en contenu. Une publication de contenu est similaire \u00e0 un article de blog.";
         break;
         case "pimage":
-            JSSHOP.ads.doImgPostCnfgPop();
+            // JSSHOP.ads.doImgPostCnfgPop();
             return;
-        tTChngStrObj["en_us"] += "Post type changed to image. The image is created from the content.";
-        tTChngStrObj["en_us"] += "You can prefill content with user or property layouts.";
-        tTChngStrObj["pt_pt"] += "Tipo de post alterado para imagem. A imagem \u00e9 criada a partir do conteudo.";
-        tTChngStrObj["pt_pt"] += "Voc\u00ea pode preencher o conteudo com layouts de usuarios ou propriedades.";
-        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a imagen. La imagen se crea a partir del contenido.";
-        tTChngStrObj["spa_spa"] += "Puede rellenar el contenido con diseños de usuarios o propiedades.";
-        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en image. L'image est cr\u00e9\u00e9e \u00e0 partir du contenu.";
-        tTChngStrObj["fr_fr"] += "Vous pouvez pr\u00e9remplir le contenu avec des mises en page utilisateur ou propri\u00e9t\u00e9.";
+        tTChngStrObj["en_us"] += "Post type changed to Flyer. The Flyer is created from the properties you selected.";
+        tTChngStrObj["en_us"] += "You can edit the Flyer and then will be converted into an image you can share.";
+        tTChngStrObj["pt_pt"] += "Tipo de post alterado para Flyer. O Flyer \u00e9 criado a partir das propriedades que voc\u00ea selecionou.";
+        tTChngStrObj["pt_pt"] += "Voc\u00ea pode editar o Flyer e depois ele ser\u00e1 convertido em uma imagem que voc\u00ea pode compartilhar.";
+        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a Flyer. El Flyer se crea a partir de las propiedades que seleccionaste.";
+        tTChngStrObj["spa_spa"] += "Puedes editar el Flyer y luego se convertira en una imagen que puedes compartir.";
+        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en Flyer. Le Flyer est cr\u00e9\u00e9 \u00e0 partir des propri\u00e9t\u00e9s que vous avez s\u00e9lectionn\u00e9es.";
+        tTChngStrObj["fr_fr"] += "Vous pouvez \u00e9diter le Flyer et ensuite il sera converti en une image que vous pourrez partager.";
         hasSlect = "yes";
         break;
         case "pcarousel":
-            JSSHOP.ads.doSwprConfigPop();
+            // JSSHOP.ads.doSwprConfigPop();
             return;
         tTChngStrObj["en_us"] += "Post type changed to carousel. A sliding image gallery is created from user or property listings.";
         tTChngStrObj["pt_pt"] += "Tipo de post alterado para carrossel. Uma galeria de imagens deslizantes \u00e9 criada a partir de listagens de usuarios ou propriedades.";
@@ -250,7 +285,7 @@ var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
         break;
         case "pmap":
 
-        JSSHOP.ads.doMapPostCnfgPop();
+        // JSSHOP.ads.doMapPostCnfgPop();
         return;
         tTChngStrObj["en_us"] += "Post type changed to map. A map is created from user or property listings.";
         tTChngStrObj["pt_pt"] += "Tipo de post alterado para mapa. Um mapa  criado a partir de listagens de usuarios ou propriedades.";
@@ -301,10 +336,32 @@ var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
                   JSSHOP.ui.popAndFillLbox(tTChngStrObj[usrlang]);
 
             }
+*/
     // procNuUIitem("qposts","p_ptype",currUrlArr.tpstid,objVal,"fnshPTypeChange");
     };
 
+    var getPtypeCngPop = function() {
+        tDPTCel = document.getElementById("p_ptype");
+        switch(tDPTCel.value) {
+            case "ppost":
+            case "pcontent":    
+            doPTypeChange("p_ptype", tDPTCel.value, "nep");
+            break;
+            case "pimage":
+            JSSHOP.ads.doImgPostCnfgPop();
+            break;
+            case "pcarousel":
+            JSSHOP.ads.doSwprConfigPop();
+            break;
+            case "pmap":
+            JSSHOP.ads.doMapPostCnfgPop();
+            break;
+            default:
+            doPTypeChange("p_ptype", tDPTCel.value, "nep");
+            break;
+            }
 
+    }
     var getPTypeChange = function() {
         // doPTypeChange
         tDPTCel = document.getElementById("p_ptype");
@@ -408,8 +465,25 @@ var finishMPstUld = function(theMMum) {
         }
     };
 
-function loadTnyI() {
-     JSSHOP.loadScript("js/tinymce/init-tinymce.min.js", donada, "js");
+function setTnDPlachldrs(theTLSpath, theTLSstat) {
+    // set tmp_p_title and tmp_p_content placeholders
+    console.log("setTnDPlachldrs");
+    tpttxtinp = document.getElementById("tmp_p_title");
+    tpttxtinp.placeholder = "Post title here...";
+    tpcntinp = document.getElementById("tmp_p_content");    
+    //set focus to content
+    tpcntinp.focus();
+    tpcntinp.placeholder = "Post content here...";
+    if(tinyMCE.activeEditor) {
+       setTimeout(function() {
+           tinyMCE.activeEditor.setContent("<p>Post content here...</p>");
+       }, 1500);
+    }
+    console.log("setTnDPlachldrs: " + theTLSpath + " :: " + theTLSstat);
+}
+
+function loadTnyI(theTLSpath, theTLSstat) {
+     JSSHOP.loadScript("js/tinymce/init-tinymce.min.js", setTnDPlachldrs, "js");
  }
 
 function setUPostAddSave(a,b,c) {
@@ -581,9 +655,9 @@ currMediaID = prpid;
             tDDPTyObj["val"] = "ppost";
             tDDPTyObj["kvpObj"] = svftObj["posttype"];
             tDDPTyObj["cb"] = "doPTypeTip";
-            tDDPTyObj["fldcls"] = "dropdown-toggle crsrPointer txtClrHdr txtDecorUline";
+            tDDPTyObj["fldcls"] = "dropdown-toggle crsrPointer txtClrHdr txtDecorUline txtBold txtBig slmtable brdrClrHdr";
             tDDPTyObj["lblcls"] = "txtSmall";
-            tDDPTyObj["valcls"] = "slmtable bkgdClrNrml txtClrNrml txtSmall txtBold";
+            tDDPTyObj["valcls"] = "bkgdClrNrml txtClrNrml txtSmall txtBold";
             tDDPTyObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
             tDDPTyObj["horvert"] = "horizontal";
             tDDPTyObj["icn"] = "noQvalue";
@@ -636,7 +710,7 @@ currMediaID = prpid;
             tDDXtraCntObj["kvIcnsObj"]["snippets"] = "&#xe5cd;";
  
             tDDXtraCntStr = JSSHOP.ui.getNuBSdropDstr(tDDXtraCntObj);
-            document.getElementById("dvDDxcntnt").innerHTML = tDDXtraCntStr;
+           //  document.getElementById("dvDDxcntnt").innerHTML = tDDXtraCntStr;
 
  
 

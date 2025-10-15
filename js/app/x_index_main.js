@@ -239,7 +239,13 @@ retPLstSTr += "<span class=\"crsrPointer\" style=\"margin:2px;text-align:absmidd
 retPLstSTr += "</td>";
 retPLstSTr += "<td>";
 // retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrLtBlue\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
+if(quid == aprpUid) {
+  // do not show message button if the user is the owner of the property
+  retPLstSTr += "";
+} else {
 retPLstSTr += "<span class=\"crsrPointer\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.prepMsgBox(" + aprpUid + ",'" + aprpUFlName + "','" + aprpObj.u_icon + "','" + istrt + "','showMsgSave');\"><i class=\"menu-material-icons\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
+
+}
 
 retPLstSTr += "</td>";
 retPLstSTr += "<td>";
@@ -285,7 +291,9 @@ JSSHOP.ui.setTinnerHTML("dvMainPrpsLst",retPLstSTr);
 // JSSHOP.ads.doGenMapShow();
 
  JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks');
+ if(quid == 0 || quid == "0") {
  getTestUsers("divIUsersList");
+ }
     tUFObj = {};
 tUFObj["uplmt"] = 5;
 tUFObj["upcb"] = "jshp_ads_showUpdtsFeed";
@@ -434,6 +442,8 @@ aTPrpOstr = getPrpObjSTr(aTPrpObj);
 
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
+// JSSHOP.ads.doGenericPlug("main", "index_main", "dvPartLinks");
+document.title = shopTitle;
  //  alert('fnishCntLoad');
  // 
  tmpDOqs = null;

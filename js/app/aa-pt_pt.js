@@ -300,7 +300,7 @@ stxt[631] = "Tradu\u00e7\u00f5es";
 stxt[632] = "Traduzir o titulo e a descricao atuais para o idioma selecionado";
 stxt[633] = "Comece fazendo o upload de algumas imagens.";
 stxt[634] = "Editar todas as Propriedades";
-
+stxt[635] = "Selecionar propriedades para";
 
 stxt[700] = "Tem uma pergunta?";
 stxt[702] = " Opcional para servi\u00e7os baseados em localiza\u00e7\u00e3o ";
@@ -706,7 +706,7 @@ tPostsTypeObj = {};
 tPostsTypeObj["ppost"] = "Post";
 // tPostsTypeObj["pcontent"] = "Conteudo";
 tPostsTypeObj["pimage"] = "Flyer";
-tPostsTypeObj["pcarousel"] = "Carrossel";
+tPostsTypeObj["pcarousel"] = "Swiper";
 tPostsTypeObj["pmap"] = "Mapa";
 svftObj["posttype"] = tPostsTypeObj;
 

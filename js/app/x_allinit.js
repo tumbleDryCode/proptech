@@ -88,6 +88,7 @@ if(shopDir.indexOf("titan") != -1) {
 } else {
     currWebHome = "https://dev.propsgo.com/";
 }
+var shopTitle = "PropsGo.com";
 // currWebHome = "https://dev.propsgo.com/";
 var spinTextDiv = document.createElement("div");
 var currSpinText = "noQvalue";

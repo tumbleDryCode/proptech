@@ -3017,7 +3017,7 @@ JSSHOP.ui.getPickerStr = function(tPDtype) {
 tGPSstr += "</div>";
 tGPSstr += "<br>";
     tGPSstr += "<div style=\"margin: 10px\">";
-    tGPSstr += "<span style=\"\" class=\"cls_button cls_button-medium bkgdClrHdr txtClrWhite\" onclick=\"getPTypeChange();\">OK</span>";
+    tGPSstr += "<span style=\"\" class=\"cls_button cls_button-medium bkgdClrHdr txtClrWhite\" onclick=\"JSSHOP.ui.closeLbox();JSSHOP.ads.trnsltPTpObj();\">OK</span>";
     tGPSstr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-medium  bkgdClrGrey txtClrHdr\" onclick=\"getPTypeChange();\">Cancel</span>";   
     tGPSstr += "</div>";
     return tGPSstr;
@@ -4316,11 +4316,13 @@ JSSHOP.ui.doNuMsgList = function(a,theResp,ttcb) {
             otherUserId = ts.msg_to_userid;
             otherUserName = ts.msg_to;
             otherUserIcon = ts.msg_to_icon;
+            console.log("otherUserId (icon)ts.msg_userid == quid: " + otherUserIcon);
         } else {
             // Current user is recipient, other party is sender
             otherUserId = ts.msg_userid;
             otherUserName = ts.msg_from;
             otherUserIcon = ts.msg_from_icon;
+            console.log("otherUserId (icon) ts.msg_userid != quid: " + otherUserIcon);
         }
         
         // Facebook messenger style message list
@@ -4329,7 +4331,7 @@ JSSHOP.ui.doNuMsgList = function(a,theResp,ttcb) {
         // Message header with other party info
         tstr += "<div style=\"display:flex;align-items:center;margin-bottom:5px;\">";
         if(otherUserIcon && otherUserIcon != "") {
-            tstr += "<img src=\"images/user/" + otherUserIcon + "\" style=\"width:30px;height:30px;border-radius:50%;margin-right:10px;\">";
+            tstr += "<img src=\"images/user/s_thumb" + otherUserIcon + "\" style=\"width:30px;height:30px;border-radius:50%;margin-right:10px;\">";
         } else {
             tstr += "<div style=\"width:30px;height:30px;border-radius:50%;background:#ccc;margin-right:10px;display:flex;align-items:center;justify-content:center;font-weight:bold;\">" + otherUserName.charAt(0).toUpperCase() + "</div>";
         }
@@ -4566,6 +4568,7 @@ INSERT INTO `qmsg` (`_id`, `ms_rtype`, `ms_threadid`, `ms_from`, `ms_to`, `ms_vi
 }
 
 function doUMsgHdr(atmdiv,theResp,ttcb) {
+    console.log("doUMsgHdr: " + theResp);
 document.getElementById("ms_threadid").value = "";
   var tFllArr = JSON.parse(theResp);
   var len = tFllArr.length;
@@ -4613,10 +4616,15 @@ document.getElementById("ms_dadded").value = JSSHOP.getUnixTimeStamp();
 
     // urldecode message matter
     tmsgmatter = decodeURIComponent(tmsUEgmatter);
+    console.log("tmsgmatter.decodeURIComponent: " + tmsgmatter);
     if(tmsgmatter.indexOf("#PROPID:") != -1) {
-        var tpropid = tmsgmatter.split("#PROPID:")[1].split(":")[0];
-        tsmsgmatter = tmsgmatter.replace("#PROPID:"+tpropid+":", "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&propid="+tpropid+"')\">#PROPID:"+tpropid+"</a>");
-        tMsgSTR += tsmsgmatter;
+
+        var tSpropid = tmsgmatter.split("#PROPID:");
+        var tpropid = tSpropid[1];
+        console.log("Extracted property ID for link: " + tpropid);                              
+        tAsmsgmatter = tmsgmatter.replace("#PROPID:"+tpropid+":", "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&propid="+tpropid+"')\">#PROPID:"+tpropid+"</a>");
+        tMsgSTR += tAsmsgmatter;
+        console.log("tmsgmatter with propid link: " + tAsmsgmatter);
     } else {
         tMsgSTR += tmsgmatter;
     }
@@ -4628,7 +4636,7 @@ document.getElementById("ms_dadded").value = JSSHOP.getUnixTimeStamp();
     */
    // use facebook style colors depending on who sent the message in tstr
    if(ts.msg_userid == quid) { 
-    tstr += "<div id=\"dvMsgHdr" + ts._id + "\" style=\"min-height: 45px;margin:15px;margin-bottom:18px;\" class=\"rtable bkgdClrHdr slmtblpadding txtClrWhite\">";
+    tstr += "<div id=\"dvMsgHdr" + ts._id + "\" style=\"min-height: 45px;margin:15px;margin-bottom:18px;\" class=\"rtable bkgdClrBBlue slmtblpadding txtClrWhite\">";
    } else {
     tstr += "<div id=\"dvMsgHdr" + ts._id + "\" style=\"min-height: 45px;margin:15px;margin-bottom:18px;\" class=\"rtable bkgdClrNrml slmtblpadding\">";
     }
@@ -4761,6 +4769,7 @@ doQComm(oi["rq"], null, tempCB);
 };
 
 var nTmpMsgBxOb = function() {
+   //  alert("nTmpMsgBxOb" + quid  );
 tAllowedStr = "msg_subjectmsg_matter";
 if(quid == "0") {
 tAllowedStr += "msg_frommsg_emailmsg_tel";
@@ -4773,8 +4782,8 @@ aTmpMsgBxOb["m_btn1_cl"] = "btnMsgsend"; // send button id
 aTmpMsgBxOb["m_btn2_cl"] = "btnMsgcancel"; // cancel button id
 aTmpMsgBxOb["m_btn1_fnc"] = "doNada"; // send button function
 aTmpMsgBxOb["m_btn2_fnc"] = "JSSHOP.ui.closeLbox"; // cancel button function
-     aTmpMsgBxOb["m_to_userid"] = 1; // send to user id
-    aTmpMsgBxOb["m_to"] = "msg_to"; // send to user field name
+aTmpMsgBxOb["m_to_userid"] = 1; // send to user id
+aTmpMsgBxOb["m_to"] = "msg_to"; // send to user field name
 aTmpMsgBxOb["m_to_icon"] = "&#xe0be;"; // send to user icon
 aTmpMsgBxOb["m_from_icon"] = "&#xe0be;"; // from user icon
 aTmpMsgBxOb["m_type"] = "product"; // internal msg type
@@ -5035,7 +5044,7 @@ tsbstr += tMsgBdyStr;
 
 tMsgBxHdrSTr = '<div class="fb-chat-box" style="width:300px; height:400px; border:1px solid #ccc; border-radius:8px; overflow:hidden; display:flex; flex-direction:column;">' +
 
-'<div class="chat-header" style="background:#4267b2; color:white; padding:10px; display:flex; align-items:center;">' +
+'<div class="chat-header bkgdClrNrml txtClrHdr" style="padding:10px; display:flex; align-items:center;">' +
 '<table style="width:100%;"><tr><td><a href="javascript:eindex(\'aa-show-user\',\'pid=aa-show-user&tuid=' + ttMsgBxObj["m_to_userid"] + '\')"><img src="images/user/s_thumb' + ttMsgBxObj["m_to_icon"] + '" alt="User" style="width:40px; height:40px; border-radius:50%; margin-right:10px;"></a></td>' +
 // javascript:eindex('aa-show-user','pid=aa-show-user&tuid=' + ttMsgBxObj["m_to_userid"])
 '<td style="flex-grow:1;"><span style="font-weight:bold;color:white;"><a href="javascript:eindex(\'aa-show-user\',\'pid=aa-show-user&tuid=' + ttMsgBxObj["m_to_userid"] + '\')" class="txtClrWhite">' + ttMsgBxObj.m_to + '</a></span>' +
@@ -5168,10 +5177,10 @@ JSSHOP.ui.sendChatMessage = function(toUserId, tMitemID) {
     var inputField = document.getElementById('chat-input-' + toUserId);
     var message = inputField.innerText || inputField.textContent;
     
-    if(tMitemID && tMitemID != "noQvalue") {
-        message += "\n\n#PROPID: " + tMitemID;
+
+        if(tMitemID && tMitemID != "noQvalue") {
+        message += "\n\n #PROPID:" + tMitemID + " ";
     } 
-    
    
     // document.getElementById("ms_matter").value = message;
     // document.getElementById("ms_matter").value = message;
@@ -5191,7 +5200,7 @@ JSSHOP.ui.sendChatMessage = function(toUserId, tMitemID) {
     // Optionally, append the message to the chat window
     var messagesDiv = document.getElementById('chat-messages-' + toUserId);
 
-    newMsg = /* message replace newline and break with <br> */ message.replace(/\n/g, '<br>');
+    newMsg =  message.replace(/\n/g, '<br>');
        // newMsg = newMsg.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     newMsg = newMsg.replace(/(\r\n|\n|\r)/g, '<br>');
     newMsg = newMsg.replace(/(\uD83D[\uDE00-\uDE4F])/g, '<span class="emoji">$1</span>');
@@ -5225,7 +5234,8 @@ JSSHOP.ui.sendChatMessage = function(toUserId, tMitemID) {
         */
        if(tToShowMsg.indexOf("#PROPID:") != -1) {
 
-        tToShowMsg = tToShowMsg.replace("#PROPID:"+tMitemID, "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid="+tMitemID+"')\"><u>#PROPID:"+tMitemID+"</u></a>");
+        // tToShowMsg += "<br><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid="+tMitemID+"')\"><u>#PROPID:"+tMitemID+"</u></a>";
+        tToShowMsg = tToShowMsg.replace("#PROPID:" + tMitemID, "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + tMitemID + "')\"><u>#PROPID:" + tMitemID + "</u></a>");
        }
        console.log("Final message to show:", tToShowMsg);
     messageElem.innerHTML = tToShowMsg;
@@ -5258,6 +5268,7 @@ console.log("sendChatMessage.update: " + oi["rq"]);
 };
 
 JSSHOP.ui.showMsgBox = function(tmpMsgType, tmpMsgVal,atmpCB){
+    alert("showMsgBox: " + tmpMsgType + " :: " + tmpMsgVal + " :: " + atmpCB);
     try {
         ttMBox = null;
         ttMBox = "";
@@ -5719,14 +5730,22 @@ JSSHOP.ui.popNuFillLbox(theFill, 5);
 
 JSSHOP.ui.popFillObox = function(theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUseClosBtn) {
     document.getElementById('lightbox_content').innerHTML = "";
-    tcloseBstr  = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrDlg crsrPointer\" style=\"float:right\"><i class=\"menu-material-icons txtBold txtClrGrey\" alt=\"close\" title=\"close\" value=\"close\">&#xe5cd;</i></div>";
-    tHdrStr = "<div class=\"slmtable txtClrHdr\" style=\"margin-left: 7px\"><span>";
+    tcloseBstr  = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrDlg crsrPointer\" style=\"float:right\"><i class=\"menu-material-icons txtBold txtClrBlue\" alt=\"close\" title=\"close\" value=\"close\" style=\"font-size: 20px;\">&#xe5cd;</i></div>";
+    tHdrStr = "<table style=\"width:100%\"><tr>";
+    tHdrStr += "<td>";
+    // tHdrStr += "<span class=\"slmtable txtClrHdr\" style=\"margin-left: 7px\"><span>";
     tHdrStr += "<i class=\"menu-material-icons txtBold txtClrGrey\" alt=\"close\" title=\"close\" value=\"close\">" + thHdrIcn + "</i>";
-
-    tHdrStr += "</span><span>" + thHdrTxt + "</span>";
+    tHdrStr += "</span>";
+    tHdrStr += "</td>";
+    tHdrStr += "<td>";
+    tHdrStr += "<span>" + thHdrTxt + "</span>";
+    tHdrStr += "</td>";
     if(thUseClosDv == "yes") {
+        tHdrStr += "<td style=\"text-align:right\">";
         tHdrStr += tcloseBstr;
+        tHdrStr += "</td>";
     }
+    tHdrStr += "</tr></table>";
     tHdrStr += "</div>";
     // <button type="button" class="btn-close" aria-label="Close"  onclick=\"JSSHOP.ui.closeLbox();\"></button>
     //tcloseBstr  = "<button type=\"button\" class=\"btn btn-close\" aria-label=\"Close\"  onclick=\"JSSHOP.ui.closeLbox();\"  style=\"float:right\"></button>";
@@ -5748,7 +5767,7 @@ JSSHOP.ui.popFillObox = function(theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUse
     fullRetPOPstr = tHdrStr + theFill;
     // tmpLCbox.innerHTML = tHdrStr + theFill;
     if(thUseClosBtn == "yes") {
-        tCloseBtnStr = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrDlg crsrPointer\" style=\"float:right\"><i class=\"menu-material-icons txtBold txtClrGrey\" alt=\"close\" title=\"close\" value=\"close\">&#xe5cd;</i></div>";
+        tCloseBtnStr = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrLtBlue txtBold brdrClrDlg crsrPointer\" style=\"float:right\"><i class=\"menu-material-icons txtBold txtClrGrey\" alt=\"close\" title=\"close\" value=\"close\" style=\"font-size: 20px;\">&#xe5cd;</i></div>";
         fullRetPOPstr += tcloseBstr;
     }
      tmpLCbox.innerHTML += fullRetPOPstr;
@@ -7529,7 +7548,7 @@ tUpdteListObj["fav"] = stxt[73];
         tUdtsStr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;margin: 0 auto;\">";
         tUdtsStr += "<table style=\"width: 100%\"><tr><td style=\"min-width:40px;\">";
         tUdtsStr += "<a href=\"javascript:eindex('aa-show-user', 'pid=aa-show-user&tuid=" + tUdtsObj.p_uid + "');\" class=\"crsrPointer\">";
-        tUdtsStr += "<div><img alt=\"Profile\" src=\"images/user/" + tUdtsObj.u_icon + "\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">" + tUdtsObj.u_fullname + "</span></div></a>";
+        tUdtsStr += "<div><img alt=\"Profile\" src=\"images/user/s_thumb" + tUdtsObj.u_icon + "\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">" + tUdtsObj.u_fullname + "</span></div></a>";
         tUdtsStr += "</td><td>";
         tUdtsStr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-update','pid=aa-show-update&tupid=" + tUdtsObj._id + "')\">" + decodeURIComponent(tUdtsObj.p_title)  + "</a></h5>";
         // tUdtsStr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + tUdtsObj.p_location + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><b>" + tPostsTypeObj[tUdtsObj.p_ptype] + "</b></div></td></tr></tbody></table>";
@@ -7590,7 +7609,13 @@ tUpdteListObj["fav"] = stxt[73];
                 if(pid == "aa-show-update"){
                 imgprefx = "";
                 }
+                if(pid == "aa-show-update"){
                 tUdtsStr += "<img src=\"images/ucontent/" + imgprefx + tUdtsObj.p_image + "\" alt=\"pimage\" class=\"img100p\">";
+                } else {
+                tUdtsStr += "<a href=\"javascript:eindex('aa-show-update','pid=aa-show-update&tupid=" + tUdtsObj._id + "')\">";
+                tUdtsStr += "<img src=\"images/ucontent/" + imgprefx + tUdtsObj.p_image + "\" alt=\"pimage\" class=\"img100p\">";
+                tUdtsStr += "</a>";
+                }
 
                 tUdtsStr += "<div class=\"bg-gray quantity px-4 pt-4\">";
 
@@ -7746,7 +7771,14 @@ tUdtLnkStr += "<table style=\"margin:0 auto;width:100%;\"><tr><td>";
 tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('update'," + ided + ");\"><i class=\"menu-material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
 tUdtLnkStr += "</td>";  
 tUdtLnkStr += "<td>";
-tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.prepMsgBox(" + tUdtsObj.p_uid + ",'" + tUdtsObj.u_fullname + "','" + tUdtsObj.u_icon + "','" + ided + "','showMsgSave');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[117] + "</span>";
+if(quid == tUdtsObj.p_uid) {
+tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"eindex('aa-edit-post', 'pid=aa-edit-post&tpstid=" + tUdtsObj._id + "');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"edit\" title=\"edit\" value=\"edit\">&#xe3c9;</i>" + " " + stxt[31] + "</span>";
+} else {
+tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.prepMsgBox(" + tUdtsObj.p_uid + ",'" + tUdtsObj.u_fullname + "','" + tUdtsObj.u_icon + "','noQvalue','showMsgSave');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
+}
+tUdtLnkStr += "</td>";
+tUdtLnkStr += "<td>";
+
 tUdtLnkStr += "</td>";
 tUdtLnkStr += "<td>";
 // retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"" + currFTclr + "\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','" +"','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
@@ -7755,7 +7787,7 @@ currFTclr = "menu-material-icons txtClrTtl";
  if(currFavsIdstr.indexOf(tUdtsObj._id + "::") != -1) {
 currFTclr = "menu-material-icons txtClrRed";
 }
-tUdtLnkStr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-update&tupid=" + tUdtsObj._id + "','" + tUdtsObj.p_title + "','images/ucontent/m_thumb" + tUdtsObj.p_image + "','" + tUdtsObj._id + "','btnFavs" + tUdtsObj._id + "');\"><i id=\"btnFavs" + tUdtsObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[73] + "</span>";   
+tUdtLnkStr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-update&tupid=" + tUdtsObj._id + "','" + tUdtsObj.p_title + "','images/ucontent/m_thumb" + tUdtsObj.p_image + "','" + tUdtsObj._id + "','btnFavs" + tUdtsObj._id + "');\"><i id=\"btnFavs" + tUdtsObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";   
 tUdtLnkStr += "</td></tr></table>";
 tUdtLnkStr += "</div>"; // end bkdgClrWhite brdrClrHdr txtSmall txtBold
         tUdtsStr += tUdtLnkStr;
@@ -8312,7 +8344,9 @@ JSSHOP.ads.doImgPostCnfgPop = function() {
         tDDswprCnttObj["fld"] = "inpImgPstCntnt";
         tDDswprCnttObj["lbl"] = "Image Content";
         tDDswprCnttObj["val"] = inpImgPstCntnt.value;
-        tDDswprCnttObj["kvpObj"] = {"props": "Properties", "users": "Users"};
+        // tDDswprCnttObj["kvpObj"] = {"props": "Properties", "users": "Users"};
+        // just prps for now
+        tDDswprCnttObj["kvpObj"] = {"props": "Properties"};
         tDDswprCnttObj["cb"] = "doImgPstCntntPk";
         tDDswprCnttObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
         tDDswprCnttObj["lblcls"] = "txtSmall";
@@ -8322,7 +8356,7 @@ JSSHOP.ads.doImgPostCnfgPop = function() {
         tDDswprCnttObj["icn"] = "noQvalue";
         tDDswprCnttObj["kvIcnsObj"] = {};
         tDDswprCnttObj["kvIcnsObj"]["props"] = "&#xe5cd;";
-        tDDswprCnttObj["kvIcnsObj"]["users"] = "&#xe5cd;";
+        // tDDswprCnttObj["kvIcnsObj"]["users"] = "&#xe5cd;";
         tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprCnttObj);
         tSCPopStr += "<br><br><span style=\"\" class=\"cls_button cls_button-small bkgdClrHdr txtClrWhite\" onclick=\"JSSHOP.ui.closeLbox();JSSHOP.ads.trnsltImgPstObj();\">OK</span>";
         tSCPopStr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-small  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";   
@@ -8966,6 +9000,22 @@ function getPropertyImages(propData) {
     doQComm(oi["rq"], ipid, "setPropertyImgs");
 }
 
+JSSHOP.ads.trnsltPTpObj = function() {
+    tPtypeVal = document.getElementById("p_ptype").value;
+    console.log("trnsltPTpObj.tPtypeVal: " + tPtypeVal);
+    switch(tPtypeVal) {
+        case "pimage":
+            JSSHOP.ads.trnsltImgPstObj();
+            break;
+        case "pmap":
+            JSSHOP.ads.trnsltMapPstObj();
+            break;
+        case "pcarousel":
+            JSSHOP.ads.trnsltSwiperObj();
+            break;
+    }
+};
+
 JSSHOP.ads.trnsltImgPstObj = function() {
     tSCval = inpImgPstCntnt.value;
    console.log("trnsltImgPstObj.tSCval: == props" + tSCval);
@@ -9576,21 +9626,27 @@ fretPlugStr = "<div class=\"txtSmall\">Contacte-nos</div>";
 break;
 case "aa-contact-us":
     dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"account\" title=\"account\"> &#xe8b6;</i>";
-fretPlugStr = "<div class=\"txtSmall\">Contacte-nos</div>";
+fretPlugStr = "<div class=\"txtSmall\">" + stxt[912] + "</div>";
+// set doc title to stxt[912]
+document.title = stxt[912];
 break;
 
 case "aa-show-featured":
 // imgPLicon.src = "logoicon.png"; 
 dvPartLicon.innerHTML =  "<img src=\"images/logo/logo-small.png\" style=\"margin-top: 5px;max-height:30px;max-width:30px;\" alt=\"account\" title=\"account\" class=\"account\">";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[940] + "</div>";
-// fretPlugStr = doNuCollsLoad("links");
+document.title = stxt[940];
 break; 
 case "aa-show-search":
     dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"account\" title=\"account\"> &#xe8b6;</i>";
     fretPlugStr = "<div class=\"txtSmall\">" + stxt[936] + "</div>";
+    document.title = stxt[936];
 break; 
 case "aa-show-user":
-    JSSHOP.ui.showHideElement("dvTopHdrTtl", "hide");
+    dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"account\" title=\"account\"> &#xe7fd;</i>";
+    fretPlugStr = "<div class=\"txtSmall\">" + stxt[903] + "</div>";
+    // JSSHOP.ui.showHideElement("dvTopHdrTtl", "hide");
+    document.title = stxt[903];
     break;
 
 case "aa-edit-user":
@@ -9598,37 +9654,44 @@ case "aa-edit-user":
 dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[825] + "</div>";
 // fretPlugStr = doNuCollsLoad("links");
+    document.title = stxt[825];
 break;
 case "aa-remove":
 // imgPLicon.src = "logoicon.png";    
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[815] + "</div>";
+document.title = stxt[815];
 break;
 case "aa-edit-prop":
 // imgPLicon.src = "logoicon.png"; 
 dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[985] + "</div>";
 // fretPlugStr = doNuCollsLoad("links");
+document.title = stxt[985];
 break;
 case "aa-add-prop":
 // imgPLicon.src = "logoicon.png"; 
 dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[906] + "</div>";
 // fretPlugStr = doNuCollsLoad("links");
+document.title = stxt[906];
 break;
 case "aa-edit-post":
 // imgPLicon.src = "logoicon.png";
-dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
+dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe871;</i>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[400] + "</div>";
+document.title = stxt[400];
 break;
 case "aa-add-post":
 // imgPLicon.src = "logoicon.png";
-dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
+dvPartLicon.innerHTML =  "<i class=\"material-icons-two-tone txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;font-weight: bold;font-size: 27px;\" alt=\"search\" title=\"search\"> &#xe871;</i>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[401] + "</div>";
+document.title = stxt[401];
 break;
 case "aa-edit-posts":
 // imgPLicon.src = "logoicon.png"; 
 dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[402] + "</div>";
+document.title = stxt[402];
 // fretPlugStr = doNuCollsLoad("links");
 break;
 case "aa-edit-uprops":
@@ -9637,23 +9700,40 @@ case "aa-edit-aprops":
 dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[634] + "</div>";
 // fretPlugStr = doNuCollsLoad("links");
+document.title = stxt[634];
+break;
+case "aa-show-messages":
+// imgPLicon.src = "logoicon.png";
+dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"messages\" title=\"search\"> &#57527;</i>";
+fretPlugStr = "<div class=\"txtSmall\">" + stxt[710] + "</div>";
+document.title = stxt[710];
 break;
 case "aa-show-prop":
 // imgPLicon.src = "logoicon.png"; 
 dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[118] + "</div>";
+document.title = stxt[118];
 // fretPlugStr = doNuCollsLoad("links");
 break;
 case "aa-show-update":
 // imgPLicon.src = "logoicon.png"; 
 dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[100] + "</div>";
+document.title = stxt[100];
 // fretPlugStr = doNuCollsLoad("links");
+break;
+case "index_main":
+// imgPLicon.src = "logoicon.png"; 
+dvPartLicon.innerHTML =  "<img src=\"images/logo/logo-small.png\" style=\"margin-top: 5px;max-height:30px;max-width:30px;\" alt=\"account\" title=\"account\" class=\"account\">";
+fretPlugStr = "<div class=\"txtSmall\">" + shopTitle + "</div>";
+// fretPlugStr = doNuCollsLoad("links");
+document.title = shopTitle;
 break;
 default:
  
  
 fretPlugStr = "<div class=\"txtSmall\">.... </div>";
+document.title = "....";
  
 // fretPlugStr = "<div class=\"txtSmall\">Default</div>";
  
@@ -12997,8 +13077,8 @@ var getNuIItmsLst = function(tPrpIarr) {
         html += '<div class="users-row">';
         countryMap[country].forEach(function(user) {
             html += '<div class="user-card crsrPointer" style="float:left;margin:8px 16px 8px 0;text-align:center;min-width:100px;max-width:100px;max-height:80px;min-height:80px">';
-            html += '<img alt="Profile" src="images/user/s_thumb' + user.u_icon + '" class="icnRndDSmUser crsrPointer" style="display:block;margin:0 auto;"  onclick="javascript:eindex(\'aa-show-user\',\'pid=aa-show-user&tuid=' + user._id + '\');">';
-            html += '<div class="txtSmall txtCLrHdr crsrPointer" style="margin-top:6px;" onclick="javascript:eindex(\'aa-show-user\',\'pid=aa-show-user&tuid=' + user._id + '\');">' + user.u_fullname + '</div>';
+            html += '<img alt="Profile" src="images/user/s_thumb' + user.u_icon + '" class="icnRndDSmUser crsrPointer" style="display:block;margin:0 auto;"  onclick="javascript:doTUserLgin(' + user._id + ');">';
+            html += '<div class="txtSmall txtCLrHdr crsrPointer" style="margin-top:6px;" onclick="javascript:doTUserLgin(' + user._id + ');">' + user.u_fullname + '</div>';
             // eindex show user link with profile title
             html += '<div class="txtSmall txtClrGrey" style="margin-top:6px;"><a href="javascript:doTUserLgin(' + user._id + ')">Demo</a></div>';
             html += '</div>';
@@ -13026,7 +13106,7 @@ tSHowTetsUTtl += "<br><br>" + stxt[828] + "<br><br>";
 */
 // make the above tSHowTetsUTtl (uses the stxt[826.. more facebook like and use some material icons
 tSHowTetsUTtl = "<div class=\"txtCenter txtClrGrey txtSmall\" style=\"margin-bottom:16px;\">";
-tSHowTetsUTtl += "<div style=\"font-size:48px;line-height:48px;\"><i class=\"material-icons\">&#xe7fd;</i></div>";
+// tSHowTetsUTtl += "<div style=\"font-size:48px;line-height:48px;\"><i class=\"material-icons\">&#xe7fd;</i></div>";
 tSHowTetsUTtl += stxt[826] + "<br></br>";
 tSHowTetsUTtl += stxt[827] + "<br></br>";
 tSHowTetsUTtl += stxt[828] + "<br></br>";

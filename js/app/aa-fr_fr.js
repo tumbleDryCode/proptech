@@ -285,6 +285,8 @@ stxt[631] = "Traductions";
 stxt[632] = "Traduire le titre et la description actuels dans la langue s\u00e9lectionn\u00e9e";
 stxt[633] = "Commencez par t\u00e9l\u00e9charger quelques images.";
 stxt[634] = "Modifier toutes les propri\u00e9t\u00e9s";
+stxt[635] = "S\u00e9lectionner les propri\u00e9t\u00e9s pour";
+
 // messaging strings
 stxt[700] = "Vous avez une question ?";
 stxt[701] = undefined;
@@ -641,7 +643,7 @@ tPostsTypeObj = {};
 tPostsTypeObj["ppost"] = "Publication";
 // tPostsTypeObj["pcontent"] = "Contenu";
 tPostsTypeObj["pimage"] = "Flyer";
-tPostsTypeObj["pcarousel"] = "Carrousel";
+tPostsTypeObj["pcarousel"] = "Swiper";
 tPostsTypeObj["pmap"] = "Carte";
 svftObj["posttype"] = tPostsTypeObj;
 

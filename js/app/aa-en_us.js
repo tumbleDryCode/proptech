@@ -303,6 +303,7 @@ stxt[631] = "Translations";
 stxt[632] = "Translate the current title and description to the selected language";
 stxt[633] = "Start by uploading some images.";
 stxt[634] = "Edit all Properties";
+stxt[635] = "Select properties for";
  
 // messaging strings
 stxt[700] = "Have a Question?";
@@ -672,7 +673,7 @@ tPostsTypeObj = {};
 tPostsTypeObj["ppost"] = "Post";
 // tPostsTypeObj["pcontent"] = "Content";
 tPostsTypeObj["pimage"] = "Flyer";
-tPostsTypeObj["pcarousel"] = "Carousel";
+tPostsTypeObj["pcarousel"] = "Swiper";
 tPostsTypeObj["pmap"] = "Map";
 svftObj["posttype"] = tPostsTypeObj;
 

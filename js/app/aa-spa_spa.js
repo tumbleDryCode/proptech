@@ -314,6 +314,7 @@ stxt[631] = "Traducciones";
 stxt[632] = "Traducir el titulo y la descripcion actuales al idioma seleccionado";
 stxt[633] = "Comience subiendo algunas imagenes.";
 stxt[634] = "Editar todas las Propiedades";
+stxt[635] = "Seleccionar propiedades para";
 /*
 
 // messaging strings
@@ -792,7 +793,7 @@ tPostsTypeObj = {};
 tPostsTypeObj["ppost"] = "Publicacion";
 // tPostsTypeObj["pcontent"] = "Contenido";
 tPostsTypeObj["pimage"] = "Flyer";
-tPostsTypeObj["pcarousel"] = "Carrusel";
+tPostsTypeObj["pcarousel"] = "Swiper";
 tPostsTypeObj["pmap"] = "Mapa";
 svftObj["posttype"] = tPostsTypeObj;
 

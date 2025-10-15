@@ -1,5 +1,5 @@
-currPgTitle = stxt[31] + " " + stxt[56];
-document.title = currPgTitle; 
+// currPgTitle = stxt[31] + " " + stxt[56];
+// document.title = currPgTitle; 
 var euiFFObjArr = null;
 var euiFFObjArr = [];
 

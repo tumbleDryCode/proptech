@@ -901,21 +901,7 @@ CREATE TABLE `quser` (
   `u_dadded` varchar(14) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
-
-// example rows
-(46, 5, 1, 'trtt', 'Pedro Matias', '', 'A dos Cunhados', 'Portugal', '39.1524', '-9.2972', 'trtt@', 'trtt', 'headline', 'introduction', '22_1726999049.jpg', 'private', '', 5, '5', '5', '1701509624242'),
-(47, 5, 5, '1', 'Jean Mulhouse', 'Allauch', 'Eyguieres', 'France', '43.3357', '5.48201', 'testerA@propsgo.com', 'tester', 'I am a great realtor!', 'My Realtor Description is about me loving my job at companyA, companyB,', '47_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036');
-
-// using the above database table structure for quser and example records/rows, create an insert statement where 5 random genre real estate agents in spanish with convincing headline (u_header) and description (u_desc) as an insert statement
-
-create an insert statement for the following records where the first column is unique and autoincrementing
-
-(48, 5, 1, '1', 'Juan Pérez', 'Madrid', 'Madrid', 'Spain', '40.4168', '-3.7038', 'juanp@propsgo.com', 'juanp', '¡Soy un gran agente inmobiliario!', 'Mi descripción de agente inmobiliario es sobre mi amor por ayudar a las personas a encontrar su hogar ideal.', '48_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
-(49, 5, 1, '1', 'María López', 'Barcelona', 'Barcelona', 'Spain', '41.3851', '2.1734', 'marial@propsgo.com', 'marial', '¡Tu sueño es mi misión!', 'Como agente inmobiliario, me apasiona ayudar a mis clientes a encontrar la propiedad perfecta.', '49_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
-(50, 5, 1, '1', 'Carlos García', 'Valencia', 'Valencia', 'Spain', '39.4699', '-0.3763', 'carlosg@propsgo.com', 'carlosg', '¡Experiencia y dedicación!', 'Con años de experiencia en el sector inmobiliario, estoy aquí para guiarte en cada paso del camino.', '50_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
-(51, 5, 1, '1', 'Laura Martínez', 'Sevilla', 'Sevilla', 'Spain', '37.3886', '-5.9823', 'lauram@propsgo.com', 'lauram', '¡Tu confianza es mi prioridad!', 'Me esfuerzo por construir relaciones sólidas con mis clientes y brindar un servicio excepcional.', '51_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
-(52, 5, 1, '1', 'David Sánchez', 'Bilbao', 'Bilbao', 'Spain', '43.2630', '-2.9340', 'davids@propsgo.com', 'davids', '¡Resultados que hablan por sí mismos!', 'Mi enfoque centrado en el cliente garantiza que obtendrás los mejores resultados en tu búsqueda inmobiliaria.', '52_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036');
-
+ 
 INSERT INTO `quser` (`_id`, `u_rtype`, `u_cat`, `u_name`, `u_fullname`, `u_location`, `u_region`, `u_country`, `u_loclat`, `u_loclng`, `u_email`, `u_pass`, `u_header`, `u_desc`, `u_icon`, `u_privacy`, `u_prfs`, `u_socauthtype`, `u_socauthid`, `u_socauthtoke`, `u_dadded`) VALUES
 (48, 5, 1, '1', 'Juan Pérez', 'Madrid', 'Madrid', 'Spain', '40.4168', '-3.7038', 'juanp@propsgo.com', 'juanp', '¡Soy un gran agente inmobiliario!', 'Mi descripción de agente inmobiliario es sobre mi amor por ayudar a las personas a encontrar su hogar ideal.', '48_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
 (49, 5, 1, '1', 'María López', 'Barcelona', 'Barcelona', 'Spain', '41.3851', '2.1734', 'marial@propsgo.com', 'marial', '¡Tu sueño es mi misión!', 'Como agente inmobiliario, me apasiona ayudar a mis clientes a encontrar la propiedad perfecta.', '49_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
@@ -923,217 +909,112 @@ INSERT INTO `quser` (`_id`, `u_rtype`, `u_cat`, `u_name`, `u_fullname`, `u_locat
 (51, 5, 1, '1', 'Laura Martínez', 'Sevilla', 'Sevilla', 'Spain', '37.3886', '-5.9823', 'lauram@propsgo.com', 'lauram', '¡Tu confianza es mi prioridad!', 'Me esfuerzo por construir relaciones sólidas con mis clientes y brindar un servicio excepcional.', '51_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
 (52, 5, 1, '1', 'David Sánchez', 'Bilbao', 'Bilbao', 'Spain', '43.2630', '-2.9340', 'davids@propsgo.com', 'davids', '¡Resultados que hablan por sí mismos!', 'Mi enfoque centrado en el cliente garantiza que obtendrás los mejores resultados en tu búsqueda inmobiliaria.', '52_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036');
 
-// use an update query  for 5 new french users and update the u_header and u_desc to french and use \u unicode for special characters and quotes
-UPDATE `quser` SET `u_header` = 'Je suis un grand agent immobilier !', `u_desc` = 'Ma description d\'agent immobilier parle de mon amour pour aider les gens à trouver leur maison idéale.' WHERE `_id` = 53;
-UPDATE `quser` SET `u_header` = 'Votre rêve est ma mission !', `u_desc` = 'En tant qu\'agent immobilier, je suis passionné par l\'aide à mes clients pour trouver la propriété parfaite.' WHERE `_id` = 54;
-UPDATE `quser` SET `u_header` = 'Expérience et dévouement !', `u_desc` = 'Avec des années d\'expérience dans le secteur immobilier, je suis là pour vous guider à chaque étape du chemin.' WHERE `_id` = 55;
-UPDATE `quser` SET `u_header` = 'Votre confiance est ma priorité !', `u_desc` = 'Je m\'efforce de construire des relations solides avec mes clients et de fournir un service exceptionnel.' WHERE `_id` = 56;
-UPDATE `quser` SET `u_header` = 'Résultats qui parlent d\'eux-mêmes !', `u_desc` = 'Mon approche centrée sur le client garantit que vous obtiendrez les meilleurs résultats dans votre recherche immobilière.' WHERE `_id` = 57;
-
-
-INSERT INTO `quser` (`u_rtype`, `u_cat`, `u_name`, `u_fullname`, `u_location`, `u_region`, `u_country`, `u_loclat`, `u_loclng`, `u_email`, `u_pass`, `u_header`, `u_desc`, `u_icon`, `u_privacy`, `u_prfs`, `u_socauthtype`, `u_socauthid`, `u_socauthtoke`, `u_dadded`) VALUES
-(5, 1, '1', 'Ana Torres', 'Ciudad de México', 'CDMX', 'Mexico', '19.4326', '-99.1332', 'anatorres@propsgo.com', 'anatorres', '¡Soy una gran agente inmobiliaria!', 'Mi descripción de agente inmobiliaria es sobre mi amor por ayudar a las personas a encontrar su hogar ideal.', '53_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
-(5, 1, '1', 'Luis Martínez', 'Guadalajara', 'Jalisco', 'Mexico', '20.6597', '-103.3496', 'luismartinez@propsgo.com', 'luismartinez', '¡Tu sueño es mi misión!', 'Como agente inmobiliario, me apasiona ayudar a mis clientes a encontrar la propiedad perfecta.', '54_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
-(5, 1, '1', 'Sofía López', 'Monterrey', 'Nuevo León', 'Mexico', '25.6866', '-100.3161', 'sofialopez@propsgo.com', 'sofialopez', '¡Experiencia y dedicación!', 'Con años de experiencia en el sector inmobiliario, estoy aquí para guiarte en cada paso del camino.', '55_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
-(5, 1, '1', 'Diego Pérez', 'Puebla', 'Puebla', 'Mexico', '19.0414', '-98.2063', 'diegoperez@propsgo.com', 'diegoperez', '¡Tu confianza es mi prioridad!', 'Me esfuerzo por construir relaciones sólidas con mis clientes y brindar un servicio excepcional.', '56_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
-(5, 1, '1', 'Valentina Torres', 'Cancún', 'Quintana Roo', 'Mexico', '21.1619', '-86.8515', 'valentinatorres@propsgo.com', 'valentinatorres', '¡Resultados que hablan por sí mismos!', 'Mi enfoque centrado en el cliente garantiza que obtendrás los mejores resultados en tu búsqueda inmobiliaria.', '57_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036');
-
-
-// create insert statements for 5 new mexican users in spanish with convincing headline (u_header) and description (u_desc) as an insert statement and not using the _id column so it autoincrements
-CREATE TABLE `qlinks` (
-  `_id` int(11) NOT NULL,
-  `k_rtype` int(11) DEFAULT NULL,
-  `k_userid` int(11) DEFAULT NULL,
-  `k_coid` int(11) DEFAULT NULL,
-  `k_category` varchar(56) DEFAULT NULL,
-  `k_title` varchar(128) NOT NULL,
-  `k_matter` text DEFAULT NULL,
-  `k_privacy` varchar(56) DEFAULT NULL,
-  `k_dadded` varchar(12) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-    tmpKLnksSlctObj = {};
-    tmpKLnksSlctObj["facebook"] = "Facebook";
-    tmpKLnksSlctObj["whatsapp"] = "Whatsapp";
-    tmpKLnksSlctObj["instagram"] = "Instagram";
-    tmpKLnksSlctObj["linkedin"] = "Linkedin";
-    tmpKLnksSlctObj["twitter"] = "Twitter";
-    tmpKLnksSlctObj["web"] = "Website";
-    tmpKLnksSlctObj["email"] = "Email";
-    tmpKLnksSlctObj["telephone"] = "Telephone";
-    tmpKLnksSlctObj["sms"] = "SMS";
-    tmpKLnksSlctObj["fax"] = "Fax";
-    tmpKLnksSlctObj["other"] = "Other";
-
  
- // k_matter is the link type facebook, whatsapp, instagram, linkedin, twitter, web, email, telephone, sms, fax, other
-// create qlinks records with telephone, sms, whatsapp facebook and twitter records for each of the spanish users above
-
-/*
--- QLINKS records for Spanish quser agents (Juan Pérez, María López, Carlos García, Laura Martínez, David Sánchez)
--- Use their quser _id as k_userid and k_coid, email for facebook/twitter, and fictional Spanish phone numbers
-// create qlinks records with telephone, sms, whatsapp facebook and twitter records for each of the mexican users above where the first user has _id = 58 and the last user has _id = 62
-insert into qlinks (k_rtype, k_userid, k_coid, k_category, k_title, k_matter, k_privacy, k_dadded) values
-(5, 58, 58, 'telephone', 'Teléfono', '+52 555000058', 'public', '1742930036'),
-(5, 58, 58, 'sms', 'SMS', '+52 555000158', 'public', '1742930036'),
-(5, 58, 58, 'whatsapp', 'WhatsApp', '+52 555000258', 'public', '1742930036'),
-(5, 58, 58, 'facebook', 'Facebook', 'ana.torres@propsgo.com', 'public', '1742930036'),
-(5, 58, 58, 'twitter', 'Twitter', 'ana.torres@propsgo.com', 'public', '1742930036'),
-(5, 59, 59, 'telephone', 'Teléfono', '+52 555000059', 'public', '1742930036'),
-(5, 59, 59, 'sms', 'SMS', '+52 555000159', 'public', '1742930036'),
-(5, 59, 59, 'whatsapp', 'WhatsApp', '+52 555000259', 'public', '1742930036'),
-(5, 59, 59, 'facebook', 'Facebook', 'luis.martinez@propsgo.com', 'public', '1742930036'),
-(5, 59, 59, 'twitter', 'Twitter', 'luis.martinez@propsgo.com', 'public', '1742930036'),
-(5, 60, 60, 'telephone', 'Teléfono', '+52 555000060', 'public', '1742930036'),
-(5, 60, 60, 'sms', 'SMS', '+52 555000160', 'public', '1742930036'),
-(5, 60, 60, 'whatsapp', 'WhatsApp', '+52 555000260', 'public', '1742930036'),
-(5, 60, 60, 'facebook', 'Facebook', 'sofia.lopez@propsgo.com', 'public', '1742930036'),
-(5, 60, 60, 'twitter', 'Twitter', 'sofia.lopez@propsgo.com', 'public', '1742930036'),
-(5, 61, 61, 'telephone', 'Teléfono', '+52 555000061', 'public', '1742930036'),
-(5, 61, 61, 'sms', 'SMS', '+52 555000161', 'public', '1742930036'),
-(5, 61, 61, 'whatsapp', 'WhatsApp', '+52 555000261', 'public', '1742930036'),
-(5, 61, 61, 'facebook', 'Facebook', 'diego.perez@propsgo.com', 'public', '1742930036'),
-(5, 61, 61, 'twitter', 'Twitter', 'diego.perez@propsgo.com', 'public', '1742930036'),
-(5, 62, 62, 'telephone', 'Teléfono', '+52 555000062', 'public', '1742930036'),
-(5, 62, 62, 'sms', 'SMS', '+52 555000162', 'public', '1742930036'),
-(5, 62, 62, 'whatsapp', 'WhatsApp', '+52 555000262', 'public', '1742930036'),
-(5, 62, 62, 'facebook', 'Facebook', 'valentina.torres@propsgo.com', 'public', '1742930036'),
-(5, 62, 62, 'twitter', 'Twitter', 'valentina.torres@propsgo.com', 'public', '1742930036');
-
-
-INSERT INTO `property` (`_id`, `prtype`, `pcoid`, `ptitle`, `pcontent`, `ptype`, `bhk`, `stype`, `bedroom`, `bathroom`, `balcony`, `kitchen`, `hall`, `pfloors`, `size`, `price`, `pdoornum`, `pstreet`, `location`, `city`, `state`, `country`, `pzipcode`, `ploclat`, `ploclng`, `feature`, `pimage`, `pprf_showslr`, `pprf_showftd`, `pprf_showloc`, `pprf_prvcy`, `uid`, `pstatus`, `mapimage`, `topmapimage`, `groundmapimage`, `totalfloor`, `pdadded`) VALUES
-(91, 5, 5, 'Titulo.. Moradia... ', '', 'house', 'on', 'sell', 5, 2, 1, 1, 1, '2', 5, '199.000', '1', '1', '1', 'Catarroja', 'Valencia', 'Spain', '1', '39.4', '-0.4', '5', 'default.jpg', '5', '5', '5', '5', 50, 'pending', '5', '5', '5', '5', '1758465346'),
-(92, 5, 5, 'Titulo.. Moradia... ', '', 'house', 'on', 'sell', 5, 2, 1, 1, 1, '2', 5, '1.199.000', '1', '1', '1', 'Agaete', 'Vecindario', 'Spain', '1', '28.1002', '-15.7', '5', 'default.jpg', '5', '5', '5', '5', 50, 'pending', '5', '5', '5', '5', '1758466089'),
-(93, 5, 5, 'Titulo.. Moradia... ', '', 'house', 'on', 'sell', 5, 2, 1, 1, 1, '2', 5, '199', '21', '1', '1', 'Alpiarca', 'Santarem', 'Portugal', '1', '39.2571', '-8.58187', '5', '78_9270b123cc274ddf.jpg', '5', '5', '5', 'private', 46, 'pending', '5', '5', '5', '5', '1758467912'),
-(94, 5, 5, 'Titulo.. Moradia... ', '', 'house', 'on', 'sell', 5, 2, 1, 1, 1, '2', 5, '199.000', '1', '1', '1', '1', '1', 'Portugal', '1', '', '', '5', 'default.jpg', '5', '5', '5', '5', 62, 'pending', '5', '5', '5', '5', '1758480801');
-
-// using the query on lines 1003 - 1007 above as a template, create 5 new property records for each of the 5 new spanish users above (Juan Pérez, María López, Carlos García, Laura Martínez, David Sánchez) where the first user has _id = 52 and the last user has _id = 62 using the mexican city names above (Ciudad de México, Guadalajara, Monterrey, Puebla, Cancún) and fictional street names and numbers and realistic prices in mexican pesos and sizes in square meters and 4 bhk for houses and 3 bhk for apartments and condos and villas starting with propert._id = 95 and ending with property._id = 99
 INSERT INTO `property` (`prtype`, `pcoid`, `ptitle`, `pcontent`, `ptype`, `bhk`, `stype`, `bedroom`, `bathroom`, `balcony`, `kitchen`, `hall`, `pfloors`, `size`, `price`, `pdoornum`, `pstreet`, `location`, `city`, `state`, `country`, `pzipcode`, `ploclat`, `ploclng`, `feature`, `pimage`, `pprf_showslr`, `pprf_showftd`, `pprf_showloc`, `pprf_prvcy`, `uid`, `pstatus`, `mapimage`, `topmapimage`, `groundmapimage`, `totalfloor`, `pdadded`) VALUES
 (95, 48, 'Casa en Ciudad de México', 'Hermosa casa en el corazón de la ciudad.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 120, '3.500.000', '123', 'Calle Falsa', 'Colonia Centro', 'Ciudad de México', 'CDMX', 'Mexico', '06000', '19.4326', '-99.1332', '5', 'default.jpg', '48', 'public', 'public', 'public', 48, 'available', '5', '5', '5', '5', '1758500000'),
 (96, 49, 'Departamento en Guadalajara', 'Moderno departamento con vista a la ciudad.', 'apartment', 'on', 'sell', 3, 2, 1, 1, 1, '1', 85, '2.800.000', '456', 'Avenida Siempre Viva', 'Zapopan', 'Guadalajara', 'Jalisco', 'Mexico', '44100', '20.6597', '-103.3496', '5', 'default.jpg', '49', 'public', 'public', 'public', 49, 'available', '5', '5', '5', '5', '1758501000'),
 (97, 50, 'Villa en Monterrey', 'Exclusiva villa con piscina y jardín.', 'villa', 'on', 'sell', 4, 4, 1, 1, 1, '2', 200, '5.500.000', '789', 'Boulevard de los Sueños Rotos', 'San Pedro Garza García', 'Monterrey', 'Nuevo León', 'Mexico', '66220', '25.6866', '-100.3161', '5', 'default.jpg', '50', 'public', 'public', 'public', 50, 'available', '5', '5', '5', '5', '1758502000'),
 (98, 51, 'Casa en Puebla', 'Acogedora casa cerca del centro histórico.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 110, '3.200.000', '321', 'Calle de la Amargura', 'Centro', 'Puebla', 'Puebla', 'Mexico', '72000', '19.0414', '-98.2063', '5', 'default.jpg', '51', 'public', 'public', 'public', 51, 'available', '5', '5', '5', '5', '1758503000'),
 (99, 52, 'Condominio en Cancún', 'Condominio frente al mar con todas las comodidades.', 'condo', 'on', 'sell', 3, 2, 1, 1, 1, '1', 90, '4.000.000', '654', 'Avenida Kukulcán', 'Zona Hotelera', 'Cancún', 'Quintana Roo', 'Mexico', '77500', '21.1619', '-86.8515', '5', 'default.jpg', '52', 'public', 'public', 'public', 52, 'available', '5', '5', '5', '5', '1758504000'); 
+ 
 
-// create another five property records for the 5 new french users above (Jean Dupont, Marie Curie, Paul Martin, Claire Bernard, Lucas Dubois) where the first user has _id = 53 and the last user has _id = 57 using fictional french city names (Paris, Lyon, Marseille, Toulouse, Nice) and fictional street names and numbers and realistic prices in euros and sizes in square meters and 4 bhk for houses and 3 bhk for apartments and condos and villas and the property._id should start with 100 and end with 104 and property.uid should match the respective quser._id
+CREATE TABLE `quser` (
+  `_id` int(11) NOT NULL,
+  `u_rtype` int(11) DEFAULT NULL,
+  `u_cat` int(12) NOT NULL,
+  `u_name` varchar(64) DEFAULT NULL,
+  `u_fullname` varchar(128) NOT NULL,
+  `u_location` varchar(64) NOT NULL,
+  `u_region` varchar(64) NOT NULL,
+  `u_country` varchar(64) NOT NULL,
+  `u_loclat` varchar(24) NOT NULL,
+  `u_loclng` varchar(24) NOT NULL,
+  `u_email` varchar(128) DEFAULT NULL,
+  `u_pass` varchar(128) DEFAULT NULL,
+  `u_header` varchar(256) DEFAULT NULL,
+  `u_desc` text NOT NULL,
+  `u_icon` varchar(128) NOT NULL,
+  `u_privacy` varchar(12) NOT NULL,
+  `u_prfs` text NOT NULL,
+  `u_socauthtype` int(11) DEFAULT NULL,
+  `u_socauthid` varchar(128) DEFAULT NULL,
+  `u_socauthtoke` text DEFAULT NULL,
+  `u_dadded` varchar(14) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `quser`
+--
+
+INSERT INTO `quser` (`_id`, `u_rtype`, `u_cat`, `u_name`, `u_fullname`, `u_location`, `u_region`, `u_country`, `u_loclat`, `u_loclng`, `u_email`, `u_pass`, `u_header`, `u_desc`, `u_icon`, `u_privacy`, `u_prfs`, `u_socauthtype`, `u_socauthid`, `u_socauthtoke`, `u_dadded`) VALUES 
+(63, 5, 1, '1', 'Luís Ferreira', 'Porto', 'Porto', 'Portugal', '41.1496', '-8.6109', 'luisferreira@propsgo.com', 'luisferreira', 'Seu sonho é minha missão!', 'Como agente imobiliário, sou apaixonado por ajudar meus clientes a encontrar a propriedade perfeita.', '64_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(64, 5, 1, '1', 'Sofia Costa', 'Coimbra', 'Coimbra', 'Portugal', '40.2033', '-8.4103', 'sofiacosta@propsgo.com', 'sofiacosta', 'Experiência e dedicação!', 'Com anos de experiência no setor imobiliário, estou aqui para guiá-lo em cada passo do caminho.', '65_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(65, 5, 1, '1', 'Diego Almeida', 'Braga', 'Braga', 'Portugal', '41.5503', '-8.4265', 'diegoalmeida@propsgo.com', 'diegoalmeida', 'Sua confiança é minha prioridade!', 'Esforço-me para construir relacionamentos sólidos com meus clientes e fornecer um serviço excepcional.', '66_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(66, 5, 1, '1', 'Valentina Santos', 'Funchal', 'Madeira', 'Portugal', '32.6665', '-16.9245', 'valentinasantos@propsgo.com', 'valentinasantos', 'Resultados que falam por si mesmos!', 'Minha abordagem centrada no cliente garante que você obterá os melhores resultados em sua busca imobiliária.', '67_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036');
+
+
+CREATE TABLE `property` (
+  `_id` int(50) NOT NULL,
+  `prtype` int(6) NOT NULL,
+  `pcoid` int(8) NOT NULL,
+  `ptitle` varchar(200) NOT NULL,
+  `pcontent` longtext NOT NULL,
+  `ptype` varchar(100) NOT NULL,
+  `bhk` varchar(50) NOT NULL,
+  `stype` varchar(100) NOT NULL,
+  `bedroom` int(50) NOT NULL,
+  `bathroom` int(50) NOT NULL,
+  `balcony` int(50) NOT NULL,
+  `kitchen` int(50) NOT NULL,
+  `hall` int(50) NOT NULL,
+  `pfloors` varchar(50) NOT NULL,
+  `size` int(50) NOT NULL,
+  `price` varchar(12) NOT NULL,
+  `pdoornum` varchar(12) NOT NULL,
+  `pstreet` varchar(212) NOT NULL,
+  `location` varchar(200) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `state` varchar(100) NOT NULL,
+  `country` varchar(64) NOT NULL,
+  `pzipcode` varchar(12) NOT NULL,
+  `ploclat` varchar(64) NOT NULL,
+  `ploclng` varchar(64) NOT NULL,
+  `feature` longtext NOT NULL,
+  `pimage` varchar(300) NOT NULL,
+  `pprf_showslr` varchar(12) NOT NULL,
+  `pprf_showftd` varchar(12) NOT NULL,
+  `pprf_showloc` varchar(12) NOT NULL,
+  `pprf_prvcy` varchar(12) NOT NULL,
+  `uid` int(50) NOT NULL,
+  `pstatus` varchar(50) NOT NULL,
+  `mapimage` varchar(300) NOT NULL,
+  `topmapimage` varchar(300) NOT NULL,
+  `groundmapimage` varchar(300) NOT NULL,
+  `totalfloor` varchar(50) NOT NULL,
+  `pdadded` varchar(24) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+// create insert statements of a new property for property table for user Luís Ferreira (id 63) and Sofia Costa (id 64) and Diego Almeida (id 65) and Valentina Santos (id 66) with different cities in Portugal
+
 INSERT INTO `property` (`prtype`, `pcoid`, `ptitle`, `pcontent`, `ptype`, `bhk`, `stype`, `bedroom`, `bathroom`, `balcony`, `kitchen`, `hall`, `pfloors`, `size`, `price`, `pdoornum`, `pstreet`, `location`, `city`, `state`, `country`, `pzipcode`, `ploclat`, `ploclng`, `feature`, `pimage`, `pprf_showslr`, `pprf_showftd`, `pprf_showloc`, `pprf_prvcy`, `uid`, `pstatus`, `mapimage`, `topmapimage`, `groundmapimage`, `totalfloor`, `pdadded`) VALUES
-(100, 53, 'Maison à Paris', 'Belle maison au c?ur de la ville.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 120, '450.000', '12', 'Rue Fausse', 'Quartier Latin', 'Paris', 'Île-de-France', 'France', '75005', '48.8566', '2.3522', '5', 'default.jpg', '53', 'public', 'public', 'public', 53, 'available', '5', '5', '5', '5', '1758600000'),
-(101, 54, 'Appartement à Lyon', 'Appartement moderne avec vue sur la ville.', 'apartment', 'on', 'sell', 3, 2, 1, 1, 1, '1', 85, '350.000', '34', 'Avenue Toujours Vive', 'Presqu\'île', 'Lyon', 'Auvergne-Rhône-Alpes', 'France', '69002', '45.7640', '4.8357', '5', 'default.jpg', '54', 'public', 'public', 'public', 54, 'available', '5', '5', '5', '5', '1758601000'),
-(102, 55, 'Villa à Marseille', 'Villa exclusive avec piscine et jardin.', 'villa', 'on', 'sell', 4, 4, 1, 1, 1, '2', 200, '750.000', '56', 'Boulevard des Rêves Brisés', 'Le Panier', 'Marseille', 'Provence-Alpes-Côte d\'Azur', 'France', '13002', '43.2965', '5.3698', '5', 'default.jpg', '55', 'public', 'public', 'public', 55, 'available', '5', '5', '5', '5', '1758602000'),
-(103, 56, 'Maison à Toulouse', 'Charmante maison près du centre historique.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 110, '400.000', '78', 'Rue de la Tristesse', 'Capitole', 'Toulouse', 'Occitanie', 'France', '31000', '43.6045', '1.4442', '5', 'default.jpg', '56', 'public', 'public', 'public', 56, 'available', '5', '5', '5', '5', '1758603000'),
-(104, 57, 'Condominium à Nice', 'Condominium en bord de mer avec toutes les commodités.', 'condo', 'on', 'sell', 3, 2, 1, 1, 1, '1', 90, '500.000', '90', 'Avenue des Anges', 'Promenade des Anglais', 'Nice', 'Provence-Alpes-Côte d\'Azur', 'France', '06000', '43.7102', '7.2620', '5', 'default.jpg', '57', 'public', 'public', 'public', 57, 'available', '5', '5', '5', '5', '1758604000');   
+(100, 63, 'Apartamento em Lisboa', 'Apartamento moderno no centro de Lisboa.', 'apartment', 'on', 'sell', 3, 2, 1, 1, 1, '1', 90, '350.000', '10', 'Rua da Liberdade', 'Baixa', 'Lisboa', 'Lisboa', 'Portugal', '1100-123', '38.7223', '-9.1393', '5', 'default.jpg', '63', 'public', 'public', 'public', 63, 'available', '5', '5', '5', '5', '1758600000'),
+(101, 64, 'Moradia em Faro', 'Moradia espaçosa perto da praia.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 150, '450.000', '20', 'Avenida do Mar', 'Vila Real de Santo António', 'Faro', 'Faro', 'Portugal', '8900-123', '37.0179', '-7.9304', '5', 'default.jpg', '64', 'public', 'public', 'public', 64, 'available', '5', '5', '5', '5', '1758601000'),
+(102, 65, 'T2 em Braga', 'Apartamento T2 no centro de Braga.', 'apartment', 'on', 'sell', 2, 1, 1, 1, 1, '1', 75, '200.000', '30', 'Rua do Souto', 'Centro', 'Braga', 'Braga', 'Portugal', '4700-123', '41.5503', '-8.4265', '5', 'default.jpg', '65', 'public', 'public', 'public', 65, 'available', '5', '5', '5', '5', '1758602000'),
+(103, 66, 'Apartamento em Coimbra', 'Apartamento acolhedor perto da Universidade.', 'apartment', 'on', 'sell', 2, 1, 1, 1, 1, '1', 80, '220.000', '40', 'Rua da Sofia', 'Santo António dos Olivais', 'Coimbra', 'Coimbra', 'Portugal', '3000-123', '40.2033', '-8.4103', '5', 'default.jpg', '66', 'public', 'public', 'public', 66, 'available', '5', '5', '5', '5', '1758603000');    
 
-// create another 3 properties for each of the 5 new mexican users above (Ana Torres, Luis Martínez, Sofía López, Diego Pérez, Valentina Torres) where the first user has _id = 58 and the last user has _id = 62 using fictional mexican city names (Tijuana, León, Mérida, Querétaro, San Luis Potosí) and fictional street names and numbers and realistic prices in mexican pesos and sizes in square meters and 4 bhk for houses and 3 bhk for apartments and condos and villas and the property._id should start with 105 and end with 119 and property.uid should match the respective quser._id
+// create insert statements of a new property for property table for user Luís Ferreira (id 63) and Sofia Costa (id 64) and Diego Almeida (id 65) and Valentina Santos (id 66) with different cities in Portugal not used in the previous insert statements
+
 INSERT INTO `property` (`prtype`, `pcoid`, `ptitle`, `pcontent`, `ptype`, `bhk`, `stype`, `bedroom`, `bathroom`, `balcony`, `kitchen`, `hall`, `pfloors`, `size`, `price`, `pdoornum`, `pstreet`, `location`, `city`, `state`, `country`, `pzipcode`, `ploclat`, `ploclng`, `feature`, `pimage`, `pprf_showslr`, `pprf_showftd`, `pprf_showloc`, `pprf_prvcy`, `uid`, `pstatus`, `mapimage`, `topmapimage`, `groundmapimage`, `totalfloor`, `pdadded`) VALUES
-(105, 58, 'Casa en Tijuana', 'Hermosa casa en el corazón de la ciudad.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 120, '3.800.000', '123', 'Calle Imaginaria', 'Colonia Centro', 'Tijuana', 'Baja California', 'Mexico', '22000', '32.5149', '-117.0382', '5', 'default.jpg', '58', 'public', 'public', 'public', 58, 'available', '5', '5', '5', '5', '1758700000'),
-(106, 58, 'Departamento en Tijuana', 'Moderno departamento con vista a la ciudad.', 'apartment', 'on', 'sell', 3, 2, 1, 1, 1, '1', 85, '2.900.000', '456', 'Avenida Ficticia', 'Zona Río', 'Tijuana', 'Baja California', 'Mexico', '22010', '32.5149', '-117.0382', '5', 'default.jpg', '58', 'public', 'public', 'public', 58, 'available', '5', '5', '5', '5', '1758701000'),
-(107, 58, 'Villa en Tijuana', 'Exclusiva villa con piscina y jardín.', 'villa', 'on', 'sell', 4, 4, 1, 1, 1, '2', 200, '5.600.000', '789', 'Boulevard de los Sueños', 'Playas de Tijuana', 'Tijuana', 'Baja California', 'Mexico', '22015', '32.5149', '-117.0382', '5', 'default.jpg', '58', 'public', 'public', 'public', 58, 'available', '5', '5', '5', '5', '1758702000'),
-(108, 59, 'Casa en León', 'Acogedora casa cerca del centro histórico.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 110, '3.300.000', '321', 'Calle de los Sueños', 'Centro', 'León', 'Guanajuato', 'Mexico', '37000', '21.1619', '-101.6869', '5', 'default.jpg', '59', 'public', 'public', 'public', 59, 'available', '5', '5', '5', '5', '1758703000'),
-(109, 59, 'Departamento en León', 'Moderno departamento con vista a la ciudad.', 'apartment', 'on', 'sell', 3, 2, 1, 1, 1, '1', 85, '2.700.000', '654', 'Avenida de la Esperanza', 'San Juan Bosco', 'León', 'Guanajuato', 'Mexico', '37010', '21.1619', '-101.6869', '5', 'default.jpg', '59', 'public', 'public', 'public', 59, 'available', '5', '5', '5', '5', '1758704000'),
-(110, 59, 'Villa en León', 'Exclusiva villa con piscina y jardín.', 'villa', 'on', 'sell', 4, 4, 1, 1, 1, '2', 200, '5.400.000', '987', 'Boulevard de la Vida', 'Las Joyas', 'León', 'Guanajuato', 'Mexico', '37015', '21.1619', '-101.6869', '5', 'default.jpg', '59', 'public', 'public', 'public', 59, 'available', '5', '5', '5', '5', '1758705000'),
-(111, 60, 'Casa en Mérida', 'Hermosa casa en el corazón de la ciudad.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 120, '3.600.000', '123', 'Calle del Sol', 'Centro', 'Mérida', 'Yucatán', 'Mexico', '97000', '20.9674', '-89.5926', '5', 'default.jpg', '60', 'public', 'public', 'public', 60, 'available', '5', '5', '5', '5', '1758706000'),
-(112, 60, 'Departamento en Mérida', 'Moderno departamento con vista a la ciudad.', 'apartment', 'on', 'sell', 3, 2, 1, 1, 1, '1', 85, '2.600.000', '456', 'Avenida de los Sueños', 'Santa Ana', 'Mérida', 'Yucatán', 'Mexico', '97010', '20.9674', '-89.5926', '5', 'default.jpg', '60', 'public', 'public', 'public', 60, 'available', '5', '5', '5', '5', '1758707000'),
-(113, 60, 'Villa en Mérida', 'Exclusiva villa con piscina y jardín.', 'villa', 'on', 'sell', 4, 4, 1, 1, 1, '2', 200, '5.700.000', '789', 'Boulevard de la Paz', 'Chuburná', 'Mérida', 'Yucatán', 'Mexico', '97015', '20.9674', '-89.5926', '5', 'default.jpg', '60', 'public', 'public', 'public', 60, 'available', '5', '5', '5', '5', '1758708000'),
-(114, 61, 'Casa en Querétaro', 'Acogedora casa cerca del centro histórico.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 110, '3.400.000', '321', 'Calle de la Alegría', 'Centro', 'Querétaro', 'Querétaro', 'Mexico', '76000', '20.5888', '-100.3899', '5', 'default.jpg', '61', 'public', 'public', 'public', 61, 'available', '5', '5', '5', '5', '1758709000'),
-(115, 61, 'Departamento en Querétaro', 'Moderno departamento con vista a la ciudad.', 'apartment', 'on', 'sell', 3, 2, 1, 1, 1, '1', 85, '2.500.000', '654', 'Avenida de la Luz', 'Juriquilla', 'Querétaro', 'Querétaro', 'Mexico', '76010', '20.5888', '-100.3899', '5', 'default.jpg', '61', 'public', 'public', 'public', 61, 'available', '5', '5', '5', '5', '1758710000'),
-(116, 61, 'Villa en Querétaro', 'Exclusiva villa con piscina y jardín.', 'villa', 'on', 'sell', 4, 4, 1, 1, 1, '2', 200, '5.800.000', '987', 'Boulevard de la Esperanza', 'El Refugio', 'Querétaro', 'Querétaro', 'Mexico', '76015', '20.5888', '-100.3899', '5', 'default.jpg', '61', 'public', 'public', 'public', 61, 'available', '5', '5', '5', '5', '1758711000'),
-(117, 62, 'Casa en San Luis Potosí', 'Hermosa casa en el corazón de la ciudad.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 120, '3.700.000', '123', 'Calle de los Sueños', 'Centro', 'San Luis Potosí', 'San Luis Potosí', 'Mexico', '78000', '22.1565', '-100.9855', '5', 'default.jpg', '62', 'public', 'public', 'public', 62, 'available', '5', '5', '5', '5', '1758712000'),
-(118, 62, 'Departamento en San Luis Potosí', 'Moderno departamento con vista a la ciudad.', 'apartment', 'on', 'sell', 3, 2, 1, 1, 1, '1', 85, '2.400.000', '456', 'Avenida de la Vida', 'Lomas', 'San Luis Potosí', 'San Luis Potosí', 'Mexico', '78010', '22.1565', '-100.9855', '5', 'default.jpg', '62', 'public', 'public', 'public', 62, 'available', '5', '5', '5', '5', '1758713000'),
-(119, 62, 'Villa en San Luis Potosí', 'Exclusiva villa con piscina y jardín.', 'villa', 'on', 'sell', 4, 4, 1, 1, 1, '2', 200, '5.900.000', '789', 'Boulevard de la Fortuna', 'Tangamanga', 'San Luis Potosí', 'San Luis Potosí', 'Mexico', '78015', '22.1565', '-100.9855', '5', 'default.jpg', '62', 'public', 'public', 'public', 62, 'available', '5', '5', '5', '5', '1758714000');
+(104, 63, 'Moradia em Sintra', 'Moradia charmosa com vista para o mar.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 130, '600.000', '50', 'Rua das Flores', 'Colares', 'Sintra', 'Lisboa', 'Portugal', '2700-123', '38.8029', '-9.3817', '5', 'default.jpg', '63', 'public', 'public', 'public', 63, 'available', '5', '5', '5', '5', '1758604000'),
+(105, 64, 'Apartamento em Aveiro', 'Apartamento moderno com vista para os canais.', 'apartment', 'on', 'sell', 3, 2, 1, 1, 1, '1', 95, '300.000', '60', 'Avenida Dr. Lourenço Peixinho', 'Centro', 'Aveiro', 'Aveiro', 'Portugal', '3800-123', '40.6405', '-8.6538', '5', 'default.jpg', '64', 'public', 'public', 'public', 64, 'available', '5', '5', '5', '5', '1758605000'),
+(106, 65, 'Casa em Viseu', 'Casa tradicional com quintal espaçoso.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 140, '400.000', '70', 'Rua Direita', 'Centro', 'Viseu', 'Viseu', 'Portugal', '3500-123', '40.6610', '-7.9097', '5', 'default.jpg', '65', 'public', 'public', 'public', 65, 'available', '5', '5', '5', '5', '1758606000'),
+(107, 66, 'Apartamento em Évora', 'Apartamento acolhedor no centro histórico.', 'apartment', 'on', 'sell', 2, 1, 1, 1, 1, '1', 70, '180.000', '80', 'Rua do Raimundo', 'Centro', 'Évora', 'Évora', 'Portugal', '7000-123', '38.5719', '-7.9135', '5', 'default.jpg', '66', 'public', 'public', 'public', 66, 'available', '5', '5', '5', '5', '1758607000');
 
-
-INSERT INTO `propdescs` (`_id`, `pd_rtype`, `pd_uid`, `pd_coid`, `pd_prpid`, `pd_prptlng`, `pd_prptype`, `pd_prptitle`, `pd_prpdesc`, `pd_dadded`) VALUES
-(51, 5, 48, 24088, 88, 'fr_fr', '5', 'JMFwhg5gpgBFB2MBuCSwAcwMJgDa9gBNYEJcx5CYg', 'KIDwxgNgrgzglgMwAQFMAuToFs4DsVQhIwD2sSwUATiQA4CGSAggG4q5QrABk9WtAbiQA1JCQQIqKJGGkJ6uNPRho4AR07EyMCtTrTW7TgBokARgBsAFiRYATDJK4VVKHAz02YJFHxIA5lQKACbSaChUQTAw0iRUcOxo3Cj0YFDhAtIwUMGmcMHJqekoAvQQSLRkVBU0CO4RSMFQWhAocOVoZOGYAOQKuIVpGSgAdEgAMoxY9HCkuI2zlTGN0gDMMgAWfABGUjrBPXFw-njSVqadxTqeKN5gyglUOnhJKUMlgYPFAjroK4TEMqtfbSbYzZyOfgQZKBG4CcIwUy+aTsYhucJjACS5WCixIywOyJkbngfhgDDACVg0hu3hQ5NS0lCmE89H80jwBTe31o7GCCjQpgYVHk7gqVVs4PCuDg1QghyowSkqAwEEYCCcYFUTlwZXcXwySF4sLYQjVktmTjGk0BEFaRrZQVNktw7Oq9IwDMpBGWf2wp2pplpWioqiZstu3TYTxZSHCkWUMVMGjgDpNJS080u1WWYB1kZpXkw9KQAC8nCW81gsMiQb1qGCZTB6NrcMm3GIJMrfAEgrhgo5cBrQyrxRAAJ4sMrsWRjADCJH4Un7AXoQXZMjXVANGf5EPttHiIDyziUdpbcCcK1XpaQurQ1BQECDssHuNbA25hsT1AFxcHw4YMaToZpcGBYIuiTXvK-Q7pkYwACIKDoRINgoswXlepDHJ+RTDEGRZ5tQaB1tKTZCvQoTPhUsyUvgiKoF60iVNQqBDgKvwYAAVmuuLOEKEqyACKZIPQtCHnB3qKL07AsLK+ZYFB9wQIpo4wNwUCUlQYACFQYwAPKUiQpj+MoaA0Lgi4JKY9wIHBnE+H4dTzM2ELOSs1wQPG95wGwMBjEwYBgDCIE-Eg8iUva9AArC-YljQVyQqpACyAC0VgAAxIAAmswqUWKOaUAKwZasNnSCJP7KqE+xwbQaqyIpig6EEtD5CW0Y6PasiKNV0jJZR8QDn8BzReZ8VwScTj+RQ4BPq0zVxn25JxCRbFJb4ABcmA4SWzLbOQfwqJh8zMlgcHmSQEzHBEV3ZHKPSGDK-LXpQNAMGMwi+cq929E9+SMMyb10Iw8D+DKdTMbU9TVIS8yyfJuD4E1GDbl+JTwKEigJOUymqUdGlaTp1TBjBU6KGyTJ9CwJCvjVxARHJsg6Fs6TXqZ1YoKY9P0hSHURGtfw9uZyGVCOCP0Ns9rAXCjjEeGx24LOSBzj0HqOWxSq0xgwqijrgkEEQIlSGAGwRKbUHmhoeqvHhu7SHJKBAA', '5'),
-(52, 5, 48, 24088, 88, 'en_us', '5', 'IIBwhgTgLgtgpgOygAgGYHsLIM5gDZzICWCyAwvgcgCaECiCA5nmAtckA', 'KIDwxgNgrgzglgNwKYAICGA7AJigRgJzgHMALAFxQgHsB3FKjFAQWQzizRS1WCnyoAOaYCgBkaALYCA3OimyAavQBmypPhgoyJOJuWYyaGGThhKteoxZI2HLjz6C0AGhQBGAGwAWFBIBMeFBwEBQ0cNqUaPhEqDBUUBH6YHAYRFrq+GhgSK7sSGgQKMpU+Cg2AFZUAJ4padqxUIwFhVX5pfyNWAB0KAAqJKgk8TCDRigAzHhIWPxUEppUyvSERCkoXq7NKGGJ4WTT21EzVLhImpg4ZDRURVAQhbho2rPzrgyoi1oDEihrMEFkLoASQoJDGMCEyWGKAA1uEwANGDsSCgRkJMvtDjAdKl0Ph8q4BOo1GAKMVShI0ClDClastuKULrcMKS4AwCuEqr9GPUUEMJEgev1UBBEHSXr9NBCsmzYOhsHgVuRXMiuHB8aSyiBwlobrz9vhMtkVToEdytHxGGAGBgkKTNKredaJBIGHj8gslry+I82AAvJ5sjAm0wogT8BB5TREfFPFDO8kUJnIDSB0VkKo9EHcyBQbjnFBEKJoGLm3nh0w5FAYJ58AqFsYpYzNQMMTbq+MMLDhIN0mz-Qi4hMlJNJjBckwClRfVCtKJZii6cxgJ4HNacGhIe4AWkp1KptpwPswcADJjb23CKP2GDYmmtfDIhLQ3AgrhgYRddIEVCoEBgrgIsEMw2AA5OcsbyjgRb4NwTSxgBRQlF8VAjNsQwoAgBRQKgnAAI5BEgY44DAaBqGUGCRvwGAChggIoAAMlQK77DgbrlvixjELKmjWBgOHTrw-BEm8trTryrrGFqubwMgUGdhIiZoLgEC4Qh04AApUH6OHUMwEBRGAohUFkCRINIwboEUSB0NS6g1ueNaFAMBQRNkdGcbkPIDCgFZYZiMAIr+-7iT5ABawRUCqV5WVhhBEVynx2fgDlBvWLkhCiK74vGNhkJ56AOluhSNt5qB+auqJBX+iFrBxiCVYFQw1aFqARdQPQMUguh8FWRbGNRcxVIBZGiPkYBmdI5wKpgFFYKpMDnCE9mBsgPTAEYXJZNki26jOvgHigHT7FKUBmmMvIALLbl4AAMKAAJrMNuHjyddACst3jCGZr9r1miZAI7C+FQyC0WQmhkHqPnuQa06XS+hA4EyVD1IyCHreAxV5Z2t52o5kMkB0pC+VAKmmFomQYBCI4AFyBJooq2tNlw+ZdRH8IxxDqDczaOdOfHsJw3AoEJThdAxYq4m6gt2CLYtCL4+TUxRlQ1Li+GEU+qJ2r1R1nHkdFwPWNhUQw4PRREvIvlhdElh8SxgpGuLhkgEhwFAPwjPgkY7a4MZIDY7pjEypvGypqD5ZgNP4KEV5rDQBRwri3bNiygooNmS6cES+AkhQAgGdkSGlNoqEir+ydpOSKAERyGbTqKag9KIISyAA9L5YhEGQ0hAA', '5'),
-(53, 5, 50, 24088, 91, 'spa_spa', '5', 'AoSwzg9gBApgdlAbvALgQ1ggwmgNrmKAExlzCh0TwICcwg', 'KIDwxgNgrgzglgNwPYAICeLoFs4DskyoBGAhgFaoCmuKAggtXACYkpOUrBQBOSADiWAAyElj4BuAGookAM26UwHSjAAuHWSVyqRJMFHXi1cMMXJUa9RizYcuvAQBpbKAIwA2ACwosAJhSmuGrcUMwEAUg0onwQcKzq3NwkAF6sSNxw1KokNiQQKDA8zsyUeSgCSWxwMPIGJNy2+YT5TDxa6iiqSExU+SRC2nAQ7OJIAHQAMqwIiJm4NvpZrIEoAMxs6ThdGeHsMhkA5tQons5dPTARUdxY9XDhlGJIqkkX6BuXpAOqQyPhpmIIJQujBnFB8C5KBAIA8aIU4OoxgARap8SIcPamMB4VgqATYgjLSIoZKRVh7CAkBA5VB4dh8ahMObqZwM7iyRTZcr1Vi3bTUSgNKH7dg0DCycEE3B5Zg5FDHYUACyQB3qY2ATTyQiQegMlHEuAAtADKD0hZdorFUBhsHgCEhnCsYDKbEyFGAuaxKZ1BUlUs4AI5QDisQooBjJK6cok0SmXUnSy4A8EqFzenikXBwVLY7W6wy4ZwwlBBkNo7hcg5JGgA7qypjvBjcZ0-WIsJhjACSuEgUDQHBiKXJHFVSTIyhowr47vuxSC2UpuZ1+gLLlVl2lqjaEGcJDgChQekiTKlNJQo-a2a0PSusnSqnlNageSDmQaQlKK-1aLAw7631+fVxgAVSIEwz2OcFWAzLQryXfN9SfesSEdYk+GqLk9nULNQW5dgd3KapsUTZwE1YPBNEGfIMDIi0yHqJlpRYXCKlYEhS2hcJS3DPJ0i0R9tghF4tFfYsMBgSgDh4cYAGUEWfGxjm9acVB+A57mdOgGCzV07GkpwUCgtMSHjMlLiwXQvyMeVwGgeBqUuDAwDzKysG6EyXAABSQZJg2LPZaEpbhnOXPUDV3eUYF-QhzOBXhLnwlAAGEsl4ZKkCwQVsTKAAtTJixWakMlNOUsLmZjnEKNlMuCmlcNMIF1PCPAEmlU8gQSgcFGMJqIjcugavAmgZLAZUkAI38xFgQysybeBsh2XDlRgdCFxUR1Ut2DhnWgJhHQgIQ4isrNovKDJqQq89n24dhuEOhDxA8pzNs6+VWl-eDjpQCjL3yJSPLwTKmT0e5cBUMYUAAeQJZx1xeSIMvuqyUICEgOQSJGwqemaCjwFBZDxvY8lakgfgcsYADFLLC7E+jAJRCEPTAPOnPBsQEDrw0xwwPNrZmUAAWUNTwAAYUAATToQ13HeIWAFYRdWItUG4kzJLaWwVspVIcCycI7pIB70LeRUQdxfIlG0NK9gFnIMgbDBniSS5qcMBQTPVcAoSyVNAkoEBQdTIG4n5TpqxW+8ByEZ8rKIWJTAALkwbnENKV6SAMJAiFgVMbVxNQQZcsKaBtuLUAmOAjmtjgrB04dOH0kgxkkWYhVjVha9lFx7H4UNK6zAnfyqGoQgWlxwQE9IIW6koezifJhNwUSHQKdXeFQ9vwyWeiXGwwVV+4GYCUuFScCgLBSLMrebtzsOtAjisJxmYG45DSLovJDCtGy9VLgn6BRzlEFByD0qBWIllCMcbOUVlgulKhwZ+TcgA', '5'),
-(54, 5, 50, 24088, 91, 'pt_pt', '5', 'AoSwzg9gBApgtlAbjAdgEwIawQYQwG3xijRnzCj0QKICcKg', 'KIDwxgNgrgzglgNwPYAICmLoFs4DskyqEBGKAhigIIJq5wAmFjKwUATkgA5nABkZWTgG4AaiiQAzNGzRgMaGABcMEsrkX8yYKMqFK4YIklIVqtBkwqsO3ADQp6GAIwA2ACwosAJhSHcStiheOC0dNCF6Al8kLHJBCFRlNjYyXjA5ejgIIVRkCEUySPIiKAh7BjQyCBRuFIcFCUCCtgcjavp2NWUURSQi1DUkADoqFAALMmI4ArSMrKF+RSzHHJ60WIBmFABHKDI2Xph68TY4AHN1lDd7Xsijw1j9rE1tXVOovGUzlLv0VrgjsQ1GM0HAOPcYpwIGhDvYoLFHNCjpcYEEQq9wsohgARAGcXhIJYQFYYRzRABeeAm6Bg3FmaEy2QIFAeKBeYSEMiYGAgZAQZAusTwjk4tEc6jQ9lFbCk0wotQoWC60nIJ0csRUUFwYDgSFwVQsZMuYDIMDIIwA8igzRBFstwkgALQPBlIFq8SoYoRxKGoHnwvAEJD2Vlm4KhXTMTIyAo1fYURLSFL0xk5ey7SU1N3WvYoGjkkN62Sx1mmtlkCPhLkQrBao7MdhAujk1LpBnzO3Eh32VAZmo2N06vUUb5qMl+CRu3p-GhsM1Ew1oIYASW10Dg-dbc2y3JQZ3jgpQ+H7aBT82DKDwSiqW-b2U7K1QZLO7N0R31ik6ZXILT8mSH+pFPuKTqMKqATlOfqxLsVQZu6nocpwSAmq05D4EMACqUwmkUlzwhQjZqHALZnveZBEo+vhQIaZCFrEnAArGZIaLIYJgEIdAwFKhRoN+DEwDq+pceWlacpUl64KooHVBg5LDkcZAAFb7JkgGmtxdRkBmSI7FAGD8gkpwto8WBTLQ3SKCBuxZH61poGc7DDCgFpDvY+4BHqMQhCGZASB6onIig8J2bEEhwAiGBVEkH6IKaQwAGKvuEOrVFoCiEOWo40Ho-Z4Dq3AAnmIQ1gMKAALKOm4AAMKAAJpUI6Lh-BVACsVUbD2umRTAMD2Z09QwAkJpYOZURsElQgMb8CriL45kcMcZWFKc9B-EgOgpEcE3ViMoByNCEpHBA5y3qmBIUeEChZi0llqLSU4YPiexesQx2GAAXJgVJlmSBI6mw7F0MQsB-FY16kQs5H2qsZUwgtAAy5zSE+pg0HQUZWI53BDCIiAqvqVBoxYDiYzYFDwGcdBhShjgwI0Oj7McwUCGZEooDI8DijqVQ9FZ1EJPYvUORwdGqvy6gCpczEqr1bAIHAENRJwMg4PC9hyUJebSLTfy3f4SEHBgeA0IpE00KlNImj1TCMfw-2A9zIy8MAolBbE0DATU0iytOM0ZvRHDaHUMHHYwZJkvLjBDEAA', '5'),
-(55, 5, 50, 24088, 91, 'fr_fr', '5', 'JMFwhg5gpgBABzAblAdgEwE6wQYTAG31jSnwGcY9ECiMKg', 'KIDwxgNgrgzglgMwAQFMAuToFs4DsVQhIwD2sSAggG4q5wAmAhkk0sFAE4kAOjwAZIyzcA3EgBqSEggQcUSMPISNcaRjDRwAjlHmly7Lt3nVaugDRIAjADYALEiwAmBSVwaOUOBkY0wSKHwkAHMOFXp5NBQOMJgYeRIOOFo0fhRGMCgokT0oeksGNIyslBFGCCRuMg5KrgRvaJYoYhIIFDgKtDIozAByFVwizOyUADokABlmLEY4UlwWOar4lnkAZgUACyEAIzkYFl7EuGC8eTtLLpKD3xR-MHVkjgO8VPTh0tChkpED9FXCMRym0DhEkDtZu5XMIIGlQrcRFEYJZAvJaMQvFFxgBJCr0JYkFb0XqohReeBBGC8MDJWDyW7+FBUjLyMEQXyMYLyPD0b7ZYy4JiqSy8DjKbyVaqOSFROg1CBHDj0OSoDDspAINxgTRuXDlbx80pIQTwmhidUzOZucZTIEQNrGzlhM3S3BcmpMjDMmkEFb-bBnOmWBktDiaVlwOTa+Q0Z6YZhRGLqeKWHRwR2mo3zJBXGorMC6u49EMgpAALzcTOhWFRoPkCs4ELoMEYOtwqa8UhkKsCITCgtcuE1YdVkogAE8qOVaIpxgBhEjCOQD4KMMJchRrjiGsRCg4O7hJEAFdxqe2tuBuVYhRhlpB6tCcFAQYORwf4tuDd4-JDJzgqNV5ALIdEgwE1nSNK4MCwRcUmvBUBh3MYkAAERUA5SUbFQ5gvK9SBOL9ihGYM-FcTg0DrHNaGbEVGAiF9KjmGl8GRVBvXkKpOFQIcAL+DAACs13xdwRSlRRATTX9uEPHcfVUPpaCoSNCywOCHggVTRxgfgoBpDgwBEDhxgAeRpEhLFXDw3EXZJLAeBAdz4gIgnqBYWyhVzVhuCBEwfOAaBgcYKDAMA4Qg34NQyDp6UBeFBSrLhrmreQAFkAFo7AABiQABNSg0psUd0oAVkytY7PkSS-xVCJQR3bh2UUVTVAOMJuAYKtY33ICUhq1K6KSehR2JRgsn2JBt2-bJTjcQK2HAZ82hanN+ypUC-gWAssBrXAAC5MAIqswR2ch-g0XCFjBLAdzQLhJhOaISAxeVelMOhWDBQweEYcZxH8lUYC4hU3oYZhPs4b7iAIxBklqaQGhqYle0U5TcHwZqMEmojSngCJVGSCp1M0s6dL0gyahLfop1UTlWSpkg31q4hoiUxQDm2LJr1XbaUEsJmmWpTrogo0de1u9CqhHFHGB2B1wIRMiwwjc7cFnJA516T1nO45UGYwUVxX1sSCCISSo02aIwAt+T1R0fU3mx3cY2SIA', '5'),
-(56, 5, 50, 24088, 91, 'en_us', '5', 'IIBwhgTgLgtgpgOygAgGYHsLIM5gDZzICWCyAwvgcgCZx7blgBulcEDQA', 'GQGwLg3ABADlwHNJQKIA8DGICuBnAlgG4CmUAhgHYAmUARgE74IAWYUIA9gO5QcVQBBEhXxUyUKqRTZ6HGGRTwyAWxjQVaqADVeAM13F6uKGGb5juymDK4w+DHRvG+g4aPGTUMuWQA0UAEYANgAWKGUAJjpsfHAoLnxTdjJ6BFJcDmwkywx8CgQTQ3oyDGJ-UWIyEChdDnooYgoAKw4ATzyC03Tsfirq1sr62R6qADooABVmUmZM3BmbKABmOmIqWQ5lZ11eRgQ8qBD-PvjE5hrEsDX4lPWOWmJjShowLg4a7BBq2jJTDa3-HxSBwdl1lFADrgYmBRgBJNjMRa4eS5OZQADWiQw034CSS83kxSuN1wZny5HolX8MEMBgwbFq9WUZDy1jyHV2knqzw+FHp+D4VUSrQh-C6UFmymI4ympBARA5-whxmRJQFeHI1Doe1Y-jx5yo+Ep9IaaESJne4qu9GKpT1ZmxopMMn4GD4FGI9OM+pM0ygbuUyhcKUq219pBkPxEAC9fgKKPb7OcYLJCBVjAhKb9-ZtGWweSQjHH5WBWuN4aKsNhJE8oAgUmQ0k7xSn7GUoBRfjIqnXFnlbH043xjkac9REvGOY0oYxyQG8+R8xQRXYpXpw1ABily2xzOwOBhftcDuIuMQvgBaZmslkemiRyj4WN2YenJJXCgiYxumRgalkSQQH8XAEkDDkYA4DgQFwfxsVidZGgAcieLNNRoet6EkXosxgmo6l9Dh5niWYoEIKpsFIcQAEcYmIJcaFwMgDAaCg01kCgpQoGEoAAGQPI8aBcFtKVsJh1WMIRGgo9dpFkGlAQ9ddxSDWxTSrAgSDQnNlDzMhaBASicPXAAFDhowozhBBAFIMGADgSiyYgIATcgamIHhWUMTsX07appiqJJSi4kTyjFP1WzI4lcGxSDoKUv0AC1Yg4PUzlcsjGDokUQVFa1vPjHt-PAc5D0pf1GjAELyG9c9qj7MLSAio8oGi2YoNwg5hKIZrWtisNxSSzhxh44hzBkdt61sdjNlaWCmOASoMEciAni1SgWKoAzcCecAvLjEhxhQGwRRKUptotDdr34YYrhVbBHUWcUAFkLxCAAGKAAE1BAvIItJegBWN6lkTR1p3G4xihgURwg4EhOLAYwwEtP0gutdcnoAxgaB5Dgum5HDDswWqKrHD1+T4JHmGGFhYGwfT7BMYoKGROowAALmiYx5Q9VaXj9J66NkXimEMd4Bx89dJJEMQJCkbx5FGHiFXJFxpfcOWvDk8QpUoYxGhadpyWo2i-xaz1xqgESKi4-Ae0aNi+AR1L3z9ACyK4xtgR2RE03JFNiGUfBsHBeZ6DTM7-EzYhGgpUMtIdu39NISq9Yg+g2H1A4uCqTFyUNAc+WlKAKz3cQaXoOk2BgazSjw+pTEIuVILzgpGSgGihVLdd5QMcZQGQAB6WB4CQCAgA', '5'),
-(57, 5, 50, 24088, 92, 'spa_spa', '5', 'AoSwzg9gBApgdlAbvALgQ1ggwmgNrmKAExlyhwCcKQySpcIxy8YLGg', 'FAIQ9gdglgLmAEAHKBnBBjS8YFMBOeAhgF6Hw4TwCCRAboeocAKIQDmOANgGSEC2iANwA1bmACufToM4BrfCiR4cKCjDIr15FIhzp16cZ0J54tKOYoATDZVVtxEG0mMR1AGniZKjslAHKKFCQhG442PhEpEj4-jgwRJzwVuF8vAziuIKKKfAAjADMAAzwfPF4YCiejgi5nJWlhACeYIHwhAkMMBYNdWSMKIQAdPDMKLjwHBD4lQgqiAzB5AAeuHjBeJ4AjuLhFSlkxkpgyDg2Vp6c4WAAZsro4YcNELu0DYgVp+rrDUeIlVAAEZQThQc7JcK6PBoCCEUGkPBHMgocSTcTjMBDYAAYSwvmSqASQPE6CgYgyWUouggg2cCyI7Q+YFoegAFiZ2kk0oQKThBMt-BhCM4ygkMOJhUQrGBLv1CIMvLs3P0sAVkq0+LBWsEUAAueBHdnAgxksC8wRU9YQUkLJKGNQqnyUfiIUEIFnjMGteBNeCAwjcNwglKCOZ2cSwHCeX3SxRG2CLSAqdpWKCkkJXRQ7cKYAQmXBO7QLdNoP0BoOcEMIG78EFQEwjKgpbnmqoEnRJiHwRztVS1HOtXAobj1wxZYbUJJqIibbuUNhESjszhJQjA-BwZJkBgPUtw+CBTd9RSaUKk+WeILO6nypDykH1Nv1eDZxmD7cCUEwcRWH0GyRQBAALnFiAAyKqkrCnjePAqBHL6xAhF2uZnN6gG4AuwqEJ4yZQjcehaPSZD3ECUCmGQNaaqCZC+rWbCVI2zbpGOfJtvaypeHilDMZkfLKGQuQFikKQVH+xj0NKnhEY0LSmLmYCpiBoyUNqUx3ngEx9JxkHbpwgL4Gwa4aEk0p4JqcA-H+hj5v2ZaBt0lZ8rZqh4OY6ZgWQaxRNhL67OQEC0LsnAsgaZDmJYTg+YQ-waWQ+KqDSizkixFrIZA3QvGCwqcZQXD+RZQHwLC36JCMAAiKi5Hly6cDhSSDDwZopZQvp5aZ5naggHyATacKXo86APLkGjjOE8yJisawbPA3ASs1aaYsAACqwKMM4FChZxqbns4iGwl2NCEPQjCeJ5oTwGgz55CUmovHAOThAAspA6D1D5p5ePKyJjdaSqdAeCk4FhXZwLGBoNC5bk6toFDnpm+ofJoUBsDqDSYFcKOVNB069OEDU-p4NZmYsF4XeIUJlHga0NL6+L0OswO3BuZCGeMFQQMlvGCJqJ05eYGlkkDzXSkcG34se8B7beLYpQ9qhYQ98CPZKYIjOB3Z4P60CkKSnOUhdeOwLN5q2HOnmLjsIJyiueyA8DuT0tmbZgkDSTSamKB3JkHJaYwnB8DR5BJOu0zjCYl6AQeFCOOe5GbUyAqauCvtQD+wpYgAcv2ABWkJfaYRwnIOjhZb+uTmEE3zaIRnxQGc6fKWbktITB6hUmAjDwEzsVduFdeRYooJh4o0nThyYUWGROFh9oTcd-eet8txc1c9AnfSd4LIC9CP3HF8JhLLkdOT9YGjLK96IWMMwBAA', '5'),
-(58, 5, 46, 46, 93, 'pt_pt', '5', 'LIewTghgJglhAEMB2UCmAHVKsBdXwAP4A3LKBVAW3gEEAbdOMAc4iA', 'LIewTghgJglhAEAVALPAxiAtvCaCmAzgTAEYwA2MU0h8AdgK6YIBeIdC+dALpOfFDzwAguQAOcMADI0+WOQDcEAHQBhCAQR0Q8THnIALcPCHMYBeGDwAzGByg7C3CjoBKpCNzwArCNoA0ugww3I4EYhAychQKIJom6FjwTCYAHvjkeDxC5CAA5pAODGA6GNgpYiBRePKxgWh+FPUaCII4YGBMcQl5EB0Q1ngwkPVJBfoG0MYRkDgWgwTcGgJC1hCYUnBoDF4KlAhC6zB5ccoAcjoSBDrcUni4O3gKHXg3eJjdKYRoYCFSIA9dr8QIEmAgCn42ppyJwkjCrMMIIEAO5oeDXNBwciBGEAN0hfTgCT6nQ+FiEGBYdkmJnCkVkNRicVh2Aok3OCGhCC8ZJwtIa1BWOHwRB0EEuvz0w0u5hBiWw+jw+IcYCF32gSPg7DaWQwPFmYN0fQguLZzPRDE2gKeXnl6FyBDw3ASqPlYkyoVBzHgXjA+ER6BaQpIfiMQoglRgYu6AEcGH1QgRAmYLABmeBxhOnADy6JAt08FEEsXgd2tCmSCrp1VqOkwDHIzmsDDomPYEGxOBIeDAnp9IAc8Gs4EKYqNgkRygAMiAGpQWPTooopIXyMWJTBTZk8nBqAAuACi2DYHHQWV4HaFogkfRrMRZwsI10sK-LEkHbQaHTH3xAMKTFpiD2eh+lMAFlGW2xAm2CSOmApp3oocQKMI8CVAwGAWBEooWG0ETUL8mrWJ0SyEYEViLBAxR+F44EDJBjwKABlSLDon5YCQDCLFaUFPLi+gJPWjYeK2IAofAACMACsuh2Ds3SCsIEmpqM2CUL0iEKP8zhrk8tCwFYSwEAo0myYwiZCgAyjRt73LxCiYCZ8BGLMbRTuYJAAoEVD3PwMwIHG7w+pAIaGFonARiEl5CIIjq+PApr8aqZTBX4cYUFQNAJJmlDUIIygHpRpZ2YxlYICAlS9i2mVtFI8b2XQMANGhxoJZuPb0IaHyFESzatlGHD8EIVjuk6rQUlgA41YQgSMN61AWCeywpmh0gQOWzgNOSOAQlAr72fx5gCG4HheN4IDKAACuAgUrPx-J-gYHUIAAYh2aArjp67wK4vnwIVSxeHu2ZiKRaH6FocTxBAeR3JifoKP1CAMbsD2GB1eDpPocPDGgiOYpqeq2H4mkHJYhANksDgEMo8CqEkhp4OlERSHQJDhAogiwAKmqeFksB6Dwlw9tcg0wAug5CIaECeWA1B5EFdggMq4Cak46zdGUYglHozjUyY2ChGAHCqpy8ZpEBvw4wjSPwDAHxkJQ+2MYRpb1YxjXNUI3aYAAtAQGGMtQtMACIblKJSJDwng6CuEL8RWVgduLi6Msuq7fQ4rPs2ITF4JabMc6LRiBOrvIQOlLWzBA3gMHt632b7uQABQQAAlNnHMRYK2HPoODSYNSF2loXueFRgYUZvGuU0KXBATzSr3vZ9RZPG4f0A3zyhAA', '5'),
-(59, 5, 46, 46, 93, 'spa_spa', '5', 'LIewTghgJglhAEMB2UCmAHVKZYC6vi3gDc8EiBBAG3TjAHOEg', 'LIewTghgJglhAEAVALPAxiAdvCa0FMBnGAIxgBsYpp59sBXTBALywQMwBdJz4p94AQXIAHOGABkefLHIBuCADoAwhEII6tXgFt8AK3DwAnvG0SIuep3xzC8MPgBmMJlBC1CnCu4BKpCNZ6EJggADSm9CZEIrgwIOrG6FjwjLQAHgTkdNbw5CAA5pBu9GDuGAzYIiCs4WjBFLVqCPw4YGD02vGJ+RBtEI74MJC1yTFtFOQIYwiTds5EnGp8Ao4Q2hRwiWsw+fGK8ACi2JPwIpNcCCQQQfDWmPiddowIIM5oLhDhz-CFwfDqJ3K6AAFjBdPdPvAAO5of4gd4QcjhSYAN2C-EkcDQVhsCBMvXaj0SGHeTA8MXe8XYyRghEmigAcggAQg7g8uiciHUspBljhpIR3IjTmAwfgwKdaWEktg1BxBRKWlzEeLIW5MErMNjsrzvtpehAURMqf96BIsTi5F47EC0HlCPhOIkYUltGdHdLvtYwAReXUEi0rhIuBR+HJ3C0IFUjELcktgRAyItKfdCOEzBZsdZbPAAMzwBNJ2JYIiKA68QWcCQgSzZ7BEFL1wgUuIRcheRyMFOI8KJmDizjSwdueCOcBFWP6jFKeAAVTIdXe1drNkqoqNWXycGoAC4jnH4KwyRxuMKWsIxL1mNTZQL3JJM5axCOWiTgQINIRtbNwoR6CJxV0H1oHiEYgMpRIHTAI1KUIORBFOeEuhiQU7BaGJXHFc0VwUcJHHaRZMRwyEHE8CASmCaw03QfoJHwHDqJEegFgjAQMG0Eh6E8UgskSbR6HbfwtRAeD4AARgAVlMFwrC6FoTkEMTcxGetMEmAg0KGfA0EHODJOkzBZLQgQAGVKN6OicO0OQxILcBmgEAAZWkSBrcIqHo3hpngABHeh+2wU8rhuTRASjGBFl4Ex+AdBAjSNCUgVPTA-I2agoGJREqGgfYDjIjxGxeKowE4RhsoyiR6BwzAYDqU4DXgeKhloCo4pgI06GoUcuziJgovsfB3UWPl2JAWB0qIcJNG+eSliPJYMwYkVzBwnTaqWfFfmoEgsmM+A-CuQIQH2c0-IWOQAAVDD8yysxsZYSCwi1sw0TdmoAMURNBzC8cgw18TyAH5DjI6wdwAeREQjEIlQyFl5CB8joBECvwN6JXwDI0eRuAVOcYJr0SUiBMWNxCH2ZRklSfBUqqYMSGbOR+FgOpqF7O4lxrO65EqcVBT6mBry6kxqcwMczvgFwQjRNwwCmsiiXYkRSl0LwyZwAtcHFU10gA0UcYQFxOjIShek2SrqvWxJMYiql9gAETRkUxUSrBk0HDWTgcLLr056rlnIenGYdM1MAZkRbCwYFpQWNYuggG7nvu7yICMehqDALIAAoIAASiDiP2GgKY1FY3g6nWEITrDxm8owG5uXKqbKBuT7yG+gJQxsAHhTyxZrEUIA', '5'),
-(60, 5, 46, 46, 93, 'fr_fr', '5', 'GoSwNmCGAEIHYBMCXAHApoycAuboAPoA3DBAJz0IEEwURIyBzmIA', 'LIewTghgJglhAEAVALPCA3ApgYzd7mAzoTAEYwA2MALgGSYTYCu1mA3PFBAHaHxPd4ARyYQw1GJjDwC3apAqcA5AEEKABzhha+TLApsIAOnjAIMQiEFde8CpniFqAT3t2H6ikz4AzGIMxqd3hPb3hIHz9uekYWdngAJTIIVgArHhAAGnh5egBzSCw2PkJ1RkkmAA94QLQsXAEayoIKezka7igwEBo6nH5BdSYaQmzsAAtMbkpsgFtzS2sHJxBsAGsIPIda7AwHWk3C+PR-bL3cAspFdRAmaXtfemwYMGw2Vj4oBx8IWavtoIPNB-QgmFRMcKYABeAFovjCJhBvIQYsxWGwHNxbnwMFY+I1SHcGExso0CjwoI4IBQrH1cBNMH9ogw0exMNlCNS3F94KRzLZLM9qezeaJOlJJDUgpBuFtZlMgjthiRuMsys9MN4HOd4LQYM9Xmx7CYACI8PhuTk0wRYsK42xAoi7KhSHEQ9RgRmSaSouLvTYinVfPhO6ne0bwEC0JjkorwdDYnLdJhYT1QgYOeVgLD-LWOYasOkhCiMMSU2pW7kOPn+PjYECzTz5I7vEUCBzyHokZt7NjyqmtBw8mu2G53Ry3VjTe5EGTjX6kT0R0J8ADMc4XS5MABkHAUpt6ak4Bkf1ZmmBQJD4rNgJFZVRRsrdU9RstRJ5xbqQKL70Zxq12O4VCEYAwCcP4sn6eQwL+8QAFzwGaDoIFCVgOLI8jCsoaiaGIOgEPohhFo0jDYD2RR8JAmg8ki1SwWw9YPByTDqFI8yvOM9ERvWsxZgQUqOFIJwEIQHAAFLeIWByxvEIiYBQcl8GUnwARePBbKBIrzHkEAqv+8A+GABYRku1BIjK1DcRAPhcRyZl3gExBTPxtQqIgwAcAAjAArPATJxCp8AqJ5q5nPU-51vemCVDAeKcC8OAfF5vn+R8+kAMo8GZ2iQeisxefAkxEvp24WKQUXZDAUD0dSIS3NIBBVMIwxJhg5iDu0NgWgguyaGZbi1FgF4KvGYGekWmHcCIVw0PRAkiGGdC5ewJgAMJKEQQTtpG+C6bFggCDAcn6Sc6DjV1Gaja0CDXtwt77Q+A1BPW3DXuIEDfiKF0UEojTBs1YgSK67hKV4SmQBIikCYcNWfYFSR8mkIAmAACvVIg9HOXYvMEUANvyDgJCAzi1QAYtSL3wAhq3jNj0hYvI2pbHd6EbceEx03YG3NPJbQENkJYyFYfg8C5gKzjlsTooQF72aCQXhdt9HTaxnD0bA9FtoIhBCfqHiuveYYostHC1NtEDqB6qyTPA-hYugWUirafDOx0OlbHF0ktpCnTjQmjNNOo9GaSztu8SA5BUOR7DjYdx21JLrJsMikimu6np-FIQtyIwQRe72dgIInfpGyk+36bQ3CkKUbD+56lfV+obBdAwszZK7li8bO+owHV44JnaVVSAAFBAACUDc14ix30WZqtQBCDJMmttMWBYOvpoLC1UEtUvsGMq8kE5m+EwwijkxQlMAKJOCkmBGEAA', '5'),
-(61, 5, 46, 46, 93, 'en_us', '5', 'JIOwJgpgDh6wLgAgG4EsA26CGiBmB7AJ0QGct0JFUREBBdKVLQgc5yA', 'LIewTghgJglhAEAVALPA7jALgC3hAxvgKYDOJMARjADZYCe8MAdnvMU5pNXmEQiADN4AQWoAHOGABkhIrGoBuCADp4ACRABXEkUYscugc1KY8TKPAC2IEqd5Gmc%2BLbrVdAJUoRMRAFYQmEAAaeAA3IjAGEjECGC0SMwsMHDN4IgAPYmo3DngxagJdZNwENCJskIBrIiZHahDbcAgAc11seN0ApOM2coKwEOL4ZrAabgFweAEISxoGGLBMGFJEqdGaqBJVAHl9bF0RrXMp6hBJsvhsCHDUwSNiEIR%2B1vhaUOZm%2BDAzy3QsXCMvHyhQaIHwcG4FG82G%2BIEsIQKmnMkVWjUgLy6zhi4Pi8EqWHw%2BxYQxgJAK5lUAEk9ro3h8vj90G1rroDM5MBAYGAEpgQPA2YDbCczgM-ilbJzuYN9rx4HQtH9slNmBZSiBzBEBJpuCRNFgiv82KcdKZMVqlVCcLD4awcFyLJaYYzec5NGIxOBTGzrSQQvltPAAMzwChyH2qRD7PCYJb4RgJBCWbVLLVMfBLdUQHXYoghEBiGqPJW0RzdFJoM5QVQABVG7zcrQsp3w3jiLAAXPBqb0OFweHx4IIROJJDJiPIlGKARAhS2wHhZGR%2BXySISztRfa6C2BLBAwNVMJv8HDLBFiKiIu9iCQFPAAFLaUy2IhiBICb6-KHVSIhd96p-tGIIS8BKmiQBwR4QAIpAhM0M7sq26qrMIiDALeACMACsVjMJoPhvh%2BIjoYGgyGrAvDpmw6qOOmbY3lhOFMHhKzvnC8AAMoBBy0h8PgzEKJYCjoZcWjzqxvwADKkhQ6ohDAUB8OMkw4DYRTtOg4CVHo-JRi2EgctwmJoFxy6vDANxDJwAQAI56rQmAMJitlZvQEbYKS8asEiMC2bo%2BYeos3kOaZby6MwrCprRmaGccx6WBMiwQBQbhhGMEBySw6p%2BUIbLWEKYiQLRLYxRY%2BR8CQJl7uVg5CJ4lp%2BCAqgAOrYFE7TahY8qaGw7SqTpHggHQWbwAAYlmx4sAAohKPidogfJrn1ol4K0aYMB5LqLToaSZH0NQPPyYCPqsIHJls8BNYaCAKbALY%2BBYPgzH6EQkNFMAAF5ODoYBXp0xwBHogShK2NwQO63wENggydLKcWzDGTguru%2BJMJ8XXzrww0mN4ugZNuyxpro3m%2BaimiLiQ5qqCNhGCqYE0cpRLqY7Q72IZlAhSEwFDRAo6Oc9zYgKFAmM2hcVWXBErJ8vs4hyloAAUEAAJT8zzRDhCiz5iDV-XoBAdCqKrgsAMK9dtzn2XQIRbayUbuIpo3jUh00cj4yhAA', '5');
-
-
-// using the LZString library, encode all property titles (ptitle) and descriptions (pcontent) from the mexican properties and create insert statements for the encoded values into the propdescs table as shown in examples directly above where property _id will be the pd_prpid in propdescs table and language code will be 'spa_spa' and pd_uid will be the propert.uid value
-INSERT INTO `propdescs` (`pd_prpid`, `pd_uid`, `pd_lang`, `pd_title`, `pd_content`) VALUES
-(24088, '5', 'spa_spa', 'Nave industrial en venta en Parque Industrial FINSA, Querétaro', 'Nave industrial en venta en Parque Industrial FINSA, Querétaro. \n\nSuperficie: 2,408 m²\nPrecio por m²: $7,500 MXN\nPrecio total: $18,060,000 MXN\n\nCaracterísticas:\n- Altura libre: 10 metros\n- Área de oficinas: 10% de la superficie total\n- Andenes de carga y descarga\n- Estacionamiento para empleados\n- Seguridad 24/7\n- Servicios subterráneos\n\nUbicación estratégica cerca de vías principales y acceso a transporte público. Ideal para operaciones logísticas e industriales. \n\nContáctanos para más información y agendar una visita.'),
-(24089, '6', 'spa_spa', 'Oficina en renta en Torre Corporativa, Ciudad de México', 'Oficina en renta en Torre Corporativa, Ciudad de México.\n\nSuperficie: 150 m²\nPrecio por m²: $400 MXN\nPrecio total: $60,000 MXN\n\nCaracterísticas:\n- Espacio abierto con divisiones modulares\n- Aire acondicionado central\n- Sala de juntas equipada\n- Área de recepción\n- Estacionamiento para visitantes\n- Seguridad 24/7\n- Servicios subterráneos\n\nUbicación privilegiada en el corazón financiero de la ciudad, con acceso a transporte público y servicios cercanos. Ideal para empresas que buscan presencia corporativa. \n\nContáctanos para más información y agendar una visita.'),
-(24090, '7', 'spa_spa', 'Departamento en venta en Condominio Residencial, Monterrey', 'Departamento en venta en Condominio Residencial, Monterrey.\n\nSuperficie: 120 m²\nPrecio por m²: $25,000 MXN\nPrecio total: $3,000,000 MXN\n\nCaracterísticas:\n- 3 recámaras con closets\n- 2 baños completos\n- Cocina integral con barra desayunadora\n- Sala y comedor amplios\n- Balcón con vista panorámica\n- Amenidades: alberca, gimnasio, áreas verdes\n- Seguridad 24/7\n\nUbicación céntrica cerca de escuelas, centros comerciales y parques. Ideal para familias que buscan comodidad y seguridad. \n\nContáctanos para más información y agendar una visita.'),
-(24091, '8', 'spa_spa', 'Terreno en venta en Zona Industrial, Guadalajara', 'Terreno en venta en Zona Industrial, Guadalajara.\n\nSuperficie: 5,000 m²\nPrecio por m²: $3,000 MXN\nPrecio total: $15,000,000 MXN\n\nCaracterísticas:\n- Uso de suelo industrial\n- Acceso a vías principales\n- Servicios subterráneos disponibles\n- Seguridad 24/7\n\nUbicación estratégica cerca de parques industriales y con fácil acceso a transporte público. Ideal para desarrollo industrial o logístico. \n\nContáctanos para más información y agendar una visita.'),
-(24092, '9', 'spa_spa', 'Local comercial en renta en Plaza Comercial, Cancún', 'Local comercial en renta en Plaza Comercial, Cancún.\n\nSuperficie: 80 m²\nPrecio por m²: $500 MXN\nPrecio total: $40,000 MXN\n\nCaracterísticas:\n- Ubicación en planta baja con alta afluencia peatonal\n- Amplios ventanales para exhibición\n- Baño privado\n- Estacionamiento para clientes\n- Seguridad 24/7\n- Servicios subterráneos\n\nUbicación privilegiada en una de las zonas comerciales más concurridas de Cancún, cerca de restaurantes, tiendas y oficinas. Ideal para negocios que buscan visibilidad y tráfico constante. \n\nContáctanos para más información y agendar una visita.');  
-
-
-// create an update statement to update property.pcoid to 5 when it is not the number 5 or 0
-
-
-
-
-INSERT INTO `qlinks` (`k_rtype`, `k_userid`, `k_coid`, `k_category`, `k_title`, `k_matter`, `k_privacy`, `k_dadded`) VALUES
--- Juan Pérez (quser._id = 48)
-(5, 48, 48, 'telephone', 'Teléfono', '+34 600000048', 'public', '1742930036'),
-(5, 48, 48, 'sms', 'SMS', '+34 600000148', 'public', '1742930036'),
-(5, 48, 48, 'whatsapp', 'WhatsApp', '+34 600000248', 'public', '1742930036'),
-(5, 48, 48, 'facebook', 'Facebook', 'juanp@propsgo.com', 'public', '1742930036'),
-(5, 48, 48, 'twitter', 'Twitter', 'juanp@propsgo.com', 'public', '1742930036'),
--- María López (quser._id = 49)
-(5, 49, 49, 'telephone', 'Teléfono', '+34 600000049', 'public', '1742930036'),
-(5, 49, 49, 'sms', 'SMS', '+34 600000149', 'public', '1742930036'),
-(5, 49, 49, 'whatsapp', 'WhatsApp', '+34 600000249', 'public', '1742930036'),
-(5, 49, 49, 'facebook', 'Facebook', 'marial@propsgo.com', 'public', '1742930036'),
-(5, 49, 49, 'twitter', 'Twitter', 'marial@propsgo.com', 'public', '1742930036'),
--- Carlos García (quser._id = 50)
-(5, 50, 50, 'telephone', 'Teléfono', '+34 600000050', 'public', '1742930036'),
-(5, 50, 50, 'sms', 'SMS', '+34 600000150', 'public', '1742930036'),
-(5, 50, 50, 'whatsapp', 'WhatsApp', '+34 600000250', 'public', '1742930036'),
-(5, 50, 50, 'facebook', 'Facebook', 'carlosg@propsgo.com', 'public', '1742930036'),
-(5, 50, 50, 'twitter', 'Twitter', 'carlosg@propsgo.com', 'public', '1742930036'),
--- Laura Martínez (quser._id = 51)
-(5, 51, 51, 'telephone', 'Teléfono', '+34 600000051', 'public', '1742930036'),
-(5, 51, 51, 'sms', 'SMS', '+34 600000151', 'public', '1742930036'),
-(5, 51, 51, 'whatsapp', 'WhatsApp', '+34 600000251', 'public', '1742930036'),
-(5, 51, 51, 'facebook', 'Facebook', 'lauram@propsgo.com', 'public', '1742930036'),
-(5, 51, 51, 'twitter', 'Twitter', 'lauram@propsgo.com', 'public', '1742930036'),
--- David Sánchez (quser._id = 52)
-(5, 52, 52, 'telephone', 'Teléfono', '+34 600000052', 'public', '1742930036'),
-(5, 52, 52, 'sms', 'SMS', '+34 600000152', 'public', '1742930036'),
-(5, 52, 52, 'whatsapp', 'WhatsApp', '+34 600000252', 'public', '1742930036'),
-(5, 52, 52, 'facebook', 'Facebook', 'davids@propsgo.com', 'public', '1742930036'),
-(5, 52, 52, 'twitter', 'Twitter', 'davids@propsgo.com', 'public', '1742930036');
-
-// create records for 5 new french users and respective qlinks
--- Jean Dupont (quser._id = 53)
-INSERT INTO `qlinks` (`k_rtype`, `k_userid`, `k_coid`, `k_category`, `k_title`, `k_matter`, `k_privacy`, `k_dadded`) VALUES
-(5, 53, 53, 'telephone', 'Téléphone', '+33 600000053', 'public', '1742930036'),
-(5, 53, 53, 'sms', 'SMS', '+33 600000153', 'public', '1742930036'),
-(5, 53, 53, 'whatsapp', 'WhatsApp', '+33 600000253', 'public', '1742930036'),
-(5, 53, 53, 'facebook', 'Facebook', 'jeand@propsgo.com', 'public', '1742930036'),
-(5, 53, 53, 'twitter', 'Twitter', 'jeand@propsgo.com', 'public', '1742930036'),
--- Marie Curie (quser._id = 54)
-(5, 54, 54, 'telephone', 'Téléphone', '+33 600000054', 'public', '1742930036'),
-(5, 54, 54, 'sms', 'SMS', '+33 600000154', 'public', '1742930036'),
-(5, 54, 54, 'whatsapp', 'WhatsApp', '+33 600000254', 'public', '1742930036'),
-(5, 54, 54, 'facebook', 'Facebook', 'mariec@propsgo.com', 'public', '1742930036'),
-(5, 54, 54, 'twitter', 'Twitter', 'mariec@propsgo.com', 'public', '1742930036'),
--- Pierre Dupuis (quser._id = 55)
-(5, 55, 55, 'telephone', 'Téléphone', '+33 600000055', 'public', '1742930036'),
-(5, 55, 55, 'sms', 'SMS', '+33 600000155', 'public', '1742930036'),
-(5, 55, 55, 'whatsapp', 'WhatsApp', '+33 600000255', 'public', '1742930036'),
-(5, 55, 55, 'facebook', 'Facebook', 'pierred@propsgo.com', 'public', '1742930036'),
-(5, 55, 55, 'twitter', 'Twitter', 'pierred@propsgo.com', 'public', '1742930036'),
--- Simone de Beauvoir (quser._id = 56)
-(5, 56, 56, 'telephone', 'Téléphone', '+33 600000056', 'public', '1742930036'),
-(5, 56, 56, 'sms', 'SMS', '+33 600000156', 'public', '1742930036'),
-(5, 56, 56, 'whatsapp', 'WhatsApp', '+33 600000256', 'public', '1742930036'),
-(5, 56, 56, 'facebook', 'Facebook', 'simoneb@propsgo.com', 'public', '1742930036'),
-(5, 56, 56, 'twitter', 'Twitter', 'simoneb@propsgo.com', 'public', '1742930036'),
--- Victor Hugo (quser._id = 57)
-(5, 57, 57, 'telephone', 'Téléphone', '+33 600000057', 'public', '1742930036'),
-(5, 57, 57, 'sms', 'SMS', '+33 600000157', 'public', '1742930036'),
-(5, 57, 57, 'whatsapp', 'WhatsApp', '+33 600000257', 'public', '1742930036'),
-(5, 57, 57, 'facebook', 'Facebook', 'victorh@propsgo.com', 'public', '1742930036'),
-(5, 57, 57, 'twitter', 'Twitter', 'victorh@propsgo.com', 'public', '1742930036');
-// create the quser records for the new french users using the quser table structure found on this page
-
-
-*/
+// create insert statements of a new property for property table for user Luís Ferreira (id 63) and Sofia Costa (id 64) and Diego Almeida (id 65) and Valentina Santos (id 66) with different cities in Portugal not used in the previous insert statements
+INSERT INTO `property` (`prtype`, `pcoid`, `ptitle`, `pcontent`, `ptype`, `bhk`, `stype`, `bedroom`, `bathroom`, `balcony`, `kitchen`, `hall`, `pfloors`, `size`, `price`, `pdoornum`, `pstreet`, `location`, `city`, `state`, `country`, `pzipcode`, `ploclat`, `ploclng`, `feature`, `pimage`, `pprf_showslr`, `pprf_showftd`, `pprf_showloc`, `pprf_prvcy`, `uid`, `pstatus`, `mapimage`, `topmapimage`, `groundmapimage`, `totalfloor`, `pdadded`) VALUES
+(108, 63, 'Apartamento em Braga', 'Apartamento moderno no centro de Braga.', 'apartment', 'on', 'sell', 3, 2, 1, 1, 1, '1', 90, '320.000', '90', 'Rua do Souto', 'Centro', 'Braga', 'Braga', 'Portugal', '4700-456', '41.5503', '-8.4265', '5', 'default.jpg', '63', 'public', 'public', 'public', 63, 'available', '5', '5', '5', '5', '1758608000'),
+(109, 64, 'Moradia em Guimarães', 'Moradia espaçosa perto do centro histórico.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 150, '480.000', '100', 'Avenida Dom Afonso Henriques', 'Centro', 'Guimarães', 'Braga', 'Portugal', '4800-123', '41.4445', '-8.2960', '5', 'default.jpg', '64', 'public', 'public', 'public', 64, 'available', '5', '5', '5', '5', '1758609000'),
+(110, 65, 'T2 em Coimbra', 'Apartamento T2 no centro de Coimbra.', 'apartment', 'on', 'sell', 2, 1, 1, 1, 1, '1', 75, '210.000', '110', 'Rua da Sofia', 'Santo António dos Olivais', 'Coimbra', 'Coimbra', 'Portugal', '3000-456', '40.2033', '-8.4103', '5', 'default.jpg', '65', 'public', 'public', 'public', 65, 'available', '5', '5', '5', '5', '1758610000'),
+(111, 66, 'Apartamento em Leiria', 'Apartamento acolhedor perto do centro.', 'apartment', 'on', 'sell', 2, 1, 1, 1, 1, '1', 80, '230.000', '120', 'Avenida Heróis de Angola', 'Centro', 'Leiria', 'Leiria', 'Portugal', '2400-123', '39.7436', '-8.8070', '5', 'default.jpg', '66', 'public', 'public', 'public', 66, 'available', '5', '5', '5', '5', '1758611000');   
+ */

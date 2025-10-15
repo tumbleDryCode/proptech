@@ -88,7 +88,7 @@ doQComm(oiaqZa, null, "getMsgThread");
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
 
-
+    JSSHOP.ads.doGenericPlug("messages", "message-list", "dvPartLinks");
 if(JSSHOP.cookies.getCookie("quid") !== null) {
 tthreadid = "";
 if(currUrlArr.threadid){
