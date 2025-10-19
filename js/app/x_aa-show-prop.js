@@ -1030,7 +1030,8 @@ function doPrpMDDSlct(apld, aaw,aww,cww) {
     JSSHOP.ui.showShareBox('property',  tDDiidx);
     break;
   case "msg":
-    JSSHOP.ui.showMsgBox('uproperty', tDDiidx, 'showMsgSave');
+    JSSHOP.ui.prepMsgBox(currShopsArr[tDDiidx].uid, currShopsArr[tDDiidx].u_fullname, currShopsArr[tDDiidx].u_icon, tDDiidx, 'showMsgSave');
+    // JSSHOP.ui.showMsgBox('uproperty', tDDiidx, 'showMsgSave');
     break;
   case "fav":
     doRecentFavorite('index.html?pid=aa-show-prop&prpid=' + tDDiid, 'noQvalue', 'noQvalue', tDDiid, 'btnFavs' + tDDiid);

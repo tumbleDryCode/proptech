@@ -7632,7 +7632,30 @@ tUpdteListObj["fav"] = stxt[73];
 
         tUdtsStr += "<div class=\"mb-4\">";
 
- 
+
+       
+           /*
+        tUdtsStr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + tUdtsObj._id + "')\">";
+
+        tUdtsStr += "<img src=\"admin/property/" + tUdtsObj.p_image + "\" alt=\"pimage\" class=\"img100p\">";
+        tUdtsStr += "<div class=\"featured bg-primary text-white\">New</div>";
+        tUdtsStr += "<div class=\"sale bg-secondary text-white text-capitalize\">" + tDBHObj[tUdtsObj.p_ptype] + "</div>";
+        tUdtsStr += "</div>"; // end overlay-black overflow-hidden position-relative
+        tUdtsStr += "<div class=\"featured-thumb-data shadow-one\">";
+        tUdtsStr += "<div class=\"bg-gray quantity px-4 pt-4\">";
+        tUdtsStr += "<ul>";
+        tUdtsStr += "<li><b>" + tUdtsObj.p_size + "</b> Area m2</li>";
+        tUdtsStr += "<li><b>" + tUdtsObj.p_bedroom + "</b>" + stxt[922] + "</li>";
+        tUdtsStr += "<li><b>" + tUdtsObj.p_bathroom + "</b>" + stxt[923] + "</li>"
+        tUdtsStr += "<li><b>" + tUdtsObj.p_kitchen + "</b>" + stxt[926] + "</li>";
+        tUdtsStr += "</ul>";
+        tUdtsStr += "</div>"; // end bg-gray quantity px-4 pt-4
+       
+
+        // !!!  bckdClrWhite div for buttons and icons goes here
+        tUdtsStr += "</div>"; // end featured-thumb-data shadow-one
+         */
+        // tUdtsStr += tUdtsObj.p_ptype;
         tUpType = tUdtsObj.p_ptype;
 
 
@@ -7658,35 +7681,6 @@ tUpdteListObj["fav"] = stxt[73];
         tUpPcontent = ttUpPcontent;
         }
 
-        // modify returned string to add buttons and icons div here
-tUdtLnkStr = "<div class=\"bkdgClrWhite brdrClrHdr txtSmall txtBold\" style=\"padding:4px;margin:2px;\">";
-tUdtLnkStr += "<table style=\"margin:0 auto;width:100%;\"><tr><td>";
-tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('update'," + ided + ");\"><i class=\"menu-material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
-tUdtLnkStr += "</td>";  
-tUdtLnkStr += "<td>";
-if(quid == tUdtsObj.p_uid) {
-tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"eindex('aa-edit-post', 'pid=aa-edit-post&tpstid=" + tUdtsObj._id + "');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"edit\" title=\"edit\" value=\"edit\">&#xe3c9;</i>" + " " + stxt[31] + "</span>";
-} else {
-tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.prepMsgBox(" + tUdtsObj.p_uid + ",'" + tUdtsObj.u_fullname + "','" + tUdtsObj.u_icon + "','noQvalue','showMsgSave');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
-}
-tUdtLnkStr += "</td>";
-tUdtLnkStr += "<td>";
-
-tUdtLnkStr += "</td>";
-tUdtLnkStr += "<td>";
-// retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"" + currFTclr + "\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','" +"','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
-// check if already a favorite and make it red if so    
-currFTclr = "menu-material-icons txtClrTtl";
- if(currFavsIdstr.indexOf(tUdtsObj._id + "::") != -1) {
-currFTclr = "menu-material-icons txtClrRed";
-}
-tUdtLnkStr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-update&tupid=" + tUdtsObj._id + "','" + tUdtsObj.p_title + "','images/ucontent/m_thumb" + tUdtsObj.p_image + "','" + tUdtsObj._id + "','btnFavs" + tUdtsObj._id + "');\"><i id=\"btnFavs" + tUdtsObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";   
-tUdtLnkStr += "</td></tr></table>";
-tUdtLnkStr += "</div>"; // end bkdgClrWhite brdrClrHdr txtSmall txtBold
-console.log("jshp_ads_showUpdtsFeed.tUdtLnkStr: " + tUdtLnkStr);
-
-
-
         switch(tUpType) {
             case "pcontent":
                 tUdtsStr +=  tUpPcontent;
@@ -7700,9 +7694,6 @@ console.log("jshp_ads_showUpdtsFeed.tUdtLnkStr: " + tUdtLnkStr);
                 if(pid == "aa-show-update"){
                 imgprefx = "";    
                 tUdtsStr += "<img src=\"images/ucontent/" + imgprefx + tUdtsObj.p_image + "\" alt=\"pimage\" class=\"img100p\">";
-                // add the share,msg,fav  buttons here
-                tUdtsStr += tUdtLnkStr;
-
                 tUdtsStr += "<div id=\"dvUpdtCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + aprpContent + "</div>";
                 tUdtsStr += "<div id=\"dvUpdtCBtn\" class=\"clsPcntnt\" style=\"padding:10px;\"><a href=\"javascript:void(0);\" class=\"txtClrHdr txtBold\" onclick=\"javascript:showMoreUpdtCntnt('dvUpdtCntnt','dvUpdtCBtn');\">" + stxt[110] + "</a></div>";
                 } else {
@@ -7734,16 +7725,7 @@ console.log("jshp_ads_showUpdtsFeed.tUdtLnkStr: " + tUdtLnkStr);
                 if(pid == "aa-show-update"){
                 imgprefx = "";    
                 tUdtsStr += "<img src=\"images/ucontent/" + imgprefx + tUdtsObj.p_image + "\" alt=\"pimage\" class=\"img100p\">";
-
-                
-                // add the share,msg,fav  buttons here
-                tUdtsStr += tUdtLnkStr;
-
-
-
                 tUdtsStr += "<div id=\"dvUpdtCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + aprpContent + "</div>";
-
-
                 tUdtsStr += "<div id=\"dvUpdtCBtn\" class=\"clsPcntnt\" style=\"padding:10px;\"><a href=\"javascript:void(0);\" class=\"txtClrHdr txtBold\" onclick=\"javascript:showMoreUpdtCntnt('dvUpdtCntnt','dvUpdtCBtn');\">" + stxt[110] + "</a></div>";
                 } else {
                 tUdtsStr += "<a href=\"javascript:eindex('aa-show-update','pid=aa-show-update&tupid=" + tUdtsObj._id + "')\">";
@@ -7853,8 +7835,59 @@ setTimeout(
         }
 
 
-          // add the share,msg,fav  buttons here
-                tUdtsStr += tUdtLnkStr;
+
+        /*
+        
+    retPLstSTr = "<div class=\"bkgdClrWhite\">";
+
+retPLstSTr += "<div class=\"slmtable bkgdClrWhite brdrClrHdr\" style=\"padding:4px;margin:2px;\">";
+    retPLstSTr += "<table style=\"margin:0 auto;width:100%;\"><tr><td>";
+retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"menu-material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
+retPLstSTr += "</td>";
+retPLstSTr += "<td>";
+// retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
+// JSSHOP.ui.prepMsgBox(" + aprpUid + ",'" + aprpUFlName + "','" + aprpObj.u_icon + "','" + istrt + "','showMsgSave');
+retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.prepMsgBox(" + aprpUid + ",'" + aprpUFlName + "','" + aprpObj.u_icon + "','" + istrt + "','showMsgSave');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[117] + "</span>";
+retPLstSTr += "</td>";
+retPLstSTr += "<td>";
+// retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"" + currFTclr + "\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','" +"','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
+// check if already a favorite and make it red if so
+currFTclr = "menu-material-icons txtClrTtl";
+ if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {
+currFTclr = "menu-material-icons txtClrRed";
+}
+retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','images/property/s_thumb" + aprpPimage + "','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
+
+retPLstSTr += "</td></tr></table>";
+retPLstSTr += "</div>"; // end slmtable bkgdClrWhite brdrClrHdr
+*/
+
+// modify returned string to add buttons and icons div here
+tUdtLnkStr = "<div class=\"bkdgClrWhite brdrClrHdr txtSmall txtBold\" style=\"padding:4px;margin:2px;\">";
+tUdtLnkStr += "<table style=\"margin:0 auto;width:100%;\"><tr><td>";
+tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('update'," + ided + ");\"><i class=\"menu-material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
+tUdtLnkStr += "</td>";  
+tUdtLnkStr += "<td>";
+if(quid == tUdtsObj.p_uid) {
+tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"eindex('aa-edit-post', 'pid=aa-edit-post&tpstid=" + tUdtsObj._id + "');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"edit\" title=\"edit\" value=\"edit\">&#xe3c9;</i>" + " " + stxt[31] + "</span>";
+} else {
+tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.prepMsgBox(" + tUdtsObj.p_uid + ",'" + tUdtsObj.u_fullname + "','" + tUdtsObj.u_icon + "','noQvalue','showMsgSave');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
+}
+tUdtLnkStr += "</td>";
+tUdtLnkStr += "<td>";
+
+tUdtLnkStr += "</td>";
+tUdtLnkStr += "<td>";
+// retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"" + currFTclr + "\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','" +"','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
+// check if already a favorite and make it red if so    
+currFTclr = "menu-material-icons txtClrTtl";
+ if(currFavsIdstr.indexOf(tUdtsObj._id + "::") != -1) {
+currFTclr = "menu-material-icons txtClrRed";
+}
+tUdtLnkStr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-update&tupid=" + tUdtsObj._id + "','" + tUdtsObj.p_title + "','images/ucontent/m_thumb" + tUdtsObj.p_image + "','" + tUdtsObj._id + "','btnFavs" + tUdtsObj._id + "');\"><i id=\"btnFavs" + tUdtsObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";   
+tUdtLnkStr += "</td></tr></table>";
+tUdtLnkStr += "</div>"; // end bkdgClrWhite brdrClrHdr txtSmall txtBold
+tUdtsStr += tUdtLnkStr;
 
         tUdtsStr += "</div>"; // end featured-thumb hover-zoomer mb-4
         tUdtsStr += "</div>";  // end col-md-6
@@ -7870,7 +7903,18 @@ setTimeout(
   if(tHasSlider == "yes") {
     console.log("jshp_ads_showUpdtsFeed.currSwpCnfgArr: " + JSON.stringify(currSwpCnfgArr));
     JSSHOP.ads.loadNuSwiperArr(currSwpCnfgArr);
- 
+    /* 
+    for(ihy = 0; ihy < currSwpCnfgArr.length; ihy++) {
+        tqSwpCnfgObj = null;
+        tqSwpCnfgObj = {};
+        tqSwpCnfgObj = currSwpCnfgArr[ihy];
+        tQCnfStr = JSON.stringify(tqSwpCnfgObj);
+        tQcnfO = JSON.parse(tQCnfStr);
+        console.log("jshp_ads_showUpdtsFeed.tqSwpCnfgObj: " + JSON.stringify(tQcnfO)); 
+        setTimeout(function() { JSSHOP.ads.loadNuSwiperObj(tQcnfO); }, (ihy + 1) * 1000);
+        // JSSHOP.ads.loadNuSwiperObj(tSwpCnfgObj);
+    }
+    */
    //  JSSHOP.ads.loadNuSwiperArr(currSwpCnfgArr);
 } // end of if tHasSlider
  

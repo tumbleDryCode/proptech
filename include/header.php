@@ -1,5 +1,5 @@
 <div id="lightbox" class="lightbox"   onclick="javascript:JSSHOP.ui.closePopMenus();">
-</div> <div id="lightbox_content" class="rtable bkgdClrWhite bottom-shadow" style="min-height:100px;min-width:300px;width: auto;z-index: 2147483647;position:fixed;top:-700px;left:-700px;word-wrap: break-word;max-width:96%;margin-right:10px;margin: 0 auto;">
+</div> <div id="lightbox_content" class="rtable bkgdClrWhite bottom-shadow" style="min-height:100px;min-width:300px;width: auto;z-index: 2147483647;position:fixed;top:-700px;left:-700px;word-wrap: break-word;max-width:400px;margin-right:20px;">
       </div>
 
 
@@ -73,8 +73,7 @@
 
 <!-- <li id="ahAccountIcon"  style="padding:0px;margin:0px;display:inline;float:left;" class="newNavCls"><a href="javascript:JSSHOP.ui.doDefCBBCC('ahAccountIcon', null, document.location.href='index.html?pid=aa-edit-uinfo&cid=' + cuid);" style="padding:2px"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="person" title="person"></li>
    <li id="ahSettingsIcon">  <span id="spnAlrtSettings" class="icnbtn slmtable txtSmall txtClrWhite bkgdClrHdr" style="float:right">5</span> <a href="javascript:JSSHOP.ui.doDefCBBCC('ahSettingsIcon', null, document.location.href='index.html?pid=aa-settings&cid=' + cid);"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="Settings" title="Settings">&#xe8b8;</i></a></li> 
-   <li id="ahNotifyIcon"><span id="spnAlrtNotify" class="icnbtn slmtable txtSmall txtClrWhite bkgdClrHdr" style="float:right"></span><a href="javascript:JSSHOP.ui.doDefCBBCC('ahNotifyIcon', null, document.location.href='index.html?pid=aa-show-notifications&cid=' + cid);"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="Notify" title="notifications">
-  &#59380;</i></a></li>     
+     
 
 
    <li id="ahCartIcon"><a href="javascript:JSSHOP.ui.doDefCBBCC('ahCartIcon', null, document.location.href='index.html?pid=aa-show-cart&cid=' + cid + '&ppid=' + ppid);"><i class="material-icons"  style="margin-top: 5px;font-size:32px;margin-right:6px;"  alt="shopping_cart" title="shopping_cart">&#xe8cc;</i></a></li>
@@ -101,9 +100,13 @@
   <li id="ahDeRecent" style="padding:0px;margin:0px;display:inline;float:right;"><div class="crsrPointer hoover" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;">
   <i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="ahDeRecent" title="ahDeRecent"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrRed', 'material-icons crsrPointer hoover', function(){JSSHOP.ui.popAndFillLbox(doFavoritesRndr('y', 'y', 'y', 60).replace(/::/g, '<br>'));}, 300);">
  &#59517;</i></div></li> 
+
+
+        <!--   
+    <li id="ahNotifyIcon"  style="padding:0px;margin:0px;display:inline;float:right;"><span id="spnAlrtNotify" class="icnbtn slmtable txtSmall txtClrWhite bkgdClrHdr" style="float:right"></span><a href="javascript:JSSHOP.ui.doDefCBBCC('ahNotifyIcon', null, document.location.href='index.html?pid=aa-show-notifications&cid=' + cid);"  style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="Notify" title="notifications">
+  &#59380;</i></a></li>  
  <li id="ahSearch" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:eindex('aa-show-search','pid=aa-show-search&cit=y');" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="search" title="search"  onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'material-icons txtClrHdr', 'material-icons crsrPointer hoover', function(){void(0);}, 300);">
  &#xe8b6;</i></a></li>
-        <!--    
   <li id="ahAccnt" style="padding:0px;margin:0px;display:inline;float:right;"><a href="javascript:void(0);" onclick="javascript:JSSHOP.ui.setNuCBBClickClr(this,'kcoll-menu-item','collection-item txtClrRed', function(){eindex('aa-edit-user', 'pid=aa-edit-user&cit=y')}, 20);" style="border-radius : 10px; color : #E7E5E5; display : block; font-family : arial; font-size : 13px; font-style : normal; font-weight : bold; margin : 0; moz-border-radius : 10px;   text-decoration : none; text-shadow : 2px 2px 3px #000000; webkit-border-radius : 10px;"><i class="material-icons"  style="margin-top: 5px;font-size:27px;margin-right:6px;" alt="account" title="account">
   &#xe7fd;</i></a></li> 
                
@@ -176,9 +179,9 @@
  <li class="" style="margin-top:10px;padding-left:8px;padding-top:5px;">
 											 <ti data-ison="stxt[83]" data-desc="btn_account">Admin</ti>
 											<ul class="">
-												<!-- <li class="nav-item"> <a class="nav-link" href="profile.php"><ti data-ison="stxt[903]" data-desc="btn_profile">Profile</ti></a> </li> -->
+												<!-- <li class="nav-item"> <a class="nav-link" href="profile.php"><ti data-ison="stxt[903]" data-desc="btn_profile">Profile</ti></a> </li>
                                                 <li class="nav-item txtClrWhite"> <a class="nav-link txtClrWhite" href="javascript:eindex('aa-edit-place','pid=aa-edit-place');" style="color:white;"><ti data-ison="stxt[68]" data-desc="btn_shpsettinhs">Shop Settings</ti></a> </li>
-
+                                                     -->
                                                 <li class="nav-item txtClrWhite"> <a class="nav-link txtClrWhite" href="javascript:eindex('aa-edit-aprops','pid=aa-edit-aprops');" style="color:white;"><ti data-ison="stxt[901]" data-desc="btn_addprop">Properties</ti></a> </li>
 												 <li class="nav-item txtClrWhite"> <a class="nav-link txtClrWhite" href="javascript:eindex('aa-edit-ausers', 'pid=aa-edit-ausers');" style="color:white;"><ti data-ison="stxt[80]" data-desc="btn_yourprops">Users</ti></a> </li>
 											</ul>

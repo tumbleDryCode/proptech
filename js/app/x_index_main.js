@@ -28,7 +28,8 @@ function doPrpMDDSlct(apld, aaw,aww,cww) {
     JSSHOP.ui.showShareBox('property',  tDDiidx);
     break;
   case "msg":
-    JSSHOP.ui.showMsgBox('uproperty', tDDiidx, 'showMsgSave');
+    JSSHOP.ui.prepMsgBox(currShopsArr[tDDiidx].uid, currShopsArr[tDDiidx].u_fullname, currShopsArr[tDDiidx].u_icon, tDDiidx, 'showMsgSave');
+    // JSSHOP.ui.showMsgBox('uproperty', tDDiidx, 'showMsgSave');
     break;
   case "fav":
     doRecentFavorite('index.html?pid=aa-show-prop&prpid=' + tDDiid, 'noQvalue', 'noQvalue', tDDiid, 'btnFavs' + tDDiid);
@@ -43,6 +44,22 @@ function doPrpMDDSlct(apld, aaw,aww,cww) {
     break;
 
 }
+}
+//
+function getCountryFlagIcon(acountryName) {
+  // get country code from apcountryCode name
+    var countryCode = JSSHOP.shared.getCountryCodeFromName(acountryName);
+
+    // convert countryCode to lower case
+    console.log("getCountryFlagIcon - countryCode: " + countryCode);
+    var ccLower = countryCode.toLowerCase();
+    // create the unicode flag icon using the country code
+    // var flagIcon = String.fromCodePoint(0x1F1E6 + ccLower.charCodeAt(0) - 97) + String.fromCodePoint(0x1F1E6 + ccLower.charCodeAt(1) - 97);
+    // use the new unicode emoji flags
+    var flagIcon = JSSHOP.shared.getEmojiCntryFlag(countryCode);
+
+    console.log("getCountryFlagIcon - flagIcon: " + flagIcon);
+    return flagIcon;
 }
 
 function doMPropsList(aaw,aww,cww) {
@@ -83,6 +100,7 @@ aprpPrice = aprpObj["price"];
 aprpLocation = aprpObj["location"];
 aprpCity = aprpObj["city"];
 aprpState = aprpObj["state"];
+aprpCountry = aprpObj["country"];
 aprpFeature = aprpObj["feature"];
 aprpPimage = aprpObj["pimage"];
 aprpPimage1 = aprpObj["pimage1"];
@@ -117,7 +135,12 @@ if(aprpLocation.length < 3) {
 } else {
   tLocationStr = aprpLocation;
 }
-// start the main div
+
+// set the unicode flag icon based on aprpCountry
+if(aprpCountry.length > 0) {
+  tLocationStr += " " + getCountryFlagIcon(aprpCountry);
+}
+
 retPLstSTr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;\">";
 
  

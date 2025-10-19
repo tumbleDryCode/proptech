@@ -576,9 +576,18 @@ document.location.href = "index.html?pid=login";
 return;
 }
  
+if(quid == c_uid.value) {
+    isOwnCo = "y";
+} else {
+    isOwnCo = "n";
+}
 
-
-
+if((isOwnCo == "n") && (currUrlArr.tpid)) {
+      alert("nogo:" + c_uid.value + " : " + quid);
+   //  eindex("pid=aa-add-new-shop", "pid=aa-add-new-shop&cid=" + currUrlArr.tpid); 
+    // document.location.href = "index.html?pid=aa-add-new-shop&cid=" + currUrlArr.tpid;
+    return;
+}
 // JSSHOP.ui.setTinnerHTML("tdTitleBar", currPgTitle);
 // JSSHOP.shared.setFrmFieldVal("qco", "c_uid", quid);
 // JSSHOP.shared.setFrmFieldVal("qco", "c_coid", cid);
@@ -924,17 +933,6 @@ if(tCCLB.indexOf("_id") != -1) {
 // alert("setCurrCoLinks: " + tCCLB);
 currCoLinksArr = JSON.parse(tCCLB);
 rndrCoLnks(tCCLA, tCCLB, tCCLC);
-if(quid == c_uid.value) {
-    isOwnCo = "y";
-} else {
-    isOwnCo = "n";
-}
-if((isOwnCo == "n") && (currUrlArr.tpid)) {
-      alert("nogo:" + c_uid.value + " : " + quid);
-   //  eindex("pid=aa-add-new-shop", "pid=aa-add-new-shop&cid=" + currUrlArr.tpid); 
-    // document.location.href = "index.html?pid=aa-add-new-shop&cid=" + currUrlArr.tpid;
-    return;
-}
 }
 }
 

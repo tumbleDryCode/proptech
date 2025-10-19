@@ -450,7 +450,7 @@ color: #000000;
 color: #0000A0;
 }
 .txtClrHdr {
-color: #294759;
+color: rgb(41, 71, 89);
 }
 .txtClrDrkGrn {
 color: #005B5B;
@@ -1901,4 +1901,19 @@ overflow: auto; height: 100%;
   min-height: 46px;
   max-height: 48px;
   max-width: 48px;
+}
+
+.mojiHdrImg {
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  -khtml-border-radius: 50%;
+  min-width: 72px;
+  min-height: 72px;
+  max-height: 74px;
+  max-width: 74px;
+  text-shadow: 0 0 1px #8c8cb9;
+   text-decoration-color: #005B5B;
 }
