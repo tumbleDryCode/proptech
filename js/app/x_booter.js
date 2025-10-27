@@ -2747,7 +2747,9 @@ JSSHOP.ajax.doAjaxGVals = function(tDlMStr, tDlMUstr) {
 currFrmQArr = [];
 // arrAllForms = null;
 // arrAllForms = {};
-
+currSortIdx = null;
+currSortIdx = "";
+currSortIdx = {};
 // cid = "0";
 catid = "0";
 content = "noQvalue";

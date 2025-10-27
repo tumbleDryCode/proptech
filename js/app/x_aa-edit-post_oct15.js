@@ -541,7 +541,7 @@ JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue
        tDDXtraCntObj["kvIcnsObj"]["snippets"] = "&#xe5cd;";
 
        tDDXtraCntStr = JSSHOP.ui.getNuBSdropDstr(tDDXtraCntObj);
-       // document.getElementById("dvDDxcntnt").innerHTML = tDDXtraCntStr;
+       document.getElementById("dvDDxcntnt").innerHTML = tDDXtraCntStr;
 
        doPTypeTip("p_ptype", p_ptype.value, "noQvalue");
 
@@ -1050,20 +1050,6 @@ function setPostAdd() {
      JSSHOP.ajax.doNuAjaxPost(oi["rq"], setUPostAddSave);
 }
 
-function doNuPostEditSave() {
-    console.log("doNuPostEditSave");
-    tTMCcntStr = tmp_p_content_ifr.contentWindow.document.body.innerHTML;
-    tLZenced = LZString.compressToEncodedURIComponent(tTMCcntStr);
-    document.getElementById("p_content").value = tLZenced;
-    document.getElementById("p_title").value = document.getElementById("tmp_p_title").value;
-    document.getElementById("p_dmodified").value = JSSHOP.getUnixTimeStamp();
-    tmpFobj = null;
-    tmpFobj = {};
-     tmpFobj["knvp"] = JSSHOP.shared.getFrmVals(document["qposts"], "nada");
-        oi = getNuDBFnvp("qposts", 7, null, tmpFobj);
-        JSSHOP.ajax.doNuAjaxPost(oi["rq"], setUPostAddSave);
-}
-
 function doPostAdd() {
     console.log("doPostAdd");
      // tTMCcntStr = tinyMCE.activeEditor.getContent();
@@ -1073,8 +1059,7 @@ function doPostAdd() {
     // JSSHOP.ajax.doNuAjaxPost(oi["rq"], setUPostAddSave);
      switch(tSlctdPstType) {
         case "pimage":
-              html2canvas(taDemoEdtr_ifr.contentWindow.document.body).then(function(canvas) { savePstCanvasImg(canvas);})
-          
+            html2canvas(taDemoEdtr_ifr.contentWindow.document.body).then(function(canvas) { savePstCanvasImg(canvas);})
             break;
         case "pcarousel":
             tZpd = LZString.compressToEncodedURIComponent(JSON.stringify(JSSHOP.ads.getUpdatePVrs("pcarousel")));
@@ -1180,7 +1165,7 @@ JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue
        tDDXtraCntObj["kvIcnsObj"]["snippets"] = "&#xe5cd;";
 
        tDDXtraCntStr = JSSHOP.ui.getNuBSdropDstr(tDDXtraCntObj);
-       // document.getElementById("dvDDxcntnt").innerHTML = tDDXtraCntStr;
+       document.getElementById("dvDDxcntnt").innerHTML = tDDXtraCntStr;
 
        doPTypeTip("p_ptype", p_ptype.value, "noQvalue");
 
@@ -1579,7 +1564,7 @@ return dmyFnishCntLoad;
 
 var OLddmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
-JSSHOP.ads.doGenericPlug("posts", "edit-post", "dvPartLinks");
+
  
 tafsb = nCurrFFieldOb();
 tafsb.fid = "btnEUsave";

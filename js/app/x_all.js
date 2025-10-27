@@ -2087,8 +2087,8 @@ tmpSordr = "sortAsc";
 currSortIdx[tSrtIdx] = "sortAsc";
 }
 } else {
-tmpSordr = "sortAsc";
-currSortIdx[tSrtIdx] = "sortAsc";
+tmpSordr = "sortDesc";
+currSortIdx[tSrtIdx] = "sortDesc";
 }
 currSortIdx[tSrtIdx] = tmpSordr;
 return(JSSHOP.shared.sort(tSortArr, tSrtIdx, tmpSordr));
@@ -4957,7 +4957,7 @@ function doUMsglinks(tULUID, tdivMID) {
 
   
   var rndrUMsgLnks = function(za,zb,zc) {
-  
+    console.log("rndrUMsgLnks: " + zb);
     // dvCoLinks.innerHTML = "";
     
     theArr = JSON.parse(zb);
@@ -7640,7 +7640,7 @@ tUpdteListObj["fav"] = stxt[73];
         tZpUpPcntnt = tUdtsObj.p_content;
         tDcdedUcntnt = decodeURIComponent(tZpUpPcntnt);
         ttUpPcontent = LZString.decompressFromEncodedURIComponent(tDcdedUcntnt);
-        if(ttUpPcontent) {
+ 
         // tHtmlStrpd = ttUpPcontent.replace(/(<([^>]+)>)/ig,"");
         // only allow img and a tags
         if(pid == "aa-show-update") {
@@ -7654,14 +7654,16 @@ tUpdteListObj["fav"] = stxt[73];
         }
         }
         // tUpPcontent = tHtmlStrpd.substring(0, 100) + "...";
-        } else {
-        tUpPcontent = ttUpPcontent;
-        }
-
+       
         // modify returned string to add buttons and icons div here
 tUdtLnkStr = "<div class=\"bkdgClrWhite brdrClrHdr txtSmall txtBold\" style=\"padding:4px;margin:2px;\">";
 tUdtLnkStr += "<table style=\"margin:0 auto;width:100%;\"><tr><td>";
-tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('update'," + ided + ");\"><i class=\"menu-material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
+// check if already a favorite and make it red if so   
+currFTclr = "menu-material-icons txtClrTtl";
+ if(currFavsIdstr.indexOf(tUdtsObj._id + "::") != -1) {
+currFTclr = "menu-material-icons txtClrRed";
+}
+tUdtLnkStr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-update&tupid=" + tUdtsObj._id + "','" + tUdtsObj.p_title + "','images/ucontent/m_thumb" + tUdtsObj.p_image + "','" + tUdtsObj._id + "','btnFavs" + tUdtsObj._id + "');\"><i id=\"btnFavs" + tUdtsObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";   
 tUdtLnkStr += "</td>";  
 tUdtLnkStr += "<td>";
 if(quid == tUdtsObj.p_uid) {
@@ -7674,13 +7676,10 @@ tUdtLnkStr += "<td>";
 
 tUdtLnkStr += "</td>";
 tUdtLnkStr += "<td>";
-// retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"" + currFTclr + "\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','" +"','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
-// check if already a favorite and make it red if so    
-currFTclr = "menu-material-icons txtClrTtl";
- if(currFavsIdstr.indexOf(tUdtsObj._id + "::") != -1) {
-currFTclr = "menu-material-icons txtClrRed";
-}
-tUdtLnkStr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-update&tupid=" + tUdtsObj._id + "','" + tUdtsObj.p_title + "','images/ucontent/m_thumb" + tUdtsObj.p_image + "','" + tUdtsObj._id + "','btnFavs" + tUdtsObj._id + "');\"><i id=\"btnFavs" + tUdtsObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";   
+ 
+
+tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('update'," + ided + ");\"><i class=\"menu-material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
+
 tUdtLnkStr += "</td></tr></table>";
 tUdtLnkStr += "</div>"; // end bkdgClrWhite brdrClrHdr txtSmall txtBold
 console.log("jshp_ads_showUpdtsFeed.tUdtLnkStr: " + tUdtLnkStr);
@@ -7700,18 +7699,22 @@ console.log("jshp_ads_showUpdtsFeed.tUdtLnkStr: " + tUdtLnkStr);
                 if(pid == "aa-show-update"){
                 imgprefx = "";    
                 tUdtsStr += "<img src=\"images/ucontent/" + imgprefx + tUdtsObj.p_image + "\" alt=\"pimage\" class=\"img100p\">";
-                // add the share,msg,fav  buttons here
+                             // add the share,msg,fav  buttons here
                 tUdtsStr += tUdtLnkStr;
+                
 
-                tUdtsStr += "<div id=\"dvUpdtCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + aprpContent + "</div>";
+                tUdtsStr += "<div id=\"dvUpdtCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + tUpPcontent + "</div>";
                 tUdtsStr += "<div id=\"dvUpdtCBtn\" class=\"clsPcntnt\" style=\"padding:10px;\"><a href=\"javascript:void(0);\" class=\"txtClrHdr txtBold\" onclick=\"javascript:showMoreUpdtCntnt('dvUpdtCntnt','dvUpdtCBtn');\">" + stxt[110] + "</a></div>";
                 } else {
                 tUdtsStr += "<a href=\"javascript:eindex('aa-show-update','pid=aa-show-update&tupid=" + tUdtsObj._id + "')\">";
                 tUdtsStr += "<img src=\"images/ucontent/" + imgprefx + tUdtsObj.p_image + "\" alt=\"pimage\" class=\"img100p\">";
                 tUdtsStr += "</a>";
+
                 tUdtsStr += "<div class=\"bg-gray quantity px-4 pt-4\">";
                 tUdtsStr += tUpPcontent;
                 tUdtsStr += "</div>"; // end bg-gray quantity px-4 pt-4
+                                                // add the share,msg,fav  buttons here
+                tUdtsStr += tUdtLnkStr;
                 }
 
 
@@ -7730,29 +7733,20 @@ console.log("jshp_ads_showUpdtsFeed.tUdtLnkStr: " + tUdtLnkStr);
                         tRansSTr = Math.random().toString(36).substring(2, 7);
                         tDvaMpID = "dvUpMap" + tRansSTr;
                         tUdtsStr += "<div id=\"" + tDvaMpID +  "\" style=\"min-height: 240px; max-height: 240px; width: 100%;\"></div>";
-
-                if(pid == "aa-show-update"){
-                imgprefx = "";    
-                tUdtsStr += "<img src=\"images/ucontent/" + imgprefx + tUdtsObj.p_image + "\" alt=\"pimage\" class=\"img100p\">";
-
-                
-                // add the share,msg,fav  buttons here
-                tUdtsStr += tUdtLnkStr;
-
-
-
-                tUdtsStr += "<div id=\"dvUpdtCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + aprpContent + "</div>";
-
-
+      
+                 
+                 if(pid == "aa-show-update"){
+                     tUdtsStr += tUdtLnkStr;
+                                    tUdtsStr += "<div id=\"dvUpdtCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + aprpContent + "</div>";
                 tUdtsStr += "<div id=\"dvUpdtCBtn\" class=\"clsPcntnt\" style=\"padding:10px;\"><a href=\"javascript:void(0);\" class=\"txtClrHdr txtBold\" onclick=\"javascript:showMoreUpdtCntnt('dvUpdtCntnt','dvUpdtCBtn');\">" + stxt[110] + "</a></div>";
-                } else {
-                tUdtsStr += "<a href=\"javascript:eindex('aa-show-update','pid=aa-show-update&tupid=" + tUdtsObj._id + "')\">";
-                tUdtsStr += "<img src=\"images/ucontent/" + imgprefx + tUdtsObj.p_image + "\" alt=\"pimage\" class=\"img100p\">";
-                tUdtsStr += "</a>";
+                                } else {       
                 tUdtsStr += "<div class=\"bg-gray quantity px-4 pt-4\">";
                 tUdtsStr += tUpPcontent;
                 tUdtsStr += "</div>"; // end bg-gray quantity px-4 pt-4
-                }
+                        // add the share,msg,fav  buttons here   tUdtLnkStr  
+                         tUdtsStr += tUdtLnkStr;   
+                                }
+                               
 
 
                         tALeavesObj = null;
@@ -7811,10 +7805,20 @@ setTimeout(
                             
                             }
                             tUdtsStr +=  taNewPstr;
+
+                            if(pid == "aa-show-update"){
+                                  tUdtsStr += tUdtLnkStr; 
+                                                tUdtsStr += "<div id=\"dvUpdtCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + aprpContent + "</div>";
+                                             
+                tUdtsStr += "<div id=\"dvUpdtCBtn\" class=\"clsPcntnt\" style=\"padding:10px;\"><a href=\"javascript:void(0);\" class=\"txtClrHdr txtBold\" onclick=\"javascript:showMoreUpdtCntnt('dvUpdtCntnt','dvUpdtCBtn');\">" + stxt[110] + "</a></div>";
+                
+                                } else {
                 tUdtsStr += "<div class=\"bg-gray quantity px-4 pt-4\">";
                 tUdtsStr += tUpPcontent;
                 tUdtsStr += "</div>"; // end bg-gray quantity px-4 pt-4
-                        
+                tUdtsStr += tUdtLnkStr;
+                          }                          // add the share,msg,fav  buttons here
+            
                         }
 
                                        
@@ -7854,7 +7858,7 @@ setTimeout(
 
 
           // add the share,msg,fav  buttons here
-                tUdtsStr += tUdtLnkStr;
+              //   tUdtsStr += tUdtLnkStr;
 
         tUdtsStr += "</div>"; // end featured-thumb hover-zoomer mb-4
         tUdtsStr += "</div>";  // end col-md-6
@@ -10134,7 +10138,7 @@ retPlugStr += ppslectted.join(" ");
 // images/logo/logo-small.png
  // imgPLicon.src = "images/logo/logo-small.png";
   //   retPlugStr = "<div class=\"txtSmall\">" + stxt[63] + "</div>";
-  dvPartLicon.innerHTML =  "<img src=\"images/logo/logo-small.png\" style=\"margin-top: 5px;max-height:30px;max-width:30px;\" alt=\"account\" title=\"account\" class=\"account\">";
+  dvPartLicon.innerHTML =  "<div class=\"bkgdClrHdr\" style=\"max-width:40px;\"><img src=\"images/misc/thumb_logo_ai_trimmed.gif\"  alt=\"logo\" title=\"logo\" class=\"icnRnd22\"></div>";
 fretPlugStr = "<div class=\"txtSmall\">" + retPlugStr + "</div>";
 // tcanShowPlug = "no";
 break;
@@ -10179,11 +10183,16 @@ fretPlugStr = "<div class=\"txtSmall\">" + stxt[815] + "</div>";
 document.title = stxt[815];
 break;
 case "aa-edit-prop":
+    tDGPstr = "";
+tDGPstr = stxt[985];
+if(currUrlArr.prpid) {
+    tDGPstr += " - ID: " + currUrlArr.prpid;
+}
 // imgPLicon.src = "logoicon.png"; 
 dvPartLicon.innerHTML =  "<span  style=\"color:rgba(41,71,89,.25);text-shadow: 0 0 0 rgba(41,71,89,.65);font-size:27px;\" alt=\"apartment\" title=\"apartment\">&#x1F3D9;</span>";
-fretPlugStr = "<div class=\"txtSmall\">" + stxt[985] + "</div>";
+fretPlugStr = "<div class=\"txtSmall\">" + tDGPstr + "</div>";
 // fretPlugStr = doNuCollsLoad("links");
-document.title = stxt[985];
+document.title = tDGPstr;
 break;
 case "aa-add-prop":
 // imgPLicon.src = "logoicon.png"; 
@@ -10194,9 +10203,14 @@ document.title = stxt[906];
 break;
 case "aa-edit-post":
 // imgPLicon.src = "logoicon.png";
-dvPartLicon.innerHTML =  "<i class=\"material-icons-two-tone txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;font-weight: bold;font-size: 27px;\" alt=\"search\" title=\"search\"> &#xe871;</i>";
-fretPlugStr = "<div class=\"txtSmall\">" + stxt[400] + "</div>";
-document.title = stxt[400];
+tDGPstr = "";
+tDGPstr = stxt[400];
+if(currUrlArr.tpstid) {
+    tDGPstr += " - ID: " + currUrlArr.tpstid;
+}
+dvPartLicon.innerHTML =  "<i class=\"material-icons-two-tone txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;font-weight: bold;font-size: 27px;vertical-align: middle;\" alt=\"search\" title=\"search\"> &#xe871;</i>";
+fretPlugStr = "<div class=\"txtSmall\">" + tDGPstr + "</div>";
+document.title = tDGPstr;
 break;
 case "aa-add-post":
 // imgPLicon.src = "logoicon.png";

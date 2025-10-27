@@ -115,7 +115,7 @@ currACTblCnt = tHdrArr.length;
  
     
     
-    tSrtIdx = "u_dadded";
+    tSrtIdx = "_id";
     tmpAGUsrsLArr = JSSHOP.shared.getSrtdArr(tmpAUsrsLArr, tSrtIdx);
     tRndrINGARr = tmpAGUsrsLArr;
     tRndrStr = getAUItmsLst(tRndrINGARr);

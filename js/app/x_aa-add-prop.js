@@ -239,11 +239,10 @@ setTimeout(function(){ fillPpropFields(); }, 300);
 }
 
 
- 
-
- /* editing and adding properties */
- 
-
+  function fnishPDescAdd(aa,bb,cc) { 
+    // alert("fnishPDescAdd: " + bb);
+    eindex("pid=aa-edit-prop", "pid=aa-edit-prop&prpid=" + document.getElementById("pd_prpid").value);
+    }
 
 var fnshPrpAdd = function(a,b,c) {
     tncobj = null;
@@ -254,7 +253,51 @@ if(b.indexOf("_id") != -1) {
 tncobj = JSON.parse(b);
 // alert("fnshCoPgAdd: " + tncobj[0]._id);
 if(tncobj[0]._id) {
-eindex("pid=aa-edit-prop", "pid=aa-edit-prop&prpid=" + tncobj[0]._id);
+    // create a title and desc from the ptype value
+    tPrpTitle = stxt[953] + " " + document.getElementById("ptype").value;
+    tPrpDesc = stxt[954] + " " + document.getElementById("ptype").value + ". " + stxt[955];
+// LZString compress
+    tPrpTitleLZd = LZString.compressToEncodedURIComponent(tPrpTitle);
+    tPrpDescLZd = LZString.compressToEncodedURIComponent(tPrpDesc);
+        document.getElementById("pd_prptitle").value = tPrpTitleLZd;
+    document.getElementById("pd_prpdesc").value = tPrpDescLZd;
+    document.getElementById("pd_prpid").value = tncobj[0]._id;
+    document.getElementById("pd_coid").value = cid;
+    document.getElementById("pd_dadded").value = JSSHOP.getUnixTimeStamp();
+    document.getElementById("pd_uid").value = quid;
+    document.getElementById("pd_rtype").value = 5;
+    document.getElementById("pd_prptlng").value = usrlang;
+        tmpDOLP = null;
+    tmpDOLP = {};
+    tmpDOLP["knvp"] = JSSHOP.shared.getFrmVals(document["propdescs"], "nada");
+    oi = getNuDBFnvp("propdescs", 6, null, tmpDOLP);
+    doQComm(oi["rq"], null, "fnishPDescAdd");
+    /*
+
+
+
+    CREATE TABLE `propdescs` (
+  `_id` int(12) NOT NULL,
+  `pd_rtype` int(12) NOT NULL,
+  `pd_uid` int(12) NOT NULL,
+  `pd_coid` int(12) NOT NULL DEFAULT 5,
+  `pd_prpid` int(12) NOT NULL,
+  `pd_prptlng` varchar(12) NOT NULL,
+  `pd_prptype` varchar(12) NOT NULL,
+  `pd_prptitle` text NOT NULL,
+  `pd_prpdesc` text NOT NULL,
+  `pd_dadded` varchar(12) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+
+    doCFrmQ = nCurrCnxOb();
+doCFrmQ["q"] = "batch" + JSON.stringify(currFrmQArr);
+//alert("doFrmQLoad:  " + JSON.stringify(currFrmQArr));
+doCFrmQ["cb"] = "fillMFormArr";
+doNurQComm(doCFrmQ);
+    */
+
+// eindex("pid=aa-edit-prop", "pid=aa-edit-prop&prpid=" + tncobj[0]._id);
     }
 }
 

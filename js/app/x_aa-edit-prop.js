@@ -865,7 +865,7 @@ var doThreeDPop = function() {
     }
 
     function startNuTDAnim(tNTDAurl) {
-        console.log("doNuThreeDAnim: " + tNTDAurl);
+        console.log("startNuTDAnim: " + tNTDAurl);
         tNTDAobj = JSSHOP.shared.urlToArray(tNTDAurl);
         tNTDAlat = tNTDAobj["center"].split(",")[0];
         tNTDAlng = tNTDAobj["center"].split(",")[1];
@@ -880,7 +880,7 @@ var doThreeDPop = function() {
         tNTDtilt = parseFloat(tNTtilt);
         tNTDheading = parseFloat(tNTDheading);
         // set camera to 
-        console.log("doNuThreeDAnim: " + tNTDAlat + " " + tNTDAlng + " " + tNTDAalt);
+        console.log("startNuTDAnim: " + tNTDAlat + " " + tNTDAlng + " " + tNTDAalt);
         threedmap.flyCameraTo({
             endCamera: {
                 center: { lat: tNTDAlat, lng: tNTDAlng, altitude: 500 },

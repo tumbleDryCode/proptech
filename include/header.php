@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-lg-12" style="margin:0px;">
                             <nav class="navbar-expand-lg navbar-light p-0">
-                              <span style="float:left;text-align:left;white-space: nowrap;"><a class="breadcrumb-item active" href="javascript:goHome();"><img id="imgMainLogo" class="slmtable" src="images/logo/logo-small.png" alt="proptech" style="max-height:40px;max-width:40px;"> <b>proptech</b></a></span>
+                              <span style="float:left;text-align:left;white-space: nowrap;"><a class="breadcrumb-item active" href="javascript:goHome();"><img id="imgMainLogo" class="icnRnd22" src="images/misc/thumb_logo_ai_trimmed.gif" alt="proptech" style="margin:4px;"> <b>proptech</b></a></span>
 
   <!-- menu icons 
 
@@ -142,8 +142,8 @@
                                     <ul>
                                         <li class="nav-item"> <a class="nav-link" href="./" role="button" aria-haspopup="true" aria-expanded="false">Home</a></li>
 										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-featured','pid=aa-show-featured');"><ti data-ison="stxt[940]" data-desc="btn_properties">Properties</ti></a> </li>					 
-										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-search','pid=aa-show-search&cit=y');"><ti data-ison="stxt[936]" data-desc="btn_searchprops">Search Properties</ti></a> </li>
-										<!-- <li class="nav-item"> <a class="nav-link" href="agent.php"><ti data-ison="stxt[900]" data-desc="btn_agentes">Agentes</ti></a> </li> -->
+										<!-- <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-search','pid=aa-show-search&cit=y');"><ti data-ison="stxt[936]" data-desc="btn_searchprops">Search Properties</ti></a> </li>
+										<li class="nav-item"> <a class="nav-link" href="agent.php"><ti data-ison="stxt[900]" data-desc="btn_agentes">Agentes</ti></a> </li> -->
                                         <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-contact-us','pid=aa-contact-us');"><ti data-ison="stxt[902]" data-desc="btn_contacts">Contacts</ti></a> </li>
 										
 									 

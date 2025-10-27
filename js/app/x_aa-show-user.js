@@ -334,6 +334,15 @@ function aFillUsrFrm(a,b,c) {
     document.getElementById("dvSndMsgBtn").innerHTML = "<button id=\"btnSndMsg\" class=\"cls_button cls_button-medium bkgdClrHdr txtClrWhite\" onclick=\"javascript:JSSHOP.ui.prepMsgBox('" + fuArr[0]._id + "','" + fuArr[0].u_fullname + "','" + fuArr[0].u_icon + "','showMsgSave');\"><ti data-ison=\"stxt[42]\" data-desc=\"btn_del\">" + stxt[935] + "</ti></button>";
 
 }  
+
+    tUcat = document.getElementById("tmp_u_cat");
+    tUcat = currQUsrObj.u_cat;
+    // set the edit user link in dvUsrEditLnk div if quid == tuid or if u_cat == 5 (admin)
+    if(quid == tuid) {
+        document.getElementById("dvUsrEditLnk").innerHTML = "<a href=\"javascript:eindex('aa-edit-user', 'pid=aa-edit-user&tuid=" + tuid + "');\" class=\"txtBold txctClrHdr bkgdClrNrml\">" + stxt[31] + "</a>";
+        // document.getElementById("dvUsrEditLnk").innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"javascript:removeAccount();\" class=\"txtBold txctClrRed bkgdClrWhite\">" + stxt[815] + "</a>";
+    }
+ 
     tmpDOs = null;
 tmpDOs = {};
 tmpDOs["ws"] = "where k_userid=? and k_coid=? and k_rtype=?";
@@ -365,12 +374,7 @@ if(currUrlArr.tuid) {
     tGUKos["wa"] = [tuid];
     oi = getNuDBFnvp("quser",5,null,tGUKos);
     doQComm(oi["rq"], "y", "aFillUsrFrm");
-    tUcat = document.getElementById("tmp_u_cat");
-    // set the edit user link in dvUsrEditLnk div if quid == tuid or if u_cat == 5 (admin)
-    if((quid == tuid) || (JSSHOP.shared.getFrmFieldVal("quser", "u_cat", "0") == "5")) {
-        document.getElementById("dvUsrEditLnk").innerHTML = "<a href=\"javascript:eindex('aa-edit-user', 'pid=aa-edit-user&tuid=" + tuid + "');\" class=\"txtBold txctClrHdr bkgdClrNrml\">" + stxt[31] + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"javascript:removeAccount();\" class=\"txtBold txctClrRed bkgdClrWhite\">" + stxt[815] + "</a>";
-    }
- 
+
 // JSSHOP.shared.addCurrSlctObj(svftObj["usercat"], tUcat, u_cat.value, "noQvalue", "noQvalue");
  
 

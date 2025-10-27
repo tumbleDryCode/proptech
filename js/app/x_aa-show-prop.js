@@ -1195,9 +1195,15 @@ function doPrpMDDSlct(apld, aaw,aww,cww) {
     // add clear fix
     retPLstSTr += "<div class=\"clearfix\"></div>";
     retPLstSTr += "</div>"; // end 3d view div 
-    retPLstSTr += "<div id=\"dvAPrpImg\" class=\"overlay-black overflow-hidden position-relative crsrPointer hover-zoomer\"> <img src=\"" + currPrpImgsFldr + "/" + aprpPimage + "\" alt=\"pimage\" class=\"img100p\" id=\"imgAPrpMain\">";
+            retPLstSTr += "<div style=\"margin-top:5px;text-align:right;\" class=\"sale  slmtable bkgdClrWhite txtClrHdr txtSmall\">ID: " + aprpObj._id + " / " + tDBHObj[aprpType] + " / " + stxt[953] + ": " + aprpSize + "</div>";
+
+    retPLstSTr += "<div id=\"dvAPrpImg\" class=\"overlay-black overflow-hidden position-relative crsrPointer hover-zoomer\">";
+    retPLstSTr += "<img src=\"" + currPrpImgsFldr + "/" + aprpPimage + "\" alt=\"pimage\" class=\"img100p\" id=\"imgAPrpMain\">";
     // retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
+
     retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
+
+
      retPLstSTr += "<div id=\"dvPropFooter\" style=\"text-align:center;\" class=\"sale bg-secondary text-white text-capitalize\">" + tDBHObj[aprpType] + "</div>";
 
     retPLstSTr += "<div id=\"singlerproperty\" class=\"\"></div>";
@@ -1232,7 +1238,11 @@ function doPrpMDDSlct(apld, aaw,aww,cww) {
 
 retPLstSTr += "<div class=\"slmtable bkgdClrWhite brdrClrHdr\" style=\"padding:4px;margin:2px;\">";
     retPLstSTr += "<table style=\"margin:0 auto;width:100%;\"><tr><td>";
-retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"menu-material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
+currFTclr = "menu-material-icons txtClrTtl";
+ if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {
+currFTclr = "menu-material-icons txtClrRed";
+}
+retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','images/property/s_thumb" + aprpPimage + "','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
 retPLstSTr += "</td>";
 retPLstSTr += "<td>";
 // retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
@@ -1245,13 +1255,7 @@ retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=
     }
 retPLstSTr += "</td>";
 retPLstSTr += "<td>";
-// retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"" + currFTclr + "\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','" +"','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
-// check if already a favorite and make it red if so
-currFTclr = "menu-material-icons txtClrTtl";
- if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {
-currFTclr = "menu-material-icons txtClrRed";
-}
-retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','images/property/s_thumb" + aprpPimage + "','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
+ retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"menu-material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
 
 retPLstSTr += "</td></tr></table>";
 retPLstSTr += "</div>"; // end slmtable bkgdClrWhite brdrClrHdr

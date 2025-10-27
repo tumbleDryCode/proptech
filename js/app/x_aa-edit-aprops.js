@@ -8,7 +8,7 @@ var setUEdtPrpList = function(a,rfb,c) {
   tmpUPropsArr = [];
   tmpUPropsArr = JSON.parse(rfb);
  
-  rnderPrpTbl("p_dadded");
+  rnderPrpTbl("_id");
     } else {
         document.getElementById("divQitems").innerHTML = stxt[508];
     }

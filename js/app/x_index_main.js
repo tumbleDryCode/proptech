@@ -77,7 +77,7 @@ if(iprplen == 0) {
     retPLstSTr = "<div class=\"col-md-12\"><h4 class=\"text-center text-secondary\">No Properties Found</h4></div>";
 }
 if(iprplen > 3) {
- iprplen = 3;
+iprplen = 5;
 }
 // alert('doMPropsList - iprplen: ' + iprplen);
 while(istrt < iprplen){
@@ -257,8 +257,12 @@ retPLstSTr += "</div>"; // end bg-gray quantity px-4 pt-4
 retPLstSTr += "<div class=\"bkgdClrWhite\" style=\"padding:2px;\">";
 // table
 retPLstSTr += "<table style=\"width:100%;margin:0 auto;\"><tr><td style=\"vertical-align:center;\">";
-retPLstSTr += "<span class=\"crsrPointer\" style=\"margin:2px;text-align:absmiddle;vertical-align:center;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"menu-material-icons\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
-// make text alingn center to icon
+  currFTclr = "menu-material-icons txtClrTtl";
+ if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {
+currFTclr = "menu-material-icons txtClrRed";
+}
+retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','images/property/s_thumb" + aprpPimage + "','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
+
 retPLstSTr += "</td>";
 retPLstSTr += "<td>";
 // retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrLtBlue\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
@@ -272,13 +276,8 @@ retPLstSTr += "<span class=\"crsrPointer\" style=\"margin:2px;\" onclick=\"JSSHO
 
 retPLstSTr += "</td>";
 retPLstSTr += "<td>";
-// retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"" + currFTclr + "\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','" +"','" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
-// check if already a favorite and make it red if so
-currFTclr = "menu-material-icons txtClrTtl";
- if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {
-currFTclr = "menu-material-icons txtClrRed";
-}
-retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','images/property/s_thumb" + aprpPimage + "','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
+retPLstSTr += "<span class=\"crsrPointer\" style=\"margin:2px;text-align:absmiddle;vertical-align:center;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"menu-material-icons\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
+
 
 retPLstSTr += "</td></tr></table>";
 // streetview link http://maps.google.com/maps?q=&layer=c&cbll=

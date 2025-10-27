@@ -122,8 +122,11 @@ currACTblCnt = tHdrArr.length;
     
     tSrtIdx = "_id";
     // tSrtIdx = "p_dadded";
+    // currSortIdx[tSrtIdx] = "sortDesc";
+   //  tmpGPostsLArr = JSSHOP.shared.sort(tmpPostsArr, tSrtIdx, "sortDesc");
     tmpGPostsLArr = JSSHOP.shared.getSrtdArr(tmpPostsArr, tSrtIdx);
     tRndrINGARr = tmpGPostsLArr;
+    
     tRndrStr = getPostsLst(tRndrINGARr);
     // alert('rnderUEdtPrpItms - tSrtIdx: ' + tSrtIdx);
 
@@ -183,7 +186,7 @@ fnishCntLoad = function() {
  tmpDOs = {};
  tmpDOs["ws"] = "where p_uid = ? and p_rtype = ?";
  tmpDOs["wa"] = [quid, 5];
- // tmpDOs["o"] = "_id desc";
+ tmpDOs["o"] = "_id desc";
  
  oi = getNuDBFnvp("qposts",5,null,tmpDOs);
  currRQtable = "qposts";
