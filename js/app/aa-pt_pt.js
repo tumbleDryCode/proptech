@@ -330,8 +330,11 @@ stxt[725] = "Voc\u00ea deve estar logado.";
 stxt[726] = "Confirmado! Seu endere\u00e7o de email foi confirmado.";
 stxt[727] = "Desculpe, ocorreu um erro. Por favor, entre em contato conosco.";
 stxt[728] = "Clique aqui para continuar";
-// stxt[729] = "Contact us regarding this property:";
 stxt[729] = "Entre em contato conosco sobre esta propriedade:";
+stxt[730] = "Por favor, forne\u00e7a seu email e/ou n\u00famero de telefone para que possamos retornar a voc\u00ea.";
+stxt[731] = "Convidado";
+stxt[732] = "Mensagem do Usu\u00e1rio Convidado";
+stxt[733] = "Por favor, selecione um endereço primeiro ou insira coordenadas.";
 
 // coookie consent strings
 stxt[800] = "Nos usamos cookies";
@@ -735,8 +738,16 @@ tPostsStatObj["highlight"] = "Sublinhado";
 tPostsStatObj["pin"] = "Fixo";
 tPostsStatObj["pinhlight"] = "Fixo & Sublinhado";
 svftObj["poststat"] = tPostsStatObj;
- 
- 
+
+tMsgSbjObj = null;
+tMsgSbjObj = "";
+tMsgSbjObj = {};
+tMsgSbjObj["visit"] = "Pedido de Visita";
+tMsgSbjObj["price"] = "Pedido de Pre\u00e7o";
+tMsgSbjObj["financing"] = "Financiamento";
+tMsgSbjObj["other"] = "Outro";
+svftObj["msgsubject"] = tMsgSbjObj;
+
 // custom strings
  
 var cstmStr = "";

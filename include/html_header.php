@@ -13,6 +13,11 @@
 	========================================================-->
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 
+<!-- Preload Material Icons fonts for better caching -->
+<link rel="preload" href="fonts/materialicons/mi.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/materialicons/mio.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/materialicons/mitt.woff2" as="font" type="font/woff2" crossorigin>
+
 <!-- Try without these
 
 <link rel="stylesheet" type="text/css" href="fonts/flaticon/flaticon.css">
@@ -39,14 +44,30 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
  
 	<script src="js/app/lz-string.js" language="javascript" type="text/javascript"></script>
-	<script src="js/app/x_allinit.js" type="text/javascript"></script> 
+	<script src="js/app/x_allinit.js" type="text/javascript"></script>
+	<script src="js/app/material-icons-cache.js" type="text/javascript"></script> 
 <script>
 // JSSHOP.loadScript("js/app/aa-" + usrlang + ".js", donada,"js");
 </script>
 <?php
-echo "<scr" . "ipt src=\"js/app/aa-" .  $usrlang . ".js\"></script>";
+// echo "<scr" . "ipt src=\"js/app/aa-" .  $usrlang . ".js\"></script>";
 ?> 
- <link href="js/thirdp/swiper-bundle.min.css" rel="stylesheet"> 
+ <link href="js/thirdp/swiper-bundle.min.css" rel="stylesheet">
+
+<!-- Register Service Worker for font caching -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw-icons.js')
+      .then(function(registration) {
+        console.log('Material Icons ServiceWorker registered');
+      })
+      .catch(function(error) {
+        console.log('Material Icons ServiceWorker registration failed:', error);
+      });
+  });
+}
+</script> 
  
    <script src="js/thirdp/swiper-bundle.min.js" type="text/javascript"></script>    <script src="js/jquery.min.js"></script> 
    <script src="js/thirdp/html2canvas.js" type="text/javascript"></script>    <script src="js/jquery.min.js"></script> 

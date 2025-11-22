@@ -378,6 +378,12 @@ stxt[726] = "Confirmado! Su direccion de correo electronico ha sido confirmada."
 stxt[727] = "Lo siento, se produjo un error. Por favor contactenos.";
 stxt[728] = "Haga clic aqui para continuar";
 stxt[729] = "Contactenos sobre esta propiedad:";
+stxt[730] = "Proporcione su correo electronico y/o numero de telefono para que podamos comunicarnos con usted.";
+stxt[731] = "Invitado";
+stxt[732] = "Mensaje de usuario invitado";
+stxt[733] = "Por favor, seleccione una direccion primero o ingrese coordenadas.";
+
+
 
 
 // coookie consent strings
@@ -823,15 +829,17 @@ tPostsStatObj["pin"] = "Pin";
 tPostsStatObj["pinhlight"] = "Pin & Resaltar";
 svftObj["poststat"] = tPostsStatObj;
 
+tMsgSbjObj = null;
+tMsgSbjObj = "";
+tMsgSbjObj = {};
+tMsgSbjObj["visit"] = "Solicitud de Visita";
+tMsgSbjObj["price"] = "Solicitud de Precio";
+tMsgSbjObj["financing"] = "Financiacion";
+tMsgSbjObj["other"] = "Otro";
+svftObj["msgsubject"] = tMsgSbjObj;
 
 // custom strings
-/*
-var cstmStr = "";
-cstmStr = {};
-cstmStr["prop1"] = "proptech - property technology";
-cstmStr["prop2"] = "proptech - your onestop property technology";
-cstmStr["prop3"] = "proptech - buy, sell, rent...";   
-*/
+
 var cstmStr = "";
 cstmStr = {};
 cstmStr["prop1"] = "proptech - tecnologia de propiedades";

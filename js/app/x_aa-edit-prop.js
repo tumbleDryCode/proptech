@@ -3252,7 +3252,7 @@ currMapMrkrArr.push(tMrkr);
 }
 
 function showPrpAdrsPop(theA, thePSResp, theC) {
-    
+    console.log("showPrpAdrsPop: " + theA + " " + thePSResp + " " + theC);
 	hasr = "n";
 	fullstr = "";
 	// alert("runPlacesSearch: " + thePSResp);
@@ -3591,7 +3591,7 @@ JSSHOP.ui.setMapMrkrs(currMapMrkrArr);
 // JSSHOP.loadScript("js/vrp/wasm-vrpcli.js", JSSHOP.checkLoader,"module");
   }// end of else container not null
     } catch(e) {
-
+        alert("doGenPEMap: " + e);
         return "ERR" + e
 }
 }
@@ -3656,10 +3656,17 @@ alert("popLboxMap: " + e);
 function getPlaceCrdsM() {
     
 
-
+    
 
     tCllLatVal = document.getElementById("tmp_ploclat").value;
     tCllLngVal = document.getElementById("tmp_ploclng").value;
+
+    // if tCllLatVal.length < 3 or tCllLngVal.length < 3 then set pop up alert to select address first or enter coordinates.
+    if((tCllLatVal.length < 3) || (tCllLngVal.length < 3)) {
+        // alert("");
+        JSSHOP.ui.popAndFillLbox(stxt[733]);
+        return;
+    }
     if((tCllLatVal.length > 5) && (tCllLngVal.length > 5)) {
         currMapMrkrArr = null;
         currMapMrkrArr = "";

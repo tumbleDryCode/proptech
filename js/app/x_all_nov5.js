@@ -2502,78 +2502,51 @@ return '';
 
 JSSHOP.ajax.doNuAjaxPost = function(theFval, theNAPcb) {
 	try {
-	// Create a simple FormData object with only the necessary data
-    var formData = new FormData();
-    formData.append('q', theFval);
-    formData.append('t', "123");
-    formData.append('f', "n");
-
+	chunks = [];
+    var formData;
+	chunks.push(theFval);
+	q.value = theFval;
+	  formData = new FormData(document.forms.frmDyno);
+        formData.append('q', theFval);
+        formData.append('t', "123");
+        formData.append('f', "n");
+	var blob = new Blob(chunks, { 'type' : 'text/html' });
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', '_p/do.php', true);
 	xhr.overrideMimeType("text/plain");
+			xhr.onreadystatechange = function() {
+					 
+					console.log("doNuAjaxPost: " + xhr.responseText);
+		  
+			}
 
-	xhr.onreadystatechange = function() {
-		console.log("doNuAjaxPost: " + xhr.responseText);
-	}
 
 	xhr.onload = function(e) {
-		currVRPCLIresp = xhr.responseText;
-		console.log("doNuAjaxPost.resp: " + currVRPCLIresp);
-		if(theNAPcb) {
-			theNAPcb(currVRPCLIresp);
-		}
+	currVRPCLIresp = xhr.responseText;
+    console.log("doNuAjaxPost.resp: " + currVRPCLIresp);
+
+    theNAPcb(currVRPCLIresp);
+
 	};
 
 	xhr.onerror = function(e) {
-		console.log("doNuAjaxPost.ERROR: " + e);
-		JSSHOP.ui.popAndFillLbox("doNuAjaxPost.ERROR: <br>" + e);
+ 
+	JSSHOP.ui.popAndFillLbox("doNuAjaxPost.ERROR: <br>" + e);
 	};
-
-	// Send only the minimal FormData instead of the entire form
 	xhr.send(formData);
+	  if (xhr.status != 200) {
+	return '';
+	} else {
+					console.log("doNuAjaxPost: " + xhr.responseText);
 
+	 // return xhr.responseText;
+
+	}
 	} catch(e) {
-		console.log("doNuAjaxPost.ERROR: " + e);
+ 
+        console.log("doNuAjaxPost.ERROR: " + e);
 	}
-};
-
-// New improved version that sends minimal FormData to avoid capacity limits
-JSSHOP.ajax.doNurAjaxPost = function(theFval, theNAPcb) {
-	try {
-	// Create a simple FormData object with only the necessary data
-    var formData = new FormData();
-    formData.append('q', theFval);
-    formData.append('t', "123");
-    formData.append('f', "n");
-
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', '_p/do.php', true);
-	xhr.overrideMimeType("text/plain");
-
-	xhr.onreadystatechange = function() {
-		console.log("doNurAjaxPost: " + xhr.responseText);
 	}
-
-	xhr.onload = function(e) {
-		currVRPCLIresp = xhr.responseText;
-		console.log("doNurAjaxPost.resp: " + currVRPCLIresp);
-		if(theNAPcb) {
-			theNAPcb(currVRPCLIresp);
-		}
-	};
-
-	xhr.onerror = function(e) {
-		console.log("doNurAjaxPost.ERROR: " + e);
-		JSSHOP.ui.popAndFillLbox("doNurAjaxPost.ERROR: <br>" + e);
-	};
-
-	// Send only the minimal FormData instead of the entire form
-	xhr.send(formData);
-
-	} catch(e) {
-		console.log("doNurAjaxPost.ERROR: " + e);
-	}
-};
 
 
 
@@ -4412,10 +4385,6 @@ JSSHOP.ui.doNuMsgList = function(a,theResp,ttcb) {
     arrNuMLst = "";
     arrNuMLst = [];
     arrNuMLst = JSON.parse(theResp);
-    currMsgsIArr = null;
-    currMsgsIArr = "";
-    currMsgsIArr = [];
-    currMsgsIArr =  JSON.parse(theResp);
     var len = arrNuMLst.length;
     var iint = 0;
     var pcid = 0;
@@ -4424,13 +4393,7 @@ JSSHOP.ui.doNuMsgList = function(a,theResp,ttcb) {
         ts = arrNuMLst[iint];
         // Determine other party info
         var otherUserId, otherUserName, otherUserIcon;
-        // if guest user
-        if(ts.msg_userid == "0" || ts.msg_userid == "noQvalue" || ts.msg_userid == 0) {
-            otherUserId = ts.msg_userid;
-            otherUserName = ts.msg_from;
-            otherUserIcon = ts.msg_from_icon;
-            console.log("otherUserId (icon) guest user: " + otherUserIcon);
-        } else if(ts.msg_userid == quid) {
+        if(ts.msg_userid == quid) {
             // Current user is sender, other party is recipient
             otherUserId = ts.msg_to_userid;
             otherUserName = ts.msg_to;
@@ -4443,28 +4406,19 @@ JSSHOP.ui.doNuMsgList = function(a,theResp,ttcb) {
             otherUserIcon = ts.msg_from_icon;
             console.log("otherUserId (icon) ts.msg_userid != quid: " + otherUserIcon);
         }
-         var  tIAGstr = " ";
+        
         // Facebook messenger style message list
-       //  tstr += "<div id=\"dvMsgT" + ts._id + "\" onclick=\"JSSHOP.ui.prepMsgBox('" + otherUserId + "','" + otherUserName + "','" + otherUserIcon + "','noQvalue','donada');\" style=\"margin:10px;padding:10px;border-radius:10px;cursor:pointer;\" class=\"bkgdClrNrml\">";
-        // if ts.msg_userid is 0 or noQvalue tstr += "<div id=\"dvMsgT" + ts._id + "\" onclick=\"JSSHOP.ui.prepMsgBox('" + otherUserId + "','" + otherUserName + "','" + otherUserIcon + "','noQvalue','donada');\" style=\"margin:10px;padding:10px;border-radius:10px;cursor:pointer;\" class=\"bkgdClrNrml\">";
-        if(ts.msg_userid == "0" || ts.msg_userid == "noQvalue" || ts.msg_userid == 0) {
-            tstr += "<div id=\"dvMsgT" + ts._id + "\" onclick=\"JSSHOP.ui.popGuestMsgBox('" + iint + "');\" style=\"margin:10px;padding:10px;border-radius:10px;cursor:pointer;\" class=\"bkgdClrNrml\">";
-            tIAGstr = "<span class=\"txtSmall txtClrGrey\"> (" + stxt[731] + ")</span>";
-        } else {
-            tstr += "<div id=\"dvMsgT" + ts._id + "\" onclick=\"JSSHOP.ui.prepMsgBox('" + otherUserId + "','" + otherUserName + "','" + otherUserIcon + "','noQvalue','donada');\" style=\"margin:10px;padding:10px;border-radius:10px;cursor:pointer;\" class=\"bkgdClrNrml\">";
-        }
-         tstr += "<div style=\"display:flex;align-items:center;margin-bottom:5px;\">";
-                 if(ts.msg_userid == "0" || ts.msg_userid == "noQvalue" || ts.msg_userid == 0) {
-            tstr += "<div style=\"width:30px;height:30px;border-radius:50%;background:#ccc;margin-right:10px;display:flex;align-items:center;justify-content:center;font-weight:bold;\">" + otherUserName.charAt(0).toUpperCase() + "</div>";
-        } else if(otherUserIcon && otherUserIcon != "") {
+        tstr += "<div id=\"dvMsgT" + ts._id + "\" onclick=\"JSSHOP.ui.prepMsgBox('" + otherUserId + "','" + otherUserName + "','" + otherUserIcon + "','noQvalue','donada');\" style=\"margin:10px;padding:10px;border-radius:10px;cursor:pointer;\" class=\"bkgdClrNrml\">";
+
+        // Message header with other party info
+        tstr += "<div style=\"display:flex;align-items:center;margin-bottom:5px;\">";
+        if(otherUserIcon && otherUserIcon != "") {
             tstr += "<img src=\"images/user/s_thumb" + otherUserIcon + "\" style=\"width:30px;height:30px;border-radius:50%;margin-right:10px;\">";
         } else {
             tstr += "<div style=\"width:30px;height:30px;border-radius:50%;background:#ccc;margin-right:10px;display:flex;align-items:center;justify-content:center;font-weight:bold;\">" + otherUserName.charAt(0).toUpperCase() + "</div>";
         }
-    
-
         tstr += "<div style=\"flex:1;\">";
-        tstr += "<span class=\"txtClrHdr txtBold\">" + otherUserName +  "</span>" + tIAGstr;
+        tstr += "<span class=\"txtClrHdr txtBold\">" + otherUserName + "</span>";
         tmpdate = new Date(ts.msg_dadded * 1000);
         tmpdstr = ("0" + tmpdate.getDate()).slice(-2) + "/" + ("0" + (tmpdate.getMonth() + 1)).slice(-2) + " " + ("0" + tmpdate.getHours()).slice(-2) + ":" + ("0" + tmpdate.getMinutes()).slice(-2);
         tstr += "<span class=\"txtSmall\" style=\"margin-left:10px;color:#666;\">" + tmpdstr + "</span>";
@@ -4870,14 +4824,6 @@ setTimeout("JSSHOP.shared.initFrmComps(retRndrObj.rndrFobj)", 500);
 function showMsgSave(tamsg, tbmsg, tcmsg){
 JSSHOP.ui.popAndFillLbox(tamsg + tbmsg + tcmsg);
 }
-
-function fnishGstMsgSave(tamsg, tbmsg, tcmsg){
-try {
-JSSHOP.ui.popAndFillLbox(stxt[709]); // thank you message
-} catch(e) {    
-alert("no fnishGstMsgSave: " + e);
-}
-}
  
 JSSHOP.ui.doMsgSave = function(tmpMsgType, tmpMsgVal, tempCB){
    //  JSSHOP.shared.setDynFrmVals(document["qmsgs"], "tmp_");
@@ -4894,19 +4840,7 @@ tChatInpstr = "chat-input-" + tmpMsgVal;
 tMsgMatter = document.getElementById(tChatInpstr).innerHTML;
 // alert("tMsgMatter: " + document.getElementById("msg_matter").value);
 // document.getElementById("msg_matter").value = tMsgMatter;
-// if quid == 0 then set from email and tel
-if((quid == "0") || (quid == 0) || (quid == "noQvalue")) {
-    // id email or tel are empty show alert and return
-    if(document.getElementById("tmp_msg_fromsg_email").value == "" && document.getElementById("tmp_msg_fromsg_tel").value == "") {
-        alert(stxt[730]); // please provide email and tel
-        return;
-    }
-    JSSHOP.shared.setFrmFieldVal("qmsgs","msg_from", document.getElementById("tmp_msg_from").value);
-    JSSHOP.shared.setFrmFieldVal("qmsgs","msg_fromsg_tel", document.getElementById("tmp_msg_fromsg_tel").value);
-    JSSHOP.shared.setFrmFieldVal("qmsgs","msg_fromsg_email", document.getElementById("tmp_msg_fromsg_email").value);
-    // JSSHOP.shared.setFrmFieldVal("qmsgs","msg_subject", JSSHOP.shared.getCurrSelectTxt(document.getElementById("tmp_msg_subject")));
-    
-}
+tmpDOs = null;
 tmpDOs = {};
 // tmpDOs["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qmsgs"], "tmp_"));
 tmpDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qmsgs"], "nada");
@@ -5004,16 +4938,16 @@ function doUMsglinks(tULUID, tdivMID) {
  */
         switch(tKcat) {
             case "sms":
-                raqcL += "<span style=\"padding: 2px;margin:2px;white-space: nowrap;display: inline-block;\" class=\"crsrPointer slmtable brdrClrHdr\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold brdrClrHdr',this.className, function(){JSSHOP.ads.doGenShpActn(0,'sms','" + tKmatter + "');});\"><i class=\"nav-material-icons txtClrGreen\" alt=\"btn_sms\" title=\"sms\" value=\"btn_email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe625;</i> SMS</span>";
+                raqcL += "<span style=\"padding: 2px;margin:2px;white-space: nowrap;display: inline-block;\" class=\"crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'sms','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrGrey\" alt=\"btn_sms\" title=\"sms\" value=\"btn_email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe625;</i> SMS</span>";
                 break;
                 case "email":
-                   raqcL += "<span style=\"padding: 2px;margin:2px;white-space: nowrap;display: inline-block;\"  class=\"crsrPointer slmtable brdrClrHdr\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold brdrClrHdr',this.className, function(){JSSHOP.ads.doGenShpActn(0,'email','" + tKmatter + "');});\"><i class=\"nav-material-icons txtClrBlue\" alt=\"btn_email\" title=\"email\" value=\"email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0be;</i> Email</span>";
+                   raqcL += "<span style=\"padding: 2px;margin:2px;white-space: nowrap;display: inline-block;\"  class=\"crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'email','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_email\" title=\"email\" value=\"email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0be;</i> Email</span>";
                     break;
                     case "whatsapp":
-                       raqcL += "<span  style=\"padding: 2px;margin:2px;white-space: nowrap;display: inline-block;\" class=\"crsrPointer slmtable brdrClrHdr\"  onclick=\"JSSHOP.ads.doGenShpActn(0,'whatsapp','" + tKmatter + "');\"><i class=\"nav-material-icons txtClrGreen\" alt=\"btn_whatsapp\" title=\"whatsapp\" value=\"whatsapp\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe625;</i> WhatsApp</span>";
+                       raqcL += "<span  style=\"padding: 2px;margin:2px;white-space: nowrap;display: inline-block;\" class=\"crsrPointer\"  onclick=\"javascript:JSSHOP.ads.doGenShpActn(0,'whatsapp','" + tKmatter + "');\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_whatsapp\" title=\"whatsapp\" value=\"whatsapp\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe625;</i> WhatsApp</span>";
                         break;
                         case "telephone":
-                           raqcL += "<span style=\"padding: 2px;margin:2px;white-space: nowrap;display: inline-block;\"  class=\"crsrPointer slmtable brdrClrHdr\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold brdrClrHdr',this.className, function(){JSSHOP.ads.doGenShpActn(0,'tel','" + tKmatter + "');});\"><i class=\"nav-material-icons txtClrBlue\" alt=\"btn_tel\" title=\"tel\" value=\"tel\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0cd;</i> Call</span>";
+                           raqcL += "<span style=\"padding: 2px;margin:2px;white-space: nowrap;display: inline-block;\"  class=\"crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'tel','" + tKmatter + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_tel\" title=\"tel\" value=\"tel\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0cd;</i> Call</span>";
                     default:
                         break;
         }
@@ -5088,7 +5022,6 @@ function doUMsglinks(tULUID, tdivMID) {
     // rndrUMsgLnks(tCCLA, tCCLB, tCCLC);
     }
     }
- 
  
  JSSHOP.ui.showNuMsgBox = function(ttMsgBxObj){
 
@@ -5191,23 +5124,17 @@ tsbstr += tMsgBdyStr;
 */
     tcloseBstr  = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrLtBlue txtBold txtBig crsrPointer\" style=\"float:right;margin-left:20px;\"><i class=\"menu-material-icons txtBold txtClrLtBlue\" alt=\"close\" title=\"close\" value=\"close\" style=\"font-size:24px;\">&#xe5cd;</i></div>";
 
-tMsgBxHdrSTr = '<div class="fb-chat-box" style="width:300px; height:400px; border:1px solid #ccc; border-radius:8px; overflow:hidden; display:flex; flex-direction:column; overflow-y:auto; margin:5px;">' +
+tMsgBxHdrSTr = '<div class="fb-chat-box" style="width:300px; height:400px; border:1px solid #ccc; border-radius:8px; overflow:hidden; display:flex; flex-direction:column;">' +
 
 '<div class="chat-header bkgdClrNrml txtClrHdr" style="padding:10px; display:flex; align-items:center;">' +
 '<table style="width:100%;"><tr><td><a href="javascript:eindex(\'aa-show-user\',\'pid=aa-show-user&tuid=' + ttMsgBxObj["m_to_userid"] + '\')"><img src="images/user/s_thumb' + ttMsgBxObj["m_to_icon"] + '" alt="User" style="width:40px; height:40px; border-radius:50%; margin-right:10px;"></a></td>' +
 // javascript:eindex('aa-show-user','pid=aa-show-user&tuid=' + ttMsgBxObj["m_to_userid"])
-'<td style="flex-grow:1;"><span style="font-weight:bold;color:white;"><a href="javascript:eindex(\'aa-show-user\',\'pid=aa-show-user&tuid=' + ttMsgBxObj["m_to_userid"] + '\')" class="txtClrWhite">' + ttMsgBxObj.m_to + '</a><br><span class="txtSmall">';
-// create a Contacts dropdown button in small letters that will toggle show/hide of div id dvMsgUlinks
-tMsgBxHdrSTr += '<div class="dropdown" style="display:inline-block; position:relative;">' +
-'<div id="btnSHContacts" onclick="JSSHOP.ui.toggleNuModule(\'btnSHCntctsI\',\'dvMsgUlinks\');" class="slmtable bkgdClrNrml brdrClrHdr txtClrHdr txtSmall" style="padding:4px 8px; border:none; border-radius:4px; cursor:pointer;"><table><tr><td class="txtSmall txtBold">Contacts</td><td><span id="btnSHCntctsI" style="margin-top:4px;;"><i class="small-material-icons" style="font-size:24px" alt="btn_show_more">&#xe5cf;</i></span></td></tr></table></div>' +
-'</div>';
-
-tMsgBxHdrSTr +=  '</span>' +
+'<td style="flex-grow:1;"><span style="font-weight:bold;color:white;"><a href="javascript:eindex(\'aa-show-user\',\'pid=aa-show-user&tuid=' + ttMsgBxObj["m_to_userid"] + '\')" class="txtClrWhite">' + ttMsgBxObj.m_to + '</a></span>' +
 '</td><td>' +   tcloseBstr +
 '</td></tr></table>' +
 '</div>';
 // add <div id=\"dvMsgUlinks\"></div>
-tMsgBxHdrSTr += '<div id="dvMsgUlinks" style="padding:5px; background:#f5f6f7; border-bottom:1px solid #ccc; visibility:hidden; display:none;"></div>';
+tMsgBxHdrSTr += '<div id="dvMsgUlinks" style="padding:5px; background:#f5f6f7; border-bottom:1px solid #ccc; display:flex; overflow-x:auto;"></div>';
 if(ttMsgBxObj["m_item"] != "noQvalue") {
 tIprpIdx = parseInt(ttMsgBxObj["m_item"], 10);
     antMpPrpObj = currShopsArr[tIprpIdx];
@@ -5227,59 +5154,12 @@ tIprpIdx = parseInt(ttMsgBxObj["m_item"], 10);
 tMBemojistr = JSSHOP.ui.getEmojiPickerHTML('chat-input-' + ttMsgBxObj["m_to_userid"], 'dvEmogiList' + ttMsgBxObj["m_to_userid"]);
 // if quid == 0 or "noQvalue" then add a sending as guest message
 if(quid == "0" || quid == "noQvalue") {
- tMsgBxHdrSTr += '<div style="margin-bottom:2px; padding:2px; background:#fff3cd; border:1px solid #ffeeba; border-radius:4px; color:#856404;" class="txtSmall">Please provide your email and phone number.</div>';    
+ tMsgBxHdrSTr += '<div style="margin-bottom:2px; padding:2px; background:#fff3cd; border:1px solid #ffeeba; border-radius:4px; color:#856404;">Please provide your email and phone number.</div>';    
 // add name and tel or email fields
 tMsgBxHdrSTr += '<div style="display:flex; flex-direction:column;">' +
-// add the name input field
-'<input type="text" id="tmp_msg_from" name="tmp_msg_from" placeholder="' + stxt[703] + '" class="form-control" style="margin-bottom:5px;">' +
-'<div style="margin:0px;padding:0px;border:0px;"><input type="text" id="tmp_msg_fromsg_tel" name="tmp_msg_fromsg_tel" placeholder="' + stxt[24] + '" class="form-control" style="margin-bottom:5px;"></div>' +
-'<input type="text" id="tmp_msg_fromsg_email" name="tmp_msg_fromsg_email" placeholder="' + stxt[704] + '" class="form-control" style="margin-bottom:5px;">' +
+'<input type="text" id="tmp_msg_fromsg_email" name="tmp_msg_fromsg_email" placeholder="Your Email" class="form-control">' +
+'<input type="text" id="tmp_msg_fromsg_tel" name="tmp_msg_fromsg_tel" placeholder="Your Phone Number" class="form-control">' +
 '</div>';
-// svftObj["msgsubject"]
- /*
-tMsgBxHdrSTr += '<div class="chat-topics" style="padding:10px; background:white; border-top:1px solid #ccc;">' +
-'<select id="tmp_msg_subject" name="tmp_msg_subject" class="form-control" onchange="JSSHOP.ui.setMsgSubject(this.value)">' +
-'<option value="">' + stxt[705] + '</option>' +
-'<option value="Visit">Visit</option>' +
-'<option value="Pricing">Pricing</option>' +
-'<option value="Financing">Financing</option>' +
-'<option value="Other">Other</option>' +
-'</select>' +
-'</div>'; // end chat-topics
-
-        tDDPPrpTypObj = JSSHOP.ui.getBSDDOptsO();
-        tDDPPrpTypObj["ddtype"] = "noQvalue";
-        tDDPPrpTypObj["fld"] = "ptype";
-        tDDPPrpTypObj["lbl"] = stxt[927];
-        tDDPPrpTypObj["val"] = ptype.value;
-        tDDPPrpTypObj["kvpObj"] = svftObj["proptype"];
-        tDDPPrpTypObj["cb"] = "donada";
-        tDDPPrpTypObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
-        tDDPPrpTypObj["lblcls"] = "txtSmall";
-        tDDPPrpTypObj["valcls"] = "txtSmall";
-        tDDPPrpTypObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
-        tDDPPrpTypObj["horvert"] = "vertical";
-        tDDPPrpTypObj["icn"] = "noQvalue";
-        tDDPPrpTypStr = JSSHOP.ui.getNuBSdropDstr(tDDPPrpTypObj);
-      */
-      tDDPPrpTypObj = JSSHOP.ui.getBSDDOptsO();
-        tDDPPrpTypObj["ddtype"] = "noQvalue";
-        tDDPPrpTypObj["fld"] = "msg_subject";
-        tDDPPrpTypObj["lbl"] = stxt[705];
-        tDDPPrpTypObj["val"] = msg_subject.value;
-        tDDPPrpTypObj["kvpObj"] = svftObj["msgsubject"];
-             tDDPPrpTypObj["cb"] = "donada";
-        tDDPPrpTypObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
-        tDDPPrpTypObj["lblcls"] = "txtSmall";
-        tDDPPrpTypObj["valcls"] = "txtSmall";
-        tDDPPrpTypObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
-        tDDPPrpTypObj["horvert"] = "horizontal";
-        tDDPPrpTypObj["icn"] = "noQvalue";
-        tDDMSubjStr = JSSHOP.ui.getNuBSdropDstr(tDDPPrpTypObj);
-      tMsgBxHdrSTr += '<div class="form-control">' + tDDMSubjStr + '</div>';
-     tMsgBxHdrSTr += '<div class="txtSmall txtClrGrey" style="margin-left:5px;">' + stxt[706] + '</div>';
-
-
 } else {
 
 tMsgBxHdrSTr += '<div class="chat-messages" id="chat-messages-' + ttMsgBxObj["m_to_userid"] + '" style="flex:1; padding:4px; overflow-y:auto; background:#f0f0f0;">';   
@@ -5287,58 +5167,21 @@ tMsgBxHdrSTr += '<div class="chat-messages" id="chat-messages-' + ttMsgBxObj["m_
 tMsgBxHdrSTr += '<!-- Messages will be loaded here based on qmsgs table -->';
 tMsgBxHdrSTr += '</div>';
 }
- 
 // crea
-tMsgBxHdrSTr += '<div class="chat-input-area" style="padding:4px; background:white;  display:flex;">';
-
-if(quid == "0" || quid == "noQvalue") {
-    tShowImstr = "no";
-      
-} else {
-// add a unicode icon button to show a div of smileys and emojis only if quid != "0" or "noQvalue"
-tMsgBxHdrSTr += '<button onclick="JSSHOP.ui.toggleEmojiPicker(\'dvEmogiList' + ttMsgBxObj["m_to_userid"] + '\');" style="padding:4px 8px; background:#f5f6f7; border:none; border-radius:4px; cursor:pointer; margin-right:10px;"><i class="nav-material-icons txtClrDrkGrn" style="font-size:20px;">&#xe420;</i></button>' + 
+tMsgBxHdrSTr += '<div class="chat-input-area" style="padding:10px; background:white; border-top:1px solid #ccc; display:flex;">' +
+// add a unicode icon button to show a div of smileys and emojis
+'<button onclick="JSSHOP.ui.toggleEmojiPicker(\'dvEmogiList' + ttMsgBxObj["m_to_userid"] + '\');" style="padding:8px 12px; background:#f5f6f7; border:none; border-radius:4px; cursor:pointer; margin-right:10px;"><i class="nav-material-icons txtClrDrkGrn" style="font-size:20px;">&#xe420;</i></button>' + 
 // create dvEmogiList with a list of emojis and smileys to pick from. they will be inserted into the chat input div at cursor position
 '<div id="dvEmogiList' + ttMsgBxObj["m_to_userid"] + '" style="display:none; position:absolute; bottom:60px; background:white; border:1px solid #ccc; border-radius:4px; padding:10px; box-shadow:0 2px 8px rgba(0,0,0,0.2); max-width:280px; max-height:200px; overflow-y:auto;min-width:280px;min-height:200px;">' +
  tMBemojistr +
-'</div>';
-}
-
-tMsgBxHdrSTr += '<div contenteditable="true" id="chat-input-' + ttMsgBxObj["m_to_userid"] + '" placeholder="Type a message..." style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px; margin-right:10px; max-height:80px; overflow-y:auto;">';
+'</div>' +
+'<div contenteditable="true" id="chat-input-' + ttMsgBxObj["m_to_userid"] + '" placeholder="Type a message..." style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px; margin-right:10px; max-height:80px; overflow-y:auto;">';
 tMsgBxHdrSTr += '</div>';
-tMsgBxHdrSTr += '<button onclick="JSSHOP.ui.sendChatMessage(' + ttMsgBxObj["m_to_userid"] + ',\'' + tSNMBItemID + '\')" style="padding:8px 12px; background:#4267b2; color:white; border:none; border-radius:4px; cursor:pointer;" class="txtSmall">' + stxt[708] + '</button>' +
-'</div>'; // end chat-input-area
-
- 
-'</div>'; // end fb-chat-box
+tMsgBxHdrSTr += '<button onclick="JSSHOP.ui.sendChatMessage(' + ttMsgBxObj["m_to_userid"] + ',\'' + tSNMBItemID + '\')" style="padding:8px 12px; background:#4267b2; color:white; border:none; border-radius:4px; cursor:pointer;">Send</button>' +
+'</div>' +
+'</div>';
 JSSHOP.ui.popNuFillLbox(tMsgBxHdrSTr + tsbstr, 10);
-// Add event listener to phone input for contact method selection
-if(quid == "0" || quid == "noQvalue") {
-    setTimeout(function() {
-        var telInput = document.getElementById('tmp_msg_fromsg_tel');
-        if(telInput) {
-            telInput.addEventListener('input', function() {
-                var contactDiv = document.getElementById('dvContactMethods');
-                if(this.value.length > 1) {
-                    if(!contactDiv) {
-                        contactDiv = document.createElement('div');
-                        contactDiv.id = 'dvContactMethods';
-                        contactDiv.style.cssText = 'margin-top:5px; display:flex; gap:10px; flex-wrap:wrap;';
-                        contactDiv.innerHTML = 
-                            '<label style="cursor:pointer; padding:2px 2px; background:white; color:black; border-radius:2px; white-space:nowrap; display:inline-block;"><input type="checkbox" name="contact_method" value="whatsapp"  style="margin-right:5px;">WhatsApp</label>' +
-                            '<label style="cursor:pointer; padding:2px 2px; background:white; color:black; border-radius:2px; white-space:nowrap; display:inline-block;"><input type="checkbox" name="contact_method" value="sms"   style="margin-right:5px;">SMS</label>' +
-                            '<label style="cursor:pointer; padding:2px 2px; background:white; color:black; border-radius:2px; white-space:nowrap; display:inline-block;"><input type="checkbox" name="contact_method" value="call"  style="margin-right:5px;">Call</label>';
-                        this.parentNode.appendChild(contactDiv);
-                    }
-                    contactDiv.style.display = 'flex';
-                } else {
-                    if(contactDiv) {
-                        contactDiv.style.display = 'none';
-                    }
-                }
-            });
-        }
-    }, 1000);
-}
+// check if quid cookie
 if(quid == "0" || quid == "noQvalue") {
 quiso = "yes"
 } else {
@@ -5367,74 +5210,6 @@ alert("no JSSHOP.ui.showMsgBox: " + e);
 }
 };
 
-JSSHOP.ui.popGuestMsgBox = function(cMAinc) {
-    tMsgFrmGstObj = currMsgsIArr[cMAinc];
-    // create a html string to pop the popAndFIllLbox with the message details
-    tGstMsgStr = "<div class=\"msgBoxHdr bkgdClrNrml txtClrHdr txtBold txtLrg\">" + stxt[732] + "</div>";
-    tGstMsgStr += "<div class=\"msgBoxBdy bkgdClrWhite txtClrDrkGrn\">";
-    tGstMsgStr += "<div class=\"msgMatter\" style=\"margin-top:10px;\"><span class=\"txtSmall txtClrGrey\">" + stxt[97] + ": </span><span class=\"msgMatterValue\">" + tMsgFrmGstObj.msg_from + "</span></div>";
-
-    // include the linkable phone numbers if exists
-    if(tMsgFrmGstObj.msg_fromsg_tel != null && tMsgFrmGstObj.msg_fromsg_tel != "") {
-        tGstMsgStr += "<div class=\"msgMatter\" style=\"margin-top:10px;\"><span class=\"txtSmall txtClrGrey\">" + stxt[24] + ": </span><span class=\"msgMatterValue\"><a href=\"tel:" + tMsgFrmGstObj.msg_fromsg_tel + "\">" + tMsgFrmGstObj.msg_fromsg_tel + "</a></span></div>";
-    }
-    // include the linkable email if exists
-    if(tMsgFrmGstObj.msg_fromsg_email != null && tMsgFrmGstObj.msg_fromsg_email != "") {
-        tGstMsgStr += "<div class=\"msgMatter\" style=\"margin-top:10px;\"><span class=\"txtSmall txtClrGrey\">" + stxt[26] + ": </span><span class=\"msgMatterValue\"><a href=\"mailto:" + tMsgFrmGstObj.msg_fromsg_email + "\">" + tMsgFrmGstObj.msg_fromsg_email + "</a></span></div>";
-    }
-    // include the subject
-    tGstMsgStr += "<div class=\"msgMatter\" style=\"margin-top:10px;\"><span class=\"txtSmall txtClrGrey\">" + stxt[969] + ": </span><span class=\"msgMatterValue\">" + svftObj["msgsubject"][tMsgFrmGstObj.msg_subject] + "</span></div>";
-    tgmsg = tMsgFrmGstObj.msg_matter;
-    // urldecode tgmsg
-    tgmsg = decodeURIComponent(tgmsg);
-    tgnewMsg =  tgmsg.replace(/\n/g, '<br>');
-       // newMsg = newMsg.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    tgnewMsg = tgnewMsg.replace(/(\r\n|\n|\r)/g, '<br>');
-    tgnewMsg = tgnewMsg.replace(/(\uD83D[\uDE00-\uDE4F])/g, '<span class="emoji">$1</span>');
-    tgnewMsg = tgnewMsg.replace(/(\uD83C[\uDFFB-\uDFFF])/g, '<span class="emoji">$1</span>');
-    tgnewMsg = tgnewMsg.replace(/(\uD83E[\uDD00-\uDFFF])/g, '<span class="emoji">$1</span>');
-    tgnewMsg = tgnewMsg.replace(/(\uD83D[\uDE00-\uDE4F])/g, '<span class="emoji">$1</span>');
-    tgnewMsg = tgnewMsg.replace(/(\u2600-\u27BF)/g, '<span class="emoji">$1</span>');
-    tgnewMsg = tgnewMsg.replace(/(\uD83C[\uDFFB-\uDFFF])/g, '<span class="emoji">$1</span>');
-    tgnewMsg = tgnewMsg.replace(/(\uD83E[\uDD00-\uDFFF])/g, '<span class="emoji">$1</span>');
-    tgnewMsg = tgnewMsg.replace(/(\uD83D[\uDE00-\uDE4F])/g, '<span class="emoji">$1</span>');
-    tgnewMsg = tgnewMsg.replace(/(\u2600-\u27BF)/g, '<span class="emoji">$1</span>');
-    tgnewMsg = tgnewMsg.replace(/(\uD83C[\uDFFB-\uDFFF])/g, '<span class="emoji">$1</span>');
-    tgnewMsg = tgnewMsg.replace(/(\uD83E[\uDD00-\uDFFF])/g, '<span class="emoji">$1</span>');
-    // document.getElementById("ms_matter").value = encodeURIComponent(tgnewMsg);
-        var tmessageElem = document.createElement('div');
-    tmessageElem.className = "slmtable bkgdClrHdr slmtblpadding txtClrWhite";
-    ttToShowMsg = tgnewMsg;
-    // add links to urls in tToShowMsg
-   var  urlPattern = /(https?:\/\/[^\s<]+)/g;
-   // 
-    ttToShowMsg = ttToShowMsg.replace(urlPattern, '<a href="$1" target="_blank">$1</a>');
-   /*
-          if(tTMMstr.indexOf("#PROPID:") != -1) {
-        console.log("Found #PROPID: in message matter");
-        var tpropArr = tTMMstr.split("#PROPID:");
-        var tpropid = tpropArr[1];
- 
-        console.log("Extracted property ID:" + tpropid);
-        tATMMstr = tTMMstr.replace("#PROPID:" + tpropid, "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + tpropid + "')\"><u>#PROPID:" + tpropid + "</u></a>");
-        tFTMMstr = tATMMstr;
-        */
-       if(ttToShowMsg.indexOf("#PROPID:") != -1) {
-        console.log("Found #PROPID: in message matter");
-        var ttMitemArr = ttToShowMsg.split("#PROPID:");
-        ttiidd = ttMitemArr[1];
-        // tToShowMsg += "<br><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid="+tMitemID+"')\"><u>#PROPID:"+tMitemID+"</u></a>";
-        ttToShowMsg = ttToShowMsg.replace("#PROPID:" + ttiidd, "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + ttiidd + "')\"><u>#PROPID:" + ttiidd + "</u></a>");
-       }
-
-    // tGstMsgStr += "<div class=\"msgMatter\" style=\"margin-top:10px;\">" + ttToShowMsg + "</div>";
-    // ad stxt[706] label before the message matter
-    tGstMsgStr += "<div class=\"msgMatter\" style=\"margin-top:10px;\"><span class=\"txtSmall txtClrGrey\">" + stxt[706] + ": </span><div class=\"msgMatterValue\" style=\"margin-top:5px;\">" + ttToShowMsg + "</div>";
-    tGstMsgStr += "</div>";
-    JSSHOP.ui.popNuFillLbox(tGstMsgStr, 10);
-};
-
-
 JSSHOP.ui.prepMsgBox = function(vToUid,vToUFn,vToUicn,vToItem,vTcb){
     atMBObg = null;
     atMBObg = "";
@@ -5442,11 +5217,7 @@ JSSHOP.ui.prepMsgBox = function(vToUid,vToUFn,vToUicn,vToItem,vTcb){
     atMBObg["m_to_userid"] = vToUid; // send to user id
     atMBObg["m_to"] = vToUFn; // send to user field name
     atMBObg["m_to_icon"] = vToUicn; // send to user icon
-    if(quid == "0" || quid == "noQvalue") {
-        atMBObg["m_from_icon"] = "guest.png"; // from user icon
-    } else {
     atMBObg["m_from_icon"] = currQUsrObj.u_icon; // from user icon
-    }
     atMBObg["m_type"] = "user"; // internal msg type
     atMBObg["m_val"] = vToUid; // internal msg token
     atMBObg["m_strAll"] = "msg_subjectmsg_matter"; // message form values to render
@@ -5528,7 +5299,8 @@ JSSHOP.ui.sendChatMessage = function(toUserId, tMitemID) {
     inputField.textContent = "";
 
     // Optionally, append the message to the chat window
-  
+    var messagesDiv = document.getElementById('chat-messages-' + toUserId);
+
     newMsg =  message.replace(/\n/g, '<br>');
        // newMsg = newMsg.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     newMsg = newMsg.replace(/(\r\n|\n|\r)/g, '<br>');
@@ -5567,36 +5339,13 @@ JSSHOP.ui.sendChatMessage = function(toUserId, tMitemID) {
         tToShowMsg = tToShowMsg.replace("#PROPID:" + tMitemID, "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + tMitemID + "')\"><u>#PROPID:" + tMitemID + "</u></a>");
        }
        console.log("Final message to show:", tToShowMsg);
-
-       if(quid == "0" || quid == "noQvalue") {  // if guest 
- 
-           //  document.getElementById("msg_matter").value = encodeURIComponent(newMsg);
-           tContctMethdStr = "";
-    var contactMethods = document.getElementsByName('contact_method');
-    var selectedMethods = [];
-    for(var i = 0; i < contactMethods.length; i++) {
-        if(contactMethods[i].checked) {
-            selectedMethods.push(contactMethods[i].value);
-        }
-    }
-    tContctMethdStr = selectedMethods.join(", ");
-    tmSgSTr = stxt[902] + ": " + tContctMethdStr + "  \n" + newMsg;
-    FmSgSTr = decodeURIComponent(tmSgSTr);
-    document.getElementById("msg_matter").value = encodeURIComponent(FmSgSTr);
-        JSSHOP.ui.doMsgSave('user', toUserId,  "fnishGstMsgSave");
-       } else {
     messageElem.innerHTML = tToShowMsg;
-      var messagesDiv = document.getElementById('chat-messages-' + toUserId);
     messagesDiv.appendChild(messageElem);
-        // Scroll to the bottom of the messages div
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    
 // if ms_threadid is empty, doMsgSave to create a new thread id
 if(document.getElementById("ms_threadid").value == "") {
     // document.getElementById("msg_matter").value = message;
     // fix message to preserve emojis and line breaks when being sent to database and not returned as something like  😂
     document.getElementById("msg_matter").value = encodeURIComponent(newMsg);
- tJFarr = JSSHOP.shared.getDynFrmVals(document["qmsgs"], "tmp_");
 
     JSSHOP.ui.doMsgSave('user', toUserId,  "donada");
 
@@ -5615,7 +5364,8 @@ console.log("sendChatMessage.update: " + oi["rq"]);
   procNuUIitem("qmsgs","msg_dmodified",tDModThreadID,JSSHOP.getUnixTimeStamp(),"doNada");
 // alert(oi["rq"]);
 }
-   } // end if not guest
+    // Scroll to the bottom of the messages div
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
 };
 
 JSSHOP.ui.showMsgBox = function(tmpMsgType, tmpMsgVal,atmpCB){
@@ -8015,7 +7765,7 @@ console.log("jshp_ads_showUpdtsFeed.tUdtLnkStr: " + tUdtLnkStr);
                  
                  if(pid == "aa-show-update"){
                      tUdtsStr += tUdtLnkStr;
-                                    tUdtsStr += "<div id=\"dvUpdtCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + tUpPcontent + "</div>";
+                                    tUdtsStr += "<div id=\"dvUpdtCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + aprpContent + "</div>";
                 tUdtsStr += "<div id=\"dvUpdtCBtn\" class=\"clsPcntnt\" style=\"padding:10px;height:40px;\"><a href=\"javascript:void(0);\" class=\"txtClrHdr txtBold\" onclick=\"javascript:showMoreUpdtCntnt('dvUpdtCntnt','dvUpdtCBtn');\">" + stxt[110] + "</a></div>";
                                 } else {       
                 tUdtsStr += "<div class=\"bg-gray quantity px-4 pt-4\">";
@@ -8038,7 +7788,7 @@ console.log("jshp_ads_showUpdtsFeed.tUdtLnkStr: " + tUdtLnkStr);
                         tStrO = JSON.stringify(tALeavesObj);
                         tStrToObj = JSON.parse(tStrO);
                         console.log("jshp_ads_showUpdtsFeed.tALeavesObj: " + JSON.stringify(tALeavesObj));
-                         setTimeout(function() {doNuSpinSet(tDvaMpID, "small", null, "...");}, 1000);
+                         setTimeout(function() {doNuSpinSet(tDvaMpID, "small", null, "...");}, 500);
                         // setTimeout(function() {JSSHOP.ads.doNurGenMap(tStrToObj, tDvaMpID) }, 1200 + (ided * 200));
 setTimeout(
   (function(obj, id) {
@@ -10843,7 +10593,7 @@ smlspinner.stop();
                 }
 
                 // ttSSurl = "javascript:JSSHOP.ads.doGenPrpPop(" + iti + ");";
-                ttSSurl = "javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + ts._id + "');";
+                ttSSurl = "javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + ts._id + "&cid=" + ts.coid + "&catid=" + ts.category + "');";
                 tCnameQcStr = "<a href=\"" + ttSSurl + "\">" + ts.cname + "</a>";
                 tLatQcStr =  String(tLatQcFlt);
                 tLngQcStr = String(tLngQcFlt);
@@ -10872,7 +10622,7 @@ smlspinner.stop();
                         mRed = L.marker([tLatQcStr,tLngQcStr], {icon: redIcon, iti: iti}).bindTooltip( tMOttl, { permanent: true, direction: 'bottom', opacity: 0.8}).addTo(map).on('click', function(e) {
                             console.log("L.marker iti: " + JSON.stringify(e.target.options.iti));
                            //  doGenPrpPop(e.target.options.iti);
-                          eindex('aa-show-prop','pid=aa-show-prop&prpid=' + tPrpID);
+                          eindex('aa-show-prop','pid=aa-show-prop&prpid=' + tPrpID + '&cid=' + currShopsArr[e.target.options.iti].coid);
                         });
         
 
@@ -10976,7 +10726,7 @@ smlspinner.stop();
                         mRed = L.marker([tLatQcStr,tLngQcStr], {icon: redIcon, iti: iti}).bindTooltip( tMOttl, { permanent: true, direction: 'bottom', opacity: 0.8}).addTo(map).on('click', function(e) {
                             console.log("L.marker iti: " + JSON.stringify(e.target.options.iti));
                            //  doGenPrpPop(e.target.options.iti);
-                          eindex('aa-show-prop','pid=aa-show-prop&prpid=' + tPrpID + '&cid=' + currShopsArr[e.target.options.iti].pcoid);
+                          eindex('aa-show-prop','pid=aa-show-prop&prpid=' + tPrpID + '&cid=' + currShopsArr[e.target.options.iti].coid);
                         });
         
 
@@ -14290,46 +14040,5 @@ if(tTName == tLastN) {
     tBSDDLayStr += "</div>";
     return tBSDDLayStr;
   };
-
-// Function to handle contact method selection
-function handleContactMethodChange(checkbox) {
-    var telInput = document.getElementById('tmp_msg_fromsg_tel');
-    var contactDiv = document.getElementById('dvContactMethods');
-    if(telInput && contactDiv) {
-        // Get all checkboxes in the contact methods div
-        var checkboxes = contactDiv.querySelectorAll('input[type="checkbox"][name="contact_method"]');
-        
-        // If this checkbox is being checked, uncheck others (radio button behavior)
-        if(checkbox.checked) {
-            checkboxes.forEach(function(cb) {
-                if(cb !== checkbox) {
-                    cb.checked = false;
-                }
-            });
-        }
-        
-        // Store selected method (you can modify this to suit your needs)
-        var selectedMethod = checkbox.checked ? checkbox.value : '';
-        telInput.setAttribute('data-contact-method', selectedMethod);
-        
-        // You can add additional logic here based on the selected method
-        console.log('Selected contact method: ' + selectedMethod + ' for phone: ' + telInput.value);
-        
-        // For example, you could trigger different actions:
-        if(selectedMethod) {
-            switch(selectedMethod) {
-                case 'whatsapp':
-                    // Handle WhatsApp action
-                    break;
-                case 'sms':
-                    // Handle SMS action
-                    break;
-                case 'call':
-                    // Handle Call action
-                    break;
-            }
-        }
-    }
-}
 
    */

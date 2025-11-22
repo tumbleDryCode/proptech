@@ -547,7 +547,7 @@ function setPostAdd() {
         oi = getNuDBFnvp("qposts", 6, null, tmpFobj);
     
      // doQComm(oi["rq"], null, "setUPostAddSave");
-     JSSHOP.ajax.doNuAjaxPost(oi["rq"], setUPostAddSave);
+     JSSHOP.ajax.doNurAjaxPost(oi["rq"], setUPostAddSave);
 }
 
 function doPostAdd() {

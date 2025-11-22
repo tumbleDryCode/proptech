@@ -1880,15 +1880,31 @@ for(var aRsRgkey in currUrlArr) {
   window[aRsRgkey] = currUrlArr[aRsRgkey];
 }
 if(currUrlArr.ditemid) {
+// check if "-" is in the ditemid value
+if(currUrlArr.ditemid.indexOf("-") != -1) {
+ditemidParts = currUrlArr.ditemid.split("-");
+itDitemiD = ditemidParts[0];
+usrlang = ditemidParts[1];
+} else {
+itDitemiD = currUrlArr.ditemid;
+}
+currUrlArr.ditemid = itDitemiD;
+currUrlArr.prpid = itDitemiD;
+prpid = itDitemiD;
 currUrlArr.pid = "aa-show-prop";
-pid = currUrlArr.pid;
-prpid = currUrlArr.ditemid;
-currUrlArr.prpid = currUrlArr.ditemid;
+pid = "aa-show-prop";
 }
 if(currUrlArr.tupid) {
 currUrlArr.pid = "aa-show-update";
-pid = currUrlArr.pid;
-tupid = currUrlArr.tupid;
+frupid = currUrlArr.tupid;
+pid = "aa-show-update";
+if(frupid.indexOf("-") != -1) {
+frupidParts = frupid.split("-");
+tupid = frupidParts[0];
+usrlang = frupidParts[1];   
+} else {
+tupid = frupid;
+}
 }
 
 // delete the cookie
@@ -2561,19 +2577,6 @@ if(currUrlArr.dcid) {
 
 
 
-  if(currUrlArr.ditemid) {
-    
-    prpid = currUrlArr.ditemid;
-    currUrlArr.prpid = currUrlArr.ditemid;
-    pid = "aa-show-prop";
-    // set a 
-    // addFrmQArr("qitem", itemid, "fnishItemForm");
-   }
-   if(currUrlArr.tupid) {
-    tupid = currUrlArr.tupid;
-    pid = "aa-show-update";
-    // addFrmQArr("qitem", itemid, "fnishItemForm");
-   }
 
 if(currUrlArr.content){
 content = currUrlArr.content;
@@ -2722,6 +2725,40 @@ if(JSSHOP.cookies.getCookie("currSortObj") != null) {
       currSortObj = JSON.parse(LZString.decompressFromEncodedURIComponent(JSSHOP.cookies.getCookie("currSortObj")));
    } 
 // alert("tufilepath: " + (newError).fileName);
+
+
+
+  if(currUrlArr.ditemid) {
+    console.log("doBootLoad.currUrlArr.ditemid: " + currUrlArr.ditemid);
+    fprpid = currUrlArr.ditemid;
+    // split at - if exists
+    if(fprpid.indexOf("-") != -1) {
+        console.log("doBootLoad.fprpid: " + fprpid);
+    fprpidA = fprpid.split("-");
+    currUrlArr.ditemid = fprpidA[0];
+    currUrlArr.usrlang = fprpidA[1];
+    usrlang = fprpidA[1];
+    }
+    prpid = currUrlArr.ditemid;
+    currUrlArr.prpid = currUrlArr.ditemid;
+    pid = "aa-show-prop";
+    // set a 
+    // addFrmQArr("qitem", itemid, "fnishItemForm");
+   }
+   if(currUrlArr.tupid) {
+    frupid = currUrlArr.tupid;
+    if(frupid.indexOf("-") != -1) {
+    frupidA = frupid.split("-");
+    currUrlArr.tupid = frupidA[0];
+    currUrlArr.usrlang = frupidA[1];
+    usrlang = frupidA[1];
+    } else {
+    tupid = frupid;
+    }
+    pid = "aa-show-update";
+    // addFrmQArr("qitem", itemid, "fnishItemForm");
+   }
+   console.log("doBootLoad.usrlang: " + usrlang);
 tdhref = document.location.href;
 if(tdhref.indexOf("/admin") != -1) {
 JSSHOP.loadScript("../js/app/" + jscssprefix + "aa-" + usrlang + ".js", doFrmQLoad,"js");

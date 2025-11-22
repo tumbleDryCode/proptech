@@ -26,9 +26,17 @@ fnishCntLoad = function() {
    
    
 if(currUrlArr.tupid) {
+    frupid = currUrlArr.tupid;
+    if(frupid.indexOf("-") != -1) {
+    frupidA = frupid.split("-");
+    currUrlArr.tupid = frupidA[0];
+    currUrlArr.usrlang = frupidA[1];
+    usrlang = frupidA[1];
+    tupid = currUrlArr.tupid;
+    }
     tUFObj = {};
 tUFObj["uplmt"] = 1;
-tUFObj["uppstid"] = currUrlArr.tupid;
+tUFObj["uppstid"] = tupid;
 tUFObj["upcb"] = "jshp_ads_showUpdtsFeed";
  JSSHOP.ads.doUpdatesFeed(tUFObj);
 } else {

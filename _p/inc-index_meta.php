@@ -1,6 +1,9 @@
  
 <!-- SOCIAL MEDIA META -->
 <?php
+// output all errors for debugging
+error_reporting(E_ALL);
+
 /**
  * PDO mysql database helper class
  * 
@@ -18,7 +21,7 @@
  // if cookie usrlang
  if(isset($_COOKIE["usrlang"])) {
      $usrlang = $_COOKIE["usrlang"];
-     $deflang = $_COOKIE["usrlang"];
+    //  $deflang = $_COOKIE["usrlang"];
  }
  
 
@@ -27,7 +30,15 @@
 require_once dirname(__FILE__) . '/DumDatabase.php';
 if(isset($_GET["ditemid"])) {
     try {
-     $itemid = $_GET["ditemid"];
+     $fullitemid = $_GET["ditemid"];
+        $itemidArr = explode("-", $fullitemid);
+        $itemid = $itemidArr[0];
+        $usrlang = $itemidArr[1];
+        // $deflang = $usrlang;
+       // set the usrlang cookie if not set and different from default
+
+
+ 
      // get record from database
    //  $q = "SELECT * FROM property WHERE _id = $itemid";
    // anewQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id = " + prpid + " and p.prtype = '5' and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = '" +  usrlang + "' or pd.pd_prptlng = '" + deflang + "')";
@@ -110,7 +121,12 @@ if(isset($_GET["ditemid"])) {
 }
 if(isset($_GET["tupid"])) {
     try {
-     $itemid = $_GET["tupid"];
+        $fulltupid = $_GET["tupid"];
+        $tupidArr = explode("-", $fulltupid);
+     $itemid = $tupidArr[0];
+        $usrlang = $tupidArr[1];
+        // $deflang = $usrlang;
+        
      // get record from database
     $q = "SELECT * FROM qposts WHERE _id = $itemid";
     // send query to do.php

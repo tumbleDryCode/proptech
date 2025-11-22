@@ -318,6 +318,13 @@ stxt[726] = "Confirm\u00e9 ! Votre adresse email a \u00e9t\u00e9 confirm\u00e9e.
 stxt[727] = "D\u00e9sol\u00e9, une erreur s'est produite. Veuillez nous contacter.";
 stxt[728] = "Cliquez ici pour continuer";
 stxt[729] = "Contactez-nous concernant cette propri\u00e9t\u00e9 :";
+stxt[730] = "Veuillez fournir votre email et/ou num\u00e9ro de t\u00e9l\u00e9phone afin que nous puissions vous recontacter.";
+stxt[731] = "Invit\u00e9";
+stxt[732] = "Message de l&quote; utilisateur invit\u00e9";
+stxt[733] = "Veuillez d abord s\u00e9lectionner une adresse ou entrer des coordonn\u00e9es.";
+
+
+
 
 
 
@@ -672,6 +679,18 @@ tPostsStatObj["highlight"] = "Surligner";
 tPostsStatObj["pin"] = "\u00c9pingler";
 tPostsStatObj["pinhlight"] = "\u00c9pingler & Surligner";
 svftObj["poststat"] = tPostsStatObj;
+
+ 
+tMsgSbjObj = null;
+tMsgSbjObj = "";
+tMsgSbjObj = {};
+tMsgSbjObj["visit"] = "Demande de visite";
+tMsgSbjObj["price"] = "Demande de prix";
+tMsgSbjObj["financing"] = "Financement";
+tMsgSbjObj["other"] = "Autre";
+svftObj["msgsubject"] = tMsgSbjObj;
+ 
+
 
 // cha\u00eene personnalis\u00e9e modifiable
 var cstmStr = "";

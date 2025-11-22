@@ -75,6 +75,8 @@ aprpTitle = LZString.decompressFromEncodedURIComponent(nprpTitle);
     // atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-item', 'pid=aa-edit-item&itemid=" + ts._id + "&cid=" + ts.i_coid + "&catid=" + ts.i_catid + "');\"><div class=\"crsrPointer\">" + ts._id + "</div></a></td>";
     tSTstr = "<tr>";
     tSTstr += "<td style=\"text-align: left;position: sticky; left: 0; z-index: 3;background-color: #FFFFFF; \"  class=\"dtd\"><a href=\"javascript:eindex('aa-edit-prop', 'pid=aa-edit-prop&prpid=" + apropID + "');\"><div class=\"crsrPointer\">" + apropID + "</div></a></td>";
+   tSTstr += "<td style=\"text-align: left\" class=\"txtClrHdr\"><a href=\"javascript:eindex('aa-edit-prop', 'pid=aa-edit-prop&prpid=" + apropID + "');\" class=\"txtDecorNone\"><i class=\"nav-material-icons\" alt=\"delete\" title=\"delete\">&#xe3c9</i></a>";
+    tSTstr += "</td>";
     tSTstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-show-prop', 'pid=aa-show-prop&prpid=" + apropID + "');\">" + aprpTitle + "</a></td>";
     tSTstr += "<td style=\"text-align: left\">" + aprpPrice + "</td>";
     tSTstr += "<td style=\"text-align: left\">" + tdaprpType + "</td>";
@@ -83,8 +85,7 @@ aprpTitle = LZString.decompressFromEncodedURIComponent(nprpTitle);
     tSTstr += "<td style=\"text-align: left\" class=\"txtClrHdr\"><a href=\"javascript:eindex('aa-edit-prop', 'pid=aa-edit-prop&prpid=" + apropID + "');\" class=\"txtDecorNone\"><i class=\"nav-material-icons\" alt=\"edit\" title=\"edit\">&#xe3c9</i></a>";
     tSTstr += "<input type=\"hidden\" value=\"" + apropID + "\"></input>";
     tSTstr += "</td>";
-    tSTstr += "<td style=\"text-align: left\" class=\"txtClrHdr\"><a href=\"javascript:eindex('aa-edit-prop', 'pid=aa-edit-prop&prpid=" + apropID + "');\" class=\"txtDecorNone\"><i class=\"nav-material-icons\" alt=\"delete\" title=\"delete\">&#xe3c9</i></a>";
-    tSTstr += "</td>";
+
     tSTstr += "</tr>";
     fullurpstr += tSTstr;
     tmpACarr.push(tSTstr);
@@ -114,6 +115,12 @@ aprpTitle = LZString.decompressFromEncodedURIComponent(nprpTitle);
     tHdFObj["fld"] = "_id";
     tHdFObj["nm"] = "ID";
     tHdrArr.push(tHdFObj);
+     tQCHdFObj = {};	
+        tQCHdFObj["fld"] = "_id";
+    tQCHdFObj.ulnk = "noQvalue";
+    tQCHdFObj["nm"] = "<span style=\"margin-right: 10px; margin-top: 10px\" class=\"nav-material-icons txtBold\"><i class=\"nav-material-icons\" alt=\"delete\" title=\"delete\">&#xe3c9</i></span>";
+        tHdrArr.push(tQCHdFObj);
+
     tAHdFObj = {};	
     tAHdFObj["fld"] = "ptitle";
     tAHdFObj["nm"] = stxt[10];
@@ -139,11 +146,7 @@ aprpTitle = LZString.decompressFromEncodedURIComponent(nprpTitle);
     tBHdFObj.ulnk = "noQvalue";
     tBHdFObj["nm"] = "<span style=\"margin-right: 10px; margin-top: 10px\" class=\"nav-material-icons txtBold\"><i class=\"nav-material-icons\" alt=\"edit\" title=\"edit\">&#xe3c9</i></span>";
     tHdrArr.push(tBHdFObj);
-    tCHdFObj = {};	
-    tCHdFObj["fld"] = "_id";
-    tCHdFObj.ulnk = "noQvalue";
-    tCHdFObj["nm"] = "<span style=\"margin-right: 10px; margin-top: 10px\" class=\"nav-material-icons txtBold\"><i class=\"nav-material-icons\" alt=\"delete\" title=\"delete\">&#xe3c9</i></span>";
-    tHdrArr.push(tCHdFObj);
+   
      
     currACTblCnt = tHdrArr.length;
     tmpACarr = null;

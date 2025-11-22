@@ -23,7 +23,7 @@ var gpmap = null;
 var currPgTitle = stxt[985];
 var threedmap = null;
 var isThreeDrun = "no";
-var currGglSVloaded = "no";
+
 
 var tmpMFarrObj = null;
 var tmpMFarrObj = {};
@@ -554,7 +554,7 @@ function doSVLoad(tlat, tlng) {
     // alert("doSVLoad");
     if(currGglSVloaded == "no") {
         initStreetView();
-        currGglSVloaded = "y";
+        currGglSVloaded = "yes";
         // JSSHOP.loadScript("https://maps.googleapis.com/maps/api/js?key=" + gglSKey, doSVDinit,"js");
         } else {
             initStreetView();
@@ -1293,7 +1293,7 @@ retPLstSTr += retBedBathstr;
 
 
     retPLstSTr += "<div id=\"dvPrpCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + aprpContent + "</div>";
-     retPLstSTr += "<div id=\"dvPrpCntntBtn\" class=\"clsPcntnt\" style=\"padding:10px;\"><a href=\"javascript:void(0);\" class=\"txtClrHdr txtBold\" onclick=\"javascript:showMorePropCntnt('dvPrpCntnt','dvPrpCntntBtn');\">" + stxt[110] + "</a></div>";
+     retPLstSTr += "<div id=\"dvPrpCntntBtn\" class=\"clsPcntnt\" style=\"padding:10px;height:40px;\"><a href=\"javascript:void(0);\" class=\"txtClrHdr txtBold\" onclick=\"javascript:showMorePropCntnt('dvPrpCntnt','dvPrpCntntBtn');\">" + stxt[110] + "</a></div>";
     // show less button to hide the content again
     // retPLstSTr += "<div id=\"dvPrpCntntBtn\" class=\"clsPcntnt\" style=\"padding:10px;\"><a href=\"javascript:void(0);\" class=\"txtClrHdr txtBold\" onclick=\"javascript:showLessPropCntnt('dvPrpCntnt','dvPrpCntntBtn');\">" + stxt[111] + "</a></div>";   
     retPLstSTr += "</div>"; // end bkgdClrWhite

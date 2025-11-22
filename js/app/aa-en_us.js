@@ -335,7 +335,10 @@ stxt[726] = "Confirmed!  Your email address has been confirmed.";
 stxt[727] = "Sorry, an error occured.  Please contact us.";
 stxt[728] = "Click here to continue";
 stxt[729] = "Contact us regarding this property:";
-
+stxt[730] = "Please provide your email and/or phone number so we can get back to you.";
+stxt[731] = "Guest";
+stxt[732] = "Message from Guest User";
+stxt[733] = "Please select an address first or enter coordinates.";
 
 
 // coookie consent strings
@@ -704,7 +707,14 @@ tPostsStatObj["pin"] = "Pin";
 tPostsStatObj["pinhlight"] = "Pin & Highlight";
 svftObj["poststat"] = tPostsStatObj;
 
-
+tMsgSbjObj = null;
+tMsgSbjObj = "";
+tMsgSbjObj = {};
+tMsgSbjObj["visit"] = "Visit Request";
+tMsgSbjObj["price"] = "Price Inquiry";
+tMsgSbjObj["financing"] = "Financing";
+tMsgSbjObj["other"] = "Other";
+svftObj["msgsubject"] = tMsgSbjObj;
 
 
 // custom editable strings

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Icons Cache Test</title>
+    <link rel="stylesheet" href="css/x_forms.css">
+    <script src="js/app/material-icons-cache.js"></script>
+</head>
+<body>
+    <h1>Material Icons Caching Test</h1>
+
+    <div style="font-size: 48px; margin: 20px;">
+        <i class="material-icons">home</i>
+        <i class="material-icons">search</i>
+        <i class="material-icons">settings</i>
+        <i class="nav-material-icons">home</i>
+        <i class="material-icons-two-tone">favorite</i>
+        <i class="material-icons-outlined">star</i>
+    </div>
+
+    <div id="cache-status">
+        <h2>Cache Status</h2>
+        <p id="sw-status">Service Worker: Checking...</p>
+        <p id="ls-status">LocalStorage Cache: Checking...</p>
+        <p id="font-status">Font Loading: Checking...</p>
+    </div>
+
+    <button onclick="testCache()">Test Cache</button>
+    <button onclick="clearCache()">Clear Cache</button>
+
+    <script>
+        // Check Service Worker status
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistration('/sw-icons.js').then(reg => {
+                document.getElementById('sw-status').textContent =
+                    'Service Worker: ' + (reg ? 'Registered (' + reg.active.state + ')' : 'Not registered');
+            });
+        } else {
+            document.getElementById('sw-status').textContent = 'Service Worker: Not supported';
+        }
+
+        // Check localStorage cache
+        const cache = new MaterialIconsCache();
+        setTimeout(() => {
+            const cachedFonts = cache.getCachedFonts();
+            document.getElementById('ls-status').textContent =
+                'LocalStorage Cache: ' + (cachedFonts.length > 0 ? cachedFonts.length + ' fonts cached' : 'No fonts cached');
+        }, 1000);
+
+        // Check font loading
+        if ('fonts' in document) {
+            document.fonts.ready.then(() => {
+                document.getElementById('font-status').textContent = 'Font Loading: Complete';
+            });
+        } else {
+            document.getElementById('font-status').textContent = 'Font Loading: API not supported';
+        }
+
+        function testCache() {
+            console.log('Testing cache...');
+            // Force reload to test cache
+            location.reload();
+        }
+
+        function clearCache() {
+            // Clear localStorage cache
+            localStorage.removeItem('material-icons-cache');
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('font-')) {
+                    localStorage.removeItem(key);
+                }
+            });
+
+            // Unregister service worker
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(registrations => {
+                    registrations.forEach(reg => reg.unregister());
+                });
+            }
+
+            alert('Cache cleared. Refresh the page.');
+        }
+    </script>
+</body>
+</html>
