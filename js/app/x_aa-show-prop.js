@@ -218,7 +218,7 @@ async function initNuThreeDView(tImgSrc) {
     JSSHOP.ui.showHideElement("dvThreeDView", "show");
     // document.getElementById("dvThreeDView").innerHTML = "";
     advThreeView = document.getElementById('dvThreeDView');
-           document.getElementById("dvPropFooter").innerHTML = "3D View";
+           document.getElementById("dvPropFooter").innerHTML = "3D View - Click to Play/Stop";
 
         
         doNuSpinSet("dvThreeDCntnr", "big", null, "...");
@@ -464,7 +464,7 @@ function initStreetView() {
     JSSHOP.ui.showHideElement("dvThreeDView", "hide");
     JSSHOP.ui.showHideElement("street-view", "show");
     window.scrollTo(0, document.getElementById("street-view").offsetTop - 100);
-    document.getElementById("dvPropFooter").innerHTML = "Street View";
+    document.getElementById("dvPropFooter").innerHTML = "Street View - Swipe and Zoom";
     console.log("initStreetView: " + tmpSVloclat + " :: " + tmpSVloclng);
     // latpos = ploclat.value;
     // lngpos = ploclng.value;
@@ -869,7 +869,7 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
                 tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
                 tLuncthm = LZString.decompressFromEncodedURIComponent(tAiretArr[iirnt]["m_file_thumb"]);
                 //             tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:setPropMainImg('" + tImageFstr + "');\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"images/property/s_thumb" + tAiretArr[iirnt]["m_file"] + "\"  alt=\"image\"></a> </div>";
-                tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:setNuPropMainImg('" + iirnt + "');\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tLuncthm + "\"  alt=\"image\"></a> </div>";
+                tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:setNuPropMainImg('" + iirnt + "');\"><img class=\"rtable\" style=\"width: 100%;max-height:125px;\"  src=\"" + tLuncthm + "\"  alt=\"image\"></a> </div>";
              }  else if(tIRcatid == "30") {
                 hasGglMap = "yes";
                 tLZuncd =  tIRFname;
@@ -893,7 +893,7 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
             //  			tstr += "<img src=\"images/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
              // tAVImgUstr = "https://maps.googleapis.com/maps/api/staticmap?key=" + gglSKey + "&size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng + "&zoom=" + tZmLvl + "&maptype=" + tMpType;
 tAVImgUstr = tUnZpd;
-            t3DImgStr = "<img src=\"" + tAVImgUstr + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:initNurThreeDView('" + tAVImgUstr + "','" + tAiretArr[iint]["_id"] + "');\">";
+            t3DImgStr = "<img src=\"" + tAVImgUstr + "\" class=\"rtable crsrPointer\" onclick=\"javascript:initNurThreeDView('" + tAVImgUstr + "','" + tAiretArr[iint]["_id"] + "');\" style=\"width: 100%;min-height:125px;\" alt=\"3D Image\">";
             // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initThreeDView(" + theTmnbLat + "," + theTmnbLng + "," + theTmnbAlt + ");\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tAVImgUstr + "\"  alt=\"image\"></a> </div>";
             // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initNuThreeDView('"  + tAVImgUstr + "');\">" + t3DImgStr + "</a> </div>";
             // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initNurThreeDView('"  + tAVImgUstr + "','"+ /* qmedia _id */ tAiretArr[iirnt]["_id"] + "');\">" + t3DImgStr + "</a>";

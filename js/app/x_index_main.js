@@ -218,7 +218,7 @@ retPLstSTr += "</td><td style=\"vertical-align:top\">" + tDDPrpStr + "</td></tr>
  retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\">";
 retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"" + currPrpImgsFldr + "/" + allprpPimage + "\" alt=\"pimage\" class=\"img100p\">";
 // retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
-retPLstSTr += "<div class=\"sale  slmtable bkgdClrWhite txtClrHdr txtSmall\">ID: " + aprpObj._id + " / " + tDBHObj[aprpType] + " / " + stxt[953] + ": " + aprpSize + "</div>";
+retPLstSTr += "<div class=\"sale  slmtable bkgdClrWhite txtClrHdr txtSmall\">ID: " + aprpObj._id + " / " + svftObj["proptype"][aprpType] + " / " + stxt[953] + ": " + aprpSize + "</div>";
 retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
 retPLstSTr += "<div class=\"featured-thumb-data shadow-one\">";
 
@@ -387,7 +387,7 @@ retPLstSTr += "</td></tr></table>";
  retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\">";
 retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"" +  currPrpImgsFldr + "/" + aprpPimage + "\" alt=\"pimage\" class=\"img100p\">";
 retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
-retPLstSTr += "<div class=\"sale bg-secondary text-white text-capitalize\">" + tDBHObj[aprpType] + "</div>";
+retPLstSTr += "<div class=\"sale bg-secondary text-white text-capitalize\">" + svftObj["proptype"][aprpType] + "</div>";
 retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
 retPLstSTr += "<div class=\"featured-thumb-data shadow-one\">";
 

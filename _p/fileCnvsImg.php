@@ -36,6 +36,7 @@ function makeThumbnails($updir, $img, $id)
         $imgt = "ImagePNG";
         $imgcreatefrom = "ImageCreateFromPNG";
     }
+
     if ($imgt) {
         $old_image = $imgcreatefrom("$updir" . '/' . "$img");
         // Create new image with white background (no transparency)
@@ -66,7 +67,79 @@ function makeThumbnails($updir, $img, $id)
         imagedestroy($old_image);
         imagedestroy($new_image);
         imagedestroy($medium_image);
+
+
+
     }
+
+
+
+
+    echo json_encode(array('in' => $img, 'success' => true, 'msg' => 'done'));
+    exit;
+}
+
+function makeNuThumbnails($updir, $img, $id)
+{
+    $imgt = "ImageJPEG";
+    $imgcreatefrom = "ImageCreateFromJPEG";
+    $thumbnail_width = 160;
+    $medium_width = 400;
+
+    $arr_image_details = getimagesize("$updir" . '/' . $img);
+    if(!$arr_image_details) {
+        return false;
+    }
+    $original_width = $arr_image_details[0];
+    $original_height = $arr_image_details[1];
+
+    if ($arr_image_details[2] == IMAGETYPE_GIF) {
+        $imgt = "ImageGIF";
+        $imgcreatefrom = "ImageCreateFromGIF";
+    }
+    if ($arr_image_details[2] == IMAGETYPE_JPEG) {
+        $imgt = "ImageJPEG";
+        $imgcreatefrom = "ImageCreateFromJPEG";
+    }
+    if ($arr_image_details[2] == IMAGETYPE_PNG) {
+        $imgt = "ImagePNG";
+        $imgcreatefrom = "ImageCreateFromPNG";
+    }
+
+    if (!$imgt || !function_exists($imgcreatefrom)) {
+        return false;
+    }
+
+    $source_image = $imgcreatefrom("$updir" . '/' . "$img");
+    if(!$source_image) {
+        return false;
+    }
+
+    $createResampledImage = function($maxWidth, $maxHeight, $suffix) use ($updir, $img, $imgt, $source_image, $original_width, $original_height) {
+        $scale = min($maxWidth / $original_width, $maxHeight / $original_height, 1);
+        $new_width = (int)max(1, round($original_width * $scale));
+        $new_height = (int)max(1, round($original_height * $scale));
+
+        $resampled = imagecreatetruecolor($new_width, $new_height);
+
+        if (in_array($imgt, array("ImagePNG", "ImageGIF"), true)) {
+            imagealphablending($resampled, false);
+            imagesavealpha($resampled, true);
+            $transparent = imagecolorallocatealpha($resampled, 255, 255, 255, 127);
+            imagefill($resampled, 0, 0, $transparent);
+        }
+
+        imagecopyresampled($resampled, $source_image, 0, 0, 0, 0, $new_width, $new_height, $original_width, $original_height);
+        $imgt($resampled, "$updir" . '/' . $suffix . "$img");
+        imagedestroy($resampled);
+    };
+
+    $createResampledImage($thumbnail_width, $thumbnail_width, 's_thumb');
+    $createResampledImage($medium_width, $medium_width, 'm_thumb');
+
+    imagedestroy($source_image);
+    // return true;
+       // echo json_encode(array('in' => $img, 'success' => true, 'msg' => 'done'));
     echo json_encode(array('in' => $img, 'success' => true, 'msg' => 'done'));
     exit;
 }
@@ -91,8 +164,40 @@ $ud = $_POST['ud'];
 
 $upload_dir = $ud;
  
-$img = $_POST['inpCnvsImg'];
-$img = str_replace('data:image/png;base64,', '', $img);
+$pstimg = $_POST['inpCnvsImg'];
+
+/*
+ $unencdDesc = urldecode($adescription);
+                
+                // Include the LZString class
+                include_once 'LZCompressor/LZString.php';
+                include_once 'LZCompressor/LZData.php';
+                include_once 'LZCompressor/LZReverseDictionary.php';
+                include_once 'LZCompressor/LZUtil.php';
+                include_once 'LZCompressor/LZUtil16.php';
+                include_once 'LZCompressor/LZContext.php';
+
+                // Instantiate the LZString class
+                $lsDCls = new \LZCompressor\LZString();
+                $lzdDesc = $lsDCls->decompressFromEncodedURIComponent($unencdDesc);
+*/
+
+ $unencdImg = urldecode($pstimg);
+                
+                // Include the LZString class
+                include_once 'LZCompressor/LZString.php';
+                include_once 'LZCompressor/LZData.php';
+                include_once 'LZCompressor/LZReverseDictionary.php';
+                include_once 'LZCompressor/LZUtil.php';
+                include_once 'LZCompressor/LZUtil16.php';
+                include_once 'LZCompressor/LZContext.php';
+
+                // Instantiate the LZString class
+                $lsDCls = new \LZCompressor\LZString();
+                $img = $lsDCls->decompressFromEncodedURIComponent($unencdImg);
+                
+
+$img = str_replace('data:image/jpeg;base64,', '', $img);
 $img = str_replace(' ', '+', $img);
 $data = base64_decode($img);
 
@@ -120,7 +225,7 @@ try {
         echo 'There was an error writing this file';
     } else {
        //  echo $nf;
-     makeThumbnails($upload_dir, $nf, $in);
+     makeNuThumbnails($upload_dir, $nf, $in);
     //   makeResamples($upload_dir, $nf, $in);
     }
 } catch (Exception $e) {

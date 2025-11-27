@@ -189,7 +189,13 @@
     </ul>
 </div> <!-- end of dvAMnuLnks -->  
 
-
+<div style="padding:8px;margin:8px;border-top:1px solid #cccccc;">
+            <a class="txtSmall  txtDecorNone" href="javascript:JSSHOP.cookies.setCookie('usrlang','en_us','130','','','');document.location.href='index.html?nls=y';">
+			English</a>&nbsp; |&nbsp;<a class="txtSmall  txtDecorNone" href="javascript:JSSHOP.cookies.setCookie('usrlang','spa_spa','130','','','');document.location.href='index.html?nls=y';">
+			Spanish</a>&nbsp; |&nbsp;<a class="txtSmall  txtDecorNone" href="javascript:JSSHOP.cookies.setCookie('usrlang','pt_pt','130','','','');document.location.href='index.html?nls=y';">
+			Portuguese</a>&nbsp; |&nbsp;<a class="txtSmall txtDecorNone" href="javascript:JSSHOP.cookies.setCookie('usrlang','fr_fr','130','','','');document.location.href='index.html?nls=y';">
+			French</a>
+            </div>
 
 </div> <!-- end of navbar-collapse -->
                                 </td></tr></table>

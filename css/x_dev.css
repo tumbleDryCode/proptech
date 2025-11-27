@@ -1719,6 +1719,23 @@ max-width: 98%;
 	max-height: 0;
 }
 
+
+.icnRndnBgUser {
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+ 
+	-khtml-border-radius: 50%;
+ 
+  min-width:96px;
+  min-height:96px;
+  max-height:96px;
+  max-width:96px;
+}
+
+
 .icnRndnUser {
   border-radius: 50%;
   -webkit-border-radius: 50%;
@@ -1728,11 +1745,13 @@ max-width: 98%;
  
 	-khtml-border-radius: 50%;
  
-  min-width:46px;
-  min-height:46px;
+  min-width:48px;
+  min-height:48px;
   max-height:48px;
   max-width:48px;
 }
+
+
 
 
 .icnRndDSmUser {

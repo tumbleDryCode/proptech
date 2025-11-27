@@ -1,3 +1,5 @@
+
+
 currIContent == "y"
 var euiFFObjArr = null;
 var euiFFObjArr = [];
@@ -512,16 +514,21 @@ function fnishSvCnvsImg(tFnishResp) {
 function savePstCanvasImg(canvas) {
     try {
         document.getElementById("in").value = quid;
-        var dataURL = canvas.toDataURL("image/png");
-        inpCnvsImg.value = dataURL;
+        //var dataURL = canvas.toDataURL("image/png");
+        // toDataUrl in jpeg
+        var decDdataURL = canvas.toDataURL("image/jpeg");
+        encdLZdDataUrl = LZString.compressToEncodedURIComponent(decDdataURL);
+        // log first 100 chars of dataURL
+        console.log("savePstCanvasImg: dataURL: " + decDdataURL.substring(0,100));  
+        inpCnvsImg.value = encdLZdDataUrl;
         tNGPObj = null;
         tNGPObj = {};
         tNGPObj["t"] = "inpCnvsImg";
-        tNGPObj["v"] = dataURL;
+        tNGPObj["v"] = encdLZdDataUrl;
         tNGPArr = [];
         tNGPArr.push(tNGPObj);
-        JSSHOP.ajax.doNuGenAjaxPost("frmCnvsImg", tNGPArr, "_p/fileCnvsImg.php", "POST", fnishSvCnvsImg);
-        // document.forms["qposts"].submit();
+       JSSHOP.ajax.doNwstGenAjaxPost(tNGPArr, "_p/fileCnvsImg.php", "POST", fnishSvCnvsImg, 30000);
+       //   document.forms["qposts"].submit();
     } catch(e) {
         alert("savePstCanvasImg: " + e);
     }
@@ -537,7 +544,15 @@ function setPostAdd() {
     document.getElementById("p_uid").value = quid;
     document.getElementById("p_dmodified").value = JSSHOP.getUnixTimeStamp();
     document.getElementById("p_dadded").value = JSSHOP.getUnixTimeStamp();
-
+     // if p_ptype is pimage, save the demo editor content as LZString compressed string in p_vars
+    tSlctdPstType = document.getElementById("p_ptype").value;
+    console.log("setPostAdd: " + tSlctdPstType);
+    if(tSlctdPstType == "pimage") {
+        daTAbod = taDemoEdtr_ifr.contentWindow.document.body;
+        daDiv = daTAbod.querySelector("#dvTMCdemo");
+        tZpd = LZString.compressToEncodedURIComponent(daDiv.innerHTML);
+        document.getElementById("p_vars").value = tZpd;    
+    }
 
 
     tmpFobj = null;

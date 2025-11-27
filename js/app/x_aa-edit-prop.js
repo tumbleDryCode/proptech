@@ -83,6 +83,41 @@ function popLangTrnsBx() {
  
     try {
 
+ 
+        selctedLang = document.getElementById("pd_prptlng").value;
+    tAllButSlctdObj = {};
+    for(var key in tPrpLngs) {
+        if(key != selctedLang) {
+            tAllButSlctdObj[key] = tPrpLngs[key];
+        }
+    }
+    tLangDDObj = {};
+    tLangDDObj["ddtype"] = "noQvalue";
+    tLangDDObj["fld"] = "inpTgtLang";
+    tLangDDObj["lbl"] =  stxt[629]; // select language
+    tLangDDObj["val"] = usrlang;
+    tLangDDObj["kvpObj"] = tAllButSlctdObj;
+    tLangDDObj["cb"] = "doTgtLangSlct";
+    tLangDDObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tLangDDObj["lblcls"] = "txtSmall";
+    tLangDDObj["valcls"] = "txtSmall";
+    tLangDDObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
+    tLangDDObj["horvert"] = "vertical";
+    tLangDDObj["icn"] = "noQvalue";
+    tLangDDObj["kvIcnsObj"] = {};
+    // all but selected language icons
+    for(var key in tAllButSlctdObj) {
+        tLangDDObj["kvIcnsObj"][key] = "&#xe5cd;";
+       tLangDDObj["val"] = key;
+    }
+ 
+
+
+    tLangDDStr = JSSHOP.ui.getNuBSdropDstr(tLangDDObj);
+    document.getElementById("dvTgtLangSlct").innerHTML = tLangDDStr;
+ 
+
+
     tmpLTrnsbox = document.getElementById('ltboxLTns');
     tmpLCTrnsbox = document.getElementById('dvLTPopCntr');
     // tmpLTrnsbox is the lightbox and tmpLCTrnsbox is the content
@@ -148,7 +183,7 @@ function doTransPost() {
         data.append("q", tDTrnsLngStr);
         data.append("source", tPrpLngCds[document.getElementById("pd_prptlng").value]["trnscode"]);
         data.append("target", tPrpLngCds[document.getElementById("inpTgtLang").value]["trnscode"]);
-        data.append("format", "text");
+        data.append("format", "html");
         // data.append("alternatives", 3);
         data.append("api_key", localStorage.getItem("api_key") || "");
         // if (apiSecret) data.append("secret", atob(self.apiSecret));
@@ -209,6 +244,104 @@ function doTransPost() {
 
         request.send(data);
     }
+
+function doGglTansPost() {
+    // var apiKey = localStorage.getItem("google_api_key");
+    var apiKey = document.getElementById("inpGglTransMgc").value;
+    if (!apiKey || apiKey == "API Key Here") {
+        alert("Please request API key.");
+        return;
+    }
+ 
+    tSbtnObj = document.getElementById("btnDoTrans");
+    tSbtnObj.innerHTML = "";
+    tSbtnObj.disabled=true;
+    doSpinSet(tSbtnObj.id, "small", null);
+    var tDTrnsTtl = document.getElementById("tmp_pd_prptitle").value;
+    var tDTrnsDsc = "";
+    if(document.getElementById("tmp_pd_prpdesc_ifr")) {
+        tDTrnsDsc = document.getElementById("tmp_pd_prpdesc_ifr").contentWindow.document.body.innerHTML;
+    } else {
+        tDTrnsDsc = document.getElementById("tmp_pd_prpdesc").value;
+    }
+    
+    var sourceLang = tPrpLngCds[document.getElementById("pd_prptlng").value]["trnscode"];
+    var targetLang = tPrpLngCds[document.getElementById("inpTgtLang").value]["trnscode"];
+
+    var url = "https://translation.googleapis.com/language/translate/v2?key=" + apiKey;
+    
+    var requestData = {
+        q: [tDTrnsTtl, tDTrnsDsc],
+        target: targetLang,
+        source: sourceLang,
+        format: "html"
+    };
+
+    var request = new XMLHttpRequest();
+    request.open('POST', url, true);
+    request.setRequestHeader('Content-Type', 'application/json');
+
+    request.onload = function() {
+        try {
+            var res = JSON.parse(request.response);
+            if (res.data && res.data.translations) {
+                var translations = res.data.translations;
+                var translatedTitle = translations[0].translatedText;
+                var translatedDesc = translations[1].translatedText;
+
+                console.log("doGglTansPost.title: " + translatedTitle);
+                console.log("doGglTansPost.desc: " + translatedDesc);
+
+                JSSHOP.ui.doGenBSDDcb('noQvalue','pd_prptlng', document.getElementById("inpTgtLang").value, tPrpLngs[document.getElementById("inpTgtLang").value], 'donada');
+                
+                document.getElementById("tmp_pd_prptitle").value = translatedTitle;
+                document.getElementById("tmp_pd_prpdesc").value = translatedDesc;
+                
+                if(tinyMCE && tinyMCE.get('tmp_pd_prpdesc')) {
+                    tinyMCE.get('tmp_pd_prpdesc').setContent(translatedDesc);
+                }
+                if(tinyMCE && tinyMCE.activeEditor) {
+                    tinyMCE.activeEditor.setContent(translatedDesc);
+                }
+                tSbtnObj = document.getElementById("btnDoTrans");
+                tSbtnObj.innerHTML = stxt[630];
+                tSbtnObj.disabled=false;
+                closeLangTrnsBx();
+                document.getElementById("dvLangSlct").focus();
+                scrollToElement("dvLangSlct");
+
+            } else {
+                throw new Error(res.error ? res.error.message : "Unknown error");
+                                tSbtnObj = document.getElementById("btnDoTrans");
+                tSbtnObj.innerHTML = stxt[630];
+                tSbtnObj.disabled=false;
+        
+                document.getElementById("dvLangSlct").focus();
+                scrollToElement("dvLangSlct");
+            }
+        } catch (e) {
+            console.error("doGglTansPost.Error: " + e);
+            alert("Google Translate Error: " + e);
+                            tSbtnObj = document.getElementById("btnDoTrans");
+                tSbtnObj.innerHTML = stxt[630];
+                tSbtnObj.disabled=false;
+           
+        }
+    };
+    
+    request.onerror = function() {
+        alert("Network Error");
+                            tSbtnObj = document.getElementById("btnDoTrans");
+                tSbtnObj.innerHTML = stxt[630];
+                tSbtnObj.disabled=false;
+      
+    };
+
+    request.send(JSON.stringify(requestData));
+}
+
+
+
  
 
 function setPrpDescLngs(rsplA, rsplB, rsplC) {
@@ -266,8 +399,8 @@ function savePDescTrans(theSPDBtn) {
      // JSSHOP.shared.getDynFrmVals(document["propdescs"], "tmp_");
 tPureDescStrng = tinyMCE.activeEditor.getContent();
 // strip html tags from tPureDescStrng
-tPurrDscStrng = tPureDescStrng.replace(/<\/?[^>]+(>|$)/g, "");
-tDescLZd = LZString.compressToEncodedURIComponent(tPurrDscStrng);   
+// tPurrDscStrng = tPureDescStrng.replace(/<\/?[^>]+(>|$)/g, "");
+tDescLZd = LZString.compressToEncodedURIComponent(tPureDescStrng);   
     // tDescLZd = LZString.compressToEncodedURIComponent(document.getElementById("tmp_pd_prpdesc").value);
     document.getElementById("pd_prpdesc").value = tDescLZd;
     tTitleLZd = LZString.compressToEncodedURIComponent(document.getElementById("tmp_pd_prptitle").value);
@@ -517,7 +650,7 @@ var fnshProdMDel = function(aa,bb,cc) {
                         //  			tstr += "<img src=\"images/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
 
                        //  tSVImgStr += "<img src=\"" + tLZuncomp + "\" class=\"icnmedbtn slmtable\" onclick=\"JSSHOP.ui.popAndFillLbox(getPrdImgEditDv('" + tAiretArr[iint]["_id"] + "','" + tThumbImg + "'));\">";
-                        tSVImgStr += "<img src=\"" + tLZuncomp + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:doNuStrtVwPop('" + tLZuncomp + "','" + tSSVIArr[iint]["_id"] + "');\">";
+                        tSVImgStr += "<img src=\"" + tLZuncomp + "\" class=\"icnmedbtn slmtable  crsrPointer\" onclick=\"javascript:doNuStrtVwPop('" + tLZuncomp + "','" + tSSVIArr[iint]["_id"] + "');\">";
                         iint++;
                     }
                                         document.getElementById("dvSVimgs").innerHTML = tSVImgStr;
@@ -776,7 +909,7 @@ function show3DImages(tTDIlen,tstfib,c) {
              
             tAVImgUstr = LZString.decompressFromEncodedURIComponent(tThumbImg);
            
-            t3DImgStr += "<img src=\"" + tAVImgUstr + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:doNuThreeDPop(this.src," + tSTDAarr[iint]["_id"] + ");\">";
+            t3DImgStr += "<img src=\"" + tAVImgUstr + "\" class=\"icnmedbtn slmtable crsrPointer\" onclick=\"javascript:doNuThreeDPop(this.src," + tSTDAarr[iint]["_id"] + ");\">";
             iint++;
         }
         document.getElementById("dv3Dimgs").innerHTML = t3DImgStr;
@@ -1520,7 +1653,11 @@ var doThreeDPop = function() {
             //tAVPurl = getCurrAVImgUrl("240", "180");
             // tAVPurl = LZString.compressToEncodedURIComponent(tAVPurl);
         } else {
+            if(tmpPrpMediaObj["prp" + tSVIid]["m_title"] != null && tmpPrpMediaObj["prp" + tSVIid]["m_title"] != undefined && tmpPrpMediaObj["prp" + tSVIid]["m_title"] != "") {
             tAVIttl = tmpPrpMediaObj["prp" + tSVIid]["m_title"];
+            } else {
+                tAVIttl = "Arial View";
+            }
             JSSHOP.shared.setFrmFieldVal("qmedia", "_id", tSVIid);
          }
 
@@ -1528,7 +1665,7 @@ var doThreeDPop = function() {
         tAVpopStr += "<div class=\"txtClrHdr txtSmall\">";
         tAVpopStr += "<span class=\"txtClrHdr\" id=\"lbl_m_title\">" + stxt[996] + "</span>";
         tAVpopStr += "<table><tr><td>";
-        tAVpopStr += "<input type=\"text\" id=\"tmp_m_title\" name=\"tmp_m_title\" value=\"" + stxt[996] + "\" class=\"form-control txtSmall txtClrHdr\" style=\"width:100%;\">";
+        tAVpopStr += "<input type=\"text\" id=\"tmp_m_title\" name=\"tmp_m_title\" value=\"" + tAVIttl + "\" class=\"form-control txtSmall txtClrHdr\" style=\"width:100%;\">";
         tAVpopStr += "</td></tr><tr><td>";
         tAVpopStr += "</td></tr></table>";
         tAVpopStr += "</div>";
@@ -1973,7 +2110,7 @@ var setAllPropImgs = function(theAIa, theAIb, theAIc) {
 			tstr += "<div style=\"float:left\" class=\"crsrPointer\">";
             }
  
- 			tstr += "<img src=\"images/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
+ 			tstr += "<img src=\"images/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable crsrPointer\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
 			tstr += "</div>";
             // tmpPropImgsArr.push(tAiretArr[iint]);
         } else if(tAiretArr[iint]["m_catid"] == "20") {
@@ -2385,28 +2522,6 @@ tQuantValObj = {"1":"1","2":"2","3":"3","4":"4","5":"5","6":"6","7":"7","8":"8",
     tLangDDStr = JSSHOP.ui.getNuBSdropDstr(tLangDDObj);
     document.getElementById("dvLangSlct").innerHTML = tLangDDStr;
 
-    tLangDDObj = {};
-    tLangDDObj["ddtype"] = "noQvalue";
-    tLangDDObj["fld"] = "inpTgtLang";
-    tLangDDObj["lbl"] =  stxt[629]; // select language
-    tLangDDObj["val"] = usrlang;
-    tLangDDObj["kvpObj"] = tPrpLngs;
-    tLangDDObj["cb"] = "doTgtLangSlct";
-    tLangDDObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
-    tLangDDObj["lblcls"] = "txtSmall";
-    tLangDDObj["valcls"] = "txtSmall";
-    tLangDDObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
-    tLangDDObj["horvert"] = "vertical";
-    tLangDDObj["icn"] = "noQvalue";
-    tLangDDObj["kvIcnsObj"] = {};
-    tLangDDObj["kvIcnsObj"]["en_us"] = "&#xe5cd;";
-    tLangDDObj["kvIcnsObj"]["spa_spa"] = "&#xe5cd;";
-    tLangDDObj["kvIcnsObj"]["fr_fr"] = "&#xe5cd;";
-    tLangDDObj["kvIcnsObj"]["pt_pt"] = "&#xe5cd;";
-
-    tLangDDStr = JSSHOP.ui.getNuBSdropDstr(tLangDDObj);
-    document.getElementById("dvTgtLangSlct").innerHTML = tLangDDStr;
-
     tPPrivacyObj = JSSHOP.ui.getBSDDOptsO();
     tPPrivacyObj["ddtype"] = "noQvalue";
     tPPrivacyObj["fld"] = "pprf_prvcy";
@@ -2716,7 +2831,7 @@ euiFFObjArr.push(tifsb);
 tifsb = nCurrFFieldOb();
 tifsb.fid = "btnDoTrans";
 tifsb.fty = "button";
-tifsb.fcl = function() { doTransPost(); };
+tifsb.fcl = function() { doGglTansPost(); };
 euiFFObjArr.push(tifsb);
 
 tofsb = nCurrFFieldOb();

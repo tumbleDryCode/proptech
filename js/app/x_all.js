@@ -2499,6 +2499,47 @@ return '';
 }
 };
 
+// New improved version that sends minimal FormData to avoid capacity limits
+JSSHOP.ajax.doNurGenAjaxPost = function(tNameValArr, tUrl, tMethdType, tCB) {
+	try {
+		// Create a simple FormData object with only the necessary data from tNameValArr
+		var formData = new FormData();
+		for (var i = 0; i < tNameValArr.length; i++) {
+			formData.append(tNameValArr[i].t, tNameValArr[i].v);
+			if(document.getElementById(tNameValArr[i].t)) {
+				document.getElementById(tNameValArr[i].t).value = tNameValArr[i].v;
+			}
+		}
+
+		var xhr = new XMLHttpRequest();
+		xhr.open(tMethdType, tUrl, true);
+
+		xhr.onreadystatechange = function() {
+			console.log("doNurGenAjaxPost: " + xhr.responseText);
+		}
+
+		xhr.onload = function(e) {
+			currVRPCLIresp = xhr.responseText;
+			console.log("doNurGenAjaxPost.resp: " + currVRPCLIresp);
+			if(tCB) {
+				tCB(currVRPCLIresp);
+			}
+		};
+
+		xhr.onerror = function(e) {
+			console.log("doNurGenAjaxPost.ERROR: " + e);
+			JSSHOP.ui.popAndFillLbox("doNurGenAjaxPost.ERROR: <br>" + e);
+		};
+
+		// Send only the minimal FormData instead of the entire form
+		xhr.send(formData);
+
+	} catch(e) {
+		console.log("doNurGenAjaxPost.ERROR: " + e);
+		alert("doNurGenAjaxPost: " + e);
+	}
+};
+
 
 JSSHOP.ajax.doNuAjaxPost = function(theFval, theNAPcb) {
 	try {
@@ -2534,6 +2575,56 @@ JSSHOP.ajax.doNuAjaxPost = function(theFval, theNAPcb) {
 
 	} catch(e) {
 		console.log("doNuAjaxPost.ERROR: " + e);
+	}
+};
+//         JSSHOP.ajax.doNwstGenAjaxPost(tNGPArr, "_p/fileCnvsImg.php", "POST", fnishSvCnvsImg, 30000);
+
+// New improved version with enhanced error handling and timeout management
+JSSHOP.ajax.doNwstGenAjaxPost = function(tNameValArr, tUrl, tMethdType, tCB, timeout) {
+	try {
+		// Create a simple FormData object with only the necessary data from tNameValArr
+		var formData = new FormData();
+		for (var i = 0; i < tNameValArr.length; i++) {
+			formData.append(tNameValArr[i].t, tNameValArr[i].v);
+			if(document.getElementById(tNameValArr[i].t)) {
+				document.getElementById(tNameValArr[i].t).value = tNameValArr[i].v;
+			}
+		}
+
+		var xhr = new XMLHttpRequest();
+		xhr.open(tMethdType, tUrl, true);
+
+		// Set timeout if provided (default 30 seconds)
+		xhr.timeout = timeout || 30000;
+
+		xhr.onreadystatechange = function() {
+			console.log("doNwstGenAjaxPost: " + xhr.responseText);
+		}
+
+		xhr.onload = function(e) {
+			currVRPCLIresp = xhr.responseText;
+			console.log("doNwstGenAjaxPost.resp: " + currVRPCLIresp);
+			if(tCB) {
+				tCB(currVRPCLIresp);
+			}
+		};
+
+		xhr.onerror = function(e) {
+			console.log("doNwstGenAjaxPost.ERROR: " + e);
+			JSSHOP.ui.popAndFillLbox("doNwstGenAjaxPost.ERROR: <br>" + e);
+		};
+
+		xhr.ontimeout = function(e) {
+			console.log("doNwstGenAjaxPost.TIMEOUT: Request timed out");
+			JSSHOP.ui.popAndFillLbox("doNwstGenAjaxPost.TIMEOUT: Request timed out after " + (timeout || 30000) + "ms");
+		};
+
+		// Send only the minimal FormData instead of the entire form
+		xhr.send(formData);
+
+	} catch(e) {
+		console.log("doNwstGenAjaxPost.ERROR: " + e);
+		alert("doNwstGenAjaxPost: " + e);
 	}
 };
 
@@ -4147,8 +4238,9 @@ alert("no JSSHOP.ui.showShareBox: " + " " + tmpMsgType + " " + e);
                 // tShareMsgDsc = tmpPrpObj.pcontent;
                 // clean and cut both title and content at 100 chars
                 tUnzpdMsgDsc =  LZString.decompressFromEncodedURIComponent(tmpPrpObj.pd_prpdesc);
-                tCleanMsgTtl = tmpPrpObj.ptitle.replace(/<\/?[^>]+(>|$)/g, "");
                 tCleanMsgDsc = tUnzpdMsgDsc.replace(/<\/?[^>]+(>|$)/g, "");
+                tZpdToPTTL = tmpPrpObj.pd_prptitle;
+                tCleanMsgTtl = LZString.decompressFromEncodedURIComponent(tZpdToPTTL);
                 tShareMsgTtl = tCleanMsgTtl.substring(0, 100);
                 tShareMsgDsc = tCleanMsgDsc.substring(0, 100);
 
@@ -4238,6 +4330,17 @@ tClogoimg = c_logoimg.value;
     tShareMsgStr += "<div class=\"txtClrHdr txtBold\">" + stxt[72] + "</div>";
     tShareMsgStr += "<div class=\"txtClrHdr\">";
     for(var i = 0; i < tShareSIteArr.length; i++) {
+        
+        // fix tShareMsgTtl and tShareMsgDsc to escape ALL single quotes
+
+
+        tShareMsgTtla = tShareMsgTtl.replace("'", "&#39;");
+        tShareMsgTtlb = encodeURIComponent(tShareMsgTtla);
+ 
+        tShareMsgDsca = tShareMsgDsc.replace(/'/g, "&#39;");
+        tShareMsgDscb = encodeURIComponent(tShareMsgDsca);
+        tShareMsgTtl = tShareMsgTtlb;
+        tShareMsgDsc = tShareMsgDscb;
         tShareMsgStr += "<a href=\"javascript:JSSHOP.ui.doShare('" + tShareSIteArr[i] + "','" + tShareMsgUrl + "','" + tShareMsgTtl + "','" + tShareMsgDsc + "','" + tShareMsgImg + "');\" class=\"txtDecorUline\">" + tShareSIteArr[i] + "</a> &nbsp; ";
 
     }
@@ -7972,8 +8075,8 @@ console.log("jshp_ads_showUpdtsFeed.tUdtLnkStr: " + tUdtLnkStr);
                 tUdtsStr +=  tUpPcontent;
                 break;
             case "pimage":
-                imgprefx = "m_thumb";
-           
+                // imgprefx = "m_thumb";
+                imgprefx = "";
                 if(pid == "aa-show-update"){
                 imgprefx = "";    
                 tUdtsStr += "<img src=\"images/ucontent/" + imgprefx + tUdtsObj.p_image + "\" alt=\"pimage\" class=\"img100p\">";
@@ -8086,7 +8189,7 @@ setTimeout(
 
                             if(pid == "aa-show-update"){
                                   tUdtsStr += tUdtLnkStr; 
-                                                tUdtsStr += "<div id=\"dvUpdtCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + aprpContent + "</div>";
+                                                tUdtsStr += "<div id=\"dvUpdtCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + tUpPcontent + "</div>";
 
                 tUdtsStr += "<div id=\"dvUpdtCBtn\" class=\"clsPcntnt\" style=\"padding:10px;height:40px;\"><a href=\"javascript:void(0);\" class=\"txtClrHdr txtBold\" onclick=\"javascript:showMoreUpdtCntnt('dvUpdtCntnt','dvUpdtCBtn');\">" + stxt[110] + "</a></div>";
 
@@ -8379,23 +8482,24 @@ JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
     // use the example tPrpDtarr above to generate the editor string
  // create a div string with a diagonal gradient fill from blue to white
     // tEdtrDescStr is a string listing the titles and prices of selected properties
-   
-     tEdtrPrpsStr += "<div style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px;\" class=\"slmtable brdrClrDlg bkgdClrWhite\" id=\"dvTMCdemo\">";
-              tEdtrPrpsStr += "<table class=\"rtable bkgdClrWhite brdrClrHdr\" style=\"margin-bottom:10px;margin: 0 auto;\">";
-    tEdtrPrpsStr += "<tr><td class=\"txtBold txtClrHdr\" style=\"text-align:center;\">" + stxt[10]+ "... " + stxt[10] + "...</td></tr>";
-    tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\" style=\"text-align:center;\">" + stxt[40]+ "... " + stxt[40] + "... " + stxt[40] + "...</td></tr>";
+           tEdtrPrpsStr += "<div class=\"property-flyer\" style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px;\" id=\"dvTMCdemo\">";
+
+    // tEdtrPrpsStr += "<div style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px;\" class=\"slmtable brdrClrDlg bkgdClrWhite\" id=\"dvTMCdemo\">";
+    tEdtrPrpsStr += "<table class=\"rtable bkgdClrWhite brdrClrHdr\" style=\"margin-bottom:10px;margin: 0 auto;\">";
+    tEdtrPrpsStr += "<tr><td class=\"txtBold txtClrHdr\" style=\"text-align:center;\"><span style=\"font-size:18px;\">" + stxt[10]+ "... " + stxt[10] + "...</span></td></tr>";
+    tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\" style=\"text-align:center;\"><span style=\"font-size:14px;\">" + stxt[40]+ "... " + stxt[40] + "... " + stxt[40] + "...</span></td></tr>";
     tEdtrPrpsStr += "</table>";
     tEdtrPrpsStr += "<hr>";
      for(i = 0; i < tPrpDtarr.length; i++) {
         tPrpDtObj = tPrpDtarr[i];
-        tPrpImgStr = "<img src=\"" + currPrpImgsFldr + "/" + tPrpDtObj.pimage + "\" style=\"min-width:150px;max-width:160px;text-align:center;margin-right:3px;min-height:150px;max-height:160px;\" class=\"slmtable brdrClrDlg\" alt=\"Property Image\">";
+        tPrpImgStr = "<img src=\"" + currPrpImgsFldr + "/" + tPrpDtObj.pimage + "\" style=\"min-width:80px;max-width:90px;text-align:center;margin-right:3px;min-height:80px;max-height:90px;\" class=\"slmtable brdrClrDlg\" alt=\"Property Image\">";
          tEdtrPrpsStr += "<table class=\"rtable bkgdClrWhite brdrClrDlg\">";
         tEdtrPrpsStr += "<tr><td>" + tPrpImgStr + "</td><td style=\"width:100%;vertical-align:top;\">";
         tEdtrPrpsStr += "<div class=\"\" style=\"float:left;\">";
         tEdtrPrpsStr += "<table class=\"\">";
-        tEdtrPrpsStr += "<tr><td class=\"txtBold txtClrHdr\">" + LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle) + "</td></tr>";
+        tEdtrPrpsStr += "<tr><td class=\"txtBold txtClrHdr\"><span style=\"font-size:18px;\">" + LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle) + "</span></td></tr>";
         // tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\">" + tPrpDtObj.ptype + " - " + tPrpDtObj.stype + "</td></tr>";
-        tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\">" + tPrpDtObj.city + ", " + tPrpDtObj.state + "</td></tr>";
+        tEdtrPrpsStr += "<tr><td class=\" txtClrHdr\">" + tPrpDtObj.city + ", " + tPrpDtObj.state + "</td></tr>";
         tEdtrPrpsStr += "<tr><td class=\"txtBig txtBold txtClrHdr\">" + tPrpDtObj.price + " &euro;</td></tr>";
        //  tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\">" + tPrpDtObj.location + "</td></tr>";
 
@@ -8413,7 +8517,7 @@ JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
         tEdtrPrpsStr += "<div class=\"txtBig txtBold txtClrHdr\" style=\"text-align:center;\">" + stxt[912] + "...</div>";
 
     tEdtrPrpsStr += "<table class=\"table table-striped\">";
-    tEdtrPrpsStr += "<tr><td><img src=\"images/user/" + u_icon.value + "\" class=\"icnRndnUser\"></td>";
+    tEdtrPrpsStr += "<tr><td><img src=\"images/user/" + u_icon.value + "\" class=\"icnRndnBgUser\"></td>";
     tEdtrPrpsStr += "<td>" + u_fullname.value + "<br>" + u_email.value + "<br>"  + "</td>";
     tEdtrPrpsStr += "</tr></table>";
     tEdtrPrpsStr += "</div>"; // end of edtr-grid rtable brdrClrHdr
@@ -9658,6 +9762,181 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
                 tIsrcStr = "images/property/m_thumb" + tAiretArr[iirnt]["m_file"];
                 tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.4);transition:transform 0.3s ease;border:2px solid rgba(255,255,255,0.9);\">";
                 tPrpFlyerMImgSTr += "<img src=\"images/property/m_thumb" + tAiretArr[iirnt]["m_file"] + "\" style=\"width:100%;height:70px;object-fit:cover;display:block;\" alt=\"Property image\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:12px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else if(tIRcatid == "20") {
+                hasGglMap = "yes";
+                tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
+                tAudecd = tAiretArr[iirnt]["m_file_thumb"];
+                tUrlded = decodeURIComponent(tAudecd);
+                tLuncthm = LZString.decompressFromEncodedURIComponent(tUrlded);
+                tUnZpd = "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.9);\">";
+                tPrpFlyerMImgSTr += "<img src=\"" + tUnZpd + "\" style=\"width:100%;height:70px;object-fit:cover;display:block;\" alt=\"Street view\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:12px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else if(tIRcatid == "25") {
+                hasGglMap = "yes";
+                tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
+                tULchm = tAiretArr[iirnt]["m_file_thumb"];
+                tFthumb = decodeURIComponent(tAiretArr[iirnt]["m_file_thumb"]);
+                tLuncthm = LZString.decompressFromEncodedURIComponent(tFthumb);
+                tUnZpd = "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.9);\">";
+                tPrpFlyerMImgSTr += "<img src=\"" + tUnZpd + "\" style=\"width:100%;height:70px;object-fit:cover;display:block;\" alt=\"Map view\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:12px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else if(tIRcatid == "30") {
+                hasGglMap = "yes";
+                tLZuncd = tIRFname;
+                tLuncthm = tAiretArr[iirnt]["m_file_thumb"];
+                tuRldssd = decodeURIComponent(tLuncthm);
+                tUnAZpd = LZString.decompressFromEncodedURIComponent(tuRldssd);
+                tUnZpd = "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                console.log("setNwstPropImages: 30 " + tUnZpd);
+                tThumbImg = tLuncthm;
+                theSplitThmnb = tThumbImg.split("|");
+                theTmnbLat = theSplitThmnb[0];
+                theTmnbLng = theSplitThmnb[1];
+                theTmnbAlt = theSplitThmnb[2];
+                tMpType = "satellite";
+                console.log("show3DImages: " + theTmnbLat + " " + theTmnbLng + " " + theTmnbAlt);
+                tCntrMapLat = theTmnbLat - 0.0001;
+                tCntrMapLng = theTmnbLng;
+                tZmLvl = 20;
+                tIUwidth = 240;
+                tIUheight = 180;
+                tAVImgUstr = tUnZpd;
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.9);\">";
+                tPrpFlyerMImgSTr += "<img src=\"" + tAVImgUstr + "\" style=\"width:100%;height:70px;object-fit:cover;display:block;\" alt=\"3D view\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:12px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else {
+                intIFrmHght += 1000;
+                tmpSocLinksArr.push(tAiretArr[iirnt]);
+            }
+
+            iirnt++;
+        }
+
+        tPrpFlyerMImgSTr += "</div>"; // End gallery grid
+        tPrpFlyerMImgSTr += "</div>"; // End overlaid gallery section
+
+        // Seller information overlay - now positioned at the bottom of the main image
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:15px;left:20px;right:20px;z-index:12;\">";
+        tPrpFlyerMImgSTr += "<div style=\"background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-radius:12px;padding:12px;max-width:100%;box-shadow:0 4px 20px rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.3);\">";
+        tPrpFlyerMImgSTr += "<div style=\"display:flex;align-items:center;justify-content:center;\">";
+        tPrpFlyerMImgSTr += "<img src=\"images/user/" + u_icon.value + "\" style=\"width:35px;height:35px;border-radius:50%;object-fit:cover;border:2px solid #007bff;margin-right:8px;\" alt=\"Seller\">";
+        tPrpFlyerMImgSTr += "<div>";
+        tPrpFlyerMImgSTr += "<div style=\"font-weight:700;color:#333;font-size:16px;\">" + u_fullname.value + "</div>";
+        tPrpFlyerMImgSTr += "<div style=\"font-size:16px;color:#666;\">" + u_email.value + "</div>";
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>";
+
+        tPrpFlyerMImgSTr += "</div>"; // End main image background
+
+        tPrpFlyerMImgSTr += "</div>"; // End property flyer
+
+        // Create textarea for editing
+        tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tPrpFlyerMImgSTr + "</textarea>";
+        tDVDstr += "<div class=\"clearfix\"></div><br>";
+        document.getElementById("dvDemoView").innerHTML = tDVDstr;
+        setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+    }
+};
+
+
+var setNanoPropImages = function(theAIa, theAIb, theAIc) {
+    console.log("setNanoPropImages: " + theAIa + " " + theAIb + " " + theAIc);
+    intIFrmHght = 0;
+    hasGglMap = "no";
+    tImgAdArr = null;
+    tImgAdArr = "";
+    tImgAdArr = [];
+    if(theAIb.indexOf("_id") != -1) {
+		tAiretArr = JSON.parse(theAIb);
+		awlen = tAiretArr.length;
+        tstr = "";
+        tpdSocLnksStr = "";
+        iirnt = 0;
+
+        otobStr = "ob" + theAIa;
+        mGPIobj = currSlctdPrpsObj[otobStr];
+        mGPIImg = mGPIobj.pimage;
+        tPATtls = mGPIobj.ptitle;
+        tPATtlsDecded = decodeURIComponent(tPATtls);
+        tSPIttlStr = LZString.decompressFromEncodedURIComponent(tPATtlsDecded);
+        document.getElementById("tmp_p_title").value = tSPIttlStr;
+        tDesc = LZString.decompressFromEncodedURIComponent(mGPIobj.pdesc);
+        tinyMCE.activeEditor.setContent(tDesc);
+
+        // Get property price for the balloon
+        tPropPrice = mGPIobj.price || "Contact for Price";
+
+        console.log("setNanoPropImages: " + mGPIobj.ptitle + " " + mGPIImg);
+
+        // Enhanced property flyer with all elements overlaid on main image
+        tPrpFlyerMImgSTr = "<div class=\"property-flyer\" style=\"position:relative;width:100%;min-height:700px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);\" id=\"dvTMCdemo\">";
+
+        // Main image background with overlay (tallest to accommodate all overlaid elements)
+        tPrpFlyerMImgSTr += "<div style=\"position:relative;width:100%;height:600px;background-image:url('" + currPrpImgsFldr + "/" + mGPIImg + "');background-size:cover;background-position:center;background-repeat:no-repeat;\">";
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0.6) 100%);\"></div>";
+
+        // Property title overlay - now wraps around the price balloon
+        tPrpFlyerMImgSTr += "<div style=\"color:#fff;z-index:10;display:flex;flex-direction:column;justify-content:flex-start;\">";
+
+        tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;margin:20px;font-size:32px;font-weight:bold;text-shadow:3px 3px 6px rgba(0,0,0,0.8);line-height:1.2;text-transform:uppercase;letter-spacing:1px;max-width:100%;word-wrap:break-word;\">";
+
+        tPrpFlyerMImgSTr += "<div style=\"float:right;background:#fff;color:#333;padding:12px 20px;border-radius:25px;font-size:18px;font-weight:bold;box-shadow:0 4px 15px rgba(0,0,0,0.3);border:3px solid #007bff;z-index:15;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;\">";
+        tPrpFlyerMImgSTr +=  tPropPrice;
+        // add state and Area M2 if available
+        if (mGPIobj.state) {
+            tPrpFlyerMImgSTr += "<div style=\"font-size:14px;color:#fff;\">State: " + mGPIobj.state + "</div>";
+        }
+        if (mGPIobj.area) {
+            tPrpFlyerMImgSTr += "<div style=\"font-size:14px;color:#fff;\">Area: " + mGPIobj.area + " m²</div>";
+        }
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += tSPIttlStr;
+        tPrpFlyerMImgSTr += "</div>";
+        
+        tPrpFlyerMImgSTr += "</div>"; // End title and price container
+
+        // add a clearfix
+        tPrpFlyerMImgSTr += "<div style=\"clear:both;\"></div>";    
+
+        // Overlaid property images gallery section - positioned at bottom of main image
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:120px;left:20px;right:20px;z-index:10;\">";
+        tPrpFlyerMImgSTr += "<div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;max-width:100%;\">";
+
+        // Prepare Gemini Request Data
+        var geminiImages = [];
+        geminiImages.push({
+            "mime_type": "image/jpeg",
+            "file_uri": currPrpImgsFldr + "/" + mGPIImg,
+            "description": "Main Property Image"
+        });
+
+        while (iirnt < 5) {
+            if(tAiretArr[iirnt]) {
+            tIRFname = tAiretArr[iirnt]["m_file"];
+            tIRcatid = tAiretArr[iirnt]["m_catid"];
+
+            if(tIRcatid == "5") {
+                tImageFstr = "images/property/" + tAiretArr[iirnt]["m_file"];
+                tIsrcStr = "images/property/m_thumb" + tAiretArr[iirnt]["m_file"];
+                
+                // Add to Gemini Images
+                geminiImages.push({
+                    "mime_type": "image/jpeg",
+                    "file_uri": tImageFstr,
+                    "description": tAiretArr[iirnt]["m_title"] || "Property Image"
+                });
+
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.4);transition:transform 0.3s ease;border:2px solid rgba(255,255,255,0.9);\">";
+                tPrpFlyerMImgSTr += "<img src=\"images/property/m_thumb" + tAiretArr[iirnt]["m_file"] + "\" style=\"width:100%;height:70px;object-fit:cover;display:block;\" alt=\"Property image\">";
                 tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:9px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
                 tPrpFlyerMImgSTr += "</div>";
             } else if(tIRcatid == "20") {
@@ -9711,7 +9990,7 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
                 intIFrmHght += 1000;
                 tmpSocLinksArr.push(tAiretArr[iirnt]);
             }
-
+            }
             iirnt++;
         }
 
@@ -9735,9 +10014,36 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
 
         tPrpFlyerMImgSTr += "</div>"; // End property flyer
 
+        // Construct Gemini Request Object
+        var geminiRequest = {
+            "model": "gemini-2.5-flash-image", // Nano Banana
+            "prompt": "Create a commercial real estate flyer (Open Graph compatible) for the following property: " + tSPIttlStr + ". Price: " + tPropPrice + ". Description: " + tDesc.substring(0, 200) + "...",
+            "input_data": {
+                "images": geminiImages,
+                "property_details": {
+                    "title": tSPIttlStr,
+                    "price": tPropPrice,
+                    "state": mGPIobj.state,
+                    "area": mGPIobj.area,
+                    "agent": {
+                        "name": u_fullname.value,
+                        "email": u_email.value,
+                        "icon": "images/user/" + u_icon.value
+                    }
+                }
+            },
+            "output_config": {
+                "format": "image/png",
+                "aspect_ratio": "1.91:1" // Open Graph
+            }
+        };
+
         // Create textarea for editing
         tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tPrpFlyerMImgSTr + "</textarea>";
         tDVDstr += "<div class=\"clearfix\"></div><br>";
+        tDVDstr += "<h4>Gemini 2.5 Flash Image (Nano Banana) Request:</h4>";
+        tDVDstr += "<textarea class=\"form-control\" rows=\"10\">" + JSON.stringify(geminiRequest, null, 2) + "</textarea>";
+
         document.getElementById("dvDemoView").innerHTML = tDVDstr;
         setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
     }
@@ -9830,12 +10136,12 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         }
         // if tSlctdPrpsArr has only one property, create a new function to get the property images from q_media
     
-        tSwprStr = JSSHOP.ads.getEditorPrpStr(tSlctdPrpsArr);
+        tFlyrHStr = JSSHOP.ads.getEditorPrpStr(tSlctdPrpsArr);
         tEdtrDstr = JSSHOP.ads.getEdtrPrpDscStr(tSlctdPrpsArr);
         tPATtls = tSlctdPrpsArr[0].ptitle;
         tPATtlsDecded = decodeURIComponent(tPATtls);
         tSPIttlStr = LZString.decompressFromEncodedURIComponent(tPATtlsDecded);
-        document.getElementById("tmp_p_title").value = tSPIttlStr
+        document.getElementById("tmp_p_title").value = tSPIttlStr;
          // tDesc = LZString.decompressFromEncodedURIComponent(tSlctdPrps
         console.log("trnsltImgPstObj.tEdtrDstr: " + tEdtrDstr);
         tinyMCE.activeEditor.setContent(tEdtrDstr);
@@ -9849,14 +10155,14 @@ JSSHOP.ads.trnsltImgPstObj = function() {
                 tSlctdUsrsArr.push(currSlctdUsrObj[key]);
             }
         }
-        tSwprStr = JSSHOP.ads.getEditorUStr(tSlctdUsrsArr);
+        tFlyrHStr = JSSHOP.ads.getEditorUStr(tSlctdUsrsArr);
     }
     // create new editor in dvDemoView
         if (tSlctdPrpsArr.length === 1) {
         getPropertyImages(tSlctdPrpsArr[0]);
         
         } else {
-     tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tSwprStr + "</textarea>";
+     tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tFlyrHStr + "</textarea>";
      tDVDstr += "<div class=\"clearfix\"></div><br>";
     document.getElementById("dvDemoView").innerHTML = tDVDstr;
     setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
@@ -9993,10 +10299,12 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         // set the tinymce editor to the description of the first object in currSlctdPrpsObj or currSlctdUsrObj
         // if tMapLeavesArr.length > 0, set the editor to the description of the first object in currSlctdPrpsObj or currSlctdUsrObj
         // if tMapLeavesArr.length == 0, set the editor to "Map View"
-
+        tDescFlSTr = "";
         if(tMapLeavesArr.length > 0) {
-        tDesc = LZString.decompressFromEncodedURIComponent(tMapLeavesArr[0].pdesc || "Map View");
-        tinyMCE.activeEditor.setContent(tDesc);
+            for(var i = 0; i < tMapLeavesArr.length; i++) {
+         tDescFlSTr += LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].pdesc || "Map View").substring(0, 100);
+            }
+        tinyMCE.activeEditor.setContent(tDescFlSTr);
     } else {
         tinyMCE.activeEditor.setContent("Map View");
     }
@@ -10008,11 +10316,11 @@ JSSHOP.ads.trnsltImgPstObj = function() {
             tAllDescStr += "<h3>" + LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].title || "Map View").substring(0, 80) + "</h3>";
             // link the title to the property if it exists
             if(tMapLeavesArr[i].prpid) {
-                tAllDescStr = "<h3><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + tMapLeavesArr[i].prpid + "');\">" + LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].title || "Map View").substring(0, 80) + "</a></h3>";
+                tAllDescStr += "<h3><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + tMapLeavesArr[i].prpid + "');\">" + LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].title || "Map View").substring(0, 80) + "</a></h3>";
             }
-            tZAllDescStr = LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].pdesc || "Map View").substring(0, 100);
+            tAllDescStr += LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].pdesc || "Map View").substring(0, 100);
             // strip any html tags from tAllDescStr
-            tAllDescStr += tZAllDescStr.replace(/<\/?[^>]+(>|$)/g, "");
+            // tAllDescStr += tZAllDescStr.replace(/<\/?[^>]+(>|$)/g, "");
             // add the price if it exists
             if(tMapLeavesArr[i].price) {
                 tAllDescStr += "Price: " + tMapLeavesArr[i].price;
@@ -13878,13 +14186,18 @@ var getNuIItmsLst = function(tPrpIarr) {
     var countryMap = {};
     tPrpIarr.forEach(function(user) {
         var country = user.u_country || "Unknown";
+        if(country == "Unknown") {
+            country = "Unknown Location";
+        } else {
         if (!countryMap[country]) countryMap[country] = [];
         countryMap[country].push(user);
+        }
     });
     var html = "";
+   
     Object.keys(countryMap).forEach(function(country) {
         html += '<div class="country-block" style="margin-bottom:24px;">';
-        html += '<h3 class="txtBold txtCLrHdr">' + country + '</h3>';
+        html += '<h3 class="txtBold txtCLrHdr">' + country + ' - Fake Demo Users</h3>';
         html += '<div class="users-row">';
         countryMap[country].forEach(function(user) {
             html += '<div class="user-card crsrPointer" style="float:left;margin:8px 16px 8px 0;text-align:center;min-width:100px;max-width:100px;max-height:80px;min-height:80px">';
@@ -13897,6 +14210,7 @@ var getNuIItmsLst = function(tPrpIarr) {
         html += '<div style="clear:both"></div>';
         html += '</div></div>';
     });
+
     return html;
 }
 
@@ -13916,17 +14230,24 @@ tSHowTetsUTtl = "<h4 class=\"text-center text-secondary\">" + stxt[826] + "</h4>
 tSHowTetsUTtl += "<br><br>" + stxt[828] + "<br><br>";
 */
 // make the above tSHowTetsUTtl (uses the stxt[826.. more facebook like and use some material icons
+
+         tuhtml = '<div class="slmtable bkgdClrWhite bottom-shadow" style="padding:16px;margin-bottom:24px;">';
+
 tSHowTetsUTtl = "<div class=\"txtCenter txtClrGrey txtSmall\" style=\"margin-bottom:16px;\">";
 // tSHowTetsUTtl += "<div style=\"font-size:48px;line-height:48px;\"><i class=\"material-icons\">&#xe7fd;</i></div>";
 tSHowTetsUTtl += stxt[826] + "<br></br>";
 tSHowTetsUTtl += stxt[827] + "<br></br>";
-tSHowTetsUTtl += stxt[828] + "<br></br>";
+tSHowTetsUTtl += "<b>" + stxt[828] + "</b><br></br>";
 tSHowTetsUTtl += "</div>";
+tuhtml += tSHowTetsUTtl;
 tFllUIstr =  getNuIItmsLst(tmpIUsrsLArr);
+tuhtml += tFllUIstr;
+
+    tuhtml += '</div>';
 // tDVtestUsers = document.createElement("div");
 // tDVtestUsers.innerHTML = tFllUIstr;
 // document.getElementById("includedContent").insertBefore(tDVtestUsers, document.getElementById("includedContent").firstChild);
-document.getElementById(atudiv).innerHTML = tSHowTetsUTtl + tFllUIstr; 
+document.getElementById(atudiv).innerHTML = tuhtml; 
 } else {
         alert("doAUsersList: " + rfb);
         // document.getElementById("divQitems").innerHTML = stxt[508];

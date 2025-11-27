@@ -693,9 +693,9 @@ if(isset($_COOKIE['quid'])) {
 
  
 
-<div id="dvLTPopCntr"  class="rtable bkgdClrWhite bottom-shadow" style="min-height:400px;min-width:50%;z-index: 9147483647;position:fixed;top:3700px;left:100px;word-wrap: break-word;max-width:80%;margin: 0 auto;">
+<div id="dvLTPopCntr"  class="rtable bkgdClrWhite bottom-shadow" style="position:fixed;top:3700px;left:100px;min-height:400px;min-width:50%;z-index: 9147483647;word-wrap: break-word;max-width:80%;margin: 0 auto;">
     <div id="dvLTPopCntnt" style="margin: 0 auto;min-height:400px;min-width:98%; max-width:98%;"><div class="accordion-item">
-												
+		<div onclick="javascript:closeLangTrnsBx();" class="slmtable txtClrLtBlue txtBold txtBig crsrPointer" style="float:right;margin-left:20px;"><i class="menu-material-icons txtBold txtClrLtBlue" alt="close" title="close" value="close" style="font-size:24px;"></i></div>										
         <h2 class="text-secondary"  id="panelsStayOpen-headingSix">
         <button style="background-color: #ffffff;" class="acacordion-button show" type="button" data-bs-toggle="show" data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="true" aria-controls="panelsStayOpen-collapseSix">
         <div><i class="nav-material-icons coll-menu-item txtClrHdr" style="margin-right:4px;">&#xe873</i><ti data-ison="stxt[631]" data-desc="btn_description">Translate</ti><br><span class="txtClrGrey txtSmall"><ti data-ison="stxt[632]" data-desc="btn_content">Translate the current title and description to the selected language</ti>...</span>
@@ -709,11 +709,13 @@ if(isset($_COOKIE['quid'])) {
                  
                  <div id="dvTgtLangSlct">Langs</div>
                  <div></div>
-                 
-                 												 
-
-        									        <!-- end tinymc -->
-<div align="center"><button id="btnDoTrans" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite"><ti data-ison="stxt[630]" data-desc="btn_save">Translate</ti></button>
+<!-- end tinymc --><hr>
+				 <table style="margin: 0  auto">
+					 <tr>
+						 <td><input type="text" name="inpGglTransMgc" id="inpGglTransMgc" placeholder="Google Api Key" value="API Key Here"></td>
+					 </tr>
+				 </table><hr>
+				 <div align="center"><button id="btnDoTrans" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite"><ti data-ison="stxt[630]" data-desc="btn_save">Translate</ti></button>
 <input id="inpTgtLang" type="hidden" value="pt_pt"></div>
         </div>
         </div>

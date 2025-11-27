@@ -433,16 +433,29 @@ function doPostDel() {
     }
 
     }
+function fnishUPstEdt(a,b,c) {
+    console.log("fnishUPstEdt: " + a + " " + b + " " + c);
+    JSSHOP.ui.popAndFillLbox("Post saved. " + a + " " + b + " " + c);
+    JSSHOP.ui.setCBBClickClr(tmpSvBtnObj,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium  bkgdClrHdr txtClrWhite', function(){tmpSvBtnObj.innerHTML=stxt[21];tmpSvBtnObj.disabled=false;});
+}
 
 function doPostEdit() {
      
     tmpSvBtnObj = btnEUsave;
-    tTMCcntStr = tinyMCE.activeEditor.getContent();
+    tTMCcntStr =  tmp_p_content_ifr.contentWindow.document.body.innerHTML;
     tLZenced = LZString.compressToEncodedURIComponent(tTMCcntStr);
     document.getElementById("p_content").value = tLZenced;
     document.getElementById("p_title").value = document.getElementById("tmp_p_title").value;
     document.getElementById("p_uid").value = quid;
     document.getElementById("p_dmodified").value = JSSHOP.getUnixTimeStamp();
+    if(document.getElementById("p_ptype").value == "pimage") {
+        // set p_vars to demoview content
+        daTAbodE = taDemoEdtr_ifr.contentWindow.document.body;
+        dTABEstr = daTAbodE.innerHTML;
+        dTABLZd = LZString.compressToEncodedURIComponent(dTABEstr);
+        document.getElementById("p_vars").value = dTABLZd;
+    }
+       // document.getElementById("p_vars").value = document.getElementById("dvDemoView").innerHTML;
     tmpFobj = null;
     tmpFobj = {};
     tmpFobj["knvp"] = JSSHOP.shared.getFrmVals(document["qposts"], "nada");
@@ -453,7 +466,9 @@ function doPostEdit() {
     } else {
         oi = getNuDBFnvp("qposts", 6, null, tmpFobj);
     }
-    doQComm(oi["rq"], null, "setUPostSave");
+    // doQComm(oi["rq"], null, "setUPostSave");
+    JSSHOP.ajax.doNuAjaxPost(oi["rq"], fnishUPstEdt);
+ 
 }
 
 
@@ -546,7 +561,6 @@ JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue
        doPTypeTip("p_ptype", p_ptype.value, "noQvalue");
 
 
-   JSSHOP.loadScript("js/tinymce/tinymce.js", loadTnyI, "js");
    tDDfullStr = "";
 
 
@@ -554,8 +568,9 @@ JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue
 tPCntnVal = p_content.value;
 tDcdVal =  decodeURIComponent(tPCntnVal);
 tmp_p_content.value = LZString.decompressFromEncodedURIComponent(tDcdVal);
-getPostImgs();
-JSSHOP.loadScript("js/tinymce/tinymce.min.js", loadPstTnyI, "js");
+// getPostImgs();
+// JSSHOP.loadScript("js/tinymce/tinymce.min.js", loadPstTnyI, "js");
+   JSSHOP.loadScript("js/tinymce/tinymce.js", loadTnyI, "js");
 
 }
 function doMPostForm(aaw,aww,cww) {
@@ -750,7 +765,7 @@ var doPstTypOpts = function(tPTval) {
         tTChngStrObj["en_us"] += "Post type changed to carousel. A sliding image gallery is created from user or property listings.";
         tTChngStrObj["pt_pt"] += "Tipo de post alterado para carrossel. Uma galeria de imagens deslizantes \u00e9 criada a partir de listagens de usuarios ou propriedades.";
         tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a carrusel. Se crea una galería de imagenes deslizantes a partir de listados de usuarios o propiedades.";
-        doPstTypOpts("users");
+        // doPstTypOpts("users");
         return;
         hasSlect = "yes";
         break;
@@ -795,7 +810,28 @@ var doPstTypOpts = function(tPTval) {
     // procNuUIitem("qposts","p_ptype",currUrlArr.tpstid,objVal,"fnshPTypeChange");
     };
 
+  var getEPtypeCngPop = function() {
+        tDPTCel = document.getElementById("p_ptype");
+        switch(tDPTCel.value) {
+            case "ppost":
+            case "pcontent":    
+            doPTypeChange("p_ptype", tDPTCel.value, "nep");
+            break;
+            case "pimage":
+            JSSHOP.ads.doImgPostCnfgPop();
+            break;
+            case "pcarousel":
+            JSSHOP.ads.doSwprConfigPop();
+            break;
+            case "pmap":
+            JSSHOP.ads.doMapPostCnfgPop();
+            break;
+            default:
+            doPTypeChange("p_ptype", tDPTCel.value, "nep");
+            break;
+            }
 
+    }
 var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
     // use \u to escape the unicode characters for the special characters in the strings
     // document.getElementById("tmp_p_ptype").disabled=true;
@@ -982,8 +1018,46 @@ var finishMPstUld = function(theMMum) {
         }
     };
 
+    function doPTypeCheck() {
+    console.log("doPTypeCheck");
+    tSlctdPstType = document.getElementById("p_ptype").value;
+    if(p_ptype.value == "pimage") {
+        decdPCval = decodeURIComponent(p_vars.value);
+       lzdecdstr = LZString.decompressFromEncodedURIComponent(decdPCval);
+       tFullPTIstr = "";
+       if(lzdecdstr.indexOf("dvTMCDemo") != -1) {
+        tFullPTIstr = lzdecdstr;
+       } else {
+            tFullPTIstr += "<div class=\"property-flyer\" style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px;\" id=\"dvTMCdemo\">";
+
+         tFullPTIstr += lzdecdstr;
+        tFullPTIstr += "</div>";
+       }
+             tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" +  tFullPTIstr + "</textarea>";
+     tDVDstr += "<div class=\"clearfix\"></div><br>";
+    document.getElementById("dvDemoView").innerHTML = tDVDstr;
+    setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+    }
+    if((p_ptype.value == "pmap") || (p_ptype.value == "pcarousel")) {
+        currSlctdPrpsObj = null;
+        currSlctdPrpsObj = {};
+        decdPCval = decodeURIComponent(p_vars.value);
+        tPATtlsDecded = decodeURIComponent(p_vars.value);
+        tSPIttlStr = LZString.decompressFromEncodedURIComponent(tPATtlsDecded);
+        currTPrpObj = JSON.parse(tSPIttlStr);
+        currSlctdPrpsObj = currTPrpObj["data"];
+        if(p_ptype.value == "pmap") {
+                  setTimeout(function() {  JSSHOP.ads.trnsltMapPstObj(); }, 1000);
+
+        } else {
+                  setTimeout(function() {  JSSHOP.ads.trnsltSwiperObj(); }, 1000);
+        }
+    }
+    console.log("edit-post:doPTypeCheck: " + tSlctdPstType);
+}
+
 function loadTnyI() {
-     JSSHOP.loadScript("js/tinymce/init-tinymce.min.js", donada, "js");
+     JSSHOP.loadScript("js/tinymce/init-tinymce.min.js", doPTypeCheck, "js");
  }
 
 function setUPostAddSave(a,b,c) {
@@ -993,7 +1067,7 @@ function setUPostAddSave(a,b,c) {
  
     // JSSHOP.ui.setCBBClickClr(tmpSvBtnObj,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium  bkgdClrHdr txtClrWhite', function(){tmpSvBtnObj.innerHTML=stxt[21];tmpSvBtnObj.disabled=false;});
 }
-function fnishSvCnvsImg(tFnishResp) {
+function fnishSvECnvsImg(tFnishResp) {
     console.log("fnishSvCnvsImg: " + tFnishResp);
     try   {
         if(tFnishResp.indexOf("Error") != -1) {
@@ -1002,33 +1076,39 @@ function fnishSvCnvsImg(tFnishResp) {
             tFRespObj = JSON.parse(tFnishResp);
             document.getElementById("p_image").value = tFRespObj.in;
            //  doQComm(oi["rq"], null, "setUPostAddSave");
-           setPostAdd();
+           setPostEAdd();
         }
     } catch(e) {
         alert("fnishSvCnvsImg: " + e);
     }   
 }
 
-function savePstCanvasImg(canvas) {
+function savePstECnvsImg(canvas) {
     try {
         document.getElementById("in").value = quid;
-        var dataURL = canvas.toDataURL("image/png");
-        inpCnvsImg.value = dataURL;
+        //var dataURL = canvas.toDataURL("image/png");
+        // toDataUrl in jpeg
+        var decDdataURL = canvas.toDataURL("image/jpeg");
+        encdLZdDataUrl = LZString.compressToEncodedURIComponent(decDdataURL);
+        // log first 100 chars of dataURL
+        console.log("savePstECnvsImg: dataURL: " + decDdataURL.substring(0,100));  
+        inpCnvsImg.value = encdLZdDataUrl;
         tNGPObj = null;
         tNGPObj = {};
         tNGPObj["t"] = "inpCnvsImg";
-        tNGPObj["v"] = dataURL;
+        tNGPObj["v"] = encdLZdDataUrl;
         tNGPArr = [];
         tNGPArr.push(tNGPObj);
-        JSSHOP.ajax.doNuGenAjaxPost("frmCnvsImg", tNGPArr, "_p/fileCnvsImg.php", "POST", fnishSvCnvsImg);
-        // document.forms["qposts"].submit();
+       JSSHOP.ajax.doNwstGenAjaxPost(tNGPArr, "_p/fileCnvsImg.php", "POST", fnishSvECnvsImg, 30000);
+       //   document.forms["qposts"].submit();
     } catch(e) {
-        alert("savePstCanvasImg: " + e);
+        alert("savePstECnvsImg: " + e);
     }
 } 
 
-function setPostAdd() {
-    console.log("setPostAdd");
+function setPostEAdd() {
+    try {
+    console.log("setPostEAdd");
     tTMCcntStr = tmp_p_content_ifr.contentWindow.document.body.innerHTML;
     tLZenced = LZString.compressToEncodedURIComponent(tTMCcntStr);
 
@@ -1037,17 +1117,32 @@ function setPostAdd() {
     document.getElementById("p_uid").value = quid;
     document.getElementById("p_dmodified").value = JSSHOP.getUnixTimeStamp();
     document.getElementById("p_dadded").value = JSSHOP.getUnixTimeStamp();
-
+     // if p_ptype is pimage, save the demo editor content as LZString compressed string in p_vars
+    tSlctdPstType = document.getElementById("p_ptype").value;
+    console.log("setPostEAdd: " + tSlctdPstType);
+    if(tSlctdPstType == "pimage") {
+        daTAbod = taDemoEdtr_ifr.contentWindow.document.body.innerHTML;
+        // daDiv = daTAbod.querySelector("#dvTMCdemo");
+        tZpd = LZString.compressToEncodedURIComponent(daTAbod);
+        document.getElementById("p_vars").value = tZpd;   
+        console.log("setPostEAdd.pimage p_vars: " + tZpd); 
+    }
 
 
     tmpFobj = null;
     tmpFobj = {};
+    tmpFobj["ws"] = "where _id=?";
+    tmpFobj["wa"] = [currUrlArr.tpstid];
+
      tmpFobj["knvp"] = JSSHOP.shared.getFrmVals(document["qposts"], "nada");
  // tmpFobj["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qposts"], "tmp_"));
-        oi = getNuDBFnvp("qposts", 6, null, tmpFobj);
+        oi = getNuDBFnvp("qposts", 7, null, tmpFobj);
     
      // doQComm(oi["rq"], null, "setUPostAddSave");
-     JSSHOP.ajax.doNuAjaxPost(oi["rq"], setUPostAddSave);
+     JSSHOP.ajax.doNurAjaxPost(oi["rq"], setUPostAddSave);
+} catch(e) {
+    alert("setPostEAdd.error: " + e);
+}
 }
 
 function doNuPostEditSave() {
@@ -1059,6 +1154,8 @@ function doNuPostEditSave() {
     document.getElementById("p_dmodified").value = JSSHOP.getUnixTimeStamp();
     tmpFobj = null;
     tmpFobj = {};
+    tmpFobj["ws"] = "where _id=?";
+    tmpFobj["wa"] = [currUrlArr.tpstid];
      tmpFobj["knvp"] = JSSHOP.shared.getFrmVals(document["qposts"], "nada");
         oi = getNuDBFnvp("qposts", 7, null, tmpFobj);
         JSSHOP.ajax.doNuAjaxPost(oi["rq"], setUPostAddSave);
@@ -1073,25 +1170,25 @@ function doPostAdd() {
     // JSSHOP.ajax.doNuAjaxPost(oi["rq"], setUPostAddSave);
      switch(tSlctdPstType) {
         case "pimage":
-              html2canvas(taDemoEdtr_ifr.contentWindow.document.body).then(function(canvas) { savePstCanvasImg(canvas);})
+              html2canvas(taDemoEdtr_ifr.contentWindow.document.body).then(function(canvas) { savePstECnvsImg(canvas);})
           
             break;
         case "pcarousel":
             tZpd = LZString.compressToEncodedURIComponent(JSON.stringify(JSSHOP.ads.getUpdatePVrs("pcarousel")));
             p_vars.value = tZpd;    
-            setPostAdd();   
+            setPostEAdd();   
              
-            JSSHOP.ads.doSwprConfigPop();
+            // JSSHOP.ads.doSwprConfigPop();
             break;
         case "pmap":
             tZpd = LZString.compressToEncodedURIComponent(JSON.stringify(JSSHOP.ads.getUpdatePVrs("pmap")));
             console.log("doPostAdd.pmap: " + tZpd);
             
             p_vars.value = tZpd;   
-            setPostAdd();
+            setPostEAdd();
             break;
         default:
-            setPostAdd();
+            setPostEAdd();
              break;
         }
 }     
@@ -1186,10 +1283,13 @@ JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue
 
 
     tDDfullStr = "";
-
-tmp_p_content.value = LZString.decompressFromEncodedURIComponent(p_content.value);
+theTpCVstr = document.getElementById("p_content").value;
+unEncdStr = decodeURIComponent(theTpCVstr);
+document.getElementById("tmp_p_content").value = LZString.decompressFromEncodedURIComponent(unEncdStr);
+document.getElementById("tmp_p_title").value = decodeURIComponent(document.getElementById("p_title").value);
 getPostImgs();
-JSSHOP.loadScript("js/tinymce/tinymce.min.js", loadTnyI, "js");
+setTimeout(function() { JSSHOP.loadScript("js/tinymce/tinymce.min.js", loadTnyI, "js"); }, 500);
+//     setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
 
 }
 function doMPostForm(aaw,aww,cww) {
