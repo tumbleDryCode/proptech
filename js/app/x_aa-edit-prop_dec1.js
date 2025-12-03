@@ -23,7 +23,6 @@ var tmpSaveBtnID = null;
 var gpmap = null;
 var currPgTitle = stxt[985];
 var threedmap = null;
-var curr3DMarker = null;
 
 var tmpMFarrObj = null;
 var tmpMFarrObj = {};
@@ -940,7 +939,7 @@ function get3DImages() {
     // doQComm(oi["rq"], null, "show3DImages");
 }
 
-async function doNuThreeDPop(ts3DImgUstr, t3DImgId) {
+var doNuThreeDPop = function(ts3DImgUstr, t3DImgId) {
     JSSHOP.shared.setFrmFieldVal("qmedia", "_id", t3DImgId);
     t3DpopStr = "";
     if(ts3DImgUstr == "noQvalue") {
@@ -955,19 +954,16 @@ tmpRetStr += "<input type=\"text\" id=\"tmp_m_title\" name=\"tmp_m_title\" value
 tmpRetStr += "</td></tr><tr><td>";
 tmpRetStr += "</td></tr></table>";
 tmpRetStr += "</div>";
-
-    t3DpopStr += tmpRetStr; 
-    t3DpopStr += "<div style=\"min-width:325px;\">"; 
-    t3DpopStr += "<table style=\"margin 0 auto\"><tr><td><div id=\"dvThreeDPop\" style=\"height:320px;width:320px;margin 0 auto;\">";
-
+    t3DpopStr += tmpRetStr;
+    t3DpopStr += "<div id=\"dvThreeDPop\" style=\"height:280px;\">";
     // t3DpopStr += "<gmp-map-3d id=\"dvTDPop\" mode=\"hybrid\" center=\"" + tmp_ploclat.value  + "," + tmp_ploclng.value  + "\" range=\"2000\" tilt=\"75\" heading=\"330\"></gmp-map-3d>";
-   t3DpopStr += "</div></td></tr></table>";
-// create a cleafix div
-t3DpopStr += "<div class=\"clearfix\"></div>";
-    t3DpopStr += "</div>";
+   t3DpopStr += "</div>";
+   // create a div that has a the camera material.icon to call getCurrSVImgUrl
+   // t3DpopStr += "<i class=\"txtClrRed brdrClrWhite bkgdClrWhite menu-material-icons\" alt=\"delete\" title=\"delete\">&#xe92b;</i>";
+  //  t3DpopStr += "<div class=\"dvTxtBtns\"><input type=\"button\" class=\"btnTxtLabel\" value=\"Get Image URL\" onclick=\"javascript:updtCurr3DImgUrl('" + + "');\"></div>";
    JSSHOP.ui.popAndFillLbox(t3DpopStr);
  
-       setTimeout(() => showNwstThreeDPop(ts3DImgUstr, t3DImgId), 1500);
+       showNuThreeDPop(ts3DImgUstr, t3DImgId);
     };
 
 
@@ -1254,252 +1250,9 @@ var doThreeDPop = function() {
             t3DpopStr += "</div>";
             tHlderDiv = document.createElement("div");
             tHlderDiv.innerHTML = t3DpopStr;
-            lightbox_content.append(tHlderDiv);
+            advThreeDPop.append(tHlderDiv);
   
         }
-
-        async function toggleNuTDRecording() {
-    var btn = document.getElementById("btnAEPRecord");
-    var elementToRecord = document.getElementById("dvThreeDPop");
-
-    if (btn.value === "Record Video") {
-        try {
-            const stream = await navigator.mediaDevices.getDisplayMedia({
-                video: { displaySurface: "browser" },
-                audio: false,
-                selfBrowserSurface: "include",
-                preferCurrentTab: true
-            });
-            
-            // Attempt to crop to the specific element using Region Capture API
-            const [track] = stream.getVideoTracks();
-            if (window.CropTarget && track.cropTo && elementToRecord) {
-                try {
-                    const cropTarget = await CropTarget.fromElement(elementToRecord);
-                    await track.cropTo(cropTarget);
-                } catch (err) {
-                    console.warn("Region Capture failed, recording full tab/screen: ", err);
-                }
-            }
-            
-            nuRecordedChunks = [];
-            nuMediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp9' });
-
-            nuMediaRecorder.ondataavailable = function(e) {
-                if (e.data.size > 0) {
-                    nuRecordedChunks.push(e.data);
-                }
-            };
-
-            nuMediaRecorder.onstop = function() {
-                const blob = new Blob(nuRecordedChunks, {
-                    type: "video/webm"
-                });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                document.body.appendChild(a);
-                a.style = "display: none";
-                a.href = url;
-                a.download = "property-3d-view.webm";
-                a.click();
-                window.URL.revokeObjectURL(url);
-                
-                // Reset button state if stopped externally (e.g. via browser UI)
-                if(document.getElementById("btnAEPRecord")) {
-                    document.getElementById("btnAEPRecord").value = "Record Video";
-                    document.getElementById("btnAEPRecord").style.backgroundColor = "";
-                }
-            };
-            
-            // Handle case where user stops sharing via browser UI
-            stream.getVideoTracks()[0].onended = function() {
-                if(nuMediaRecorder.state !== 'inactive') {
-                    nuMediaRecorder.stop();
-                }
-            };
-
-            nuMediaRecorder.start();
-            btn.value = "Stop Recording";
-            btn.style.backgroundColor = "#ff0000"; // Red to indicate recording
-
-        } catch (err) {
-            console.error("Error starting recording: " + err);
-            alert("Could not start recording: " + err.message);
-        }
-    } else {
-        if(nuMediaRecorder && nuMediaRecorder.state !== "inactive") {
-            nuMediaRecorder.stop();
-            // Stop all tracks
-            nuMediaRecorder.stream.getTracks().forEach(track => track.stop());
-        }
-        btn.value = "Record Video";
-        btn.style.backgroundColor = "";
-    }
-}
-
-    async function showNwstThreeDPop(tThreedPurl, tMdiaID) {
-        doNuSpinSet("dvThreeDPop", "big", null, "...");
-        var pdTitle = "Property";
-        var pPrice = "";
-        var tSellerIcon = "default_user.png";
-        var tSellerName = "Seller";
-
-        try {
-            pdTitle = document.getElementById("tmp_pd_prptitle").value;
-            if(document.getElementsByName("price")[0]) {
-                pPrice = document.getElementsByName("price")[0].value;
-            }
-             if(JSSHOP.cookies.getCookie("c_uicon")) {
-                tSellerIcon = JSSHOP.cookies.getCookie("c_uicon");
-            }
-            if(JSSHOP.cookies.getCookie("c_uname")) {
-                tSellerName = JSSHOP.cookies.getCookie("c_uname");
-            }
-        } catch(e) {
-            console.log("showNwstThreeDPop error getting details: " + e);
-        }
-
-        if(tThreedPurl == "noQvalue") {
-            tLocLat = tmp_ploclat.value;
-            tLocLng = tmp_ploclng.value;
-            tLocAlt = 10;
-            tZmLvl = 16;
-            tMpType = "SATELLITE";
-            tCntrMapLat = tLocLat;
-            tCntrMapLng = tLocLng;
-            tCntrMapAlt = tLocAlt;
-            tFldHeading = 0;
-            tFldTilt = 67.5;
-            tFldRange = 500;
-            tFldAlt = 10;
-            tFldZoom = 16;
-        } else {
-            console.log("showNwstThreeDPop: " + tThreedPurl);
-            tTDpopObj = JSSHOP.shared.urlToArray(tThreedPurl);
-            tLocLat = tTDpopObj["center"].split(",")[0];
-            tLocLng = tTDpopObj["center"].split(",")[1];
-            tLocAlt = tTDpopObj["altitude"];
-            tZmLvl = tTDpopObj["zoom"];
-            tMpType = tTDpopObj["maptype"];
-            tCntrMapLat = tLocLat;
-            tCntrMapLng = tLocLng;
-            tCntrMapAlt = tLocAlt;
-            tFldHeading = tTDpopObj["heading"];
-            tFldTilt = tTDpopObj["tilt"];
-            tFldRange = tTDpopObj["range"];
-            tFldAlt = tTDpopObj["altitude"];
-            tFldZoom = tTDpopObj["zoom"];
-        }
-
-        fltdLat = parseFloat(tLocLat);
-        fltdLng = parseFloat(tLocLng);
-        fltheading = parseFloat(tFldHeading);
-        flttilt = parseFloat(tFldTilt);
-        fltzoom = parseFloat(tFldZoom);
-        fltdrange = parseFloat(tFldRange);
-        fltdaltitude = parseFloat(tFldAlt);
-        xfltdLat = fltdLat;
-        xfltdLng = fltdLng;
-        advThreeDPop = document.getElementById('dvThreeDPop');
-
-        // Ensure libraries are loaded
-        var { Map3DElement, MapMode, Marker3DElement } = await google.maps.importLibrary("maps3d");
-
-        if(threedmap != null && threedmap != undefined && threedmap != "") {
-            threedmap.stopCameraAnimation();
-            threedmap.removeEventListener('gmp-animationend', () => { donada = "yes";});
-            isThreeDrun = "no";
-            advThreeDPop.innerHTML = "";
-            advThreeDPop.append(threedmap);
-            if(curr3DMarker) {
-                curr3DMarker.remove();
-                curr3DMarker = null;
-            }
-        } else {
-            threedmap = new Map3DElement({
-                center: { lat: xfltdLat, lng: xfltdLng,  altitude: fltdaltitude },
-                tilt: flttilt,
-                range: fltdrange,
-                mode: MapMode.SATELLITE,
-                defaultUIDisabled: true,
-            });
-
-            advThreeDPop.innerHTML = "";
-            advThreeDPop.append(threedmap);
-
-            threedmap.addEventListener('gmp-click', (event) => {
-                console.log("threedmap: " + JSON.stringify(event.position));
-            });
-
-            threedmap.addEventListener('gmp-camera-changed', (event) => {
-                console.log("threedmap: camera changed: " + JSON.stringify(event.camera));
-            });
-        }
-
-        // Add Marker
-        curr3DMarker = new Marker3DElement({
-            position: { lat: fltdLat, lng: fltdLng, altitude: fltdaltitude + 20 }
-        });
-
-        const template = document.createElement('template');
-        const containerWidth = document.getElementById('dvThreeDPop').offsetWidth;
-        const svgWidth = Math.floor(containerWidth * 0.95);
-        
-        template.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="${svgWidth}" height="200">
-                <foreignObject width="100%" height="100%">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
-                        <div style="color: white; font-size: 24px; font-weight: bold; text-shadow: 2px 2px 4px #000000; animation: bounce 2s infinite; text-align: center; width: 100%; word-wrap: break-word;">
-                            <div>${pdTitle}</div>
-                            <div style="font-size: 18px; color: #ffff00;">${pPrice}</div>
-                        </div>
-                        <div style="position: absolute; bottom: 0; right: 0; display: flex; align-items: center; background: rgba(0,0,0,0.6); padding: 5px; border-radius: 8px; margin: 5px;">
-                            <img src="${currWebHome}images/user/${tSellerIcon}" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 8px; border: 1px solid white;">
-                            <span style="color: white; font-size: 12px; font-weight: bold;">${tSellerName}</span>
-                        </div>
-                    </div>
-                    <style>
-                        @keyframes bounce {
-                            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-                            40% {transform: translateY(-10px);}
-                            60% {transform: translateY(-5px);}
-                        }
-                    </style>
-                </foreignObject>
-            </svg>
-        `;
-
-        curr3DMarker.append(template);
-        threedmap.append(curr3DMarker);
-
-        // Buttons
-         var tt3DpopStr = "";
-        tt3DpopStr += "<div class=\"dvTxtBtns\">";
-        tt3DpopStr += "<table><tr><td>";
-        tt3DpopStr += "<input id=\"btnAEPadd\" type=\"button\" class=\"cls_button cls_button-small txtSmall bkgdClrHdr txtClrWhite\" value=\"Save\" onclick=\"javascript:updtCurr3DImgUrl('" + tMdiaID + "');\">";
-        tt3DpopStr += "</td><td>";
-        tt3DpopStr += "<input id=\"btnAEPplay\" type=\"button\" class=\"cls_button cls_button-small  txtSmall bkgdClrHdr txtClrWhite\" value=\"Play\" onclick=\"javascript:strtStpNuTDAnm(getCurr3DImgUrl(280,140));\">";
-        tt3DpopStr += "</td><td>";
-        // chek if is set demouser cookie
-        if(JSSHOP.cookies.getCookie("demouser") !== null) {
-            isDemoUser = "yes";
-            tt3DpopStr += "<input id=\"btnAEPRecord\" type=\"button\" class=\"cls_button cls_button-small txtSmall bkgdClrHdr txtClrWhite\" value=\"Record\" onclick=\"javascript:toggleNuTDRecording();\">";
-
-        }
-
-        tt3DpopStr += "</td><td>";
-        if(tMdiaID != "noQvalue") {
-            tt3DpopStr += "<input id=\"btnTDPopdel\" type=\"button\" class=\"cls_button cls_button-small txtSmall bkgdClrDlg txtClrNrml\" value=\"Delete\" onclick=\"javascript:doNuPrdMDelete(" + tMdiaID + ",'get3DImages');\">";
-        }
-        tt3DpopStr += "</td></tr></table>";
-        tt3DpopStr += "</div>";
-        // create a clearfix div
-        tt3DpopStr += "<div style=\"clear: both;\"></div>";
-        ttHlderDiv = document.createElement("div");
-        ttHlderDiv.innerHTML = tt3DpopStr;
-        // lightbox_content.style.margin = "15px";
-         lightbox_content.append(ttHlderDiv);
-    }
 
 
 
@@ -2599,7 +2352,7 @@ CREATE TABLE `qposts` (
 
 
 function gotoPropUpdate() {
-    eindex("aa-add-post", "pid=aa-add-post&pstprpid=" + prpid + "&quid=" + quid + "&pptype=pimage");
+    eindex("aa-add-post", "pid=aa-add-post&pstprpid=" + prpid + "&quid=" + quid);
    //  window.location.href = "aa-edit-prop.html?prpid=" + prpid + "&quid=" + quid;
 }
 function popUpdtsImgThmbSlction() {

@@ -605,11 +605,7 @@ var getCurrUrl = function() {
     
     
     
-    currUrlArr = JSSHOP.shared.urlToArray(getCurrUrl()); 
-    if(currUrlArr.debug) {
-    JSSHOP.loadScript("js/fl/chrome-extension-beta/firebug-lite-beta.js", JSSHOP.checkLoader,"js");
-    }
-    
+   
     
     try {
     tmpNvstr = navigator.userAgent;
@@ -658,7 +654,14 @@ var getCurrUrl = function() {
     
         }
         
-
+ currUrlArr = JSSHOP.shared.urlToArray(getCurrUrl()); 
+    if(currUrlArr.debug) {
+    JSSHOP.loadScript("js/fl/chrome-extension-beta/firebug-lite-beta.js", JSSHOP.checkLoader,"js");
+    }
+    if(currUrlArr.demouser) {
+    JSSHOP.cookies.setCookie("demouser", "yes", "30", "", "", "");
+    }
+    
 var pfBoot = function(theElem, theResp, marble) {
     console.log("seq.pfBoot");
     document.getElementById(theElem).innerHTML = theResp;

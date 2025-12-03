@@ -453,6 +453,14 @@ aprpDate = aprpObj["date"];
 aprploclat = aprpObj["ploclat"];
 aprploclng = aprpObj["ploclng"];
 
+if(aprpPimage.indexOf("updt_") != -1) {
+    tspRPiMG = aprpPimage.replace("updt_","");
+    tPrpImgsFldr = "images/ucontent"
+} else {
+    tspRPiMG = aprpPimage;  
+    tPrpImgsFldr = currPrpImgsFldr;
+}
+
 retPLstSTr += "<div class=\"col-md-6 col-lg-4\">";
 /*
 retPLstSTr += "<div tid=\"dvCoFavBtn\" style=\"float: right\"></div>";
@@ -467,7 +475,7 @@ currFTclr = "material-icons txtClrRed";
 retPLstSTr += "<table><tr><td>";
 
 //  <div  onclick="javascript:JSSHOP.ui.toggleVisibility('tdUploadBtn');" class="crsrPointer"><img alt="User Icon" src="images/misc/default_user.png"  class="slmtable brdrClrDlg" style="minn-width:150px;max-width:160px;text-align:center;margin-right:3px" align="absmiddle" id="imgIedit"><span class="txtSmall txtClrGrey">Edit</span></div>
- retPLstSTr += "<div  onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\" class=\"crsrPointer\"><img src=\"images/property/s_thumb" + aprpPimage + "\" alt=\"pimage\" class=\"slmtable brdrClrDlg\" style=\"min-width:100px;max-width:100px;min-height:100px;max-height:100px;text-align:center;margin-right:3px\" align=\"absmiddle\"></div>";
+ retPLstSTr += "<div  onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\" class=\"crsrPointer\"><img src=\"" + tPrpImgsFldr + "/" + tspRPiMG + "\" alt=\"pimage\" class=\"slmtable brdrClrDlg\" style=\"min-width:100px;max-width:100px;min-height:100px;max-height:100px;text-align:center;margin-right:3px\" align=\"absmiddle\"></div>";
 retPLstSTr += "</td>";
 retPLstSTr += "<td>";
 retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";

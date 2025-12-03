@@ -2911,7 +2911,7 @@ if(tdLHR.indexOf("clean.html") != -1) {
 isAclean = "y";
 } else {
     if(tdLHR.indexOf("?") != -1) {
-        goHome();
+       goHome();
     } else {
 setTimeout("doBootLoad()", 800);
     }

@@ -6253,6 +6253,8 @@ JSSHOP.ui.popFillObox = function(theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUse
     // tmpLCbox.style.top="5px";
     if(getViewportWidth() > 500) {}
     iMdl = Math.round((getViewportWidth() - tmpLCbox.clientWidth) / 2);
+    // if(iMdl < 5) { iMdl = 5; }
+    // if(iMdl < 40) { iMdl = 15; }
     tmpLCbox.style.left=iMdl+"px";
     
     

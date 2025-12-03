@@ -456,6 +456,8 @@ async function initNuThreeDView(tImgSrc) {
             t3DBtnStr += "<div class=\"dvTxtBtns\">";
             t3DBtnStr += "<table><tr><td>";
             t3DBtnStr += "<input id=\"btnAEPplay\" type=\"button\" class=\"cls_button cls_button-small  txtSmall bkgdClrHdr txtClrWhite\" value=\"Play\" onclick=\"javascript:strtStpNuTDAnm('" + tThreedPurl + "');\">";
+            t3DBtnStr += "</td><td>";
+            t3DBtnStr += "<input id=\"btnAEPRecord\" type=\"button\" class=\"cls_button cls_button-small txtSmall bkgdClrHdr txtClrWhite\" value=\"Record Video\" onclick=\"javascript:toggleNuTDRecording();\">";
             t3DBtnStr += "</td></tr></table>";
             t3DBtnStr += "</div>";
             ttdBdv = document.createElement("div");
@@ -866,9 +868,6 @@ function setPropMainImg(tPMImgSRC) {
    window.scrollTo(0, document.getElementById("imgAPrpMain").offsetTop - 100);
  }
 
-// use js file x_all.js
-// use js file x_aa-show-prop.js
-
 /*
 
 
@@ -1124,10 +1123,10 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
             tIUheight = 180;
 
             // tLZuncomp = LZString.decompressFromEncodedURIComponent(tThumbImg);
-            //  			tstr += "<img src=\"images/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
+            //  			tstr += "<img src=\"images/property/" + tAiretArr[iirnt]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iirnt]["_id"] + "','" + tAiretArr[iirnt]["m_file"] + "'));\">";
              // tAVImgUstr = "https://maps.googleapis.com/maps/api/staticmap?key=" + gglSKey + "&size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng + "&zoom=" + tZmLvl + "&maptype=" + tMpType;
 tAVImgUstr = tUnZpd;
-            t3DImgStr = "<img src=\"" + tAVImgUstr + "\" class=\"rtable crsrPointer\" onclick=\"javascript:initNwstThreeDView('" + tAVImgUstr + "','" + tAiretArr[iint]["_id"] + "');\" style=\"width: 100%;min-height:125px;\" alt=\"3D Image\">";
+            t3DImgStr = "<img src=\"" + tAVImgUstr + "\" class=\"rtable crsrPointer\" onclick=\"javascript:initNwstThreeDView('" + tAVImgUstr + "','" + tAiretArr[iirnt]["_id"] + "');\" style=\"width: 100%;min-height:125px;\" alt=\"3D Image\">";
             // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initThreeDView(" + theTmnbLat + "," + theTmnbLng + "," + theTmnbAlt + ");\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tAVImgUstr + "\"  alt=\"image\"></a> </div>";
             // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initNuThreeDView('"  + tAVImgUstr + "');\">" + t3DImgStr + "</a> </div>";
             // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initNurThreeDView('"  + tAVImgUstr + "','"+ /* qmedia _id */ tAiretArr[iirnt]["_id"] + "');\">" + t3DImgStr + "</a>";
@@ -1282,7 +1281,7 @@ function doPrpMDDSlct(apld, aaw,aww,cww) {
 }
 }
 
-    function doMPropDeatils(aaw,aww,cww) {
+ function doMPropDeatils(aaw,aww,cww) {
         console.log('doMPropsList - aww: ' + aww);
         tPropUID = 0;   
     istrt = 0;
@@ -1612,8 +1611,8 @@ function setPropTandD(aapa,apaphh,apaprt) {
         }
         tLZdecTitle = LZString.decompressFromEncodedURIComponent(tTitle);
         tLZdecDesc = LZString.decompressFromEncodedURIComponent(tDesc);
-        document.getElementById("dvPrpCntnt").innerHTML = tLZdecDesc;
-        document.getElementById("dvPrpTtl").innerHTML = tLZdecTitle;
+        if(document.getElementById("dvPrpCntnt")) { document.getElementById("dvPrpCntnt").innerHTML = tLZdecDesc; }
+        if(document.getElementById("dvPrpTtl")) { document.getElementById("dvPrpTtl").innerHTML = tLZdecTitle; }
         
     } else {
         
@@ -1622,8 +1621,8 @@ function setPropTandD(aapa,apaphh,apaprt) {
     console.log("NO-setPropTandD: " + aapa + " " + apaphh + " " +apaprt);
     tTitle = stxt[3001];
     tDesc = stxt[983];
-    document.getElementById("dvPrpCntnt").innerHTML = tDesc;
-    document.getElementById("dvPrpTtl").innerHTML = tTitle;
+    if(document.getElementById("dvPrpCntnt")) { document.getElementById("dvPrpCntnt").innerHTML = tDesc; }
+    if(document.getElementById("dvPrpTtl")) { document.getElementById("dvPrpTtl").innerHTML = tTitle; }
 }
 getPropImgs();
 }
@@ -1852,3 +1851,85 @@ function getFIrstCanvasOnPage() {
             }
 
 */
+
+var nuMediaRecorder;
+var nuRecordedChunks = [];
+
+async function toggleNuTDRecording() {
+    var btn = document.getElementById("btnAEPRecord");
+    var elementToRecord = document.getElementById("dvThreeDCntnr");
+
+    if (btn.value === "Record Video") {
+        try {
+            const stream = await navigator.mediaDevices.getDisplayMedia({
+                video: { displaySurface: "browser" },
+                audio: false,
+                selfBrowserSurface: "include",
+                preferCurrentTab: true
+            });
+            
+            // Attempt to crop to the specific element using Region Capture API
+            const [track] = stream.getVideoTracks();
+            if (window.CropTarget && track.cropTo && elementToRecord) {
+                try {
+                    const cropTarget = await CropTarget.fromElement(elementToRecord);
+                    await track.cropTo(cropTarget);
+                } catch (err) {
+                    console.warn("Region Capture failed, recording full tab/screen: ", err);
+                }
+            }
+            
+            nuRecordedChunks = [];
+            nuMediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp9' });
+
+            nuMediaRecorder.ondataavailable = function(e) {
+                if (e.data.size > 0) {
+                    nuRecordedChunks.push(e.data);
+                }
+            };
+
+            nuMediaRecorder.onstop = function() {
+                const blob = new Blob(nuRecordedChunks, {
+                    type: "video/webm"
+                });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                document.body.appendChild(a);
+                a.style = "display: none";
+                a.href = url;
+                a.download = "property-3d-view.webm";
+                a.click();
+                window.URL.revokeObjectURL(url);
+                
+                // Reset button state if stopped externally (e.g. via browser UI)
+                if(document.getElementById("btnAEPRecord")) {
+                    document.getElementById("btnAEPRecord").value = "Record Video";
+                    document.getElementById("btnAEPRecord").style.backgroundColor = "";
+                }
+            };
+            
+            // Handle case where user stops sharing via browser UI
+            stream.getVideoTracks()[0].onended = function() {
+                if(nuMediaRecorder.state !== 'inactive') {
+                    nuMediaRecorder.stop();
+                }
+            };
+
+            nuMediaRecorder.start();
+            btn.value = "Stop Recording";
+            btn.style.backgroundColor = "#ff0000"; // Red to indicate recording
+
+        } catch (err) {
+            console.error("Error starting recording: " + err);
+            alert("Could not start recording: " + err.message);
+        }
+    } else {
+        if(nuMediaRecorder && nuMediaRecorder.state !== "inactive") {
+            nuMediaRecorder.stop();
+            // Stop all tracks
+            nuMediaRecorder.stream.getTracks().forEach(track => track.stop());
+        }
+        btn.value = "Record Video";
+        btn.style.backgroundColor = "";
+    }
+}

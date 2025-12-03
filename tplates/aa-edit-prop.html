@@ -453,7 +453,23 @@ if(isset($_COOKIE['quid'])) {
 					<div id="dvUploadBtn"  style="display:block;visibility:visible;margin-right:10px"><button id="uploadBtn" class="cls_button cls_button-small form-control" capture="camera"><i class="nav-material-icons coll-menu-item txtClrHdr" style="margin-right:4px;">&#xe439;</i><ti data-ison="stxt[986]" data-desc="btn_upload">Upload</ti></button></div>
 					
 				 
-             </td><td style="text-align: center; vertical-align:top; height: 50px;"><div id="dvPrdMedia"></div></td></tr></table></td>
+             </td><td style="height: 50px">
+
+						 <table style="width: 100%">
+							 <tr>
+								 <td>
+
+						 <a href="javascript:popUpdtsImgThmbSlction();">From 
+						 Updates</a></td>
+							 </tr>
+							 <tr>
+								 <td>
+
+						 <a href="javascript:gotoPropUpdate();">Create 
+						 Update</a></td>
+							 </tr>
+						 </table>
+						 </td><td style="text-align: center; vertical-align:top; height: 50px;"><div id="dvPrdMedia"></div></td></tr></table></td>
 				 </tr>
 				 <tr>
 					 <td id="tdAppBCodeBtn"><div id="dvAppBCodeBtn"><div><a href="javascript:doBarCodeScan('add');" class="txtDecorNone">
@@ -712,7 +728,10 @@ if(isset($_COOKIE['quid'])) {
 <!-- end tinymc --><hr>
 				 <table style="margin: 0  auto">
 					 <tr>
-						 <td><input type="text" name="inpGglTransMgc" id="inpGglTransMgc" placeholder="Google Api Key" value="API Key Here"></td>
+						 <td>API Key:</td>
+					 </tr>
+					 <tr>
+						 <td><input type="text" name="inpGglTransMgc" id="inpGglTransMgc" value=""></td>
 					 </tr>
 				 </table><hr>
 				 <div align="center"><button id="btnDoTrans" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite"><ti data-ison="stxt[630]" data-desc="btn_save">Translate</ti></button>

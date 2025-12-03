@@ -189,7 +189,14 @@ tDDPrpStr = JSSHOP.ui.getNuBSdropDstr(tDDPrpObj);
 if(aprpPimage == "default.jpg") {
  allprpPimage = aprpPimage;
 } else {
-  allprpPimage = "m_thumb" + aprpPimage;
+  if(aprpPimage.indexOf("updt_") != -1) {
+    tprpPimage = aprpPimage.replace("updt_", "");
+        tPrpImgsFldr = "images/ucontent";
+  } else {
+      tPrpImgsFldr = currPrpImgsFldr;
+    tprpPimage = aprpPimage;
+  }
+  allprpPimage = "m_thumb" + tprpPimage;
 }
 /*
 retPLstSTr += "<div tid=\"dvCoFavBtn\" style=\"float: right\"></div>";
@@ -216,7 +223,7 @@ retPLstSTr += "<td class=\"txtBold txtBig\" nowrap=\"nowrap\">" + aprpPrice + "<
 retPLstSTr += "</td><td style=\"vertical-align:top\">" + tDDPrpStr + "</td></tr></table>";
 
  retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\">";
-retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"" + currPrpImgsFldr + "/" + allprpPimage + "\" alt=\"pimage\" class=\"img100p\">";
+retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"" + tPrpImgsFldr + "/" + tprpPimage + "\" alt=\"pimage\" class=\"img100p\">";
 // retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
 retPLstSTr += "<div class=\"sale  slmtable bkgdClrWhite txtClrHdr txtSmall\">ID: " + aprpObj._id + " / " + svftObj["proptype"][aprpType] + " / " + stxt[953] + ": " + aprpSize + "</div>";
 retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
@@ -373,9 +380,16 @@ currFTclr = "material-icons txtClrTtl";
  if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {
 currFTclr = "material-icons txtClrRed";
 }
+tIMPrpImg = aprpPimage;
 
-retPLstSTr += "<table><tr><td style=\"min-width:40px;>";
-
+// if tIMPrpImg indexOf updt_ then remove updt_
+if(tIMPrpImg.indexOf("updt_") != -1) {
+  tIMPrpImg = aprpPimage.replace("updt_", "");
+  tCurrPrpImgsFldr = "images/updates";
+} else {
+  tCurrPrpImgsFldr = currPrpImgsFldr;
+}
+retPLstSTr += "<table><tr><td style=\"min-width:40px;\">";
 //  <div  onclick="javascript:JSSHOP.ui.toggleVisibility('tdUploadBtn');" class="crsrPointer"><img alt="User Icon" src="images/misc/default_user.png"  class="slmtable brdrClrDlg" style="minn-width:150px;max-width:160px;text-align:center;margin-right:3px" align="absmiddle" id="imgIedit"><span class="txtSmall txtClrGrey">Edit</span></div>
 retPLstSTr += "<div  onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\" class=\"crsrPointer\"><img alt=\"Profile\" src=\"images/user/" + aprpObj.u_icon + "\"  class=\"icnRndDSmUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">Edit</span></div>";
 retPLstSTr += "</td><td>";
@@ -385,7 +399,7 @@ retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" s
 retPLstSTr += "</td></tr></table>";
 
  retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\">";
-retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"" +  currPrpImgsFldr + "/" + aprpPimage + "\" alt=\"pimage\" class=\"img100p\">";
+retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"" +  tCurrPrpImgsFldr + "/" + tIMPrpImg + "\" alt=\"pimage\" class=\"img100p\">";
 retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
 retPLstSTr += "<div class=\"sale bg-secondary text-white text-capitalize\">" + svftObj["proptype"][aprpType] + "</div>";
 retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative

@@ -729,8 +729,14 @@ currMediaID = prpid;
 
  
 
+            doPTypeTip("p_ptype", "pimage", "pimage");
+//     eindex("aa-add-post", "pid=aa-add-post&pstprpid=" + prpid + "&quid=" + quid + "&pptype=pimage");
+        if(currUrlArr.pstprpid && currUrlArr.pstprpid != "null") {
+            tprpid = currUrlArr.pstprpid;
+            doPTypeTip("p_ptype", "pimage", "pimage");
+        } else {
             doPTypeTip("p_ptype", "ppost", "ppost");
-
+        }
 
         JSSHOP.loadScript("js/tinymce/tinymce.js", loadTnyI, "js");
         tDDfullStr = "";
