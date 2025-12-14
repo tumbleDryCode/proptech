@@ -509,7 +509,9 @@ async function initNuThreeDView(tImgSrc) {
             pLng = parseFloat(propData.ploclng);
         }
             const marker = new Marker3DElement({
-                position: { lat: fltdLat, lng: fltdLng, altitude: fltdaltitude + 20 }
+                position: { lat: fltdLat, lng: fltdLng, altitude: fltdaltitude + 20 },
+                altitudeMode: "ABSOLUTE",
+
             });
 
             // Create HTML template for the marker content

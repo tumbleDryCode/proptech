@@ -590,9 +590,11 @@ function doPostAdd() {
         case "pmap":
             tZpd = LZString.compressToEncodedURIComponent(JSON.stringify(JSSHOP.ads.getUpdatePVrs("pmap")));
             console.log("doPostAdd.pmap: " + tZpd);
-            
-            p_vars.value = tZpd;   
-            setPostAdd();
+                        p_vars.value = tZpd; 
+            daMdiv = document.getElementById("dvDemoView");
+                       html2canvas(daMdiv).then(function(canvas) { savePstCanvasImg(canvas);})
+  
+            // setPostAdd();
             break;
         default:
             setPostAdd();
@@ -734,6 +736,7 @@ currMediaID = prpid;
         if(currUrlArr.pstprpid && currUrlArr.pstprpid != "null") {
             tprpid = currUrlArr.pstprpid;
             doPTypeTip("p_ptype", "pimage", "pimage");
+            document.getElementById("p_ptype").value = "pimage";
         } else {
             doPTypeTip("p_ptype", "ppost", "ppost");
         }

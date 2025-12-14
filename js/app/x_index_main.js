@@ -1,7 +1,408 @@
-/*
-<td style="text-align: left" nowrap="nowrap"><div onclick="javascript:eindex('aa-show-user','pid=aa-show-user&amp;tuid=46')" class="crsrPointer"><img alt="Profile" src="images/user/22_1726999049.jpg" class="icnRndDSmUser" align="absmiddle">&nbsp;<span class="txtBold txtCLrHdr">Pedro Matias</span></div></td>
-create function show users div with link to user profile
-*/
+var has3Dvid = "no";
+var threedmap = null;
+var isThreeDrun = "no";
+
+// 3DMap functions taken from x_aa-show-prop.js
+
+
+async function initGMap() {
+    tLocLat = ploclat.value;
+tLocLng = ploclng.value;
+ 
+    if(currGglSVloaded == "no") {
+        currGglSVloaded = "yes";
+(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+    key: gglSKey,
+    v: "beta",
+    // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+    // Add other bootstrap parameters as needed, using camel case.
+  });
+    }
+
+      var { Map3DElement, MapMode, Marker3DElement, Marker3DInteractiveElement } = await google.maps.importLibrary("maps3d");
+ 
+    var { LatLng } = await google.maps.importLibrary("geometry");
+     var { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+     var { PinElement } = await google.maps.importLibrary("marker");
+    var { DrawingLibrary } = await google.maps.importLibrary("drawing");
+ 
+  }
+    async function doNuThreeDAnim(tNTDAurl) {
+        // remove the event gmp-animationend event listener
+        // threedmap.removeEventListener('gmp-animationend', () => {
+        //    donada = "yes";});
+     
+        console.log("doNuThreeDAnim: " + tNTDAurl);
+        tNTDAobj = JSSHOP.shared.urlToArray(tNTDAurl);
+        tNTDAlat = tNTDAobj["center"].split(",")[0];
+        tNTDAlng = tNTDAobj["center"].split(",")[1];
+        tNTDAalt = tNTDAobj["altitude"];
+        tNTDAlat = parseFloat(tNTDAlat);
+        tNTDAlng = parseFloat(tNTDAlng);
+        tNTDAalt = parseFloat(tNTDAalt);
+        tNTtilt = tNTDAobj["tilt"];
+        tNTDheading = tNTDAobj["heading"];
+        tNTrange = tNTDAobj["range"];
+        tFNTrange = parseFloat(tNTrange);
+        tNTDtilt = parseFloat(tNTtilt);
+        tNTDheading = parseFloat(tNTDheading);
+        // set camera to tNTDAlat, tNTDAlng, tNTDAalt, tNTDtilt, tFNTrange
+        // set camera to tNTDAlat, tNTDAlng, tNTDAalt, tNTDtilt, tFNTrange
+
+        console.log("doNuThreeDAnim: " + tNTDAlat + " " + tNTDAlng + " " + tNTDAalt);
+        await threedmap.flyCameraTo({
+            endCamera: {
+                center: { lat: tNTDAlat, lng: tNTDAlng, altitude: tNTDAalt + 20 },
+                tilt: tNTDtilt,
+                range: tFNTrange,
+            },
+            durationMillis: 2000
+        });
+        setTimeout(() => {
+        threedmap.flyCameraAround({
+            camera: {
+                center: { lat: tNTDAlat, lng: tNTDAlng, altitude: tNTDAalt + 20 },
+                tilt: tNTDtilt,
+                range: tFNTrange,
+            },
+            durationMillis: 8000,
+            repeatCount: 1
+        });
+        }, 2100);
+        tmpThreeDLat = tNTDAlat;
+        tmpThreeDLng = tNTDAlng;
+        tmpThreeDAlt = tNTDAalt;
+        console.log("doNuThreeDAnim: " + tmpThreeDLat + " " + tmpThreeDLng + " " + tmpThreeDAlt);
+        isThreeDrun = "yes";
+    }
+
+    async function initNwstIMThreeDView(tTDdivID, tThreedPurl, tMdiaID) {
+      console.log("initNwstThreeDView: " + tTDdivID + " :: " + tThreedPurl + " :: " + tMdiaID);
+        advThreeView = document.getElementById(tTDdivID);
+         
+        // document.getElementById("dvPropFooter").innerHTML = "3D View - Click to Play/Stop";
+        
+       //  doNuSpinSet(advThreeView, "big", null, "...");
+
+        // Get property data
+        var pdTitle = "Property";
+        var pPrice = "";
+        var pLat = 0;
+        var pLng = 0;
+        var tSellerIcon = "default_user.png";
+        var tSellerName = "Seller";
+
+        if(tThreedPurl == "noQvalue") {
+            tLocLat = pLat || tmp_ploclat.value;
+            tLocLng = pLng || tmp_ploclng.value;
+            tLocAlt = 10;
+            tZmLvl = 16;
+            tMpType = "SATELLITE";
+            tCntrMapLat = tLocLat;
+            tCntrMapLng = tLocLng;
+            tCntrMapAlt = tLocAlt;
+            tFldHeading = 0;
+            tFldTilt = 67.5;
+            tFldRange = 500;
+            tFldAlt = 10;
+            tFldZoom = 16;
+        } else {
+            tTDpopObj = JSSHOP.shared.urlToArray(tThreedPurl);
+            tLocLat = tTDpopObj["center"].split(",")[0];
+            tLocLng = tTDpopObj["center"].split(",")[1];
+            tLocAlt = tTDpopObj["altitude"];
+            tZmLvl = tTDpopObj["zoom"];
+            tMpType = tTDpopObj["maptype"];
+            tCntrMapLat = tLocLat;
+            tCntrMapLng = tLocLng;
+            tCntrMapAlt = tLocAlt;
+            tFldHeading = tTDpopObj["heading"];
+            tFldTilt = tTDpopObj["tilt"];
+            tFldRange = tTDpopObj["range"];
+            tFldAlt = tTDpopObj["altitude"];
+            tFldZoom = tTDpopObj["zoom"];
+        }
+
+        fltdLat = parseFloat(tLocLat);
+        fltdLng = parseFloat(tLocLng);
+        fltheading = parseFloat(tFldHeading);
+        flttilt = parseFloat(tFldTilt);
+        fltzoom = parseFloat(tFldZoom);
+        fltdrange = parseFloat(tFldRange);
+        fltdaltitude = parseFloat(tFldAlt);
+        xfltdLat = fltdLat;
+        xfltdLng = fltdLng;
+        advThreeDPop = document.getElementById(tTDdivID);
+        advThreeDPop.style.width = "300px";
+        advThreeDPop.style.height = "300px";
+        advThreeDPop.style.maxWidth = "320px";
+        advThreeDPop.style.maxHeight = "320px";
+        if(threedmap != null && threedmap != undefined && threedmap != "") {
+            threedmap.stopCameraAnimation();
+            threedmap.removeEventListener('gmp-animationend', () => { donada = "yes";});
+            isThreeDrun = "no";
+            advThreeDPop.innerHTML = "";
+            advThreeDPop.append(threedmap);
+        } else {
+            t3DBtnStr = "";
+            t3DBtnStr += "<div class=\"dvTxtBtns\">";
+            t3DBtnStr += "<table><tr><td>";
+            t3DBtnStr += "<input id=\"btnAEPplay\" type=\"hidden\" class=\"cls_button cls_button-small  txtSmall bkgdClrHdr txtClrWhite\" value=\"Play\" onclick=\"javascript:strtStpNuTDAnm('" + tThreedPurl + "');\">";
+            t3DBtnStr += "</td></tr></table>";
+            t3DBtnStr += "</div>";
+            ttdBdv = document.createElement("div");
+            ttdBdv.innerHTML = t3DBtnStr;
+            advThreeView.appendChild(ttdBdv);
+
+            var { Map3DElement, MapMode, Marker3DElement } = await google.maps.importLibrary("maps3d");
+
+            threedmap = new Map3DElement({
+                center: { lat: xfltdLat, lng: xfltdLng,  altitude: fltdaltitude },
+                tilt: flttilt,
+                range: fltdrange,
+                mode: MapMode.SATELLITE,
+                defaultUIDisabled: true,
+            });
+
+            advThreeDPop.innerHTML = "";
+            advThreeDPop.append(threedmap);
+
+            // Add animated text marker
+             tTDpopObj = JSSHOP.shared.urlToArray(tThreedPurl);
+            tLocLat = tTDpopObj["center"].split(",")[0];
+            tLocLng = tTDpopObj["center"].split(",")[1];
+            tLocAlt = tTDpopObj["altitude"];
+            tZmLvl = tTDpopObj["zoom"];
+            tMpType = tTDpopObj["maptype"];
+            tCntrMapLat = tLocLat;
+            tCntrMapLng = tLocLng;
+            tCntrMapAlt = tLocAlt;
+            fltdLat = parseFloat(tLocLat);
+            fltdLng = parseFloat(tLocLng);
+            fltdaltitude = parseFloat(tLocAlt);
+            var propData = currShopsArr[0];
+
+            if(propData) {
+            try {
+                tPtitleUdecd = decodeURIComponent(propData.pd_prptitle);
+                pdTitle = LZString.decompressFromEncodedURIComponent(tPtitleUdecd);
+                tSellerIcon = propData.u_icon;
+                tSellerName = propData.u_fullname;
+            } catch(e) {
+                alert("Error decompressing property title: " + e.message);
+                pdTitle = propData.pd_prptitle;
+            }
+            console.log("initNwstThreeDView: pdTitle: " + pdTitle);
+            pPrice = propData.price;
+            pLat = parseFloat(propData.ploclat);
+            pLng = parseFloat(propData.ploclng);
+        }
+
+        // Generate Canvas Image
+        const getMarkerCanvasImg = (title, price, iconUrl, name) => {
+            return new Promise((resolve, reject) => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = 280;
+                canvas.height = 150;
+
+                // Helper for text wrapping
+                const wrapText = (context, text, x, y, maxWidth, lineHeight) => {
+                    var words = text.split(' ');
+                    var line = '';
+
+                    for(var n = 0; n < words.length; n++) {
+                      var testLine = line + words[n] + ' ';
+                      var metrics = context.measureText(testLine);
+                      var testWidth = metrics.width;
+                      if (testWidth > maxWidth && n > 0) {
+                        context.fillText(line, x, y);
+                        line = words[n] + ' ';
+                        y += lineHeight;
+                      }
+                      else {
+                        line = testLine;
+                      }
+                    }
+                    context.fillText(line, x, y);
+                    return y;
+                };
+
+                const img = new Image();
+                img.crossOrigin = "Anonymous";
+                img.onload = () => {
+                    ctx.font = 'bold 18px Arial';
+                    ctx.fillStyle = 'white';
+                    ctx.textAlign = 'center';
+                    ctx.shadowColor = "blue";
+                    ctx.shadowBlur = 4;
+                    ctx.shadowOffsetX = 2;
+                    ctx.shadowOffsetY = 2;
+                    
+                    let nextY = wrapText(ctx, title, canvas.width / 2, 30, canvas.width - 40, 24);
+                    
+                    ctx.font = 'bold 24px Arial';
+                    ctx.fillStyle = '#c3a1f5ff';
+                    ctx.textAlign = 'center';
+                    ctx.shadowColor = "black";
+                    ctx.shadowBlur = 4;
+                    ctx.shadowOffsetX = 2;
+                    ctx.shadowOffsetY = 2;
+                    ctx.fillText(price, canvas.width / 2, nextY + 25);
+                    // Rounded corner rectangle for seller name and icon at bottom center
+                    const balloonWidth = 250;
+                    const balloonHeight = 60;
+                    const balloonX = (canvas.width - balloonWidth) / 2;
+                    const balloonY = canvas.height - balloonHeight;
+                    
+                    
+                    // Icon inside balloon
+                    const imgSize = 45;
+                    const imgX = balloonX;
+                    const imgY = balloonY + 15;
+                    
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(imgX + imgSize/2, imgY + imgSize/2, imgSize/2, 0, Math.PI * 2, true);
+                    ctx.closePath();
+                    ctx.clip();
+                    ctx.drawImage(img, imgX, imgY, imgSize, imgSize);
+                    ctx.restore();
+                    
+                    ctx.beginPath();
+                    ctx.arc(imgX + imgSize/2, imgY + imgSize/2, imgSize/2, 0, Math.PI * 2, true);
+                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = 'white';
+                    ctx.stroke();
+
+                    // Name inside balloon, same style as title
+                    ctx.font = 'bold 20px Arial';
+                    ctx.fillStyle = 'white';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(name, imgX + imgSize + 10, imgY + 25);
+
+                    resolve(canvas.toDataURL());
+                };
+                img.onerror = (err) => {
+                    console.error("Error loading image for marker", err);
+                    ctx.font = 'bold 20px Arial';
+                    ctx.fillStyle = 'white';
+                    ctx.textAlign = 'center';
+                    ctx.shadowColor = "black";
+                    ctx.shadowBlur = 4;
+                    ctx.shadowOffsetX = 2;
+                    ctx.shadowOffsetY = 2;
+                    
+                    let nextY = wrapText(ctx, title, canvas.width / 2, 30, canvas.width - 20, 24);
+                    
+                    ctx.font = '16px Arial';
+                    ctx.fillStyle = '#ffff00';
+                    ctx.fillText(price, canvas.width / 2, nextY + 25);
+                    
+                    ctx.font = '12px Arial';
+                    ctx.fillStyle = 'white';
+                    ctx.fillText(name, canvas.width / 2, nextY + 55);
+                    resolve(canvas.toDataURL());
+                };
+                img.src = iconUrl;
+            });
+        };
+
+        const markerImgData = await getMarkerCanvasImg(pdTitle, pPrice, currWebHome + "images/user/s_thumb" + tSellerIcon, tSellerName);
+
+            const marker = new Marker3DElement({
+                position: { lat: fltdLat, lng: fltdLng, altitude: fltdaltitude },
+                            altitudeMode: "ABSOLUTE",
+            });
+
+            // Create HTML template for the marker content
+            const template = document.createElement('template');
+            template.innerHTML = `<img src="${markerImgData}" style="width: 100%; height: auto;" />`;
+
+            marker.append(template);
+            threedmap.append(marker);
+
+            threedmap.addEventListener('gmp-click', (event) => {
+                console.log("threedmap: " + JSON.stringify(event.position));
+                strtStpNuTDAnm(tThreedPurl);
+            });
+            
+            threedmap.addEventListener('gmp-camera-changed', (event) => {
+                console.log("threedmap: camera changed: " + JSON.stringify(event.camera));
+            });
+        }
+        // window.scrollTo(0, advThreeDPop.offsetTop - 100);
+        if(tMdiaID == 101) {
+            strtStpNuTDAnm(tThreedPurl);
+        }
+    } // end initNwstThreeDView
+
+ function startNuTDAnim(tNTDAurl) {
+        console.log("doNuThreeDAnim: " + tNTDAurl);
+        tNTDAobj = JSSHOP.shared.urlToArray(tNTDAurl);
+        tNTDAlat = tNTDAobj["center"].split(",")[0];
+        tNTDAlng = tNTDAobj["center"].split(",")[1];
+        tNTDAalt = tNTDAobj["altitude"];
+        tNTDAlat = parseFloat(tNTDAlat);
+        tNTDAlng = parseFloat(tNTDAlng);
+        tNTDAalt = parseFloat(tNTDAalt);
+        tNTtilt = tNTDAobj["tilt"];
+        tNTDheading = tNTDAobj["heading"];
+        tNTrange = tNTDAobj["range"];
+        tFNTrange = parseFloat(tNTrange);
+        tNTDtilt = parseFloat(tNTtilt);
+        tNTDheading = parseFloat(tNTDheading);
+        // set camera to 
+        console.log("doNuThreeDAnim: " + tNTDAlat + " " + tNTDAlng + " " + tNTDAalt);
+        threedmap.flyCameraTo({
+            endCamera: {
+                center: { lat: tNTDAlat, lng: tNTDAlng, altitude: 500 },
+                tilt: tNTDtilt,
+                range: tFNTrange,
+            },
+            durationMillis: 2000
+        }, {once: true});
+        threedmap.addEventListener('gmp-animationend', () => {
+            doNuThreeDAnim(tNTDAurl);
+        });
+        }
+
+
+    function strtStpNuTDAnm(tNTDAurl) {
+        console.log("strtStpNuTDAnm: " + tNTDAurl);
+        // check if animation is running
+ if(isThreeDrun == "no") {
+            isThreeDrun = "yes";
+            // document.getElementById("btnAEPplay").value = "Stop";
+            startNuTDAnim(tNTDAurl);
+            // put the Stop word in the button
+
+        } else {
+            isThreeDrun = "no";
+            threedmap.removeEventListener('gmp-animationend', () => {
+                donada = "yes";
+            });
+            threedmap.stopCameraAnimation();
+            // put the Play word in the button
+            // document.getElementById("btnAEPplay").value = "Play";
+
+        }
+    }
+
+    // END 3DMap functions
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function doPrpMDDSlct(apld, aaw,aww,cww) {
@@ -141,7 +542,7 @@ if(aprpCountry.length > 0) {
   tLocationStr += " " + getCountryFlagIcon(aprpCountry);
 }
 
-retPLstSTr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;\">";
+retPLstSTr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;\">";
 
  
 tPrpMMListObj = null;
@@ -185,18 +586,32 @@ tDDPrpObj["kvIcnsObj"]["fav"] = "&#xe87d;";
 tDDPrpObj["kvIcnsObj"]["streetview"] = "&#xe56e;";
 
 tDDPrpStr = JSSHOP.ui.getNuBSdropDstr(tDDPrpObj);
-
+tPrpImgsFldr = currPrpImgsFldr + "/";
 if(aprpPimage == "default.jpg") {
  allprpPimage = aprpPimage;
 } else {
   if(aprpPimage.indexOf("updt_") != -1) {
     tprpPimage = aprpPimage.replace("updt_", "");
-        tPrpImgsFldr = "images/ucontent";
-  } else {
-      tPrpImgsFldr = currPrpImgsFldr;
+        tPrpImgsFldr = "images/ucontent/";
+        allprpPimage = "m_thumb" + tprpPimage;
+  } else if(aprpPimage.indexOf("updt3d_") != -1) {
+      tprpPimage = aprpPimage.replace("updt3d_", "");
+
+    allprpPimage = LZString.decompressFromEncodedURIComponent(tprpPimage);
+    tPrpImgsFldr = "";
+    if(has3Dvid == "no") {
+          tSrtIMinc = istrt;
+      apIMimg = allprpPimage;
+      has3Dvid = "yes";
+      initGMap();
+        setTimeout(function(){ initNwstIMThreeDView("dvPrpImg" + tSrtIMinc, apIMimg, 101); }, 2000);
+    }
+   } else {
+
     tprpPimage = aprpPimage;
+      allprpPimage = "m_thumb" + tprpPimage;
+
   }
-  allprpPimage = "m_thumb" + tprpPimage;
 }
 /*
 retPLstSTr += "<div tid=\"dvCoFavBtn\" style=\"float: right\"></div>";
@@ -221,11 +636,22 @@ retPLstSTr += "<span class=\"txtBold txtClrLtBlue text-capitalize\" style=\"marg
 retPLstSTr += "<td class=\"txtBold txtBig\" nowrap=\"nowrap\">" + aprpPrice + "<span style=\"vertical-align:center;font-size:smaller;align: absmiddle\" class=\"txtClrGrey\">&euro;</span></td></tr></tbody></table>";
 
 retPLstSTr += "</td><td style=\"vertical-align:top\">" + tDDPrpStr + "</td></tr></table>";
-
- retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\">";
-retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"" + tPrpImgsFldr + "/" + tprpPimage + "\" alt=\"pimage\" class=\"img100p\">";
-// retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
+if(has3Dvid == "yes" && tSrtIMinc == istrt) {
+   retPLstSTr += "<div   id=\"dvPrpImg" + istrt + "\"  style=\"z-index:99999990;height:320px;width:320px;\">";
+retPLstSTr += "<div   onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"" + tPrpImgsFldr + allprpPimage + "\" alt=\"pimage\" class=\"\" style=\"width:320px;height:320px;\"></div>";
 retPLstSTr += "<div class=\"sale  slmtable bkgdClrWhite txtClrHdr txtSmall\">ID: " + aprpObj._id + " / " + svftObj["proptype"][aprpType] + " / " + stxt[953] + ": " + aprpSize + "</div>";
+
+retPLstSTr += "</div>"; // end featured-thumb hover-zoomer mb-4
+
+} else {
+ retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\" id=\"dvPrpImg" + istrt + "\" style=\"min-height: 300px; min-width: 99%; max-width: 99%; visibility: visible; display: block; z-index: 99999990; max-height: 500px\">";
+retPLstSTr += "<div class=\"overlay-black overflow-hidden position-relative crsrPointer\" onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"" + tPrpImgsFldr + allprpPimage + "\" alt=\"pimage\" class=\"img100p\" style=\"width:100%;max-height:380px;\">";
+retPLstSTr += "<div class=\"sale  slmtable bkgdClrWhite txtClrHdr txtSmall\">ID: " + aprpObj._id + " / " + svftObj["proptype"][aprpType] + " / " + stxt[953] + ": " + aprpSize + "</div>";
+
+retPLstSTr += "</div>"; // end featured-thumb hover-zoomer mb-4
+}
+
+// retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
 retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
 retPLstSTr += "<div class=\"featured-thumb-data shadow-one\">";
 
@@ -299,7 +725,6 @@ retPLstSTr += "</div>"; // end bkgdClrWhite
 
 
 retPLstSTr += "</div>"; // end featured-thumb-data shadow-one
-retPLstSTr += "</div>"; // end featured-thumb hover-zoomer mb-4
 
 
 

@@ -98,13 +98,22 @@ if(isset($_GET["ditemid"])) {
                 $image = $row["pimage"];
                 if(stristr($image, "http")) {
                     $image = $row["pimage"];
-                } else if(stristr($image, ".")){
+
+                } else  if(stristr($image, "updt_")) {
+                    $ckeanImg = str_replace("updt_", "", $image);
+                    $image = "https://dev.propsgo.com/images/ucontent/" . $ckeanImg;
+                 } else   if(stristr($image, "updt3d_")){
+                    $ckeanImg = str_replace("updt3d_", "", $image);
+                    $unzdImg = LZCompressor\LZString::decompressFromEncodedURIComponent($ckeanImg);
+                    $image = $unzdImg;
+                                    } else if(stristr($image, ".")){
                     $image = "https://dev.propsgo.com/images/property/" . $row["pimage"];
                 } else {
                     $image = "https://propsgo.com/images/logo_og.png";
                 }   
                 $tJsonSTr = '{"ditemid":"' . $row["_id"] . '","ptitle":"' . $title . '","pdesc":"' .  $description . '","i_img":"' . $image . '"}';
-             
+              // echo $tJsonSTr;
+              // exit;
                  }   // 
                  /*
                 echo "<script>";
@@ -174,6 +183,8 @@ if(isset($_GET["tupid"])) {
                     $pgKeywords = $title;
                     $siteTitle = $title;
                     $image = $row["p_image"];
+                    $ppType = $row["p_ptype"];
+                  
                     if(stristr($image, "http")) {
                         $image = $row["p_image"];
                     } else if(stristr($image, ".")){
@@ -186,8 +197,11 @@ if(isset($_GET["tupid"])) {
                     } else {
                         $pgType = "website";
                     }   
+                   
+                                        $tJsonSTr = '{"ditemid":"' . $row["_id"] . '","ptitle":"' . $title . '","pdesc":"' .  $description . '","i_img":"' . $image . '"}';
                     $tJsonSTr = '{"ditemid":"' . $row["_id"] . '","ptitle":"' . $title . '","pdesc":"' .  $description . '","i_img":"' . $image . '"}';
-                    }   //
+
+                }
                  } catch(Exception $ex) {
     echo "/* exception: " . $ex . "*/";
                 }

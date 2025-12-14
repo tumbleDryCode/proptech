@@ -1,8 +1,4 @@
-// #aa-en_us.js
-// #aa-pt_pt.js
-// #aa-spa_spa.js
-
-
+ 
 if (!window.JSSHOP) {
     var JSSHOP = new Object();
 }
@@ -4232,8 +4228,21 @@ alert("no JSSHOP.ui.showShareBox: " + " " + tmpMsgType + " " + e);
                 tmpPrpObj = currShopsArr[tmpMsgVal];
                 tShareMsgSTr = stxt[72] + " " + stxt[19];
                 tShareMsgUrl = currWebHome + "index.html?ditemid=" + tmpPrpObj._id + "-" + usrlang;
-                tShareMsgImg = currWebHome + "images/property/" + tmpPrpObj.pimage;
-                tShareThmbImg = currPrpImgsFldr + "/" + "s_thumb" + tmpPrpObj.pimage;
+                tShareMsgImg = tmpPrpObj.pimage;
+                console.log("tmpPrpObj.pimage: " + tmpPrpObj.pimage);
+                if(tShareMsgImg.indexOf("updt_") != -1) {
+                    tCleanShareMsgImg = tShareMsgImg.replace("updt_", "");
+                    tShareMsgImg = currWebHome + "images/ucontent/" + tCleanShareMsgImg;
+                    tShareThmbImg = currWebHome + "images/ucontent/s_thumb" + tCleanShareMsgImg;
+                } else if(tShareMsgImg.indexOf("updt3d_") != -1) {
+                    tCleanShareMsgImg = tShareMsgImg.replace("updt3d_", "");
+                    tUnzpdShareMsgImg = LZString.decompressFromEncodedURIComponent(tCleanShareMsgImg);
+                    tShareMsgImg = tUnzpdShareMsgImg;
+                    tShareThmbImg = tUnzpdShareMsgImg;
+                } else {
+                    tShareMsgImg = currWebHome + "images/property/" + tmpPrpObj.pimage;
+                    tShareThmbImg = currWebHome + "images/property/s_thumb" + tmpPrpObj.pimage;
+                }
                 // tShareMsgTtl = tmpPrpObj.ptitle;
                 // tShareMsgDsc = tmpPrpObj.pcontent;
                 // clean and cut both title and content at 100 chars
@@ -4243,7 +4252,10 @@ alert("no JSSHOP.ui.showShareBox: " + " " + tmpMsgType + " " + e);
                 tCleanMsgTtl = LZString.decompressFromEncodedURIComponent(tZpdToPTTL);
                 tShareMsgTtl = tCleanMsgTtl.substring(0, 100);
                 tShareMsgDsc = tCleanMsgDsc.substring(0, 100);
-
+                console.log("tShareMsgTtl: " + tShareMsgTtl);
+                console.log("tShareMsgDsc: " + tShareMsgDsc);   
+                console.log("tShareMsgImg: " + tShareMsgImg); 
+                console.log("tShareThmbImg: " + tShareThmbImg);
                 break;
         case "category":
             tShareMsgSTr = "Category";
@@ -4283,7 +4295,10 @@ tClogoimg = c_logoimg.value;
             tShareMsgSTr = stxt[72] + " " + stxt[19];
             tShareMsgUrl = currWebHome + "index.html?tupid=" + tUpdateObj._id + "-" + usrlang;
             tShareMsgImg = currWebHome + "images/ucontent/" + tUpdateObj.p_image;
-            tShareThmbImg = "images/ucontent/s_thumb" + tUpdateObj.p_image;       
+            console.log("tUpdateObj.p_image: " + tUpdateObj.p_image);
+            console.log("tUpdateObj.p_ptpe: " + tUpdateObj.p_ptype);
+            tShareThmbImg = "images/ucontent/s_thumb" + tUpdateObj.p_image;     
+ 
             tmShareMsgTtl = tUpdateObj.p_title;
             tShareMsgTtl = /* url decoded */ decodeURIComponent(tmShareMsgTtl);
             if(tShareMsgTtl.length < 1) {
@@ -5318,11 +5333,21 @@ tIprpIdx = parseInt(ttMsgBxObj["m_item"], 10);
         tSNMBItemID = antMpPrpObj._id;
         console.log("showNuMsgBox.antMpPrpObj: " + JSON.stringify(antMpPrpObj));
          JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_prodid", antMpPrpObj._id);
-        tToPrpIcn = antMpPrpObj.pimage;
+        ttToPrpIcn = antMpPrpObj.pimage;
+        tToPrpIcn = "images/property/s_thumb" + ttToPrpIcn;
+        if(ttToPrpIcn.indexOf("updt_") != -1) {
+            tCleanPrpIcn = ttToPrpIcn.replace("updt_", "");
+            tToPrpIcn = "images/ucontent/" + tCleanPrpIcn;
+        }
+             if(ttToPrpIcn.indexOf("updt3d_") != -1) {   
+                tCleanPrpIcn = ttToPrpIcn.replace("updt3d_", "");
+                tLZunzpdAurldecd = LZString.decompressFromEncodedURIComponent(tCleanPrpIcn);
+                tToPrpIcn = tLZunzpdAurldecd;
+            }
         tZpdToPrpNm = antMpPrpObj.pd_prptitle;
         tToPrpNm = LZString.decompressFromEncodedURIComponent(tZpdToPrpNm);
         tMsgBxHdrSTr += '<div class="chat-item-info" style="padding:10px; background:#e9ebee; border-bottom:1px solid #ccc; display:flex; align-items:center;">' +
-        '<img src="images/property/s_thumb' + tToPrpIcn + '" alt="Item" style="width:30px; height:30px; border-radius:4px; margin-right:10px;">' +
+        '<img src="' + tToPrpIcn + '" alt="Item" style="width:30px; height:30px; border-radius:4px; margin-right:10px;">' +
         '<span style="font-weight:bold; font-size:14px;">' + tToPrpNm + '</span>' +
         '</div>';
     }
@@ -10174,6 +10199,7 @@ JSSHOP.ads.trnsltImgPstObj = function() {
 
  JSSHOP.ads.getUpdtMapMrkrs = function(tmmtype, tmmobj) {
     try {
+        console.log("getUpdtMapMrkrs: " + tmmtype + " " + JSON.stringify(tmmobj));  
         tMapLeavesArr = null;
         tMapLeavesArr = "";
         tMapLeavesArr = [];
@@ -10186,7 +10212,7 @@ JSSHOP.ads.trnsltImgPstObj = function() {
                     tLeavesObj = "";
                     tLeavesObj = {};
                     if(tmmobj.hasOwnProperty(key)) {
-                        console.log("getUpdtMapMrkrs: " + key + " " + tmmobj[key].ptitle + " " + tmmobj[key].ploclat + " " + tmmobj[key].ploclng);  
+                         console.log("getUpdtMapMrkrs: " + key + " " + tmmobj[key].ptitle + " " + tmmobj[key].ploclat + " " + tmmobj[key].ploclng);  
                         tLeavesObj["icn"] = currPrpImgsFldr + "/" + "s_thumb" + tmmobj[key].pimage;
                         tLeavesObj["title"] = tmmobj[key].ptitle;
                         tLeavesObj["lat"] = tmmobj[key].ploclat;
@@ -10304,7 +10330,7 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         tDescFlSTr = "";
         if(tMapLeavesArr.length > 0) {
             for(var i = 0; i < tMapLeavesArr.length; i++) {
-         tDescFlSTr += LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].pdesc || "Map View").substring(0, 100);
+         tDescFlSTr += LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].title || "Map View").substring(0, 100);
             }
         tinyMCE.activeEditor.setContent(tDescFlSTr);
     } else {

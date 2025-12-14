@@ -24,6 +24,8 @@ var gpmap = null;
 var currPgTitle = stxt[985];
 var threedmap = null;
 var curr3DMarker = null;
+var nuMediaRecorder = null;
+var nuRecordedChunks = [];
 
 var tmpMFarrObj = null;
 var tmpMFarrObj = {};
@@ -47,7 +49,7 @@ var tmpPrpLngArr = [];
 var tmpPrpLngObj = null;
 var tmpPrpLngObj = {};
 var isThreeDrun = "no";
-var currGglSVloaded = "no";
+// var currGglSVloaded = "no";
 // make AdvancedMarkerElement available globally
 var AdvancedMarkerElement, Marker3DElement, PinElement, interactiveMarker, DrawingLibrary;
 
@@ -940,6 +942,16 @@ function get3DImages() {
     // doQComm(oi["rq"], null, "show3DImages");
 }
 
+function doNuChkdPrpMImg(chkObj, tPrpMSource, tPrpMtytpe) {
+    console.log("doNuChkdPrpMImg.chkObj.checked: " + chkObj.checked + " " + tPrpMSource + " " + tPrpMtytpe);
+    if(chkObj.checked == true) {
+        document.getElementById("m_file").value = "updt3d_" + tPrpMSource;
+         doPrpCkckdIMain();
+        // updtCurr3DImgUrl(JSSHOP.shared.getFrmFieldVal("qmedia", "_id"));
+    } else {
+        console.log("doNuChkdPrpMImg.unchecked - no action taken");
+    }
+}
 async function doNuThreeDPop(ts3DImgUstr, t3DImgId) {
     JSSHOP.shared.setFrmFieldVal("qmedia", "_id", t3DImgId);
     t3DpopStr = "";
@@ -947,7 +959,10 @@ async function doNuThreeDPop(ts3DImgUstr, t3DImgId) {
         tPrpTDMTitle = "3D Animations";
     } else {
         tPrpTDMTitle = tmpPrpMediaObj["prp" + t3DImgId]["m_title"];
+        tPrpMSource = tmpPrpMediaObj["prp" + t3DImgId]["m_file"];
+        console.log("doNuThreeDPop.tPrpMSource: " + tPrpMSource);
     }
+    tPrpMtytpe = "3dmap";
     tmpRetStr = "<div class=\"txtClrHdr txtSmall\">";
 tmpRetStr += "<span class=\"txtClrHdr\" id=\"lbl_m_title\">" + stxt[996] + "</span>";
 tmpRetStr += "<table><tr><td>";
@@ -955,6 +970,17 @@ tmpRetStr += "<input type=\"text\" id=\"tmp_m_title\" name=\"tmp_m_title\" value
 tmpRetStr += "</td></tr><tr><td>";
 tmpRetStr += "</td></tr></table>";
 tmpRetStr += "</div>";
+
+tmpRetStr += "<table style=\"width:100%;\">";
+tmpRetStr += "<tr><td style=\"min-width: 100%\"><label class=\"txtClrHdr\" id=\"lbl_setmpropimg\">" + stxt[521] + "</label></td>";
+tmpRetStr += "<td><div class=\"switch\"><label>";
+tmpRetStr += "<input type=\"checkbox\" id=\"tmp_setmpropimg\" name=\"tmp_setmpropimg\" value=\"10\" onchange=\"javascript:doNuChkdPrpMImg(this, tPrpMSource, tPrpMtytpe);\">";
+tmpRetStr += "<span class=\"lever\" style=\"float:right\"></span>";
+tmpRetStr += "</label></div></td></tr>";
+// tmpRetStr += "<tr><td style=\"min-width: 100%\"><label class=\"txtClrHdr\" id=\"lbl_delimgae\">" + stxt[42] + "</label></td>";
+// tmpRetStr += "<td><div class=\"switch\">X</div></td></tr>";
+tmpRetStr += "</table>";
+
 
     t3DpopStr += tmpRetStr; 
     t3DpopStr += "<div style=\"min-width:325px;\">"; 
@@ -1000,9 +1026,9 @@ var doThreeDPop = function() {
 
         } else {
             isThreeDrun = "no";
-            threedmap.removeEventListener('gmp-animationend', () => {
-                donada = "yes";
-            });
+            // threedmap.removeEventListener('gmp-animationend', () => {
+            //    donada = "yes";
+            // });
             threedmap.stopCameraAnimation();
             // put the Play word in the button
             document.getElementById("btnAEPplay").value = "Play";
@@ -1010,8 +1036,8 @@ var doThreeDPop = function() {
         }
     }
 
-    function startNuTDAnim(tNTDAurl) {
-        console.log("startNuTDAnim: " + tNTDAurl);
+    async function startNuTDAnim(tNTDAurl) {
+             console.log("startNuTDAnim: " + tNTDAurl);
         tNTDAobj = JSSHOP.shared.urlToArray(tNTDAurl);
         tNTDAlat = tNTDAobj["center"].split(",")[0];
         tNTDAlng = tNTDAobj["center"].split(",")[1];
@@ -1033,10 +1059,20 @@ var doThreeDPop = function() {
                 tilt: tNTDtilt,
                 range: tFNTrange,
             },
-            durationMillis: 1000
+            durationMillis: 2000
         }, {once: true});
         threedmap.addEventListener('gmp-animationend', () => {
-            doNuThreeDAnim(tNTDAurl);
+            threedmap.flyCameraTo({
+            endCamera: {
+                center: { lat: tNTDAlat, lng: tNTDAlng, altitude: tNTDAalt },
+                tilt: tNTDtilt,
+                range: tFNTrange,
+            },
+            durationMillis: 2000
+        });
+            setTimeout(() => {
+                doNuThreeDAnim(tNTDAurl);
+            }, 2100);
         });
         }
 
@@ -1063,7 +1099,7 @@ var doThreeDPop = function() {
         // set camera to tNTDAlat, tNTDAlng, tNTDAalt, tNTDtilt, tFNTrange
 
         console.log("doNuThreeDAnim: " + tNTDAlat + " " + tNTDAlng + " " + tNTDAalt);
-        threedmap.flyCameraTo({
+        /* threedmap.flyCameraTo({
             endCamera: {
                 center: { lat: tNTDAlat, lng: tNTDAlng, altitude: tNTDAalt },
                 tilt: tNTDtilt,
@@ -1072,23 +1108,23 @@ var doThreeDPop = function() {
             durationMillis: 2000
         });
         threedmap.addEventListener('gmp-animationend', () => {
-            threedmap.flyCameraAround({
+
+        }, {once: true}); */
+                    threedmap.flyCameraAround({
                 camera: {
                     center: { lat: tNTDAlat, lng: tNTDAlng, altitude: tNTDAalt },
                     tilt: tNTDtilt,
                     range: tFNTrange,
                 },
                 durationMillis: 8000,
-                repeatCount: 1
+                repeatCount: 3
             });
-        }, {once: true});
         tmpThreeDLat = tNTDAlat;
         tmpThreeDLng = tNTDAlng;
         tmpThreeDAlt = tNTDAalt;
         console.log("doNuThreeDAnim: " + tmpThreeDLat + " " + tmpThreeDLng + " " + tmpThreeDAlt);
         isThreeDrun = "yes";
     }
-
     
     function doThreeDAnim(fLocLat, fLocLng, fLocAlt) {
         // threedmap.append(xMarker3DElement);
@@ -1141,7 +1177,7 @@ var doThreeDPop = function() {
 
 
     
- 
+ /* "!!! to delete
 
     async function showNuThreeDPop(tThreedPurl, tMdiaID) {
         doNuSpinSet("dvThreeDPop", "big", null, "...");
@@ -1224,6 +1260,20 @@ var doThreeDPop = function() {
          // threedmap.bounds = {south: -48.30, west: 163.56, north: -32.86, east: -180};
          threedmap.addEventListener('gmp-click', (event) => {
             console.log("threedmap: " + JSON.stringify(event.position));
+            // Add a pinelement at the clicked position
+            const pinElement = new PinElement({
+              position: event.position,
+                scale: 1.5,
+                altitudeMode: "ABSOLUTE"
+
+            });
+            tmpThreeDLat = event.position.lat;
+            tmpThreeDLng = event.position.lng;
+            tmpThreeDAlt = 10;
+            console.log("threedmap.click: " + tmpThreeDLat + " " + tmpThreeDLng + " " + tmpThreeDAlt);
+
+          //  doNuThreeDAnim(tmpThreeDLat, tmpThreeDLng, tmpThreeDAlt);
+
           //   strtStpNuTDAnm(getCurr3DImgUrl(280,140));
           });
     
@@ -1257,7 +1307,7 @@ var doThreeDPop = function() {
             lightbox_content.append(tHlderDiv);
   
         }
-
+*/
         async function toggleNuTDRecording() {
     var btn = document.getElementById("btnAEPRecord");
     var elementToRecord = document.getElementById("dvThreeDPop");
@@ -1349,11 +1399,11 @@ var doThreeDPop = function() {
             if(document.getElementsByName("price")[0]) {
                 pPrice = document.getElementsByName("price")[0].value;
             }
-             if(JSSHOP.cookies.getCookie("c_uicon")) {
-                tSellerIcon = JSSHOP.cookies.getCookie("c_uicon");
+             if(currShopsArr[0].u_icon && currShopsArr[0].u_icon != "") {
+                tSellerIcon = currShopsArr[0].u_icon;
             }
-            if(JSSHOP.cookies.getCookie("c_uname")) {
-                tSellerName = JSSHOP.cookies.getCookie("c_uname");
+            if(currShopsArr[0].u_fullname && currShopsArr[0].u_fullname != "") {
+                tSellerName = currShopsArr[0].u_fullname;
             }
         } catch(e) {
             console.log("showNwstThreeDPop error getting details: " + e);
@@ -1375,6 +1425,12 @@ var doThreeDPop = function() {
             tFldZoom = 16;
         } else {
             console.log("showNwstThreeDPop: " + tThreedPurl);
+            if(tThreedPurl.indexOf("center=") == -1) {
+                console.log("showNwstThreeDPop invalid 3d url: " + tThreedPurl);
+                alert("Invalid 3D Animation URL");
+                doNuPrdMDelete(tMdiaID,"get3DImages");
+                return;
+            }
             tTDpopObj = JSSHOP.shared.urlToArray(tThreedPurl);
             tLocLat = tTDpopObj["center"].split(",")[0];
             tLocLng = tTDpopObj["center"].split(",")[1];
@@ -1421,7 +1477,7 @@ var doThreeDPop = function() {
                 tilt: flttilt,
                 range: fltdrange,
                 mode: MapMode.SATELLITE,
-                defaultUIDisabled: true,
+                defaultUIHidden: true,
             });
 
             advThreeDPop.innerHTML = "";
@@ -1429,50 +1485,157 @@ var doThreeDPop = function() {
 
             threedmap.addEventListener('gmp-click', (event) => {
                 console.log("threedmap: " + JSON.stringify(event.position));
+                // add a marker at the clicked position
+                tmpThreeDLat = event.position.lat;
+                tmpThreeDLng = event.position.lng;
+                tmpThreeDAlt = 10;
+            
+                if(isThreeDrun == "yes") {
+                    strtStpNuTDAnm(getCurr3DImgUrl(280,140));
+                }
+                // threedmap.stopCameraAnimation();
+                isThreeDrun = "no";
+                // threedmap = null;
+                tUTDimgUrl = getCurr3DImgUrl("240", "180");
+                threedmap = null;
+                showNwstThreeDPop(tUTDimgUrl, tMdiaID);
+                console.log("threedmap.click: " + tmpThreeDLat + " " + tmpThreeDLng + " " + tmpThreeDAlt);
+              
+
             });
 
             threedmap.addEventListener('gmp-camera-changed', (event) => {
                 console.log("threedmap: camera changed: " + JSON.stringify(event.camera));
             });
         }
+        const getMarkerCanvasImg = (title, price, iconUrl, name) => {
+            return new Promise((resolve, reject) => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = 300;
+                canvas.height = 150;
+
+                // Helper for text wrapping
+                const wrapText = (context, text, x, y, maxWidth, lineHeight) => {
+                    var words = text.split(' ');
+                    var line = '';
+
+                    for(var n = 0; n < words.length; n++) {
+                      var testLine = line + words[n] + ' ';
+                      var metrics = context.measureText(testLine);
+                      var testWidth = metrics.width;
+                      if (testWidth > maxWidth && n > 0) {
+                        context.fillText(line, x, y);
+                        line = words[n] + ' ';
+                        y += lineHeight;
+                      }
+                      else {
+                        line = testLine;
+                      }
+                    }
+                    context.fillText(line, x, y);
+                    return y;
+                };
+
+                const img = new Image();
+                img.crossOrigin = "Anonymous";
+                img.onload = () => {
+                    ctx.font = 'bold 18px Arial';
+                    ctx.fillStyle = 'white';
+                    ctx.textAlign = 'center';
+                    ctx.shadowColor = "blue";
+                    ctx.shadowBlur = 4;
+                    ctx.shadowOffsetX = 2;
+                    ctx.shadowOffsetY = 2;
+                    
+                    let nextY = wrapText(ctx, title, canvas.width / 2, 30, canvas.width, 24);
+                    
+                    ctx.font = 'bold 24px Arial';
+                    ctx.fillStyle = '#c3a1f5ff';
+                    ctx.textAlign = 'center';
+                    ctx.shadowColor = "black";
+                    ctx.shadowBlur = 4;
+                    ctx.shadowOffsetX = 2;
+                    ctx.shadowOffsetY = 2;
+                    ctx.fillText(price, canvas.width / 2, nextY + 25);
+                    // Rounded corner rectangle for seller name and icon at bottom center
+                    const balloonWidth = 250;
+                    const balloonHeight = 60;
+                    const balloonX = (canvas.width - balloonWidth) / 2;
+                    const balloonY = canvas.height - balloonHeight;
+                    
+                    
+                    // Icon inside balloon
+                    const imgSize = 45;
+                    const imgX = balloonX;
+                    const imgY = balloonY + 15;
+                    
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(imgX + imgSize/2, imgY + imgSize/2, imgSize/2, 0, Math.PI * 2, true);
+                    ctx.closePath();
+                    ctx.clip();
+                    ctx.drawImage(img, imgX, imgY, imgSize, imgSize);
+                    ctx.restore();
+                    
+                    ctx.beginPath();
+                    ctx.arc(imgX + imgSize/2, imgY + imgSize/2, imgSize/2, 0, Math.PI * 2, true);
+                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = 'white';
+                    ctx.stroke();
+
+                    // Name inside balloon, same style as title
+                    ctx.font = 'bold 20px Arial';
+                    ctx.fillStyle = 'white';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(name, imgX + imgSize + 10, imgY + 25);
+
+                    resolve(canvas.toDataURL());
+                };
+                img.onerror = (err) => {
+                    console.error("Error loading image for marker", err);
+                    ctx.font = 'bold 20px Arial';
+                    ctx.fillStyle = 'white';
+                    ctx.textAlign = 'center';
+                    ctx.shadowColor = "black";
+                    ctx.shadowBlur = 4;
+                    ctx.shadowOffsetX = 2;
+                    ctx.shadowOffsetY = 2;
+                    
+                    let nextY = wrapText(ctx, title, canvas.width / 2, 30, canvas.width - 20, 24);
+                    
+                    ctx.font = '16px Arial';
+                    ctx.fillStyle = '#ffff00';
+                    ctx.fillText(price, canvas.width / 2, nextY + 25);
+                    
+                    ctx.font = '12px Arial';
+                    ctx.fillStyle = 'white';
+                    ctx.fillText(name, canvas.width / 2, nextY + 55);
+                    resolve(canvas.toDataURL());
+                };
+                img.src = iconUrl;
+            });
+        };
+ 
+        const markerImgData = await getMarkerCanvasImg(pdTitle, pPrice, currWebHome + "images/user/s_thumb" + tSellerIcon, tSellerName);
 
         // Add Marker
         curr3DMarker = new Marker3DElement({
-            position: { lat: fltdLat, lng: fltdLng, altitude: fltdaltitude + 20 }
+            position: { lat: fltdLat, lng: fltdLng, altitude: fltdaltitude },
+            altitudeMode: "ABSOLUTE",
+
         });
 
         const template = document.createElement('template');
-        const containerWidth = document.getElementById('dvThreeDPop').offsetWidth;
-        const svgWidth = Math.floor(containerWidth * 0.95);
+        template.innerHTML = `<img src="${markerImgData}" style="width: 100%; height: auto;" />`;
         
-        template.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="${svgWidth}" height="200">
-                <foreignObject width="100%" height="100%">
-                    <div xmlns="http://www.w3.org/1999/xhtml" style="position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
-                        <div style="color: white; font-size: 24px; font-weight: bold; text-shadow: 2px 2px 4px #000000; animation: bounce 2s infinite; text-align: center; width: 100%; word-wrap: break-word;">
-                            <div>${pdTitle}</div>
-                            <div style="font-size: 18px; color: #ffff00;">${pPrice}</div>
-                        </div>
-                        <div style="position: absolute; bottom: 0; right: 0; display: flex; align-items: center; background: rgba(0,0,0,0.6); padding: 5px; border-radius: 8px; margin: 5px;">
-                            <img src="${currWebHome}images/user/${tSellerIcon}" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 8px; border: 1px solid white;">
-                            <span style="color: white; font-size: 12px; font-weight: bold;">${tSellerName}</span>
-                        </div>
-                    </div>
-                    <style>
-                        @keyframes bounce {
-                            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-                            40% {transform: translateY(-10px);}
-                            60% {transform: translateY(-5px);}
-                        }
-                    </style>
-                </foreignObject>
-            </svg>
-        `;
-
         curr3DMarker.append(template);
         threedmap.append(curr3DMarker);
 
         // Buttons
+        if(document.getElementById("btnAEPadd")) {
+            JSSHOP.ui.setCBBClickClr("btnAEPadd", "txtBold txtBig", document.getElementById("dvTxtBtns").className, function(){void(0);});
+         } else {
          var tt3DpopStr = "";
         tt3DpopStr += "<div class=\"dvTxtBtns\">";
         tt3DpopStr += "<table><tr><td>";
@@ -1493,9 +1656,12 @@ var doThreeDPop = function() {
         }
         tt3DpopStr += "</td></tr></table>";
         tt3DpopStr += "</div>";
+
+    } // end if dvTxtBtns not exist
         // create a clearfix div
         tt3DpopStr += "<div style=\"clear: both;\"></div>";
         ttHlderDiv = document.createElement("div");
+
         ttHlderDiv.innerHTML = tt3DpopStr;
         // lightbox_content.style.margin = "15px";
          lightbox_content.append(ttHlderDiv);
@@ -2442,7 +2608,20 @@ var setAllPropImgs = function(theAIa, theAIb, theAIc) {
         
         }
 	} // end if _id
-    document.getElementById("dvPrpDVID").innerHTML = stxt[985] + " ID: " + prpid;
+           tFullPROIDstr = "";
+       // put seller icon and name
+       tSlrIcon = currShopsArr[0].u_icon;
+       tSlrName = currShopsArr[0].u_fullname;
+       tFullPROIDstr += "<table><tr><td>";
+       tFullPROIDstr += "<img src=\"images/user/s_thumb" + tSlrIcon +  "\" class=\"icnRnd26 crsrPointer\" alt=\"seller icon\" id=\"imgSlrIcn\"> ";
+         tFullPROIDstr += "</td><td>";
+         tFullPROIDstr += tSlrName;
+            tFullPROIDstr += "</td></tr></table>";
+         // tSlrName = LZString.decompressFromEncodedURIComponent(currShopsArr[0].u_fullname);
+         tFullPROIDstr += "<br>" + stxt[985] + " ID: " + prpid;
+  document.getElementById("dvPrpDVID").innerHTML = tFullPROIDstr;
+
+         // document.getElementById("dvPrpDVID").innerHTML = stxt[985] + " ID: " + prpid;
     tPopTitlZpd = tmpPrpLngObj[usrlang]["pd_prptitle"];
     tPrpTitleUnzpd = LZString.decompressFromEncodedURIComponent(tPopTitlZpd);
     tPrpTtlClnShrt = tPrpTitleUnzpd.length > 20 ? tPrpTitleUnzpd.substring(0, 70) + "..." : tPrpTitleUnzpd;
@@ -2537,8 +2716,20 @@ var setPropImgs = function(tspiArr, tspiB, tspiC) {
             document.getElementById("dvProdImgs").innerHTML = tstr;
         }
         document.getElementById("dvProdImgs").innerHTML = tstr;
-        document.getElementById("dvPrpDVID").innerHTML = stxt[985] + " ID: " + prpid;
-       //  document.getElementById("dvPrpDTtl").innerHTML = pd_prptitle.value;
+        
+        // document.getElementById("dvPrpDVID").innerHTML = stxt[985] + " ID: " + prpid;
+       tFullPROIDstr = "";
+       // put seller icon and name
+       tSlrIcon = currShopsArr[0].u_icon;
+       tSlrName = currShopsArr[0].u_fullname;
+       tFullPROIDstr += "<table><tr><td>";
+       tFullPROIDstr += "<img src=\"images/users/s_thumb" + tSlrIcon +  "\" class=\"icnsmllbtn brdrRadius50prcnt\" alt=\"seller icon\" id=\"imgSlrIcn\"> ";
+         tFullPROIDstr += "</td><td>";
+         tFullPROIDstr += tSlrName;
+            tFullPROIDstr += "</td></tr></table>";
+         // tSlrName = LZString.decompressFromEncodedURIComponent(currShopsArr[0].u_fullname);
+         tFullPROIDstr += "<br>" + stxt[985] + " ID: " + prpid;
+         document.getElementById("dvPrpDVID").innerHTML = tFullPROIDstr;
 
 };
 
@@ -2580,20 +2771,50 @@ CREATE TABLE `qposts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     */
     console.log("rndrUpdtsImgThmbSlction: " + theRDa + " " + theRDb + " " + theRDc);
-    tThmbStr = "<table style=\"width:100%;\">";
+     tThmbStr = "<table style=\"width:100%;\">";
     if(theRDb.indexOf("_id") != -1) {
         tAiretArr = JSON.parse(theRDb);
         var len = tAiretArr.length;
         tstr = "";
         iint = 0;
         while (iint < len) {
-            tThmbStr += "<tr><td style=\"width:50%;\"><img src=\"images/ucontent/m_thumb" + tAiretArr[iint]["p_image"] +  "\" class=\"icnmedbtn\"></td>";
+           tThmbStr += "<tr><td style=\"width:50%;\"><img src=\"images/ucontent/m_thumb" + tAiretArr[iint]["p_image"] +  "\" class=\"icnmedbtn\"></td>";
             tThmbStr += "<td style=\"width:50%;\"><button class=\"crsrPointer cls_button cls_button-small txtSmall bkgdClrHdr txtClrWhite\" onclick=\"javascript:finishMPupload('updt_" + tAiretArr[iint]["p_image"] + "');JSSHOP.ui.closeLbox();\">" + stxt[70] + "</button></td></tr>";
             iint++;
         }
     }
     tThmbStr += "</table>";
     // document.getElementById("dvPrpImgThmbSlction").innerHTML = tThmbStr;
+    JSSHOP.ui.popAndFillLbox(tThmbStr);
+}
+
+
+function rndrNuUpdtIThbSlction(theRDa, theRDb, theRDc) {
+    console.log("rndrNuUpdtIThbSlction: " + theRDa + " " + theRDb + " " + theRDc);
+    tThmbStr = "<div style=\"width:100%; overflow:hidden;\">"; // Container for floated divs
+    if(theRDb.indexOf("_id") != -1) {
+        tAiretArr = JSON.parse(theRDb);
+        var len = tAiretArr.length;
+        iint = 0;
+        while (iint < len) {
+            tChTstr = tAiretArr[iint]["p_title"];
+            tUrlDecd = decodeURIComponent(tChTstr);
+            tChoppedTstr = tUrlDecd;
+            aChoppedTstr = tChoppedTstr;
+            if(tChoppedTstr.length > 45) {
+                aChoppedTstr = tChoppedTstr.substring(0, 45) + "...";
+            }
+            tThmbStr += "<div style=\"float:left; width:150px; height:200px; margin:5px; border:1px solid #ccc; text-align:center; cursor:pointer; background-color:#f9f9f9;\" ";
+            tThmbStr += "onmouseover=\"this.style.backgroundColor='#e0e0e0';\" ";
+            tThmbStr += "onmouseout=\"this.style.backgroundColor='#f9f9f9';\" ";
+            tThmbStr += "onclick=\"this.style.backgroundColor='#add8e6'; finishMPupload('updt_" + tAiretArr[iint]["p_image"] + "'); JSSHOP.ui.closeLbox();\">";
+            tThmbStr += "<img src=\"images/ucontent/m_thumb" + tAiretArr[iint]["p_image"] + "\" style=\"width:140px; height:120px; margin:5px;\">";
+            tThmbStr += "<div style=\"font-size:12px; padding:5px;\">" + (aChoppedTstr || "No Title") + "</div>";
+            tThmbStr += "</div>";
+            iint++;
+        }
+    }
+    tThmbStr += "</div>";
     JSSHOP.ui.popAndFillLbox(tThmbStr);
 }
 
@@ -2609,7 +2830,7 @@ function popUpdtsImgThmbSlction() {
     tmpFobj["ws"] = "where p_uid=?";
     tmpFobj["wa"] = [quid];
     oi = getNuDBFnvp("qposts", 5, null, tmpFobj);
-    doQComm(oi["rq"], null, "rndrUpdtsImgThmbSlction");
+    doQComm(oi["rq"], null, "rndrNuUpdtIThbSlction");
 }
 
 function fnishMMadd(aa,bb,cc) { 
@@ -2915,10 +3136,10 @@ function doMPropForm(aaw,aww,cww) {
 // tmp_ptitle.value = thePRetObj.ptitle;
     //  JSSHOP.shared.setFrmVals("property",theRetPArr[0], fillPpropFields);
      for(var gkey in thePRetObj) {
-      
+        if(document["property"][gkey]) {
         document["property"][gkey].value = thePRetObj[gkey];
         tmpOldFFvals[gkey] = thePRetObj[gkey];
- 
+        }
         } 
 
         getPrpDescLangs("noQvalue");
@@ -3228,6 +3449,8 @@ tmpDOqs["ws"] = "where _id=?";
 tmpDOqs["wa"] = [currUrlArr.prpid];
 tmpDOqs["l"] = 45;
 oia = getNuDBFnvp("property",5,null,tmpDOqs);
+ // newerEPQstr = "SELECT p.*, u.u_icon, u.u_fullname, COALESCE(pd_user.pd_prptitle, pd_def.pd_prptitle) AS pd_prptitle, COALESCE(pd_user.pd_prpdesc,  pd_def.pd_prpdesc)  AS pd_prpdesc FROM property p JOIN quser u ON p.uid = u._id LEFT JOIN propdescs pd_user ON pd_user.pd_prpid = p._id AND pd_user.pd_prptlng = '" +  usrlang + "' LEFT JOIN propdescs pd_def ON pd_def.pd_prpid = p._id AND pd_def.pd_prptlng = '" + deflang + "' WHERE p._id = " + prpid + " AND p.prtype = '5' ORDER BY RAND() LIMIT 20";
+
 doQComm(oia["rq"], null, "doMPropForm");
 
     } else {
@@ -4187,51 +4410,5 @@ var LeafIcon = L.Icon.extend({
     }
     }
 }
-
-
-
-// database table property structure
-/*
-CREATE TABLE `property` (
-  `_id` int(50) NOT NULL,
-  `prtype` int(6) NOT NULL,
-  `pcoid` int(8) NOT NULL,
-  `ptitle` varchar(200) NOT NULL,
-  `pcontent` longtext NOT NULL,
-  `ptype` varchar(100) NOT NULL,
-  `bhk` varchar(50) NOT NULL,
-  `stype` varchar(100) NOT NULL,
-  `bedroom` int(50) NOT NULL,
-  `bathroom` int(50) NOT NULL,
-  `balcony` int(50) NOT NULL,
-  `kitchen` int(50) NOT NULL,
-  `hall` int(50) NOT NULL,
-  `pfloors` varchar(50) NOT NULL,
-  `size` int(50) NOT NULL,
-  `price` int(50) NOT NULL,
-  `pdoornum` varchar(12) NOT NULL,
-  `pstreet` varchar(212) NOT NULL,
-  `location` varchar(200) NOT NULL,
-  `city` varchar(100) NOT NULL,
-  `state` varchar(100) NOT NULL,
-  `country` varchar(64) NOT NULL,
-  `pzipcode` varchar(12) NOT NULL,
-  `ploclat` varchar(64) NOT NULL,
-  `ploclng` varchar(64) NOT NULL,
-  `feature` longtext NOT NULL,
-  `pimage` varchar(300) NOT NULL,
-  `pprf_showslr` varchar(12) NOT NULL,
-  `pprf_showftd` varchar(12) NOT NULL,
-  `pprf_showloc` varchar(12) NOT NULL,
-  `pprf_prvcy` varchar(12) NOT NULL,
-  `uid` int(50) NOT NULL,
-  `pstatus` varchar(50) NOT NULL,
-  `mapimage` varchar(300) NOT NULL,
-  `topmapimage` varchar(300) NOT NULL,
-  `groundmapimage` varchar(300) NOT NULL,
-  `totalfloor` varchar(50) NOT NULL,
-  `pdadded` varchar(24) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
- */
 
  
