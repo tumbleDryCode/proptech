@@ -1314,6 +1314,20 @@ setTimeout(function(){ fillUPostFlds(); }, 300);
 }
 }
 
+function fnishPrivChange(tfpA, tfpB, tfpC) {
+    // tdDD
+    tPobjStr = JSON.stringify(tfpC);
+    console.log("fnishPrivChange: " + tfpA + " " + tfpB + " " + tPobjStr);
+}
+
+function updatePrivViz(aaw,aww,cww) {
+    console.log("updatePrivViz: " + aaw + " " + aww + " " + cww);
+    
+    tUPfld = aww;
+    tUPval = cww;
+    procNuUIitem("qposts", tUPfld, currUrlArr.tpstid, tUPval, "fnishPrivChange");
+   }
+
 function doPrivVizPop(tPVel, tPVval, tPVtxt) {
 console.log("doPrivVizPop: " + tPVel + " " + tPVval + " " + tPVtxt);
      
@@ -1321,7 +1335,7 @@ console.log("doPrivVizPop: " + tPVel + " " + tPVval + " " + tPVtxt);
 
 tDDPStr = "";   
 document.getElementById("lightbox_content").innerHTML = "";
-if(tPVval == "privacy") {
+if(tPVtxt == "privacy") {
 tDDBojA = {};
     tDDBojA = JSSHOP.ui.getBSDDOptsO();
     tDDBojA["ddtype"] = "noQvalue";
@@ -1329,7 +1343,7 @@ tDDBojA = {};
     tDDBojA["lbl"] = stxt[101];
     tDDBojA["val"] = svftObj["userpriv"];
     tDDBojA["kvpObj"] = svftObj["userpriv"];
-    tDDBojA["cb"] = "donada";
+    tDDBojA["cb"] = "updatePrivViz";
     tDDBojA["fldcls"] = "nav-link dropdown-toggle txtSmall";
     tDDBojA["lblcls"] = "txtSmall";
     tDDBojA["valcls"] = "txtSmall";
@@ -1352,7 +1366,7 @@ tDDBojA = {};
         tDDBAuthObj["lbl"] = stxt[105];
         tDDBAuthObj["val"] = svftObj["postauth"];
         tDDBAuthObj["kvpObj"] = svftObj["postauth"];
-        tDDBAuthObj["cb"] = "donada";
+        tDDBAuthObj["cb"] = "updatePrivViz";
         tDDBAuthObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
         tDDBAuthObj["lblcls"] = "txtSmall";
         tDDBAuthObj["valcls"] = "txtSmall";
@@ -1374,7 +1388,7 @@ tDDBojA = {};
         tDDPPgObj["lbl"] = stxt[102];
         tDDPPgObj["val"] = svftObj["postpages"];
         tDDPPgObj["kvpObj"] = svftObj["postpages"];
-        tDDPPgObj["cb"] = "donada";
+        tDDPPgObj["cb"] = "updatePrivViz";
         tDDPPgObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
         tDDPPgObj["lblcls"] = "txtSmall";
         tDDPPgObj["valcls"] = "txtSmall";
@@ -1398,7 +1412,7 @@ tDDBojA = {};
         tDDPPosObj["lbl"] = stxt[104];
         tDDPPosObj["val"] = svftObj["postpos"];
         tDDPPosObj["kvpObj"] = svftObj["postpos"];
-        tDDPPosObj["cb"] = "donada";
+        tDDPPosObj["cb"] = "updatePrivViz";
         tDDPPosObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
         tDDPPosObj["lblcls"] = "txtSmall";
         tDDPPosObj["valcls"] = "txtSmall";
@@ -1417,7 +1431,7 @@ tDDBojA = {};
         tDDPStatObj["lbl"] = stxt[106];
         tDDPStatObj["val"] = svftObj["poststat"];
         tDDPStatObj["kvpObj"] = svftObj["poststat"];
-        tDDPStatObj["cb"] = "donada";
+        tDDPStatObj["cb"] = "updatePrivViz";
         tDDPStatObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
         tDDPStatObj["lblcls"] = "txtSmall";
         tDDPStatObj["valcls"] = "txtSmall";
@@ -1434,7 +1448,7 @@ tDDBojA = {};
         tDDPStr += tDDPStatStr;
     }
    
-     tDvpadStr = "<div  style=\"margin:10px\">" + tDDPStr + "</div>";
+     tDvpadStr = "<div  style=\"margin:10px;min-height:280px;\">" + tDDPStr + "</div>";
     // JSSHOP.ui.popAndFillLbox(tDvpadStr);
     // JSSHOP.ui.popFillObox = function(theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUseClosBtn) {
 

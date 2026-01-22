@@ -8,19 +8,15 @@ var euiFFObjArr = null;
 var euiFFObjArr = [];
 var currStartLat = "";
 var currStartLng = "";
-var currPlaceObj = {};
+
+
 if(currUrlArr.tpid) {
-currPgTitle = "Edit Place";
+ 
+currPgTitle = "Company Profile";
 currPgIcon = "xe3c9";
 } else {
-currPgTitle = "Add Place";
+currPgTitle = "Add Company";
 currPgIcon = "xe145";
-}
-if(currUrlArr.cid) {
-cid = currUrlArr.cid;
-tpid = currUrlArr.cid;
-} else {
-cid = 0;
 }
 tmpWHHsel = "";
 tmpWHHsel = document.createElement("div");
@@ -51,6 +47,27 @@ var LeafIcon = L.Icon.extend({
 
 if(currUrlArr.tpid) {
 tpid = currUrlArr.tpid;
+loadCompanyProfile(tpid);
+}
+
+function loadCompanyProfile(cid) {
+    let tQstr = "select * from qco where _id = " + cid;
+    doQComm(tQstr, null, "setCompanyProfile");
+}
+
+function setCompanyProfile(aa, bb, cc) {
+    let coData = JSON.parse(bb)[0];
+    if(coData) {
+        document.getElementById("company_name").innerHTML = coData.c_name || "N/A";
+        document.getElementById("company_desc").innerHTML = coData.c_desc || "No description available";
+        document.getElementById("company_address").innerHTML = (coData.c_street || "") + ", " + (coData.c_location || "") + ", " + (coData.c_state || "") + " " + (coData.c_zip || "");
+        document.getElementById("company_contact").innerHTML = (coData.c_tel || "") + "<br>" + (coData.c_email || "");
+        // Set logo if available
+        if(coData.c_logo) {
+            document.getElementById("company_logo").src = "images/user/" + coData.c_logo;
+        }
+        // Working hours and links can be added similarly if data is available
+    }
 }
 
 function fillPAddrssLst(tFPFa, tFPFb, tFPFc) {
@@ -134,70 +151,35 @@ alert("getPAddrssLst: " + e);
 };
 
 
-
 function fillPlacesForm(tFPFa, tFPFb, tFPFc) {
+try {} catch(e) {
+    alert("fillPlacesForm: " + e);
+    }
     currPlaceObj = null;
     currPlaceArr = "";
     currPlaceArr = [];
     currPlaceObj = {};
-
-try {
-    tawqwRSstr = "";
-console.log("fillPlacesForm: " + tFPFb);
+// alert("fillPlacesForm: " + tFPFb);
 tfPobj = JSON.parse(tFPFb);
 currPlaceObj = tfPobj[0];
-currShopsArr = "";
-currShopsArr = [];
-currShopsArr = JSON.parse(tFPFb);
-if(isJApp == "yes") {
-    console.log("fillPlacesForm: " + JSON.stringify(currPlaceObj));
-    tFnlCmprsdStr = LZString.compressToEncodedURIComponent(tFPFb);
-    app.setCShpAStr(tFnlCmprsdStr);
-}
-
-// currShopsArr.push(currPlaceObj);
 console.log("tfPobj: " + JSON.stringify(tfPobj));
 // JSSHOP.shared.setDynFrmVals(document["qco"], "tmp_");
- // JSSHOP.shared.setDynFieldVals(tfPobj[0], "tmp_");
- //
- JSSHOP.shared.setFrmVals("qco",tfPobj[0],function() {JSSHOP.shared.setDynFrmVals(document["qco"], "tmp_");});
+ JSSHOP.shared.setDynFieldVals(tfPobj[0], "tmp_");
+ JSSHOP.shared.setFrmVals("qco",tfPobj[0],function() {rndrWorkHObj()});
+ tCdescStr = c_desc.value;
+ if((tCdescStr == "ns") || (tCdescStr == "5")){
+ 
+     tCdescStr = c_name.value;
+     c_desc.value = tCdescStr;
+     tmp_c_desc.innerText = tCdescStr;
 
+     
+ }
 // getPAddrssLst();
 tQlogoVA = c_logoimg.value;
-tNameFirstLtr = c_name.value.charAt(0);
-ts = currPlaceObj;
-tttLImg = ts.c_logoimg;
-    if(tttLImg.indexOf(".") != -1) {
-     if(tttLImg.indexOf("http") != -1) {
- 
-    tBimgU = tttLImg;
- 
-    } else {
-     
-     tBimgU = "images/slogos/s_thumb" + ts.c_logoimg;
-    }
-    } else { // end of indexOf(".") in c_logoimg
-    // tBimgU = "noQvalue";
-    tBimgU = "images/slogos/s_thumb" + ts.c_logoimg;
-
-    }
-    if(tBimgU == "noQvalue") {
-
-        // use the first letter of the name as the image
-        tCshrtClrd = pSBC( 0.02, JSSHOP.ui.stringToColour(c_name.value));
-        tIstr = "<div class=\"txtSmall txtClrHdr slmtable\" style=\"margin-right:8px;padding-right:8px;vertical-align: middle; align: center; max-width: 27px; max-height: 27px; color:#FFFFFF;background-color:" + tCshrtClrd + "\">&nbsp;" + tNameFirstLtr + "</div>";
-    // atstr += "<div class=\"txtBold txtClrHdr\" style=\"margin-right:8px;padding-right:8px;vertical-align: middle; max-width: 27px; max-height: 27px;\">" + tCshortttl + "</div>";
-    } else {
-        tIBclsStr = "avatar";
-        tIstr = "<a href=\"javascript:JSSHOP.ui.popAFImgUrl('" + tBimgU + "')\"><img id=\"dvPLogoImg\" src=\"" + tBimgU + "\" class=\"" + tIBclsStr + "\" style=\"margin-right:8px;padding-right:8px;vertical-align: middle; max-width: 27px; max-height: 27px;\"  onerror=\"javascript:doGglImgLdErr(" + ts._id + ");\"></a>";
-    }
-
-
-
-/*
 tQlogoV = tQlogoVA.replace("https: /", "https://");
 c_logoimg.value = tQlogoV;
-tIncStr = "default.gif";
+tIncStr = "images/slogos/default.png";
 if(tQlogoV.indexOf(".") != -1) {
     if(tQlogoV.indexOf("http") != -1) {
 tIncStr = c_logoimg.value;
@@ -205,118 +187,38 @@ tIncStr = c_logoimg.value;
 tIncStr = "images/slogos/s_thumb" + c_logoimg.value;
     }
 }
-*/
+
+tIstr = "<img class=\"avatar\" id=\"dvPLogoImg\" src=\"" + tIncStr + "\" width=\"48\" height=\"48\" />";
+
+
+// document.getElementById("dvPIDHDRstr").innerHTML =  "<div style=\"float:left;padding-right:6px;padding-bottom:6px;\">" + tIstr + "</div>" + c_name.value + "<br><span class=\"txtSmall\">kkkkkkk " + tCdescStr + "</span>";
 // add option "noQvalue" to tmp_k_category
 
-// JSSHOP.shared.addOptAtIndex(tmp_k_category, 0, "noQvalue", stxt[522], "noQvalue");
-// tIstr = "<img class=\"avatar\" id=\"dvPLogoImg\" src=\"" + tIncStr + "\" width=\"48\" height=\"48\" />";
+JSSHOP.shared.addOptAtIndex(tmp_k_category, 0, "noQvalue", stxt[522], "noQvalue");
+tIstr = "<img class=\"avatar\" id=\"dvPLogoImg\" src=\"" + tIncStr + "\" width=\"48\" height=\"48\" />";
 
-
-
-tCdescStr = c_desc.value;
-if((tCdescStr == "ns") || (tCdescStr == "5")){
-
-    tCdescStr = c_name.value + "  " + stxt[559] + " " + c_location.value + ". " ;
- 
-}
-// document.getElementById("dvPartLinks").innerHTML =  "<div style=\"float:left;padding-right:6px;padding-bottom:6px;\">" + tIstr + "</div>" + c_name.value + "<br><span class=\"txtSmall\">" + tCdescStr + "</span>";
-
-//  document.getElementById("dvPIDHDRstr").innerHTML =  "<div style=\"float:left;padding-right:6px;padding-bottom:6px;\">" + tIstr + "</div>" + c_name.value + "<br><span class=\"txtSmall\">" + tCdescStr + "</span>";
-// document.getElementById("spInDat").innerHTML = c_name.value + " " + stxt[86];
-
-document.title = c_name.value + " " + stxt[16] + ": " + stxt[3002] + " - recamby.com";
+document.getElementById("dvPIDHDRstr").innerHTML = tIstr + "  " + c_name.value + "<br><span class=\"txtSmall\">" + stxt[513] + "</span>" ;
+document.getElementById("spInDat").innerHTML = c_name.value + " " + stxt[86];
 document.getElementById("spWHrs").innerHTML = c_name.value + " " + stxt[514];
-tWebVal = c_web.value;
-tWUAdr = tWebVal;
-tFPFtel = c_tel.value;
-ttFPFtel = tFPFtel;
+setTimeout("JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')", 1500);
 
-// remove "351 " and "34 " from beginning of phone number
-if(tFPFtel.indexOf("351 ") != -1) {
-    ttFPFtel = tFPFtel.replace("351 ", "");
-}
-if(tFPFtel.indexOf("34 ") != -1) {
-    ttFPFtel = tFPFtel.replace("34 ", "");
-}
-tttFPFtel = ttFPFtel.replace(/\s/g, "");
-// if the first number in ttFPFtel is 9 then it is a mobile number
-if((tttFPFtel.charAt(0) == "9") || (tttFPFtel.charAt(0) == "6") || (tttFPFtel.charAt(0) == "7")) {
-   
-    tmp_c_tel.innerHTML = "<a href=\"tel:" + tttFPFtel + "\">" + tttFPFtel + "</a>";
-} else {
-  
-    tmp_c_tel.innerHTML = "<a href=\"tel:" + tttFPFtel + "\">" + tttFPFtel + "</a>";
-}
-
-
-
-tWUTtl = tWebVal;
-if(tWebVal.indexOf(".") != -1) {
-     
-    if(tWebVal.indexOf("http") != -1) {
-    } else {
-        tWUAdr = "http://" + tWebVal;
-    }
-    if(tWebVal.indexOf("facebook") != -1) {
-        // alert("facebook");
-        tWUTtl = "facebook";
-        tWUAdr = "https://www.google.com/search?q=" + c_name.value + " facebook";
-    }
-    if(tWebVal.indexOf("instagram") != -1) {
-        tWUTtl = "instagram";
-        tWUAdr = "https://www.google.com/search?q=" + c_name.value + " instagram";
-    }
-    if(tWebVal.indexOf("twitter") != -1) {
-        tWUTtl = "twitter";
-        tWUAdr = "https://www.google.com/search?q=" + c_name.value + " twitter";
-    }
-    if(tWebVal.indexOf("youtube") != -1) {
-        tWUTtl = "youtube";
-        tWUAdr = "https://www.google.com/search?q=" + c_name.value + " youtube";
-    }
-
-    tWVstr = "<a href=\"" + tWUAdr + "\" target=\"_blank\">" + tWUTtl + "</a>";
-
-    tmp_c_web.innerHTML = tWVstr;
-}
-// document.getElementById("tmp_qsv").value = c_name.value;
-if(c_category.value == "101") {
-    tmpPSLdvId = "dvGetSvcsLnk";
-
-    JSSHOP.ui.setNuCBBClickClr(document.getElementById(tmpPSLdvId),tBounceClsName,tActvClsName, function() {void(0)}, 300);
-
- } else {
-    tmpPSLdvId = "dvGetPLnk";
-    JSSHOP.ui.setNuCBBClickClr(document.getElementById(tmpPSLdvId),tBounceClsName,tActvClsName, function() {void(0)}, 300);
-}
-tCMsgstr = c_msg.value;
-if(c_whours.value.length < 5) {
-    tmp_c_msg.className = "txtSmall txtClrBBlue"; 
-    tmp_c_msg.innerHTML = stxt[139];
-} else {
-if(tCMsgstr.length < 5) {
- tmp_c_msg.className = "txtSmall txtClrRed"; 
- tmp_c_msg.innerHTML = stxt[138];
-
-} else {
-    tmp_c_msg.innerHTML = tCMsgstr;
-}
-}
-
-// document.getElementById("lnkGSSearch").href = c_web.value;
-// document.getElementById("lnkGPSearch").href = "https://www.google.com/maps/search/" + c_name.value;
-// document.getElementById("lnkGWSearch").href = "https://www.google.com/search?q=" + c_name.value;
+/*
+document.getElementById("tmp_qsv").value = c_name.value;
+document.getElementById("lnkGSSearch").href = c_web.value;
+document.getElementById("lnkGPSearch").href = "https://www.google.com/maps/search/" + c_name.value;
+document.getElementById("lnkGWSearch").href = "https://www.google.com/search?q=" + c_name.value;
+*/
 tmpDOs = null;
 tmpDOs = {};
 tmpDOs["ws"] = "where k_coid=? and k_rtype=?";
-tmpDOs["wa"] = [cid,5]; 
+tmpDOs["wa"] = [currUrlArr.tpid,5]; 
 oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
 doQComm(oi["rq"], "y", "setCurrCoLinks");
 // setTimeout("rndrWorkHObj()", 600);
-} catch(e) {
-    alert("fillPlacesForm: " + e);
-    }
+
 }
+
+
 
 var donePIcnAdd = function(tFPFa, tFPFb, tFPFc) {
 try {
@@ -348,7 +250,6 @@ try {
     image = null;
     image = new Image();
     image.src = "images/user_icons/s_thumb" + theMMum;
-    
    	document.getElementById("mmprogressBar").appendChild(image);
 	JSSHOP.shared.setFrmFieldVal("qco", "c_logoimg", theMMum);
     procNuUIitem("qco","c_logoimg",JSSHOP.shared.getFrmFieldVal('qco','_id',0), theMMum, "donePIcnAdd");
@@ -437,333 +338,12 @@ alert("setDefWorkH: " + e);
  
 
 
-
-
-
-
-var doWHObjCnvrt = function() {
-    
-    tWHVal = c_whours.value;
-    tOpenedStr = "- <span class=\"txtClrDrkGrn\">" + stxt[558] + "</span>";
-    tClosedStr = "- <span class=\"txtClrRed\">" + stxt[547] + "</span>";
-        twBstr = tWHVal;
-    
-        // replace all non alpha numeric minus space and | with ;
-        twCstr = twBstr.replace(/[^a-zA-Z0-9\s\-\|]/g, ";");
-        // replace all ;;; with -
-        twDstr = twCstr.replace(/\;\;\;/g, "-");
-        // replace all am- with am:
-        twEstr = twDstr.replace(/am-/g, "am_");
-        // replace all "; " with .
-        twFstr = twEstr.replace(/\;\s/g, ".");
-        // replace all ; with :
-        twGstr = twFstr.replace(/\;/g, ":");
-        // replace all ":am" with ";am"
-        twHstr = twGstr.replace(/\:am/g, ";am");
-        // replace all ":pm" with ";pm"
-        twIstr = twHstr.replace(/\:pm/g, ";pm");
-
-        // replace all ":30" with ";30;"
-        twJstr = twIstr.replace(/\:30/g, ";30;");
-        twAstr = twJstr.replace(/\:15/g, ";15;");
-        console.log("twAstr: " + twAstr);
-        tFullRetWHSTr = "";
-     
-    // tmpDaysArr = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    tmpDaysArr = [stxt[541],stxt[535],stxt[536],stxt[537],stxt[538],stxt[539],stxt[540]];
-    tmpDaysArrAb = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
- 
-    if(twAstr.indexOf("|Confirm") != -1) {
-        // remove |Confirm and everything after it
-        tWNstr = twAstr.split("|Confirm")[0];
-        twAstr = tWNstr;
-    }
-    if(twAstr.indexOf("More") != -1) {
-        return;
-    }
-    
-    tmpWordDaysArr = twAstr.split("|");
-    tmpRetWhrStr = "";
-    tmpWHDmyObj = {};
-
-    iii = 0;
-    while(iii < tmpWordDaysArr.length) {
-        tDVWDayStr = "dvWOB" + tmpDaysArrAb[iii].toLowerCase();
-         
- 
-    tWDA = tmpWordDaysArr[iii];
-    console.log("tWDA: " + tWDA);
-    if(tWDA.indexOf("na") != -1) {
-        tmpRetWhrStr += tmpDaysArrAb[iii] + ": " + stxt[547] + "<br>";  
-    // not open
-    } else {
-    // open
-    // check if there is a second working period
-    if(tWDA.indexOf(".") != -1) {
-        tWstree = "9 am:1 pm.5:6:30 pm"
-   
-
-    // two working periods
-    tmpWDArr = tWDA.split(".");
-    tmpWD1 = tmpWDArr[0];
-    tmpWD2 = tmpWDArr[1];
-    // check if current time is between first working period
-    tmpWD1Arr = tmpWD1.split(":");
-    tmpWD1Start = JSSHOP.shared.convertTo24Hour(tmpWD1Arr[0]);
-    tmpWD1End = JSSHOP.shared.convertTo24Hour(tmpWD1Arr[1]);
-    // check if current time is between second working period
-    tmpWD2Arr = tmpWD2.split(":");
-    tmpWD2Start = JSSHOP.shared.convertTo24Hour(tmpWD2Arr[0]);
-    // convert tmpWD2Start to 24 hour time
-    // tmpWD2Start = JSSHOP.shared.convertTo24Hour(tmpWD2Arr[0]);
-    tmpWD2End = JSSHOP.shared.convertTo24Hour(tmpWD2Arr[1]);
-    
-    if(tmpWD2Arr[2]) {
-        if(tmpWD2Arr[2] == "30") {
-            tmpWD2Start += ":30";
-        } else {
-    tmpWD2End += ":" + tmpWD2Arr[2];
-        }
-    }
-    tmpRetWhrStr += tmpDaysArrAb[iii] + ": " + tmpWD1Start + " - " + tmpWD1End + " | " + tmpWD2Start + " - " + tmpWD2End + "<br>";
-    tmpWHDmyObj[tmpDaysArrAb[iii].toLowerCase() + "1"] = tmpWD1Start;
-    tmpWHDmyObj[tmpDaysArrAb[iii].toLowerCase() + "2"] = tmpWD1End;
-    tmpWHDmyObj[tmpDaysArrAb[iii].toLowerCase() + "3"] = tmpWD2Start;
-    tmpWHDmyObj[tmpDaysArrAb[iii].toLowerCase() + "4"] = tmpWD2End;
-    } else {
-        tWHOnestr = tmpDaysArrAb[iii].toLowerCase() + "1";
-        tWHtwostr = tmpDaysArrAb[iii].toLowerCase() + "2";
-           
-        if(tWDA.indexOf("24 h") != -1) {
-            tmpWHDmyObj[tWHOnestr] = "00:00";
-            tmpWHDmyObj[tWHtwostr] = "24:00";
-            tmp_c_msg.innerHTML = stxt[548];
-        } else {
-    // one working period
-    tmpWD1 = tWDA;
-    console.log("tmpWD1: " + tmpWD1);
-    tmpWD1Arr = tmpWD1.split(":");
-    tmpWD1Start = JSSHOP.shared.convertTo24Hour(tmpWD1Arr[0]);
-    tmpWD1End = JSSHOP.shared.convertTo24Hour(tmpWD1Arr[1]);
-    tmpRetWhrStr += tmpDaysArrAb[iii] + ": " + tmpWD1Start + " - " + tmpWD1End + "<br>";
-
-    tmpWHDmyObj[tWHOnestr] = tmpWD1Start;
-    tmpWHDmyObj[tWHtwostr] = tmpWD1End;
-    }
-    }
-}   
-    iii++;
-    }
-
-    console.log("tmpWHDmyObj: " + JSON.stringify(tmpWHDmyObj));
- 
-
-
- tmpWorkObj = tmpWHDmyObj;
- // tmpWorkObj["sat2"] = "23:00";
-for(var wgkey in tmpWorkObj) {
- 
-thiTRWD =  "dv" + wgkey;
-if(document.getElementById(thiTRWD)) {
-document.getElementById(thiTRWD).innerText = tmpWorkObj[wgkey];
-// alert(JSON.stringify(theResp[gkey]));
-}
-}
-// if days in tmpDaysArrAb to lower case with "1" added to the end of it does not exist then set div with id "dvW" + tmpDaysArrAb + "1" to "closed"
-// iterate through tmpDaysArrAb and check if the day with "1" added to the end of it exists in tmpWorkObj
-// if it does not exist then set div with id "dvW" + tmpDaysArrAb + "1" to "closed"
-// iterate through tmpDaysArrAb and check if the day with "1" added to the end of it exists in tmpWorkObj
-// if it does not exist then set div with id "dvW" + tmpDaysArrAb + "1" to "closed"
-
- 
-// see if the shop is open now
-tmpCurrDay = new Date().getDay();
-tmpCurrHour = new Date().getHours();
-tmpCurrMin = new Date().getMinutes();
-tmpCurrTime = tmpCurrHour + ":" + tmpCurrMin;
-tmpFCDAStr = tmpDaysArr[tmpCurrDay];
-tmpCLCDayStr = tmpDaysArrAb[tmpCurrDay];
-tmpCurrDayStr = tmpCLCDayStr.toLowerCase(); 
-console.log("doWHObjCnvrt.tmpCurrDayStr: " + tmpCurrDayStr);
-console.log("doWHObjCnvrt.tmpWorkObj: " + JSON.stringify(tmpWorkObj));
-tmpFullDstr = "";
-tmpCurrOpen = stxt[547];
-
-if(tmpWorkObj[tmpCurrDayStr + "1"]) {
-
-
-    tmpCurrStart = tmpWorkObj[tmpCurrDayStr + "1"];
-    tmpCurrEnd = tmpWorkObj[tmpCurrDayStr + "2"];
-    tmpCCurrTime = tmpCurrTime.replace(":","");
-    tmpCCurrStart = tmpCurrStart.replace(":","");
-    tmpCCurrEnd = tmpCurrEnd.replace(":","");
-    tMCCurrTime = parseInt(tmpCCurrTime);
-    tMCCurrStart = parseInt(tmpCCurrStart);
-    tMCCurrEnd = parseInt(tmpCCurrEnd);
-    tmpFullDstr += tmpCurrStart + " : " + tmpCurrEnd;
-    console.log("doWHObjCnvrt.tmpCurrTimeA: " + " " + tmpCurrTime + " " + tmpCurrStart + " " + tmpCurrEnd);
-
-    if(tmpWorkObj[tmpCurrDayStr + "3"]) {
-
-        tmpCurrStart2 = tmpWorkObj[tmpCurrDayStr + "3"];
-        tmpCurrEnd2 = tmpWorkObj[tmpCurrDayStr + "4"];
- 
-        tmpCCurrStart2 = tmpCurrStart2.replace(":","");
-        tmpCCurrEnd2 = tmpCurrEnd2.replace(":","");
-  
-        tMCCurrStart2 = parseInt(tmpCCurrStart2);
-        tMCCurrEnd2 = parseInt(tmpCCurrEnd2);
-        tmpFullDstr += "  "  + tmpCurrEnd2;
- 
-        if((tMCCurrTime >= tMCCurrStart && tMCCurrTime <= tMCCurrEnd2)) {
-  
-            tmpCurrOpen = tOpenedStr;
-            // tmpCurrOpen += " closes at " + tmpCurrEnd2;
-        } else {
- 
-           tmpCurrOpen = tClosedStr;
-           //  tmpCurrOpen += " opens at " + tmpCurrStart;
-        }
-    } else {
-      
-        console.log("doWHObjCnvrt.tmpCurrTimeE: " + " " + tmpCurrTime + " " + tmpCurrStart + " " + tmpCurrEnd);
-        tmpCCurrTime = tmpCurrTime.replace(":","");
-        tmpCCurrStart = tmpCurrStart.replace(":","");
-        tmpCCurrEnd = tmpCurrEnd.replace(":","");
-        tMCCurrTime = parseInt(tmpCCurrTime);
-        tMCCurrStart = parseInt(tmpCCurrStart);
-        tMCCurrEnd = parseInt(tmpCCurrEnd);
-        tmpFullDstr += " " + tmpCurrEnd;
-        if(tMCCurrTime >= tMCCurrStart && tMCCurrTime <= tMCCurrEnd) {
- 
-            tmpCurrOpen = tOpenedStr;
-            // tmpCurrOpen += " closes at " + tmpCurrEnd;
-        } else {
-  
-            tmpCurrOpen = tClosedStr;
-            // tmpCurrOpen += " opens at " + tmpCurrStart;
-
-        }
-    }
-
-
-}  else {
-    tmpCurrOpen = tClosedStr;
-     
-
-}
- 
-for(var wgkey in tmpDaysArrAb) {
-    tWgkey = tmpDaysArrAb[wgkey].toLowerCase() + "1";
-    if(!tmpWorkObj[tWgkey]) {
-        thiTRWD =  "dv" + tmpDaysArrAb[wgkey].toLowerCase() + "1";
-        document.getElementById(thiTRWD).innerText = stxt[547];
-    }
-}
-
-tFIOstr = tmpCurrOpen;
-document.getElementById("spWHrs").innerHTML =  tFIOstr;
-
-};
-
-
-
-
-
-
-
 var rndrWorkHObj = function() {
-
-    tWHVal = c_whours.value;
-    if(tWHVal.length > 10) {
-        if(tWHVal.indexOf("|") != -1) {
-        /* 
-        // na| 9 am–6:30 pm| 9 am–6:30 pm| 9 am–6:30 pm| 9 am–6:30 pm| 9 am–6:30 pm| na
-        twBstr = tWHVal;
-    
-        // replace all non alpha numeric minus space and | with ;
-        twAstr = twBstr.replace(/[^a-zA-Z0-9\s\-\|]/g, ";");
-        // replace all ;;; with -
-        twAstr = twAstr.replace(/\;\;\;/g, "-");
-        // replace all am- with am:
-        twAstr = twAstr.replace(/am-/g, "am_");
-        // replace all "; " with .
-        twAstr = twAstr.replace(/\;\s/g, ".");
-        // replace all ; with :
-        twAstr = twAstr.replace(/\;/g, ":");
-    // no lunch twAstr:
-    //  na| 9-am_6-pm| 9-am_6-pm| 9-am_6-pm| 9-am_6-pm| 9-am_6-pm| na
-    // lunch twAstr:
-    // na| 9-am_1-pm.2-6:30-pm| 9-am_1-pm.2-6:30-pm| 9-am_1-pm.2-6:30-pm| 9-am_1-pm.2-6:30-pm| 9-am_1-pm.2-6:30-pm| 9-am_1-pm
-    // twAstr.split("|") will give seven working days starting with sunday
-    // twAstr.split("|")[0] will give sunday
-    // twAstr.split("|")[0].split(".") will give two working periods for sunday
-    // twAstr.split("|")[0].split(".")[0] will give first working period for sunday
-    // twAstr contains "na" for non working days
-    // if twAstr contains . then it has two working periods
-    
-    // twAstr.split("|")[0].split(".")[0].split("-")[0] will give first working period start for sunday
-    // twAstr.split("|")[0].split(".")[0].split("-")[1] will give first working period end for sunday
-    // twAstr.split("|")[0].split(".")[1] will give second working period for sunday
-    // twAstr.split("|")[0].split(".")[1].split("-")[0] will give second working period start for sunday
-    // twAstr.split("|")[0].split(".")[1].split("-")[1] will give second working period end for sunday
-    
-    // using system time to get current day of week and time, then compare with twAstr to see if shop is open
-    // if shop is open then twAstr will contain the current day of week and time
-    // if shop is closed then twAstr will contain "na"
-    tmpDaysArr = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    tmpDaysArrAb = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-    tmpWordDaysArr = twAstr.split("|");
-    tmpRetWhrStr = "";
-    iii = 0;
-    while(iii < tmpWordDaysArr.length) {
-    tWDA = tmpWordDaysArr[iii];
-    if(tWDA.indexOf("na") != -1) {
-        tmpRetWhrStr += tmpDaysArrAb[iii] + ": " + stxt[547] + "<br>";  
-    // not open
-    } else {
-    // open
-    // check if there is a second working period
-    if(tWDA.indexOf(".") != -1) {
-    // two working periods
-    tmpWDArr = tWDA.split(".");
-    tmpWD1 = tmpWDArr[0];
-    tmpWD2 = tmpWDArr[1];
-    // check if current time is between first working period
-    tmpWD1Arr = tmpWD1.split("-");
-    tmpWD1Start = tmpWD1Arr[0];
-    tmpWD1End = tmpWD1Arr[1];
-    // check if current time is between second working period
-    tmpWD2Arr = tmpWD2.split("-");
-    tmpWD2Start = tmpWD2Arr[0];
-    tmpWD2End = tmpWD2Arr[1];
-    tmpRetWhrStr += tmpDaysArrAb[iii] + ": " + tmpWD1Start + " - " + tmpWD1End + " | " + tmpWD2Start + " - " + tmpWD2End + "<br>";
-    
-    } else {
-    // one working period
-    tmpWD1 = tWDA;
-    tmpWD1Arr = tmpWD1.split("-");
-    tmpWD1Start = tmpWD1Arr[0];
-    tmpWD1End = tmpWD1Arr[1];
-    tmpRetWhrStr += tmpDaysArrAb[iii] + ": " + tmpWD1Start + " - " + tmpWD1End + "<br>";    
-    
-    }
-    }
-    iii++;
-    }
-    
-    
-    tawqwRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + tmpRetWhrStr + "</div>";
-    document.getElementById("dvWHoursOld").innerHTML =  tawqwRSstr;
-    JSSHOP.ui.toggleVisibility("dvWHoursOld");
-    */
-    doWHObjCnvrt();
-    } else {
-// example of 
+ 
 tmpWorkStr = "";
 tmpWorkStr = LZString.decompressFromEncodedURIComponent(c_whours.value);
-// console.log("rndrWorkHObj: " + tmpWorkStr);
-
+if(tmpWorkStr) {
+// alert("rndrWorkHObj: " + tmpWorkStr + " : " + c_whours.value);
 tmpWorkObj = JSON.parse(tmpWorkStr);
 for(var wgkey in tmpWorkObj) {
 thiTRWD =  "dv" + wgkey;
@@ -772,19 +352,7 @@ document.getElementById(thiTRWD).innerText = tmpWorkObj[wgkey];
 // alert(JSON.stringify(theResp[gkey]));
 }
 }
-// JSSHOP.ui.toggleVisibility("dvShpWHD");
 }
-}
-dvQteBox.innerHTML = "";
-dvQteBox.innerHTML = JSSHOP.ads.getCoAprsDiv(currPlaceObj, "pp"); 
-tDlen = dvQteBox.innerHTML.length;
-if(tDlen > 10) {
-    if(arrUprefs["prfsSHOPuser"][0].tglDvAprs) {
-        if(arrUprefs["prfsSHOPuser"][0].tglDvAprs == "show") {
-        JSSHOP.ui.toggleNuModule('dvTglAprs','dvTglAprsTbl');
-        }
-        }
-    }
 };
 
 
@@ -921,23 +489,14 @@ var cbFedit = function(a,b,c) {
 
 JSSHOP.ui.setCBBClickClr(btnEUsave,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium', function(){document.getElementById("btnEUsave").innerHTML=stxt[21];document.getElementById("btnEUsave").disabled=false;});
 } else {
-		if(c_category.value == "site") {
-			    tmpDOs = {};
-    tmpDOs["ws"] = "where c_category=? and c_coid=?";
-    tmpDOs["wa"] = ["site",cid];
-    oi = getNuDBFnvp("qco", 5, null, tmpDOs);
-	// addFrmQArr("qco", cid, "fnishCoForm");
-    doQComm(oi["rq"],"noQvalue","getSectors");
-		// currSctrsArr.push(JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qco"], "tmp_")));
-	} else {
+        alert("cbFedit: " + b);
         tDadded = JSSHOP.shared.getFrmFieldVal("qco", "c_dadded", 0);
         tmpDOs = {};
         tmpDOs["ws"] = "where c_uid=? and c_dadded=?";
         tmpDOs["wa"] = [quid,tDadded];
         oi = getNuDBFnvp("qco", 5, null, tmpDOs);
         doQComm(oi["rq"],"noQvalue","fnshCoPgAdd");
-
-    }
+    
  // doMLinkM('aa-edit-places', 'pid=aa-edit-places');
  }
 };
@@ -967,23 +526,85 @@ if(currUrlArr.tpid) {
 
 
 var doPlaceEdit = function() {
+    tmp_c_internal.value = 5;
 doNPlaceEdit();
 }
 
 
+function fillPrvwPopForm() {
+    tQlogoVA = c_logoimg.value;
+tQlogoV = tQlogoVA.replace("https: /", "https://");
+c_logoimg.value = tQlogoV;
+tIncStr = "default.gif";
+if(tQlogoV.indexOf(".") != -1) {
+    if(tQlogoV.indexOf("http") != -1) {
+tIncStr = c_logoimg.value;
+    } else {
+tIncStr = "images/slogos/s_thumb" + c_logoimg.value;
+    }
+}
 
+// add option "noQvalue" to tmp_k_category
 
+ tIstr = "<img class=\"avatar\" id=\"dvPLogoImg\" src=\"" + tIncStr + "\" width=\"48\" height=\"48\" />";
+
+document.getElementById("pprv_dvPIDHDRstr").innerHTML = tIstr + "  " + c_name.value + "<br><span class=\"txtSmall\">" + stxt[513] + "</span>" ;
+document.getElementById("spInDat").innerHTML = c_name.value + " " + stxt[86];
+document.getElementById("spWHrs").innerHTML = c_name.value + " " + stxt[514];
+document.getElementById("tmp_qsv").value = c_name.value;
+}
+
+function doPrvwPopFnsh() {
+    console.log("doPrvwPopFnsh");
+    tfilarr = [];
+    tfilarr = JSSHOP.shared.getDynFrmVals(qco,"tmp_");
+    iouy = 0;
+    while(iouy < tfilarr.length) {
+     for(var key in tfilarr[iouy]) {
+        // get key name from tfilarr[iouy]
+        tkeyname = "pprv_" + key;
+        tkeyval = tfilarr[iouy][key];
+
+        console.log("doPrvwPopFnsh-keytkeyval: " + tkeyname + " : " + tkeyval);
+        if(document.getElementById(tkeyname)) {
+            document.getElementById(tkeyname).innerHTML = tkeyval;
+        }
+    }
+    iouy++;
+    }
+    
+     JSSHOP.shared.doNuDwEL();
+     fillPrvwPopForm();
+
+ }
+
+var doPrvwPop = function(tAbCd, tAbCdA, tAbCdB) {
+    fullResp = "<div onclick=\"JSSHOP.ui.closeLbox();\" style=\"float:right\">Closei</div>" + tAbCdA;
+    // JSSHOP.shared.popAndFillLbox(fullResp);
+    document.getElementById(tAbCd).innerHTML = fullResp;
+    setTimeout("doPrvwPopFnsh()", 1000);
+}
 
 
 
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
-    isOwnCo = "y";
- try { 
-} catch(e) {
-    alert("dmyFnishCntLoad: " + e);
-    }
-    /*s
+    console.log("fnishCntLoad.edit-place");
+    isOwnCo = "n";
+try {
+if((quid == 0) || (quid == 5) || (quid == "noQvalue")) {
+document.location.href = "index.html?pid=login";
+return;
+}
+ 
+
+
+
+// JSSHOP.ui.setTinnerHTML("tdTitleBar", currPgTitle);
+// JSSHOP.shared.setFrmFieldVal("qco", "c_uid", quid);
+// JSSHOP.shared.setFrmFieldVal("qco", "c_coid", cid);
+
+/*
 tSARR = [stxt[3001],stxt[3002]];
 tVSARR = [svtxt[3001],svtxt[3002]];
 isslen = tSARR.length;
@@ -1007,6 +628,15 @@ rweint++;
 }
 
 
+trifo = nCurrFFieldOb();
+trifo.fid = "tmp_c_category";
+// trifo.fdv = "Category";
+trifo.lid = "lbl_c_category"; 
+trifo.ltxt = stxt[16]; 
+euiFFObjArr.push(trifo);
+
+*/
+
 
 taifo = nCurrFFieldOb();
 taifo.fid = "tmp_c_internal";
@@ -1016,18 +646,13 @@ taifo.ltxt = "Internal ID";
 euiFFObjArr.push(taifo);
 
 
-trifo = nCurrFFieldOb();
-trifo.fid = "tmp_c_category";
-// trifo.fdv = "Category";
-trifo.lid = "lbl_c_category"; 
-trifo.ltxt = stxt[16]; 
-euiFFObjArr.push(trifo);
 
 tbifo = nCurrFFieldOb();
 tbifo.fid = "tmp_c_name";
-tbifo.fdv = stxt[404];
+tbifo.fdv = stxt[22];
 tbifo.lid = "lbl_c_name"; 
-tbifo.ltxt = stxt[404]; // Name
+// stxt title
+tbifo.ltxt = stxt[22]; // Name
 euiFFObjArr.push(tbifo);
 
 
@@ -1037,7 +662,7 @@ twifwo.fdv = stxt[40];
 twifwo.lid = "lbl_c_desc"; 
 twifwo.ltxt = stxt[40]; // Description
 euiFFObjArr.push(twifwo);
-*/
+
 
 
 tyifo = nCurrFFieldOb();
@@ -1050,37 +675,43 @@ euiFFObjArr.push(tyifo);
 
 
 
- 
+tfui = nCurrFFieldOb();
+tfui.fid = "tmp_c_contact";
+tfui.fdv = stxt[517];
+tfui.lid = "lbl_c_contact"; 
+tfui.ltxt = stxt[517]; // Contact
+euiFFObjArr.push(tfui);
 
 
+/**/
 tfue = nCurrFFieldOb();
 tfue.fid = "tmp_c_web";
 tfue.fdv = "http....";
 tfue.lid = "lbl_c_web"; 
 tfue.ltxt = "Website"; 
 euiFFObjArr.push(tfue);
-/*
+
 tfuew = nCurrFFieldOb();
 tfuew.fid = "tmp_c_email";
 tfuew.fdv = "";
 tfuew.lid = "lbl_c_email"; 
 tfuew.ltxt = "Email"; 
 euiFFObjArr.push(tfuew);
-
+/*
 tfuew = nCurrFFieldOb();
 tfuew.fid = "tmp_c_logoimg";
 tfuew.fdv = "";
 tfuew.lid = "lbl_c_logoimg"; 
 tfuew.ltxt = "Logo"; 
 euiFFObjArr.push(tfuew);
-
+ */
 tfdxa = null;
 tfdxa = nCurrFFieldOb();
 tfdxa.fid = "tmp_c_door";
 tfdxa.lid = "lbl_c_door"; 
 tfdxa.ltxt = stxt[94]; // Zip Code
 euiFFObjArr.push(tfdxa);
- 
+
 tfxa = null;
 tfxa = nCurrFFieldOb();
 tfxa.fid = "tmp_c_zipcode";
@@ -1110,7 +741,7 @@ tfuh.lid = "lbl_c_street";
 tfuh.ltxt = stxt[518]; // Street Name or Address
 euiFFObjArr.push(tfuh);
 
-
+/*
 tfuh = nCurrFFieldOb();
 tfuh.fid = "tmp_c_location";
 tfuh.lid = "lbl_c_location"; 
@@ -1129,13 +760,13 @@ tfuaa.fid = "tmp_c_country";
 tfuaa.lid = "lbl_c_country"; 
 tfuaa.ltxt = stxt[528]; // Country
 euiFFObjArr.push(tfuaa);
- 
+
 tfuaza = nCurrFFieldOb();
 tfuaza.fid = "tmp_c_placeid";
 tfuaza.lid = "lbl_c_placeid"; 
 tfuaza.ltxt = "Place ID"; 
 euiFFObjArr.push(tfuaza);
-
+*/
 
 tifuaza = nCurrFFieldOb();
 tifuaza.fid = "tmp_c_msg";
@@ -1149,14 +780,14 @@ tfsb.fid = "btnAddSoLink";
 tfsb.fty = "button";
 tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){doCoLinkAdd()}) };
 euiFFObjArr.push(tfsb);
-*/
+
 /*
 tfsb = nCurrFFieldOb();
 tfsb.fid = "btnWHsave";
 tfsb.fty = "button";
 tfsb.fcl = function() { JSSHOP.ui.setNuSaveBtnClick(this, function(){setWorkHObj("btnWHsave")}, stxt[21]) };
 euiFFObjArr.push(tfsb);
-
+*/
 
 tfsb = nCurrFFieldOb();
 tfsb.fid = "btnEUsave";
@@ -1165,11 +796,11 @@ tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){doPlaceEdit()
 
 
 euiFFObjArr.push(tfsb);
-*/
+
  
 JSSHOP.shared.initFrmComps(euiFFObjArr);
 
-
+ 
  
 JSSHOP.shared.setFrmFieldVal("qlinks", "k_rtype", "5");
 
@@ -1178,18 +809,19 @@ JSSHOP.shared.setFrmFieldVal("qlinks", "k_matter", "http://");
 JSSHOP.shared.setFrmFieldVal("qlinks", "k_title", "Social Link");
 JSSHOP.shared.setFrmFieldVal("qlinks", "k_privacy", "0");
 JSSHOP.shared.setFrmFieldVal("qlinks", "k_userid", quid);
-if(currUrlArr.dcid) {
-    cid = currUrlArr.dcid;
-}
-if(cid > 0) {
-    JSSHOP.shared.setFrmFieldVal("qlinks", "k_coid", currUrlArr.tpid);
 
+if(currUrlArr.tpid) {
+    JSSHOP.shared.setFrmFieldVal("qlinks", "k_coid", currUrlArr.tpid);
+  //   taaCurl = "javascript:eindex('aa-show-place','pid=aa-show-place&cid=" + currUrlArr.tpid + "');";
+   taaCurl = "javascript:loadNurJSModal('tplates/aa-mod-preview-place.html?cid=" + currUrlArr.tpid + "','...',doPrvwPop);";
+   atstr = "<div><a href=\"" + taaCurl + "\" class=\"txtBold txtDecorNone\">" + stxt[21] + "</a></div>";
+    // document.getElementById("dvShowPlnk").innerHTML = atstr;
     console.log("currUrlArr.tpid: " + currUrlArr.tpid);
     JSSHOP.shared.setFrmFieldVal("qco", "_id", currUrlArr.tpid);
     tmpFobj = null;
     tmpFobj = {};
     tmpFobj["ws"] = "where _id=?";
-    tmpFobj["wa"] = [cid];
+    tmpFobj["wa"] = [currUrlArr.tpid];
     oi = getNuDBFnvp("qco", 5, null, tmpFobj);
     doQComm(oi["rq"], null, "fillPlacesForm");
 }
@@ -1205,34 +837,16 @@ if((isJApp !== "no") && (isPhP == "no")) {
     currMediaBtnCB = "finishPIcn";
     currMediaFldr = "images/slogos";
     currMediaID=cid;
-    doMediaBtnSetup('uploadBtn', '', 'finishMPupload', '../images/slogos');
+    doMediaBtnSetup('uploadBtn', '', 'finishMPupload', 'images/slogos');
     }
-    tmpPSLdvId = "dvCoLinks";
-    tDefClsName = "slmtable bkgdClrWhite brdrClrDlg txtBold txtClrBSLnks crsrPointer";
-    tBounceClsName = "rtable bkgdClrWhite brdrClrRed txtBold txtClrRed";
-    tActvClsName = "slmtable bkgdClrWhite brdrClrRed txtBold txtClrRed crsrPointer";
-    document.getElementById("dvGetSvcsLnk").className = tDefClsName;
-    document.getElementById("dvGetPLnk").className = tDefClsName;
-    tDocLocHref = document.location.href;
-    if(tDocLocHref.indexOf("q=") != -1) {
- 
-            currPLMtype = "ggl";
-        
-          JSSHOP.ads.setGboxUp("doGGAdsFill");
 
-    } else {
-        currPLMtype = "ebay";
-        // JSSHOP.ads.setGboxUp("doGGAdsFill");
-        if(JSSHOP.ads.setPrtsPrefCC("part") != "noQvalue") {
-        JSSHOP.ads.setEboxUp("doEBAdsFill");
-        }
-    }
-    
-  
  
-
 return dmyFnishCntLoad;
- 
+
+
+} catch(e) {
+alert("dmyFnishCntLoad: " + e);
+}
 };
 
 function loadTimeScript() {
@@ -1245,54 +859,7 @@ var doAddrEdit = function(ttatype) {
 }
 
 
-function doEBAdsFill() {
-    JSSHOP.ads.doPgLnkMedia("ebay", 20);
-  }
 
-JSSHOP.ads.setEboxUp = function(tQFunct) {
-    tIMLStglbObj = JSSHOP.ui.nTglBxOb();
-    tIMLStglbObj["ttl"] = "Sponsor Ads"; // the toggle box title
-    tIMLStglbObj["dvid"] = "dvEBSearchRes"; // the toggle box div id
-    tIMLStglbObj["cntntFnc"] =  tQFunct;
-    tIMLStglbObj["content"] = "noQvalue"; // the toggle that goes in above toggle div
-    tIMLStglbObj["btn"] = "btnTglLEBm" // the toogle btn id
-    tIMLStglbObj["pref"] = "tglLEBm"; // the toogle pref id saved in cookie
-    tIMLStglbObj["tbtmpCB"] = "noQvalue"; // null function as callback
-    tIMLStglbObj["icn"] = "&#xe3ec;"; // the icon
-    tIMLStglbObj["pnid"] = "dvEBSearM"; // the parent node, will just return text if noQvalue
-    tIMLStglbObj["appnd"] = "y"; // the parent node, will just return text if noQvalue
-    tIMLStglbObj["cut"] = 2000; // the parent node, will just return text if noQvalue
-    tIMLStglbObj["clsmaintbl"] = "bkgdClrWhite"; // main table class
-    tIMLStglbObj["clstitletd"] = "txtBold txtClrDGreen"; // title box class
-    tIMLStglbObj["clsttltxt"] = "txtSmall txtBold txtClrDrkGrn"; // title box text class
-    JSSHOP.ui.doTglBox(tIMLStglbObj);
-    };
-    
-  
-function doGGAdsFill() {
-    JSSHOP.ads.doPgLnkMedia("ggl", 100);
-  }
-   
-  JSSHOP.ads.setGboxUp = function(tQFunct) {
-    tIMLStglbObj = JSSHOP.ui.nTglBxOb();
-    tIMLStglbObj["ttl"] = "Sponsor Ads"; // the toggle box title
-    tIMLStglbObj["dvid"] = "dvGGSearchRes"; // the toggle box div id
-    tIMLStglbObj["cntntFnc"] =  tQFunct;
-    tIMLStglbObj["content"] = "noQvalue"; // the toggle that goes in above toggle div
-    tIMLStglbObj["btn"] = "btnTglLGGPm" // the toogle btn id
-    tIMLStglbObj["pref"] = "tglLGGBm"; // the toogle pref id saved in cookie
-    tIMLStglbObj["tbtmpCB"] = "noQvalue"; // null function as callback
-    tIMLStglbObj["icn"] = "&#xe3ec;"; // the icon
-    tIMLStglbObj["pnid"] = "dvEBSearM"; // the parent node, will just return text if noQvalue
-    tIMLStglbObj["appnd"] = "y"; // the parent node, will just return text if noQvalue
-    tIMLStglbObj["cut"] = 2000; // the parent node, will just return text if noQvalue
-    tIMLStglbObj["clsmaintbl"] = "accordion-item bkgdClrWhite"; // main table class
-    tIMLStglbObj["clstitletd"] = "txtClrDGreen"; // title box class
-    tIMLStglbObj["clsttltxt"] = "txtClrDrkGrn"; // title box text class
-    JSSHOP.ui.doTglBox(tIMLStglbObj);
-    };
-    
-    
 
 
 // data gathering functions
@@ -1361,7 +928,6 @@ dvCoLinks.appendChild(rcnsDv);
 if(za == "y") {
     setTimeout("JSSHOP.ui.setCBBClickClr(dvCoLinks,'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr bkgdClrWhite', function(){JSSHOP.ui.closeLbox()})", 1000);
 }
-
 // dvCoLinks.innerHTML = JSON.stringify(currCoLinksArr);
 };
 
@@ -1373,13 +939,23 @@ alert("finishCOLupload: " + theMMum);
 };
 
 var setCurrCoLinks = function(tCCLA, tCCLB, tCCLC) {
-    rndrWorkHObj();
 if(tCCLB.indexOf("_id") != -1) {
     currCoLinksArr = null;
     currCoLinksArr = [];
 // alert("setCurrCoLinks: " + tCCLB);
 currCoLinksArr = JSON.parse(tCCLB);
 rndrCoLnks(tCCLA, tCCLB, tCCLC);
+if(quid == c_uid.value) {
+    isOwnCo = "y";
+} else {
+    isOwnCo = "n";
+}
+if((isOwnCo == "n") && (currUrlArr.tpid)) {
+      alert("nogo:" + c_uid.value + " : " + quid);
+   //  eindex("pid=aa-add-new-shop", "pid=aa-add-new-shop&cid=" + currUrlArr.tpid); 
+    // document.location.href = "index.html?pid=aa-add-new-shop&cid=" + currUrlArr.tpid;
+    return;
+}
 }
 }
 
@@ -1403,7 +979,7 @@ var fnshCoLinkAdd = function(tCCLA, tCCLB, tCCLC) {
         tmpDOs = null;
         tmpDOs = {};
         tmpDOs["ws"] = "where k_coid=? and k_rtype=?";
-        tmpDOs["wa"] = [cid,5]; 
+        tmpDOs["wa"] = [currUrlArr.tpid,5]; 
         oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
         doQComm(oi["rq"], "y", "setCurrCoLinks");
     }; 
@@ -1922,15 +1498,19 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
             } else {
 			tstr += "<div style=\"float:left\" class=\"crsrPointer\">";
             }
- 			tstr += "<img src=\"images/slogos/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icndbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
+ 			tstr += "<img src=\"images/slogos/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
 			tstr += "</div>";
  
 			iint++;
 		}
 		document.getElementById("dvProdImgs").innerHTML = tstr;
 	}
+    JSSHOP.loadScript("misc/x_countries.js", doZoneDD,  "js");
+
 	} catch(e) {
 		alert("setPropImgs: " + e);
+        JSSHOP.loadScript("misc/x_countries.js", doZoneDD,  "js");
+
 	}
 };
 
@@ -1954,6 +1534,36 @@ var getPropImgs = function() {
 // map functions map functions map functions map functions
 // map functions
 // map functions
+
+
+
+
+
+function doZoneDD(thePrx, theSTat) {
+    try {    } catch(e) {
+        alert("doZoneDD: " + e);
+    }
+
+        // alert("doZoneDD: " + thePrx + " " + theSTat);
+        if(theSTat == "ok") {
+           tLclDstDstr = getCountryDropStr("c_country", "doCountryPckChg");
+              document.getElementById("dvCountryDD").innerHTML = tLclDstDstr;
+        } else {
+            document.getElementById("dvCountryDD").innerHTML = "error loading zones";
+        }
+       /*
+        dvBSDDKLnks = document.getElementById("dvBSDDKLnks");
+        dvBSDDKLnks.innerHTML = getKLinksBSDDstr();
+        tPRvBSDDstr = getPrvcyBSDDstr();
+        dvUsrPrivacy = document.getElementById("dvUsrPrivacy");
+        dvUsrPrivacy.innerHTML = tPRvBSDDstr;
+       
+        // doCountryPckChg("dvCountryDD", u_country.value, u_country.value);
+        getRegionDropStr(u_country.value, "c_region", "setUregionDD");
+        */
+    
+}
+
 
 
 var LeafIcon = L.Icon.extend({
@@ -2417,14 +2027,9 @@ tmpLCbox.style.left=iMdl+"px";
     }
 // tmpLCbox.style.position="fixed";
 tmpLCbox.width=tmpLCbox.width + 2;
-if(isJApp == "yes") {
-    app.doscrllVwToTop();
- 
-    } 
 setTimeout(function () {
     window.dispatchEvent(new Event('resize'));
 }, 1000);
-
 } catch(e) {
 alert("popLboxMap: " + e);
 }
@@ -2434,37 +2039,12 @@ alert("popLboxMap: " + e);
 
 
 function getPlaceCrdsM() {
-            if(isJApp == "yes") {
-                tOldHref = document.location.href;
-                tCleanRef = "clean.html"
-        
-                tOldHref = document.location.href;
-                if(tOldHref.indexOf("recamby.com") != -1) {
-                    tnewHref = "https://www.recamby.com/clean.html";
-             
-                } else {
-                    tnewHref = "https://titan/recamby/clean.html";
-                }
-        
-        
-                if(tOldHref.indexOf("?") != -1) {
-                    // get everything after the ?
-                    tAddonSTr = tOldHref.split("?")[1];
-        
-          tnewHref = tnewHref + "?" + tAddonSTr + "&st=map&cid=" + cid + "&quid=" + quid;        
-        
-                } else {
-                    tnewHref = tnewHref + "?&cid=" + cid + "st=map";
-                }
-                theFill = "This is a test";
-                document.location.href = tnewHref;
-            
-            
-            } else {  // end of isJApp
+    
 
 
-    tCllLatVal = document.getElementById("c_loc_lat").value;
-    tCllLngVal = document.getElementById("c_loc_lng").value;
+
+    tCllLatVal = document.getElementById("tmp_c_loc_lat").value;
+    tCllLngVal = document.getElementById("tmp_c_loc_lng").value;
     if((tCllLatVal.length > 5) && (tCllLngVal.length > 5)) {
         currMapMrkrArr = null;
         currMapMrkrArr = "";
@@ -2487,10 +2067,7 @@ function getPlaceCrdsM() {
    
         tMrkr = null;
         tMrkr = "";
-        tCrdsArr = getCoordinates(tCllLatVal, tCllLngVal, 7.0, 91);
-        tLatQcStr = String(tCrdsArr[0]);
-        tLngQcStr = String(tCrdsArr[1]);
-        tMrkr  = L.marker([tLatQcStr, tLngQcStr], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:map.closePopup();">' + stxt[531] + '</a></span>');
+        tMrkr  = L.marker([tCllLatVal, tCllLngVal], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:map.closePopup();">' + stxt[531] + '</a></span>');
         currMapMrkrArr.push(tMrkr);
         popPlacesMap();
     } else {
@@ -2538,5 +2115,4 @@ var LeafIcon = L.Icon.extend({
     JSSHOP.ajax.doNuAjaxPipe("dvPSearch", "_p/osmgeo.php?qv=" + encodeURI(tSrchIval), getPlcesLRes);
     }
     }
-    } // end of else isJApp
 }

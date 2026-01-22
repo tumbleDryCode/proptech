@@ -3221,75 +3221,6 @@ tGPSstr += "<br>";
 
 };
 
-JSSHOP.ads.getEdtrPrpLstStr = function(tPrpDtarr, style = 'modern') {
-    let tEdtrPrpsStr = "";
-    let gradientStyle = "";
-
-    // Define styles
-    switch(style) {
-        case 'classic':
-            gradientStyle = "background: linear-gradient(to bottom, #007bff, #ffffff);";
-            break;
-        case 'vibrant':
-            gradientStyle = "background: linear-gradient(to bottom right, #ff4081, #ff1744, #ffeb3b);";
-            break;
-        default:
-            gradientStyle = "background: linear-gradient(to right, #00bcd4, #2196f3, #3f51b5);";
-    }
-
-    // Start flyer container - vertical list
-    tEdtrPrpsStr += `<div style="${gradientStyle} width: 100%; min-height: 430px; position: relative; padding: 10px; box-sizing: border-box;" id="dvTMCdemo">`;
-
-    // Header - larger text for mobile readability
-    tEdtrPrpsStr += `<div style="text-align: center; margin-bottom: 10px;">`;
-    tEdtrPrpsStr += `<h1 style="color: white; font-weight: bold; font-size: 48px; margin: 0; line-height: 1.2;">${stxt[10]}... ${stxt[10]}...</h1>`;
-    tEdtrPrpsStr += `<p style="color: white; font-size: 24px; margin: 5px 0 0 0; line-height: 1.3;">${stxt[40]}... ${stxt[40]}... ${stxt[40]}...</p>`;
-    tEdtrPrpsStr += '</div>';
-
-    // Properties container - vertical list
-    tEdtrPrpsStr += '<div style="display: block; margin-bottom: 10px;">';
-    for(let i = 0; i < tPrpDtarr.length; i++) {
-        let prop = tPrpDtarr[i];
-        let imgSrc = (prop.pimage && prop.pimage !== "noQvalue") ? `admin/property/${prop.pimage}` : "images/misc/example_thumb.png";
-        let priceStr = prop.price ? `<span style="color:#2196f3;font-weight:bold;font-size:20px;">${prop.price} ?</span>` : "";
-        let titleStr = prop.ptitle ? `<span style="font-size:20px;font-weight:bold;color:#333;">${prop.ptitle}</span>` : "";
-        let cityStr = prop.city ? `<span style="color:#666;">${prop.city}</span>` : "";
-        let stateStr = prop.state ? `<span style="color:#999;">${prop.state}</span>` : "";
-        let descStr = prop.pdesc ? `<div style="color:#444;font-size:15px;">${prop.pdesc}</div>` : "";
-
-        tEdtrPrpsStr += `
-        <div style="display:flex;align-items:center; background:rgba(255,255,255,0.95); border-radius:12px; margin:10px 0; box-shadow:0 2px 8px rgba(0,0,0,0.07); padding:10px;">
-            <div style="flex:0 0 120px; text-align:center;">
-                <img src="${imgSrc}" alt="Property" style="width:110px; height:80px; object-fit:cover; border-radius:8px;">
-            </div>
-            <div style="flex:1; padding-left:16px;">
-                ${titleStr}<br>
-                ${cityStr} ${stateStr}<br>
-                ${priceStr}
-                ${descStr}
-            </div>
-        </div>
-        `;
-    }
-    tEdtrPrpsStr += '<div style="clear: both;"></div>';
-    tEdtrPrpsStr += '</div>';
-
-    // Seller info - positioned at bottom right
-    tEdtrPrpsStr += '<div style="background: rgba(255,255,255,0.9); border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; margin-top:20px;">';
-    tEdtrPrpsStr += `<h5 style="margin: 0 0 10px 0; font-size: 16px;">${stxt[912]}...</h5>`;
-    tEdtrPrpsStr += '<div style="display: flex; align-items: center; justify-content:center;">';
-    tEdtrPrpsStr += `<img src="images/user/${u_icon.value}" alt="Agent" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">`;
-    tEdtrPrpsStr += '<div>';
-    tEdtrPrpsStr += `<p style="margin: 0; font-weight: bold; font-size: 14px;">${u_fullname.value}</p>`;
-    tEdtrPrpsStr += `<p style="margin: 0; color: #666; font-size: 12px;">${u_email.value}</p>`;
-    tEdtrPrpsStr += '</div>';
-    tEdtrPrpsStr += '</div>';
-    tEdtrPrpsStr += '</div>';
-
-    tEdtrPrpsStr += '</div>'; // end of flyer container
-
-    return tEdtrPrpsStr;
-};
 
 JSSHOP.ui.getPickerDiv = function(tPDtype) {
     try {
@@ -8565,14 +8496,11 @@ JSSHOP.ads.getTinyTransFileStr = function() {
     return tTnyTransFileStr;
 };
 
-
 JSSHOP.ads.intDemoEditor = function() {
-
     // width is current viewport width
     var ewidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     // set height to a 1.91:1 ratio based on the width
     var eheight = Math.round(ewidth / 1.91);
-    var tQRimgSTr = doQRimgSrcStr(currWebHome + "index.html?pid=aa-show-user&tuid=" + quid, 200);
     tDemoMCEobj = {
         selector: "textarea.inpDemoEdtr",
         theme: 'modern',
@@ -8583,25 +8511,25 @@ JSSHOP.ads.intDemoEditor = function() {
         visual: false,
         resize: true,
         height: 500,
-     
+ 
+        // use tinymce in canvas
+
+        /* content_css: [
+            'css/x_dev.css'
+        ]
+        */
         plugins: [
             'advlist autolink lists link image charmap print preview hr anchor pagebreak',
             'searchreplace wordcount visualblocks visualchars code fullscreen',
             'insertdatetime media nonbreaking save table contextmenu directionality',
-            'emoticons template paste textcolor colorpicker textpattern imagetools code bgcolorpicker mediapop'
+            'emoticons template paste textcolor colorpicker textpattern imagetools code'
         ],
         toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image table',
-        toolbar2: 'print preview media | forecolor backcolor emoticons imagetools fontsizeselect | fontselect | code | template | bgcolorpicker | mediapop',
+        toolbar2: 'print preview media | forecolor backcolor emoticons imagetools fontsizeselect | fontselect | code',
         image_advtab: true,
         templates: [
-            { title: 'QRCode', content: tQRimgSTr },
-            // create some templates for property listings and user info
-            { title: 'Seller Info', content: JSSHOP.ads.getEditorUsrBoxStr("nada") },
-            // create some balloons for property features
-            { title: 'Feature 1', content: '<div style="background-color:#fff0;border:1px solid #cccccc;padding:10px;border-radius:10px;box-shadow:2px 2px 5px rgba(0,0,0,0.3);width:200px;text-align:center;"><h3>Feature 1</h3><p>Description of feature 1.</p></div>' },
-            { title: 'Feature 2', content: '<div style="background-color:#fff0;border:1px solid #cccccc;padding:10px;border-radius:10px;box-shadow:2px 2px 5px rgba(0,0,0,0.3);width:200px;text-align:center;"><h3>Feature 2</h3><p>Description of feature 2.</p></div>' },
-            { title: 'Feature 3', content: '<div style="background-color:#fff0;border:1px solid #cccccc;padding:10px;border-radius:10px;box-shadow:2px 2px 5px rgba(0,0,0,0.3);width:200px;text-align:center;"><h3>Feature 3</h3><p>Description of feature 3.</p></div>' }
-
+            { title: 'Test template 1', content: 'Test 1' },
+            { title: 'Test template 2', content: 'Test 2' }
         ],
         content_css: [
             'css/x_dev.css','css/bootstrap.min.css','css/font-awesome.min.css','css/primer.css'
@@ -8631,8 +8559,6 @@ JSSHOP.ads.intDemoEditor = function() {
         // }
         
     };
-  
-
     if(usrlang == "en_us") {
     tinymce.init(tDemoMCEobj);
     } else {
@@ -8645,9 +8571,8 @@ JSSHOP.ads.intDemoEditor = function() {
 
 
     editor = tinymce.activeEditor;
-    /*
     editor.addButton('preview', {
-        text: 'Previeeeeew',
+        text: 'Preview',
         icon: false,
         onclick: function () {
             // Open window
@@ -8668,386 +8593,8 @@ JSSHOP.ads.intDemoEditor = function() {
             })
         }
     });
- 
-    */
-tinymce.PluginManager.add('mediapop', function (editor, url) {
-    // Add toolbar button
-    editor.addButton('mediapop', {
-        text: 'Media Pop',
-        icon: false,
-        onclick: openMediaPickerDialog
-    });
-    // Add menu item
-    editor.addMenuItem('mediapop', {
-        text: 'Media Pop',
-        icon: false,
-        onclick: openMediaPickerDialog
-    });
-});    
-tinymce.PluginManager.add('bgcolorpicker', function (editor, url) {
-    
-     
-    // Add toolbar button
-    editor.addButton('bgcolorpicker', {
-        text: 'Flyer BackGround',
-        icon: false,
-        onclick: openBgColorPickerDialog
-    });
-    // Add menu item
-    editor.addMenuItem('bgcolorpicker', {
-        text: 'Flyer BackGround',
-        icon: false,
-        onclick: openBgColorPickerDialog
-    });
-});
 
 };
-
-// Helper function to find the closest parent with class 'gallery-item'
-function findClosestGalleryItem(node, editor) {
-    while (node && node !== editor.getBody()) {
-        if (node.classList && node.classList.contains('gallery-item')) {
-            return node;
-        }
-        node = node.parentNode;
-    }
-    return null;
-}
-
-function openMediaPickerDialog() { 
-      var amppropArr = [];
-    try {
-        if (window.currPstsPrpsArr && window.currPstsPrpsArr.length) {
-            amppropArr = window.currPstsPrpsArr;
-        }
-    } catch (e) { }
-    var grad1 = '#2196f3', grad2 = '#e3f2fd';
-
-    // Tab buttons
-    var tabHtml = `
-        <div style="margin-bottom:10px;">
-            <button type="button" id="mp_tab_gradient" style="margin-right:10px;padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Gradient Fill</button>
-            <button type="button" id="mp_tab_solid" style="margin-right:10px;padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Solid Color</button>
-            <button type="button" id="mp_tab_image" style="padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Property Image</button>
-        </div>
-    `;
-
-    // Gradient tab content
-    var gradientHtml = `
-        <div id="mp_tab_gradient_content">
-            <label style="display:block;margin-bottom:5px;">Color 1: <input type="text" id="mp_grad1" value="${grad1}" data-coloris style="margin-right:10px;width:100px;"></label>
-            <label style="display:block;margin-bottom:5px;">Color 2: <input type="text" id="mp_grad2" value="${grad2}" data-coloris style="width:100px;"></label>
-            <div id="mp_gradPreview" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:linear-gradient(135deg,${grad1},${grad2});border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="mp_grad_border"> <label for="mp_grad_border">Apply to Border</label></div>
-            <button type="button" id="mp_apply_gradient" style="padding:5px 10px;border:1px solid #ccc;background:#fff;border-radius:4px;">Apply Gradient</button>
-        </div>
-    `;
-
-    // Solid color tab content
-    var solidHtml = `
-        <div id="mp_tab_solid_content" style="display:none;">
-            <label style="display:block;margin-bottom:5px;">Color: <input type="text" id="mp_solid" value="#2196f3" data-coloris style="width:100px;"></label>
-            <div id="mp_solidPreview" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:#2196f3;border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="mp_solid_border"> <label for="mp_solid_border">Apply to Border</label></div>
-            <button type="button" id="mp_apply_solid" style="padding:5px 10px;border:1px solid #ccc;background:#fff;border-radius:4px;">Apply Solid Color</button>
-        </div>
-    `;
-
-    // Images tab content
-    var imagesHtml = '<div id="mp_tab_image_content" style="display:none;min-height:350px;max-height:400px;overflow:auto;">';
-        imagesHtml += '<div><input type="checkbox" id="mp_set_bg"> <label for="mp_set_bg">Set as Background</label></div>';
-    for (var i = 0; i < amppropArr.length; i++) {
-        var amprop = amppropArr[i];
-        var imgSrc = (amprop.pimage && amprop.pimage !== "noQvalue") ? 'images/property/s_thumb' + amprop.pimage : "images/misc/example_thumb.png";
-        var title = amprop.ptitle ? LZString.decompressFromEncodedURIComponent(decodeURIComponent(amprop.pd_prptitle || amprop.ptitle)) : '';
-        imagesHtml += '<div style="display:inline-block;margin:6px;text-align:center;border:1px solid #ddd;padding:5px;border-radius:4px;background:#f9f9f9;cursor:pointer;" onclick="setMdaBgImage(\'' + imgSrc.replace('s_thumb', '') + '\');JSSHOP.ui.closeLbox();">';
-        imagesHtml += '<img src="' + imgSrc + '" style="width:90px;height:70px;object-fit:cover;border-radius:6px;" />';
-        imagesHtml += '<div style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:5px;">' + title + '</div></div>';
-        }
-
-    imagesHtml += '</div>';
-
-    // Full dialog HTML
-    tdialogHtml = tabHtml + gradientHtml + solidHtml + imagesHtml;
-    // wrap tdialogHtml in a div with min height 80% of viewport height
-    var dialogHtml = '<div style="min-height:80vh;max-height:90vh;overflow:auto;">' + tdialogHtml + '</div>';
-    // Add event listeners after rendering
-    setTimeout(function() {
-        // Tab switching
-        document.getElementById('mp_tab_gradient').onclick = function() {
-            document.getElementById('mp_tab_gradient_content').style.display = 'block';
-            document.getElementById('mp_tab_solid_content').style.display = 'none';
-            document.getElementById('mp_tab_image_content').style.display = 'none';
-        };
-        document.getElementById('mp_tab_solid').onclick = function() {
-            document.getElementById('mp_tab_gradient_content').style.display = 'none';
-            document.getElementById('mp_tab_solid_content').style.display = 'block';
-            document.getElementById('mp_tab_image_content').style.display = 'none';
-        };
-        document.getElementById('mp_tab_image').onclick = function() {
-            document.getElementById('mp_tab_gradient_content').style.display = 'none';
-            document.getElementById('mp_tab_solid_content').style.display = 'none';
-            document.getElementById('mp_tab_image_content').style.display = 'block';
-        };
-
-        // Gradient preview
-        document.getElementById('mp_grad1').onchange = function() {
-            grad1 = this.value;
-            document.getElementById('mp_gradPreview').style.background = 'linear-gradient(135deg,' + grad1 + ',' + grad2 + ')';
-        };
-        document.getElementById('mp_grad2').onchange = function() {
-            grad2 = this.value;
-            document.getElementById('mp_gradPreview').style.background = 'linear-gradient(135deg,' + grad1 + ',' + grad2 + ')';
-        };
-
-        // Apply gradient
-        document.getElementById('mp_apply_gradient').onclick = function() {
-            setMdaBgGradient(grad1, grad2, document.getElementById('mp_grad_border').checked);
-            JSSHOP.ui.closeLbox();
-        };
-
-        // Solid preview
-        document.getElementById('mp_solid').onchange = function() {
-            document.getElementById('mp_solidPreview').style.background = this.value;
-        };
-
-        // Apply solid
-        document.getElementById('mp_apply_solid').onclick = function() {
-            setMdaBgSolidColor(document.getElementById('mp_solid').value, document.getElementById('mp_solid_border').checked);
-            JSSHOP.ui.closeLbox();
-        };
-
-        // Initialize Coloris if available
-        if (window.Coloris) {
-            Coloris({
-                el: '[data-coloris]',
-                swatches: ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']
-            });
-        }
-    }, 800);
-
-    JSSHOP.ui.popAndFillLbox(dialogHtml);
-}
-function openBgColorPickerDialog() {
-    var propArr = [];
-    try {
-        if (window.currPstsPrpsArr && window.currPstsPrpsArr.length) {
-            propArr = window.currPstsPrpsArr;
-        }
-    } catch (e) { }
-
-    var grad1 = '#2196f3', grad2 = '#e3f2fd';
-
-    // Tab buttons
-    var tabHtml = `
-        <div style="margin-bottom:10px;">
-            <button type="button" id="bgc_tab_gradient" style="margin-right:10px;padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Gradient Fill</button>
-            <button type="button" id="bgc_tab_solid" style="margin-right:10px;padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Solid Color</button>
-            <button type="button" id="bgc_tab_image" style="padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Property Image</button>
-        </div>
-    `;
-
-    // Gradient tab content
-    var gradientHtml = `
-        <div id="bgc_tab_gradient_content">
-            <label style="display:block;margin-bottom:5px;">Color 1: <input type="text" id="bgc_grad1" value="${grad1}" data-coloris style="margin-right:10px;width:100px;"></label>
-            <label style="display:block;margin-bottom:5px;">Color 2: <input type="text" id="bgc_grad2" value="${grad2}" data-coloris style="width:100px;"></label>
-            <div id="gradPreview" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:linear-gradient(135deg,${grad1},${grad2});border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="bgc_grad_border"> <label for="bgc_grad_border">Apply to Border</label></div>
-            <button type="button" id="bgc_apply_gradient" style="padding:5px 10px;border:1px solid #ccc;background:#fff;border-radius:4px;">Apply Gradient</button>
-        </div>
-    `;
-
-    // Solid color tab content
-    var solidHtml = `
-        <div id="bgc_tab_solid_content" style="display:none;">
-            <label style="display:block;margin-bottom:5px;">Color: <input type="text" id="bgc_solid" value="#2196f3" data-coloris style="width:100px;"></label>
-            <div id="solidPreview" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:#2196f3;border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="bgc_solid_border"> <label for="bgc_solid_border">Apply to Border</label></div>
-            <button type="button" id="bgc_apply_solid" style="padding:5px 10px;border:1px solid #ccc;background:#fff;border-radius:4px;">Apply Solid Color</button>
-        </div>
-    `;
-
-    // Images tab content
-    var imagesHtml = '<div id="bgc_tab_image_content" style="display:none;max-height:250px;overflow:auto;">';
-    for (var i = 0; i < propArr.length; i++) {
-        var prop = propArr[i];
-        var imgSrc = (prop.pimage && prop.pimage !== "noQvalue") ? 'images/property/s_thumb' + prop.pimage : "images/misc/example_thumb.png";
-        var title = prop.ptitle ? LZString.decompressFromEncodedURIComponent(decodeURIComponent(prop.pd_prptitle || prop.ptitle)) : '';
-        imagesHtml += '<div style="display:inline-block;margin:6px;text-align:center;border:1px solid #ddd;padding:5px;border-radius:4px;background:#f9f9f9;cursor:pointer;" onclick="setBgImage(\'' + imgSrc.replace('s_thumb', '') + '\');JSSHOP.ui.closeLbox();">';
-        imagesHtml += '<img src="' + imgSrc + '" style="width:90px;height:70px;object-fit:cover;border-radius:6px;" />';
-        imagesHtml += '<div style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:5px;">' + title + '</div></div>';
-    }
-    imagesHtml += '</div>';
-
-    // Full dialog HTML
-    var dialogHtml = tabHtml + gradientHtml + solidHtml + imagesHtml;
-
-    // Add event listeners after rendering
-    setTimeout(function() {
-        var tabGradient = document.getElementById('bgc_tab_gradient');
-        var tabSolid = document.getElementById('bgc_tab_solid');
-        var tabImage = document.getElementById('bgc_tab_image');
-        var gradContent = document.getElementById('bgc_tab_gradient_content');
-        var solidContent = document.getElementById('bgc_tab_solid_content');
-        var imgContent = document.getElementById('bgc_tab_image_content');
-        var grad1Input = document.getElementById('bgc_grad1');
-        var grad2Input = document.getElementById('bgc_grad2');
-        var gradPreview = document.getElementById('gradPreview');
-        var solidInput = document.getElementById('bgc_solid');
-        var solidPreview = document.getElementById('solidPreview');
-        var applyBtn = document.getElementById('bgc_apply_gradient');
-        var applySolidBtn = document.getElementById('bgc_apply_solid');
-
-        function updatePreview() {
-            grad1 = grad1Input.value;
-            grad2 = grad2Input.value;
-            gradPreview.style.background = 'linear-gradient(135deg,' + grad1 + ',' + grad2 + ')';
-        }
-
-        tabGradient.onclick = function() {
-            gradContent.style.display = '';
-            solidContent.style.display = 'none';
-            imgContent.style.display = 'none';
-        };
-        tabSolid.onclick = function() {
-            gradContent.style.display = 'none';
-            solidContent.style.display = '';
-            imgContent.style.display = 'none';
-        };
-        tabImage.onclick = function() {
-            gradContent.style.display = 'none';
-            solidContent.style.display = 'none';
-            imgContent.style.display = '';
-        };
-
-        grad1Input.onchange = updatePreview;
-        grad2Input.onchange = updatePreview;
-        solidInput.onchange = function() {
-            solidPreview.style.background = this.value;
-        };
-
-        applyBtn.onclick = function() {
-            setBgGradient(grad1, grad2, document.getElementById('bgc_grad_border').checked);
-            JSSHOP.ui.closeLbox();
-        };
-        applySolidBtn.onclick = function() {
-            setBgSolidColor(solidInput.value, document.getElementById('bgc_solid_border').checked);
-            JSSHOP.ui.closeLbox();
-        };
-
-        // Initialize Coloris if available
-        if (window.Coloris) {
-            Coloris({
-                el: '[data-coloris]',
-                swatches: ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']
-            });
-        }
-    }, 800);
-
-    JSSHOP.ui.popAndFillLbox(dialogHtml);
-}
-
-// Function to set background gradient
-function setBgGradient(color1, color2, isBorder = false) {
-    console.log("setBgGradient.colors: " + color1 + ", " + color2 + ", isBorder: " + isBorder);
-    var iframe = document.getElementById('taDemoEdtr_ifr');
-    if (iframe && iframe.contentDocument) {
-        var demoDiv = iframe.contentDocument.getElementById('dvTMCdemo');
-        if (demoDiv) {
-            if (isBorder) {
-                demoDiv.style.borderImage = 'linear-gradient(135deg, ' + color1 + ', ' + color2 + ') 1';
-                demoDiv.style.border = '5px solid transparent';
-            } else {
-                demoDiv.style.backgroundImage = 'none';
-                demoDiv.style.background = 'linear-gradient(135deg, ' + color1 + ', ' + color2 + ')';
-            }
-        }
-    }
-}
-
-// Function to set background image
-function setBgImage(imgSrc) {
-    var iframe = document.getElementById('taDemoEdtr_ifr');
-    if (iframe && iframe.contentDocument) {
-        var demoDiv = iframe.contentDocument.getElementById('dvTMCdemo');
-        if (demoDiv) {
-            demoDiv.style.background = 'none';
-            demoDiv.style.backgroundImage = 'url(' + imgSrc + ')';
-            demoDiv.style.backgroundSize = 'cover';
-            demoDiv.style.backgroundPosition = 'center';
-            demoDiv.style.backgroundRepeat = 'no-repeat';
-        }
-    }
-}
-
-// Function to set solid color background or border
-function setBgSolidColor(color, isBorder = false) {
-    console.log("setBgSolidColor.color: " + color + ", isBorder: " + isBorder);
-    var iframe = document.getElementById('taDemoEdtr_ifr');
-    if (iframe && iframe.contentDocument) {
-        var demoDiv = iframe.contentDocument.getElementById('dvTMCdemo');
-        if (demoDiv) {
-            if (isBorder) {
-                demoDiv.style.borderColor = color;
-                demoDiv.style.border = '5px solid ' + color;
-            } else {
-                demoDiv.style.backgroundColor = color;
-                demoDiv.style.backgroundImage = 'none';
-            }
-        }
-    }
-}
-
-// Function to set media background gradient
-function setMdaBgGradient(color1, color2, isBorder = false) {
-    console.log("setMdaBgGradient.colors: " + color1 + ", " + color2 + ", isBorder: " + isBorder);
-    var editor = tinymce.activeEditor;
-    var galleryItem = findClosestGalleryItem(editor.selection.getNode(), editor);
-    if (galleryItem) {
-        if (isBorder) {
-            galleryItem.style.borderImage = 'linear-gradient(135deg, ' + color1 + ', ' + color2 + ') 1';
-            galleryItem.style.border = '5px solid transparent';
-        } else {
-            galleryItem.style.backgroundImage = 'none';
-            galleryItem.style.background = 'linear-gradient(135deg, ' + color1 + ', ' + color2 + ')';
-        }
-    }
-}
-
-// Function to set media background image
-function setMdaBgImage(imgSrc, isaBg) {
-    var editor = tinymce.activeEditor;
-    isBg = document.getElementById('mp_set_bg') ? document.getElementById('mp_set_bg').checked : false;
-    if (isBg) {
-        var galleryItem = findClosestGalleryItem(editor.selection.getNode(), editor);
-        if (galleryItem) {
-            galleryItem.style.background = 'none';
-            galleryItem.style.backgroundImage = 'url(' + imgSrc + ')';
-            galleryItem.style.backgroundSize = 'cover';
-            galleryItem.style.backgroundPosition = 'center';
-            galleryItem.style.backgroundRepeat = 'no-repeat';
-        }
-    } else {
-        editor.insertContent('<img src="' + imgSrc + '" width="200" height="200">');
-    }
-}
-
-// Function to set media solid color background or border
-function setMdaBgSolidColor(color, isBorder = false) {
-    console.log("setMdaBgSolidColor.color: " + color + ", isBorder: " + isBorder);
-    var editor = tinymce.activeEditor;
-    var galleryItem = findClosestGalleryItem(editor.selection.getNode(), editor);
-    if (galleryItem) {
-        if (isBorder) {
-            galleryItem.style.borderColor = color;
-            galleryItem.style.border = '5px solid ' + color;
-        } else {
-            galleryItem.style.backgroundColor = color;
-            galleryItem.style.backgroundImage = 'none';
-        }
-    }
-}
 
 JSSHOP.ads.getEdtrPrpDscStr = function(tPrpDtarr) {
     tEdtrDescStr = "";
@@ -9063,68 +8610,6 @@ JSSHOP.ads.getEdtrPrpDscStr = function(tPrpDtarr) {
     return tEdtrDescStr;
 };
 
-
-JSSHOP.ads.getEditorUsrBoxStr = function(tUsrDtObj) {
-    tEdtrUsrStr = "";
-        let contacts = [];
-    let preferred = ['whatsapp', 'telephone', 'email', 'facebook'];
-    for(let pref of preferred){
-        let link = currQUsrLnksArr.find(l => l.k_category === pref);
-        if(link){
-            contacts.push(link);
-            if(contacts.length >= 2) break;
-        }
-    }
-
-      // Seller info
-      // wrapped in table
-       tEdtrUsrStr += '<table><tr><td>';
-    tEdtrUsrStr += '<div class="gallery-item" style="background: rgba(255,255,255,0.9); border-radius: 10px;margin:10px; padding: 5px; box-shadow: 1px 4px 8px rgba(0,0,0,0.1); text-align: center;">';
-         tEdtrUsrStr += "<table><tr><td><div>||||</div></td><td>";
-
-    // tEdtrUsrStr += `<h5 style="margin: 0 0 10px 0; font-size: 16px;">${stxt[912]}...</h5>`;
-    tEdtrUsrStr += '<div style="display: flex; align-items: center;">';
-    tEdtrUsrStr += `<img src="images/user/${u_icon.value}" alt="Agent" style="width: 80px; height: 80px; border-radius: 50%; margin-right: 10px;">`;
-    tEdtrUsrStr += '<div>';
-    tEdtrUsrStr += `<p style="margin: 0; font-weight: bold; font-size: 24px;">${u_fullname.value}</p>`;
-    // tEdtrUsrStr += `<p style="margin: 0; color: #666; font-size: 12px;">${u_email.value}</p>`;
-    if(contacts.length > 0){
-        tEdtrUsrStr += '<div style="margin-top: 10px; display: flex; justify-content: center; gap: 10px;">';
-        for(let contact of contacts){
-            let href = '';
-            if(contact.k_category === 'whatsapp'){
-                href = `https://wa.me/${contact.k_matter}`;
-            } else if(contact.k_category === 'telephone'){
-                href = `tel:${contact.k_matter}`;
-            } else if(contact.k_category === 'email'){
-                href = `mailto:${contact.k_matter}`;
-            } else if(contact.k_category === 'facebook'){
-                href = `https://facebook.com/${contact.k_matter}`;
-            }
-            if(href){
-                // tEdtrPrpsStr += `<a href="${href}" target="_blank"><img src="images/misc/ts-icon-${contact.k_category}.png" alt="${contact.k_category}" style="width: 24px; height: 24px;"></a>`;
-                // show the icon and contact info
-                tEdtrUsrStr += `<div style="text-align: center;">`;
-                tEdtrUsrStr += `<a href="${href}" target="_blank" style="text-decoration: none; color: inherit;">`;
-                tEdtrUsrStr += `<img src="images/misc/ts-icon-${contact.k_category}.png" alt="${contact.k_category}" style="width: 24px; height: 24px;margin: 0 10px 0 0;">`;
-                tEdtrUsrStr += `<span style="font-size: 20px;margin-right: 15px;"><b>${contact.k_matter}</b></span>`;
-                tEdtrUsrStr += `</a>`;
-                tEdtrUsrStr += `</div>`;
-
-            }
-        }
-        tEdtrUsrStr += '</div>';
-    }
-    tEdtrUsrStr += '</div>';
-    tEdtrUsrStr += '</div>';
-       tEdtrUsrStr += "</td><td>||||</td></tr></table>";
-
-   
-    tEdtrUsrStr += '</div>';
-    // end of seller info box
-    tEdtrUsrStr += '</td></tr></table>'; // end of wrapping table
-    return tEdtrUsrStr;
-};
 
 JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
 
@@ -9195,7 +8680,8 @@ JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
     // tEdtrDescStr is a string listing the titles and prices of selected properties
            tEdtrPrpsStr += "<div class=\"property-flyer\" style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px;\" id=\"dvTMCdemo\">";
 
-     tEdtrPrpsStr += "<table class=\"rtable bkgdClrWhite brdrClrHdr\" style=\"margin-bottom:10px;margin: 0 auto;\">";
+    // tEdtrPrpsStr += "<div style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px;\" class=\"slmtable brdrClrDlg bkgdClrWhite\" id=\"dvTMCdemo\">";
+    tEdtrPrpsStr += "<table class=\"rtable bkgdClrWhite brdrClrHdr\" style=\"margin-bottom:10px;margin: 0 auto;\">";
     tEdtrPrpsStr += "<tr><td class=\"txtBold txtClrHdr\" style=\"text-align:center;\"><span style=\"font-size:18px;\">" + stxt[10]+ "... " + stxt[10] + "...</span></td></tr>";
     tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\" style=\"text-align:center;\"><span style=\"font-size:14px;\">" + stxt[40]+ "... " + stxt[40] + "... " + stxt[40] + "...</span></td></tr>";
     tEdtrPrpsStr += "</table>";
@@ -9222,12 +8708,9 @@ JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
         }
     }
     tEdtrPrpsStr += "<hr>";
-
-
-/*
     // add the seller information
     tEdtrPrpsStr += "<div class=\"slmtable brdrClrHdr bkgdClrWhite\" style=\"text-align:center;\">";
-       //  tEdtrPrpsStr += "<div class=\"txtBig txtBold txtClrHdr\" style=\"text-align:center;\">" + stxt[912] + "...</div>";
+        tEdtrPrpsStr += "<div class=\"txtBig txtBold txtClrHdr\" style=\"text-align:center;\">" + stxt[912] + "...</div>";
 
     tEdtrPrpsStr += "<table class=\"table table-striped\">";
     tEdtrPrpsStr += "<tr><td><img src=\"images/user/" + u_icon.value + "\" class=\"icnRndnBgUser\"></td>";
@@ -9235,9 +8718,6 @@ JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
     tEdtrPrpsStr += "</tr></table>";
     tEdtrPrpsStr += "</div>"; // end of edtr-grid rtable brdrClrHdr
     tEdtrPrpsStr += "</div>"; // end of seller information div
-*/
-tEdtrPrpsStr += JSSHOP.ads.getEditorUsrBoxStr("nada");
-
 
     // add clear fix to the end of the div
     tEdtrPrpsStr += "<div style=\"clear:both;\" class=\"clearfix\"></div>";
@@ -9247,7 +8727,230 @@ tEdtrPrpsStr += JSSHOP.ads.getEditorUsrBoxStr("nada");
     return tEdtrPrpsStr;
 };
 
- 
+JSSHOP.ads.getNuEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
+    let tEdtrPrpsStr = "";
+    let gradientStyle = "";
+    let cardClass = "card shadow";
+    let headerClass = "text-white font-weight-bold";
+    let subHeaderClass = "text-white";
+
+    // Define styles
+    switch(style) {
+        case 'classic':
+            gradientStyle = "background: linear-gradient(to bottom, #007bff, #ffffff);";
+            cardClass = "card shadow-sm";
+            break;
+        case 'modern':
+            gradientStyle = "background: linear-gradient(to right, #00bcd4, #2196f3, #3f51b5);";
+            cardClass = "card border-0 shadow-lg";
+            break;
+        case 'vibrant':
+            gradientStyle = "background: linear-gradient(to bottom right, #ff4081, #ff1744, #ffeb3b);";
+            cardClass = "card border-0 shadow-xl";
+            break;
+        default:
+            gradientStyle = "background: linear-gradient(to bottom, #007bff, #ffffff);";
+            cardClass = "card shadow";
+    }
+
+    // Start flyer container
+    tEdtrPrpsStr += `<div class="container-fluid p-4" style="${gradientStyle} min-height: 100vh;">`;
+    tEdtrPrpsStr += '<div class="row justify-content-center">';
+    tEdtrPrpsStr += '<div class="col-md-8">';
+
+    // Header
+    tEdtrPrpsStr += '<div class="text-center mb-4">';
+    tEdtrPrpsStr += `<h1 class="display-4 ${headerClass}">${stxt[10]}... ${stxt[10]}...</h1>`;
+    tEdtrPrpsStr += `<p class="lead ${subHeaderClass}">${stxt[40]}... ${stxt[40]}... ${stxt[40]}...</p>`;
+    tEdtrPrpsStr += '</div>';
+
+    // Properties
+    tEdtrPrpsStr += '<div class="row">';
+    for(let i = 0; i < tPrpDtarr.length; i++) {
+        let tPrpDtObj = tPrpDtarr[i];
+        let imgSrc = currPrpImgsFldr + "/" + tPrpDtObj.pimage;
+        let title = LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle);
+        let location = tPrpDtObj.city + ", " + tPrpDtObj.state;
+        let price = tPrpDtObj.price + " ?";
+
+        tEdtrPrpsStr += '<div class="col-md-6 mb-4">';
+        tEdtrPrpsStr += `<div class="${cardClass}">`;
+        tEdtrPrpsStr += '<div class="row no-gutters">';
+        tEdtrPrpsStr += '<div class="col-md-4">';
+        tEdtrPrpsStr += `<img src="${imgSrc}" class="card-img" alt="Property Image" style="height: 100%; object-fit: cover;">`;
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '<div class="col-md-8">';
+        tEdtrPrpsStr += '<div class="card-body">';
+        tEdtrPrpsStr += `<h5 class="card-title font-weight-bold">${title}</h5>`;
+        tEdtrPrpsStr += `<p class="card-text text-muted">${location}</p>`;
+        tEdtrPrpsStr += `<p class="card-text font-weight-bold text-primary h4">${price}</p>`;
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
+    }
+    tEdtrPrpsStr += '</div>';
+
+    // Seller info
+    tEdtrPrpsStr += '<div class="row justify-content-center mt-4">';
+    tEdtrPrpsStr += '<div class="col-md-6">';
+    tEdtrPrpsStr += '<div class="card text-center shadow">';
+    tEdtrPrpsStr += '<div class="card-body">';
+    tEdtrPrpsStr += `<h5 class="card-title">${stxt[912]}...</h5>`;
+    tEdtrPrpsStr += '<div class="d-flex align-items-center justify-content-center">';
+    tEdtrPrpsStr += `<img src="images/user/${u_icon.value}" class="rounded-circle mr-3" style="width: 60px; height: 60px;">`;
+    tEdtrPrpsStr += '<div>';
+    tEdtrPrpsStr += `<p class="mb-0 font-weight-bold">${u_fullname.value}</p>`;
+    tEdtrPrpsStr += `<p class="mb-0 text-muted">${u_email.value}</p>`;
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+
+    // Style selector modal
+    tEdtrPrpsStr += `
+    <!-- Style Selector Modal -->
+    <div class="modal fade" id="styleSelectorModal" tabindex="-1" role="dialog" aria-labelledby="styleSelectorModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="styleSelectorModalLabel">Choose Flyer Style</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-4">
+                <div class="card style-option" data-style="classic" style="cursor: pointer;">
+                  <div class="card-body text-center" style="background: linear-gradient(to bottom, #007bff, #ffffff); height: 100px;">
+                    <h6>Classic</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="card style-option" data-style="modern" style="cursor: pointer;">
+                  <div class="card-body text-center" style="background: linear-gradient(to right, #00bcd4, #2196f3, #3f51b5); height: 100px;">
+                    <h6>Modern</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="card style-option" data-style="vibrant" style="cursor: pointer;">
+                  <div class="card-body text-center" style="background: linear-gradient(to bottom right, #ff4081, #ff1744, #ffeb3b); height: 100px;">
+                    <h6>Vibrant</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+
+    // Button to open style selector
+    tEdtrPrpsStr += '<div class="text-center mt-3">';
+    tEdtrPrpsStr += '<button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#styleSelectorModal">Change Style</button>';
+    tEdtrPrpsStr += '</div>';
+
+    // Add script for style selection
+    tEdtrPrpsStr += `
+    <script>
+    $(document).ready(function() {
+        $('.style-option').on('click', function() {
+            var selectedStyle = $(this).data('style');
+            // Here you would regenerate the flyer with the new style
+            // For example: $('#flyerContainer').html(JSSHOP.ads.getNuEdtrPrpStr(tPrpDtarr, selectedStyle));
+            alert('Selected style: ' + selectedStyle + '. Please implement regeneration logic.');
+            $('#styleSelectorModal').modal('hide');
+        });
+    });
+    </script>
+    `;
+
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+
+    return tEdtrPrpsStr;
+};
+
+JSSHOP.ads.getNurEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
+    let tEdtrPrpsStr = "";
+    let gradientStyle = "";
+    let headerClass = "text-white font-weight-bold";
+    let subHeaderClass = "text-white";
+
+    // Define styles
+    switch(style) {
+        case 'classic':
+            gradientStyle = "background: linear-gradient(to right, #007bff, #ffffff);";
+            break;
+        case 'modern':
+            gradientStyle = "background: linear-gradient(to right, #00bcd4, #2196f3, #3f51b5);";
+            break;
+        case 'vibrant':
+            gradientStyle = "background: linear-gradient(to right, #ff4081, #ff1744, #ffeb3b);";
+            break;
+        default:
+            gradientStyle = "background: linear-gradient(to right, #007bff, #ffffff);";
+    }
+
+    // Start flyer container - landscape oriented for og:image (approx 1200x630)
+    tEdtrPrpsStr += `<div style="${gradientStyle} width: 1200px; height: 630px; position: relative; padding: 20px; box-sizing: border-box;"  id="dvTMCdemo">`;
+
+    // Header - positioned at top
+    tEdtrPrpsStr += `<div style="text-align: center; margin-bottom: 20px;">`;
+    tEdtrPrpsStr += `<h1 style="color: white; font-weight: bold; font-size: 36px; margin: 0;">${stxt[10]}... ${stxt[10]}...</h1>`;
+    tEdtrPrpsStr += `<p style="color: white; font-size: 18px; margin: 5px 0 0 0;">${stxt[40]}... ${stxt[40]}... ${stxt[40]}...</p>`;
+    tEdtrPrpsStr += '</div>';
+
+    // Properties container - horizontal layout
+    tEdtrPrpsStr += '<div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start; margin-bottom: 20px;">';
+    for(let i = 0; i < tPrpDtarr.length; i++) {
+        let tPrpDtObj = tPrpDtarr[i];
+        let imgSrc = currPrpImgsFldr + "/" + tPrpDtObj.pimage;
+        let title = LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle);
+        let location = tPrpDtObj.city + ", " + tPrpDtObj.state;
+        let price = tPrpDtObj.price + " ?";
+
+        // Property card - floated left for landscape
+        tEdtrPrpsStr += `<div style="float: left; width: ${tPrpDtarr.length > 2 ? '30%' : '45%'}; margin: 10px; background: rgba(255,255,255,0.9); border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); overflow: hidden;">`;
+        tEdtrPrpsStr += `<img src="${imgSrc}" alt="Property Image" style="width: 100%; height: 150px; object-fit: cover;">`;
+        tEdtrPrpsStr += '<div style="padding: 10px;">';
+        tEdtrPrpsStr += `<h5 style="font-weight: bold; margin: 0 0 5px 0; font-size: 16px;">${title}</h5>`;
+        tEdtrPrpsStr += `<p style="color: #666; margin: 0 0 5px 0; font-size: 14px;">${location}</p>`;
+        tEdtrPrpsStr += `<p style="font-weight: bold; color: #007bff; margin: 0; font-size: 18px;">${price}</p>`;
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
+    }
+    tEdtrPrpsStr += '<div style="clear: both;"></div>';
+    tEdtrPrpsStr += '</div>';
+
+    // Seller info - positioned at bottom right
+    tEdtrPrpsStr += '<div style="position: absolute; bottom: 20px; right: 20px; background: rgba(255,255,255,0.9); border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center;">';
+    tEdtrPrpsStr += `<h5 style="margin: 0 0 10px 0; font-size: 16px;">${stxt[912]}...</h5>`;
+    tEdtrPrpsStr += '<div style="display: flex; align-items: center;">';
+    tEdtrPrpsStr += `<img src="images/user/${u_icon.value}" alt="Agent" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">`;
+    tEdtrPrpsStr += '<div>';
+    tEdtrPrpsStr += `<p style="margin: 0; font-weight: bold; font-size: 14px;">${u_fullname.value}</p>`;
+    tEdtrPrpsStr += `<p style="margin: 0; color: #666; font-size: 12px;">${u_email.value}</p>`;
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+
+    tEdtrPrpsStr += '</div>';
+
+    return tEdtrPrpsStr;
+};
+
 JSSHOP.ads.getNwstEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
     let tEdtrPrpsStr = "";
     let gradientStyle = "";
@@ -9279,7 +8982,7 @@ JSSHOP.ads.getNwstEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
         let title = LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle);
         let location = tPrpDtObj.city + ", " + tPrpDtObj.state;
         let price = tPrpDtObj.price + "  &euro;";
-       
+
         // Property card - larger for better mobile readability
         tEdtrPCntStr += `<div style="float: left; width: ${tPrpDtarr.length > 2 ? '30%' : '45%'}; margin: 5px; background: rgba(255,255,255,0.95); border-radius: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); overflow: hidden;">`;
         tEdtrPCntStr += `<img src="${imgSrc}" alt="Property Image" style="width: 100%; height: 180px; object-fit: cover;">`;
@@ -9306,21 +9009,198 @@ JSSHOP.ads.getNwstEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
     tEdtrHdrStr += `<h1 style="color: white; font-weight: bold; font-size: 48px; margin: 0; line-height: 1.2;">${sulltitlestr}</h1>`;
     tEdtrHdrStr += `<p style="color: white; font-size: 24px; margin: 5px 0 0 0; line-height: 1.3;">${stxt[40]}... ${stxt[40]}... ${stxt[40]}...</p>`;
     tEdtrHdrStr += '</div>';
+    tEdtrPrpsStr += tEdtrHdrStr + tEdtrPCntStr;
+    /* demo of currQUsrLnksArr  to be used for the seller information box
+    [
+    {
+        "_id": "408",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24088",
+        "k_category": "facebook",
+        "k_title": "facebook",
+        "k_matter": "sadaw",
+        "k_privacy": "0",
+        "k_dadded": "1760828127"
+    },
+    {
+        "_id": "311",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "46",
+        "k_category": "whatsapp",
+        "k_title": "twitter",
+        "k_matter": "98989999",
+        "k_privacy": "0",
+        "k_dadded": "1745699399"
+    },
+    {
+        "_id": "310",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24088",
+        "k_category": "fax",
+        "k_title": "fax",
+        "k_matter": "fdfdf",
+        "k_privacy": "0",
+        "k_dadded": "1737284296"
+    },
+    {
+        "_id": "309",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24088",
+        "k_category": "facebook",
+        "k_title": "facebook",
+        "k_matter": "kjkhj",
+        "k_privacy": "0",
+        "k_dadded": "1736073494"
+    },
+    {
+        "_id": "308",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24087",
+        "k_category": "twitter",
+        "k_title": "twitter",
+        "k_matter": "ddddd",
+        "k_privacy": "0",
+        "k_dadded": "1735160114"
+    },
+    {
+        "_id": "307",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24087",
+        "k_category": "whatsapp",
+        "k_title": "whatsapp",
+        "k_matter": "ddddd",
+        "k_privacy": "0",
+        "k_dadded": "1735160107"
+    },
+    {
+        "_id": "306",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24087",
+        "k_category": "fax",
+        "k_title": "fax",
+        "k_matter": "ddddd",
+        "k_privacy": "0",
+        "k_dadded": "1735160098"
+    },
+    {
+        "_id": "305",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24087",
+        "k_category": "Telephone",
+        "k_title": "Telephone",
+        "k_matter": "ddddd",
+        "k_privacy": "0",
+        "k_dadded": "1735160092"
+    },
+    {
+        "_id": "304",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24087",
+        "k_category": "facebook",
+        "k_title": "facebook",
+        "k_matter": "ddddd",
+        "k_privacy": "0",
+        "k_dadded": "1735160086"
+    },
+    {
+        "_id": "298",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "46",
+        "k_category": "email",
+        "k_title": "twitter",
+        "k_matter": "aa@aa.com",
+        "k_privacy": "aa",
+        "k_dadded": "1733097054"
+    },
+    {
+        "_id": "297",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "46",
+        "k_category": "telephone",
+        "k_title": "twitter",
+        "k_matter": "gttrddds",
+        "k_privacy": "aa",
+        "k_dadded": "1731242261"
+    },
+    {
+        "_id": "256",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "46",
+        "k_category": "fax",
+        "k_title": "twitter",
+        "k_matter": "gttrddds",
+        "k_privacy": "aa",
+        "k_dadded": "1729252085"
+    }
+]
+    */
+    let contacts = [];
+    let preferred = ['whatsapp', 'telephone', 'email', 'facebook'];
+    for(let pref of preferred){
+        let link = currQUsrLnksArr.find(l => l.k_category === pref);
+        if(link){
+            contacts.push(link);
+            if(contacts.length >= 2) break;
+        }
+    }
+      // Seller info - positioned at bottom right
+    tEdtrPrpsStr += '<div style="background: rgba(255,255,255,0.9); border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center;">';
+    // tEdtrPrpsStr += `<h5 style="margin: 0 0 10px 0; font-size: 16px;">${stxt[912]}...</h5>`;
+    tEdtrPrpsStr += '<div style="display: flex; align-items: center;">';
+    tEdtrPrpsStr += `<img src="images/user/${u_icon.value}" alt="Agent" style="width: 80px; height: 80px; border-radius: 50%; margin-right: 10px;">`;
+    tEdtrPrpsStr += '<div>';
+    tEdtrPrpsStr += `<p style="margin: 0; font-weight: bold; font-size: 24px;">${u_fullname.value}</p>`;
+    // tEdtrPrpsStr += `<p style="margin: 0; color: #666; font-size: 12px;">${u_email.value}</p>`;
+    if(contacts.length > 0){
+        tEdtrPrpsStr += '<div style="margin-top: 10px; display: flex; justify-content: center; gap: 10px;">';
+        for(let contact of contacts){
+            let href = '';
+            if(contact.k_category === 'whatsapp'){
+                href = `https://wa.me/${contact.k_matter}`;
+            } else if(contact.k_category === 'telephone'){
+                href = `tel:${contact.k_matter}`;
+            } else if(contact.k_category === 'email'){
+                href = `mailto:${contact.k_matter}`;
+            } else if(contact.k_category === 'facebook'){
+                href = `https://facebook.com/${contact.k_matter}`;
+            }
+            if(href){
+                // tEdtrPrpsStr += `<a href="${href}" target="_blank"><img src="images/misc/ts-icon-${contact.k_category}.png" alt="${contact.k_category}" style="width: 24px; height: 24px;"></a>`;
+                // show the icon and contact info
+                tEdtrPrpsStr += `<div style="text-align: center;">`;
+                tEdtrPrpsStr += `<a href="${href}" target="_blank" style="text-decoration: none; color: inherit;">`;
+                tEdtrPrpsStr += `<img src="images/misc/ts-icon-${contact.k_category}.png" alt="${contact.k_category}" style="width: 24px; height: 24px;margin: 0 10px 0 0;">`;
+                tEdtrPrpsStr += `<span style="font-size: 20px;margin-right: 15px;"><b>${contact.k_matter}</b></span>`;
+                tEdtrPrpsStr += `</a>`;
+                tEdtrPrpsStr += `</div>`;
 
-    // !! Table cell wrapper
-    tEdtrPrpsStr += '<table><tr><td>' + tEdtrHdrStr + '</td></tr><tr><td>||||</td></tr><tr><td>' + tEdtrPCntStr + '</td></tr><tr><td>||||</td></tr><tr><td>';
-    
-    
-    tEdtrPrpsStr += JSSHOP.ads.getEditorUsrBoxStr("nada");
+            }
+        }
+        tEdtrPrpsStr += '</div>';
+    }
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    // end of seller info box
 
-    tEdtrPrpsStr += '</td></tr><tr><td>||||</td></tr></table>';
+
+
     tEdtrPrpsStr += '</div>'; // end of flyer container
 
     return tEdtrPrpsStr;
 };
-
-
- 
 
 JSSHOP.ads.initInteractiveElements = function(containerId) {
     const container = document.getElementById(containerId);
@@ -10473,12 +10353,13 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
         console.log("setNwstPropImages: " + mGPIobj.ptitle + " " + mGPIImg);
 
         // Enhanced property flyer with all elements overlaid on main image
-        tPrpFlyerMImgSTr = "<div class=\"property-flyer\" style=\"position:relative;width:100%;min-height:700px;border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);background-image:url('" + currPrpImgsFldr + "/" + mGPIImg + "');background-size:cover;background-position:center;background-repeat:no-repeat;\" id=\"dvTMCdemo\">";
+        tPrpFlyerMImgSTr = "<div class=\"property-flyer\" style=\"position:relative;width:100%;min-height:700px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);\" id=\"dvTMCdemo\">";
+
+        // Main image background with overlay (tallest to accommodate all overlaid elements)
+        tPrpFlyerMImgSTr += "<div style=\"position:relative;width:100%;height:600px;background-image:url('" + currPrpImgsFldr + "/" + mGPIImg + "');background-size:cover;background-position:center;background-repeat:no-repeat;\">";
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0.6) 100%);\"></div>";
 
  
-       //  tPrpFlyerMImgSTr += "<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0.6) 100%);\"></div>";
-
-        tPrpFlyerMImgSTr += "<table><tr><td><div style=\"color:white;font-size:24px;font-weight:bold;\">. ... .....</div></td><td>";
         // Property title overlay - now wraps around the price balloon
         tPrpFlyerMImgSTr += "<div style=\"color:#fff;z-index:10;display:flex;flex-direction:column;justify-content:flex-start;\">";
 
@@ -10498,7 +10379,7 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
         tPrpFlyerMImgSTr += "</div>";
         
         tPrpFlyerMImgSTr += "</div>"; // End title and price container
-            tPrpFlyerMImgSTr += "</td><td style=\"width:50px;\">...</td></tr></table>";
+    
         // add a clearfix
         tPrpFlyerMImgSTr += "<div style=\"clear:both;\"></div>";    
 
@@ -10575,9 +10456,6 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
 
         tPrpFlyerMImgSTr += "</div>"; // End gallery grid
 
-        tPrpFlyerMImgSTr += "</div>"; // End overlaid gallery section
-
-        
     let contacts = [];
     let preferred = ['whatsapp', 'telephone', 'email', 'facebook'];
     for(let pref of preferred){
@@ -10589,17 +10467,54 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
     }
  
                         // Seller information overlay - now positioned at the bottom of the main image
+ 
         tPrpFlyerMImgSTr += "<div style=\"position:absolute; bottom:10px; left:0; right:0; z-index:12;\">";
+        tPrpFlyerMImgSTr += "<div style=\"background: rgba(255,255,255,0.9); border-radius: 10px; margin: 15px; padding: 5px;box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center;\">";
+        tPrpFlyerMImgSTr += "<div style=\"display:flex;align-items:center;justify-content:center;\">";
+        tPrpFlyerMImgSTr += "<img src=\"images/user/" + u_icon.value + "\" style=\"width:85px;height:85px;border-radius:30%;object-fit:cover;border:1px solid #007bff;margin-right:8px;\" alt=\"Seller\">";
+        tPrpFlyerMImgSTr += "<div>";
+        tPrpFlyerMImgSTr += "<div style=\"font-weight:700;color:#333;font-size:22px;\">" + u_fullname.value + "</div>";
+        // tPrpFlyerMImgSTr += "<div style=\"font-size:18px;color:#666;\">" + u_email.value + "</div>";
+        if(contacts.length > 0){
+            tPrpFlyerMImgSTr += '<div style="margin-top: 5px; display: flex; justify-content: center; gap: 5px;">';
+            for(let contact of contacts){
+                let href = '';
+                if(contact.k_category === 'whatsapp'){
+                    href = `https://wa.me/${contact.k_matter}`;
+                } else if(contact.k_category === 'telephone'){
+                    href = `tel:${contact.k_matter}`;
+                } else if(contact.k_category === 'email'){
+                    href = `mailto:${contact.k_matter}`;
+                } else if(contact.k_category === 'facebook'){
+                    href = `https://facebook.com/${contact.k_matter}`;
+                }
+                if(href){
+        // tEdtrPrpsStr += `<a href="${href}" target="_blank"><img src="images/misc/ts-icon-${contact.k_category}.png" alt="${contact.k_category}" style="width: 24px; height: 24px;"></a>`;
+                // show the icon and contact info
+                tPrpFlyerMImgSTr += `<div style="text-align: center;">`;
+                tPrpFlyerMImgSTr += `<a href="${href}" target="_blank" style="text-decoration: none; color: inherit;">`;
+                tPrpFlyerMImgSTr += `<img src="images/misc/ts-icon-${contact.k_category}.png" alt="${contact.k_category}" style="width: 24px; height: 24px;margin: 0 10px 0 0;">`;
+                tPrpFlyerMImgSTr += `<span style="font-size: 20px;margin-right: 15px;"><b>${contact.k_matter}</b></span>`;
+                tPrpFlyerMImgSTr += `</a>`;
+                tPrpFlyerMImgSTr += `</div>`;                }
+            }
+            tPrpFlyerMImgSTr += '</div>';
+        }
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>";
 
- 
-        tPrpFlyerMImgSTr += JSSHOP.ads.getEditorUsrBoxStr("nada");
+     
 
-        tPrpFlyerMImgSTr += "</div>"; // End bottom positioned overlay container
- 
+        tPrpFlyerMImgSTr += "</div>"; // End overlaid gallery section
 
 
+        tPrpFlyerMImgSTr += "<div style=\"clear: both;\"></div>";
 
- 
+   ;
+        tPrpFlyerMImgSTr += "</div>"; // End main image background
+
         tPrpFlyerMImgSTr += "</div>"; // End property flyer
 
         // Create textarea for editing
@@ -10741,16 +10656,10 @@ JSSHOP.ads.trnsltImgPstObj = function() {
                 tSlctdPrpsArr.push(currSlctdPrpsObj[key]);
             }
         }
-        console.log("trnsltImgPstObj.tSlctdPrpsArr: " + JSON.stringify(tSlctdPrpsArr));
-       if (tSlctdPrpsArr.length === 1) {
-        tFlyrHStr = "";
-        getPropertyImages(tSlctdPrpsArr[0]);
-          } else {
-                if (tSlctdPrpsArr.length === 2) {
-                tFlyrHStr = JSSHOP.ads.getNwstEdtrPrpStr(tSlctdPrpsArr, "modern");
-                } else {
-                tFlyrHStr = JSSHOP.ads.getEditorPrpStr(tSlctdPrpsArr);
-                }
+        // if tSlctdPrpsArr has only one property, create a new function to get the property images from q_media
+         // tFlyrHStr = JSSHOP.ads.getInteractiveNwstEdtrPrpStr(tSlctdPrpsArr, "modern");
+   
+        tFlyrHStr = JSSHOP.ads.getNwstEdtrPrpStr(tSlctdPrpsArr, "modern");
         tEdtrDstr = JSSHOP.ads.getEdtrPrpDscStr(tSlctdPrpsArr);
         tPATtls = tSlctdPrpsArr[0].ptitle;
         tPATtlsDecded = decodeURIComponent(tPATtls);
@@ -10758,16 +10667,20 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         document.getElementById("tmp_p_title").value = tSPIttlStr;
          // tDesc = LZString.decompressFromEncodedURIComponent(tSlctdPrps
         console.log("trnsltImgPstObj.tEdtrDstr: " + tEdtrDstr);
-         _ifrm = document.getElementById('tmp_p_content_ifr');
+        // tinyMCE.activeEditor.setContent(tEdtrDstr);
+        _ifrm = document.getElementById('tmp_p_content_ifr');
         _ifrmDoc = _ifrm.contentDocument || _ifrm.contentWindow.document;
         _ifrmDoc.body.innerHTML = tEdtrDstr;
- 
-            tBlkFlyrHStr = "...";
-     tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tFlyrHStr + "</textarea>";
-     tDVDstr += "<div class=\"clearfix\"></div><br>";
-         document.getElementById("dvDemoView").innerHTML = tDVDstr;
-        setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
-            }
+    // Seller info - larger text, positioned to use space efficiently
+    // tEdtrPrpsStr += '<div style="position: absolute; bottom: 10px; right: 10px; background: rgba(255,255,255,0.95); border-radius: 15px; padding: 20px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); text-align: center;">';
+    // make it a dragable box at the bottom center
+    // seller info will be added as a dragable div on the generated dvTMCdemo div
+    // so that the user can position it anywhere on the flyer
+  
+
+
+    
+
     } else if(tSCval == "users") {
         tSlctdUsrsArr = null;
         tSlctdUsrsArr = "";
@@ -10779,7 +10692,40 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         }
         tFlyrHStr = JSSHOP.ads.getEditorUStr(tSlctdUsrsArr);
     }
-  
+    // create new editor in dvDemoView
+        if (tSlctdPrpsArr.length === 1) {
+        getPropertyImages(tSlctdPrpsArr[0]);
+        
+        } else {
+   // document.getElementById("dvCanvasView").innerHTML = tFlyrHStr;
+   // setTimeout(function() { JSSHOP.ads.initInteractiveElements('interactiveNwstFlyer');}, 1200);
+
+            tBlkFlyrHStr = "...";
+     tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tFlyrHStr + "</textarea>";
+     tDVDstr += "<div class=\"clearfix\"></div><br>";
+         document.getElementById("dvDemoView").innerHTML = tDVDstr;
+        setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+     /* 
+  tUslrPrpsStr = '<div id="drgblSlrInfo"  style="z-index:999999998;position:fixed;background: rgba(255,255,255,0.95); border-radius: 15px; padding: 20px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); text-align: center; cursor: move;">';
+    tUslrPrpsStr += `<h5 style="margin: 0 0 15px 0; font-size: 20px; line-height: 1.3;">${stxt[912]}...</h5>`;
+    tUslrPrpsStr += '<div style="display: flex; align-items: center;">';
+    tUslrPrpsStr += `<img src="images/user/${u_icon.value}" alt="Agent" style="width: 60px; height: 60px; border-radius: 50%; margin-right: 15px;">`;
+    tUslrPrpsStr += '<div>';
+    tUslrPrpsStr += `<p style="margin: 0; font-weight: bold; font-size: 18px; line-height: 1.4;">${u_fullname.value}</p>`;
+    tUslrPrpsStr += `<p style="margin: 0; color: #666; font-size: 16px; line-height: 1.5;">${u_email.value}</p>`;
+    tUslrPrpsStr += '</div>';
+    tUslrPrpsStr += '</div>';
+    tUslrPrpsStr += '</div>';
+
+        var tempDDDDiv = document.createElement("div");
+     tempDDDDiv.innerHTML = tUslrPrpsStr;
+    // appen as first child
+    dvDemoView.insertBefore(tempDDDDiv, dvDemoView.firstChild);
+     setTimeout(function() { JSSHOP.ui.dragElement(document.getElementById("drgblSlrInfo")); }, 1500);
+
+*/
+        }
+    // tinyMCE.activeEditor.setContent(tSwprStr);
  };
 
  JSSHOP.ads.getUpdtMapMrkrs = function(tmmtype, tmmobj) {
@@ -10970,18 +10916,7 @@ JSSHOP.ads.trnsltSwiperObj = function() {
                 tSlctdPrpsArr.push(currSlctdPrpsObj[key]);
                 tSwprTtlStr += LZString.decompressFromEncodedURIComponent(currSlctdPrpsObj[key].ptitle).substring(0, 20);
                 tSwprTtlStr += ", ";
-                if(currSlctdPrpsObj[key].pdesc) {
-                    console.log("trnsltSwiperObj.pdesc: " + currSlctdPrpsObj[key].pdesc);
-                    tTWIUYPdesc = currSlctdPrpsObj[key].pdesc;
-                    tUnzpPstr = LZString.decompressFromEncodedURIComponent(tTWIUYPdesc);
-                    if(tUnzpPstr.length > 100) {
-                    tSwprDscStr += tUnzpPstr.substring(0, 100) + "...";
-                    } else {    
-                    tSwprDscStr += tUnzpPstr;
-                    }
-                } else {
-                tSwprDscStr += "No description available.";
-                }
+                tSwprDscStr += LZString.decompressFromEncodedURIComponent(currSlctdPrpsObj[key].pdesc).substring(0, 100);
                 tSwprDscStr += "<hr>";
 
             }

@@ -167,6 +167,7 @@ var currPstsUsrArr = [];
 var currPstsPrpsArr = [];
 var currSlctdUsrObj = {};
 var currQUsrObj = {};
+var currQUsrLnksArr = [];
 var currSlctdPrpsObj = {};
 var currSwpCnfgObj = {};
 var currSwpCnfgArr = [];

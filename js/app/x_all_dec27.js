@@ -3221,75 +3221,6 @@ tGPSstr += "<br>";
 
 };
 
-JSSHOP.ads.getEdtrPrpLstStr = function(tPrpDtarr, style = 'modern') {
-    let tEdtrPrpsStr = "";
-    let gradientStyle = "";
-
-    // Define styles
-    switch(style) {
-        case 'classic':
-            gradientStyle = "background: linear-gradient(to bottom, #007bff, #ffffff);";
-            break;
-        case 'vibrant':
-            gradientStyle = "background: linear-gradient(to bottom right, #ff4081, #ff1744, #ffeb3b);";
-            break;
-        default:
-            gradientStyle = "background: linear-gradient(to right, #00bcd4, #2196f3, #3f51b5);";
-    }
-
-    // Start flyer container - vertical list
-    tEdtrPrpsStr += `<div style="${gradientStyle} width: 100%; min-height: 430px; position: relative; padding: 10px; box-sizing: border-box;" id="dvTMCdemo">`;
-
-    // Header - larger text for mobile readability
-    tEdtrPrpsStr += `<div style="text-align: center; margin-bottom: 10px;">`;
-    tEdtrPrpsStr += `<h1 style="color: white; font-weight: bold; font-size: 48px; margin: 0; line-height: 1.2;">${stxt[10]}... ${stxt[10]}...</h1>`;
-    tEdtrPrpsStr += `<p style="color: white; font-size: 24px; margin: 5px 0 0 0; line-height: 1.3;">${stxt[40]}... ${stxt[40]}... ${stxt[40]}...</p>`;
-    tEdtrPrpsStr += '</div>';
-
-    // Properties container - vertical list
-    tEdtrPrpsStr += '<div style="display: block; margin-bottom: 10px;">';
-    for(let i = 0; i < tPrpDtarr.length; i++) {
-        let prop = tPrpDtarr[i];
-        let imgSrc = (prop.pimage && prop.pimage !== "noQvalue") ? `admin/property/${prop.pimage}` : "images/misc/example_thumb.png";
-        let priceStr = prop.price ? `<span style="color:#2196f3;font-weight:bold;font-size:20px;">${prop.price} ?</span>` : "";
-        let titleStr = prop.ptitle ? `<span style="font-size:20px;font-weight:bold;color:#333;">${prop.ptitle}</span>` : "";
-        let cityStr = prop.city ? `<span style="color:#666;">${prop.city}</span>` : "";
-        let stateStr = prop.state ? `<span style="color:#999;">${prop.state}</span>` : "";
-        let descStr = prop.pdesc ? `<div style="color:#444;font-size:15px;">${prop.pdesc}</div>` : "";
-
-        tEdtrPrpsStr += `
-        <div style="display:flex;align-items:center; background:rgba(255,255,255,0.95); border-radius:12px; margin:10px 0; box-shadow:0 2px 8px rgba(0,0,0,0.07); padding:10px;">
-            <div style="flex:0 0 120px; text-align:center;">
-                <img src="${imgSrc}" alt="Property" style="width:110px; height:80px; object-fit:cover; border-radius:8px;">
-            </div>
-            <div style="flex:1; padding-left:16px;">
-                ${titleStr}<br>
-                ${cityStr} ${stateStr}<br>
-                ${priceStr}
-                ${descStr}
-            </div>
-        </div>
-        `;
-    }
-    tEdtrPrpsStr += '<div style="clear: both;"></div>';
-    tEdtrPrpsStr += '</div>';
-
-    // Seller info - positioned at bottom right
-    tEdtrPrpsStr += '<div style="background: rgba(255,255,255,0.9); border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; margin-top:20px;">';
-    tEdtrPrpsStr += `<h5 style="margin: 0 0 10px 0; font-size: 16px;">${stxt[912]}...</h5>`;
-    tEdtrPrpsStr += '<div style="display: flex; align-items: center; justify-content:center;">';
-    tEdtrPrpsStr += `<img src="images/user/${u_icon.value}" alt="Agent" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">`;
-    tEdtrPrpsStr += '<div>';
-    tEdtrPrpsStr += `<p style="margin: 0; font-weight: bold; font-size: 14px;">${u_fullname.value}</p>`;
-    tEdtrPrpsStr += `<p style="margin: 0; color: #666; font-size: 12px;">${u_email.value}</p>`;
-    tEdtrPrpsStr += '</div>';
-    tEdtrPrpsStr += '</div>';
-    tEdtrPrpsStr += '</div>';
-
-    tEdtrPrpsStr += '</div>'; // end of flyer container
-
-    return tEdtrPrpsStr;
-};
 
 JSSHOP.ui.getPickerDiv = function(tPDtype) {
     try {
@@ -8095,42 +8026,11 @@ tUpdteListObj["fav"] = stxt[73];
 
         tDDUpdateStr = JSSHOP.ui.getNuBSdropDstr(tDDUdteObj);
 
-        /*
-        tPostsAuthObj = {};
-tPostsAuthObj["user"] = "Me";
-tPostsAuthObj["co"] = "Company";
-tPostsAuthObj["anon"] = "Anonymous";
-tPostsAuthObj["none"] = "None";
-svftObj["postauth"] = tPostsAuthObj;
-        */
 
-        // tUdtsStr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;margin: 0 auto;\">";
-        tpauther = tUdtsObj.p_author;
-        if(tpauther == "user") {
-         tUdtsStr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;margin: 0 auto;\">";
-        } else if(tpauther == "co") {
-         tUdtsStr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;margin: 0 auto;border-left: 4px solid #4caf50;\">";
-        } else if(tpauther == "anon") { 
-            tUdtsStr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;margin: 0 auto;border-left: 4px solid #9e9e9e;\">";    
-        } else {
-            tyyy = "ytt";
-            tUdtsStr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;margin: 0 auto;\">";
-         // tUdtsStr += "";
-        }
+        tUdtsStr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;margin: 0 auto;\">";
         tUdtsStr += "<table style=\"width: 100%\"><tr><td style=\"min-width:40px;\">";
-        if(tpauther == "user") {
         tUdtsStr += "<a href=\"javascript:eindex('aa-show-user', 'pid=aa-show-user&tuid=" + tUdtsObj.p_uid + "');\" class=\"crsrPointer\">";
         tUdtsStr += "<div><img alt=\"Profile\" src=\"images/user/s_thumb" + tUdtsObj.u_icon + "\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">" + tUdtsObj.u_fullname + "</span></div></a>";
-        } else if(tpauther == "co") {
-        tUdtsStr += "<a href=\"javascript:eindex('aa-show-place', 'pid=aa-show-place&tcid=" + tUdtsObj.p_coid + "');\" class=\"crsrPointer\">";
-        tUdtsStr += "<div><img alt=\"Company\" src=\"images/misc/thumb_logo_ai_trimmed.gif\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">" + tUdtsObj.co_name + "</span></div></a>";
-        } else if(tpauther == "anon") {
-        tUdtsStr += "<div><img alt=\"Anonymous\" src=\"images/user/s_thumbdefault.png\"  class=\"icnRndnUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">" + stxt[102] + "</span></div>";
-        } else {
-        tUdtsStr += "";
-        }
-
-
         tUdtsStr += "</td><td>";
         tUdtsStr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-update','pid=aa-show-update&tupid=" + tUdtsObj._id + "')\">" + decodeURIComponent(tUdtsObj.p_title)  + "</a></h5>";
         // tUdtsStr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + tUdtsObj.p_location + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><b>" + tPostsTypeObj[tUdtsObj.p_ptype] + "</b></div></td></tr></tbody></table>";
@@ -8153,13 +8053,7 @@ svftObj["postauth"] = tPostsAuthObj;
         // tHtmlStrpd = ttUpPcontent.replace(/(<([^>]+)>)/ig,"");
         // only allow img and a tags
         if(pid == "aa-show-update") {
-//            javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=129 ')
-// if #PROPID: is present in content, replace with link to property
-         
-           //  tUpPcontent = ttUpPcontent;
-              tUpPcontent = ttUpPcontent.replace(/#PROPID:([0-9]+)/g, function(match, p1) {
-                return "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + p1 + "');\" class=\"txtClrHdr txtBold\"><u>#PROPID:" + p1 + "</u></a>";
-            });
+            tUpPcontent = ttUpPcontent;
         } else {
         tHtmlStrpd = ttUpPcontent.replace(/<(?!\/?(a|img)(?=>|\s.*>))\/?.*?>/ig, "");
         if(tHtmlStrpd.length > 100) {
@@ -8395,103 +8289,7 @@ setTimeout(
  
  
 }
-// Further improved Updates Feed with privacy logic
-JSSHOP.ads.doNurUpdatesFeed = function(tUFCnfObj) {
-    let tuplmt = 10;
-    let tuptype = "noQvalue";
-    let tupuid = 0;
-    let tupcb = "donada";
-    let tuppstid = 0;
-    let tQstr = "";
-    let langWhere = "(psts.p_lang = '" + usrlang + "' or psts.p_lang = '" + deflang + "')";
-    let includeOtherLang = true;
-    let quidVal = (typeof quid !== 'undefined' && quid) ? quid : (getCookie && getCookie('quid')) ? getCookie('quid') : 0;
-    let privacyWhere = "";
-    if (quidVal && quidVal != 0) {
-        privacyWhere = "((psts.p_privacy = 'public' or psts.p_privacy = 'members') or (psts.p_privacy = 'private' and psts.p_uid = " + quidVal + "))";
-    } else {
-        privacyWhere = "(psts.p_privacy = 'public')";
-    }
-    if (tUFCnfObj.uppstid) {
-        tuppstid = tUFCnfObj.uppstid;
-        tQstr += "select psts.*, u.u_icon, u.u_fullname from qposts psts, quser u where psts._id > 0 and psts.p_uid = u._id and psts._id = " + tuppstid;
-    } else {
-        tQstr += "select psts.*, u.u_icon, u.u_fullname from qposts psts, quser u where psts._id > 0 and psts.p_rtype = '5' and psts.p_uid = u._id and (" + langWhere;
-        if (includeOtherLang) {
-            tQstr += " or (psts.p_lang != '" + usrlang + "' and psts.p_lang != '" + deflang + "')";
-        }
-        tQstr += ") and " + privacyWhere;
-        if (tUFCnfObj.uptype) {
-            tuptype = tUFCnfObj.uptype;
-            tQstr += " and psts.p_type = '" + tuptype + "'";
-        }
-        if (tUFCnfObj.upuid) {
-            tupuid = tUFCnfObj.upuid;
-            tQstr += " and psts.p_uid = " + tUFCnfObj.upuid;
-        }
-        if (tUFCnfObj.upppage) {
-            tppgtype = tUFCnfObj.upppage;
-            tQstr += " and psts.p_ppage =  '" + tUFCnfObj.upppage + "'";
-        }
-        tQstr += " and psts.p_rtype = '5'";
-        tQstr += " order by case when psts.p_lang = '" + usrlang + "' then 1 when psts.p_lang = '" + deflang + "' then 2 else 3 end, psts._id desc ";
-        if (tUFCnfObj.uplmt) {
-            tuplmt = tUFCnfObj.uplmt;
-            tQstr += " limit " + tuplmt;
-        }
-    }
-    if (tUFCnfObj.upcb) {
-        tupcb = tUFCnfObj.upcb;
-    }
-    console.log("doNurUpdatesFeed.tQstr: " + tQstr);
-    doQComm(tQstr, null, tupcb);
-};
 
-// Improved Updates Feed prioritizing user/default language but including others if needed
-JSSHOP.ads.doNuUpdatesFeed = function(tUFCnfObj) {
-    let tuplmt = 10;
-    let tuptype = "noQvalue";
-    let tupuid = 0;
-    let tupcb = "donada";
-    let tuppstid = 0;
-    let tQstr = "";
-    let langWhere = "(psts.p_lang = '" + usrlang + "' or psts.p_lang = '" + deflang + "')";
-    let includeOtherLang = true;
-    if (tUFCnfObj.uppstid) {
-        tuppstid = tUFCnfObj.uppstid;
-        tQstr += "select psts.*, u.u_icon, u.u_fullname from qposts psts, quser u where psts._id > 0 and psts.p_uid = u._id and psts._id = " + tuppstid;
-        includeOtherLang = false;
-    } else {
-        tQstr += "select psts.*, u.u_icon, u.u_fullname from qposts psts, quser u where psts._id > 0 and psts.p_rtype = '5' and psts.p_uid = u._id and (" + langWhere;
-        if (includeOtherLang) {
-            tQstr += " or (psts.p_lang != '" + usrlang + "' and psts.p_lang != '" + deflang + "')";
-        }
-        tQstr += ")";
-        if (tUFCnfObj.uptype) {
-            tuptype = tUFCnfObj.uptype;
-            tQstr += " and psts.p_type = '" + tuptype + "'";
-        }
-        if (tUFCnfObj.upuid) {
-            tupuid = tUFCnfObj.upuid;
-            tQstr += " and psts.p_uid = " + tUFCnfObj.upuid;
-        }
-        if (tUFCnfObj.upppage) {
-            tppgtype = tUFCnfObj.upppage;
-            tQstr += " and psts.p_ppage =  '" + tUFCnfObj.upppage + "'";
-        }
-        tQstr += " and psts.p_rtype = '5'";
-        tQstr += " order by case when psts.p_lang = '" + usrlang + "' then 1 when psts.p_lang = '" + deflang + "' then 2 else 3 end, psts._id desc ";
-        if (tUFCnfObj.uplmt) {
-            tuplmt = tUFCnfObj.uplmt;
-            tQstr += " limit " + tuplmt;
-        }
-    }
-    if (tUFCnfObj.upcb) {
-        tupcb = tUFCnfObj.upcb;
-    }
-    console.log("doNuUpdatesFeed.tQstr: " + tQstr);
-    doQComm(tQstr, null, tupcb);
-};
 
 JSSHOP.ads.doUpdatesFeed = function(tUFCnfObj) {
     tuplmt = 10;
@@ -8515,10 +8313,6 @@ JSSHOP.ads.doUpdatesFeed = function(tUFCnfObj) {
     if(tUFCnfObj.upuid) {
         tupuid = tUFCnfObj.upuid;
         tQstr += " and psts.p_uid = " + tUFCnfObj.upuid;
-    }
-        if(tUFCnfObj.upppage) {
-        tppgtype = tUFCnfObj.upppage;
-        tQstr += " and psts.p_ppage =  '" +  tUFCnfObj.upppage + "'";
     }
     tQstr += " and psts.p_rtype = '5'";
 
@@ -8565,14 +8359,11 @@ JSSHOP.ads.getTinyTransFileStr = function() {
     return tTnyTransFileStr;
 };
 
-
 JSSHOP.ads.intDemoEditor = function() {
-
     // width is current viewport width
     var ewidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     // set height to a 1.91:1 ratio based on the width
     var eheight = Math.round(ewidth / 1.91);
-    var tQRimgSTr = doQRimgSrcStr(currWebHome + "index.html?pid=aa-show-user&tuid=" + quid, 200);
     tDemoMCEobj = {
         selector: "textarea.inpDemoEdtr",
         theme: 'modern',
@@ -8583,25 +8374,25 @@ JSSHOP.ads.intDemoEditor = function() {
         visual: false,
         resize: true,
         height: 500,
-     
+ 
+        // use tinymce in canvas
+
+        /* content_css: [
+            'css/x_dev.css'
+        ]
+        */
         plugins: [
             'advlist autolink lists link image charmap print preview hr anchor pagebreak',
             'searchreplace wordcount visualblocks visualchars code fullscreen',
             'insertdatetime media nonbreaking save table contextmenu directionality',
-            'emoticons template paste textcolor colorpicker textpattern imagetools code bgcolorpicker mediapop'
+            'emoticons template paste textcolor colorpicker textpattern imagetools code'
         ],
         toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image table',
-        toolbar2: 'print preview media | forecolor backcolor emoticons imagetools fontsizeselect | fontselect | code | template | bgcolorpicker | mediapop',
+        toolbar2: 'print preview media | forecolor backcolor emoticons imagetools fontsizeselect | fontselect | code',
         image_advtab: true,
         templates: [
-            { title: 'QRCode', content: tQRimgSTr },
-            // create some templates for property listings and user info
-            { title: 'Seller Info', content: JSSHOP.ads.getEditorUsrBoxStr("nada") },
-            // create some balloons for property features
-            { title: 'Feature 1', content: '<div style="background-color:#fff0;border:1px solid #cccccc;padding:10px;border-radius:10px;box-shadow:2px 2px 5px rgba(0,0,0,0.3);width:200px;text-align:center;"><h3>Feature 1</h3><p>Description of feature 1.</p></div>' },
-            { title: 'Feature 2', content: '<div style="background-color:#fff0;border:1px solid #cccccc;padding:10px;border-radius:10px;box-shadow:2px 2px 5px rgba(0,0,0,0.3);width:200px;text-align:center;"><h3>Feature 2</h3><p>Description of feature 2.</p></div>' },
-            { title: 'Feature 3', content: '<div style="background-color:#fff0;border:1px solid #cccccc;padding:10px;border-radius:10px;box-shadow:2px 2px 5px rgba(0,0,0,0.3);width:200px;text-align:center;"><h3>Feature 3</h3><p>Description of feature 3.</p></div>' }
-
+            { title: 'Test template 1', content: 'Test 1' },
+            { title: 'Test template 2', content: 'Test 2' }
         ],
         content_css: [
             'css/x_dev.css','css/bootstrap.min.css','css/font-awesome.min.css','css/primer.css'
@@ -8631,8 +8422,6 @@ JSSHOP.ads.intDemoEditor = function() {
         // }
         
     };
-  
-
     if(usrlang == "en_us") {
     tinymce.init(tDemoMCEobj);
     } else {
@@ -8645,9 +8434,8 @@ JSSHOP.ads.intDemoEditor = function() {
 
 
     editor = tinymce.activeEditor;
-    /*
     editor.addButton('preview', {
-        text: 'Previeeeeew',
+        text: 'Preview',
         icon: false,
         onclick: function () {
             // Open window
@@ -8668,386 +8456,8 @@ JSSHOP.ads.intDemoEditor = function() {
             })
         }
     });
- 
-    */
-tinymce.PluginManager.add('mediapop', function (editor, url) {
-    // Add toolbar button
-    editor.addButton('mediapop', {
-        text: 'Media Pop',
-        icon: false,
-        onclick: openMediaPickerDialog
-    });
-    // Add menu item
-    editor.addMenuItem('mediapop', {
-        text: 'Media Pop',
-        icon: false,
-        onclick: openMediaPickerDialog
-    });
-});    
-tinymce.PluginManager.add('bgcolorpicker', function (editor, url) {
-    
-     
-    // Add toolbar button
-    editor.addButton('bgcolorpicker', {
-        text: 'Flyer BackGround',
-        icon: false,
-        onclick: openBgColorPickerDialog
-    });
-    // Add menu item
-    editor.addMenuItem('bgcolorpicker', {
-        text: 'Flyer BackGround',
-        icon: false,
-        onclick: openBgColorPickerDialog
-    });
-});
 
 };
-
-// Helper function to find the closest parent with class 'gallery-item'
-function findClosestGalleryItem(node, editor) {
-    while (node && node !== editor.getBody()) {
-        if (node.classList && node.classList.contains('gallery-item')) {
-            return node;
-        }
-        node = node.parentNode;
-    }
-    return null;
-}
-
-function openMediaPickerDialog() { 
-      var amppropArr = [];
-    try {
-        if (window.currPstsPrpsArr && window.currPstsPrpsArr.length) {
-            amppropArr = window.currPstsPrpsArr;
-        }
-    } catch (e) { }
-    var grad1 = '#2196f3', grad2 = '#e3f2fd';
-
-    // Tab buttons
-    var tabHtml = `
-        <div style="margin-bottom:10px;">
-            <button type="button" id="mp_tab_gradient" style="margin-right:10px;padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Gradient Fill</button>
-            <button type="button" id="mp_tab_solid" style="margin-right:10px;padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Solid Color</button>
-            <button type="button" id="mp_tab_image" style="padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Property Image</button>
-        </div>
-    `;
-
-    // Gradient tab content
-    var gradientHtml = `
-        <div id="mp_tab_gradient_content">
-            <label style="display:block;margin-bottom:5px;">Color 1: <input type="text" id="mp_grad1" value="${grad1}" data-coloris style="margin-right:10px;width:100px;"></label>
-            <label style="display:block;margin-bottom:5px;">Color 2: <input type="text" id="mp_grad2" value="${grad2}" data-coloris style="width:100px;"></label>
-            <div id="mp_gradPreview" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:linear-gradient(135deg,${grad1},${grad2});border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="mp_grad_border"> <label for="mp_grad_border">Apply to Border</label></div>
-            <button type="button" id="mp_apply_gradient" style="padding:5px 10px;border:1px solid #ccc;background:#fff;border-radius:4px;">Apply Gradient</button>
-        </div>
-    `;
-
-    // Solid color tab content
-    var solidHtml = `
-        <div id="mp_tab_solid_content" style="display:none;">
-            <label style="display:block;margin-bottom:5px;">Color: <input type="text" id="mp_solid" value="#2196f3" data-coloris style="width:100px;"></label>
-            <div id="mp_solidPreview" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:#2196f3;border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="mp_solid_border"> <label for="mp_solid_border">Apply to Border</label></div>
-            <button type="button" id="mp_apply_solid" style="padding:5px 10px;border:1px solid #ccc;background:#fff;border-radius:4px;">Apply Solid Color</button>
-        </div>
-    `;
-
-    // Images tab content
-    var imagesHtml = '<div id="mp_tab_image_content" style="display:none;min-height:350px;max-height:400px;overflow:auto;">';
-        imagesHtml += '<div><input type="checkbox" id="mp_set_bg"> <label for="mp_set_bg">Set as Background</label></div>';
-    for (var i = 0; i < amppropArr.length; i++) {
-        var amprop = amppropArr[i];
-        var imgSrc = (amprop.pimage && amprop.pimage !== "noQvalue") ? 'images/property/s_thumb' + amprop.pimage : "images/misc/example_thumb.png";
-        var title = amprop.ptitle ? LZString.decompressFromEncodedURIComponent(decodeURIComponent(amprop.pd_prptitle || amprop.ptitle)) : '';
-        imagesHtml += '<div style="display:inline-block;margin:6px;text-align:center;border:1px solid #ddd;padding:5px;border-radius:4px;background:#f9f9f9;cursor:pointer;" onclick="setMdaBgImage(\'' + imgSrc.replace('s_thumb', '') + '\');JSSHOP.ui.closeLbox();">';
-        imagesHtml += '<img src="' + imgSrc + '" style="width:90px;height:70px;object-fit:cover;border-radius:6px;" />';
-        imagesHtml += '<div style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:5px;">' + title + '</div></div>';
-        }
-
-    imagesHtml += '</div>';
-
-    // Full dialog HTML
-    tdialogHtml = tabHtml + gradientHtml + solidHtml + imagesHtml;
-    // wrap tdialogHtml in a div with min height 80% of viewport height
-    var dialogHtml = '<div style="min-height:80vh;max-height:90vh;overflow:auto;">' + tdialogHtml + '</div>';
-    // Add event listeners after rendering
-    setTimeout(function() {
-        // Tab switching
-        document.getElementById('mp_tab_gradient').onclick = function() {
-            document.getElementById('mp_tab_gradient_content').style.display = 'block';
-            document.getElementById('mp_tab_solid_content').style.display = 'none';
-            document.getElementById('mp_tab_image_content').style.display = 'none';
-        };
-        document.getElementById('mp_tab_solid').onclick = function() {
-            document.getElementById('mp_tab_gradient_content').style.display = 'none';
-            document.getElementById('mp_tab_solid_content').style.display = 'block';
-            document.getElementById('mp_tab_image_content').style.display = 'none';
-        };
-        document.getElementById('mp_tab_image').onclick = function() {
-            document.getElementById('mp_tab_gradient_content').style.display = 'none';
-            document.getElementById('mp_tab_solid_content').style.display = 'none';
-            document.getElementById('mp_tab_image_content').style.display = 'block';
-        };
-
-        // Gradient preview
-        document.getElementById('mp_grad1').onchange = function() {
-            grad1 = this.value;
-            document.getElementById('mp_gradPreview').style.background = 'linear-gradient(135deg,' + grad1 + ',' + grad2 + ')';
-        };
-        document.getElementById('mp_grad2').onchange = function() {
-            grad2 = this.value;
-            document.getElementById('mp_gradPreview').style.background = 'linear-gradient(135deg,' + grad1 + ',' + grad2 + ')';
-        };
-
-        // Apply gradient
-        document.getElementById('mp_apply_gradient').onclick = function() {
-            setMdaBgGradient(grad1, grad2, document.getElementById('mp_grad_border').checked);
-            JSSHOP.ui.closeLbox();
-        };
-
-        // Solid preview
-        document.getElementById('mp_solid').onchange = function() {
-            document.getElementById('mp_solidPreview').style.background = this.value;
-        };
-
-        // Apply solid
-        document.getElementById('mp_apply_solid').onclick = function() {
-            setMdaBgSolidColor(document.getElementById('mp_solid').value, document.getElementById('mp_solid_border').checked);
-            JSSHOP.ui.closeLbox();
-        };
-
-        // Initialize Coloris if available
-        if (window.Coloris) {
-            Coloris({
-                el: '[data-coloris]',
-                swatches: ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']
-            });
-        }
-    }, 800);
-
-    JSSHOP.ui.popAndFillLbox(dialogHtml);
-}
-function openBgColorPickerDialog() {
-    var propArr = [];
-    try {
-        if (window.currPstsPrpsArr && window.currPstsPrpsArr.length) {
-            propArr = window.currPstsPrpsArr;
-        }
-    } catch (e) { }
-
-    var grad1 = '#2196f3', grad2 = '#e3f2fd';
-
-    // Tab buttons
-    var tabHtml = `
-        <div style="margin-bottom:10px;">
-            <button type="button" id="bgc_tab_gradient" style="margin-right:10px;padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Gradient Fill</button>
-            <button type="button" id="bgc_tab_solid" style="margin-right:10px;padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Solid Color</button>
-            <button type="button" id="bgc_tab_image" style="padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Property Image</button>
-        </div>
-    `;
-
-    // Gradient tab content
-    var gradientHtml = `
-        <div id="bgc_tab_gradient_content">
-            <label style="display:block;margin-bottom:5px;">Color 1: <input type="text" id="bgc_grad1" value="${grad1}" data-coloris style="margin-right:10px;width:100px;"></label>
-            <label style="display:block;margin-bottom:5px;">Color 2: <input type="text" id="bgc_grad2" value="${grad2}" data-coloris style="width:100px;"></label>
-            <div id="gradPreview" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:linear-gradient(135deg,${grad1},${grad2});border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="bgc_grad_border"> <label for="bgc_grad_border">Apply to Border</label></div>
-            <button type="button" id="bgc_apply_gradient" style="padding:5px 10px;border:1px solid #ccc;background:#fff;border-radius:4px;">Apply Gradient</button>
-        </div>
-    `;
-
-    // Solid color tab content
-    var solidHtml = `
-        <div id="bgc_tab_solid_content" style="display:none;">
-            <label style="display:block;margin-bottom:5px;">Color: <input type="text" id="bgc_solid" value="#2196f3" data-coloris style="width:100px;"></label>
-            <div id="solidPreview" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:#2196f3;border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="bgc_solid_border"> <label for="bgc_solid_border">Apply to Border</label></div>
-            <button type="button" id="bgc_apply_solid" style="padding:5px 10px;border:1px solid #ccc;background:#fff;border-radius:4px;">Apply Solid Color</button>
-        </div>
-    `;
-
-    // Images tab content
-    var imagesHtml = '<div id="bgc_tab_image_content" style="display:none;max-height:250px;overflow:auto;">';
-    for (var i = 0; i < propArr.length; i++) {
-        var prop = propArr[i];
-        var imgSrc = (prop.pimage && prop.pimage !== "noQvalue") ? 'images/property/s_thumb' + prop.pimage : "images/misc/example_thumb.png";
-        var title = prop.ptitle ? LZString.decompressFromEncodedURIComponent(decodeURIComponent(prop.pd_prptitle || prop.ptitle)) : '';
-        imagesHtml += '<div style="display:inline-block;margin:6px;text-align:center;border:1px solid #ddd;padding:5px;border-radius:4px;background:#f9f9f9;cursor:pointer;" onclick="setBgImage(\'' + imgSrc.replace('s_thumb', '') + '\');JSSHOP.ui.closeLbox();">';
-        imagesHtml += '<img src="' + imgSrc + '" style="width:90px;height:70px;object-fit:cover;border-radius:6px;" />';
-        imagesHtml += '<div style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:5px;">' + title + '</div></div>';
-    }
-    imagesHtml += '</div>';
-
-    // Full dialog HTML
-    var dialogHtml = tabHtml + gradientHtml + solidHtml + imagesHtml;
-
-    // Add event listeners after rendering
-    setTimeout(function() {
-        var tabGradient = document.getElementById('bgc_tab_gradient');
-        var tabSolid = document.getElementById('bgc_tab_solid');
-        var tabImage = document.getElementById('bgc_tab_image');
-        var gradContent = document.getElementById('bgc_tab_gradient_content');
-        var solidContent = document.getElementById('bgc_tab_solid_content');
-        var imgContent = document.getElementById('bgc_tab_image_content');
-        var grad1Input = document.getElementById('bgc_grad1');
-        var grad2Input = document.getElementById('bgc_grad2');
-        var gradPreview = document.getElementById('gradPreview');
-        var solidInput = document.getElementById('bgc_solid');
-        var solidPreview = document.getElementById('solidPreview');
-        var applyBtn = document.getElementById('bgc_apply_gradient');
-        var applySolidBtn = document.getElementById('bgc_apply_solid');
-
-        function updatePreview() {
-            grad1 = grad1Input.value;
-            grad2 = grad2Input.value;
-            gradPreview.style.background = 'linear-gradient(135deg,' + grad1 + ',' + grad2 + ')';
-        }
-
-        tabGradient.onclick = function() {
-            gradContent.style.display = '';
-            solidContent.style.display = 'none';
-            imgContent.style.display = 'none';
-        };
-        tabSolid.onclick = function() {
-            gradContent.style.display = 'none';
-            solidContent.style.display = '';
-            imgContent.style.display = 'none';
-        };
-        tabImage.onclick = function() {
-            gradContent.style.display = 'none';
-            solidContent.style.display = 'none';
-            imgContent.style.display = '';
-        };
-
-        grad1Input.onchange = updatePreview;
-        grad2Input.onchange = updatePreview;
-        solidInput.onchange = function() {
-            solidPreview.style.background = this.value;
-        };
-
-        applyBtn.onclick = function() {
-            setBgGradient(grad1, grad2, document.getElementById('bgc_grad_border').checked);
-            JSSHOP.ui.closeLbox();
-        };
-        applySolidBtn.onclick = function() {
-            setBgSolidColor(solidInput.value, document.getElementById('bgc_solid_border').checked);
-            JSSHOP.ui.closeLbox();
-        };
-
-        // Initialize Coloris if available
-        if (window.Coloris) {
-            Coloris({
-                el: '[data-coloris]',
-                swatches: ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']
-            });
-        }
-    }, 800);
-
-    JSSHOP.ui.popAndFillLbox(dialogHtml);
-}
-
-// Function to set background gradient
-function setBgGradient(color1, color2, isBorder = false) {
-    console.log("setBgGradient.colors: " + color1 + ", " + color2 + ", isBorder: " + isBorder);
-    var iframe = document.getElementById('taDemoEdtr_ifr');
-    if (iframe && iframe.contentDocument) {
-        var demoDiv = iframe.contentDocument.getElementById('dvTMCdemo');
-        if (demoDiv) {
-            if (isBorder) {
-                demoDiv.style.borderImage = 'linear-gradient(135deg, ' + color1 + ', ' + color2 + ') 1';
-                demoDiv.style.border = '5px solid transparent';
-            } else {
-                demoDiv.style.backgroundImage = 'none';
-                demoDiv.style.background = 'linear-gradient(135deg, ' + color1 + ', ' + color2 + ')';
-            }
-        }
-    }
-}
-
-// Function to set background image
-function setBgImage(imgSrc) {
-    var iframe = document.getElementById('taDemoEdtr_ifr');
-    if (iframe && iframe.contentDocument) {
-        var demoDiv = iframe.contentDocument.getElementById('dvTMCdemo');
-        if (demoDiv) {
-            demoDiv.style.background = 'none';
-            demoDiv.style.backgroundImage = 'url(' + imgSrc + ')';
-            demoDiv.style.backgroundSize = 'cover';
-            demoDiv.style.backgroundPosition = 'center';
-            demoDiv.style.backgroundRepeat = 'no-repeat';
-        }
-    }
-}
-
-// Function to set solid color background or border
-function setBgSolidColor(color, isBorder = false) {
-    console.log("setBgSolidColor.color: " + color + ", isBorder: " + isBorder);
-    var iframe = document.getElementById('taDemoEdtr_ifr');
-    if (iframe && iframe.contentDocument) {
-        var demoDiv = iframe.contentDocument.getElementById('dvTMCdemo');
-        if (demoDiv) {
-            if (isBorder) {
-                demoDiv.style.borderColor = color;
-                demoDiv.style.border = '5px solid ' + color;
-            } else {
-                demoDiv.style.backgroundColor = color;
-                demoDiv.style.backgroundImage = 'none';
-            }
-        }
-    }
-}
-
-// Function to set media background gradient
-function setMdaBgGradient(color1, color2, isBorder = false) {
-    console.log("setMdaBgGradient.colors: " + color1 + ", " + color2 + ", isBorder: " + isBorder);
-    var editor = tinymce.activeEditor;
-    var galleryItem = findClosestGalleryItem(editor.selection.getNode(), editor);
-    if (galleryItem) {
-        if (isBorder) {
-            galleryItem.style.borderImage = 'linear-gradient(135deg, ' + color1 + ', ' + color2 + ') 1';
-            galleryItem.style.border = '5px solid transparent';
-        } else {
-            galleryItem.style.backgroundImage = 'none';
-            galleryItem.style.background = 'linear-gradient(135deg, ' + color1 + ', ' + color2 + ')';
-        }
-    }
-}
-
-// Function to set media background image
-function setMdaBgImage(imgSrc, isaBg) {
-    var editor = tinymce.activeEditor;
-    isBg = document.getElementById('mp_set_bg') ? document.getElementById('mp_set_bg').checked : false;
-    if (isBg) {
-        var galleryItem = findClosestGalleryItem(editor.selection.getNode(), editor);
-        if (galleryItem) {
-            galleryItem.style.background = 'none';
-            galleryItem.style.backgroundImage = 'url(' + imgSrc + ')';
-            galleryItem.style.backgroundSize = 'cover';
-            galleryItem.style.backgroundPosition = 'center';
-            galleryItem.style.backgroundRepeat = 'no-repeat';
-        }
-    } else {
-        editor.insertContent('<img src="' + imgSrc + '" width="200" height="200">');
-    }
-}
-
-// Function to set media solid color background or border
-function setMdaBgSolidColor(color, isBorder = false) {
-    console.log("setMdaBgSolidColor.color: " + color + ", isBorder: " + isBorder);
-    var editor = tinymce.activeEditor;
-    var galleryItem = findClosestGalleryItem(editor.selection.getNode(), editor);
-    if (galleryItem) {
-        if (isBorder) {
-            galleryItem.style.borderColor = color;
-            galleryItem.style.border = '5px solid ' + color;
-        } else {
-            galleryItem.style.backgroundColor = color;
-            galleryItem.style.backgroundImage = 'none';
-        }
-    }
-}
 
 JSSHOP.ads.getEdtrPrpDscStr = function(tPrpDtarr) {
     tEdtrDescStr = "";
@@ -9056,75 +8466,13 @@ JSSHOP.ads.getEdtrPrpDscStr = function(tPrpDtarr) {
             var tPrpDtObj = tPrpDtarr[key];
             // tEdtrDescStr += LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle) + " - " + tPrpDtObj.price + " &euro;; \r\n";
             // use a bullet type listing with \unicode icons
-            tEdtrDescStr += "&#8226; " + LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle) + " - " + tPrpDtObj.price + " ?   #PROPID:" + tPrpDtObj._id + "<br>";
+            tEdtrDescStr += "&#8226; " + LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle) + " - " + tPrpDtObj.price + " &euro; <br>";
 
         }
     }
     return tEdtrDescStr;
 };
 
-
-JSSHOP.ads.getEditorUsrBoxStr = function(tUsrDtObj) {
-    tEdtrUsrStr = "";
-        let contacts = [];
-    let preferred = ['whatsapp', 'telephone', 'email', 'facebook'];
-    for(let pref of preferred){
-        let link = currQUsrLnksArr.find(l => l.k_category === pref);
-        if(link){
-            contacts.push(link);
-            if(contacts.length >= 2) break;
-        }
-    }
-
-      // Seller info
-      // wrapped in table
-       tEdtrUsrStr += '<table><tr><td>';
-    tEdtrUsrStr += '<div class="gallery-item" style="background: rgba(255,255,255,0.9); border-radius: 10px;margin:10px; padding: 5px; box-shadow: 1px 4px 8px rgba(0,0,0,0.1); text-align: center;">';
-         tEdtrUsrStr += "<table><tr><td><div>||||</div></td><td>";
-
-    // tEdtrUsrStr += `<h5 style="margin: 0 0 10px 0; font-size: 16px;">${stxt[912]}...</h5>`;
-    tEdtrUsrStr += '<div style="display: flex; align-items: center;">';
-    tEdtrUsrStr += `<img src="images/user/${u_icon.value}" alt="Agent" style="width: 80px; height: 80px; border-radius: 50%; margin-right: 10px;">`;
-    tEdtrUsrStr += '<div>';
-    tEdtrUsrStr += `<p style="margin: 0; font-weight: bold; font-size: 24px;">${u_fullname.value}</p>`;
-    // tEdtrUsrStr += `<p style="margin: 0; color: #666; font-size: 12px;">${u_email.value}</p>`;
-    if(contacts.length > 0){
-        tEdtrUsrStr += '<div style="margin-top: 10px; display: flex; justify-content: center; gap: 10px;">';
-        for(let contact of contacts){
-            let href = '';
-            if(contact.k_category === 'whatsapp'){
-                href = `https://wa.me/${contact.k_matter}`;
-            } else if(contact.k_category === 'telephone'){
-                href = `tel:${contact.k_matter}`;
-            } else if(contact.k_category === 'email'){
-                href = `mailto:${contact.k_matter}`;
-            } else if(contact.k_category === 'facebook'){
-                href = `https://facebook.com/${contact.k_matter}`;
-            }
-            if(href){
-                // tEdtrPrpsStr += `<a href="${href}" target="_blank"><img src="images/misc/ts-icon-${contact.k_category}.png" alt="${contact.k_category}" style="width: 24px; height: 24px;"></a>`;
-                // show the icon and contact info
-                tEdtrUsrStr += `<div style="text-align: center;">`;
-                tEdtrUsrStr += `<a href="${href}" target="_blank" style="text-decoration: none; color: inherit;">`;
-                tEdtrUsrStr += `<img src="images/misc/ts-icon-${contact.k_category}.png" alt="${contact.k_category}" style="width: 24px; height: 24px;margin: 0 10px 0 0;">`;
-                tEdtrUsrStr += `<span style="font-size: 20px;margin-right: 15px;"><b>${contact.k_matter}</b></span>`;
-                tEdtrUsrStr += `</a>`;
-                tEdtrUsrStr += `</div>`;
-
-            }
-        }
-        tEdtrUsrStr += '</div>';
-    }
-    tEdtrUsrStr += '</div>';
-    tEdtrUsrStr += '</div>';
-       tEdtrUsrStr += "</td><td>||||</td></tr></table>";
-
-   
-    tEdtrUsrStr += '</div>';
-    // end of seller info box
-    tEdtrUsrStr += '</td></tr></table>'; // end of wrapping table
-    return tEdtrUsrStr;
-};
 
 JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
 
@@ -9195,7 +8543,8 @@ JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
     // tEdtrDescStr is a string listing the titles and prices of selected properties
            tEdtrPrpsStr += "<div class=\"property-flyer\" style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px;\" id=\"dvTMCdemo\">";
 
-     tEdtrPrpsStr += "<table class=\"rtable bkgdClrWhite brdrClrHdr\" style=\"margin-bottom:10px;margin: 0 auto;\">";
+    // tEdtrPrpsStr += "<div style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px;\" class=\"slmtable brdrClrDlg bkgdClrWhite\" id=\"dvTMCdemo\">";
+    tEdtrPrpsStr += "<table class=\"rtable bkgdClrWhite brdrClrHdr\" style=\"margin-bottom:10px;margin: 0 auto;\">";
     tEdtrPrpsStr += "<tr><td class=\"txtBold txtClrHdr\" style=\"text-align:center;\"><span style=\"font-size:18px;\">" + stxt[10]+ "... " + stxt[10] + "...</span></td></tr>";
     tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\" style=\"text-align:center;\"><span style=\"font-size:14px;\">" + stxt[40]+ "... " + stxt[40] + "... " + stxt[40] + "...</span></td></tr>";
     tEdtrPrpsStr += "</table>";
@@ -9222,12 +8571,9 @@ JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
         }
     }
     tEdtrPrpsStr += "<hr>";
-
-
-/*
     // add the seller information
     tEdtrPrpsStr += "<div class=\"slmtable brdrClrHdr bkgdClrWhite\" style=\"text-align:center;\">";
-       //  tEdtrPrpsStr += "<div class=\"txtBig txtBold txtClrHdr\" style=\"text-align:center;\">" + stxt[912] + "...</div>";
+        tEdtrPrpsStr += "<div class=\"txtBig txtBold txtClrHdr\" style=\"text-align:center;\">" + stxt[912] + "...</div>";
 
     tEdtrPrpsStr += "<table class=\"table table-striped\">";
     tEdtrPrpsStr += "<tr><td><img src=\"images/user/" + u_icon.value + "\" class=\"icnRndnBgUser\"></td>";
@@ -9235,9 +8581,6 @@ JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
     tEdtrPrpsStr += "</tr></table>";
     tEdtrPrpsStr += "</div>"; // end of edtr-grid rtable brdrClrHdr
     tEdtrPrpsStr += "</div>"; // end of seller information div
-*/
-tEdtrPrpsStr += JSSHOP.ads.getEditorUsrBoxStr("nada");
-
 
     // add clear fix to the end of the div
     tEdtrPrpsStr += "<div style=\"clear:both;\" class=\"clearfix\"></div>";
@@ -9247,7 +8590,230 @@ tEdtrPrpsStr += JSSHOP.ads.getEditorUsrBoxStr("nada");
     return tEdtrPrpsStr;
 };
 
- 
+JSSHOP.ads.getNuEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
+    let tEdtrPrpsStr = "";
+    let gradientStyle = "";
+    let cardClass = "card shadow";
+    let headerClass = "text-white font-weight-bold";
+    let subHeaderClass = "text-white";
+
+    // Define styles
+    switch(style) {
+        case 'classic':
+            gradientStyle = "background: linear-gradient(to bottom, #007bff, #ffffff);";
+            cardClass = "card shadow-sm";
+            break;
+        case 'modern':
+            gradientStyle = "background: linear-gradient(to right, #00bcd4, #2196f3, #3f51b5);";
+            cardClass = "card border-0 shadow-lg";
+            break;
+        case 'vibrant':
+            gradientStyle = "background: linear-gradient(to bottom right, #ff4081, #ff1744, #ffeb3b);";
+            cardClass = "card border-0 shadow-xl";
+            break;
+        default:
+            gradientStyle = "background: linear-gradient(to bottom, #007bff, #ffffff);";
+            cardClass = "card shadow";
+    }
+
+    // Start flyer container
+    tEdtrPrpsStr += `<div class="container-fluid p-4" style="${gradientStyle} min-height: 100vh;">`;
+    tEdtrPrpsStr += '<div class="row justify-content-center">';
+    tEdtrPrpsStr += '<div class="col-md-8">';
+
+    // Header
+    tEdtrPrpsStr += '<div class="text-center mb-4">';
+    tEdtrPrpsStr += `<h1 class="display-4 ${headerClass}">${stxt[10]}... ${stxt[10]}...</h1>`;
+    tEdtrPrpsStr += `<p class="lead ${subHeaderClass}">${stxt[40]}... ${stxt[40]}... ${stxt[40]}...</p>`;
+    tEdtrPrpsStr += '</div>';
+
+    // Properties
+    tEdtrPrpsStr += '<div class="row">';
+    for(let i = 0; i < tPrpDtarr.length; i++) {
+        let tPrpDtObj = tPrpDtarr[i];
+        let imgSrc = currPrpImgsFldr + "/" + tPrpDtObj.pimage;
+        let title = LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle);
+        let location = tPrpDtObj.city + ", " + tPrpDtObj.state;
+        let price = tPrpDtObj.price + " ?";
+
+        tEdtrPrpsStr += '<div class="col-md-6 mb-4">';
+        tEdtrPrpsStr += `<div class="${cardClass}">`;
+        tEdtrPrpsStr += '<div class="row no-gutters">';
+        tEdtrPrpsStr += '<div class="col-md-4">';
+        tEdtrPrpsStr += `<img src="${imgSrc}" class="card-img" alt="Property Image" style="height: 100%; object-fit: cover;">`;
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '<div class="col-md-8">';
+        tEdtrPrpsStr += '<div class="card-body">';
+        tEdtrPrpsStr += `<h5 class="card-title font-weight-bold">${title}</h5>`;
+        tEdtrPrpsStr += `<p class="card-text text-muted">${location}</p>`;
+        tEdtrPrpsStr += `<p class="card-text font-weight-bold text-primary h4">${price}</p>`;
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
+    }
+    tEdtrPrpsStr += '</div>';
+
+    // Seller info
+    tEdtrPrpsStr += '<div class="row justify-content-center mt-4">';
+    tEdtrPrpsStr += '<div class="col-md-6">';
+    tEdtrPrpsStr += '<div class="card text-center shadow">';
+    tEdtrPrpsStr += '<div class="card-body">';
+    tEdtrPrpsStr += `<h5 class="card-title">${stxt[912]}...</h5>`;
+    tEdtrPrpsStr += '<div class="d-flex align-items-center justify-content-center">';
+    tEdtrPrpsStr += `<img src="images/user/${u_icon.value}" class="rounded-circle mr-3" style="width: 60px; height: 60px;">`;
+    tEdtrPrpsStr += '<div>';
+    tEdtrPrpsStr += `<p class="mb-0 font-weight-bold">${u_fullname.value}</p>`;
+    tEdtrPrpsStr += `<p class="mb-0 text-muted">${u_email.value}</p>`;
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+
+    // Style selector modal
+    tEdtrPrpsStr += `
+    <!-- Style Selector Modal -->
+    <div class="modal fade" id="styleSelectorModal" tabindex="-1" role="dialog" aria-labelledby="styleSelectorModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="styleSelectorModalLabel">Choose Flyer Style</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-4">
+                <div class="card style-option" data-style="classic" style="cursor: pointer;">
+                  <div class="card-body text-center" style="background: linear-gradient(to bottom, #007bff, #ffffff); height: 100px;">
+                    <h6>Classic</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="card style-option" data-style="modern" style="cursor: pointer;">
+                  <div class="card-body text-center" style="background: linear-gradient(to right, #00bcd4, #2196f3, #3f51b5); height: 100px;">
+                    <h6>Modern</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="card style-option" data-style="vibrant" style="cursor: pointer;">
+                  <div class="card-body text-center" style="background: linear-gradient(to bottom right, #ff4081, #ff1744, #ffeb3b); height: 100px;">
+                    <h6>Vibrant</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+
+    // Button to open style selector
+    tEdtrPrpsStr += '<div class="text-center mt-3">';
+    tEdtrPrpsStr += '<button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#styleSelectorModal">Change Style</button>';
+    tEdtrPrpsStr += '</div>';
+
+    // Add script for style selection
+    tEdtrPrpsStr += `
+    <script>
+    $(document).ready(function() {
+        $('.style-option').on('click', function() {
+            var selectedStyle = $(this).data('style');
+            // Here you would regenerate the flyer with the new style
+            // For example: $('#flyerContainer').html(JSSHOP.ads.getNuEdtrPrpStr(tPrpDtarr, selectedStyle));
+            alert('Selected style: ' + selectedStyle + '. Please implement regeneration logic.');
+            $('#styleSelectorModal').modal('hide');
+        });
+    });
+    </script>
+    `;
+
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+
+    return tEdtrPrpsStr;
+};
+
+JSSHOP.ads.getNurEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
+    let tEdtrPrpsStr = "";
+    let gradientStyle = "";
+    let headerClass = "text-white font-weight-bold";
+    let subHeaderClass = "text-white";
+
+    // Define styles
+    switch(style) {
+        case 'classic':
+            gradientStyle = "background: linear-gradient(to right, #007bff, #ffffff);";
+            break;
+        case 'modern':
+            gradientStyle = "background: linear-gradient(to right, #00bcd4, #2196f3, #3f51b5);";
+            break;
+        case 'vibrant':
+            gradientStyle = "background: linear-gradient(to right, #ff4081, #ff1744, #ffeb3b);";
+            break;
+        default:
+            gradientStyle = "background: linear-gradient(to right, #007bff, #ffffff);";
+    }
+
+    // Start flyer container - landscape oriented for og:image (approx 1200x630)
+    tEdtrPrpsStr += `<div style="${gradientStyle} width: 1200px; height: 630px; position: relative; padding: 20px; box-sizing: border-box;"  id="dvTMCdemo">`;
+
+    // Header - positioned at top
+    tEdtrPrpsStr += `<div style="text-align: center; margin-bottom: 20px;">`;
+    tEdtrPrpsStr += `<h1 style="color: white; font-weight: bold; font-size: 36px; margin: 0;">${stxt[10]}... ${stxt[10]}...</h1>`;
+    tEdtrPrpsStr += `<p style="color: white; font-size: 18px; margin: 5px 0 0 0;">${stxt[40]}... ${stxt[40]}... ${stxt[40]}...</p>`;
+    tEdtrPrpsStr += '</div>';
+
+    // Properties container - horizontal layout
+    tEdtrPrpsStr += '<div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start; margin-bottom: 20px;">';
+    for(let i = 0; i < tPrpDtarr.length; i++) {
+        let tPrpDtObj = tPrpDtarr[i];
+        let imgSrc = currPrpImgsFldr + "/" + tPrpDtObj.pimage;
+        let title = LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle);
+        let location = tPrpDtObj.city + ", " + tPrpDtObj.state;
+        let price = tPrpDtObj.price + " ?";
+
+        // Property card - floated left for landscape
+        tEdtrPrpsStr += `<div style="float: left; width: ${tPrpDtarr.length > 2 ? '30%' : '45%'}; margin: 10px; background: rgba(255,255,255,0.9); border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); overflow: hidden;">`;
+        tEdtrPrpsStr += `<img src="${imgSrc}" alt="Property Image" style="width: 100%; height: 150px; object-fit: cover;">`;
+        tEdtrPrpsStr += '<div style="padding: 10px;">';
+        tEdtrPrpsStr += `<h5 style="font-weight: bold; margin: 0 0 5px 0; font-size: 16px;">${title}</h5>`;
+        tEdtrPrpsStr += `<p style="color: #666; margin: 0 0 5px 0; font-size: 14px;">${location}</p>`;
+        tEdtrPrpsStr += `<p style="font-weight: bold; color: #007bff; margin: 0; font-size: 18px;">${price}</p>`;
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
+    }
+    tEdtrPrpsStr += '<div style="clear: both;"></div>';
+    tEdtrPrpsStr += '</div>';
+
+    // Seller info - positioned at bottom right
+    tEdtrPrpsStr += '<div style="position: absolute; bottom: 20px; right: 20px; background: rgba(255,255,255,0.9); border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center;">';
+    tEdtrPrpsStr += `<h5 style="margin: 0 0 10px 0; font-size: 16px;">${stxt[912]}...</h5>`;
+    tEdtrPrpsStr += '<div style="display: flex; align-items: center;">';
+    tEdtrPrpsStr += `<img src="images/user/${u_icon.value}" alt="Agent" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">`;
+    tEdtrPrpsStr += '<div>';
+    tEdtrPrpsStr += `<p style="margin: 0; font-weight: bold; font-size: 14px;">${u_fullname.value}</p>`;
+    tEdtrPrpsStr += `<p style="margin: 0; color: #666; font-size: 12px;">${u_email.value}</p>`;
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+
+    tEdtrPrpsStr += '</div>';
+
+    return tEdtrPrpsStr;
+};
+
 JSSHOP.ads.getNwstEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
     let tEdtrPrpsStr = "";
     let gradientStyle = "";
@@ -9268,66 +8834,45 @@ JSSHOP.ads.getNwstEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
     }
 
     // Start flyer container - landscape oriented for og:image (1200x630), optimized for mobile viewing
-    tEdtrPrpsStr = `<div style="${gradientStyle} width: 100%; min-height: 430px; position: relative; padding: 10px; box-sizing: border-box;" id="dvTMCdemo">`;
+    tEdtrPrpsStr += `<div style="${gradientStyle} width: 100%; min-height: 430px; position: relative; padding: 10px; box-sizing: border-box;" id="dvTMCdemo">`;
 
+    // Header - larger text for mobile readability
+    tEdtrPrpsStr += `<div style="text-align: center; margin-bottom: 10px;">`;
+    tEdtrPrpsStr += `<h1 style="color: white; font-weight: bold; font-size: 48px; margin: 0; line-height: 1.2;">${stxt[10]}... ${stxt[10]}...</h1>`;
+    tEdtrPrpsStr += `<p style="color: white; font-size: 24px; margin: 5px 0 0 0; line-height: 1.3;">${stxt[40]}... ${stxt[40]}... ${stxt[40]}...</p>`;
+    tEdtrPrpsStr += '</div>';
 
     // Properties container - horizontal layout, optimized for full area usage
-    tEdtrPCntStr = '<div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start; margin-bottom: 10px;">';
+    tEdtrPrpsStr += '<div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start; margin-bottom: 10px;">';
     for(let i = 0; i < tPrpDtarr.length; i++) {
         let tPrpDtObj = tPrpDtarr[i];
         let imgSrc = currPrpImgsFldr + "/" + tPrpDtObj.pimage;
         let title = LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle);
         let location = tPrpDtObj.city + ", " + tPrpDtObj.state;
-        let price = tPrpDtObj.price + "  &euro;";
-       
+        let price = tPrpDtObj.price + " ?";
+
         // Property card - larger for better mobile readability
-        tEdtrPCntStr += `<div style="float: left; width: ${tPrpDtarr.length > 2 ? '30%' : '45%'}; margin: 5px; background: rgba(255,255,255,0.95); border-radius: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); overflow: hidden;">`;
-        tEdtrPCntStr += `<img src="${imgSrc}" alt="Property Image" style="width: 100%; height: 180px; object-fit: cover;">`;
-        tEdtrPCntStr += '<div style="padding: 15px;">';
-        tEdtrPCntStr += `<h5 style="font-weight: bold; margin: 0 0 8px 0; font-size: 20px; line-height: 1.3;">${title}</h5>`;
-        tEdtrPCntStr += `<p style="color: #666; margin: 0 0 8px 0; font-size: 18px; line-height: 1.4;">${location}</p>`;
-        tEdtrPCntStr += `<p style="font-weight: bold; color: #007bff; margin: 0; font-size: 24px; line-height: 1.2;">${price}</p>`;
-        tEdtrPCntStr += '</div>';
-        tEdtrPCntStr += '</div>';
+        tEdtrPrpsStr += `<div style="float: left; width: ${tPrpDtarr.length > 2 ? '30%' : '45%'}; margin: 5px; background: rgba(255,255,255,0.95); border-radius: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); overflow: hidden;">`;
+        tEdtrPrpsStr += `<img src="${imgSrc}" alt="Property Image" style="width: 100%; height: 180px; object-fit: cover;">`;
+        tEdtrPrpsStr += '<div style="padding: 15px;">';
+        tEdtrPrpsStr += `<h5 style="font-weight: bold; margin: 0 0 8px 0; font-size: 20px; line-height: 1.3;">${title}</h5>`;
+        tEdtrPrpsStr += `<p style="color: #666; margin: 0 0 8px 0; font-size: 18px; line-height: 1.4;">${location}</p>`;
+        tEdtrPrpsStr += `<p style="font-weight: bold; color: #007bff; margin: 0; font-size: 24px; line-height: 1.2;">${price}</p>`;
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
     }
-    tEdtrPCntStr += '<div style="clear: both;"></div>';
-    tEdtrPCntStr += '</div>'; // end of properties container
-    tEdtrPCntStr += '<div style="clear: both;"></div>';
- 
+    tEdtrPrpsStr += '<div style="clear: both;"></div>';
+    tEdtrPrpsStr += '</div>'; // end of properties container
 
-    let sulltitlestr = "";
-    for(let prop of tPrpDtarr){
-        let title = LZString.decompressFromEncodedURIComponent(prop.ptitle);
-        sulltitlestr += title.substring(0, 30) + "... ";
-    }
 
-        // Header - larger text for mobile readability
-    tEdtrHdrStr = `<div style="text-align: center; margin-bottom: 10px;">`;
-    tEdtrHdrStr += `<h1 style="color: white; font-weight: bold; font-size: 48px; margin: 0; line-height: 1.2;">${sulltitlestr}</h1>`;
-    tEdtrHdrStr += `<p style="color: white; font-size: 24px; margin: 5px 0 0 0; line-height: 1.3;">${stxt[40]}... ${stxt[40]}... ${stxt[40]}...</p>`;
-    tEdtrHdrStr += '</div>';
 
-    // !! Table cell wrapper
-    tEdtrPrpsStr += '<table><tr><td>' + tEdtrHdrStr + '</td></tr><tr><td>||||</td></tr><tr><td>' + tEdtrPCntStr + '</td></tr><tr><td>||||</td></tr><tr><td>';
-    
-    
-    tEdtrPrpsStr += JSSHOP.ads.getEditorUsrBoxStr("nada");
-
-    tEdtrPrpsStr += '</td></tr><tr><td>||||</td></tr></table>';
     tEdtrPrpsStr += '</div>'; // end of flyer container
 
     return tEdtrPrpsStr;
 };
 
-
- 
-
 JSSHOP.ads.initInteractiveElements = function(containerId) {
     const container = document.getElementById(containerId);
-// const conatiner is inside the taDemoEdtr_ifr iframe body
-   //  const iframe = document.getElementById("taDemoEdtr_ifr");
-   //  const container = iframe ? iframe.contentDocument.body.querySelector('#' + containerId) : null;
-
     if (!container) return;
 
     // Find all elements with interactive-element class (these are the handles)
@@ -10435,12 +9980,450 @@ tLocLng = ploclng.value;
  
      
   }
+
+var setPropertyImgs = function(theAIa, theAIb, theAIc) {
+    console.log("setPropImgs: " + theAIa + " " + theAIb + " " + theAIc);
+    intIFrmHght = 0;
+    hasGglMap = "no";
+    tImgAdArr = null;
+    tImgAdArr = "";
+    tImgAdArr = [];
+    if(theAIb.indexOf("_id") != -1) {
+		tAiretArr = JSON.parse(theAIb);
+		awlen = tAiretArr.length;
+        tstr = "";
+        tpdSocLnksStr = "";
+        iirnt = 0;
+
+            
+            otobStr = "ob" + theAIa;
+      
+    mGPIobj = currSlctdPrpsObj[otobStr];
+    mGPIImg = mGPIobj.pimage;
+    tPATtls = mGPIobj.ptitle;
+    tPATtlsDecded = decodeURIComponent(tPATtls);
+    tSPIttlStr = LZString.decompressFromEncodedURIComponent(tPATtlsDecded);
+   document.getElementById("tmp_p_title").value = tSPIttlStr
+    tDesc = LZString.decompressFromEncodedURIComponent(mGPIobj.pdesc);
+    tinyMCE.activeEditor.setContent(tDesc);
+    console.log("setPropertyImgs: " + mGPIobj.ptitle + " " + mGPIImg);
+    // set pcontent editor 
+        /* get minimum width of images
+        tImage = new Image();
+        tImage.src = "images/property/" + tAiretArr[0]["m_file"];
+        tImage.onload = function() {
+            // alert("Width: " + this.width + " Height: " + this.height);
+            // alert("Width: " + this.width + " Height: " + this.height);
+        }
+            */
+        // tstr += "<div class=\"swiper\"  style=\"max-height:280px;max-width:500px;\"> <div class=\"swiper-wrapper\"  style=\"min-height:60px;max-height:280px;max-width:500px;margin: 0 auto\">";
+       tPrpFlyerMImgSTr = "<div style=\"background-color:#FFFFFF;min-height:480px;background-image:url('" + currPrpImgsFldr + "/" + mGPIImg + "');no repeat;background-size:cover;\" id=\"dvTMCdemo\">";
+
+   tPrpFlyerMImgSTr += "<table><tr><td>";
+   tPrpFlyerMImgSTr += "<span class=\"txtBig tglmtdnml\">" + tSPIttlStr + "</span>";
+   tPrpFlyerMImgSTr += "</td></tr><tr><td>";
+   tstr = "<table><tr>";
+   while (iirnt < 5) {
+       tIRFname = tAiretArr[iirnt]["m_file"];
+       tIRcatid = tAiretArr[iirnt]["m_catid"];
+            if(tIRcatid == "5")  {
+            tImageFstr = "images/property/" + tAiretArr[iirnt]["m_file"];
+            tIsrcStr = "images/property/m_thumb" + tAiretArr[iirnt]["m_file"];
+            tstr += "<td><img class=\"imFlyrWttl\" src=\"images/property/m_thumb" + tAiretArr[iirnt]["m_file"] + "\"  alt=\"image\"><br><span class=\"txtSmall tglmtdnml\">" + tAiretArr[iirnt]["m_title"] + "</span></td>";
+            } else if(tIRcatid == "20") {
+                hasGglMap = "yes";
+                tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
+                tAudecd = tAiretArr[iirnt]["m_file_thumb"];
+               tUrlded = decodeURIComponent(tAudecd);
+                tLuncthm = LZString.decompressFromEncodedURIComponent(tUrlded);
+                // tUnZpd =  tLuncthm.replace("&center", "&amp;center");
+                tUnZpd =  "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+               //  tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initStreetView();\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tLuncthm + "\"  alt=\"image\"></a> </div>";
+               // doSVLoad(ploclat.value, ploclng.value);
+               tstr += "<td><img class=\"imFlyrWttl\" src=\"" + tUnZpd + "\"  alt=\"image\"><br><span class=\"txtSmall tglmtdnml\">" + tAiretArr[iirnt]["m_title"] + "</span></td>";
+            } else if(tIRcatid == "25") {
+                hasGglMap = "yes";
+                tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
+                tULchm = tAiretArr[iirnt]["m_file_thumb"];
+                tFthumb = decodeURIComponent(tAiretArr[iirnt]["m_file_thumb"]);
+                tLuncthm = LZString.decompressFromEncodedURIComponent(tFthumb);
+                tUnZpd =  tLuncthm.replace("&center", "&amp;center");
+                tUnZpd =  "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                //             tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:setPropMainImg('" + tImageFstr + "');\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"images/property/s_thumb" + tAiretArr[iirnt]["m_file"] + "\"  alt=\"image\"></a> </div>";
+                tstr += "<td><img class=\"imFlyrWttl\" src=\"" + tUnZpd + "\"  alt=\"image\"><br><span class=\"txtSmall tglmtdnml\">" + tAiretArr[iirnt]["m_title"] + "</span></td>";
+             }  else if(tIRcatid == "30") {
+                hasGglMap = "yes";
+                tLZuncd =  tIRFname;
+                tLuncthm = tAiretArr[iirnt]["m_file_thumb"];
+                tuRldssd = decodeURIComponent(tLuncthm);
+                tUnAZpd = LZString.decompressFromEncodedURIComponent(tuRldssd);
+                tUnZpd =  tUnAZpd.replace("&center", "&amp;center");
+                tUnZpd =  "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                console.log("setPropImgs: 30 " + tUnZpd);
+            tThumbImg = tLuncthm;
+            theSplitThmnb = tThumbImg.split("|");
+            theTmnbLat = theSplitThmnb[0];
+            theTmnbLng = theSplitThmnb[1];
+            theTmnbAlt = theSplitThmnb[2];
+            // tMpType = "hybrid";
+            tMpType = "satellite";
+            console.log("show3DImages: " + theTmnbLat + " " + theTmnbLng + " " + theTmnbAlt);   
+            tCntrMapLat = theTmnbLat - 0.0001;
+            tCntrMapLng = theTmnbLng;
+            tZmLvl = 20;
+            tIUwidth = 240;
+            tIUheight = 180;
+
+            // tLZuncomp = LZString.decompressFromEncodedURIComponent(tThumbImg);
+            //  			tstr += "<img src=\"images/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
+             // tAVImgUstr = "https://maps.googleapis.com/maps/api/staticmap?key=" + gglSKey + "&size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng + "&zoom=" + tZmLvl + "&maptype=" + tMpType;
+            tAVImgUstr = tUnZpd;
+            tstr += "<td><img class=\"imFlyrWttl\" src=\"" + tAVImgUstr + "\" ><br><span class=\"txtSmall tglmtdnml\">" + tAiretArr[iirnt]["m_title"] + "</span></td>";
+            // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initThreeDView(" + theTmnbLat + "," + theTmnbLng + "," + theTmnbAlt + ");\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tAVImgUstr + "\"  alt=\"image\"></a> </div>";
+            // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initNuThreeDView('"  + tAVImgUstr + "');\">" + t3DImgStr + "</a> </div>";
+              } else {
+                // alert("setPropImgs: " + tIRFname + " " + tIRcatid);
+                intIFrmHght += 1000;
+         // tmpSocLinksArr.push(tIRFname);
+            tmpSocLinksArr.push(tAiretArr[iirnt]);
+             }
+            
+    
+			iirnt++;
+		}
  
+        tstr += "</tr></table>";
+   tPrpFlyerMImgSTr += tstr;
+   tPrpFlyerMImgSTr += "</td></tr></table>";
 
 
- 
+       // add the seller information
+    tUSlrPrpsStr = "<div class=\"slmtable brdrClrHdr bkgdClrWhite\" style=\"text-align:center;\">";
+        tUSlrPrpsStr += "<div class=\"txtBig txtBold txtClrHdr\" style=\"text-align:center;\">" + stxt[912] + "...</div>";
 
+    tUSlrPrpsStr += "<table class=\"table table-striped\">";
+    tUSlrPrpsStr += "<tr><td><img src=\"images/user/" + u_icon.value + "\" class=\"icnRndnUser\"></td>";
+    tUSlrPrpsStr += "<td>" + u_fullname.value + "<br>" + u_email.value + "<br>"  + "</td>";
+    tUSlrPrpsStr += "</tr></table>";
+
+    tUSlrPrpsStr += "</div>"; // end of div txtBig txtBold txtClrHdr
+    tUSlrPrpsStr += "</div>"; // end of slmtable brdrClrHdr bkgdClrWhite
+
+    tPrpFlyerMImgSTr += tUSlrPrpsStr;
+   tPrpFlyerMImgSTr += "</div>";
+   
+        // using tPrpFlyerMImgSTr, create a property listing html template from the image
+        
+
+     
+          tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tPrpFlyerMImgSTr + "</textarea>";
+//tDVDstr = "<div class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" contenteditable=\"true\" spellcheck=\"false\" data-ms-editor=\"false\">" + tPrpFlyerMImgSTr + "</div>";
+     tDVDstr += "<div class=\"clearfix\"></div><br>";
+    document.getElementById("dvDemoView").innerHTML = tDVDstr;
+    setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+    
+       //  document.getElementById("single-property").appendChild(tmpItDiv);
+       // setTimeout(function(){ doSwipe(); }, 1000);
+              // JSSHOP.ads.loadNuSwiperObj(tSwpCnfgObj);
+           
+	}
  
+ 
+    // AIzaSyAiBR8BEPj2YCepKplisQKK709r1TI48Vo
+	// alert(inpPropCtrct.value);
+	// https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2
+   //  JSSHOP.loadScript("https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&ttime=" + JSSHOP.getUnixTimeStamp(), doFBFLoad,"js");
+};
+
+
+var setNuPropImages = function(theAIa, theAIb, theAIc) {
+    console.log("setNuPropImages: " + theAIa + " " + theAIb + " " + theAIc);
+    intIFrmHght = 0;
+    hasGglMap = "no";
+    tImgAdArr = null;
+    tImgAdArr = "";
+    tImgAdArr = [];
+    if(theAIb.indexOf("_id") != -1) {
+		tAiretArr = JSON.parse(theAIb);
+		awlen = tAiretArr.length;
+        tstr = "";
+        tpdSocLnksStr = "";
+        iirnt = 0;
+
+        otobStr = "ob" + theAIa;
+        mGPIobj = currSlctdPrpsObj[otobStr];
+        mGPIImg = mGPIobj.pimage;
+        tPATtls = mGPIobj.ptitle;
+        tPATtlsDecded = decodeURIComponent(tPATtls);
+        tSPIttlStr = LZString.decompressFromEncodedURIComponent(tPATtlsDecded);
+        document.getElementById("tmp_p_title").value = tSPIttlStr;
+        tDesc = LZString.decompressFromEncodedURIComponent(mGPIobj.pdesc);
+        tinyMCE.activeEditor.setContent(tDesc);
+
+        console.log("setNuPropImages: " + mGPIobj.ptitle + " " + mGPIImg);
+
+        // Improved property flyer main image string with better styling
+        tPrpFlyerMImgSTr = "<div class=\"property-flyer\" style=\"position:relative;width:100%;min-height:500px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);\" id=\"dvTMCdemo\">";
+
+        // Main image background with overlay
+        tPrpFlyerMImgSTr += "<div style=\"position:relative;width:100%;height:400px;background-image:url('" + currPrpImgsFldr + "/" + mGPIImg + "');background-size:cover;background-position:center;background-repeat:no-repeat;\">";
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 100%);\"></div>";
+
+        // Title overlay with better positioning
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:20px;left:20px;right:20px;color:#fff;\">";
+        tPrpFlyerMImgSTr += "<h2 style=\"margin:0;font-size:28px;font-weight:bold;text-shadow:2px 2px 4px rgba(0,0,0,0.5);line-height:1.2;\">" + tSPIttlStr + "</h2>";
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>"; // End main image background
+
+        // Property images gallery section
+        tPrpFlyerMImgSTr += "<div style=\"padding:20px;background:#fff;\">";
+        tPrpFlyerMImgSTr += "<h3 style=\"margin:0 0 15px 0;font-size:20px;font-weight:600;color:#333;border-bottom:2px solid #f0f0f0;padding-bottom:10px;\">Property Gallery</h3>";
+        tPrpFlyerMImgSTr += "<div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;\">";
+
+        while (iirnt < 5) {
+            tIRFname = tAiretArr[iirnt]["m_file"];
+            tIRcatid = tAiretArr[iirnt]["m_catid"];
+
+            if(tIRcatid == "5") {
+                tImageFstr = "images/property/" + tAiretArr[iirnt]["m_file"];
+                tIsrcStr = "images/property/m_thumb" + tAiretArr[iirnt]["m_file"];
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);transition:transform 0.3s ease;\">";
+                tPrpFlyerMImgSTr += "<img src=\"images/property/m_thumb" + tAiretArr[iirnt]["m_file"] + "\" style=\"width:100%;height:120px;object-fit:cover;display:block;\" alt=\"Property image\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.7));color:#fff;padding:8px;font-size:12px;font-weight:500;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else if(tIRcatid == "20") {
+                hasGglMap = "yes";
+                tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
+                tAudecd = tAiretArr[iirnt]["m_file_thumb"];
+                tUrlded = decodeURIComponent(tAudecd);
+                tLuncthm = LZString.decompressFromEncodedURIComponent(tUrlded);
+                tUnZpd = "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);\">";
+                tPrpFlyerMImgSTr += "<img src=\"" + tUnZpd + "\" style=\"width:100%;height:120px;object-fit:cover;display:block;\" alt=\"Street view\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.7));color:#fff;padding:8px;font-size:12px;font-weight:500;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else if(tIRcatid == "25") {
+                hasGglMap = "yes";
+                tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
+                tULchm = tAiretArr[iirnt]["m_file_thumb"];
+                tFthumb = decodeURIComponent(tAiretArr[iirnt]["m_file_thumb"]);
+                tLuncthm = LZString.decompressFromEncodedURIComponent(tFthumb);
+                tUnZpd = "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);\">";
+                tPrpFlyerMImgSTr += "<img src=\"" + tUnZpd + "\" style=\"width:100%;height:120px;object-fit:cover;display:block;\" alt=\"Map view\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.7));color:#fff;padding:8px;font-size:12px;font-weight:500;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else if(tIRcatid == "30") {
+                hasGglMap = "yes";
+                tLZuncd = tIRFname;
+                tLuncthm = tAiretArr[iirnt]["m_file_thumb"];
+                tuRldssd = decodeURIComponent(tLuncthm);
+                tUnAZpd = LZString.decompressFromEncodedURIComponent(tuRldssd);
+                tUnZpd = "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                console.log("setNuPropImages: 30 " + tUnZpd);
+                tThumbImg = tLuncthm;
+                theSplitThmnb = tThumbImg.split("|");
+                theTmnbLat = theSplitThmnb[0];
+                theTmnbLng = theSplitThmnb[1];
+                theTmnbAlt = theSplitThmnb[2];
+                tMpType = "satellite";
+                console.log("show3DImages: " + theTmnbLat + " " + theTmnbLng + " " + theTmnbAlt);
+                tCntrMapLat = theTmnbLat - 0.0001;
+                tCntrMapLng = theTmnbLng;
+                tZmLvl = 20;
+                tIUwidth = 240;
+                tIUheight = 180;
+                tAVImgUstr = tUnZpd;
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);\">";
+                tPrpFlyerMImgSTr += "<img src=\"" + tAVImgUstr + "\" style=\"width:100%;height:120px;object-fit:cover;display:block;\" alt=\"3D view\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.7));color:#fff;padding:8px;font-size:12px;font-weight:500;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else {
+                intIFrmHght += 1000;
+                tmpSocLinksArr.push(tAiretArr[iirnt]);
+            }
+
+            iirnt++;
+        }
+
+        tPrpFlyerMImgSTr += "</div>"; // End gallery grid
+        tPrpFlyerMImgSTr += "</div>"; // End gallery section
+
+        // Enhanced seller contact section
+        tUSlrPrpsStr = "<div class=\"seller-contact\" style=\"background:#f8f9fa;border-top:1px solid #e9ecef;padding:20px;border-radius:0 0 10px 10px;\">";
+        tUSlrPrpsStr += "<h4 style=\"margin:0 0 15px 0;font-size:18px;font-weight:600;color:#333;text-align:center;\">Contact Information</h4>";
+
+        tUSlrPrpsStr += "<div style=\"display:flex;align-items:center;justify-content:center;max-width:300px;margin:0 auto;background:#fff;padding:15px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);\">";
+        tUSlrPrpsStr += "<div style=\"margin-right:15px;\">";
+        tUSlrPrpsStr += "<img src=\"images/user/" + u_icon.value + "\" style=\"width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid #007bff;\" alt=\"Seller\">";
+        tUSlrPrpsStr += "</div>";
+        tUSlrPrpsStr += "<div style=\"flex:1;\">";
+        tUSlrPrpsStr += "<div style=\"font-weight:600;color:#333;margin-bottom:2px;\">" + u_fullname.value + "</div>";
+        tUSlrPrpsStr += "<div style=\"font-size:14px;color:#666;\">" + u_email.value + "</div>";
+        tUSlrPrpsStr += "</div>";
+        tUSlrPrpsStr += "</div>";
+
+        tUSlrPrpsStr += "</div>"; // End seller contact
+
+        tPrpFlyerMImgSTr += tUSlrPrpsStr;
+        tPrpFlyerMImgSTr += "</div>"; // End property flyer
+
+        // Create textarea for editing
+        tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tPrpFlyerMImgSTr + "</textarea>";
+        tDVDstr += "<div class=\"clearfix\"></div><br>";
+        document.getElementById("dvDemoView").innerHTML = tDVDstr;
+        setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+    }
+};
+
+
+var setNurPropImages = function(theAIa, theAIb, theAIc) {
+    console.log("setNurPropImages: " + theAIa + " " + theAIb + " " + theAIc);
+    intIFrmHght = 0;
+    hasGglMap = "no";
+    tImgAdArr = null;
+    tImgAdArr = "";
+    tImgAdArr = [];
+    if(theAIb.indexOf("_id") != -1) {
+		tAiretArr = JSON.parse(theAIb);
+		awlen = tAiretArr.length;
+        tstr = "";
+        tpdSocLnksStr = "";
+        iirnt = 0;
+
+        otobStr = "ob" + theAIa;
+        mGPIobj = currSlctdPrpsObj[otobStr];
+        mGPIImg = mGPIobj.pimage;
+        tPATtls = mGPIobj.ptitle;
+        tPATtlsDecded = decodeURIComponent(tPATtls);
+        tSPIttlStr = LZString.decompressFromEncodedURIComponent(tPATtlsDecded);
+        document.getElementById("tmp_p_title").value = tSPIttlStr;
+        tDesc = LZString.decompressFromEncodedURIComponent(mGPIobj.pdesc);
+        tinyMCE.activeEditor.setContent(tDesc);
+
+        // Get property price for the balloon
+        tPropPrice = mGPIobj.price || "Contact for Price";
+
+        console.log("setNurPropImages: " + mGPIobj.ptitle + " " + mGPIImg);
+
+        // Enhanced property flyer with overlaid elements
+        tPrpFlyerMImgSTr = "<div class=\"property-flyer\" style=\"position:relative;width:100%;min-height:600px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);\" id=\"dvTMCdemo\">";
+
+        // Main image background with overlay (taller to accommodate overlaid gallery)
+        tPrpFlyerMImgSTr += "<div style=\"position:relative;width:100%;height:500px;background-image:url('" + currPrpImgsFldr + "/" + mGPIImg + "');background-size:cover;background-position:center;background-repeat:no-repeat;\">";
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.4) 100%);\"></div>";
+
+        // Price balloon - positioned top right
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;top:20px;right:20px;background:#fff;color:#333;padding:12px 20px;border-radius:25px;font-size:18px;font-weight:bold;box-shadow:0 4px 15px rgba(0,0,0,0.2);border:3px solid #007bff;z-index:10;\">";
+        tPrpFlyerMImgSTr += "<span style=\"color:#007bff;\">?</span>" + tPropPrice;
+        tPrpFlyerMImgSTr += "</div>";
+
+        // Title overlay with better positioning (moved up to make room for gallery)
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:120px;left:20px;right:20px;color:#fff;z-index:5;\">";
+        tPrpFlyerMImgSTr += "<h2 style=\"margin:0;font-size:28px;font-weight:bold;text-shadow:2px 2px 4px rgba(0,0,0,0.7);line-height:1.2;\">" + tSPIttlStr + "</h2>";
+        tPrpFlyerMImgSTr += "</div>";
+
+        // Overlaid property images gallery section - positioned at bottom of main image
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:10px;left:20px;right:20px;z-index:5;\">";
+        tPrpFlyerMImgSTr += "<div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;max-width:100%;\">";
+
+        while (iirnt < 5) {
+            tIRFname = tAiretArr[iirnt]["m_file"];
+            tIRcatid = tAiretArr[iirnt]["m_catid"];
+
+            if(tIRcatid == "5") {
+                tImageFstr = "images/property/" + tAiretArr[iirnt]["m_file"];
+                tIsrcStr = "images/property/m_thumb" + tAiretArr[iirnt]["m_file"];
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.3);transition:transform 0.3s ease;border:2px solid rgba(255,255,255,0.8);\">";
+                tPrpFlyerMImgSTr += "<img src=\"images/property/m_thumb" + tAiretArr[iirnt]["m_file"] + "\" style=\"width:100%;height:80px;object-fit:cover;display:block;\" alt=\"Property image\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.8));color:#fff;padding:4px;font-size:10px;font-weight:500;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else if(tIRcatid == "20") {
+                hasGglMap = "yes";
+                tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
+                tAudecd = tAiretArr[iirnt]["m_file_thumb"];
+                tUrlded = decodeURIComponent(tAudecd);
+                tLuncthm = LZString.decompressFromEncodedURIComponent(tUrlded);
+                tUnZpd = "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.3);border:2px solid rgba(255,255,255,0.8);\">";
+                tPrpFlyerMImgSTr += "<img src=\"" + tUnZpd + "\" style=\"width:100%;height:80px;object-fit:cover;display:block;\" alt=\"Street view\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.8));color:#fff;padding:4px;font-size:10px;font-weight:500;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else if(tIRcatid == "25") {
+                hasGglMap = "yes";
+                tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
+                tULchm = tAiretArr[iirnt]["m_file_thumb"];
+                tFthumb = decodeURIComponent(tAiretArr[iirnt]["m_file_thumb"]);
+                tLuncthm = LZString.decompressFromEncodedURIComponent(tFthumb);
+                tUnZpd = "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.3);border:2px solid rgba(255,255,255,0.8);\">";
+                tPrpFlyerMImgSTr += "<img src=\"" + tUnZpd + "\" style=\"width:100%;height:80px;object-fit:cover;display:block;\" alt=\"Map view\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.8));color:#fff;padding:4px;font-size:10px;font-weight:500;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else if(tIRcatid == "30") {
+                hasGglMap = "yes";
+                tLZuncd = tIRFname;
+                tLuncthm = tAiretArr[iirnt]["m_file_thumb"];
+                tuRldssd = decodeURIComponent(tLuncthm);
+                tUnAZpd = LZString.decompressFromEncodedURIComponent(tuRldssd);
+                tUnZpd = "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                console.log("setNurPropImages: 30 " + tUnZpd);
+                tThumbImg = tLuncthm;
+                theSplitThmnb = tThumbImg.split("|");
+                theTmnbLat = theSplitThmnb[0];
+                theTmnbLng = theSplitThmnb[1];
+                theTmnbAlt = theSplitThmnb[2];
+                tMpType = "satellite";
+                console.log("show3DImages: " + theTmnbLat + " " + theTmnbLng + " " + theTmnbAlt);
+                tCntrMapLat = theTmnbLat - 0.0001;
+                tCntrMapLng = theTmnbLng;
+                tZmLvl = 20;
+                tIUwidth = 240;
+                tIUheight = 180;
+                tAVImgUstr = tUnZpd;
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.3);border:2px solid rgba(255,255,255,0.8);\">";
+                tPrpFlyerMImgSTr += "<img src=\"" + tAVImgUstr + "\" style=\"width:100%;height:80px;object-fit:cover;display:block;\" alt=\"3D view\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.8));color:#fff;padding:4px;font-size:10px;font-weight:500;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else {
+                intIFrmHght += 1000;
+                tmpSocLinksArr.push(tAiretArr[iirnt]);
+            }
+
+            iirnt++;
+        }
+
+        tPrpFlyerMImgSTr += "</div>"; // End gallery grid
+        tPrpFlyerMImgSTr += "</div>"; // End overlaid gallery section
+
+        tPrpFlyerMImgSTr += "</div>"; // End main image background
+
+        // Enhanced seller contact section (below the main image)
+        tUSlrPrpsStr = "<div class=\"seller-contact\" style=\"background:#f8f9fa;border-top:1px solid #e9ecef;padding:20px;border-radius:0 0 10px 10px;\">";
+        tUSlrPrpsStr += "<h4 style=\"margin:0 0 15px 0;font-size:18px;font-weight:600;color:#333;text-align:center;\">Contact Information</h4>";
+
+        tUSlrPrpsStr += "<div style=\"display:flex;align-items:center;justify-content:center;max-width:300px;margin:0 auto;background:#fff;padding:15px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);\">";
+        tUSlrPrpsStr += "<div style=\"margin-right:15px;\">";
+        tUSlrPrpsStr += "<img src=\"images/user/" + u_icon.value + "\" style=\"width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid #007bff;\" alt=\"Seller\">";
+        tUSlrPrpsStr += "</div>";
+        tUSlrPrpsStr += "<div style=\"flex:1;\">";
+        tUSlrPrpsStr += "<div style=\"font-weight:600;color:#333;margin-bottom:2px;\">" + u_fullname.value + "</div>";
+        tUSlrPrpsStr += "<div style=\"font-size:14px;color:#666;\">" + u_email.value + "</div>";
+        tUSlrPrpsStr += "</div>";
+        tUSlrPrpsStr += "</div>";
+
+        tUSlrPrpsStr += "</div>"; // End seller contact
+
+        tPrpFlyerMImgSTr += tUSlrPrpsStr;
+        tPrpFlyerMImgSTr += "</div>"; // End property flyer
+
+        // Create textarea for editing
+        tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tPrpFlyerMImgSTr + "</textarea>";
+        tDVDstr += "<div class=\"clearfix\"></div><br>";
+        document.getElementById("dvDemoView").innerHTML = tDVDstr;
+        setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+    }
+};
 
 
 var setNwstPropImages = function(theAIa, theAIb, theAIc) {
@@ -10473,39 +10456,41 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
         console.log("setNwstPropImages: " + mGPIobj.ptitle + " " + mGPIImg);
 
         // Enhanced property flyer with all elements overlaid on main image
-        tPrpFlyerMImgSTr = "<div class=\"property-flyer\" style=\"position:relative;width:100%;min-height:700px;border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);background-image:url('" + currPrpImgsFldr + "/" + mGPIImg + "');background-size:cover;background-position:center;background-repeat:no-repeat;\" id=\"dvTMCdemo\">";
+        tPrpFlyerMImgSTr = "<div class=\"property-flyer\" style=\"position:relative;width:100%;min-height:700px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);\" id=\"dvTMCdemo\">";
 
- 
-       //  tPrpFlyerMImgSTr += "<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0.6) 100%);\"></div>";
+        // Main image background with overlay (tallest to accommodate all overlaid elements)
+        tPrpFlyerMImgSTr += "<div style=\"position:relative;width:100%;height:600px;background-image:url('" + currPrpImgsFldr + "/" + mGPIImg + "');background-size:cover;background-position:center;background-repeat:no-repeat;\">";
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0.6) 100%);\"></div>";
 
-        tPrpFlyerMImgSTr += "<table><tr><td><div style=\"color:white;font-size:24px;font-weight:bold;\">. ... .....</div></td><td>";
+
+
         // Property title overlay - now wraps around the price balloon
         tPrpFlyerMImgSTr += "<div style=\"color:#fff;z-index:10;display:flex;flex-direction:column;justify-content:flex-start;\">";
 
         tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;margin:20px;font-size:32px;font-weight:bold;text-shadow:3px 3px 6px rgba(0,0,0,0.8);line-height:1.2;text-transform:uppercase;letter-spacing:1px;max-width:100%;word-wrap:break-word;\">";
 
-        tPrpFlyerMImgSTr += "<div style=\"font-size:18px;float:right;background:#fff;color:#333;padding:12px 20px;border-radius:25px;font-size:18px;font-weight:bold;box-shadow:0 4px 15px rgba(0,0,0,0.3);border:3px solid #007bff;z-index:15;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;\">";
+        tPrpFlyerMImgSTr += "<div style=\"float:right;background:#fff;color:#333;padding:12px 20px;border-radius:25px;font-size:18px;font-weight:bold;box-shadow:0 4px 15px rgba(0,0,0,0.3);border:3px solid #007bff;z-index:15;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;\">";
         tPrpFlyerMImgSTr +=  tPropPrice;
         // add state and Area M2 if available
         if (mGPIobj.state) {
-            tPrpFlyerMImgSTr += "<div style=\"font-size:18px;color:#fff;\">" + mGPIobj.state + "</div>";
+            tPrpFlyerMImgSTr += "<div style=\"font-size:14px;color:#fff;\">State: " + mGPIobj.state + "</div>";
         }
         if (mGPIobj.area) {
-            tPrpFlyerMImgSTr += "<div style=\"font-size:18px;color:#fff;\">" + mGPIobj.area + " m²</div>";
+            tPrpFlyerMImgSTr += "<div style=\"font-size:14px;color:#fff;\">Area: " + mGPIobj.area + " m²</div>";
         }
         tPrpFlyerMImgSTr += "</div>";
         tPrpFlyerMImgSTr += tSPIttlStr;
         tPrpFlyerMImgSTr += "</div>";
         
         tPrpFlyerMImgSTr += "</div>"; // End title and price container
-            tPrpFlyerMImgSTr += "</td><td style=\"width:50px;\">...</td></tr></table>";
+
         // add a clearfix
         tPrpFlyerMImgSTr += "<div style=\"clear:both;\"></div>";    
 
 
         // Overlaid property images gallery section - positioned at bottom of main image
-        tPrpFlyerMImgSTr += "<div style=\"z-index:10;\">";
-        tPrpFlyerMImgSTr += "<div style=\"margin:15px;padding:5px;display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;max-width:100%;\">";
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:120px;left:20px;right:20px;z-index:10;\">";
+        tPrpFlyerMImgSTr += "<div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;max-width:100%;\">";
 
         while (iirnt < 5) {
             tIRFname = tAiretArr[iirnt]["m_file"];
@@ -10516,7 +10501,7 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
                 tIsrcStr = "images/property/m_thumb" + tAiretArr[iirnt]["m_file"];
                 tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.4);transition:transform 0.3s ease;border:2px solid rgba(255,255,255,0.9);\">";
                 tPrpFlyerMImgSTr += "<img src=\"images/property/m_thumb" + tAiretArr[iirnt]["m_file"] + "\" style=\"width:100%;height:70px;object-fit:cover;display:block;\" alt=\"Property image\">";
-                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:16px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:12px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
                 tPrpFlyerMImgSTr += "</div>";
             } else if(tIRcatid == "20") {
                 hasGglMap = "yes";
@@ -10527,7 +10512,7 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
                 tUnZpd = "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
                 tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.9);\">";
                 tPrpFlyerMImgSTr += "<img src=\"" + tUnZpd + "\" style=\"width:100%;height:70px;object-fit:cover;display:block;\" alt=\"Street view\">";
-                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:16px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:12px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
                 tPrpFlyerMImgSTr += "</div>";
             } else if(tIRcatid == "25") {
                 hasGglMap = "yes";
@@ -10538,7 +10523,7 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
                 tUnZpd = "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
                 tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.9);\">";
                 tPrpFlyerMImgSTr += "<img src=\"" + tUnZpd + "\" style=\"width:100%;height:70px;object-fit:cover;display:block;\" alt=\"Map view\">";
-                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:16px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:12px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
                 tPrpFlyerMImgSTr += "</div>";
             } else if(tIRcatid == "30") {
                 hasGglMap = "yes";
@@ -10563,7 +10548,7 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
                 tAVImgUstr = tUnZpd;
                 tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.9);\">";
                 tPrpFlyerMImgSTr += "<img src=\"" + tAVImgUstr + "\" style=\"width:100%;height:70px;object-fit:cover;display:block;\" alt=\"3D view\">";
-                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:16px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:12px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
                 tPrpFlyerMImgSTr += "</div>";
             } else {
                 intIFrmHght += 1000;
@@ -10574,32 +10559,23 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
         }
 
         tPrpFlyerMImgSTr += "</div>"; // End gallery grid
-
         tPrpFlyerMImgSTr += "</div>"; // End overlaid gallery section
 
-        
-    let contacts = [];
-    let preferred = ['whatsapp', 'telephone', 'email', 'facebook'];
-    for(let pref of preferred){
-        let link = currQUsrLnksArr.find(l => l.k_category === pref);
-        if(link){
-            contacts.push(link);
-            if(contacts.length >= 2) break;
-        }
-    }
- 
-                        // Seller information overlay - now positioned at the bottom of the main image
-        tPrpFlyerMImgSTr += "<div style=\"position:absolute; bottom:10px; left:0; right:0; z-index:12;\">";
+        // Seller information overlay - now positioned at the bottom of the main image
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:15px;left:20px;right:20px;z-index:12;\">";
+        tPrpFlyerMImgSTr += "<div style=\"background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-radius:12px;padding:12px;max-width:100%;box-shadow:0 4px 20px rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.3);\">";
+        tPrpFlyerMImgSTr += "<div style=\"display:flex;align-items:center;justify-content:center;\">";
+        tPrpFlyerMImgSTr += "<img src=\"images/user/" + u_icon.value + "\" style=\"width:35px;height:35px;border-radius:50%;object-fit:cover;border:2px solid #007bff;margin-right:8px;\" alt=\"Seller\">";
+        tPrpFlyerMImgSTr += "<div>";
+        tPrpFlyerMImgSTr += "<div style=\"font-weight:700;color:#333;font-size:16px;\">" + u_fullname.value + "</div>";
+        tPrpFlyerMImgSTr += "<div style=\"font-size:16px;color:#666;\">" + u_email.value + "</div>";
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>";
 
- 
-        tPrpFlyerMImgSTr += JSSHOP.ads.getEditorUsrBoxStr("nada");
+        tPrpFlyerMImgSTr += "</div>"; // End main image background
 
-        tPrpFlyerMImgSTr += "</div>"; // End bottom positioned overlay container
- 
-
-
-
- 
         tPrpFlyerMImgSTr += "</div>"; // End property flyer
 
         // Create textarea for editing
@@ -10611,10 +10587,247 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
 };
 
 
- 
+var setNanoPropImages = function(theAIa, theAIb, theAIc) {
+    console.log("setNanoPropImages: " + theAIa + " " + theAIb + " " + theAIc);
+    intIFrmHght = 0;
+    hasGglMap = "no";
+    tImgAdArr = null;
+    tImgAdArr = "";
+    tImgAdArr = [];
+    if(theAIb.indexOf("_id") != -1) {
+		tAiretArr = JSON.parse(theAIb);
+		awlen = tAiretArr.length;
+        tstr = "";
+        tpdSocLnksStr = "";
+        iirnt = 0;
+
+        otobStr = "ob" + theAIa;
+        mGPIobj = currSlctdPrpsObj[otobStr];
+        mGPIImg = mGPIobj.pimage;
+        tPATtls = mGPIobj.ptitle;
+        tPATtlsDecded = decodeURIComponent(tPATtls);
+        tSPIttlStr = LZString.decompressFromEncodedURIComponent(tPATtlsDecded);
+        document.getElementById("tmp_p_title").value = tSPIttlStr;
+        tDesc = LZString.decompressFromEncodedURIComponent(mGPIobj.pdesc);
+        tinyMCE.activeEditor.setContent(tDesc);
+
+        // Get property price for the balloon
+        tPropPrice = mGPIobj.price || "Contact for Price";
+
+        console.log("setNanoPropImages: " + mGPIobj.ptitle + " " + mGPIImg);
+
+        // Enhanced property flyer with all elements overlaid on main image
+        tPrpFlyerMImgSTr = "<div class=\"property-flyer\" style=\"position:relative;width:100%;min-height:700px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);\" id=\"dvTMCdemo\">";
+
+        // Main image background with overlay (tallest to accommodate all overlaid elements)
+        tPrpFlyerMImgSTr += "<div style=\"position:relative;width:100%;height:600px;background-image:url('" + currPrpImgsFldr + "/" + mGPIImg + "');background-size:cover;background-position:center;background-repeat:no-repeat;\">";
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0.6) 100%);\"></div>";
+
+        // Property title overlay - now wraps around the price balloon
+        tPrpFlyerMImgSTr += "<div style=\"color:#fff;z-index:10;display:flex;flex-direction:column;justify-content:flex-start;\">";
+
+        tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;margin:20px;font-size:32px;font-weight:bold;text-shadow:3px 3px 6px rgba(0,0,0,0.8);line-height:1.2;text-transform:uppercase;letter-spacing:1px;max-width:100%;word-wrap:break-word;\">";
+
+        tPrpFlyerMImgSTr += "<div style=\"float:right;background:#fff;color:#333;padding:12px 20px;border-radius:25px;font-size:18px;font-weight:bold;box-shadow:0 4px 15px rgba(0,0,0,0.3);border:3px solid #007bff;z-index:15;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;\">";
+        tPrpFlyerMImgSTr +=  tPropPrice;
+        // add state and Area M2 if available
+        if (mGPIobj.state) {
+            tPrpFlyerMImgSTr += "<div style=\"font-size:14px;color:#fff;\">State: " + mGPIobj.state + "</div>";
+        }
+        if (mGPIobj.area) {
+            tPrpFlyerMImgSTr += "<div style=\"font-size:14px;color:#fff;\">Area: " + mGPIobj.area + " m²</div>";
+        }
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += tSPIttlStr;
+        tPrpFlyerMImgSTr += "</div>";
+        
+        tPrpFlyerMImgSTr += "</div>"; // End title and price container
+
+        // add a clearfix
+        tPrpFlyerMImgSTr += "<div style=\"clear:both;\"></div>";    
+
+        // Overlaid property images gallery section - positioned at bottom of main image
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:120px;left:20px;right:20px;z-index:10;\">";
+        tPrpFlyerMImgSTr += "<div style=\"display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;max-width:100%;\">";
+
+        // Prepare Gemini Request Data
+        var geminiImages = [];
+        geminiImages.push({
+            "mime_type": "image/jpeg",
+            "file_uri": currPrpImgsFldr + "/" + mGPIImg,
+            "description": "Main Property Image"
+        });
+
+        while (iirnt < 5) {
+            if(tAiretArr[iirnt]) {
+            tIRFname = tAiretArr[iirnt]["m_file"];
+            tIRcatid = tAiretArr[iirnt]["m_catid"];
+
+            if(tIRcatid == "5") {
+                tImageFstr = "images/property/" + tAiretArr[iirnt]["m_file"];
+                tIsrcStr = "images/property/m_thumb" + tAiretArr[iirnt]["m_file"];
+                
+                // Add to Gemini Images
+                geminiImages.push({
+                    "mime_type": "image/jpeg",
+                    "file_uri": tImageFstr,
+                    "description": tAiretArr[iirnt]["m_title"] || "Property Image"
+                });
+
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.4);transition:transform 0.3s ease;border:2px solid rgba(255,255,255,0.9);\">";
+                tPrpFlyerMImgSTr += "<img src=\"images/property/m_thumb" + tAiretArr[iirnt]["m_file"] + "\" style=\"width:100%;height:70px;object-fit:cover;display:block;\" alt=\"Property image\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:9px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else if(tIRcatid == "20") {
+                hasGglMap = "yes";
+                tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
+                tAudecd = tAiretArr[iirnt]["m_file_thumb"];
+                tUrlded = decodeURIComponent(tAudecd);
+                tLuncthm = LZString.decompressFromEncodedURIComponent(tUrlded);
+                tUnZpd = "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.9);\">";
+                tPrpFlyerMImgSTr += "<img src=\"" + tUnZpd + "\" style=\"width:100%;height:70px;object-fit:cover;display:block;\" alt=\"Street view\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:9px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else if(tIRcatid == "25") {
+                hasGglMap = "yes";
+                tLZuncd = LZString.decompressFromEncodedURIComponent(tIRFname);
+                tULchm = tAiretArr[iirnt]["m_file_thumb"];
+                tFthumb = decodeURIComponent(tAiretArr[iirnt]["m_file_thumb"]);
+                tLuncthm = LZString.decompressFromEncodedURIComponent(tFthumb);
+                tUnZpd = "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.9);\">";
+                tPrpFlyerMImgSTr += "<img src=\"" + tUnZpd + "\" style=\"width:100%;height:70px;object-fit:cover;display:block;\" alt=\"Map view\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:9px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else if(tIRcatid == "30") {
+                hasGglMap = "yes";
+                tLZuncd = tIRFname;
+                tLuncthm = tAiretArr[iirnt]["m_file_thumb"];
+                tuRldssd = decodeURIComponent(tLuncthm);
+                tUnAZpd = LZString.decompressFromEncodedURIComponent(tuRldssd);
+                tUnZpd = "images/tmpi/" + tAiretArr[iirnt]["m_vala"] + ".jpg";
+                console.log("setNwstPropImages: 30 " + tUnZpd);
+                tThumbImg = tLuncthm;
+                theSplitThmnb = tThumbImg.split("|");
+                theTmnbLat = theSplitThmnb[0];
+                theTmnbLng = theSplitThmnb[1];
+                theTmnbAlt = theSplitThmnb[2];
+                tMpType = "satellite";
+                console.log("show3DImages: " + theTmnbLat + " " + theTmnbLng + " " + theTmnbAlt);
+                tCntrMapLat = theTmnbLat - 0.0001;
+                tCntrMapLng = theTmnbLng;
+                tZmLvl = 20;
+                tIUwidth = 240;
+                tIUheight = 180;
+                tAVImgUstr = tUnZpd;
+                tPrpFlyerMImgSTr += "<div class=\"gallery-item\" style=\"position:relative;border-radius:6px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.9);\">";
+                tPrpFlyerMImgSTr += "<img src=\"" + tAVImgUstr + "\" style=\"width:100%;height:70px;object-fit:cover;display:block;\" alt=\"3D view\">";
+                tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent, rgba(0,0,0,0.9));color:#fff;padding:3px;font-size:9px;font-weight:600;text-align:center;\">" + tAiretArr[iirnt]["m_title"] + "</div>";
+                tPrpFlyerMImgSTr += "</div>";
+            } else {
+                intIFrmHght += 1000;
+                tmpSocLinksArr.push(tAiretArr[iirnt]);
+            }
+            }
+            iirnt++;
+        }
+
+        tPrpFlyerMImgSTr += "</div>"; // End gallery grid
+        tPrpFlyerMImgSTr += "</div>"; // End overlaid gallery section
+
+        // Seller information overlay - now positioned at the bottom of the main image
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;bottom:15px;left:20px;right:20px;z-index:12;\">";
+        tPrpFlyerMImgSTr += "<div style=\"background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-radius:12px;padding:12px;max-width:100%;box-shadow:0 4px 20px rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.3);\">";
+        tPrpFlyerMImgSTr += "<div style=\"display:flex;align-items:center;justify-content:center;\">";
+        tPrpFlyerMImgSTr += "<img src=\"images/user/" + u_icon.value + "\" style=\"width:35px;height:35px;border-radius:50%;object-fit:cover;border:2px solid #007bff;margin-right:8px;\" alt=\"Seller\">";
+        tPrpFlyerMImgSTr += "<div>";
+        tPrpFlyerMImgSTr += "<div style=\"font-weight:700;color:#333;font-size:14px;\">" + u_fullname.value + "</div>";
+        tPrpFlyerMImgSTr += "<div style=\"font-size:12px;color:#666;\">" + u_email.value + "</div>";
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>";
+
+        tPrpFlyerMImgSTr += "</div>"; // End main image background
+
+        tPrpFlyerMImgSTr += "</div>"; // End property flyer
+
+        // Construct Gemini Request Object
+        var geminiRequest = {
+            "model": "gemini-2.5-flash-image", // Nano Banana
+            "prompt": "Create a commercial real estate flyer (Open Graph compatible) for the following property: " + tSPIttlStr + ". Price: " + tPropPrice + ". Description: " + tDesc.substring(0, 200) + "...",
+            "input_data": {
+                "images": geminiImages,
+                "property_details": {
+                    "title": tSPIttlStr,
+                    "price": tPropPrice,
+                    "state": mGPIobj.state,
+                    "area": mGPIobj.area,
+                    "agent": {
+                        "name": u_fullname.value,
+                        "email": u_email.value,
+                        "icon": "images/user/" + u_icon.value
+                    }
+                }
+            },
+            "output_config": {
+                "format": "image/png",
+                "aspect_ratio": "1.91:1" // Open Graph
+            }
+        };
+
+        // Create textarea for editing
+        tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tPrpFlyerMImgSTr + "</textarea>";
+        tDVDstr += "<div class=\"clearfix\"></div><br>";
+        tDVDstr += "<h4>Gemini 2.5 Flash Image (Nano Banana) Request:</h4>";
+        tDVDstr += "<textarea class=\"form-control\" rows=\"10\">" + JSON.stringify(geminiRequest, null, 2) + "</textarea>";
+
+        document.getElementById("dvDemoView").innerHTML = tDVDstr;
+        setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+    }
+};
 
 
+function old_setPropertyImgs(tspA, tspB, tspC) {
+    console.log("Setting property images for: " + tspA + ", " + tspB + ", " + tspC);
+    if(tspB.indexOf("_id") !== -1) {
+        tPrpIarr = JSON.parse(tspB);
+        spLen = tPrpIarr.length;
+        ispii = 0;
+   tPrpFlyerSTr = "";
+        while (ispii < spLen) {
  
+                tPrpFlyerSTr += "<div style=\"float:left\" class=\"crsrPointer\">";
+     
+            tPrpFlyerSTr += "<img src=\"" + currPrpImgsFldr + "/" + tPrpIarr[ispii]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tPrpIarr[ispii]["_id"] + "','" + tPrpIarr[ispii]["m_file"] + "'));\">";
+            tPrpFlyerSTr += "</div>";
+            ispii++;
+        }
+ 
+        console.log("tPrpFlyerSTr: ", tPrpFlyerSTr);
+
+    }
+
+            otobStr = "ob" + tspA;
+      
+    mGPIobj = currSlctdPrpsObj[otobStr];
+    mGPIImg = mGPIobj.pimage;
+
+   tPrpFlyerMImgSTr = "<div style=\"float:left\" class=\"crsrPointer\">";
+   tPrpFlyerMImgSTr += "<img src=\"" + currPrpImgsFldr + "/" + mGPIImg + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + otobStr + "','" + mGPIImg + "'));\">";
+   tPrpFlyerMImgSTr += "</div>";
+    tPrpFlyerMImgSTr += tPrpFlyerSTr;
+
+
+     
+         tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tPrpFlyerMImgSTr + "</textarea>";
+     tDVDstr += "<div class=\"clearfix\"></div><br>";
+    document.getElementById("dvDemoView").innerHTML = tDVDstr;
+    setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+    
+
+}
 
 function getPropertyImages(propData) {
     // Create a new function to get the property images from q_media
@@ -10725,7 +10938,44 @@ JSSHOP.ui.dragElement =  function(elmnt) {
   };
 
 
- 
+JSSHOP.ads.makeSellerInfoDraggable = function(sellerInfoHTML) {
+    var dvDemoView = document.getElementById("dvDemoView"); 
+    // dvTMCdemo is the main flyer div in the iframe taDemoEdtr_ifr
+    // var dvDemoView = document.getElementById("taDemoEdtr_ifr").contentWindow.document.getElementById("mceu_64");
+    var tempDiv = document.createElement("div");
+    tempDiv.innerHTML = sellerInfoHTML;
+    dvDemoView.appendChild(tempDiv);
+    var dragItem = dvDemoView.lastElementChild;
+    var active = false;
+    var currentX;
+    var currentY;
+    var initialX;
+    var initialY;
+    dragItem.addEventListener("mousedown", dragStart, false);
+    document.addEventListener("mouseup", dragEnd, false);
+    document.addEventListener("mousemove", drag, false);
+    function dragStart(e) {
+        initialX = e.clientX - currentX;
+        initialY = e.clientY - currentY;
+        if (e.target === dragItem) {
+            active = true;
+        }
+    }
+    function dragEnd(e) {
+        active = false;
+    }
+    function drag(e) {
+        if (active) {
+            e.preventDefault();
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+            setTranslate(currentX, currentY, dragItem);
+        }
+    }
+    function setTranslate(xPos, yPos, el) {
+        el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+    }
+};
 
 
 JSSHOP.ads.trnsltImgPstObj = function() {
@@ -10741,16 +10991,9 @@ JSSHOP.ads.trnsltImgPstObj = function() {
                 tSlctdPrpsArr.push(currSlctdPrpsObj[key]);
             }
         }
-        console.log("trnsltImgPstObj.tSlctdPrpsArr: " + JSON.stringify(tSlctdPrpsArr));
-       if (tSlctdPrpsArr.length === 1) {
-        tFlyrHStr = "";
-        getPropertyImages(tSlctdPrpsArr[0]);
-          } else {
-                if (tSlctdPrpsArr.length === 2) {
-                tFlyrHStr = JSSHOP.ads.getNwstEdtrPrpStr(tSlctdPrpsArr, "modern");
-                } else {
-                tFlyrHStr = JSSHOP.ads.getEditorPrpStr(tSlctdPrpsArr);
-                }
+        // if tSlctdPrpsArr has only one property, create a new function to get the property images from q_media
+    
+        tFlyrHStr = JSSHOP.ads.getInteractiveNwstEdtrPrpStr(tSlctdPrpsArr, "modern");
         tEdtrDstr = JSSHOP.ads.getEdtrPrpDscStr(tSlctdPrpsArr);
         tPATtls = tSlctdPrpsArr[0].ptitle;
         tPATtlsDecded = decodeURIComponent(tPATtls);
@@ -10758,16 +11001,20 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         document.getElementById("tmp_p_title").value = tSPIttlStr;
          // tDesc = LZString.decompressFromEncodedURIComponent(tSlctdPrps
         console.log("trnsltImgPstObj.tEdtrDstr: " + tEdtrDstr);
-         _ifrm = document.getElementById('tmp_p_content_ifr');
+        // tinyMCE.activeEditor.setContent(tEdtrDstr);
+        _ifrm = document.getElementById('tmp_p_content_ifr');
         _ifrmDoc = _ifrm.contentDocument || _ifrm.contentWindow.document;
         _ifrmDoc.body.innerHTML = tEdtrDstr;
- 
-            tBlkFlyrHStr = "...";
-     tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tFlyrHStr + "</textarea>";
-     tDVDstr += "<div class=\"clearfix\"></div><br>";
-         document.getElementById("dvDemoView").innerHTML = tDVDstr;
-        setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
-            }
+    // Seller info - larger text, positioned to use space efficiently
+    // tEdtrPrpsStr += '<div style="position: absolute; bottom: 10px; right: 10px; background: rgba(255,255,255,0.95); border-radius: 15px; padding: 20px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); text-align: center;">';
+    // make it a dragable box at the bottom center
+    // seller info will be added as a dragable div on the generated dvTMCdemo div
+    // so that the user can position it anywhere on the flyer
+  
+
+
+    
+
     } else if(tSCval == "users") {
         tSlctdUsrsArr = null;
         tSlctdUsrsArr = "";
@@ -10779,7 +11026,39 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         }
         tFlyrHStr = JSSHOP.ads.getEditorUStr(tSlctdUsrsArr);
     }
-  
+    // create new editor in dvDemoView
+        if (tSlctdPrpsArr.length === 1) {
+        getPropertyImages(tSlctdPrpsArr[0]);
+        
+        } else {
+
+     tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tFlyrHStr + "</textarea>";
+     tDVDstr += "<div class=\"clearfix\"></div><br>";
+    document.getElementById("dvDemoView").innerHTML = tFlyrHStr;
+    /* setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+  tUslrPrpsStr = '<div id="drgblSlrInfo"  style="z-index:999999998;position:fixed;background: rgba(255,255,255,0.95); border-radius: 15px; padding: 20px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); text-align: center; cursor: move;">';
+    tUslrPrpsStr += `<h5 style="margin: 0 0 15px 0; font-size: 20px; line-height: 1.3;">${stxt[912]}...</h5>`;
+    tUslrPrpsStr += '<div style="display: flex; align-items: center;">';
+    tUslrPrpsStr += `<img src="images/user/${u_icon.value}" alt="Agent" style="width: 60px; height: 60px; border-radius: 50%; margin-right: 15px;">`;
+    tUslrPrpsStr += '<div>';
+    tUslrPrpsStr += `<p style="margin: 0; font-weight: bold; font-size: 18px; line-height: 1.4;">${u_fullname.value}</p>`;
+    tUslrPrpsStr += `<p style="margin: 0; color: #666; font-size: 16px; line-height: 1.5;">${u_email.value}</p>`;
+    tUslrPrpsStr += '</div>';
+    tUslrPrpsStr += '</div>';
+    tUslrPrpsStr += '</div>';
+
+        var tempDDDDiv = document.createElement("div");
+     tempDDDDiv.innerHTML = tUslrPrpsStr;
+    // appen as first child
+    dvDemoView.insertBefore(tempDDDDiv, dvDemoView.firstChild);
+     setTimeout(function() { JSSHOP.ui.dragElement(document.getElementById("drgblSlrInfo")); }, 1500);
+
+*/
+    setTimeout(function() {
+        JSSHOP.ads.initInteractiveElements('interactiveNwstFlyer');
+    }, 100);
+        }
+    // tinyMCE.activeEditor.setContent(tSwprStr);
  };
 
  JSSHOP.ads.getUpdtMapMrkrs = function(tmmtype, tmmobj) {
@@ -10915,7 +11194,7 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         tDescFlSTr = "";
         if(tMapLeavesArr.length > 0) {
             for(var i = 0; i < tMapLeavesArr.length; i++) {
-         tDescFlSTr += LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].title || "Map View").substring(0, 100) ;
+         tDescFlSTr += LZString.decompressFromEncodedURIComponent(tMapLeavesArr[i].title || "Map View").substring(0, 100);
             }
         tinyMCE.activeEditor.setContent(tDescFlSTr);
     } else {
@@ -10970,18 +11249,7 @@ JSSHOP.ads.trnsltSwiperObj = function() {
                 tSlctdPrpsArr.push(currSlctdPrpsObj[key]);
                 tSwprTtlStr += LZString.decompressFromEncodedURIComponent(currSlctdPrpsObj[key].ptitle).substring(0, 20);
                 tSwprTtlStr += ", ";
-                if(currSlctdPrpsObj[key].pdesc) {
-                    console.log("trnsltSwiperObj.pdesc: " + currSlctdPrpsObj[key].pdesc);
-                    tTWIUYPdesc = currSlctdPrpsObj[key].pdesc;
-                    tUnzpPstr = LZString.decompressFromEncodedURIComponent(tTWIUYPdesc);
-                    if(tUnzpPstr.length > 100) {
-                    tSwprDscStr += tUnzpPstr.substring(0, 100) + "...";
-                    } else {    
-                    tSwprDscStr += tUnzpPstr;
-                    }
-                } else {
-                tSwprDscStr += "No description available.";
-                }
+                tSwprDscStr += LZString.decompressFromEncodedURIComponent(currSlctdPrpsObj[key].pdesc).substring(0, 100);
                 tSwprDscStr += "<hr>";
 
             }
@@ -11471,11 +11739,6 @@ dvPartLicon.innerHTML =  "<img src=\"images/logo/logo-small.png\" style=\"margin
 fretPlugStr = "<div class=\"txtSmall\">" + shopTitle + "</div>";
 // fretPlugStr = doNuCollsLoad("links");
 document.title = shopTitle;
-break;
-case "aa-show-aboutus":
- dvPartLicon.innerHTML =  "<img src=\"images/misc/thumb_logo_ai_trimmed.gif\" style=\"margin-top: 5px;max-height:30px;max-width:30px;\" alt=\"about us\" title=\"about us\" class=\"account\">";
-fretPlugStr = "<div class=\"txtSmall\">" + stxt[913] + "</div>";
-document.title = stxt[913];
 break;
 default:
  

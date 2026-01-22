@@ -48,7 +48,7 @@ var doPostsList = function(a,rfb,c) {
           
          tUrlDecTitle = " ";
         atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-post','pid=aa-edit-post&tpstid=" + tsuar._id + "');\">" + tsuar._id + "</a></td>";
-        atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-post','pid=aa-edit-post&tpstid=" + tsuar._id + "');\">" + tsuar.p_ptype + "</a></td>";
+        atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-post','pid=aa-edit-post&tpstid=" + tsuar._id + "');\">" + svftObj["posttype"][tsuar.p_ptype] + "</a></td>";
 
         tdecdttl = "";
         tdecdttl = decodeURIComponent(tsuar.p_title);

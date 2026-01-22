@@ -467,6 +467,25 @@ var finishMPstUld = function(theMMum) {
         }
     };
 
+    function fnshAQRload() {
+        console.log("fnshAQRload");
+     }
+
+    function getQULnksArr(a,b,c) {
+    console.log("getQULnksArr: " + a + " " + b + " " + c);
+    try {
+        currQUsrLnksArr = JSON.parse(b);
+        console.log("getQULnksArr: links arr: " + JSON.stringify(currQUsrLnksArr));
+    } catch(e) {
+        alert("getQULnksArr: " + e);
+    }
+            JSSHOP.loadScript("js/app/x_aqr.js", fnshAQRload, "js");
+
+    }
+    function loadColorisCss() {
+        JSSHOP.loadScript("js/coloris/coloris.css", donada  , "css");
+    }
+
 function setTnDPlachldrs(theTLSpath, theTLSstat) {
     // set tmp_p_title and tmp_p_content placeholders
     console.log("setTnDPlachldrs");
@@ -482,6 +501,22 @@ function setTnDPlachldrs(theTLSpath, theTLSstat) {
        }, 1500);
     }
     console.log("setTnDPlachldrs: " + theTLSpath + " :: " + theTLSstat);
+    if(currQUsrLnksArr[0]) {
+       console.log("setTnDPlachldrs: already have links: " + JSON.stringify(currQUsrLnksArr));
+
+    } else {
+    tmpDOs = null;
+    tmpDOs = {};
+    tmpDOs["ws"] = "where k_userid=? and k_rtype=?";
+    tmpDOs["wa"] = [quid,5]; 
+    oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
+    doQComm(oi["rq"], "nada", "getQULnksArr");
+    }
+
+        // load the coloris js and css with loadScript function
+        JSSHOP.loadScript("js/coloris/coloris.js", loadColorisCss, "js");
+
+    
 }
 
 function loadTnyI(theTLSpath, theTLSstat) {
@@ -548,8 +583,9 @@ function setPostAdd() {
     tSlctdPstType = document.getElementById("p_ptype").value;
     console.log("setPostAdd: " + tSlctdPstType);
     if(tSlctdPstType == "pimage") {
-        daTAbod = taDemoEdtr_ifr.contentWindow.document.body;
+         daTAbod = taDemoEdtr_ifr.contentWindow.document.body;
         daDiv = daTAbod.querySelector("#dvTMCdemo");
+        // daDiv = document.getElementById("dvDemoView");
         tZpd = LZString.compressToEncodedURIComponent(daDiv.innerHTML);
         document.getElementById("p_vars").value = tZpd;    
     }
@@ -570,21 +606,25 @@ function doPostAdd() {
      // tTMCcntStr = tinyMCE.activeEditor.getContent();
      tSlctdPstType = document.getElementById("p_ptype").value;
      console.log("add-pos:doPostAdd: " + tSlctdPstType);
-
     // JSSHOP.ajax.doNuAjaxPost(oi["rq"], setUPostAddSave);
+
      switch(tSlctdPstType) {
         case "pimage":
             // dvTDiv is a div in taDemoEdtr_ifr.contentWindow.document.body
             daTAbod = taDemoEdtr_ifr.contentWindow.document.body;
-            daDiv = daTAbod.querySelector("#dvTMCdemo");
+           daDiv = daTAbod.querySelector("#dvTMCdemo");
+          //   daDiv = document.getElementById("dvDemoView");
            html2canvas(daDiv).then(function(canvas) { savePstCanvasImg(canvas);})
             // html2canvas(taDemoEdtr).then(function(canvas) { savePstCanvasImg(canvas);})
 
             break;
         case "pcarousel":
             tZpd = LZString.compressToEncodedURIComponent(JSON.stringify(JSSHOP.ads.getUpdatePVrs("pcarousel")));
-            p_vars.value = tZpd;    
-            setPostAdd();    
+            p_vars.value = tZpd;   
+           //  document.getElementById("p_image").value = JSSHOP.ads.getSwprThumbImg();
+             daMdiv = document.getElementById("dvDemoView");
+            html2canvas(daMdiv).then(function(canvas) { savePstCanvasImg(canvas);}) 
+           //  setPostAdd();    
             // JSSHOP.ads.doSwprConfigPop();
             break;
         case "pmap":
@@ -653,15 +693,13 @@ var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
  JSSHOP.ads.doGenericPlug("posts", "add-post", "dvPartLinks");
 document.getElementById("p_ptype").value = "ppost";
- 
-tafsb = nCurrFFieldOb();
-tafsb.fid = "btnEUsave";
-tafsb.fty = "button";
-// tafsb.fcl = function() { tmpSvBtnObj=this;JSSHOP.ui.setSaveBtnClick(this, function(){doPropEdit()}) };
- // tafsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){doPostAdd()}) };
+document.getElementById("p_lang").value = usrlang;
 
-// euiFFObjArr.push(tafsb);
- 
+tfsb = nCurrFFieldOb();
+tfsb.fid = "btnEUsave";
+tfsb.fty = "button";
+tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){doPostAdd()}) };
+euiFFObjArr.push(tfsb);
 JSSHOP.shared.initFrmComps(euiFFObjArr);
 currMediaID = prpid;
  

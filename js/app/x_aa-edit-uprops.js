@@ -61,6 +61,10 @@ aprpTitle = LZString.decompressFromEncodedURIComponent(nprpTitle);
     aprpGroundmapimage = aprpObj["groundmapimage"];
     aprpTotalfloor = aprpObj["totalfloor"];
     aprpDate = aprpObj["pdadded"];
+    if(aprpStatus == "available") {
+    aprpStatus = "active";
+    }
+    console.log('aprpStatus:', aprpStatus);
     // tSTstr = aprpTitle +  aprpContent + aprpType +  aprpStype + aprpPrice + aprpLocation + aprpCity + aprpState +  aprpDate;
     tdaprpType = "";
     tdaprpType = svftObj["proptype"][aprpType];

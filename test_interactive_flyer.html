@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Flyer Test</title>
+    <script src="js/app/lz-string.js"></script>
+    <script src="js/app/x_all.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .flyer-container { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Interactive Flyer Test</h1>
+    <div id="flyer-output" class="flyer-container"></div>
+
+    <script>
+        // Mock data for testing
+        const mockProperties = [
+            {
+                pimage: "sample1.jpg",
+                ptitle: LZString.compressToEncodedURIComponent("Beautiful Apartment in Lisbon"),
+                city: "Lisbon",
+                state: "Lisbon",
+                price: "250000"
+            }
+        ];
+
+        // Mock global variables
+        window.stxt = ["", "Sample", "Property", "Title", "Description", "Location", "Price", "Contact", "Info", "More", "Amazing", "Properties", "For", "Sale"];
+        window.stxt[40] = "Beautiful properties for sale";
+        window.stxt[912] = "Contact our agent";
+        window.currPrpImgsFldr = "images/property";
+        window.u_icon = { value: "default.jpg" };
+        window.u_fullname = { value: "John Doe" };
+        window.u_email = { value: "john@example.com" };
+
+        // Generate flyer
+        try {
+            const flyerHTML = JSSHOP.ads.getInteractiveNwstEdtrPrpStr(mockProperties, 'modern');
+            document.getElementById('flyer-output').innerHTML = flyerHTML;
+            console.log('Flyer generated successfully');
+
+            // Initialize interactive elements
+            JSSHOP.ads.initInteractiveElements('interactiveNwstFlyer');
+            console.log('Interactive elements initialized');
+        } catch (error) {
+            document.getElementById('flyer-output').innerHTML = '<p>Error: ' + error.message + '</p>';
+            console.error('Error generating flyer:', error);
+        }
+    </script>
+</body>
+</html>

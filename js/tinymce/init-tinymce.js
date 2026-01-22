@@ -1,9 +1,11 @@
 tinymce.init({
+
     /* replace textarea having class .tinymce with tinymce editor */
     selector: "textarea.tinymce",
     /* theme of the editor */
     theme: "modern",
     skin: "lightgray",
+
     language: "pt_PT",
     language_url: "./js/tinymce/langs/pt_PT.js",
     /* width and height of the editor */

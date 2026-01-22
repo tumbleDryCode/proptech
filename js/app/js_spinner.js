@@ -454,7 +454,15 @@ function stopNuSpin(theObjId) {
 try { 
 spinner.stop();
 smlspinner.stop();
-document.getElementById(theObjId).innerHTML = currSHTMLObj[theObjId];
+if(currSHTMLObj[theObjId]) {
+tSpnHTMLt = currSHTMLObj[theObjId];
+if(tSpnHTMLt == "moQvalue") {
+tSpnHTMLt = "";
+} else {
+  document.getElementById(theObjId).innerHTML = tSpnHTMLt;
+// alert("stopNuSpin: " + theObjId + "  :: " + "tSpnHTMLt: " + tSpnHTMLt);
+}
+}
 } catch(e) { 
 alert("stopNuSpin: " + e); 
 }

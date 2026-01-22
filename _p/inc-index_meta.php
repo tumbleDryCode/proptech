@@ -10,7 +10,7 @@ error_reporting(E_ALL);
  * @author wildantea <wildannudin@gmail.com>
  * @copyright june 2013
  */
- $image = "https://propsgo.com/images/logo_og.png";
+ $image = "https://dev.propsgo.com/images/logo_og.png";
  $pgKeywords = "Page Keywords"; 
  $pgDesc =  "propsgo.com";
  $siteTitle = "propsgo.com";
@@ -109,7 +109,7 @@ if(isset($_GET["ditemid"])) {
                                     } else if(stristr($image, ".")){
                     $image = "https://dev.propsgo.com/images/property/" . $row["pimage"];
                 } else {
-                    $image = "https://propsgo.com/images/logo_og.png";
+                    $image = "https://dev.propsgo.com/images/logo_og.png";
                 }   
                 $tJsonSTr = '{"ditemid":"' . $row["_id"] . '","ptitle":"' . $title . '","pdesc":"' .  $description . '","i_img":"' . $image . '"}';
               // echo $tJsonSTr;

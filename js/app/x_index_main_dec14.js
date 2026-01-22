@@ -637,7 +637,7 @@ retPLstSTr += "<td class=\"txtBold txtBig\" nowrap=\"nowrap\">" + aprpPrice + "<
 
 retPLstSTr += "</td><td style=\"vertical-align:top\">" + tDDPrpStr + "</td></tr></table>";
 if(has3Dvid == "yes" && tSrtIMinc == istrt) {
-retPLstSTr += "<div   id=\"dvPrpImg" + istrt + "\"  style=\"z-index:99999990;height:320px;width:320px;\">";
+   retPLstSTr += "<div   id=\"dvPrpImg" + istrt + "\"  style=\"z-index:99999990;height:320px;width:320px;\">";
 retPLstSTr += "<div   onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\"> <img src=\"" + tPrpImgsFldr + allprpPimage + "\" alt=\"pimage\" class=\"\" style=\"width:320px;height:320px;\"></div>";
 retPLstSTr += "<div class=\"sale  slmtable bkgdClrWhite txtClrHdr txtSmall\">ID: " + aprpObj._id + " / " + svftObj["proptype"][aprpType] + " / " + stxt[953] + ": " + aprpSize + "</div>";
 
@@ -651,9 +651,8 @@ retPLstSTr += "<div class=\"sale  slmtable bkgdClrWhite txtClrHdr txtSmall\">ID:
 retPLstSTr += "</div>"; // end featured-thumb hover-zoomer mb-4
 }
 
-
-
-
+// retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
+retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
 retPLstSTr += "<div class=\"featured-thumb-data shadow-one\">";
 
 /*
@@ -666,7 +665,7 @@ retPLstSTr += "</div>";
 */
 
 
-retPLstSTr += "<div class=\"bg-gray quantity px-4 pt-4 txtSmall\" style=\"padding: 6px;\">";
+retPLstSTr += "<div class=\"bg-gray quantity px-4 pt-4 txtSmall\" style=\"padding: 6px;max-width: 90%;\">";
 // retPLstSTr += a short version of the property aprpContent
 strpdPcontent = "";
 if(aprpContent == "" || aprpContent == null || aprpContent == undefined || aprpContent == "noQvalue") {
@@ -731,14 +730,6 @@ retPLstSTr += "</div>"; // end featured-thumb-data shadow-one
 
 
 
-
-// retPLstSTr += "<div class=\"featured bg-primary text-white\">New</div>";
-retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
-
-
-
-
-
 retPLstSTr += "</div>";  // end col-md-6
  
  // add clearfix div
@@ -760,7 +751,7 @@ JSSHOP.ui.setTinnerHTML("dvMainPrpsLst",retPLstSTr);
     tUFObj = {};
 tUFObj["uplmt"] = 5;
 tUFObj["upcb"] = "jshp_ads_showUpdtsFeed";
- JSSHOP.ads.doNurUpdatesFeed(tUFObj);
+ JSSHOP.ads.doUpdatesFeed(tUFObj);
  }
 
 

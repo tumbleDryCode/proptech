@@ -21837,36 +21837,7 @@
     };
     var GetSelectionContent = { getContent: getContent };
 
-    var sanitizeHTML = function(html) {
-    // Create a temporary DOM element to parse the HTML
-    var tempDiv = document.createElement('div');
-    tempDiv.innerHTML = html;
-    
-    // Remove script, style, and other dangerous elements
-    var dangerousElements = tempDiv.querySelectorAll('script, style, iframe, object, embed, form, input, button, meta, link');
-    dangerousElements.forEach(function(el) {
-        el.parentNode.removeChild(el);
-    });
-    
-    // Remove dangerous attributes
-    var allElements = tempDiv.querySelectorAll('*');
-    allElements.forEach(function(el) {
-        // List of attributes to remove
-        var dangerousAttrs = ['onclick', 'onload', 'onerror', 'onmouseover', 'onmouseout', 'onkeydown', 'onkeyup', 'onkeypress', 'onsubmit', 'onreset', 'onchange', 'onfocus', 'onblur', 'onselect', 'oncontextmenu', 'href'];
-        dangerousAttrs.forEach(function(attr) {
-            el.removeAttribute(attr);
-        });
-        
-        // Remove javascript: URLs from href
-        if (el.tagName.toLowerCase() === 'a' && el.getAttribute('href') && el.getAttribute('href').toLowerCase().startsWith('javascript:')) {
-            el.removeAttribute('href');
-        }
-    });
-    
-    return tempDiv.innerHTML;
-}
-    var setContent = function (editor, xcontent, args) {
-      var content = sanitizeHTML(xcontent);
+    var setContent = function (editor, content, args) {
       var rng = editor.selection.getRng(), caretNode;
       var doc = editor.getDoc();
       var frag, temp;

@@ -207,6 +207,7 @@
 <input type="hidden" name="p_stat" id="p_stat" value="normal" data-prval="disnull">
 <input type="hidden" name="p_vars" id="p_vars" value="5" data-prval="disnull">
 <input type="hidden" name="p_ready" id="p_ready" value="5" data-prval="disnull">
+<input type="hidden" name="p_lang" id="p_lang" value="pt_pt" data-prval="disnull">
 <input type="hidden" name="p_vala" id="p_vala" value="" data-prval="disnull">
 <input type="hidden" name="p_dmodified" id="p_dmodified" value="" data-prval="disnull">
 <input type="hidden" name="p_dadded" id="p_dadded" value="" data-prval="disnull">
