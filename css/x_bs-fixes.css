@@ -236,3 +236,11 @@ table.tfixed td:nth-of-type(2) {width:200px;}/*Setting the width of column 2.*/
 .swiper-pagination-bullet-active {
   background: #294759;
 }
+
+
+
+/* tinyMCE editor fixes */
+.tox .tox-editor-header {
+  background-color: #F3F3F3;
+} 
+.mce-menu {position:fixed !important}

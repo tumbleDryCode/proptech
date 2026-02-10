@@ -304,6 +304,41 @@ stxt[632] = "Translate the current title and description to the selected languag
 stxt[633] = "Start by uploading some images.";
 stxt[634] = "Edit all Properties";
 stxt[635] = "Select properties for";
+
+// Dialog localization strings
+stxt[636] = "Property Images";
+stxt[637] = "Your Images";
+stxt[638] = "DEMO";
+stxt[639] = "Set as Background";
+stxt[640] = "Rounded Corners";
+stxt[641] = "Gradient Fill";
+stxt[642] = "Solid Color";
+stxt[643] = "Apply Gradient";
+stxt[644] = "Apply Solid Color";
+stxt[645] = "Shadow";
+stxt[646] = "Apply";
+stxt[647] = "Remove Element Shadow";
+stxt[648] = "Horizontal Offset (px):";
+stxt[649] = "Vertical Offset (px):";
+stxt[650] = "Blur Radius (px):";
+stxt[651] = "Color:";
+stxt[652] = "Apply to Border";
+stxt[653] = "Element Shadow";
+
+// Tab descriptions
+stxt[654] = "Select from property images to set as background or insert into editor.";
+stxt[655] = "Choose from your uploaded images to set as background or insert.";
+stxt[656] = "Demo content for testing purposes.";
+stxt[657] = "Apply gradient fills to backgrounds or borders.";
+stxt[658] = "Apply solid colors to backgrounds or borders.";
+stxt[659] = "Select property images for backgrounds.";
+stxt[660] = "Configure element shadow effects for selected element.";
+stxt[661] = "Apply gradient effects to elements.";
+stxt[662] = "Apply solid color effects to elements.";
+stxt[663] = "Colors";
+stxt[664] = "Images";
+stxt[665] = "Background";
+stxt[666] = "Layout";
  
 // messaging strings
 stxt[700] = "Have a Question?";
@@ -668,6 +703,7 @@ tPstPgsAuthObj["profile"] = "Profile";
 tPstPgsAuthObj["prop"] = "Properties";
 tPstPgsAuthObj["cont"] = "Contacts";
 tPstPgsAuthObj["about"] = "About";
+tPstPgsAuthObj["blog"] = "Blog";
 svftObj["postpages"] = tPstPgsAuthObj;
 
 tPostsTypeObj = null;

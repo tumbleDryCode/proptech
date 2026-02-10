@@ -1906,7 +1906,9 @@ usrlang = frupidParts[1];
 tupid = frupid;
 }
 }
-
+    if(currUrlArr.debug) {
+    JSSHOP.loadScript("js/fl/chrome-extension-beta/firebug-lite-beta.js", JSSHOP.checkLoader,"js");
+    }
 // delete the cookie
 JSSHOP.cookies.deleteCookie("cuarr", "", "");
      }

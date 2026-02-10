@@ -276,15 +276,7 @@ stxt[616] = "Edit Drivers";
 stxt[617] = "Utilizadores";
 stxt[618] = "Favorites";
 stxt[619] = "List Trips";
-/*
-stxt[621] = "Social";
-stxt[622] = "add Social Content";
-stxt[623] = "edit profile details";
-stxt[624] = "Add title and link to your social content";
-stxt[625] = "Link-Url of social post or content";
-stxt[626] = "Current links:";
-stxt[627] = "View Property";
-*/
+ 
 stxt[620] = "Tipo, Pre\u00e7o...";
 stxt[621] = "Social";
 stxt[622] = "adicionar Conteudo Social";
@@ -301,6 +293,43 @@ stxt[632] = "Traduzir o titulo e a descricao atuais para o idioma selecionado";
 stxt[633] = "Comece fazendo o upload de algumas imagens.";
 stxt[634] = "Editar todas as Propriedades";
 stxt[635] = "Selecionar propriedades para";
+
+
+// Dialog localization strings
+stxt[636] = "Imagens da Propriedade";
+stxt[637] = "Suas Imagens";
+stxt[638] = "DEMO";
+stxt[639] = "Definir como Fundo";
+stxt[640] = "Cantos Arredondados";  
+stxt[641] = "Preenchimento em Gradiente";
+stxt[642] = "Cor Solida";
+stxt[643] = "Aplicar Gradiente";
+stxt[644] = "Aplicar Cor Solida";
+stxt[645] = "Sombra";
+stxt[646] = "Aplicar";
+stxt[647] = "Remover Sombra do Elemento";
+stxt[648] = "Deslocamento Horizontal (px):";    
+stxt[649] = "Deslocamento Vertical (px):";
+stxt[650] = "Raio de Desfoque (px):";
+stxt[651] = "Cor:";
+stxt[652] = "Aplicar na Borda";
+stxt[653] = "Sombra do Elemento";
+stxt[654] = "Selecione imagens da propriedade para definir como fundo ou inserir no editor.";
+stxt[655] = "Escolha das suas imagens carregadas para definir como fundo ou inserir.";
+stxt[656] = "Conteudo de demonstração para fins de teste.";
+stxt[657] = "Aplicar preenchimentos em gradiente a fundos ou bordas.";
+stxt[658] = "Aplicar cores solidas a fundos ou bordas.";
+stxt[659] = "Selecionar imagens da propriedade para fundos.";
+stxt[660] = "Configurar efeitos de sombra de elemento para o elemento selecionado.";
+stxt[661] = "Aplicar efeitos de gradiente a elementos.";
+stxt[662] = "Aplicar efeitos de cor solida a elementos.";
+stxt[663] = "Cores";
+stxt[664] = "Imagens";
+stxt[665] = "Fundo";
+stxt[666] = "Layout";
+
+
+
 
 stxt[700] = "Tem uma pergunta?";
 stxt[702] = " Opcional para servi\u00e7os baseados em localiza\u00e7\u00e3o ";
@@ -700,6 +729,7 @@ tPstPgsAuthObj["profile"] = "Perfil";
 tPstPgsAuthObj["prop"] = "Propriedades";
 tPstPgsAuthObj["cont"] = "Contactos";
 tPstPgsAuthObj["about"] = "Sobre";
+tPstPgsAuthObj["blog"] = "Blog";
 svftObj["postpages"] = tPstPgsAuthObj;
 
 

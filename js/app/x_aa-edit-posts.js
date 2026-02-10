@@ -8,7 +8,7 @@ var doPostsList = function(a,rfb,c) {
   tmpPostsArr = "";
   tmpPostsArr = [];
   tmpPostsArr = JSON.parse(rfb);
- 
+ currUsrUpdtsArr = tmpPostsArr;
   rnderPostsTbl("_id");
     } else {
       // create a new div informing that you have no posts

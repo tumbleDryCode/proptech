@@ -134,13 +134,7 @@ var arrAllYears = xarrAllYears.slice().reverse();
 
  
 
-var currPMakesArr = ["1:ALFA ROMEO","2:AUDI","3:BENTLEY","4:BMW","5:CADILLAC","6:CHEVROLET","7:CHRYSLER","8:CITROEN","9:DACIA","10:DAEWOO","11:DAIHATSU","12:DODGE","13:DS","14:FIAT","15:FORD","16:HONDA","17:HYUNDAI","18:INFINITI","19:ISUZU","20:IVECO","21:JAGUAR","22:JEEP","23:KIA","24:LADA","25:LAMBORGHINI","27:LANCIA","28:LAND ROVER","29:LEXUS","30:MASERATI","31:MAZDA","32:MERCEDES BENZ","33:MG","34:MICROCAR","35:MINI","36:MITSUBISHI","37:NISSAN","38:OPEL","39:PEUGEOT","40:PONTIAC","41:PORSCHE","42:RENAULT","43:ROVER","44:SAAB","45:SEAT","46:SKODA","47:SMART","48:SSANGYONG","49:SUBARU","50:SUZUKI","51:TESLA","52:TOYOTA","53:TRIUMPH","54:VOLVO","55:VW"];
-var objAllMakes = {"pi":0,"pn":"m","m1":{"id":"1","n":"ALFA ROMEO"},"m2":{"id":"2","n":"AUDI"},"m3":{"id":"3","n":"BENTLEY"},"m4":{"id":"4","n":"BMW"},"m5":{"id":"5","n":"CADILLAC"},"m6":{"id":"6","n":"CHEVROLET"},"m7":{"id":"7","n":"CHRYSLER"},"m8":{"id":"8","n":"CITROEN"},"m9":{"id":"9","n":"DACIA"},"m10":{"id":"10","n":"DAEWOO"},"m11":{"id":"11","n":"DAIHATSU"},"m12":{"id":"12","n":"DODGE"},"m13":{"id":"13","n":"DS"},"m14":{"id":"14","n":"FIAT"},"m15":{"id":"15","n":"FORD"},"m16":{"id":"16","n":"HONDA"},"m17":{"id":"17","n":"HYUNDAI"},"m18":{"id":"18","n":"INFINITI"},"m19":{"id":"19","n":"ISUZU"},"m20":{"id":"20","n":"IVECO"},"m21":{"id":"21","n":"JAGUAR"},"m22":{"id":"22","n":"JEEP"},"m23":{"id":"23","n":"KIA"},"m24":{"id":"24","n":"LADA"},"m25":{"id":"25","n":"LAMBORGHINI"},"m27":{"id":"27","n":"LANCIA"},"m28":{"id":"28","n":"LAND ROVER"},"m29":{"id":"29","n":"LEXUS"},"m30":{"id":"30","n":"MASERATI"},"m31":{"id":"31","n":"MAZDA"},"m32":{"id":"32","n":"MERCEDES BENZ"},"m33":{"id":"33","n":"MG"},"m34":{"id":"34","n":"MICROCAR"},"m35":{"id":"35","n":"MINI"},"m36":{"id":"36","n":"MITSUBISHI"},"m37":{"id":"37","n":"NISSAN"},"m38":{"id":"38","n":"OPEL"},"m39":{"id":"39","n":"PEUGEOT"},"m40":{"id":"40","n":"PONTIAC"},"m41":{"id":"41","n":"PORSCHE"},"m42":{"id":"42","n":"RENAULT"},"m43":{"id":"43","n":"ROVER"},"m44":{"id":"44","n":"SAAB"},"m45":{"id":"45","n":"SEAT"},"m46":{"id":"46","n":"SKODA"},"m47":{"id":"47","n":"SMART"},"m48":{"id":"48","n":"SSANGYONG"},"m49":{"id":"49","n":"SUBARU"},"m50":{"id":"50","n":"SUZUKI"},"m51":{"id":"51","n":"TESLA"},"m52":{"id":"52","n":"TOYOTA"},"m53":{"id":"53","n":"TRIUMPH"},"m54":{"id":"54","n":"VOLVO"},"m55":{"id":"55","n":"VW"}};
-
-var currGSarr = []; // array of objects for grid layout
-
-var objMPages = {"pi":0,"pn":"m","m1":{"id":"1","n":"ALFA ROMEO","pn":"Alfa_Romeo"},"m2":{"id":"2","n":"AUDI","pn":"Audi"},"m3":{"id":"3","n":"BENTLEY","pn":"Bentley_Motors_Limited"},"m4":{"id":"4","n":"BMW","pn":"BMW"},"m5":{"id":"5","n":"CADILLAC","pn":"Cadillac","defl":"es"},"m6":{"id":"6","n":"CHEVROLET","pn":"Chevrolet"},"m7":{"id":"7","n":"CHRYSLER","pn":"Chrysler","pnpt_pt":"Chrysler_(marca)"},"m8":{"id":"8","n":"CITROEN","pn":"Citro�n"},"m9":{"id":"9","n":"DACIA","pn":"Automobile_Dacia"},"m10":{"id":"10","n":"DAEWOO","pn":"GM_Korea"},"m11":{"id":"11","n":"DAIHATSU"},"m12":{"id":"12","n":"DODGE"},"m13":{"id":"13","n":"DS","pn":"noQvalue"},"m14":{"id":"14","n":"FIAT","pn":"FIAT"},"m15":{"id":"15","n":"FORD","pn":"Ford_Motor_Company"},"m16":{"id":"16","n":"HONDA"},"m17":{"id":"17","n":"HYUNDAI","pn":"Hyundai_Motor_Company"},"m18":{"id":"18","n":"INFINITI"},"m19":{"id":"19","n":"ISUZU"},"m20":{"id":"20","n":"IVECO","pn":"noQvalue"},"m21":{"id":"21","n":"JAGUAR","pn":"Jaguar_Cars"},"m22":{"id":"22","n":"JEEP"},"m23":{"id":"23","n":"KIA","pn":"Kia_Motors"},"m24":{"id":"24","n":"LADA"},"m25":{"id":"25","n":"LAMBORGHINI"},"m27":{"id":"27","n":"LANCIA"},"m28":{"id":"28","n":"LAND ROVER","pn":"Land_Rover","pnpt_pt":"Tata_Motors"},"m29":{"id":"29","n":"LEXUS"},"m30":{"id":"30","n":"MASERATI"},"m31":{"id":"31","n":"MAZDA"},"m32":{"id":"32","n":"MERCEDES BENZ","pn":"Mercedes-Benz"},"m33":{"id":"33","n":"MG","pn":"MG_Cars","defl":"es"},"m34":{"id":"34","n":"MICROCAR","pn":"noQvalue"},"m35":{"id":"35","n":"MINI","pn":"noQvalue","gpn":"MINI"},"m36":{"id":"36","n":"MITSUBISHI","pn":"Mitsubishi_Motors"},"m37":{"id":"37","n":"NISSAN"},"m38":{"id":"38","n":"OPEL"},"m39":{"id":"39","n":"PEUGEOT"},"m40":{"id":"40","n":"PONTIAC","pn":"Pontiac_automobile","pnpt_pt":"Pontiac_autom�veis","pnspa_spa":"Pontiac"},"m41":{"id":"41","n":"PORSCHE"},"m42":{"id":"42","n":"RENAULT"},"m43":{"id":"43","n":"ROVER","pn":"Rover_Company","defl":"es"},"m44":{"id":"44","n":"SAAB"},"m45":{"id":"45","n":"SEAT","pn":"SEAT"},"m46":{"id":"46","n":"SKODA","pn":"�koda Auto"},"m47":{"id":"47","n":"SMART","pn":"Smart_marque","defl":"en"},"m48":{"id":"48","n":"SSANGYONG","pn":"SsangYong", "defl":"es"},"m49":{"id":"49","n":"SUBARU"},"m50":{"id":"50","n":"SUZUKI"},"m51":{"id":"51","n":"TESLA","pn":"Tesla,_Inc.","gpn":"noQvalue"},"m52":{"id":"52","n":"TOYOTA","pn":"Toyota_Motor"},"m53":{"id":"53","n":"TRIUMPH","pn":"Triumph_Motor_Company"},"m54":{"id":"54","n":"VOLVO"},"m55":{"id":"55","n":"VW"}};
-
+ 
 var currRegionsObj = {};
 var currRegionsArr = [];
 var currShopsArr = [];
@@ -168,11 +162,14 @@ var currPstsPrpsArr = [];
 var currSlctdUsrObj = {};
 var currQUsrObj = {};
 var currQUsrLnksArr = [];
+var currQUsrMediaArr = [];
 var currSlctdPrpsObj = {};
 var currSwpCnfgObj = {};
 var currSwpCnfgArr = [];
 var currGglSVloaded = "no";
 var currUpdateArr = [];
+var currUsrUpdtsObj = {};
+var currPrpMediaArr = [];
 var gglSKey = "AIzaSyAiBR8BEPj2YCepKplisQKK709r1TI48Vo";
 
 
@@ -656,9 +653,7 @@ var getCurrUrl = function() {
         }
         
  currUrlArr = JSSHOP.shared.urlToArray(getCurrUrl()); 
-    if(currUrlArr.debug) {
-    JSSHOP.loadScript("js/fl/chrome-extension-beta/firebug-lite-beta.js", JSSHOP.checkLoader,"js");
-    }
+
     if(currUrlArr.demouser) {
     JSSHOP.cookies.setCookie("demouser", "yes", "30", "", "", "");
     }

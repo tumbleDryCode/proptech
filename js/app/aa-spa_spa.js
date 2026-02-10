@@ -317,38 +317,61 @@ stxt[634] = "Editar todas las Propiedades";
 stxt[635] = "Seleccionar propiedades para";
 /*
 
-// messaging strings
-stxt[700] = "Have a Question?";
-stxt[702] = " Optional for location based services ";
-stxt[703] = " Your Name ";
-stxt[704] = " Email ";
-stxt[705] = " Subject ";
-stxt[706] = " Message ";
-stxt[707] = " You can use this form to contact us.<br>Or email us at: web@recamby.com";
-stxt[708] = "Send";
-stxt[709] = "Thank you for your feedback or inquiry. If requested, we we contact you as soon as possible.";
-stxt[710] = "Messages";
-stxt[711] = "ShoutOuts";
-stxt[712] = "Is this your shop?";
-stxt[713] = "Please confirm email address";
-stxt[714] = "Thank you for registering. Please confirm your email address by clicking the link in the email we just sent you. If you do not see the email, please check your spam folder.";
-stxt[715] = "Please confirm your email address by clicking this link"; 
-stxt[716] = "Thank you from the team at Recamby.com";
-stxt[717] = "A link will sent to";
-stxt[718] = "to confirm your email address.";
-stxt[719] = "Please check your email and click the link inside to confirm your email address.";
-stxt[720] = "Send me link";
-stxt[721] = "By confirming you are agreeing to our terms of service.";
-stxt[722] = "Continue";
-stxt[723] = "Someone else is registered as administrator. Multi user permission will be coming soon for shops. For now, please contact us to resolve this issue. Thank you for your understanding.";
-stxt[724] = "If this is your shop, and you would like to edit or remove it";
-stxt[725] = "You must be logged in.";
-stxt[726] = "Confirmed!  Your email address has been confirmed.";
-stxt[727] = "Sorry, an error occured.  Please contact us.";
-stxt[728] = "Click here to continue";
+// Dialog localization strings
+stxt[636] = "Property Images";
+stxt[637] = "Your Images";
+stxt[638] = "DEMO";
+stxt[639] = "Set as Background";
+stxt[640] = "Rounded Corners";
+stxt[641] = "Gradient Fill";
+stxt[642] = "Solid Color";
+stxt[643] = "Apply Gradient";
+stxt[644] = "Apply Solid Color";
+stxt[645] = "Shadow";
+stxt[646] = "Apply";
+stxt[647] = "Remove Text Shadow";
+stxt[648] = "Horizontal Offset (px):";
+stxt[649] = "Vertical Offset (px):";
+stxt[650] = "Blur Radius (px):";
+stxt[651] = "Color:";
+stxt[652] = "Apply to Border";
+stxt[653] = "Text Shadow";
 */
-// unicode characters for spanish
-// use only unicode characters for spanish strings in stxt
+// Dialog localization strings
+stxt[636] = "Imagenes de la Propiedad";
+stxt[637] = "Sus Imagenes";
+stxt[638] = "DEMO";
+stxt[639] = "Establecer como Fondo";
+stxt[640] = "Esquinas Redondeadas";
+stxt[641] = "Relleno Degradado";
+stxt[642] = "Color Solido";
+stxt[643] = "Aplicar Degradado";
+stxt[644] = "Aplicar Color Solido";
+stxt[645] = "Sombra";
+stxt[646] = "Aplicar";
+stxt[647] = "Eliminar Sombra de Elemento";
+stxt[648] = "Desplazamiento Horizontal (px):";
+stxt[649] = "Desplazamiento Vertical (px):";
+stxt[650] = "Radio de Desenfoque (px):";
+stxt[651] = "Color:";
+stxt[652] = "Aplicar al Borde";
+stxt[653] = "Sombra de Elemento";
+
+stxt[654] = "Seleccione imágenes de la propiedad para establecer como fondo o insertar en el editor.";
+stxt[655] = "Elija de sus imágenes subidas para establecer como fondo o insertar.";
+stxt[656] = "Contenido de demostración para fines de prueba.";
+stxt[657] = "Aplicar rellenos de gradiente a fondos o bordes.";
+stxt[658] = "Aplicar colores sólidos a fondos o bordes.";
+stxt[659] = "Seleccionar imágenes de la propiedad para fondos.";
+stxt[660] = "Configurar efectos de sombra de elemento para el elemento seleccionado.";
+stxt[661] = "Aplicar efectos de gradiente a elementos.";
+stxt[662] = "Aplicar efectos de color sólido a elementos.";
+stxt[663] = "Colores";
+stxt[664] = "Imagenes";
+stxt[665] = "Fondo";
+stxt[666] = "Layout";
+
+// messaging strings
 stxt[700] = "Tienes una pregunta?";
 stxt[702] = " Opcional para servicios basados en la ubicacion ";
 stxt[703] = " Su nombre ";
@@ -769,6 +792,7 @@ tPstPgsAuthObj["profile"] = "Perfil";
 tPstPgsAuthObj["prop"] = "Propiedades";
 tPstPgsAuthObj["cont"] = "Contactos";
 tPstPgsAuthObj["about"] = "Acerca de";
+tPstPgsAuthObj["blog"] = "Blog";
 svftObj["postpages"] = tPstPgsAuthObj;
 
 

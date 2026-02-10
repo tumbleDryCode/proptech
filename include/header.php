@@ -141,7 +141,9 @@
         <div class="slmtable txtClrHdr bkgdClrWhite" id="navbarSupportedContent" style="visibility:hidden;display:none;min-width:300px;max-width:350px;float:right;position:fixed;z-index: 2147483649;max-height:90%;overflow:auto;">
                                     <ul>
                                         <li class="nav-item"> <a class="nav-link" href="./" role="button" aria-haspopup="true" aria-expanded="false">Home</a></li>
-										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-featured','pid=aa-show-featured');"><ti data-ison="stxt[940]" data-desc="btn_properties">Properties</ti></a> </li>					 
+										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-featured','pid=aa-show-featured');"><ti data-ison="stxt[940]" data-desc="btn_properties">Properties</ti></a> </li>	
+                                        <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-blog','pid=aa-show-blog');">Blog</a> </li>	
+			 
 										<!-- <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-search','pid=aa-show-search&cit=y');"><ti data-ison="stxt[936]" data-desc="btn_searchprops">Search Properties</ti></a> </li>
 										<li class="nav-item"> <a class="nav-link" href="agent.php"><ti data-ison="stxt[900]" data-desc="btn_agentes">Agentes</ti></a> </li> -->
                                         <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-contact-us','pid=aa-contact-us');"><ti data-ison="stxt[902]" data-desc="btn_contacts">Contacts</ti></a> </li>

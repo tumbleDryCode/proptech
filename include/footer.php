@@ -26,6 +26,7 @@
                                                 <ul class="hover-text-primary">
                                                     <li><a href="javascript:eindex('aa-show-aboutus','pid=aa-show-aboutus');" class="text-white"><ti data-ison="stxt[913]" data-desc="btn_about">About Us</ti></a></li>
                                                     <li><a href="javascript:eindex('aa-show-featured','pid=aa-show-featured');" class="text-white"><ti data-ison="stxt[914]" data-desc="btn_featured">Featured Property</ti></a></li>
+                                                    <li><a href="javascript:eindex('aa-show-blog','pid=aa-show-blog');" class="text-white">Blog</a></li>
                                                     <!--
                                                     <li><a href="#" class="text-white"><ti data-ison="stxt[915]" data-desc="btn_member">Become A Member</ti></a></li>
                                                     <li><a href="submitproperty.php" class="text-white"><ti data-ison="stxt[916]" data-desc="btn_addprop">Submit Property</ti></a></li>

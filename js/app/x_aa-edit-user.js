@@ -432,6 +432,7 @@ var setUiconImgs = function(theAIa, theAIb, theAIc) {
     if(theAIb.indexOf("_id") != -1) {
 
 		tAiretArr = JSON.parse(theAIb);
+        currQUsrMediaArr = tAiretArr;
 		var len = tAiretArr.length;
         tstr = "";
         iint = 0;

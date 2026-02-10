@@ -287,6 +287,45 @@ stxt[633] = "Commencez par t\u00e9l\u00e9charger quelques images.";
 stxt[634] = "Modifier toutes les propri\u00e9t\u00e9s";
 stxt[635] = "S\u00e9lectionner les propri\u00e9t\u00e9s pour";
 
+
+stxt[636] = "Images de la propri\u00e9t\u00e9";
+stxt[637] = "Vos images";
+stxt[638] = "D\u00c9MO";    
+stxt[639] = "D\u00e9finir comme fond";
+stxt[640] = "Coins arrondis";
+stxt[641] = "Remplissage en d\u00e9grad\u00e9";
+stxt[642] = "Couleur unie";
+stxt[643] = "Appliquer le d\u00e9grad\u00e9";
+stxt[644] = "Appliquer la couleur unie";        
+stxt[645] = "Ombre";
+stxt[646] = "Appliquer";
+stxt[647] = "Supprimer l'ombre du El\u00e9ment";   
+stxt[648] = "D\u00e9calage horizontal (px) :";
+stxt[649] = "D\u00e9calage vertical (px) :";
+stxt[650] = "Rayon de flou (px) :";
+stxt[651] = "Couleur :";
+stxt[652] = "Appliquer \u00e0 la bordure";
+stxt[653] = "Ombre du El\u00e9ment";
+ 
+
+// Tab descriptions
+stxt[654] = "S\u00e9lectionnez parmi les images de la propri\u00e9t\u00e9 pour d\u00e9finir comme fond ou ins\u00e9rer dans l'éditeur.";    
+stxt[655] = "Choisissez parmi vos images t\u00e9l\u00e9charg\u00e9es pour d\u00e9finir comme fond ou ins\u00e9rer.";
+stxt[656] = "Contenu de d\u00e9monstration \u00e0 des fins de test.";
+stxt[657] = "Appliquer des remplissages en d\u00e9grad\u00e9 aux fonds ou aux bordures.";
+stxt[658] = "Appliquer des couleurs unies aux fonds ou aux bordures.";  
+stxt[659] = "S\u00e9lectionnez des images de propri\u00e9t\u00e9 pour les fonds.";
+stxt[660] = "Configurer les effets d'ombre de el\u00e9ments.";
+stxt[661] = "Appliquer des effets de d\u00e9grad\u00e9 aux \u00e9l\u00e9ments.";
+stxt[662] = "Appliquer des effets de couleur unie aux \u00e9l\u00e9ments."; 
+stxt[663] = "Couleurs";
+stxt[664] = "Images";
+stxt[665] = "Arri\u00e8re-plan";
+stxt[666] = "Layout";
+
+
+
+
 // messaging strings
 stxt[700] = "Vous avez une question ?";
 stxt[701] = undefined;
@@ -642,6 +681,7 @@ tPstPgsAuthObj["profile"] = "Profil";
 tPstPgsAuthObj["prop"] = "Propri\u00e9t\u00e9s";
 tPstPgsAuthObj["cont"] = "Contacts";
 tPstPgsAuthObj["about"] = "\u00c0 propos";
+tPstPgsAuthObj["blog"] = "Blog";
 svftObj["postpages"] = tPstPgsAuthObj;
 
 tPostsTypeObj = null;

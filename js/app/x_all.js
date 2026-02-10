@@ -29,7 +29,7 @@ if (!window.JSSHOP.shop) {
     JSSHOP.shop = new Object();
 }
 
- 
+
    
         var intervals = [];
  
@@ -2973,10 +2973,10 @@ JSSHOP.hookloader.register = function(name, callback) {
     JSSHOP.hookloader.hooks[name].push(callback);
   };
 
-JSSHOP.hookloader.call = function(name, arguments) {
+JSSHOP.hookloader.call = function(name, targuments) {
     if('undefined' != typeof(JSSHOP.hookloader.hooks[name]))
       for(i = 0; i < JSSHOP.hookloader.hooks[name].length; ++i)
-        if( true != JSSHOP.hookloader.hooks[name][i]( arguments )) { break; }
+        if( true != JSSHOP.hookloader.hooks[name][i]( targuments )) { break; }
 };
 
 
@@ -3076,6 +3076,21 @@ function setCurrPrpsArr(tCPAstrA, tCPAstrB, tCPAstrC) {
     }
 }
 
+function setCurrPrpsArrForModal(tCPAstrA, tCPAstrB, tCPAstrC) {
+    try {
+        currPstsPrpsArr = null;
+        currPstsPrpsArr = [];
+        currPstsPrpsArr = JSON.parse(tCPAstrB);
+        // Update the properties tab content
+        var propertiesTab = document.getElementById('properties');
+        if (propertiesTab) {
+            propertiesTab.innerHTML = JSSHOP.ui.getPickerStr("props", false);
+        }
+    } catch (e) {
+        JSSHOP.logJSerror(e, arguments, "setCurrPrpsArrForModal");
+    }
+}
+
 JSSHOP.ui.setPickerVal = function(tPVelem, tPVtype, tPVixd, tPVid) {
 //  currSlctdUsrArr  currSlctdPrpsArr 
     try {
@@ -3143,7 +3158,8 @@ JSSHOP.ui.setPickerVal = function(tPVelem, tPVtype, tPVixd, tPVid) {
     }
 };
 
-JSSHOP.ui.getPickerStr = function(tPDtype) {
+JSSHOP.ui.getPickerStr = function(tPDtype, includeButtons) {
+    if (includeButtons === undefined) includeButtons = true;
     tGPSstr = "<div style=\"padding: 1px;max-height:300px;overflow:auto;\"> ";
     try {
     switch(tPDtype) {
@@ -3206,11 +3222,13 @@ JSSHOP.ui.getPickerStr = function(tPDtype) {
         break;
     }
 tGPSstr += "</div>";
-tGPSstr += "<br>";
+if (includeButtons) {
+    tGPSstr += "<br>";
     tGPSstr += "<div style=\"margin: 10px\">";
     tGPSstr += "<span style=\"\" class=\"cls_button cls_button-medium bkgdClrHdr txtClrWhite\" onclick=\"JSSHOP.ui.closeLbox();JSSHOP.ads.trnsltPTpObj();\">OK</span>";
     tGPSstr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-medium  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";
     tGPSstr += "</div>";
+}
     return tGPSstr;
     } catch (e) {
         JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.getPickerStr");
@@ -6273,7 +6291,7 @@ JSSHOP.ui.popAndFillLbox(tIUrlStr);
 };
  
 JSSHOP.ui.popAndFillLbox = function(theFill) {
-JSSHOP.ui.popNuFillLbox(theFill, 5);
+JSSHOP.ui.popNurFillLbox(theFill, 5);
 }
 
 
@@ -6367,6 +6385,42 @@ JSSHOP.ui.popFillObox = function(theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUse
             // app.getWVScrollY();
             } 
 
+};
+
+JSSHOP.ui.popNurFillLbox = function(theFill, theTofst) {
+    // Enhanced modal using Bootstrap for better mobile responsiveness
+    var modalId = 'nurModal';
+    var existingModal = document.getElementById(modalId);
+    if (!existingModal) {
+        var modalHtml = `
+            <div class="modal fade" id="${modalId}" tabindex="-1" aria-labelledby="${modalId}Label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="${modalId}Body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+        existingModal = document.getElementById(modalId);
+    }
+    var modalBody = document.getElementById(modalId + 'Body');
+    if (theFill === "noQvalue") {
+        modalBody.innerHTML = "";
+    } else if (theFill === "dbug") {
+        modalBody.innerHTML = "<div style=\"overflow:auto;min-height: 231px; min-width: 368px\" contenteditable=\"true\">" + currDBUGstr + "</div>";
+    } else if (theFill === "loading") {
+        modalBody.innerHTML = "<div class=\"d-flex justify-content-center\"><div class=\"spinner-border\" role=\"status\"><span class=\"visually-hidden\">Loading...</span></div></div>";
+    } else {
+        modalBody.innerHTML = theFill;
+    }
+    // Show the modal
+    var modal = new bootstrap.Modal(existingModal);
+    modal.show();
 };
 
 JSSHOP.ui.popNuFillLbox = function(theFill, theTofst) {
@@ -6472,6 +6526,25 @@ JSSHOP.ui.closeLbox = function() {
 document.getElementById('lightbox').style.display='none';
 document.getElementById('lightbox_content').style.top='-800px';
 document.getElementById('lightbox_content').style.display='none';
+}
+
+// Also close the last Bootstrap modal if it exists
+var modals = document.querySelectorAll('.modal.show');
+if (modals.length > 0) {
+    var lastModal = modals[modals.length - 1];
+    var modalInstance = bootstrap.Modal.getInstance(lastModal);
+    if (modalInstance) {
+        modalInstance.hide();
+    } else {
+        // Fallback if no instance
+        lastModal.classList.remove('show');
+        lastModal.style.display = 'none';
+        var backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) {
+            backdrop.remove();
+        }
+        document.body.classList.remove('modal-open');
+    }
 }
 
 };
@@ -8574,6 +8647,7 @@ JSSHOP.ads.intDemoEditor = function() {
     var eheight = Math.round(ewidth / 1.91);
     var tQRimgSTr = doQRimgSrcStr(currWebHome + "index.html?pid=aa-show-user&tuid=" + quid, 200);
     tDemoMCEobj = {
+
         selector: "textarea.inpDemoEdtr",
         theme: 'modern',
         statusbar: true,
@@ -8583,15 +8657,16 @@ JSSHOP.ads.intDemoEditor = function() {
         visual: false,
         resize: true,
         height: 500,
-     
+     // make scroll bars always visible
+       content_style: "body {overflow-y: scroll !important;}",
         plugins: [
             'advlist autolink lists link image charmap print preview hr anchor pagebreak',
             'searchreplace wordcount visualblocks visualchars code fullscreen',
             'insertdatetime media nonbreaking save table contextmenu directionality',
-            'emoticons template paste textcolor colorpicker textpattern imagetools code bgcolorpicker mediapop'
+            'emoticons template paste textcolor colorpicker textpattern textshadow imagetools code bgcolorpicker mediapop flyerlayout flyersmodal'
         ],
         toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image table',
-        toolbar2: 'print preview media | forecolor backcolor emoticons imagetools fontsizeselect | fontselect | code | template | bgcolorpicker | mediapop',
+        toolbar2: 'print preview media | forecolor backcolor emoticons imagetools fontsizeselect textpattern | fontselect | code | template | fullscreen | flyersmodal | flyerlayout | bgcolorpicker | mediapop | textshadow',
         image_advtab: true,
         templates: [
             { title: 'QRCode', content: tQRimgSTr },
@@ -8673,35 +8748,83 @@ JSSHOP.ads.intDemoEditor = function() {
 tinymce.PluginManager.add('mediapop', function (editor, url) {
     // Add toolbar button
     editor.addButton('mediapop', {
-        text: 'Media Pop',
+        text: stxt[664], // Images
         icon: false,
         onclick: openMediaPickerDialog
     });
     // Add menu item
     editor.addMenuItem('mediapop', {
-        text: 'Media Pop',
+        text: stxt[664], // Images
         icon: false,
         onclick: openMediaPickerDialog
     });
 });    
+
 tinymce.PluginManager.add('bgcolorpicker', function (editor, url) {
     
      
     // Add toolbar button
     editor.addButton('bgcolorpicker', {
-        text: 'Flyer BackGround',
+        text: stxt[665], // Background Color
         icon: false,
         onclick: openBgColorPickerDialog
     });
     // Add menu item
     editor.addMenuItem('bgcolorpicker', {
-        text: 'Flyer BackGround',
+        text: stxt[665], // Background Color
         icon: false,
         onclick: openBgColorPickerDialog
     });
 });
+tinymce.PluginManager.add('textshadow', function(editor, url) {
+    editor.addButton('textshadow', {
+        text: stxt[663], // Colors
+        onclick: function() {
+            openTextShadowDialog();
+        }
+    });
+    editor.addMenuItem('textshadow', {
+        text: stxt[663], // Colors
+        onclick: function() {
+            openTextShadowDialog();
+        }
+    });
+});
+tinymce.PluginManager.add('flyerlayout', function(editor, url) {
+    editor.addButton('flyerlayout', {   
+        text: stxt[666], // Flyer Layouts
+        onclick: function() {
+            openFlyerLayoutDialog();
+        }
+    });
+    editor.addMenuItem('flyerlayout', {
+        text: stxt[666], // Flyer Layouts
+        onclick: function() {
+            openFlyerLayoutDialog();
+        }
+    });
+});
+
+
+// add flyersmodal plugin
+tinymce.PluginManager.add('flyersmodal', function(editor, url) {
+    // Add toolbar button
+    editor.addButton('flyersmodal', {
+        text: 'Flyers',
+        icon: false,
+        onclick: openFlyersModalDialog
+    });
+    // Add menu item
+    editor.addMenuItem('flyersmodal', {     
+        text: 'Flyers',
+        icon: false,
+        onclick: openFlyersModalDialog
+    });
+});
+
 
 };
+
 
 // Helper function to find the closest parent with class 'gallery-item'
 function findClosestGalleryItem(node, editor) {
@@ -8714,6 +8837,156 @@ function findClosestGalleryItem(node, editor) {
     return null;
 }
 
+function getEdtrUsrMediaStr(tGUMa, tGUMb, tGUMc) {
+    try {
+        currQUsrMediaArr = [];
+        if (tGUMb && tGUMb.indexOf("_id") != -1) {
+            var tAiretArr = JSON.parse(tGUMb);
+            currQUsrMediaArr = tAiretArr;
+        }
+        var tstr = "";
+        var len = currQUsrMediaArr.length;
+        for (var iint = 0; iint < len; iint++) {
+            var amprop = currQUsrMediaArr[iint];
+            var imgSrc = "images/user/" + amprop.m_file_thumb;
+            var fullImgSrc = "images/user/" + amprop.m_file;
+            var title = amprop.m_title || '';
+            tstr += '<div style="display:inline-block;margin:6px;text-align:center;border:1px solid #ddd;padding:5px;border-radius:4px;background:#f9f9f9;cursor:pointer;" onclick="setMdaBgImage(\'' + fullImgSrc + '\', document.getElementById(\'mp_set_bg\').checked, document.getElementById(\'mp_rounded\').checked);JSSHOP.ui.closeLbox();">';
+            tstr += '<img src="' + imgSrc + '" style="width:90px;height:70px;object-fit:cover;border-radius:6px;" />';
+            tstr += '<div style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:5px;">' + title + '</div></div>';
+        }
+        // Optionally add default image, but probably not needed for editor
+        document.getElementById("mp_tab_your_images_content").innerHTML = tstr;
+    } catch (e) {
+        console.log("getEdtrUsrMediaStr: " + e);
+    }
+}
+
+function setFlyrLytVal(tFLVa, tFLVb, tFLVc) {
+    console.log("setFlyrLytVal: " + tFLVa + ", " + tFLVb + ", " + tFLVc);
+    // inpImgPstLayout.value = tFLVa;
+}
+function openFlyerLayoutDialog() {
+    // Create modal HTML with tabs
+    var modalId = 'flyerLayoutModal';
+    var modalHtml = `
+        <div class="modal fade" id="${modalId}" tabindex="-1" aria-labelledby="${modalId}Label" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="${modalId}Label">Flyer Layout</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="nav nav-tabs" id="flyerLayoutTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="properties-tab" data-bs-toggle="tab" data-bs-target="#properties" type="button" role="tab" aria-controls="properties" aria-selected="true">Properties</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="layout-tab" data-bs-toggle="tab" data-bs-target="#layout" type="button" role="tab" aria-controls="layout" aria-selected="false">Layout</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="flyerLayoutTabContent">
+                            <div class="tab-pane fade show active" id="properties" role="tabpanel" aria-labelledby="properties-tab">
+                                <!-- Properties content -->
+                            </div>
+                            <div class="tab-pane fade" id="layout" role="tabpanel" aria-labelledby="layout-tab">
+                                <!-- Layout content -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <span style="" class="cls_button cls_button-medium bkgdClrGrey txtClrHdr" onclick="bootstrap.Modal.getInstance(document.getElementById('flyerLayoutModal')).hide();">Cancel</span>
+                        <span style="" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite" onclick="JSSHOP.ads.trnsltImgPstObj(); bootstrap.Modal.getInstance(document.getElementById('flyerLayoutModal')).hide();">OK</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Remove existing modal if present
+    var existingModal = document.getElementById(modalId);
+    if (existingModal) {
+        existingModal.remove();
+    }
+
+    // Insert modal into DOM
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+    // Get layout dropdown
+    var tDDImgPstLyt = {};
+    tDDImgPstLyt["ddtype"] = "noQvalue";
+    tDDImgPstLyt["fld"] = "inpImgPstLayout";
+    tDDImgPstLyt["lbl"] = "Image Layout";
+    tDDImgPstLyt["val"] = inpImgPstLayout.value;
+    tDDImgPstLyt["kvpObj"] = {"grid": "Grid", "list": "List", "masonry": "Masonry"};
+    tDDImgPstLyt["cb"] = "setFlyrLytVal";
+    tDDImgPstLyt["fldcls"] = "nav-link dropdown-toggle txtSmall";
+    tDDImgPstLyt["lblcls"] = "txtSmall";
+    tDDImgPstLyt["valcls"] = "txtSmall";
+    tDDImgPstLyt["icncls"] = "nav-material-icons txtBold txtClrGrey";
+    tDDImgPstLyt["horvert"] = "vertical";
+    tDDImgPstLyt["icn"] = "noQvalue";
+    tDDImgPstLyt["kvIcnsObj"] = {};
+    tDDImgPstLyt["kvIcnsObj"]["Grid"] = "&#xe5cd;";
+    tDDImgPstLyt["kvIcnsObj"]["List"] = "&#xe5cd;";
+    tDDImgPstLyt["kvIcnsObj"]["Masonry"] = "&#xe5cd;";
+    var layoutDropdown = JSSHOP.ui.getNuBSdropDstr(tDDImgPstLyt);
+
+    // Set layout tab content
+    document.getElementById('layout').innerHTML = layoutDropdown;
+
+    // Handle properties tab
+    var propertiesTab = document.getElementById('properties');
+    if (currPstsPrpsArr && currPstsPrpsArr.length > 0) {
+        // Data already loaded, set content
+        propertiesTab.innerHTML = JSSHOP.ui.getPickerStr("props", false);
+    } else {
+        // Load data
+        propertiesTab.innerHTML = '<p>Loading properties...</p>';
+        var newSCPArrQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = '" + usrlang + "' or pd.pd_prptlng = '" + deflang + "') order by rand() limit 20";
+        doQComm(newSCPArrQstr, null, "setCurrPrpsArrForModal");
+    }
+
+    // Show modal
+    var modal = new bootstrap.Modal(document.getElementById(modalId));
+    modal.show();
+}
+
+function setFlyerStyle(styleName) {
+    console.log('Selected flyer style: ' + styleName);
+    var flyerStyles = [
+        { name: 'Default', background: '#ffffff', class: '' },
+        { name: 'Thought', class: 'thought-bubble' },
+        { name: 'Speech Bubble 1', class: 'speech-bubble1' },
+        { name: 'Speech Bubble 2', class: 'speech-bubble2' },
+        { name: 'Speech Bubble 3', class: 'speech-bubble3' },
+        { name: 'Jagged Bubble', class: 'jagged-bubble' }
+    ];
+    var flyerDiv = document.getElementById('dvTMCdemo');
+    if (flyerDiv) {
+        // Find the style object
+        var selectedStyle = flyerStyles.find(function(style) {
+            return style.name === styleName;
+        });
+        if (selectedStyle) {
+            // Remove existing bubble classes
+            flyerDiv.className = flyerDiv.className.replace(/\b(thought-bubble|speech-bubble\d*|jagged-bubble)\b/g, '').trim();
+            // Add the new class if any
+            if (selectedStyle.class) {
+                flyerDiv.classList.add(selectedStyle.class);
+            }
+            // Set background if specified
+            if (selectedStyle.background) {
+                flyerDiv.style.background = selectedStyle.background;
+            } else {
+                flyerDiv.style.background = '';
+            }
+        }
+    }
+}
+
+
 function openMediaPickerDialog() { 
       var amppropArr = [];
     try {
@@ -8721,112 +8994,104 @@ function openMediaPickerDialog() {
             amppropArr = window.currPstsPrpsArr;
         }
     } catch (e) { }
-    var grad1 = '#2196f3', grad2 = '#e3f2fd';
 
-    // Tab buttons
+    // Tab buttons using Bootstrap
     var tabHtml = `
-        <div style="margin-bottom:10px;">
-            <button type="button" id="mp_tab_gradient" style="margin-right:10px;padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Gradient Fill</button>
-            <button type="button" id="mp_tab_solid" style="margin-right:10px;padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Solid Color</button>
-            <button type="button" id="mp_tab_image" style="padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Property Image</button>
-        </div>
-    `;
-
-    // Gradient tab content
-    var gradientHtml = `
-        <div id="mp_tab_gradient_content">
-            <label style="display:block;margin-bottom:5px;">Color 1: <input type="text" id="mp_grad1" value="${grad1}" data-coloris style="margin-right:10px;width:100px;"></label>
-            <label style="display:block;margin-bottom:5px;">Color 2: <input type="text" id="mp_grad2" value="${grad2}" data-coloris style="width:100px;"></label>
-            <div id="mp_gradPreview" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:linear-gradient(135deg,${grad1},${grad2});border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="mp_grad_border"> <label for="mp_grad_border">Apply to Border</label></div>
-            <button type="button" id="mp_apply_gradient" style="padding:5px 10px;border:1px solid #ccc;background:#fff;border-radius:4px;">Apply Gradient</button>
-        </div>
-    `;
-
-    // Solid color tab content
-    var solidHtml = `
-        <div id="mp_tab_solid_content" style="display:none;">
-            <label style="display:block;margin-bottom:5px;">Color: <input type="text" id="mp_solid" value="#2196f3" data-coloris style="width:100px;"></label>
-            <div id="mp_solidPreview" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:#2196f3;border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="mp_solid_border"> <label for="mp_solid_border">Apply to Border</label></div>
-            <button type="button" id="mp_apply_solid" style="padding:5px 10px;border:1px solid #ccc;background:#fff;border-radius:4px;">Apply Solid Color</button>
-        </div>
+        <ul class="nav nav-tabs" id="mediaPickerTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="mp_tab_image" data-bs-toggle="tab" data-bs-target="#mp_tab_image_content" type="button" role="tab" aria-controls="mp_tab_image_content" aria-selected="true">` + stxt[636] + `</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="mp_tab_your_images" data-bs-toggle="tab" data-bs-target="#mp_tab_your_images_content" type="button" role="tab" aria-controls="mp_tab_your_images_content" aria-selected="false">` + stxt[637] + `</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="mp_tab_demo" data-bs-toggle="tab" data-bs-target="#mp_tab_demo_content" type="button" role="tab" aria-controls="mp_tab_demo_content" aria-selected="false">` + stxt[638] + `</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="mediaPickerTabContent">
     `;
 
     // Images tab content
-    var imagesHtml = '<div id="mp_tab_image_content" style="display:none;min-height:350px;max-height:400px;overflow:auto;">';
-        imagesHtml += '<div><input type="checkbox" id="mp_set_bg"> <label for="mp_set_bg">Set as Background</label></div>';
+    var imagesHtml = '<div class="tab-pane fade show active" id="mp_tab_image_content" role="tabpanel" aria-labelledby="mp_tab_image" style="min-height:350px;max-height:400px;overflow:auto;">';
+
+
+    if (window.currPrpMediaArr && window.currPrpMediaArr.length > 0) {
+        for (var i = 0; i < currPrpMediaArr.length; i++) {
+            var amprop = currPrpMediaArr[i];
+            var imgSrc, fullImgSrc, title;
+            switch(amprop.m_catid) {
+                case "5":
+                    imgSrc = "images/property/m_thumb" + amprop.m_file;
+                    fullImgSrc = "images/property/" + amprop.m_file;
+                    break;
+                case "20":
+                case "25":
+                case "30":
+                    imgSrc = "images/tmpi/" + amprop.m_vala + ".jpg";
+                    fullImgSrc = imgSrc;
+                    break;
+                default:
+                    imgSrc = 'images/misc/example_thumb.png';
+                    fullImgSrc = imgSrc;
+            }
+            title = amprop.m_title || '';
+            imagesHtml += '<div style="display:inline-block;margin:6px;text-align:center;border:1px solid #ddd;padding:5px;border-radius:4px;background:#f9f9f9;cursor:pointer;" onclick="setMdaBgImage(\'' + fullImgSrc + '\', document.getElementById(\'mp_set_bg\').checked, document.getElementById(\'mp_rounded\').checked);JSSHOP.ui.closeLbox();">';
+            imagesHtml += '<img src="' + imgSrc + '" style="width:90px;height:70px;object-fit:cover;border-radius:6px;" />';
+            imagesHtml += '<div style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:5px;">' + title + '</div></div>';
+        }
+                imagesHtml += '<hr style="margin:10px 0;">';
+
+    }
+
+
     for (var i = 0; i < amppropArr.length; i++) {
         var amprop = amppropArr[i];
         var imgSrc = (amprop.pimage && amprop.pimage !== "noQvalue") ? 'images/property/s_thumb' + amprop.pimage : "images/misc/example_thumb.png";
         var title = amprop.ptitle ? LZString.decompressFromEncodedURIComponent(decodeURIComponent(amprop.pd_prptitle || amprop.ptitle)) : '';
-        imagesHtml += '<div style="display:inline-block;margin:6px;text-align:center;border:1px solid #ddd;padding:5px;border-radius:4px;background:#f9f9f9;cursor:pointer;" onclick="setMdaBgImage(\'' + imgSrc.replace('s_thumb', '') + '\');JSSHOP.ui.closeLbox();">';
+        imagesHtml += '<div style="display:inline-block;margin:6px;text-align:center;border:1px solid #ddd;padding:5px;border-radius:4px;background:#f9f9f9;cursor:pointer;" onclick="setMdaBgImage(\'' + imgSrc.replace('s_thumb', '') + '\', document.getElementById(\'mp_set_bg\').checked, document.getElementById(\'mp_rounded\').checked);JSSHOP.ui.closeLbox();">';
         imagesHtml += '<img src="' + imgSrc + '" style="width:90px;height:70px;object-fit:cover;border-radius:6px;" />';
         imagesHtml += '<div style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:5px;">' + title + '</div></div>';
         }
+    
 
-    imagesHtml += '</div>';
+    imagesHtml += '<p style="margin-top:10px;font-size:12px;color:#666;">' + stxt[654] + '</p></div>';
+
+    // Demo tab content
+    var demoHtml = '<div class="tab-pane fade" id="mp_tab_demo_content" role="tabpanel" aria-labelledby="mp_tab_demo">DEMO<p style="margin-top:10px;font-size:12px;color:#666;">' + stxt[656] + '</p></div>';
+
+    // Your Images tab content
+    var yourImagesHtml = '<div class="tab-pane fade" id="mp_tab_your_images_content" role="tabpanel" aria-labelledby="mp_tab_your_images" style="min-height:350px;max-height:400px;overflow:auto;">Loading...<p style="margin-top:10px;font-size:12px;color:#666;">' + stxt[655] + '</p></div>';
 
     // Full dialog HTML
-    tdialogHtml = tabHtml + gradientHtml + solidHtml + imagesHtml;
+    tdialogHtml = tabHtml + imagesHtml + demoHtml + yourImagesHtml + '</div>';
     // wrap tdialogHtml in a div with min height 80% of viewport height
-    var dialogHtml = '<div style="min-height:80vh;max-height:90vh;overflow:auto;">' + tdialogHtml + '</div>';
+    var dialogHtml = '<div style="min-height:80vh;max-height:90vh;overflow:auto;">' + '<div style="position: sticky; top: 0; background: white; z-index: 1; padding: 5px; border-bottom: 1px solid #ddd;"><input type="checkbox" id="mp_set_bg"> <label for="mp_set_bg">' + stxt[639] + '</label> <input type="checkbox" id="mp_rounded"> <label for="mp_rounded">' + stxt[640] + '</label></div>' + tdialogHtml + '</div>';
     // Add event listeners after rendering
     setTimeout(function() {
-        // Tab switching
-        document.getElementById('mp_tab_gradient').onclick = function() {
-            document.getElementById('mp_tab_gradient_content').style.display = 'block';
-            document.getElementById('mp_tab_solid_content').style.display = 'none';
-            document.getElementById('mp_tab_image_content').style.display = 'none';
-        };
-        document.getElementById('mp_tab_solid').onclick = function() {
-            document.getElementById('mp_tab_gradient_content').style.display = 'none';
-            document.getElementById('mp_tab_solid_content').style.display = 'block';
-            document.getElementById('mp_tab_image_content').style.display = 'none';
-        };
-        document.getElementById('mp_tab_image').onclick = function() {
-            document.getElementById('mp_tab_gradient_content').style.display = 'none';
-            document.getElementById('mp_tab_solid_content').style.display = 'none';
-            document.getElementById('mp_tab_image_content').style.display = 'block';
-        };
-
-        // Gradient preview
-        document.getElementById('mp_grad1').onchange = function() {
-            grad1 = this.value;
-            document.getElementById('mp_gradPreview').style.background = 'linear-gradient(135deg,' + grad1 + ',' + grad2 + ')';
-        };
-        document.getElementById('mp_grad2').onchange = function() {
-            grad2 = this.value;
-            document.getElementById('mp_gradPreview').style.background = 'linear-gradient(135deg,' + grad1 + ',' + grad2 + ')';
-        };
-
-        // Apply gradient
-        document.getElementById('mp_apply_gradient').onclick = function() {
-            setMdaBgGradient(grad1, grad2, document.getElementById('mp_grad_border').checked);
-            JSSHOP.ui.closeLbox();
-        };
-
-        // Solid preview
-        document.getElementById('mp_solid').onchange = function() {
-            document.getElementById('mp_solidPreview').style.background = this.value;
-        };
-
-        // Apply solid
-        document.getElementById('mp_apply_solid').onclick = function() {
-            setMdaBgSolidColor(document.getElementById('mp_solid').value, document.getElementById('mp_solid_border').checked);
-            JSSHOP.ui.closeLbox();
-        };
-
         // Initialize Coloris if available
         if (window.Coloris) {
             Coloris({
                 el: '[data-coloris]',
+                parent: '#nurModal',
                 swatches: ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']
             });
+        }
+
+        // Load Your Images tab content
+        if (window.currQUsrMediaArr && window.currQUsrMediaArr.length > 0) {
+            getEdtrUsrMediaStr(null, JSON.stringify(currQUsrMediaArr), null);
+        } else {
+            var tmpFobj = {};
+            tmpFobj["ws"] = "where m_uid=? and m_pid=? and m_rtype=?";
+            tmpFobj["wa"] = [quid, quid, 5];
+            tmpFobj["o"] = "m_vala desc";
+            var oi = getNuDBFnvp("qmedia", 5, null, tmpFobj);
+            doQComm(oi["rq"], null, "getEdtrUsrMediaStr");
         }
     }, 800);
 
     JSSHOP.ui.popAndFillLbox(dialogHtml);
+
 }
 function openBgColorPickerDialog() {
     var propArr = [];
@@ -8837,39 +9102,207 @@ function openBgColorPickerDialog() {
     } catch (e) { }
 
     var grad1 = '#2196f3', grad2 = '#e3f2fd';
+    var uniqueId = Date.now(); // Unique ID to avoid conflicts
 
-    // Tab buttons
+    // Tab buttons using Bootstrap
     var tabHtml = `
-        <div style="margin-bottom:10px;">
-            <button type="button" id="bgc_tab_gradient" style="margin-right:10px;padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Gradient Fill</button>
-            <button type="button" id="bgc_tab_solid" style="margin-right:10px;padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Solid Color</button>
-            <button type="button" id="bgc_tab_image" style="padding:5px;border:1px solid #ccc;background:#fff;border-radius:4px;">Property Image</button>
-        </div>
+        <ul class="nav nav-tabs" id="bgColorPickerTab_${uniqueId}" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="bgc_tab_style_${uniqueId}" data-bs-toggle="tab" data-bs-target="#bgc_tab_style_content_${uniqueId}" type="button" role="tab" aria-controls="bgc_tab_style_content_${uniqueId}" aria-selected="true">Style</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="bgc_tab_gradient_${uniqueId}" data-bs-toggle="tab" data-bs-target="#bgc_tab_gradient_content_${uniqueId}" type="button" role="tab" aria-controls="bgc_tab_gradient_content_${uniqueId}" aria-selected="false">` + stxt[641] + `</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="bgc_tab_solid_${uniqueId}" data-bs-toggle="tab" data-bs-target="#bgc_tab_solid_content_${uniqueId}" type="button" role="tab" aria-controls="bgc_tab_solid_content_${uniqueId}" aria-selected="false">` + stxt[642] + `</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="bgc_tab_image_${uniqueId}" data-bs-toggle="tab" data-bs-target="#bgc_tab_image_content_${uniqueId}" type="button" role="tab" aria-controls="bgc_tab_image_content_${uniqueId}" aria-selected="false">` + stxt[636] + `</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="bgColorPickerTabContent_${uniqueId}">
     `;
+
+    // Style tab content
+    var styleHtml = `<style>
+        .thought-bubble {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 20px;
+            padding: 10px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: none;
+        }
+        .thought-tail1 {
+            position: absolute;
+            bottom: -10px;
+            left: 25px;
+            width: 16px;
+            height: 16px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .thought-tail2 {
+            position: absolute;
+            bottom: -16px;
+            left: 35px;
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .thought-tail3 {
+            position: absolute;
+            bottom: -20px;
+            left: 42px;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .speech-bubble1 {
+            background: #f9f9f9;
+            border-radius: 20px;
+            padding: 10px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: none;
+        }
+        .speech-bubble1::before {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid #f9f9f9;
+            z-index: 1;
+        }
+        .speech-bubble2 {
+            background: #fff3cd;
+            border-radius: 15px;
+            padding: 10px;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            border: none;
+        }
+        .speech-bubble2::before {
+            content: '';
+            position: absolute;
+            bottom: -16px;
+            right: 20px;
+            width: 0;
+            height: 0;
+            border-left: 16px solid transparent;
+            border-right: 16px solid transparent;
+            border-top: 16px solid #fff3cd;
+            z-index: 1;
+        }
+        .speech-bubble3 {
+            background: #d1ecf1;
+            border-radius: 25px;
+            padding: 10px;
+            position: relative;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            border: none;
+        }
+        .speech-bubble3::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 20px solid #d1ecf1;
+            z-index: 1;
+        }
+    </style>
+        <div class="tab-pane fade show active" id="bgc_tab_style_content_${uniqueId}" role="tabpanel" aria-labelledby="bgc_tab_style_${uniqueId}">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; padding: 10px;">
+    `;
+    var styles = [
+        { name: 'Classic', type: 'gradient', value: 'linear-gradient(to right, #007bff, #ffffff)' },
+        { name: 'Modern', type: 'gradient', value: 'linear-gradient(to right, #00bcd4, #2196f3, #3f51b5)' },
+        { name: 'Vibrant', type: 'gradient', value: 'linear-gradient(to right, #ff4081, #ff1744, #ffeb3b)' },
+        { name: 'Thought', type: 'balloon', value: 'thought' },
+        { name: 'Speech Bubble 1', type: 'balloon', value: 'speech1' },
+        { name: 'Speech Bubble 2', type: 'balloon', value: 'speech2' },
+        { name: 'Speech Bubble 3', type: 'balloon', value: 'speech3' }
+    ];
+    styles.forEach(function(style) {
+        var classAttr = style.type === 'balloon' ? ' class="' + (style.value === 'thought' ? 'thought-bubble' : 'speech-bubble' + (style.value === 'speech1' ? '1' : style.value === 'speech2' ? '2' : '3')) + '"' : '';
+        var textColor = style.type === 'gradient' ? 'color: white;' : 'color: #333;';
+        var bgStyle = style.type === 'gradient' ? 'background: ' + style.value + ';' : '';
+        var extraContent = '';
+        if (style.type === 'balloon' && style.value === 'thought') {
+            extraContent = '<div class="thought-tail1"></div><div class="thought-tail2"></div><div class="thought-tail3"></div>';
+        }
+        styleHtml += '<div onclick="setBgStyle(\'' + style.name + '\');JSSHOP.ui.closeLbox();" style="' + bgStyle + ' ' + textColor + ' height: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; text-shadow: ' + (style.type === 'gradient' ? '1px 1px 2px rgba(0,0,0,0.5);' : 'none;') + '"' + classAttr + '>' + extraContent + style.name + '</div>';
+    });
+    styleHtml += '</div></div>';
 
     // Gradient tab content
     var gradientHtml = `
-        <div id="bgc_tab_gradient_content">
-            <label style="display:block;margin-bottom:5px;">Color 1: <input type="text" id="bgc_grad1" value="${grad1}" data-coloris style="margin-right:10px;width:100px;"></label>
-            <label style="display:block;margin-bottom:5px;">Color 2: <input type="text" id="bgc_grad2" value="${grad2}" data-coloris style="width:100px;"></label>
-            <div id="gradPreview" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:linear-gradient(135deg,${grad1},${grad2});border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="bgc_grad_border"> <label for="bgc_grad_border">Apply to Border</label></div>
-            <button type="button" id="bgc_apply_gradient" style="padding:5px 10px;border:1px solid #ccc;background:#fff;border-radius:4px;">Apply Gradient</button>
+        <div class="tab-pane fade" id="bgc_tab_gradient_content_${uniqueId}" role="tabpanel" aria-labelledby="bgc_tab_gradient_${uniqueId}">
+            <label style="display:block;margin-bottom:5px;">Color 1: <input type="text" id="bgc_grad1_${uniqueId}" value="${grad1}" data-coloris style="margin-right:10px;width:100px;"></label>
+            <label style="display:block;margin-bottom:5px;">Color 2: <input type="text" id="bgc_grad2_${uniqueId}" value="${grad2}" data-coloris style="width:100px;"></label>
+            <div id="gradPreview_${uniqueId}" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:linear-gradient(135deg,${grad1},${grad2});border:1px solid #ddd;"></div>
+            <div><input type="checkbox" id="bgc_grad_border_${uniqueId}"> <label for="bgc_grad_border_${uniqueId}">` + stxt[652] + `</label></div>
+            <button type="button" id="bgc_apply_gradient_${uniqueId}" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite">` + stxt[643] + `</button>
+            <p style="margin-top:10px;font-size:12px;color:#666;">` + stxt[657] + `</p>
         </div>
     `;
 
     // Solid color tab content
     var solidHtml = `
-        <div id="bgc_tab_solid_content" style="display:none;">
-            <label style="display:block;margin-bottom:5px;">Color: <input type="text" id="bgc_solid" value="#2196f3" data-coloris style="width:100px;"></label>
-            <div id="solidPreview" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:#2196f3;border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="bgc_solid_border"> <label for="bgc_solid_border">Apply to Border</label></div>
-            <button type="button" id="bgc_apply_solid" style="padding:5px 10px;border:1px solid #ccc;background:#fff;border-radius:4px;">Apply Solid Color</button>
+        <div class="tab-pane fade" id="bgc_tab_solid_content_${uniqueId}" role="tabpanel" aria-labelledby="bgc_tab_solid_${uniqueId}">
+            <label style="display:block;margin-bottom:5px;">Color: <input type="text" id="bgc_solid_${uniqueId}" value="#2196f3" data-coloris style="width:100px;"></label>
+            <div id="solidPreview_${uniqueId}" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:#2196f3;border:1px solid #ddd;"></div>
+            <div><input type="checkbox" id="bgc_solid_border_${uniqueId}"> <label for="bgc_solid_border_${uniqueId}">` + stxt[652] + `</label></div>
+            <button type="button" id="bgc_apply_solid_${uniqueId}" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite">` + stxt[644] + `</button>
+            <p style="margin-top:10px;font-size:12px;color:#666;">` + stxt[658] + `</p>
         </div>
     `;
 
     // Images tab content
-    var imagesHtml = '<div id="bgc_tab_image_content" style="display:none;max-height:250px;overflow:auto;">';
+    var imagesHtml = `<div class="tab-pane fade" id="bgc_tab_image_content_${uniqueId}" role="tabpanel" aria-labelledby="bgc_tab_image_${uniqueId}" style="max-height:250px;overflow:auto;">`;
+
+    if (window.currPrpMediaArr && window.currPrpMediaArr.length > 0) {
+        for (var i = 0; i < currPrpMediaArr.length; i++) {
+            var amprop = currPrpMediaArr[i];
+            var imgSrc, fullImgSrc, title;
+            switch(amprop.m_catid) {
+                case "5":
+                    imgSrc = "images/property/m_thumb" + amprop.m_file;
+                    fullImgSrc = "images/property/" + amprop.m_file;
+                    break;
+                case "20":
+                case "25":
+                case "30":
+                    imgSrc = "images/tmpi/" + amprop.m_vala + ".jpg";
+                    fullImgSrc = imgSrc;
+                    break;
+                default:
+                    imgSrc = 'images/misc/example_thumb.png';
+                    fullImgSrc = imgSrc;
+            }
+            title = amprop.m_title || '';
+            imagesHtml += '<div style="display:inline-block;margin:6px;text-align:center;border:1px solid #ddd;padding:5px;border-radius:4px;background:#f9f9f9;cursor:pointer;" onclick="setBgImage(\'' + fullImgSrc + '\');JSSHOP.ui.closeLbox();">';
+            imagesHtml += '<img src="' + imgSrc + '" style="width:90px;height:70px;object-fit:cover;border-radius:6px;" />';
+            imagesHtml += '<div style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:5px;">' + title + '</div></div>';
+        }
+                imagesHtml += '<hr style="margin:10px 0;">';
+
+    }
+
     for (var i = 0; i < propArr.length; i++) {
         var prop = propArr[i];
         var imgSrc = (prop.pimage && prop.pimage !== "noQvalue") ? 'images/property/s_thumb' + prop.pimage : "images/misc/example_thumb.png";
@@ -8878,48 +9311,26 @@ function openBgColorPickerDialog() {
         imagesHtml += '<img src="' + imgSrc + '" style="width:90px;height:70px;object-fit:cover;border-radius:6px;" />';
         imagesHtml += '<div style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:5px;">' + title + '</div></div>';
     }
-    imagesHtml += '</div>';
+    imagesHtml += '<p style="margin-top:10px;font-size:12px;color:#666;">' + stxt[659] + '</p></div>';
 
     // Full dialog HTML
-    var dialogHtml = tabHtml + gradientHtml + solidHtml + imagesHtml;
+    var dialogHtml = tabHtml + styleHtml + gradientHtml + solidHtml + imagesHtml + '</div>';
 
     // Add event listeners after rendering
     setTimeout(function() {
-        var tabGradient = document.getElementById('bgc_tab_gradient');
-        var tabSolid = document.getElementById('bgc_tab_solid');
-        var tabImage = document.getElementById('bgc_tab_image');
-        var gradContent = document.getElementById('bgc_tab_gradient_content');
-        var solidContent = document.getElementById('bgc_tab_solid_content');
-        var imgContent = document.getElementById('bgc_tab_image_content');
-        var grad1Input = document.getElementById('bgc_grad1');
-        var grad2Input = document.getElementById('bgc_grad2');
-        var gradPreview = document.getElementById('gradPreview');
-        var solidInput = document.getElementById('bgc_solid');
-        var solidPreview = document.getElementById('solidPreview');
-        var applyBtn = document.getElementById('bgc_apply_gradient');
-        var applySolidBtn = document.getElementById('bgc_apply_solid');
+        var grad1Input = document.getElementById(`bgc_grad1_${uniqueId}`);
+        var grad2Input = document.getElementById(`bgc_grad2_${uniqueId}`);
+        var gradPreview = document.getElementById(`gradPreview_${uniqueId}`);
+        var solidInput = document.getElementById(`bgc_solid_${uniqueId}`);
+        var solidPreview = document.getElementById(`solidPreview_${uniqueId}`);
+        var applyBtn = document.getElementById(`bgc_apply_gradient_${uniqueId}`);
+        var applySolidBtn = document.getElementById(`bgc_apply_solid_${uniqueId}`);
 
         function updatePreview() {
             grad1 = grad1Input.value;
             grad2 = grad2Input.value;
             gradPreview.style.background = 'linear-gradient(135deg,' + grad1 + ',' + grad2 + ')';
         }
-
-        tabGradient.onclick = function() {
-            gradContent.style.display = '';
-            solidContent.style.display = 'none';
-            imgContent.style.display = 'none';
-        };
-        tabSolid.onclick = function() {
-            gradContent.style.display = 'none';
-            solidContent.style.display = '';
-            imgContent.style.display = 'none';
-        };
-        tabImage.onclick = function() {
-            gradContent.style.display = 'none';
-            solidContent.style.display = 'none';
-            imgContent.style.display = '';
-        };
 
         grad1Input.onchange = updatePreview;
         grad2Input.onchange = updatePreview;
@@ -8928,11 +9339,11 @@ function openBgColorPickerDialog() {
         };
 
         applyBtn.onclick = function() {
-            setBgGradient(grad1, grad2, document.getElementById('bgc_grad_border').checked);
+            setBgGradient(grad1, grad2, document.getElementById(`bgc_grad_border_${uniqueId}`).checked);
             JSSHOP.ui.closeLbox();
         };
         applySolidBtn.onclick = function() {
-            setBgSolidColor(solidInput.value, document.getElementById('bgc_solid_border').checked);
+            setBgSolidColor(solidInput.value, document.getElementById(`bgc_solid_border_${uniqueId}`).checked);
             JSSHOP.ui.closeLbox();
         };
 
@@ -8940,6 +9351,7 @@ function openBgColorPickerDialog() {
         if (window.Coloris) {
             Coloris({
                 el: '[data-coloris]',
+                parent: '#nurModal',
                 swatches: ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']
             });
         }
@@ -8963,6 +9375,146 @@ function setBgGradient(color1, color2, isBorder = false) {
                 demoDiv.style.background = 'linear-gradient(135deg, ' + color1 + ', ' + color2 + ')';
             }
         }
+    }
+}
+
+// Function to set predefined style gradient
+function setBgStyle(styleName) {
+    var iframe = document.getElementById('taDemoEdtr_ifr');
+    if (iframe && iframe.contentDocument) {
+        var demoDiv = iframe.contentDocument.getElementById('dvTMCdemo');
+        if (demoDiv) {
+            // Clear previous styles
+            demoDiv.style.clipPath = '';
+            demoDiv.style.borderRadius = '';
+            demoDiv.style.position = '';
+            // Remove any tail elements
+            var tails = demoDiv.querySelectorAll('.balloon-tail');
+            tails.forEach(function(tail) { tail.remove(); });
+
+            var styles = [
+                { name: 'Classic', type: 'gradient', value: 'linear-gradient(to right, #007bff, #ffffff)' },
+                { name: 'Modern', type: 'gradient', value: 'linear-gradient(to right, #00bcd4, #2196f3, #3f51b5)' },
+                { name: 'Vibrant', type: 'gradient', value: 'linear-gradient(to right, #ff4081, #ff1744, #ffeb3b)' },
+                { name: 'Thought', type: 'balloon', value: 'thought' },
+                { name: 'Speech Bubble 1', type: 'balloon', value: 'speech1' },
+                { name: 'Speech Bubble 2', type: 'balloon', value: 'speech2' },
+                { name: 'Speech Bubble 3', type: 'balloon', value: 'speech3' }
+            ];
+            var style = styles.find(function(s) { return s.name === styleName; });
+            if (style) {
+                if (style.type === 'gradient') {
+                    demoDiv.style.backgroundImage = 'none';
+                    demoDiv.style.background = style.value;
+                    demoDiv.style.border = 'none';
+                    demoDiv.style.borderImage = 'none';
+                } else if (style.type === 'balloon') {
+                    // Clear background image and set background
+                    demoDiv.style.backgroundImage = 'none';
+                    demoDiv.style.border = 'none';
+                    demoDiv.style.borderImage = 'none';
+                    // Apply balloon styles inline
+                    demoDiv.style.position = 'relative';
+                    if (style.value === 'thought') {
+                        demoDiv.style.background = 'linear-gradient(135deg, #e3f2fd, #bbdefb)';
+                        demoDiv.style.clipPath = 'polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%)';
+                        demoDiv.style.borderRadius = '20px';
+                        // Add tails
+                        var tail1 = iframe.contentDocument.createElement('div');
+                        tail1.className = 'balloon-tail';
+                        tail1.style.position = 'absolute';
+                        tail1.style.bottom = '-10px';
+                        tail1.style.left = '20px';
+                        tail1.style.width = '16px';
+                        tail1.style.height = '16px';
+                        tail1.style.background = 'linear-gradient(135deg, #e3f2fd, #bbdefb)';
+                        tail1.style.borderRadius = '50%';
+                        demoDiv.appendChild(tail1);
+
+                        var tail2 = iframe.contentDocument.createElement('div');
+                        tail2.className = 'balloon-tail';
+                        tail2.style.position = 'absolute';
+                        tail2.style.bottom = '-20px';
+                        tail2.style.left = '10px';
+                        tail2.style.width = '12px';
+                        tail2.style.height = '12px';
+                        tail2.style.background = 'linear-gradient(135deg, #e3f2fd, #bbdefb)';
+                        tail2.style.borderRadius = '50%';
+                        demoDiv.appendChild(tail2);
+
+                        var tail3 = iframe.contentDocument.createElement('div');
+                        tail3.className = 'balloon-tail';
+                        tail3.style.position = 'absolute';
+                        tail3.style.bottom = '-30px';
+                        tail3.style.left = '0px';
+                        tail3.style.width = '8px';
+                        tail3.style.height = '8px';
+                        tail3.style.background = 'linear-gradient(135deg, #e3f2fd, #bbdefb)';
+                        tail3.style.borderRadius = '50%';
+                        demoDiv.appendChild(tail3);
+                    } else if (style.value === 'speech1') {
+                        demoDiv.style.background = '#f9f9f9';
+                        demoDiv.style.clipPath = 'polygon(0% 0%, 100% 0%, 100% 100%, 85% 100%, 75% 85%, 0% 85%)';
+                        demoDiv.style.borderRadius = '20px';
+                        // Add tail
+                        var tail = iframe.contentDocument.createElement('div');
+                        tail.className = 'balloon-tail';
+                        tail.style.position = 'absolute';
+                        tail.style.bottom = '15px';
+                        tail.style.right = '-15px';
+                        tail.style.width = '0';
+                        tail.style.height = '0';
+                        tail.style.borderTop = '15px solid transparent';
+                        tail.style.borderBottom = '15px solid transparent';
+                        tail.style.borderLeft = '15px solid #f9f9f9';
+                        demoDiv.appendChild(tail);
+                    } else if (style.value === 'speech2') {
+                        demoDiv.style.background = '#fff3cd';
+                        demoDiv.style.clipPath = 'polygon(0% 0%, 100% 0%, 100% 100%, 85% 100%, 75% 85%, 0% 85%)';
+                        demoDiv.style.borderRadius = '15px';
+                        // Add tail
+                        var tail = iframe.contentDocument.createElement('div');
+                        tail.className = 'balloon-tail';
+                        tail.style.position = 'absolute';
+                        tail.style.top = '50%';
+                        tail.style.right = '-15px';
+                        tail.style.transform = 'translateY(-50%)';
+                        tail.style.width = '0';
+                        tail.style.height = '0';
+                        tail.style.borderTop = '15px solid transparent';
+                        tail.style.borderBottom = '15px solid transparent';
+                        tail.style.borderLeft = '15px solid #fff3cd';
+                        demoDiv.appendChild(tail);
+                    } else if (style.value === 'speech3') {
+                        demoDiv.style.background = '#d1ecf1';
+                        demoDiv.style.borderRadius = '25px';
+                        // Add tail
+                        var tail = iframe.contentDocument.createElement('div');
+                        tail.className = 'balloon-tail';
+                        tail.style.position = 'absolute';
+                        tail.style.top = '-15px';
+                        tail.style.left = '50%';
+                        tail.style.transform = 'translateX(-50%)';
+                        tail.style.width = '0';
+                        tail.style.height = '0';
+                        tail.style.borderLeft = '15px solid transparent';
+                        tail.style.borderRight = '15px solid transparent';
+                        tail.style.borderBottom = '15px solid #d1ecf1';
+                        demoDiv.appendChild(tail);
+                    }
+                }
+            }
+        } else {
+            console.error("Demo div not found in iframe.");
+            // wrap the editor content in a div with id dvTMCdemo if it doesn't exist to ensure the function works
+                var body = iframe.contentDocument.body;
+                var wrapper = iframe.contentDocument.createElement('div');
+                wrapper.id = 'dvTMCdemo';
+                while (body.firstChild) {
+                    wrapper.appendChild(body.firstChild);
+                }
+                body.appendChild(wrapper);
+            }
     }
 }
 
@@ -9016,10 +9568,9 @@ function setMdaBgGradient(color1, color2, isBorder = false) {
 }
 
 // Function to set media background image
-function setMdaBgImage(imgSrc, isaBg) {
+function setMdaBgImage(imgSrc, isaBg, isRounded) {
     var editor = tinymce.activeEditor;
-    isBg = document.getElementById('mp_set_bg') ? document.getElementById('mp_set_bg').checked : false;
-    if (isBg) {
+    if (isaBg) {
         var galleryItem = findClosestGalleryItem(editor.selection.getNode(), editor);
         if (galleryItem) {
             galleryItem.style.background = 'none';
@@ -9027,9 +9578,13 @@ function setMdaBgImage(imgSrc, isaBg) {
             galleryItem.style.backgroundSize = 'cover';
             galleryItem.style.backgroundPosition = 'center';
             galleryItem.style.backgroundRepeat = 'no-repeat';
+            if (isRounded) {
+                galleryItem.style.borderRadius = '10px';
+            }
         }
     } else {
-        editor.insertContent('<img src="' + imgSrc + '" width="200" height="200">');
+        var style = isRounded ? 'border-radius:10px;' : '';
+        editor.insertContent('<img src="' + imgSrc + '" style="' + style + '" width="200" height="200" />');
     }
 }
 
@@ -9045,6 +9600,297 @@ function setMdaBgSolidColor(color, isBorder = false) {
         } else {
             galleryItem.style.backgroundColor = color;
             galleryItem.style.backgroundImage = 'none';
+        }
+    }
+}
+
+function openTextShadowDialog() {
+    var grad1 = '#2196f3', grad2 = '#e3f2fd';
+    var uniqueId = Date.now(); // Unique ID to avoid conflicts
+
+    // Tab buttons using Bootstrap
+    var tabHtml = `
+        <ul class="nav nav-tabs" id="textShadowTab_${uniqueId}" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="ts_tab_shadow_${uniqueId}" data-bs-toggle="tab" data-bs-target="#ts_tab_shadow_content_${uniqueId}" type="button" role="tab" aria-controls="ts_tab_shadow_content_${uniqueId}" aria-selected="true">` + stxt[645] + `</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ts_tab_gradient_${uniqueId}" data-bs-toggle="tab" data-bs-target="#ts_tab_gradient_content_${uniqueId}" type="button" role="tab" aria-controls="ts_tab_gradient_content_${uniqueId}" aria-selected="false">` + stxt[641] + `</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ts_tab_solid_${uniqueId}" data-bs-toggle="tab" data-bs-target="#ts_tab_solid_content_${uniqueId}" type="button" role="tab" aria-controls="ts_tab_solid_content_${uniqueId}" aria-selected="false">` + stxt[642] + `</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="textShadowTabContent_${uniqueId}">
+    `;
+
+    // Shadow tab content
+    var shadowHtml = `
+        <div class="tab-pane fade show active" id="ts_tab_shadow_content_${uniqueId}" role="tabpanel" aria-labelledby="ts_tab_shadow_${uniqueId}">
+            <h3>` + stxt[653] + `</h3>
+            <label>` + stxt[648] + ` <input type="number" id="ts_h_${uniqueId}" value="2"></label><br>
+            <label>` + stxt[649] + ` <input type="number" id="ts_v_${uniqueId}" value="2"></label><br>
+            <label>` + stxt[650] + ` <input type="number" id="ts_b_${uniqueId}" value="4"></label><br>
+            <label>` + stxt[651] + ` <input type="text" id="ts_c_${uniqueId}" value="#000000" data-coloris style="width:100px;"></label><br>
+            <div id="ts_colorPreview_${uniqueId}" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:#000000;border:1px solid #ddd;"></div>
+            <span id="ts_apply_${uniqueId}" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite">` + stxt[646] + `</span>
+            <span id="ts_remove_${uniqueId}" class="cls_button cls_button-medium bkgdClrGrey txtClrHdr">` + stxt[647] + `</span>
+            <p style="margin-top:10px;font-size:12px;color:#666;">` + stxt[660] + `</p>
+        </div>
+    `;
+
+    // Gradient tab content
+    var gradientHtml = `
+        <div class="tab-pane fade" id="ts_tab_gradient_content_${uniqueId}" role="tabpanel" aria-labelledby="ts_tab_gradient_${uniqueId}">
+            <label style="display:block;margin-bottom:5px;">Color 1: <input type="text" id="ts_grad1_${uniqueId}" value="${grad1}" data-coloris style="margin-right:10px;width:100px;"></label>
+            <label style="display:block;margin-bottom:5px;">Color 2: <input type="text" id="ts_grad2_${uniqueId}" value="${grad2}" data-coloris style="width:100px;"></label>
+            <div id="ts_gradPreview_${uniqueId}" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:linear-gradient(135deg,${grad1},${grad2});border:1px solid #ddd;"></div>
+            <div><input type="checkbox" id="ts_grad_border_${uniqueId}"> <label for="ts_grad_border_${uniqueId}">` + stxt[652] + `</label></div>
+            <span id="ts_apply_gradient_${uniqueId}" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite">` + stxt[643] + `</span>
+            <p style="margin-top:10px;font-size:12px;color:#666;">` + stxt[661] + `</p>
+        </div>
+    `;
+
+    // Solid color tab content
+    var solidHtml = `
+        <div class="tab-pane fade" id="ts_tab_solid_content_${uniqueId}" role="tabpanel" aria-labelledby="ts_tab_solid_${uniqueId}">
+            <label style="display:block;margin-bottom:5px;">Color: <input type="text" id="ts_solid_${uniqueId}" value="#2196f3" data-coloris style="width:100px;"></label>
+            <div id="ts_solidPreview_${uniqueId}" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:#2196f3;border:1px solid #ddd;"></div>
+            <div><input type="checkbox" id="ts_solid_border_${uniqueId}"> <label for="ts_solid_border_${uniqueId}">` + stxt[652] + `</label></div>
+            <span id="ts_apply_solid_${uniqueId}" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite">` + stxt[644] + `</span>
+            <p style="margin-top:10px;font-size:12px;color:#666;">` + stxt[662] + `</p>
+        </div>
+    `;
+
+    // Full dialog HTML
+    var tdialogHtml = tabHtml + shadowHtml + gradientHtml + solidHtml + '</div>';
+    var dialogHtml = '<div style="min-height:80vh;max-height:90vh;overflow:auto;">' + tdialogHtml + '</div>';
+    JSSHOP.ui.popAndFillLbox(dialogHtml);
+    setTimeout(function() {
+        // Shadow apply
+        document.getElementById(`ts_apply_${uniqueId}`).onclick = function() {
+            var h = document.getElementById(`ts_h_${uniqueId}`).value;
+            var v = document.getElementById(`ts_v_${uniqueId}`).value;
+            var b = document.getElementById(`ts_b_${uniqueId}`).value;
+            var c = document.getElementById(`ts_c_${uniqueId}`).value;
+            var shadow = h + 'px ' + v + 'px ' + b + 'px ' + c;
+            var editor = tinymce.activeEditor;
+            var selected = editor.selection.getContent();
+            if (selected) {
+                editor.selection.setContent('<span style="text-shadow:' + shadow + ';">' + selected + '</span>');
+            } else {
+                var galleryItem = findClosestGalleryItem(editor.selection.getNode(), editor);
+                if (galleryItem) {
+                    galleryItem.style.boxShadow = shadow;
+                } else {
+                    alert('Please select text or an element near a gallery item.');
+                }
+            }
+            JSSHOP.ui.closeLbox();
+        };
+
+        // Shadow remove
+        document.getElementById(`ts_remove_${uniqueId}`).onclick = function() {
+            var editor = tinymce.activeEditor;
+            var selected = editor.selection.getContent();
+            if (selected) {
+                editor.selection.setContent('<span style="text-shadow:none;">' + selected + '</span>');
+            } else {
+                var galleryItem = findClosestGalleryItem(editor.selection.getNode(), editor);
+                if (galleryItem) {
+                    galleryItem.style.boxShadow = 'none';
+                }
+            }
+            JSSHOP.ui.closeLbox();
+        };
+
+        // Shadow color preview
+        document.getElementById(`ts_c_${uniqueId}`).addEventListener('input', function() {
+            document.getElementById(`ts_colorPreview_${uniqueId}`).style.backgroundColor = this.value;
+        });
+
+        // Gradient preview
+        document.getElementById(`ts_grad1_${uniqueId}`).onchange = function() {
+            grad1 = this.value;
+            document.getElementById(`ts_gradPreview_${uniqueId}`).style.background = 'linear-gradient(135deg,' + grad1 + ',' + grad2 + ')';
+        };
+        document.getElementById(`ts_grad2_${uniqueId}`).onchange = function() {
+            grad2 = this.value;
+            document.getElementById(`ts_gradPreview_${uniqueId}`).style.background = 'linear-gradient(135deg,' + grad1 + ',' + grad2 + ')';
+        };
+
+        // Apply gradient
+        document.getElementById(`ts_apply_gradient_${uniqueId}`).onclick = function() {
+            setMdaBgGradient(grad1, grad2, document.getElementById(`ts_grad_border_${uniqueId}`).checked);
+            JSSHOP.ui.closeLbox();
+        };
+
+        // Solid preview
+        document.getElementById(`ts_solid_${uniqueId}`).onchange = function() {
+            document.getElementById(`ts_solidPreview_${uniqueId}`).style.background = this.value;
+        };
+
+        // Apply solid
+        document.getElementById(`ts_apply_solid_${uniqueId}`).onclick = function() {
+            setMdaBgSolidColor(document.getElementById(`ts_solid_${uniqueId}`).value, document.getElementById(`ts_solid_border_${uniqueId}`).checked);
+            JSSHOP.ui.closeLbox();
+        };
+
+        // Initialize Coloris if available
+        if (window.Coloris) {
+            Coloris({
+                el: '[data-coloris]',
+                parent: '#nurModal',
+                swatches: ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']
+            });
+        }
+    }, 100);
+}
+
+function openFlyersModalDialog() {
+    // Get user images similar to getUsrPImgList
+    if (currUsrUpdtsObj && currUsrUpdtsObj["pimage"] && currUsrUpdtsObj["pimage"].length > 0) {
+        renderFlyerImages(null, JSON.stringify(currUsrUpdtsObj["pimage"]), null);
+        return;
+    } else {
+        console.log("openFlyersModalDialog: no cached pimage posts, fetching from db");
+        var tmpDOs = {};
+        tmpDOs["ws"] = "where p_uid = ? and p_rtype = ? and p_ptype = ?";
+        tmpDOs["wa"] = [quid, 5, "pimage"];
+        tmpDOs["l"] = 80;
+        var oi = getNuDBFnvp("qposts", 5, null, tmpDOs);
+        doQComm(oi["rq"], null, "renderFlyerImages");
+    }
+}
+
+function renderFlyerImages(theRDa, theRDb, theRDc) {
+    console.log("renderFlyerImages: " + theRDa + " " + theRDb + " " + theRDc);
+    if (currUsrUpdtsObj) {
+        currUsrUpdtsObj["pimage"] = null;
+    }
+    var imagesHtml = '<div class="row">';
+    if (theRDb && theRDb.indexOf("_id") != -1) {
+        var tAiretArr = JSON.parse(theRDb);
+        if (currUsrUpdtsObj) {
+            currUsrUpdtsObj["pimage"] = [];
+            currUsrUpdtsObj["pimage"] = tAiretArr;
+        }
+        for (var i = 0; i < tAiretArr.length; i++) {
+            var img = tAiretArr[i];
+            var imgSrc = "images/ucontent/" + img["p_image"];
+            var title = img["p_title"] ? decodeURIComponent(img["p_title"]) : "No Title";
+            var dateStr = img["p_dadded"] ? new Date(img["p_dadded"] * 1000).toLocaleDateString() : "";
+            if (title.length > 30) {
+                title = title.substring(0, 30) + "...";
+            }
+            imagesHtml += '<div class="col-6 col-md-2 mb-3">';
+            imagesHtml += '<div class="card" style="cursor:pointer;" onclick="loadFlyerTemplate(' + i + ');">';
+            imagesHtml += '<img src="images/ucontent/s_thumb' + img["p_image"] + '" class="card-img-top" alt="' + title + '">';
+            imagesHtml += '<div class="card-body p-2">';
+            imagesHtml += '<p class="card-text mb-1" style="font-size:12px;">' + title + '<br><small class="text-muted">' + dateStr + '</small></p>';
+            imagesHtml += '</div>';
+            imagesHtml += '</div>';
+            imagesHtml += '</div>';
+        }
+    }
+    imagesHtml += '</div>';
+
+    // Create modal
+    var modalId = 'flyersModal';
+    var existingModal = document.getElementById(modalId);
+    if (!existingModal) {
+        var modalHtml = `
+            <div class="modal fade" id="${modalId}" tabindex="-1" aria-labelledby="${modalId}Label" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="${modalId}Label">Select Flyer Image</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="${modalId}Body" style="max-height: 70vh; overflow-y: auto;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+        existingModal = document.getElementById(modalId);
+    }
+    var modalBody = document.getElementById(modalId + 'Body');
+    modalBody.innerHTML = imagesHtml;
+    var modal = new bootstrap.Modal(existingModal);
+    modal.show();
+}
+
+function loadFlyerTemplate(index) {
+    if (!currUsrUpdtsObj || !currUsrUpdtsObj["pimage"] || index >= currUsrUpdtsObj["pimage"].length) {
+        console.error("loadFlyerTemplate: invalid index or no pimage data");
+        return;
+    }
+    var record = currUsrUpdtsObj["pimage"][index];
+    var flyerHtml = "";
+    var descHtml = "";
+    var title = "";
+
+    if (record.p_vars) {
+        var pVarsStr = decodeURIComponent(record.p_vars);
+        var delimiterIndex = pVarsStr.indexOf("dlmtd");
+        if (delimiterIndex !== -1) {
+            var tZpdProps = pVarsStr.substring(0, delimiterIndex);
+            var tZpdHTML = pVarsStr.substring(delimiterIndex + 5); // "dlmtd".length = 5
+            flyerHtml = LZString.decompressFromEncodedURIComponent(tZpdHTML);
+            var tSlctdPrpsStr = LZString.decompressFromEncodedURIComponent(tZpdProps);
+            var atspaee = JSON.parse(tSlctdPrpsStr);
+            // Set the selected properties array
+            if (typeof JSSHOP !== 'undefined' && JSSHOP.shared && JSSHOP.shared.setSlctdPrpsArr) {
+                JSSHOP.shared.setSlctdPrpsArr(atspaee);
+            }
+        } else {
+            // Fallback for old format
+            flyerHtml = LZString.decompressFromEncodedURIComponent(pVarsStr);
+        }
+    }
+    if (record.p_content) {
+        descHtml = LZString.decompressFromEncodedURIComponent(decodeURIComponent(record.p_content));
+    }
+    if (record.p_title) {
+        title = decodeURIComponent(record.p_title);
+    }
+
+    // Set title
+    if (document.getElementById("tmp_p_title")) {
+        document.getElementById("tmp_p_title").value = title;
+    }
+
+    // Set flyer content to demo editor
+    if (typeof tinyMCE !== 'undefined' && tinyMCE.get('taDemoEdtr')) {
+        tinyMCE.get('taDemoEdtr').setContent(flyerHtml);
+    } else if (document.getElementById("taDemoEdtr")) {
+        document.getElementById("taDemoEdtr").value = flyerHtml;
+    } else {
+        // Fallback similar to trnsltImgPstObj
+        var tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + flyerHtml + "</textarea>";
+        tDVDstr += "<div class=\"clearfix\"></div><br>";
+        if (document.getElementById("dvDemoView")) {
+            document.getElementById("dvDemoView").innerHTML = tDVDstr;
+        }
+                setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+
+    }
+
+    // Set description content to main editor
+    if (typeof tinyMCE !== 'undefined' && tinyMCE.get('tmp_p_content')) {
+        tinyMCE.get('tmp_p_content').setContent(descHtml);
+    } else if (document.getElementById("tmp_p_content")) {
+        document.getElementById("tmp_p_content").value = descHtml;
+    }
+
+    // Close modal
+    var modal = document.getElementById('flyersModal');
+    if (modal) {
+        var bsModal = bootstrap.Modal.getInstance(modal);
+        if (bsModal) {
+            bsModal.hide();
         }
     }
 }
@@ -9080,7 +9926,7 @@ JSSHOP.ads.getEditorUsrBoxStr = function(tUsrDtObj) {
       // wrapped in table
        tEdtrUsrStr += '<table><tr><td>';
     tEdtrUsrStr += '<div class="gallery-item" style="background: rgba(255,255,255,0.9); border-radius: 10px;margin:10px; padding: 5px; box-shadow: 1px 4px 8px rgba(0,0,0,0.1); text-align: center;">';
-         tEdtrUsrStr += "<table><tr><td><div>||||</div></td><td>";
+         tEdtrUsrStr += "<table><tr><td><div><span style=\"font-size: 32px; color: #007bff; margin-right: 10px;\">&#8226;</span></div></td><td>";
 
     // tEdtrUsrStr += `<h5 style="margin: 0 0 10px 0; font-size: 16px;">${stxt[912]}...</h5>`;
     tEdtrUsrStr += '<div style="display: flex; align-items: center;">';
@@ -9117,7 +9963,7 @@ JSSHOP.ads.getEditorUsrBoxStr = function(tUsrDtObj) {
     }
     tEdtrUsrStr += '</div>';
     tEdtrUsrStr += '</div>';
-       tEdtrUsrStr += "</td><td>||||</td></tr></table>";
+       tEdtrUsrStr += "</td><td><span style=\"font-size: 32px; color: #007bff; margin-right: 10px;\">&#8226;</span></td></tr></table>";
 
    
     tEdtrUsrStr += '</div>';
@@ -9126,7 +9972,7 @@ JSSHOP.ads.getEditorUsrBoxStr = function(tUsrDtObj) {
     return tEdtrUsrStr;
 };
 
-JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
+JSSHOP.ads.getEdtrPrpListStr = function(tPrpDtarr, flyrstyle = "default") {
 
 
     tEdtrPrpsStr = "";
@@ -9193,17 +10039,38 @@ JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
     // use the example tPrpDtarr above to generate the editor string
  // create a div string with a diagonal gradient fill from blue to white
     // tEdtrDescStr is a string listing the titles and prices of selected properties
-           tEdtrPrpsStr += "<div class=\"property-flyer\" style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px;\" id=\"dvTMCdemo\">";
 
-     tEdtrPrpsStr += "<table class=\"rtable bkgdClrWhite brdrClrHdr\" style=\"margin-bottom:10px;margin: 0 auto;\">";
+    switch(flyrstyle) {
+        case 'classic':
+            gradientStyle = "background: linear-gradient(to right, #007bff, #ffffff);";
+            break;
+        case 'modern':
+            gradientStyle = "background: linear-gradient(to right, #00bcd4, #2196f3, #3f51b5);";
+            break;
+        case 'vibrant':
+            gradientStyle = "background: linear-gradient(to right, #ff4081, #ff1744, #ffeb3b);";
+            break;
+        default:
+            gradientStyle = "background: linear-gradient(to right, #007bff, #ffffff);";
+            break;
+    }
+
+        tEdtrPrpsStr += "<div class=\"property-flyer\" style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px; " + gradientStyle + "\" id=\"dvTMCdemo\">";
+    
+    tEdtrPrpsStr += "<div class=\"gallery-item\" style=\"position:relative;margin:20px;font-size:32px;font-weight:bold;text-shadow:3px 3px 6px rgba(0,0,0,0.8);line-height:1.2;text-transform:uppercase;letter-spacing:1px;max-width:100%;word-wrap:break-word;background: rgba(255,255,255,0.9); border-radius: 10px; margin: 10px; padding: 5px; box-shadow: 1px 4px 8px rgba(0,0,0,0.1); text-align: center;\">";
+
+  
+   tEdtrPrpsStr += "<table style=\"margin-bottom:10px;margin: 0 auto;\">";
     tEdtrPrpsStr += "<tr><td class=\"txtBold txtClrHdr\" style=\"text-align:center;\"><span style=\"font-size:18px;\">" + stxt[10]+ "... " + stxt[10] + "...</span></td></tr>";
     tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\" style=\"text-align:center;\"><span style=\"font-size:14px;\">" + stxt[40]+ "... " + stxt[40] + "... " + stxt[40] + "...</span></td></tr>";
     tEdtrPrpsStr += "</table>";
+    tEdtrPrpsStr += "</div>"; // end of gallery item div
     tEdtrPrpsStr += "<hr>";
      for(i = 0; i < tPrpDtarr.length; i++) {
         tPrpDtObj = tPrpDtarr[i];
         tPrpImgStr = "<img src=\"" + currPrpImgsFldr + "/" + tPrpDtObj.pimage + "\" style=\"min-width:80px;max-width:90px;text-align:center;margin-right:3px;min-height:80px;max-height:90px;\" class=\"slmtable brdrClrDlg\" alt=\"Property Image\">";
-         tEdtrPrpsStr += "<table class=\"rtable bkgdClrWhite brdrClrDlg\">";
+        tEdtrPrpsStr += "<div class=\"gallery-item\" style=\"position:relative;margin:20px;font-size:32px;font-weight:bold;letter-spacing:1px;max-width:100%;word-wrap:break-word;background: rgba(255,255,255,0.9); border-radius: 10px; margin: 10px; padding: 5px; box-shadow: 1px 4px 8px rgba(0,0,0,0.1); text-align: center;\">";
+        tEdtrPrpsStr += "<table>";
         tEdtrPrpsStr += "<tr><td>" + tPrpImgStr + "</td><td style=\"width:100%;vertical-align:top;\">";
         tEdtrPrpsStr += "<div class=\"\" style=\"float:left;\">";
         tEdtrPrpsStr += "<table class=\"\">";
@@ -9214,8 +10081,9 @@ JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
        //  tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\">" + tPrpDtObj.location + "</td></tr>";
 
         tEdtrPrpsStr += "</table>";
-        tEdtrPrpsStr += "</div>"; // end of edtr-grid rtable brdrClrHdr
+        tEdtrPrpsStr += "</div>"; // end of float left div
         tEdtrPrpsStr += "</td></tr></table>";
+        tEdtrPrpsStr += "</div>"; // end of gallery item div
          // only add <hr> if not the last property
         if(i < tPrpDtarr.length - 1) {
             tEdtrPrpsStr += "<hr>";
@@ -9248,12 +10116,12 @@ tEdtrPrpsStr += JSSHOP.ads.getEditorUsrBoxStr("nada");
 };
 
  
-JSSHOP.ads.getNwstEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
+JSSHOP.ads.getEdtrPrpGridStr = function(tPrpDtarr, flyrstyle = 'modern') {
     let tEdtrPrpsStr = "";
     let gradientStyle = "";
 
     // Define styles
-    switch(style) {
+    switch(flyrstyle) {
         case 'classic':
             gradientStyle = "background: linear-gradient(to right, #007bff, #ffffff);";
             break;
@@ -9265,6 +10133,7 @@ JSSHOP.ads.getNwstEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
             break;
         default:
             gradientStyle = "background: linear-gradient(to right, #007bff, #ffffff);";
+            break;
     }
 
     // Start flyer container - landscape oriented for og:image (1200x630), optimized for mobile viewing
@@ -9281,7 +10150,7 @@ JSSHOP.ads.getNwstEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
         let price = tPrpDtObj.price + "  &euro;";
        
         // Property card - larger for better mobile readability
-        tEdtrPCntStr += `<div style="float: left; width: ${tPrpDtarr.length > 2 ? '30%' : '45%'}; margin: 5px; background: rgba(255,255,255,0.95); border-radius: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); overflow: hidden;">`;
+        tEdtrPCntStr += `<div class=\"gallery-item\" style="float: left; width: ${tPrpDtarr.length > 2 ? '30%' : '45%'}; margin: 5px; background: rgba(255,255,255,0.95); border-radius: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); overflow: hidden;">`;
         tEdtrPCntStr += `<img src="${imgSrc}" alt="Property Image" style="width: 100%; height: 180px; object-fit: cover;">`;
         tEdtrPCntStr += '<div style="padding: 15px;">';
         tEdtrPCntStr += `<h5 style="font-weight: bold; margin: 0 0 8px 0; font-size: 20px; line-height: 1.3;">${title}</h5>`;
@@ -9308,12 +10177,12 @@ JSSHOP.ads.getNwstEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
     tEdtrHdrStr += '</div>';
 
     // !! Table cell wrapper
-    tEdtrPrpsStr += '<table><tr><td>' + tEdtrHdrStr + '</td></tr><tr><td>||||</td></tr><tr><td>' + tEdtrPCntStr + '</td></tr><tr><td>||||</td></tr><tr><td>';
+    tEdtrPrpsStr += '<table><tr><td>' + tEdtrHdrStr + '</td></tr><tr><td><span style=\"font-size: 32px; color: #007bff; margin-right: 10px;\">&#8226;</span></td></tr><tr><td>' + tEdtrPCntStr + '</td></tr><tr><td><span style=\"font-size: 32px; color: #007bff; margin-right: 10px;\">&#8226;</span></td></tr><tr><td>';
     
     
     tEdtrPrpsStr += JSSHOP.ads.getEditorUsrBoxStr("nada");
 
-    tEdtrPrpsStr += '</td></tr><tr><td>||||</td></tr></table>';
+    tEdtrPrpsStr += '</td></tr><tr><td><span style=\"font-size: 32px; color: #007bff; margin-right: 10px;\">&#8226;</span></td></tr></table>';
     tEdtrPrpsStr += '</div>'; // end of flyer container
 
     return tEdtrPrpsStr;
@@ -9991,9 +10860,9 @@ JSSHOP.ads.doImgPostCnfgPop = function() {
         tDDswprCnttObj["kvIcnsObj"]["props"] = "&#xe5cd;";
         // tDDswprCnttObj["kvIcnsObj"]["users"] = "&#xe5cd;";
         tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprCnttObj);
+
         tSCPopStr += "<br><br><span style=\"\" class=\"cls_button cls_button-small bkgdClrHdr txtClrWhite\" onclick=\"JSSHOP.ui.closeLbox();JSSHOP.ads.trnsltImgPstObj();\">OK</span>";
         tSCPopStr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-small  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";   
-    
         JSSHOP.ui.popFillObox(tSCPopStr, "&#xe5cd;", "Image Update Config", "yes", "no");
         //         setTimeout(function() { doSwpCntntPick("inpSwprCntnt", inpSwprCntnt.value, "Properties"); }, 1000);
 
@@ -10451,7 +11320,12 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
     tImgAdArr = "";
     tImgAdArr = [];
     if(theAIb.indexOf("_id") != -1) {
+        currPrpMediaArr = null;
+        currPrpMediaArr = "";
+        currPrpMediaArr = [];
+
 		tAiretArr = JSON.parse(theAIb);
+        currPrpMediaArr = tAiretArr;
 		awlen = tAiretArr.length;
         tstr = "";
         tpdSocLnksStr = "";
@@ -10478,7 +11352,7 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
  
        //  tPrpFlyerMImgSTr += "<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0.6) 100%);\"></div>";
 
-        tPrpFlyerMImgSTr += "<table><tr><td><div style=\"color:white;font-size:24px;font-weight:bold;\">. ... .....</div></td><td>";
+        tPrpFlyerMImgSTr += "<table><tr><td><div style=\"color:white;font-size:24px;font-weight:bold;\">  </div></td><td>";
         // Property title overlay - now wraps around the price balloon
         tPrpFlyerMImgSTr += "<div style=\"color:#fff;z-index:10;display:flex;flex-direction:column;justify-content:flex-start;\">";
 
@@ -10498,7 +11372,7 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
         tPrpFlyerMImgSTr += "</div>";
         
         tPrpFlyerMImgSTr += "</div>"; // End title and price container
-            tPrpFlyerMImgSTr += "</td><td style=\"width:50px;\">...</td></tr></table>";
+            tPrpFlyerMImgSTr += "</td><td style=\"width:50px;\"> </td></tr></table>";
         // add a clearfix
         tPrpFlyerMImgSTr += "<div style=\"clear:both;\"></div>";    
 
@@ -10726,10 +11600,15 @@ JSSHOP.ui.dragElement =  function(elmnt) {
 
 
  
+JSSHOP.shared.getSlctdPrpsArr = function() {
+    return tSlctdPrpsArr;
+};
 
 
 JSSHOP.ads.trnsltImgPstObj = function() {
     tSCval = inpImgPstCntnt.value;
+    tIMCLytVal = document.getElementById("inpImgPstLayout").value;
+    tIMCStyleVal = document.getElementById("inpImgPstStyle").value;
    console.log("trnsltImgPstObj.tSCval: == props" + tSCval);
 
     if(tSCval == "props") {
@@ -10746,11 +11625,11 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         tFlyrHStr = "";
         getPropertyImages(tSlctdPrpsArr[0]);
           } else {
-                if (tSlctdPrpsArr.length === 2) {
-                tFlyrHStr = JSSHOP.ads.getNwstEdtrPrpStr(tSlctdPrpsArr, "modern");
+                if (tIMCLytVal == "grid") {
+                tFlyrHStr = JSSHOP.ads.getEdtrPrpGridStr(tSlctdPrpsArr, tIMCStyleVal);
                 } else {
-                tFlyrHStr = JSSHOP.ads.getEditorPrpStr(tSlctdPrpsArr);
-                }
+                tFlyrHStr = JSSHOP.ads.getEdtrPrpListStr(tSlctdPrpsArr, tIMCStyleVal);
+                 }
         tEdtrDstr = JSSHOP.ads.getEdtrPrpDscStr(tSlctdPrpsArr);
         tPATtls = tSlctdPrpsArr[0].ptitle;
         tPATtlsDecded = decodeURIComponent(tPATtls);
@@ -10763,10 +11642,19 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         _ifrmDoc.body.innerHTML = tEdtrDstr;
  
             tBlkFlyrHStr = "...";
+            // if taDemoEdtr exists, update it
+            if(document.getElementById("taDemoEdtr")) {
+                document.getElementById("taDemoEdtr").value = tFlyrHStr;
+                // update the tinymce.editor content
+                tinyMCE.get("taDemoEdtr").setContent(tFlyrHStr);    
+                
+            } else {    
+
      tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tFlyrHStr + "</textarea>";
      tDVDstr += "<div class=\"clearfix\"></div><br>";
          document.getElementById("dvDemoView").innerHTML = tDVDstr;
         setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+            }
             }
     } else if(tSCval == "users") {
         tSlctdUsrsArr = null;

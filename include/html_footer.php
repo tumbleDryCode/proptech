@@ -271,5 +271,7 @@
 <script src="js/js_cc.js"></script>
 <script src="js/js_cci.js"></script>
 <script src="js/app/sau.js"></script>
+<script src="js/app/x_aqr.js"></script>
+
 <script src="js/app/js_spinner.js"  language="javascript" type="text/javascript"></script>
 <script src="js/app/x_menu.js"  language="javascript" type="text/javascript"></script>

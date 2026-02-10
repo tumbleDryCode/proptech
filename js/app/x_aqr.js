@@ -782,8 +782,9 @@ function setupqr(){
 */
 function doQRimgSrcStr(qStr, qSize) {
     destnanvas = doNuqr(qStr, qSize);
-    destnImgSrc = destnanvas.toDataURL("image/png");
-    destnImgSTr = '<img src="' + destnImgSrc + '" width="' + qSize + 'px" height="' + qSize + 'px">';
+    // destnImgSrc = destnanvas.toDataURL("image/png");
+    destnImgSrc = destnanvas.toDataURL();
+    destnImgSTr = '<img class="gallery-item" src="' + destnImgSrc + '" width="' + qSize + 'px" height="' + qSize + 'px">';
     return destnImgSTr;
 }
 

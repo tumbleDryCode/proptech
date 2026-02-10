@@ -449,11 +449,20 @@ function doPostEdit() {
     document.getElementById("p_uid").value = quid;
     document.getElementById("p_dmodified").value = JSSHOP.getUnixTimeStamp();
     if(document.getElementById("p_ptype").value == "pimage") {
-        // set p_vars to demoview content
+        // Save both properties array and demo editor HTML
         daTAbodE = taDemoEdtr_ifr.contentWindow.document.body;
-        dTABEstr = daTAbodE.innerHTML;
-        dTABLZd = LZString.compressToEncodedURIComponent(dTABEstr);
-        document.getElementById("p_vars").value = dTABLZd;
+        daDiv = daTAbodE.querySelector("#dvTMCdemo");
+        if (daDiv) {
+            dTABEstr = daDiv.outerHTML;
+            dTABLZd = LZString.compressToEncodedURIComponent(dTABEstr);
+            tSlctdPrpsArr = JSSHOP.shared.getSlctdPrpsArr() || [];
+            tSlctdPrpsStr = JSON.stringify(tSlctdPrpsArr);
+            tZpdProps = LZString.compressToEncodedURIComponent(tSlctdPrpsStr);
+            tZpd = tZpdProps + "dlmtd" + dTABLZd;
+            document.getElementById("p_vars").value = tZpd;
+        } else {
+            console.error("dvTMCdemo div not found in editor for saving");
+        }
     }
        // document.getElementById("p_vars").value = document.getElementById("dvDemoView").innerHTML;
     tmpFobj = null;
@@ -561,6 +570,30 @@ JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue
        doPTypeTip("p_ptype", p_ptype.value, "noQvalue");
 
 
+       // Handle pimage type: load properties and HTML from p_vars
+       if (p_ptype.value === "pimage" && p_vars.value) {
+           try {
+               var pVarsStr = p_vars.value;
+               var delimiterIndex = pVarsStr.indexOf("dlmtd");
+               if (delimiterIndex !== -1) {
+                   var tZpdProps = pVarsStr.substring(0, delimiterIndex);
+                   var tZpdHTML = pVarsStr.substring(delimiterIndex + 5); // "dlmtd".length = 5
+                   var tSlctdPrpsStr = LZString.decompressFromEncodedURIComponent(tZpdProps);
+                   var tSlctdPrpsArr = JSON.parse(tSlctdPrpsStr);
+                   JSSHOP.shared.setSlctdPrpsArr(tSlctdPrpsArr); // Assuming this function exists to set the array
+                   var dTABEstr = LZString.decompressFromEncodedURIComponent(tZpdHTML);
+                   // Set the editor content after TinyMCE loads
+                   setTimeout(function() {
+                       if (taDemoEdtr_ifr && taDemoEdtr_ifr.contentWindow) {
+                           taDemoEdtr_ifr.contentWindow.document.body.innerHTML = dTABEstr;
+                       }
+                   }, 1000);
+               }
+           } catch (e) {
+               console.error("Error loading pimage vars: " + e);
+           }
+       }
+
    tDDfullStr = "";
 
 
@@ -573,6 +606,8 @@ tmp_p_content.value = LZString.decompressFromEncodedURIComponent(tDcdVal);
    JSSHOP.loadScript("js/tinymce/tinymce.js", loadTnyI, "js");
 
 }
+ 
+
 function doMPostForm(aaw,aww,cww) {
   try {
     console.log("doMPostForm: " + aaw + " " + aww + " " + cww);
@@ -1022,16 +1057,32 @@ var finishMPstUld = function(theMMum) {
     console.log("doPTypeCheck");
     tSlctdPstType = document.getElementById("p_ptype").value;
     if(p_ptype.value == "pimage") {
-        decdPCval = decodeURIComponent(p_vars.value);
+        tPVVval = p_vars.value;
+        tmpPPrpObjval = null;
+        if(tPVVval.indexOf("dlmtd") != -1) {
+            console.log("doPTypeCheck: has dlmtd");
+            tPPrvlSplt = tPVVval.split("dlmtd");
+            tmpZdSlctPPrpArr = tPPrvlSplt[0];
+            tUdcdSlctPPrpArr = decodeURIComponent(tmpZdSlctPPrpArr);
+            tLZunzpd = LZString.decompressFromEncodedURIComponent(tUdcdSlctPPrpArr);
+            tSlctdPrpsArr = JSON.parse(tLZunzpd);
+            lzUriDcdSTr = decodeURIComponent(tPPrvlSplt[1]);
+            lzdecdstr = LZString.decompressFromEncodedURIComponent(lzUriDcdSTr);
+        } else {
+                        console.log("doPTypeCheck: no dlmtd");
+        decdPCval = decodeURIComponent(tPVVval);
        lzdecdstr = LZString.decompressFromEncodedURIComponent(decdPCval);
+       }
+                   console.log("doPTypeCheck: lzdecdstr: " + lzdecdstr);
+
        tFullPTIstr = "";
        if(lzdecdstr.indexOf("dvTMCDemo") != -1) {
         tFullPTIstr = lzdecdstr;
        } else {
-            tFullPTIstr += "<div class=\"property-flyer\" style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px;\" id=\"dvTMCdemo\">";
-
-         tFullPTIstr += lzdecdstr;
-        tFullPTIstr += "</div>";
+        tFullPTIstr = lzdecdstr;
+        // tFullPTIstr += "<div class=\"property-flyer\" style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px;\" id=\"dvTMCdemo\">";
+        // tFullPTIstr += lzdecdstr;
+        // tFullPTIstr += "</div>";
        }
              tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" +  tFullPTIstr + "</textarea>";
      tDVDstr += "<div class=\"clearfix\"></div><br>";

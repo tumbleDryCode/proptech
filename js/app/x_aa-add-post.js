@@ -1,6 +1,17 @@
 
 
-currIContent == "y"
+var cachedSlctdPrpsArr = null;
+
+function getCachedSlctdPrpsArr() {
+    if (!cachedSlctdPrpsArr) {
+        cachedSlctdPrpsArr = JSSHOP.shared.getSlctdPrpsArr() || [];
+    }
+    return cachedSlctdPrpsArr;
+}
+
+function clearCachedSlctdPrpsArr() {
+    cachedSlctdPrpsArr = null;
+}
 var euiFFObjArr = null;
 var euiFFObjArr = [];
 var tmpOldFFvals = null;
@@ -45,6 +56,60 @@ CREATE TABLE `qposts` (
  
 
 */
+
+
+function rndrUsrPImgList(theRDa, theRDb, theRDc) {
+    console.log("rndrPImgThmbs: " + theRDa + " " + theRDb + " " + theRDc);
+    tThmbStr = "<div style=\"width:100%; overflow:hidden;\">"; // Container for floated divs
+    currUsrUpdtsObj["pimage"] = null;
+    currUsrUpdtsArr = "";
+
+    if(theRDb.indexOf("_id") != -1) {
+        tAiretArr = JSON.parse(theRDb);
+            currUsrUpdtsObj["pimage"] = [];
+            currUsrUpdtsObj["pimage"] = tAiretArr;
+        var len = tAiretArr.length;
+        iint = 0;
+        while (iint < len) {
+            tChTstr = tAiretArr[iint]["p_title"];
+            tUrlDecd = decodeURIComponent(tChTstr);
+            tChoppedTstr = tUrlDecd;
+            aChoppedTstr = tChoppedTstr;
+            if(tChoppedTstr.length > 45) {
+                aChoppedTstr = tChoppedTstr.substring(0, 45) + "...";
+            }
+            tThmbStr += "<div style=\"float:left; width:150px; height:200px; margin:5px; border:1px solid #ccc; text-align:center; cursor:pointer; background-color:#f9f9f9;\" ";
+            tThmbStr += "onmouseover=\"this.style.backgroundColor='#e0e0e0';\" ";
+            tThmbStr += "onmouseout=\"this.style.backgroundColor='#f9f9f9';\" ";
+            tThmbStr += "onclick=\"this.style.backgroundColor='#add8e6'; finishMPupload('updt_" + tAiretArr[iint]["p_image"] + "'); JSSHOP.ui.closeLbox();\">";
+            tThmbStr += "<img src=\"images/ucontent/m_thumb" + tAiretArr[iint]["p_image"] + "\" style=\"width:140px; height:120px; margin:5px;\">";
+            tThmbStr += "<div style=\"font-size:12px; padding:5px;\">" + (aChoppedTstr || "No Title") + "</div>";
+            tThmbStr += "</div>";
+            iint++;
+        }
+    }
+    tThmbStr += "</div>";
+    JSSHOP.ui.popAndFillLbox(tThmbStr);
+}
+
+function getUsrPImgList() {
+    if(currUsrUpdtsObj["pimage"] && currUsrUpdtsObj["pimage"].length > 0) {
+        rndrUsrPImgList(null, JSON.stringify(currUsrUpdtsObj["pimage"]), null);
+        return;
+    } else {
+        console.log("getUsrPImgList: no cached pimage posts, fetching from db");
+    tmpDOs = {};
+    tmpDOs["ws"] = "where p_uid = ? and p_rtype = ? and p_ptype = ?";
+    tmpDOs["wa"] = [quid, 5, "pimage"];
+    tmpDOs["l"] = 80;
+    oi = getNuDBFnvp("qposts",5,null,tmpDOs);
+    currRQtable = "qposts";
+    currRQstr = oi["rq"];
+    // alert("getUsrPImgList currRQstr: " + currRQstr);
+    doQComm(oi["rq"], null, "rndrUsrPImgList");
+    }
+}       
+
 
 
 var fnshPTypeChange = function() {
@@ -224,7 +289,10 @@ var doPstTypOpts = function(tPTval) {
             tFullTTTtxt += tPtypPkStr;
             } else {
 
-             tSelPropStr = "<table style=\"margin: 0 auto;\"><tr><td><div class=\"slmtable txtClrHdr txtBold brdrClrHdr crsrPointer txtSmall form-control\" onclick=\"javascript:JSSHOP.ui.getPickerDiv('props');\">" + stxt[635] + " " + tPostsTypeObj[objVal] + "</div></td></tr></table>";
+             tSelPropStr = "<table style=\"margin: 0 auto;\"><tr><td><div class=\"slmtable txtClrHdr txtBold brdrClrHdr crsrPointer txtSmall form-control\" onclick=\"javascript:JSSHOP.ui.getPickerDiv('props');\">" + stxt[635] + " " + tPostsTypeObj[objVal] + "</div></td></tr>";
+             tSelPropStr += "<tr><td><div class=\"slmtable txtClrHdr txtBold brdrClrHdr crsrPointer txtSmall form-control\" onclick=\"javascript:openFlyersModalDialog();\">Recent</div></td></tr>";    
+
+             tSelPropStr += "</table>";
                 tFullTTTtxt += tSelPropStr;
 
    
@@ -479,7 +547,7 @@ var finishMPstUld = function(theMMum) {
     } catch(e) {
         alert("getQULnksArr: " + e);
     }
-            JSSHOP.loadScript("js/app/x_aqr.js", fnshAQRload, "js");
+         //    JSSHOP.loadScript("js/app/x_aqr.js", fnshAQRload, "js");
 
     }
     function loadColorisCss() {
@@ -523,11 +591,16 @@ function loadTnyI(theTLSpath, theTLSstat) {
      JSSHOP.loadScript("js/tinymce/init-tinymce.min.js", setTnDPlachldrs, "js");
  }
 
-function setUPostAddSave(a,b,c) {
-    console.log("setUPostAddSave: " + a + " " + b + " " + c);
-    eindex("aa-edit-posts", "pid=aa-edit-posts");
-    // JSSHOP.ui.popAndFillLbox("Post added. " + a + " " + b + " " + c);
- 
+function setUPostAddSave(tSUPAresp) {
+    console.log("setUPostAddSave: " + tSUPAresp);
+    try {
+        var responseObj = JSON.parse(tSUPAresp);
+        var insertedPostId = responseObj.data;
+        eindex("aa-edit-post", "pid=aa-edit-post&tpstid=" + insertedPostId);
+    } catch(e) {
+        console.error("Error parsing response: " + e);
+        alert("Error saving post: " + e);
+    }
     // JSSHOP.ui.setCBBClickClr(tmpSvBtnObj,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium  bkgdClrHdr txtClrWhite', function(){tmpSvBtnObj.innerHTML=stxt[21];tmpSvBtnObj.disabled=false;});
 }
 function fnishSvCnvsImg(tFnishResp) {
@@ -569,6 +642,17 @@ function savePstCanvasImg(canvas) {
     }
 } 
 
+function loadRecentFlyer(flyerId) {
+    // Placeholder for loading a recent flyer by ID
+    // This should fetch the flyer data from database or storage
+    console.log("Loading recent flyer: " + flyerId);
+    // Example: Assume flyer data is fetched and contains properties and HTML
+    // var flyerData = getFlyerData(flyerId); // Implement this
+    // Then set the selected properties and editor content
+    // JSSHOP.shared.setSlctdPrpsArr(flyerData.properties);
+    // Set editor HTML: taDemoEdtr_ifr.contentWindow.document.body.innerHTML = flyerData.html;
+}
+
 function setPostAdd() {
     console.log("setPostAdd");
     tTMCcntStr = tmp_p_content_ifr.contentWindow.document.body.innerHTML;
@@ -585,9 +669,17 @@ function setPostAdd() {
     if(tSlctdPstType == "pimage") {
          daTAbod = taDemoEdtr_ifr.contentWindow.document.body;
         daDiv = daTAbod.querySelector("#dvTMCdemo");
-        // daDiv = document.getElementById("dvDemoView");
-        tZpd = LZString.compressToEncodedURIComponent(daDiv.innerHTML);
-        document.getElementById("p_vars").value = tZpd;    
+        if (daDiv) {
+            tZpdHTML = LZString.compressToEncodedURIComponent(daDiv.outerHTML);
+            tSlctdPrpsArr = getCachedSlctdPrpsArr();
+            tSlctdPrpsStr = JSON.stringify(tSlctdPrpsArr);
+            tZpdProps = LZString.compressToEncodedURIComponent(tSlctdPrpsStr);
+            tZpd = tZpdProps + "dlmtd" + tZpdHTML;
+            document.getElementById("p_vars").value = tZpd;
+            console.log("setPostAdd: pimage vars saved with properties and HTML");
+        } else {
+            console.error("dvTMCdemo div not found in editor");
+        }
     }
 
 
@@ -613,10 +705,17 @@ function doPostAdd() {
             // dvTDiv is a div in taDemoEdtr_ifr.contentWindow.document.body
             daTAbod = taDemoEdtr_ifr.contentWindow.document.body;
            daDiv = daTAbod.querySelector("#dvTMCdemo");
-          //   daDiv = document.getElementById("dvDemoView");
-           html2canvas(daDiv).then(function(canvas) { savePstCanvasImg(canvas);})
-            // html2canvas(taDemoEdtr).then(function(canvas) { savePstCanvasImg(canvas);})
-
+           if (daDiv) {
+               html2canvas(daDiv, {
+                   useCORS: true,
+                   allowTaint: false,
+                   scale: 1, // Adjust scale for quality vs performance
+                   width: daDiv.offsetWidth,
+                   height: daDiv.offsetHeight
+               }).then(function(canvas) { savePstCanvasImg(canvas);});
+           } else {
+               console.error("dvTMCdemo not found for canvas generation");
+           }
             break;
         case "pcarousel":
             tZpd = LZString.compressToEncodedURIComponent(JSON.stringify(JSSHOP.ads.getUpdatePVrs("pcarousel")));
@@ -859,6 +958,8 @@ tDDBojA = {};
         tDDPPgObj["kvIcnsObj"]["prop"] = "noQvalue";
         tDDPPgObj["kvIcnsObj"]["cont"] = "&#xe5cd;";
         tDDPPgObj["kvIcnsObj"]["about"] = "noQvalue";
+        tDDPPgObj["kvIcnsObj"]["blog"] = "noQvalue";
+
         tDDPPgStr = JSSHOP.ui.getNuBSdropDstr(tDDPPgObj);
         tDDPStr += tDDPPgStr;
        
