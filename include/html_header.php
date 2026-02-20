@@ -69,8 +69,12 @@ if ('serviceWorker' in navigator) {
 }
 </script> 
  
-   <script src="js/thirdp/swiper-bundle.min.js" type="text/javascript"></script>    <script src="js/jquery.min.js"></script> 
-   <script src="js/thirdp/html2canvas.js" type="text/javascript"></script>    <script src="js/jquery.min.js"></script> 
+   <script src="js/thirdp/swiper-bundle.min.js" type="text/javascript"></script>    
+   <script src="js/jquery.min.js"></script> 
+   <script src="js/thirdp/CCapture.all.min.js" type="text/javascript"></script>
+  <script src="js/st/Sortable.js"  language="javascript" type="text/javascript"></script>
+   <!-- <script src="js/thirdp/html2canvas.js" type="text/javascript"></script>    
+      -->
 
 
 <script src="js/leaflet/leaflet.js" type="text/javascript"></script>
@@ -78,5 +82,4 @@ if ('serviceWorker' in navigator) {
 <link rel="stylesheet" href="js/leaflet/leaflet.css" type="text/css" />
 <link rel="stylesheet" href="js/leaflet/easy-button.css" type="text/css" />
 <link rel="stylesheet" type="text/css" href="css/x_bs-fixes.css">
-
-<title>proptech</title>
+   <script src="js/thirdp/snapdom.js" type="text/javascript"></script> 

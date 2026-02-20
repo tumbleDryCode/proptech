@@ -12,7 +12,7 @@
  $pgDesc =  "propsgo.com";
  $siteTitle = "propsgo.com";
  $pgTitle = "propsgo.com ";
- 
+ $pgType = "website";
 
  // include $_SERVER['DOCUMENT_ROOT'] . "/incasa/_p/DumDatabase.php";
 // $_SERVER['DOCUMENT_ROOT'] does not work in this context, use relative path to _p/DumDatabase.php
@@ -154,6 +154,11 @@ if(isset($_GET["tupid"])) {
                     }
                     $tJsonSTr = '{"ditemid":"' . $row["_id"] . '","ptitle":"' . $title . '","pdesc":"' .  $description . '","i_img":"' . $image . '"}';
                     }   //
+                                        if($row["p_ptype"] == "pimage") {
+                        $pgType = "image";
+                    } else {
+                        $pgType = "website";
+                    }   
                  } catch(Exception $ex) {
     echo "/* exception: " . $ex . "*/";
                 }
@@ -170,12 +175,12 @@ $oglocation .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
  
 
 $tMOGstr = "<meta name=\"description\" content=\"" . $pgDesc . "\">\n";
-$tMOGstr .= "<meta name=\"keywords\" contest>\n";
+$tMOGstr .= "<meta name=\"keywords\" content=\"" . $pgKeywords . "\">\n";
 $tMOGstr .= "<meta property=\"og:description\" content=\"" . $pgDesc . "\">\n";
 $tMOGstr .= "<meta property=\"og:image\" content=\"" . $image . "\">\n";
 $tMOGstr .= "<meta property=\"og:site_name\" content=\"propsgo.com\">\n";
 $tMOGstr .= "<meta property=\"og:title\" content=\"" . $pgTitle . "\">\n";
-$tMOGstr .= "<meta property=\"og:type\" content=\"website\">\n";
+$tMOGstr .= "<meta property=\"og:type\" content=\"" . $pgType . "\">\n";
 $tMOGstr .= "<meta property=\"og:url\" content=\"" . $oglocation . "\">\n";
 // appID
 $tMOGstr .= "<meta property=\"fb:app_id\" content=\"1814864155722452\">\n";

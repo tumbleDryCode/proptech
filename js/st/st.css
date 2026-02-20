@@ -1,0 +1,10 @@
+.myTable {
+        display: table;
+        border: 1px solid black;
+        max-width: 95%;
+    }
+
+.myTable > * {
+        display: table-cell;
+        width: 20%;
+    }

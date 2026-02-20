@@ -30,7 +30,7 @@ if (!window.JSSHOP.shop) {
 }
 
 
-   
+        var tSlctdPrpsArr = [];
         var intervals = [];
  
         function clear(i){
@@ -6291,7 +6291,7 @@ JSSHOP.ui.popAndFillLbox(tIUrlStr);
 };
  
 JSSHOP.ui.popAndFillLbox = function(theFill) {
-JSSHOP.ui.popNurFillLbox(theFill, 5);
+JSSHOP.ui.popNurFillLbox(theFill, "&#xe5cd;", "The Title");
 }
 
 
@@ -6387,7 +6387,7 @@ JSSHOP.ui.popFillObox = function(theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUse
 
 };
 
-JSSHOP.ui.popNurFillLbox = function(theFill, theTofst) {
+JSSHOP.ui.popNurFillLbox = function(theFill, theNurIcon, theNurTitle) {
     // Enhanced modal using Bootstrap for better mobile responsiveness
     var modalId = 'nurModal';
     var existingModal = document.getElementById(modalId);
@@ -6397,6 +6397,7 @@ JSSHOP.ui.popNurFillLbox = function(theFill, theTofst) {
                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-header">
+                         <h5 class="modal-title" id="${modalId}Label">${theNurTitle}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="${modalId}Body">
@@ -6408,6 +6409,11 @@ JSSHOP.ui.popNurFillLbox = function(theFill, theTofst) {
         document.body.insertAdjacentHTML('beforeend', modalHtml);
         existingModal = document.getElementById(modalId);
     }
+    // Update icon and title on every call
+    var iconElement = existingModal.querySelector('.material-icons i');
+    if (iconElement) iconElement.textContent = theNurIcon;
+    var titleElement = existingModal.querySelector('.modal-title');
+    if (titleElement) titleElement.textContent = theNurTitle;
     var modalBody = document.getElementById(modalId + 'Body');
     if (theFill === "noQvalue") {
         modalBody.innerHTML = "";
@@ -9090,7 +9096,7 @@ function openMediaPickerDialog() {
         }
     }, 800);
 
-    JSSHOP.ui.popAndFillLbox(dialogHtml);
+    JSSHOP.ui.popNurFillLbox(dialogHtml, "" , "Images");
 
 }
 function openBgColorPickerDialog() {
@@ -11598,8 +11604,13 @@ JSSHOP.ui.dragElement =  function(elmnt) {
 	}
   };
 
+JSSHOP.shared.setSlctdPrpsArr = function(tTATStr) {
+    tSlctdPrpsArr = null;
+    tSlctdPrpsArr = "";
+    tSlctdPrpsArr = [];
+    tSlctdPrpsArr = tTATStr;
+};
 
- 
 JSSHOP.shared.getSlctdPrpsArr = function() {
     return tSlctdPrpsArr;
 };

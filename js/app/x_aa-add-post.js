@@ -626,6 +626,7 @@ function savePstCanvasImg(canvas) {
         // toDataUrl in jpeg
         var decDdataURL = canvas.toDataURL("image/jpeg");
         encdLZdDataUrl = LZString.compressToEncodedURIComponent(decDdataURL);
+        console.log("savePstCanvasImg: compressed dataURL length: " + encdLZdDataUrl.length);
         // log first 100 chars of dataURL
         console.log("savePstCanvasImg: dataURL: " + decDdataURL.substring(0,100));  
         inpCnvsImg.value = encdLZdDataUrl;
@@ -693,7 +694,7 @@ function setPostAdd() {
      JSSHOP.ajax.doNurAjaxPost(oi["rq"], setUPostAddSave);
 }
 
-function doPostAdd() {
+async function doPostAdd() {
     console.log("doPostAdd");
      // tTMCcntStr = tinyMCE.activeEditor.getContent();
      tSlctdPstType = document.getElementById("p_ptype").value;
@@ -706,13 +707,17 @@ function doPostAdd() {
             daTAbod = taDemoEdtr_ifr.contentWindow.document.body;
            daDiv = daTAbod.querySelector("#dvTMCdemo");
            if (daDiv) {
+            // snapdom element to canvas with 2x scale for better quality and then save the canvas image
+            /*
                html2canvas(daDiv, {
                    useCORS: true,
                    allowTaint: false,
-                   scale: 1, // Adjust scale for quality vs performance
+                   scale: 2, // Adjust scale for quality
                    width: daDiv.offsetWidth,
                    height: daDiv.offsetHeight
-               }).then(function(canvas) { savePstCanvasImg(canvas);});
+               }).then(function(canvas) { savePstCanvasImg(canvas);}).catch(function(error) { console.error("Error generating canvas: ", error);});
+               */
+            const pcanv = await  snapdom.toCanvas(daDiv).then(function(canvas) { savePstCanvasImg(canvas);}).catch(function(error) { console.error("Error generating canvas: ", error);});
            } else {
                console.error("dvTMCdemo not found for canvas generation");
            }

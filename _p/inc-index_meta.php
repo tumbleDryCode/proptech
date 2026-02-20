@@ -3,7 +3,7 @@
 <?php
 // output all errors for debugging
 error_reporting(E_ALL);
-
+global $pgDesc, $pgKeywords, $pgTitle, $siteTitle, $pgType, $image, $oglocation;
 /**
  * PDO mysql database helper class
  * 
@@ -23,7 +23,10 @@ error_reporting(E_ALL);
      $usrlang = $_COOKIE["usrlang"];
     //  $deflang = $_COOKIE["usrlang"];
  }
- 
+
+$oglocation = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
+$oglocation .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+
 
  // include $_SERVER['DOCUMENT_ROOT'] . "/incasa/_p/DumDatabase.php";
 // $_SERVER['DOCUMENT_ROOT'] does not work in this context, use relative path to _p/DumDatabase.php
@@ -102,12 +105,18 @@ if(isset($_GET["ditemid"])) {
                 } else  if(stristr($image, "updt_")) {
                     $ckeanImg = str_replace("updt_", "", $image);
                     $image = "https://dev.propsgo.com/images/ucontent/" . $ckeanImg;
+                    $pgType = "image";
+                    $oglocation = $image;
+               
                  } else   if(stristr($image, "updt3d_")){
                     $ckeanImg = str_replace("updt3d_", "", $image);
                     $unzdImg = LZCompressor\LZString::decompressFromEncodedURIComponent($ckeanImg);
                     $image = $unzdImg;
-                                    } else if(stristr($image, ".")){
+                    $pgType = "image";
+                    $oglocation = $image;
+                } else if(stristr($image, ".")){
                     $image = "https://dev.propsgo.com/images/property/" . $row["pimage"];
+           
                 } else {
                     $image = "https://dev.propsgo.com/images/logo_og.png";
                 }   
@@ -135,7 +144,7 @@ if(isset($_GET["tupid"])) {
      $itemid = $tupidArr[0];
         $usrlang = $tupidArr[1];
         // $deflang = $usrlang;
-        
+
      // get record from database
     $q = "SELECT * FROM qposts WHERE _id = $itemid";
     // send query to do.php
@@ -192,34 +201,32 @@ if(isset($_GET["tupid"])) {
                     } else {
                         $image = "https://dev.propsgo.com/images/logo_og.png";
                     }
-                    if($row["p_ptype"] == "pimage") {
+                    // echo p_ptype for debugging
+                     if($ppType == "pimage") {
                         $pgType = "image";
+                        $oglocation = $image;
                     } else {
                         $pgType = "website";
                     }   
-                   
-                                        $tJsonSTr = '{"ditemid":"' . $row["_id"] . '","ptitle":"' . $title . '","pdesc":"' .  $description . '","i_img":"' . $image . '"}';
                     $tJsonSTr = '{"ditemid":"' . $row["_id"] . '","ptitle":"' . $title . '","pdesc":"' .  $description . '","i_img":"' . $image . '"}';
+                    $tJsonSTr = '{"ditemid":"' . $row["_id"] . '","ptitle":"' . $title . '","pdesc":"' .  $description . '","i_img":"' . $image . '"}';
+                }
 
-                }
-                 } catch(Exception $ex) {
+                
+
+ 
+ // encode the description
+
+
+} catch(Exception $ex) {
     echo "/* exception: " . $ex . "*/";
-                }
+}
           
             }
 
 
-
-$oglocation = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
-$oglocation .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
-
-
-$udecdPgTtle = urldecode($pgTitle);
-$pgTitle = $udecdPgTtle;
- // encode the description
-
 $tMOGstr = "<meta name=\"description\" content=\"" . $pgDesc . "\">\n";
-$tMOGstr .= "<meta name=\"keywords\" contest>\n";
+$tMOGstr .= "<meta name=\"keywords\" content=\"" . $pgKeywords . "\">\n";
 $tMOGstr .= "<meta property=\"og:description\" content=\"" . $pgDesc . "\">\n";
 $tMOGstr .= "<meta property=\"og:image\" content=\"" . $image . "\">\n";
 $tMOGstr .= "<meta property=\"og:site_name\" content=\"propsgo.com\">\n";
@@ -227,8 +234,9 @@ $tMOGstr .= "<meta property=\"og:title\" content=\"" . $pgTitle . "\">\n";
 $tMOGstr .= "<meta property=\"og:type\" content=\"" . $pgType . "\">\n";
 $tMOGstr .= "<meta property=\"og:url\" content=\"" . $oglocation . "\">\n";
 // appID
-// $tMOGstr .= "<meta property=\"fb:app_id\" content=\"1814864155722452\">\n";
+$tMOGstr .= "<meta property=\"fb:app_id\" content=\"1814864155722452\">\n";
 $tMOGstr .= "<title>" . $pgTitle . "</title>\n";
 echo $tMOGstr;
+// exit;
 ?>
  

@@ -440,7 +440,9 @@ function fnishUPstEdt(a,b,c) {
 }
 
 function doPostEdit() {
-     
+     try {
+    console.log("doPostEdit");
+     // tTMCcntStr = tinyMCE.activeEditor.getContent();
     tmpSvBtnObj = btnEUsave;
     tTMCcntStr =  tmp_p_content_ifr.contentWindow.document.body.innerHTML;
     tLZenced = LZString.compressToEncodedURIComponent(tTMCcntStr);
@@ -455,8 +457,10 @@ function doPostEdit() {
         if (daDiv) {
             dTABEstr = daDiv.outerHTML;
             dTABLZd = LZString.compressToEncodedURIComponent(dTABEstr);
-            tSlctdPrpsArr = JSSHOP.shared.getSlctdPrpsArr() || [];
-            tSlctdPrpsStr = JSON.stringify(tSlctdPrpsArr);
+            
+            ttSlctdPrpsArr = JSSHOP.shared.getSlctdPrpsArr() || [];
+            console.log("Selected properties array: ", ttSlctdPrpsArr);
+            tSlctdPrpsStr = JSON.stringify(ttSlctdPrpsArr);
             tZpdProps = LZString.compressToEncodedURIComponent(tSlctdPrpsStr);
             tZpd = tZpdProps + "dlmtd" + dTABLZd;
             document.getElementById("p_vars").value = tZpd;
@@ -477,7 +481,9 @@ function doPostEdit() {
     }
     // doQComm(oi["rq"], null, "setUPostSave");
     JSSHOP.ajax.doNuAjaxPost(oi["rq"], fnishUPstEdt);
- 
+    } catch(e) {
+        alert("doPostEdit: " + e);
+    }
 }
 
 
@@ -579,8 +585,9 @@ JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue
                    var tZpdProps = pVarsStr.substring(0, delimiterIndex);
                    var tZpdHTML = pVarsStr.substring(delimiterIndex + 5); // "dlmtd".length = 5
                    var tSlctdPrpsStr = LZString.decompressFromEncodedURIComponent(tZpdProps);
-                   var tSlctdPrpsArr = JSON.parse(tSlctdPrpsStr);
-                   JSSHOP.shared.setSlctdPrpsArr(tSlctdPrpsArr); // Assuming this function exists to set the array
+                   ttSlctdPrpsArr = [];
+                   ttSlctdPrpsArr = JSON.parse(tSlctdPrpsStr);
+                   JSSHOP.shared.setSlctdPrpsArr(ttSlctdPrpsArr); // Assuming this function exists to set the array
                    var dTABEstr = LZString.decompressFromEncodedURIComponent(tZpdHTML);
                    // Set the editor content after TinyMCE loads
                    setTimeout(function() {
@@ -1065,7 +1072,7 @@ var finishMPstUld = function(theMMum) {
             tmpZdSlctPPrpArr = tPPrvlSplt[0];
             tUdcdSlctPPrpArr = decodeURIComponent(tmpZdSlctPPrpArr);
             tLZunzpd = LZString.decompressFromEncodedURIComponent(tUdcdSlctPPrpArr);
-            tSlctdPrpsArr = JSON.parse(tLZunzpd);
+            JSSHOP.shared.setSlctdPrpsArr(JSON.parse(tLZunzpd));
             lzUriDcdSTr = decodeURIComponent(tPPrvlSplt[1]);
             lzdecdstr = LZString.decompressFromEncodedURIComponent(lzUriDcdSTr);
         } else {
@@ -1212,7 +1219,7 @@ function doNuPostEditSave() {
         JSSHOP.ajax.doNuAjaxPost(oi["rq"], setUPostAddSave);
 }
 
-function doPostAdd() {
+async function doPostAdd() {
     console.log("doPostAdd");
      // tTMCcntStr = tinyMCE.activeEditor.getContent();
      tSlctdPstType = document.getElementById("p_ptype").value;
@@ -1221,8 +1228,12 @@ function doPostAdd() {
     // JSSHOP.ajax.doNuAjaxPost(oi["rq"], setUPostAddSave);
      switch(tSlctdPstType) {
         case "pimage":
-              html2canvas(taDemoEdtr_ifr.contentWindow.document.body).then(function(canvas) { savePstECnvsImg(canvas);})
-          
+            tTgtDv = taDemoEdtr_ifr.contentWindow.document.body;
+            // find first child div in tTgtDv
+            tTgtChld = tTgtDv.querySelector("div");
+              // html2canvas(taDemoEdtr_ifr.contentWindow.document.body).then(function(canvas) { savePstECnvsImg(canvas);})
+                      const pcanv = await  snapdom.toCanvas(tTgtChld).then(function(canvas) { savePstECnvsImg(canvas);}).catch(function(error) { console.error("Error generating canvas: ", error);});
+
             break;
         case "pcarousel":
             tZpd = LZString.compressToEncodedURIComponent(JSON.stringify(JSSHOP.ads.getUpdatePVrs("pcarousel")));
