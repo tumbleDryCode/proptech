@@ -29,8 +29,8 @@ if (!window.JSSHOP.shop) {
     JSSHOP.shop = new Object();
 }
 
-
-        var tSlctdPrpsArr = [];
+ 
+   
         var intervals = [];
  
         function clear(i){
@@ -2973,10 +2973,10 @@ JSSHOP.hookloader.register = function(name, callback) {
     JSSHOP.hookloader.hooks[name].push(callback);
   };
 
-JSSHOP.hookloader.call = function(name, targuments) {
+JSSHOP.hookloader.call = function(name, arguments) {
     if('undefined' != typeof(JSSHOP.hookloader.hooks[name]))
       for(i = 0; i < JSSHOP.hookloader.hooks[name].length; ++i)
-        if( true != JSSHOP.hookloader.hooks[name][i]( targuments )) { break; }
+        if( true != JSSHOP.hookloader.hooks[name][i]( arguments )) { break; }
 };
 
 
@@ -3076,21 +3076,6 @@ function setCurrPrpsArr(tCPAstrA, tCPAstrB, tCPAstrC) {
     }
 }
 
-function setCurrPrpsArrForModal(tCPAstrA, tCPAstrB, tCPAstrC) {
-    try {
-        currPstsPrpsArr = null;
-        currPstsPrpsArr = [];
-        currPstsPrpsArr = JSON.parse(tCPAstrB);
-        // Update the properties tab content
-        var propertiesTab = document.getElementById('properties');
-        if (propertiesTab) {
-            propertiesTab.innerHTML = JSSHOP.ui.getPickerStr("props", false);
-        }
-    } catch (e) {
-        JSSHOP.logJSerror(e, arguments, "setCurrPrpsArrForModal");
-    }
-}
-
 JSSHOP.ui.setPickerVal = function(tPVelem, tPVtype, tPVixd, tPVid) {
 //  currSlctdUsrArr  currSlctdPrpsArr 
     try {
@@ -3158,8 +3143,7 @@ JSSHOP.ui.setPickerVal = function(tPVelem, tPVtype, tPVixd, tPVid) {
     }
 };
 
-JSSHOP.ui.getPickerStr = function(tPDtype, includeButtons) {
-    if (includeButtons === undefined) includeButtons = true;
+JSSHOP.ui.getPickerStr = function(tPDtype) {
     tGPSstr = "<div style=\"padding: 1px;max-height:300px;overflow:auto;\"> ";
     try {
     switch(tPDtype) {
@@ -3222,13 +3206,11 @@ JSSHOP.ui.getPickerStr = function(tPDtype, includeButtons) {
         break;
     }
 tGPSstr += "</div>";
-if (includeButtons) {
-    tGPSstr += "<br>";
+tGPSstr += "<br>";
     tGPSstr += "<div style=\"margin: 10px\">";
     tGPSstr += "<span style=\"\" class=\"cls_button cls_button-medium bkgdClrHdr txtClrWhite\" onclick=\"JSSHOP.ui.closeLbox();JSSHOP.ads.trnsltPTpObj();\">OK</span>";
     tGPSstr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-medium  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";
     tGPSstr += "</div>";
-}
     return tGPSstr;
     } catch (e) {
         JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.getPickerStr");
@@ -3239,75 +3221,6 @@ if (includeButtons) {
 
 };
 
-JSSHOP.ads.getEdtrPrpLstStr = function(tPrpDtarr, style = 'modern') {
-    let tEdtrPrpsStr = "";
-    let gradientStyle = "";
-
-    // Define styles
-    switch(style) {
-        case 'classic':
-            gradientStyle = "background: linear-gradient(to bottom, #007bff, #ffffff);";
-            break;
-        case 'vibrant':
-            gradientStyle = "background: linear-gradient(to bottom right, #ff4081, #ff1744, #ffeb3b);";
-            break;
-        default:
-            gradientStyle = "background: linear-gradient(to right, #00bcd4, #2196f3, #3f51b5);";
-    }
-
-    // Start flyer container - vertical list
-    tEdtrPrpsStr += `<div style="${gradientStyle} width: 100%; min-height: 430px; position: relative; padding: 10px; box-sizing: border-box;" id="dvTMCdemo">`;
-
-    // Header - larger text for mobile readability
-    tEdtrPrpsStr += `<div style="text-align: center; margin-bottom: 10px;">`;
-    tEdtrPrpsStr += `<h1 style="color: white; font-weight: bold; font-size: 48px; margin: 0; line-height: 1.2;">${stxt[10]}... ${stxt[10]}...</h1>`;
-    tEdtrPrpsStr += `<p style="color: white; font-size: 24px; margin: 5px 0 0 0; line-height: 1.3;">${stxt[40]}... ${stxt[40]}... ${stxt[40]}...</p>`;
-    tEdtrPrpsStr += '</div>';
-
-    // Properties container - vertical list
-    tEdtrPrpsStr += '<div style="display: block; margin-bottom: 10px;">';
-    for(let i = 0; i < tPrpDtarr.length; i++) {
-        let prop = tPrpDtarr[i];
-        let imgSrc = (prop.pimage && prop.pimage !== "noQvalue") ? `admin/property/${prop.pimage}` : "images/misc/example_thumb.png";
-        let priceStr = prop.price ? `<span style="color:#2196f3;font-weight:bold;font-size:20px;">${prop.price} ?</span>` : "";
-        let titleStr = prop.ptitle ? `<span style="font-size:20px;font-weight:bold;color:#333;">${prop.ptitle}</span>` : "";
-        let cityStr = prop.city ? `<span style="color:#666;">${prop.city}</span>` : "";
-        let stateStr = prop.state ? `<span style="color:#999;">${prop.state}</span>` : "";
-        let descStr = prop.pdesc ? `<div style="color:#444;font-size:15px;">${prop.pdesc}</div>` : "";
-
-        tEdtrPrpsStr += `
-        <div style="display:flex;align-items:center; background:rgba(255,255,255,0.95); border-radius:12px; margin:10px 0; box-shadow:0 2px 8px rgba(0,0,0,0.07); padding:10px;">
-            <div style="flex:0 0 120px; text-align:center;">
-                <img src="${imgSrc}" alt="Property" style="width:110px; height:80px; object-fit:cover; border-radius:8px;">
-            </div>
-            <div style="flex:1; padding-left:16px;">
-                ${titleStr}<br>
-                ${cityStr} ${stateStr}<br>
-                ${priceStr}
-                ${descStr}
-            </div>
-        </div>
-        `;
-    }
-    tEdtrPrpsStr += '<div style="clear: both;"></div>';
-    tEdtrPrpsStr += '</div>';
-
-    // Seller info - positioned at bottom right
-    tEdtrPrpsStr += '<div style="background: rgba(255,255,255,0.9); border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; margin-top:20px;">';
-    tEdtrPrpsStr += `<h5 style="margin: 0 0 10px 0; font-size: 16px;">${stxt[912]}...</h5>`;
-    tEdtrPrpsStr += '<div style="display: flex; align-items: center; justify-content:center;">';
-    tEdtrPrpsStr += `<img src="images/user/${u_icon.value}" alt="Agent" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">`;
-    tEdtrPrpsStr += '<div>';
-    tEdtrPrpsStr += `<p style="margin: 0; font-weight: bold; font-size: 14px;">${u_fullname.value}</p>`;
-    tEdtrPrpsStr += `<p style="margin: 0; color: #666; font-size: 12px;">${u_email.value}</p>`;
-    tEdtrPrpsStr += '</div>';
-    tEdtrPrpsStr += '</div>';
-    tEdtrPrpsStr += '</div>';
-
-    tEdtrPrpsStr += '</div>'; // end of flyer container
-
-    return tEdtrPrpsStr;
-};
 
 JSSHOP.ui.getPickerDiv = function(tPDtype) {
     try {
@@ -6291,7 +6204,7 @@ JSSHOP.ui.popAndFillLbox(tIUrlStr);
 };
  
 JSSHOP.ui.popAndFillLbox = function(theFill) {
-JSSHOP.ui.popNurFillLbox(theFill, "&#xe5cd;", "The Title");
+JSSHOP.ui.popNuFillLbox(theFill, 5);
 }
 
 
@@ -6385,48 +6298,6 @@ JSSHOP.ui.popFillObox = function(theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUse
             // app.getWVScrollY();
             } 
 
-};
-
-JSSHOP.ui.popNurFillLbox = function(theFill, theNurIcon, theNurTitle) {
-    // Enhanced modal using Bootstrap for better mobile responsiveness
-    var modalId = 'nurModal';
-    var existingModal = document.getElementById(modalId);
-    if (!existingModal) {
-        var modalHtml = `
-            <div class="modal fade" id="${modalId}" tabindex="-1" aria-labelledby="${modalId}Label" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                         <h5 class="modal-title" id="${modalId}Label">${theNurTitle}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" id="${modalId}Body">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', modalHtml);
-        existingModal = document.getElementById(modalId);
-    }
-    // Update icon and title on every call
-    var iconElement = existingModal.querySelector('.material-icons i');
-    if (iconElement) iconElement.textContent = theNurIcon;
-    var titleElement = existingModal.querySelector('.modal-title');
-    if (titleElement) titleElement.textContent = theNurTitle;
-    var modalBody = document.getElementById(modalId + 'Body');
-    if (theFill === "noQvalue") {
-        modalBody.innerHTML = "";
-    } else if (theFill === "dbug") {
-        modalBody.innerHTML = "<div style=\"overflow:auto;min-height: 231px; min-width: 368px\" contenteditable=\"true\">" + currDBUGstr + "</div>";
-    } else if (theFill === "loading") {
-        modalBody.innerHTML = "<div class=\"d-flex justify-content-center\"><div class=\"spinner-border\" role=\"status\"><span class=\"visually-hidden\">Loading...</span></div></div>";
-    } else {
-        modalBody.innerHTML = theFill;
-    }
-    // Show the modal
-    var modal = new bootstrap.Modal(existingModal);
-    modal.show();
 };
 
 JSSHOP.ui.popNuFillLbox = function(theFill, theTofst) {
@@ -6532,25 +6403,6 @@ JSSHOP.ui.closeLbox = function() {
 document.getElementById('lightbox').style.display='none';
 document.getElementById('lightbox_content').style.top='-800px';
 document.getElementById('lightbox_content').style.display='none';
-}
-
-// Also close the last Bootstrap modal if it exists
-var modals = document.querySelectorAll('.modal.show');
-if (modals.length > 0) {
-    var lastModal = modals[modals.length - 1];
-    var modalInstance = bootstrap.Modal.getInstance(lastModal);
-    if (modalInstance) {
-        modalInstance.hide();
-    } else {
-        // Fallback if no instance
-        lastModal.classList.remove('show');
-        lastModal.style.display = 'none';
-        var backdrop = document.querySelector('.modal-backdrop');
-        if (backdrop) {
-            backdrop.remove();
-        }
-        document.body.classList.remove('modal-open');
-    }
 }
 
 };
@@ -8445,28 +8297,6 @@ setTimeout(
  
  
                 break;
-                case "pvideo":
-                    // wrap this in a div and add the buttons in the div below the video
-                 tUdtsStr += "<div class=\"mb-4\" style=\"background-image: url('images/ucontent/" + tUdtsObj.p_image + "');\">";
-                 // make the image "images/ucontent/" + tUdtsObj.p_image as background and add the play icon in the center, on click replace with video player
- // align it in middle of parent div with style=
- 
- 
-                // embedd the p_vala webm video file found in images/ucontent/ folder
-                tUdtsStr += "<video controls style=\"width:100%;max-height:400px;max-width:400px;\" poster=\"images/ucontent/" + tUdtsObj.p_image + "\">";
-                // add the poster attribute with the p_image as thumbnail
-                tUdtsStr += "<source src=\"images/ucontent/" + tUdtsObj.p_image + "\" type=\"image/jpeg\">";
-                tUdtsStr += "<source src=\"images/ucontent/" + tUdtsObj.p_vala + "\" type=\"video/webm\">";
-                tUdtsStr += "Your browser does not support the video tag."; 
-                tUdtsStr += "</video>";
-                tUdtsStr += "<div class=\"bg-gray quantity px-4 pt-4\">";
-                tUdtsStr += tUpPcontent;
-                tUdtsStr += "</div>"; // end bg-gray quantity px-4 pt-4
-                tUdtsStr += "</div>"; // end mb-4
-
-                 // add the share,msg,fav  buttons here
-                    tUdtsStr += tUdtLnkStr;
-                break;
                 default:
                 tUdtsStr +=  tUpPcontent;
                 break;
@@ -8666,16 +8496,12 @@ JSSHOP.ads.getTinyTransFileStr = function() {
     return tTnyTransFileStr;
 };
 
-
 JSSHOP.ads.intDemoEditor = function() {
-
     // width is current viewport width
     var ewidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     // set height to a 1.91:1 ratio based on the width
     var eheight = Math.round(ewidth / 1.91);
-    var tQRimgSTr = doQRimgSrcStr(currWebHome + "index.html?pid=aa-show-user&tuid=" + quid, 200);
     tDemoMCEobj = {
-
         selector: "textarea.inpDemoEdtr",
         theme: 'modern',
         statusbar: true,
@@ -8685,26 +8511,25 @@ JSSHOP.ads.intDemoEditor = function() {
         visual: false,
         resize: true,
         height: 500,
-     // make scroll bars always visible
-       content_style: "body {overflow-y: scroll !important;}",
+ 
+        // use tinymce in canvas
+
+        /* content_css: [
+            'css/x_dev.css'
+        ]
+        */
         plugins: [
             'advlist autolink lists link image charmap print preview hr anchor pagebreak',
             'searchreplace wordcount visualblocks visualchars code fullscreen',
             'insertdatetime media nonbreaking save table contextmenu directionality',
-            'emoticons template paste textcolor colorpicker textpattern textshadow imagetools code bgcolorpicker mediapop flyerlayout flyersmodal'
+            'emoticons template paste textcolor colorpicker textpattern imagetools code'
         ],
         toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image table',
-        toolbar2: 'print preview media | forecolor backcolor emoticons imagetools fontsizeselect textpattern | fontselect | code | template | fullscreen | flyersmodal | flyerlayout | bgcolorpicker | mediapop | textshadow',
+        toolbar2: 'print preview media | forecolor backcolor emoticons imagetools fontsizeselect | fontselect | code',
         image_advtab: true,
         templates: [
-            { title: 'QRCode', content: tQRimgSTr },
-            // create some templates for property listings and user info
-            { title: 'Seller Info', content: JSSHOP.ads.getEditorUsrBoxStr("nada") },
-            // create some balloons for property features
-            { title: 'Feature 1', content: '<div style="background-color:#fff0;border:1px solid #cccccc;padding:10px;border-radius:10px;box-shadow:2px 2px 5px rgba(0,0,0,0.3);width:200px;text-align:center;"><h3>Feature 1</h3><p>Description of feature 1.</p></div>' },
-            { title: 'Feature 2', content: '<div style="background-color:#fff0;border:1px solid #cccccc;padding:10px;border-radius:10px;box-shadow:2px 2px 5px rgba(0,0,0,0.3);width:200px;text-align:center;"><h3>Feature 2</h3><p>Description of feature 2.</p></div>' },
-            { title: 'Feature 3', content: '<div style="background-color:#fff0;border:1px solid #cccccc;padding:10px;border-radius:10px;box-shadow:2px 2px 5px rgba(0,0,0,0.3);width:200px;text-align:center;"><h3>Feature 3</h3><p>Description of feature 3.</p></div>' }
-
+            { title: 'Test template 1', content: 'Test 1' },
+            { title: 'Test template 2', content: 'Test 2' }
         ],
         content_css: [
             'css/x_dev.css','css/bootstrap.min.css','css/font-awesome.min.css','css/primer.css'
@@ -8734,8 +8559,6 @@ JSSHOP.ads.intDemoEditor = function() {
         // }
         
     };
-  
-
     if(usrlang == "en_us") {
     tinymce.init(tDemoMCEobj);
     } else {
@@ -8748,9 +8571,8 @@ JSSHOP.ads.intDemoEditor = function() {
 
 
     editor = tinymce.activeEditor;
-    /*
     editor.addButton('preview', {
-        text: 'Previeeeeew',
+        text: 'Preview',
         icon: false,
         onclick: function () {
             // Open window
@@ -8771,1157 +8593,8 @@ JSSHOP.ads.intDemoEditor = function() {
             })
         }
     });
- 
-    */
-tinymce.PluginManager.add('mediapop', function (editor, url) {
-    // Add toolbar button
-    editor.addButton('mediapop', {
-        text: stxt[664], // Images
-        icon: false,
-        onclick: openMediaPickerDialog
-    });
-    // Add menu item
-    editor.addMenuItem('mediapop', {
-        text: stxt[664], // Images
-        icon: false,
-        onclick: openMediaPickerDialog
-    });
-});    
-
-tinymce.PluginManager.add('bgcolorpicker', function (editor, url) {
-    
-     
-    // Add toolbar button
-    editor.addButton('bgcolorpicker', {
-        text: stxt[665], // Background Color
-        icon: false,
-        onclick: openBgColorPickerDialog
-    });
-    // Add menu item
-    editor.addMenuItem('bgcolorpicker', {
-        text: stxt[665], // Background Color
-        icon: false,
-        onclick: openBgColorPickerDialog
-    });
-});
-tinymce.PluginManager.add('textshadow', function(editor, url) {
-    editor.addButton('textshadow', {
-        text: stxt[663], // Colors
-        onclick: function() {
-            openTextShadowDialog();
-        }
-    });
-    editor.addMenuItem('textshadow', {
-        text: stxt[663], // Colors
-        onclick: function() {
-            openTextShadowDialog();
-        }
-    });
-});
-tinymce.PluginManager.add('flyerlayout', function(editor, url) {
-    editor.addButton('flyerlayout', {   
-        text: stxt[666], // Flyer Layouts
-        onclick: function() {
-            openFlyerLayoutDialog();
-        }
-    });
-    editor.addMenuItem('flyerlayout', {
-        text: stxt[666], // Flyer Layouts
-        onclick: function() {
-            openFlyerLayoutDialog();
-        }
-    });
-});
-
-
-// add flyersmodal plugin
-tinymce.PluginManager.add('flyersmodal', function(editor, url) {
-    // Add toolbar button
-    editor.addButton('flyersmodal', {
-        text: 'Flyers',
-        icon: false,
-        onclick: openFlyersModalDialog
-    });
-    // Add menu item
-    editor.addMenuItem('flyersmodal', {     
-        text: 'Flyers',
-        icon: false,
-        onclick: openFlyersModalDialog
-    });
-});
-
 
 };
-
-
-// Helper function to find the closest parent with class 'gallery-item'
-function findClosestGalleryItem(node, editor) {
-    while (node && node !== editor.getBody()) {
-        if (node.classList && node.classList.contains('gallery-item')) {
-            return node;
-        }
-        node = node.parentNode;
-    }
-    return null;
-}
-
-function getEdtrUsrMediaStr(tGUMa, tGUMb, tGUMc) {
-    try {
-        currQUsrMediaArr = [];
-        if (tGUMb && tGUMb.indexOf("_id") != -1) {
-            var tAiretArr = JSON.parse(tGUMb);
-            currQUsrMediaArr = tAiretArr;
-        }
-        var tstr = "";
-        var len = currQUsrMediaArr.length;
-        for (var iint = 0; iint < len; iint++) {
-            var amprop = currQUsrMediaArr[iint];
-            var imgSrc = "images/user/" + amprop.m_file_thumb;
-            var fullImgSrc = "images/user/" + amprop.m_file;
-            var title = amprop.m_title || '';
-            tstr += '<div style="display:inline-block;margin:6px;text-align:center;border:1px solid #ddd;padding:5px;border-radius:4px;background:#f9f9f9;cursor:pointer;" onclick="setMdaBgImage(\'' + fullImgSrc + '\', document.getElementById(\'mp_set_bg\').checked, document.getElementById(\'mp_rounded\').checked);JSSHOP.ui.closeLbox();">';
-            tstr += '<img src="' + imgSrc + '" style="width:90px;height:70px;object-fit:cover;border-radius:6px;" />';
-            tstr += '<div style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:5px;">' + title + '</div></div>';
-        }
-        // Optionally add default image, but probably not needed for editor
-        document.getElementById("mp_tab_your_images_content").innerHTML = tstr;
-    } catch (e) {
-        console.log("getEdtrUsrMediaStr: " + e);
-    }
-}
-
-function setFlyrLytVal(tFLVa, tFLVb, tFLVc) {
-    console.log("setFlyrLytVal: " + tFLVa + ", " + tFLVb + ", " + tFLVc);
-    // inpImgPstLayout.value = tFLVa;
-}
-function openFlyerLayoutDialog() {
-    // Create modal HTML with tabs
-    var modalId = 'flyerLayoutModal';
-    var modalHtml = `
-        <div class="modal fade" id="${modalId}" tabindex="-1" aria-labelledby="${modalId}Label" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="${modalId}Label">Flyer Layout</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <ul class="nav nav-tabs" id="flyerLayoutTabs" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="properties-tab" data-bs-toggle="tab" data-bs-target="#properties" type="button" role="tab" aria-controls="properties" aria-selected="true">Properties</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="layout-tab" data-bs-toggle="tab" data-bs-target="#layout" type="button" role="tab" aria-controls="layout" aria-selected="false">Layout</button>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="flyerLayoutTabContent">
-                            <div class="tab-pane fade show active" id="properties" role="tabpanel" aria-labelledby="properties-tab">
-                                <!-- Properties content -->
-                            </div>
-                            <div class="tab-pane fade" id="layout" role="tabpanel" aria-labelledby="layout-tab">
-                                <!-- Layout content -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <span style="" class="cls_button cls_button-medium bkgdClrGrey txtClrHdr" onclick="bootstrap.Modal.getInstance(document.getElementById('flyerLayoutModal')).hide();">Cancel</span>
-                        <span style="" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite" onclick="JSSHOP.ads.trnsltImgPstObj(); bootstrap.Modal.getInstance(document.getElementById('flyerLayoutModal')).hide();">OK</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-
-    // Remove existing modal if present
-    var existingModal = document.getElementById(modalId);
-    if (existingModal) {
-        existingModal.remove();
-    }
-
-    // Insert modal into DOM
-    document.body.insertAdjacentHTML('beforeend', modalHtml);
-
-    // Get layout dropdown
-    var tDDImgPstLyt = {};
-    tDDImgPstLyt["ddtype"] = "noQvalue";
-    tDDImgPstLyt["fld"] = "inpImgPstLayout";
-    tDDImgPstLyt["lbl"] = "Image Layout";
-    tDDImgPstLyt["val"] = inpImgPstLayout.value;
-    tDDImgPstLyt["kvpObj"] = {"grid": "Grid", "list": "List", "masonry": "Masonry"};
-    tDDImgPstLyt["cb"] = "setFlyrLytVal";
-    tDDImgPstLyt["fldcls"] = "nav-link dropdown-toggle txtSmall";
-    tDDImgPstLyt["lblcls"] = "txtSmall";
-    tDDImgPstLyt["valcls"] = "txtSmall";
-    tDDImgPstLyt["icncls"] = "nav-material-icons txtBold txtClrGrey";
-    tDDImgPstLyt["horvert"] = "vertical";
-    tDDImgPstLyt["icn"] = "noQvalue";
-    tDDImgPstLyt["kvIcnsObj"] = {};
-    tDDImgPstLyt["kvIcnsObj"]["Grid"] = "&#xe5cd;";
-    tDDImgPstLyt["kvIcnsObj"]["List"] = "&#xe5cd;";
-    tDDImgPstLyt["kvIcnsObj"]["Masonry"] = "&#xe5cd;";
-    var layoutDropdown = JSSHOP.ui.getNuBSdropDstr(tDDImgPstLyt);
-
-    // Set layout tab content
-    document.getElementById('layout').innerHTML = layoutDropdown;
-
-    // Handle properties tab
-    var propertiesTab = document.getElementById('properties');
-    if (currPstsPrpsArr && currPstsPrpsArr.length > 0) {
-        // Data already loaded, set content
-        propertiesTab.innerHTML = JSSHOP.ui.getPickerStr("props", false);
-    } else {
-        // Load data
-        propertiesTab.innerHTML = '<p>Loading properties...</p>';
-        var newSCPArrQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = '" + usrlang + "' or pd.pd_prptlng = '" + deflang + "') order by rand() limit 20";
-        doQComm(newSCPArrQstr, null, "setCurrPrpsArrForModal");
-    }
-
-    // Show modal
-    var modal = new bootstrap.Modal(document.getElementById(modalId));
-    modal.show();
-}
-
-function setFlyerStyle(styleName) {
-    console.log('Selected flyer style: ' + styleName);
-    var flyerStyles = [
-        { name: 'Default', background: '#ffffff', class: '' },
-        { name: 'Thought', class: 'thought-bubble' },
-        { name: 'Speech Bubble 1', class: 'speech-bubble1' },
-        { name: 'Speech Bubble 2', class: 'speech-bubble2' },
-        { name: 'Speech Bubble 3', class: 'speech-bubble3' },
-        { name: 'Jagged Bubble', class: 'jagged-bubble' }
-    ];
-    var flyerDiv = document.getElementById('dvTMCdemo');
-    if (flyerDiv) {
-        // Find the style object
-        var selectedStyle = flyerStyles.find(function(style) {
-            return style.name === styleName;
-        });
-        if (selectedStyle) {
-            // Remove existing bubble classes
-            flyerDiv.className = flyerDiv.className.replace(/\b(thought-bubble|speech-bubble\d*|jagged-bubble)\b/g, '').trim();
-            // Add the new class if any
-            if (selectedStyle.class) {
-                flyerDiv.classList.add(selectedStyle.class);
-            }
-            // Set background if specified
-            if (selectedStyle.background) {
-                flyerDiv.style.background = selectedStyle.background;
-            } else {
-                flyerDiv.style.background = '';
-            }
-        }
-    }
-}
-
-
-function openMediaPickerDialog() { 
-      var amppropArr = [];
-    try {
-        if (window.currPstsPrpsArr && window.currPstsPrpsArr.length) {
-            amppropArr = window.currPstsPrpsArr;
-        }
-    } catch (e) { }
-
-    // Tab buttons using Bootstrap
-    var tabHtml = `
-        <ul class="nav nav-tabs" id="mediaPickerTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="mp_tab_image" data-bs-toggle="tab" data-bs-target="#mp_tab_image_content" type="button" role="tab" aria-controls="mp_tab_image_content" aria-selected="true">` + stxt[636] + `</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="mp_tab_your_images" data-bs-toggle="tab" data-bs-target="#mp_tab_your_images_content" type="button" role="tab" aria-controls="mp_tab_your_images_content" aria-selected="false">` + stxt[637] + `</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="mp_tab_demo" data-bs-toggle="tab" data-bs-target="#mp_tab_demo_content" type="button" role="tab" aria-controls="mp_tab_demo_content" aria-selected="false">` + stxt[638] + `</button>
-            </li>
-        </ul>
-        <div class="tab-content" id="mediaPickerTabContent">
-    `;
-
-    // Images tab content
-    var imagesHtml = '<div class="tab-pane fade show active" id="mp_tab_image_content" role="tabpanel" aria-labelledby="mp_tab_image" style="min-height:350px;max-height:400px;overflow:auto;">';
-
-
-    if (window.currPrpMediaArr && window.currPrpMediaArr.length > 0) {
-        for (var i = 0; i < currPrpMediaArr.length; i++) {
-            var amprop = currPrpMediaArr[i];
-            var imgSrc, fullImgSrc, title;
-            switch(amprop.m_catid) {
-                case "5":
-                    imgSrc = "images/property/m_thumb" + amprop.m_file;
-                    fullImgSrc = "images/property/" + amprop.m_file;
-                    break;
-                case "20":
-                case "25":
-                case "30":
-                    imgSrc = "images/tmpi/" + amprop.m_vala + ".jpg";
-                    fullImgSrc = imgSrc;
-                    break;
-                default:
-                    imgSrc = 'images/misc/example_thumb.png';
-                    fullImgSrc = imgSrc;
-            }
-            title = amprop.m_title || '';
-            imagesHtml += '<div style="display:inline-block;margin:6px;text-align:center;border:1px solid #ddd;padding:5px;border-radius:4px;background:#f9f9f9;cursor:pointer;" onclick="setMdaBgImage(\'' + fullImgSrc + '\', document.getElementById(\'mp_set_bg\').checked, document.getElementById(\'mp_rounded\').checked);JSSHOP.ui.closeLbox();">';
-            imagesHtml += '<img src="' + imgSrc + '" style="width:90px;height:70px;object-fit:cover;border-radius:6px;" />';
-            imagesHtml += '<div style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:5px;">' + title + '</div></div>';
-        }
-                imagesHtml += '<hr style="margin:10px 0;">';
-
-    }
-
-
-    for (var i = 0; i < amppropArr.length; i++) {
-        var amprop = amppropArr[i];
-        var imgSrc = (amprop.pimage && amprop.pimage !== "noQvalue") ? 'images/property/s_thumb' + amprop.pimage : "images/misc/example_thumb.png";
-        var title = amprop.ptitle ? LZString.decompressFromEncodedURIComponent(decodeURIComponent(amprop.pd_prptitle || amprop.ptitle)) : '';
-        imagesHtml += '<div style="display:inline-block;margin:6px;text-align:center;border:1px solid #ddd;padding:5px;border-radius:4px;background:#f9f9f9;cursor:pointer;" onclick="setMdaBgImage(\'' + imgSrc.replace('s_thumb', '') + '\', document.getElementById(\'mp_set_bg\').checked, document.getElementById(\'mp_rounded\').checked);JSSHOP.ui.closeLbox();">';
-        imagesHtml += '<img src="' + imgSrc + '" style="width:90px;height:70px;object-fit:cover;border-radius:6px;" />';
-        imagesHtml += '<div style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:5px;">' + title + '</div></div>';
-        }
-    
-
-    imagesHtml += '<p style="margin-top:10px;font-size:12px;color:#666;">' + stxt[654] + '</p></div>';
-
-    // Demo tab content
-    var demoHtml = '<div class="tab-pane fade" id="mp_tab_demo_content" role="tabpanel" aria-labelledby="mp_tab_demo">DEMO<p style="margin-top:10px;font-size:12px;color:#666;">' + stxt[656] + '</p></div>';
-
-    // Your Images tab content
-    var yourImagesHtml = '<div class="tab-pane fade" id="mp_tab_your_images_content" role="tabpanel" aria-labelledby="mp_tab_your_images" style="min-height:350px;max-height:400px;overflow:auto;">Loading...<p style="margin-top:10px;font-size:12px;color:#666;">' + stxt[655] + '</p></div>';
-
-    // Full dialog HTML
-    tdialogHtml = tabHtml + imagesHtml + demoHtml + yourImagesHtml + '</div>';
-    // wrap tdialogHtml in a div with min height 80% of viewport height
-    var dialogHtml = '<div style="min-height:80vh;max-height:90vh;overflow:auto;">' + '<div style="position: sticky; top: 0; background: white; z-index: 1; padding: 5px; border-bottom: 1px solid #ddd;"><input type="checkbox" id="mp_set_bg"> <label for="mp_set_bg">' + stxt[639] + '</label> <input type="checkbox" id="mp_rounded"> <label for="mp_rounded">' + stxt[640] + '</label></div>' + tdialogHtml + '</div>';
-    // Add event listeners after rendering
-    setTimeout(function() {
-        // Initialize Coloris if available
-        if (window.Coloris) {
-            Coloris({
-                el: '[data-coloris]',
-                parent: '#nurModal',
-                swatches: ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']
-            });
-        }
-
-        // Load Your Images tab content
-        if (window.currQUsrMediaArr && window.currQUsrMediaArr.length > 0) {
-            getEdtrUsrMediaStr(null, JSON.stringify(currQUsrMediaArr), null);
-        } else {
-            var tmpFobj = {};
-            tmpFobj["ws"] = "where m_uid=? and m_pid=? and m_rtype=?";
-            tmpFobj["wa"] = [quid, quid, 5];
-            tmpFobj["o"] = "m_vala desc";
-            var oi = getNuDBFnvp("qmedia", 5, null, tmpFobj);
-            doQComm(oi["rq"], null, "getEdtrUsrMediaStr");
-        }
-    }, 800);
-
-    JSSHOP.ui.popNurFillLbox(dialogHtml, "" , "Images");
-
-}
-function openBgColorPickerDialog() {
-    var propArr = [];
-    try {
-        if (window.currPstsPrpsArr && window.currPstsPrpsArr.length) {
-            propArr = window.currPstsPrpsArr;
-        }
-    } catch (e) { }
-
-    var grad1 = '#2196f3', grad2 = '#e3f2fd';
-    var uniqueId = Date.now(); // Unique ID to avoid conflicts
-
-    // Tab buttons using Bootstrap
-    var tabHtml = `
-        <ul class="nav nav-tabs" id="bgColorPickerTab_${uniqueId}" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="bgc_tab_style_${uniqueId}" data-bs-toggle="tab" data-bs-target="#bgc_tab_style_content_${uniqueId}" type="button" role="tab" aria-controls="bgc_tab_style_content_${uniqueId}" aria-selected="true">Style</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="bgc_tab_gradient_${uniqueId}" data-bs-toggle="tab" data-bs-target="#bgc_tab_gradient_content_${uniqueId}" type="button" role="tab" aria-controls="bgc_tab_gradient_content_${uniqueId}" aria-selected="false">` + stxt[641] + `</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="bgc_tab_solid_${uniqueId}" data-bs-toggle="tab" data-bs-target="#bgc_tab_solid_content_${uniqueId}" type="button" role="tab" aria-controls="bgc_tab_solid_content_${uniqueId}" aria-selected="false">` + stxt[642] + `</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="bgc_tab_image_${uniqueId}" data-bs-toggle="tab" data-bs-target="#bgc_tab_image_content_${uniqueId}" type="button" role="tab" aria-controls="bgc_tab_image_content_${uniqueId}" aria-selected="false">` + stxt[636] + `</button>
-            </li>
-        </ul>
-        <div class="tab-content" id="bgColorPickerTabContent_${uniqueId}">
-    `;
-
-    // Style tab content
-    var styleHtml = `<style>
-        .thought-bubble {
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            border-radius: 20px;
-            padding: 10px;
-            position: relative;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border: none;
-        }
-        .thought-tail1 {
-            position: absolute;
-            bottom: -10px;
-            left: 25px;
-            width: 16px;
-            height: 16px;
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            border-radius: 50%;
-            z-index: 1;
-        }
-        .thought-tail2 {
-            position: absolute;
-            bottom: -16px;
-            left: 35px;
-            width: 12px;
-            height: 12px;
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            border-radius: 50%;
-            z-index: 1;
-        }
-        .thought-tail3 {
-            position: absolute;
-            bottom: -20px;
-            left: 42px;
-            width: 8px;
-            height: 8px;
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            border-radius: 50%;
-            z-index: 1;
-        }
-        .speech-bubble1 {
-            background: #f9f9f9;
-            border-radius: 20px;
-            padding: 10px;
-            position: relative;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border: none;
-        }
-        .speech-bubble1::before {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 20px;
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 20px solid #f9f9f9;
-            z-index: 1;
-        }
-        .speech-bubble2 {
-            background: #fff3cd;
-            border-radius: 15px;
-            padding: 10px;
-            position: relative;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            border: none;
-        }
-        .speech-bubble2::before {
-            content: '';
-            position: absolute;
-            bottom: -16px;
-            right: 20px;
-            width: 0;
-            height: 0;
-            border-left: 16px solid transparent;
-            border-right: 16px solid transparent;
-            border-top: 16px solid #fff3cd;
-            z-index: 1;
-        }
-        .speech-bubble3 {
-            background: #d1ecf1;
-            border-radius: 25px;
-            padding: 10px;
-            position: relative;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-            border: none;
-        }
-        .speech-bubble3::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-bottom: 20px solid #d1ecf1;
-            z-index: 1;
-        }
-    </style>
-        <div class="tab-pane fade show active" id="bgc_tab_style_content_${uniqueId}" role="tabpanel" aria-labelledby="bgc_tab_style_${uniqueId}">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; padding: 10px;">
-    `;
-    var styles = [
-        { name: 'Classic', type: 'gradient', value: 'linear-gradient(to right, #007bff, #ffffff)' },
-        { name: 'Modern', type: 'gradient', value: 'linear-gradient(to right, #00bcd4, #2196f3, #3f51b5)' },
-        { name: 'Vibrant', type: 'gradient', value: 'linear-gradient(to right, #ff4081, #ff1744, #ffeb3b)' },
-        { name: 'Thought', type: 'balloon', value: 'thought' },
-        { name: 'Speech Bubble 1', type: 'balloon', value: 'speech1' },
-        { name: 'Speech Bubble 2', type: 'balloon', value: 'speech2' },
-        { name: 'Speech Bubble 3', type: 'balloon', value: 'speech3' }
-    ];
-    styles.forEach(function(style) {
-        var classAttr = style.type === 'balloon' ? ' class="' + (style.value === 'thought' ? 'thought-bubble' : 'speech-bubble' + (style.value === 'speech1' ? '1' : style.value === 'speech2' ? '2' : '3')) + '"' : '';
-        var textColor = style.type === 'gradient' ? 'color: white;' : 'color: #333;';
-        var bgStyle = style.type === 'gradient' ? 'background: ' + style.value + ';' : '';
-        var extraContent = '';
-        if (style.type === 'balloon' && style.value === 'thought') {
-            extraContent = '<div class="thought-tail1"></div><div class="thought-tail2"></div><div class="thought-tail3"></div>';
-        }
-        styleHtml += '<div onclick="setBgStyle(\'' + style.name + '\');JSSHOP.ui.closeLbox();" style="' + bgStyle + ' ' + textColor + ' height: 100px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; text-shadow: ' + (style.type === 'gradient' ? '1px 1px 2px rgba(0,0,0,0.5);' : 'none;') + '"' + classAttr + '>' + extraContent + style.name + '</div>';
-    });
-    styleHtml += '</div></div>';
-
-    // Gradient tab content
-    var gradientHtml = `
-        <div class="tab-pane fade" id="bgc_tab_gradient_content_${uniqueId}" role="tabpanel" aria-labelledby="bgc_tab_gradient_${uniqueId}">
-            <label style="display:block;margin-bottom:5px;">Color 1: <input type="text" id="bgc_grad1_${uniqueId}" value="${grad1}" data-coloris style="margin-right:10px;width:100px;"></label>
-            <label style="display:block;margin-bottom:5px;">Color 2: <input type="text" id="bgc_grad2_${uniqueId}" value="${grad2}" data-coloris style="width:100px;"></label>
-            <div id="gradPreview_${uniqueId}" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:linear-gradient(135deg,${grad1},${grad2});border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="bgc_grad_border_${uniqueId}"> <label for="bgc_grad_border_${uniqueId}">` + stxt[652] + `</label></div>
-            <button type="button" id="bgc_apply_gradient_${uniqueId}" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite">` + stxt[643] + `</button>
-            <p style="margin-top:10px;font-size:12px;color:#666;">` + stxt[657] + `</p>
-        </div>
-    `;
-
-    // Solid color tab content
-    var solidHtml = `
-        <div class="tab-pane fade" id="bgc_tab_solid_content_${uniqueId}" role="tabpanel" aria-labelledby="bgc_tab_solid_${uniqueId}">
-            <label style="display:block;margin-bottom:5px;">Color: <input type="text" id="bgc_solid_${uniqueId}" value="#2196f3" data-coloris style="width:100px;"></label>
-            <div id="solidPreview_${uniqueId}" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:#2196f3;border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="bgc_solid_border_${uniqueId}"> <label for="bgc_solid_border_${uniqueId}">` + stxt[652] + `</label></div>
-            <button type="button" id="bgc_apply_solid_${uniqueId}" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite">` + stxt[644] + `</button>
-            <p style="margin-top:10px;font-size:12px;color:#666;">` + stxt[658] + `</p>
-        </div>
-    `;
-
-    // Images tab content
-    var imagesHtml = `<div class="tab-pane fade" id="bgc_tab_image_content_${uniqueId}" role="tabpanel" aria-labelledby="bgc_tab_image_${uniqueId}" style="max-height:250px;overflow:auto;">`;
-
-    if (window.currPrpMediaArr && window.currPrpMediaArr.length > 0) {
-        for (var i = 0; i < currPrpMediaArr.length; i++) {
-            var amprop = currPrpMediaArr[i];
-            var imgSrc, fullImgSrc, title;
-            switch(amprop.m_catid) {
-                case "5":
-                    imgSrc = "images/property/m_thumb" + amprop.m_file;
-                    fullImgSrc = "images/property/" + amprop.m_file;
-                    break;
-                case "20":
-                case "25":
-                case "30":
-                    imgSrc = "images/tmpi/" + amprop.m_vala + ".jpg";
-                    fullImgSrc = imgSrc;
-                    break;
-                default:
-                    imgSrc = 'images/misc/example_thumb.png';
-                    fullImgSrc = imgSrc;
-            }
-            title = amprop.m_title || '';
-            imagesHtml += '<div style="display:inline-block;margin:6px;text-align:center;border:1px solid #ddd;padding:5px;border-radius:4px;background:#f9f9f9;cursor:pointer;" onclick="setBgImage(\'' + fullImgSrc + '\');JSSHOP.ui.closeLbox();">';
-            imagesHtml += '<img src="' + imgSrc + '" style="width:90px;height:70px;object-fit:cover;border-radius:6px;" />';
-            imagesHtml += '<div style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:5px;">' + title + '</div></div>';
-        }
-                imagesHtml += '<hr style="margin:10px 0;">';
-
-    }
-
-    for (var i = 0; i < propArr.length; i++) {
-        var prop = propArr[i];
-        var imgSrc = (prop.pimage && prop.pimage !== "noQvalue") ? 'images/property/s_thumb' + prop.pimage : "images/misc/example_thumb.png";
-        var title = prop.ptitle ? LZString.decompressFromEncodedURIComponent(decodeURIComponent(prop.pd_prptitle || prop.ptitle)) : '';
-        imagesHtml += '<div style="display:inline-block;margin:6px;text-align:center;border:1px solid #ddd;padding:5px;border-radius:4px;background:#f9f9f9;cursor:pointer;" onclick="setBgImage(\'' + imgSrc.replace('s_thumb', '') + '\');JSSHOP.ui.closeLbox();">';
-        imagesHtml += '<img src="' + imgSrc + '" style="width:90px;height:70px;object-fit:cover;border-radius:6px;" />';
-        imagesHtml += '<div style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:5px;">' + title + '</div></div>';
-    }
-    imagesHtml += '<p style="margin-top:10px;font-size:12px;color:#666;">' + stxt[659] + '</p></div>';
-
-    // Full dialog HTML
-    var dialogHtml = tabHtml + styleHtml + gradientHtml + solidHtml + imagesHtml + '</div>';
-
-    // Add event listeners after rendering
-    setTimeout(function() {
-        var grad1Input = document.getElementById(`bgc_grad1_${uniqueId}`);
-        var grad2Input = document.getElementById(`bgc_grad2_${uniqueId}`);
-        var gradPreview = document.getElementById(`gradPreview_${uniqueId}`);
-        var solidInput = document.getElementById(`bgc_solid_${uniqueId}`);
-        var solidPreview = document.getElementById(`solidPreview_${uniqueId}`);
-        var applyBtn = document.getElementById(`bgc_apply_gradient_${uniqueId}`);
-        var applySolidBtn = document.getElementById(`bgc_apply_solid_${uniqueId}`);
-
-        function updatePreview() {
-            grad1 = grad1Input.value;
-            grad2 = grad2Input.value;
-            gradPreview.style.background = 'linear-gradient(135deg,' + grad1 + ',' + grad2 + ')';
-        }
-
-        grad1Input.onchange = updatePreview;
-        grad2Input.onchange = updatePreview;
-        solidInput.onchange = function() {
-            solidPreview.style.background = this.value;
-        };
-
-        applyBtn.onclick = function() {
-            setBgGradient(grad1, grad2, document.getElementById(`bgc_grad_border_${uniqueId}`).checked);
-            JSSHOP.ui.closeLbox();
-        };
-        applySolidBtn.onclick = function() {
-            setBgSolidColor(solidInput.value, document.getElementById(`bgc_solid_border_${uniqueId}`).checked);
-            JSSHOP.ui.closeLbox();
-        };
-
-        // Initialize Coloris if available
-        if (window.Coloris) {
-            Coloris({
-                el: '[data-coloris]',
-                parent: '#nurModal',
-                swatches: ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']
-            });
-        }
-    }, 800);
-
-    JSSHOP.ui.popAndFillLbox(dialogHtml);
-}
-
-// Function to set background gradient
-function setBgGradient(color1, color2, isBorder = false) {
-    console.log("setBgGradient.colors: " + color1 + ", " + color2 + ", isBorder: " + isBorder);
-    var iframe = document.getElementById('taDemoEdtr_ifr');
-    if (iframe && iframe.contentDocument) {
-        var demoDiv = iframe.contentDocument.getElementById('dvTMCdemo');
-        if (demoDiv) {
-            if (isBorder) {
-                demoDiv.style.borderImage = 'linear-gradient(135deg, ' + color1 + ', ' + color2 + ') 1';
-                demoDiv.style.border = '5px solid transparent';
-            } else {
-                demoDiv.style.backgroundImage = 'none';
-                demoDiv.style.background = 'linear-gradient(135deg, ' + color1 + ', ' + color2 + ')';
-            }
-        }
-    }
-}
-
-// Function to set predefined style gradient
-function setBgStyle(styleName) {
-    var iframe = document.getElementById('taDemoEdtr_ifr');
-    if (iframe && iframe.contentDocument) {
-        var demoDiv = iframe.contentDocument.getElementById('dvTMCdemo');
-        if (demoDiv) {
-            // Clear previous styles
-            demoDiv.style.clipPath = '';
-            demoDiv.style.borderRadius = '';
-            demoDiv.style.position = '';
-            // Remove any tail elements
-            var tails = demoDiv.querySelectorAll('.balloon-tail');
-            tails.forEach(function(tail) { tail.remove(); });
-
-            var styles = [
-                { name: 'Classic', type: 'gradient', value: 'linear-gradient(to right, #007bff, #ffffff)' },
-                { name: 'Modern', type: 'gradient', value: 'linear-gradient(to right, #00bcd4, #2196f3, #3f51b5)' },
-                { name: 'Vibrant', type: 'gradient', value: 'linear-gradient(to right, #ff4081, #ff1744, #ffeb3b)' },
-                { name: 'Thought', type: 'balloon', value: 'thought' },
-                { name: 'Speech Bubble 1', type: 'balloon', value: 'speech1' },
-                { name: 'Speech Bubble 2', type: 'balloon', value: 'speech2' },
-                { name: 'Speech Bubble 3', type: 'balloon', value: 'speech3' }
-            ];
-            var style = styles.find(function(s) { return s.name === styleName; });
-            if (style) {
-                if (style.type === 'gradient') {
-                    demoDiv.style.backgroundImage = 'none';
-                    demoDiv.style.background = style.value;
-                    demoDiv.style.border = 'none';
-                    demoDiv.style.borderImage = 'none';
-                } else if (style.type === 'balloon') {
-                    // Clear background image and set background
-                    demoDiv.style.backgroundImage = 'none';
-                    demoDiv.style.border = 'none';
-                    demoDiv.style.borderImage = 'none';
-                    // Apply balloon styles inline
-                    demoDiv.style.position = 'relative';
-                    if (style.value === 'thought') {
-                        demoDiv.style.background = 'linear-gradient(135deg, #e3f2fd, #bbdefb)';
-                        demoDiv.style.clipPath = 'polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%)';
-                        demoDiv.style.borderRadius = '20px';
-                        // Add tails
-                        var tail1 = iframe.contentDocument.createElement('div');
-                        tail1.className = 'balloon-tail';
-                        tail1.style.position = 'absolute';
-                        tail1.style.bottom = '-10px';
-                        tail1.style.left = '20px';
-                        tail1.style.width = '16px';
-                        tail1.style.height = '16px';
-                        tail1.style.background = 'linear-gradient(135deg, #e3f2fd, #bbdefb)';
-                        tail1.style.borderRadius = '50%';
-                        demoDiv.appendChild(tail1);
-
-                        var tail2 = iframe.contentDocument.createElement('div');
-                        tail2.className = 'balloon-tail';
-                        tail2.style.position = 'absolute';
-                        tail2.style.bottom = '-20px';
-                        tail2.style.left = '10px';
-                        tail2.style.width = '12px';
-                        tail2.style.height = '12px';
-                        tail2.style.background = 'linear-gradient(135deg, #e3f2fd, #bbdefb)';
-                        tail2.style.borderRadius = '50%';
-                        demoDiv.appendChild(tail2);
-
-                        var tail3 = iframe.contentDocument.createElement('div');
-                        tail3.className = 'balloon-tail';
-                        tail3.style.position = 'absolute';
-                        tail3.style.bottom = '-30px';
-                        tail3.style.left = '0px';
-                        tail3.style.width = '8px';
-                        tail3.style.height = '8px';
-                        tail3.style.background = 'linear-gradient(135deg, #e3f2fd, #bbdefb)';
-                        tail3.style.borderRadius = '50%';
-                        demoDiv.appendChild(tail3);
-                    } else if (style.value === 'speech1') {
-                        demoDiv.style.background = '#f9f9f9';
-                        demoDiv.style.clipPath = 'polygon(0% 0%, 100% 0%, 100% 100%, 85% 100%, 75% 85%, 0% 85%)';
-                        demoDiv.style.borderRadius = '20px';
-                        // Add tail
-                        var tail = iframe.contentDocument.createElement('div');
-                        tail.className = 'balloon-tail';
-                        tail.style.position = 'absolute';
-                        tail.style.bottom = '15px';
-                        tail.style.right = '-15px';
-                        tail.style.width = '0';
-                        tail.style.height = '0';
-                        tail.style.borderTop = '15px solid transparent';
-                        tail.style.borderBottom = '15px solid transparent';
-                        tail.style.borderLeft = '15px solid #f9f9f9';
-                        demoDiv.appendChild(tail);
-                    } else if (style.value === 'speech2') {
-                        demoDiv.style.background = '#fff3cd';
-                        demoDiv.style.clipPath = 'polygon(0% 0%, 100% 0%, 100% 100%, 85% 100%, 75% 85%, 0% 85%)';
-                        demoDiv.style.borderRadius = '15px';
-                        // Add tail
-                        var tail = iframe.contentDocument.createElement('div');
-                        tail.className = 'balloon-tail';
-                        tail.style.position = 'absolute';
-                        tail.style.top = '50%';
-                        tail.style.right = '-15px';
-                        tail.style.transform = 'translateY(-50%)';
-                        tail.style.width = '0';
-                        tail.style.height = '0';
-                        tail.style.borderTop = '15px solid transparent';
-                        tail.style.borderBottom = '15px solid transparent';
-                        tail.style.borderLeft = '15px solid #fff3cd';
-                        demoDiv.appendChild(tail);
-                    } else if (style.value === 'speech3') {
-                        demoDiv.style.background = '#d1ecf1';
-                        demoDiv.style.borderRadius = '25px';
-                        // Add tail
-                        var tail = iframe.contentDocument.createElement('div');
-                        tail.className = 'balloon-tail';
-                        tail.style.position = 'absolute';
-                        tail.style.top = '-15px';
-                        tail.style.left = '50%';
-                        tail.style.transform = 'translateX(-50%)';
-                        tail.style.width = '0';
-                        tail.style.height = '0';
-                        tail.style.borderLeft = '15px solid transparent';
-                        tail.style.borderRight = '15px solid transparent';
-                        tail.style.borderBottom = '15px solid #d1ecf1';
-                        demoDiv.appendChild(tail);
-                    }
-                }
-            }
-        } else {
-            console.error("Demo div not found in iframe.");
-            // wrap the editor content in a div with id dvTMCdemo if it doesn't exist to ensure the function works
-                var body = iframe.contentDocument.body;
-                var wrapper = iframe.contentDocument.createElement('div');
-                wrapper.id = 'dvTMCdemo';
-                while (body.firstChild) {
-                    wrapper.appendChild(body.firstChild);
-                }
-                body.appendChild(wrapper);
-            }
-    }
-}
-
-// Function to set background image
-function setBgImage(imgSrc) {
-    var iframe = document.getElementById('taDemoEdtr_ifr');
-    if (iframe && iframe.contentDocument) {
-        var demoDiv = iframe.contentDocument.getElementById('dvTMCdemo');
-        if (demoDiv) {
-            demoDiv.style.background = 'none';
-            demoDiv.style.backgroundImage = 'url(' + imgSrc + ')';
-            demoDiv.style.backgroundSize = 'cover';
-            demoDiv.style.backgroundPosition = 'center';
-            demoDiv.style.backgroundRepeat = 'no-repeat';
-        }
-    }
-}
-
-// Function to set solid color background or border
-function setBgSolidColor(color, isBorder = false) {
-    console.log("setBgSolidColor.color: " + color + ", isBorder: " + isBorder);
-    var iframe = document.getElementById('taDemoEdtr_ifr');
-    if (iframe && iframe.contentDocument) {
-        var demoDiv = iframe.contentDocument.getElementById('dvTMCdemo');
-        if (demoDiv) {
-            if (isBorder) {
-                demoDiv.style.borderColor = color;
-                demoDiv.style.border = '5px solid ' + color;
-            } else {
-                demoDiv.style.backgroundColor = color;
-                demoDiv.style.backgroundImage = 'none';
-            }
-        }
-    }
-}
-
-// Function to set media background gradient
-function setMdaBgGradient(color1, color2, isBorder = false) {
-    console.log("setMdaBgGradient.colors: " + color1 + ", " + color2 + ", isBorder: " + isBorder);
-    var editor = tinymce.activeEditor;
-    var galleryItem = findClosestGalleryItem(editor.selection.getNode(), editor);
-    if (galleryItem) {
-        if (isBorder) {
-            galleryItem.style.borderImage = 'linear-gradient(135deg, ' + color1 + ', ' + color2 + ') 1';
-            galleryItem.style.border = '5px solid transparent';
-        } else {
-            galleryItem.style.backgroundImage = 'none';
-            galleryItem.style.background = 'linear-gradient(135deg, ' + color1 + ', ' + color2 + ')';
-        }
-    }
-}
-
-// Function to set media background image
-function setMdaBgImage(imgSrc, isaBg, isRounded) {
-    var editor = tinymce.activeEditor;
-    if (isaBg) {
-        var galleryItem = findClosestGalleryItem(editor.selection.getNode(), editor);
-        if (galleryItem) {
-            galleryItem.style.background = 'none';
-            galleryItem.style.backgroundImage = 'url(' + imgSrc + ')';
-            galleryItem.style.backgroundSize = 'cover';
-            galleryItem.style.backgroundPosition = 'center';
-            galleryItem.style.backgroundRepeat = 'no-repeat';
-            if (isRounded) {
-                galleryItem.style.borderRadius = '10px';
-            }
-        }
-    } else {
-        var style = isRounded ? 'border-radius:10px;' : '';
-        editor.insertContent('<img src="' + imgSrc + '" style="' + style + '" width="200" height="200" />');
-    }
-}
-
-// Function to set media solid color background or border
-function setMdaBgSolidColor(color, isBorder = false) {
-    console.log("setMdaBgSolidColor.color: " + color + ", isBorder: " + isBorder);
-    var editor = tinymce.activeEditor;
-    var galleryItem = findClosestGalleryItem(editor.selection.getNode(), editor);
-    if (galleryItem) {
-        if (isBorder) {
-            galleryItem.style.borderColor = color;
-            galleryItem.style.border = '5px solid ' + color;
-        } else {
-            galleryItem.style.backgroundColor = color;
-            galleryItem.style.backgroundImage = 'none';
-        }
-    }
-}
-
-function openTextShadowDialog() {
-    var grad1 = '#2196f3', grad2 = '#e3f2fd';
-    var uniqueId = Date.now(); // Unique ID to avoid conflicts
-
-    // Tab buttons using Bootstrap
-    var tabHtml = `
-        <ul class="nav nav-tabs" id="textShadowTab_${uniqueId}" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="ts_tab_shadow_${uniqueId}" data-bs-toggle="tab" data-bs-target="#ts_tab_shadow_content_${uniqueId}" type="button" role="tab" aria-controls="ts_tab_shadow_content_${uniqueId}" aria-selected="true">` + stxt[645] + `</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="ts_tab_gradient_${uniqueId}" data-bs-toggle="tab" data-bs-target="#ts_tab_gradient_content_${uniqueId}" type="button" role="tab" aria-controls="ts_tab_gradient_content_${uniqueId}" aria-selected="false">` + stxt[641] + `</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="ts_tab_solid_${uniqueId}" data-bs-toggle="tab" data-bs-target="#ts_tab_solid_content_${uniqueId}" type="button" role="tab" aria-controls="ts_tab_solid_content_${uniqueId}" aria-selected="false">` + stxt[642] + `</button>
-            </li>
-        </ul>
-        <div class="tab-content" id="textShadowTabContent_${uniqueId}">
-    `;
-
-    // Shadow tab content
-    var shadowHtml = `
-        <div class="tab-pane fade show active" id="ts_tab_shadow_content_${uniqueId}" role="tabpanel" aria-labelledby="ts_tab_shadow_${uniqueId}">
-            <h3>` + stxt[653] + `</h3>
-            <label>` + stxt[648] + ` <input type="number" id="ts_h_${uniqueId}" value="2"></label><br>
-            <label>` + stxt[649] + ` <input type="number" id="ts_v_${uniqueId}" value="2"></label><br>
-            <label>` + stxt[650] + ` <input type="number" id="ts_b_${uniqueId}" value="4"></label><br>
-            <label>` + stxt[651] + ` <input type="text" id="ts_c_${uniqueId}" value="#000000" data-coloris style="width:100px;"></label><br>
-            <div id="ts_colorPreview_${uniqueId}" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:#000000;border:1px solid #ddd;"></div>
-            <span id="ts_apply_${uniqueId}" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite">` + stxt[646] + `</span>
-            <span id="ts_remove_${uniqueId}" class="cls_button cls_button-medium bkgdClrGrey txtClrHdr">` + stxt[647] + `</span>
-            <p style="margin-top:10px;font-size:12px;color:#666;">` + stxt[660] + `</p>
-        </div>
-    `;
-
-    // Gradient tab content
-    var gradientHtml = `
-        <div class="tab-pane fade" id="ts_tab_gradient_content_${uniqueId}" role="tabpanel" aria-labelledby="ts_tab_gradient_${uniqueId}">
-            <label style="display:block;margin-bottom:5px;">Color 1: <input type="text" id="ts_grad1_${uniqueId}" value="${grad1}" data-coloris style="margin-right:10px;width:100px;"></label>
-            <label style="display:block;margin-bottom:5px;">Color 2: <input type="text" id="ts_grad2_${uniqueId}" value="${grad2}" data-coloris style="width:100px;"></label>
-            <div id="ts_gradPreview_${uniqueId}" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:linear-gradient(135deg,${grad1},${grad2});border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="ts_grad_border_${uniqueId}"> <label for="ts_grad_border_${uniqueId}">` + stxt[652] + `</label></div>
-            <span id="ts_apply_gradient_${uniqueId}" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite">` + stxt[643] + `</span>
-            <p style="margin-top:10px;font-size:12px;color:#666;">` + stxt[661] + `</p>
-        </div>
-    `;
-
-    // Solid color tab content
-    var solidHtml = `
-        <div class="tab-pane fade" id="ts_tab_solid_content_${uniqueId}" role="tabpanel" aria-labelledby="ts_tab_solid_${uniqueId}">
-            <label style="display:block;margin-bottom:5px;">Color: <input type="text" id="ts_solid_${uniqueId}" value="#2196f3" data-coloris style="width:100px;"></label>
-            <div id="ts_solidPreview_${uniqueId}" style="width:100%;height:40px;border-radius:8px;margin:10px 0;background:#2196f3;border:1px solid #ddd;"></div>
-            <div><input type="checkbox" id="ts_solid_border_${uniqueId}"> <label for="ts_solid_border_${uniqueId}">` + stxt[652] + `</label></div>
-            <span id="ts_apply_solid_${uniqueId}" class="cls_button cls_button-medium bkgdClrHdr txtClrWhite">` + stxt[644] + `</span>
-            <p style="margin-top:10px;font-size:12px;color:#666;">` + stxt[662] + `</p>
-        </div>
-    `;
-
-    // Full dialog HTML
-    var tdialogHtml = tabHtml + shadowHtml + gradientHtml + solidHtml + '</div>';
-    var dialogHtml = '<div style="min-height:80vh;max-height:90vh;overflow:auto;">' + tdialogHtml + '</div>';
-    JSSHOP.ui.popAndFillLbox(dialogHtml);
-    setTimeout(function() {
-        // Shadow apply
-        document.getElementById(`ts_apply_${uniqueId}`).onclick = function() {
-            var h = document.getElementById(`ts_h_${uniqueId}`).value;
-            var v = document.getElementById(`ts_v_${uniqueId}`).value;
-            var b = document.getElementById(`ts_b_${uniqueId}`).value;
-            var c = document.getElementById(`ts_c_${uniqueId}`).value;
-            var shadow = h + 'px ' + v + 'px ' + b + 'px ' + c;
-            var editor = tinymce.activeEditor;
-            var selected = editor.selection.getContent();
-            if (selected) {
-                editor.selection.setContent('<span style="text-shadow:' + shadow + ';">' + selected + '</span>');
-            } else {
-                var galleryItem = findClosestGalleryItem(editor.selection.getNode(), editor);
-                if (galleryItem) {
-                    galleryItem.style.boxShadow = shadow;
-                } else {
-                    alert('Please select text or an element near a gallery item.');
-                }
-            }
-            JSSHOP.ui.closeLbox();
-        };
-
-        // Shadow remove
-        document.getElementById(`ts_remove_${uniqueId}`).onclick = function() {
-            var editor = tinymce.activeEditor;
-            var selected = editor.selection.getContent();
-            if (selected) {
-                editor.selection.setContent('<span style="text-shadow:none;">' + selected + '</span>');
-            } else {
-                var galleryItem = findClosestGalleryItem(editor.selection.getNode(), editor);
-                if (galleryItem) {
-                    galleryItem.style.boxShadow = 'none';
-                }
-            }
-            JSSHOP.ui.closeLbox();
-        };
-
-        // Shadow color preview
-        document.getElementById(`ts_c_${uniqueId}`).addEventListener('input', function() {
-            document.getElementById(`ts_colorPreview_${uniqueId}`).style.backgroundColor = this.value;
-        });
-
-        // Gradient preview
-        document.getElementById(`ts_grad1_${uniqueId}`).onchange = function() {
-            grad1 = this.value;
-            document.getElementById(`ts_gradPreview_${uniqueId}`).style.background = 'linear-gradient(135deg,' + grad1 + ',' + grad2 + ')';
-        };
-        document.getElementById(`ts_grad2_${uniqueId}`).onchange = function() {
-            grad2 = this.value;
-            document.getElementById(`ts_gradPreview_${uniqueId}`).style.background = 'linear-gradient(135deg,' + grad1 + ',' + grad2 + ')';
-        };
-
-        // Apply gradient
-        document.getElementById(`ts_apply_gradient_${uniqueId}`).onclick = function() {
-            setMdaBgGradient(grad1, grad2, document.getElementById(`ts_grad_border_${uniqueId}`).checked);
-            JSSHOP.ui.closeLbox();
-        };
-
-        // Solid preview
-        document.getElementById(`ts_solid_${uniqueId}`).onchange = function() {
-            document.getElementById(`ts_solidPreview_${uniqueId}`).style.background = this.value;
-        };
-
-        // Apply solid
-        document.getElementById(`ts_apply_solid_${uniqueId}`).onclick = function() {
-            setMdaBgSolidColor(document.getElementById(`ts_solid_${uniqueId}`).value, document.getElementById(`ts_solid_border_${uniqueId}`).checked);
-            JSSHOP.ui.closeLbox();
-        };
-
-        // Initialize Coloris if available
-        if (window.Coloris) {
-            Coloris({
-                el: '[data-coloris]',
-                parent: '#nurModal',
-                swatches: ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']
-            });
-        }
-    }, 100);
-}
-
-function openFlyersModalDialog() {
-    // Get user images similar to getUsrPImgList
-    if (currUsrUpdtsObj && currUsrUpdtsObj["pimage"] && currUsrUpdtsObj["pimage"].length > 0) {
-        renderFlyerImages(null, JSON.stringify(currUsrUpdtsObj["pimage"]), null);
-        return;
-    } else {
-        console.log("openFlyersModalDialog: no cached pimage posts, fetching from db");
-        var tmpDOs = {};
-        tmpDOs["ws"] = "where p_uid = ? and p_rtype = ? and p_ptype = ?";
-        tmpDOs["wa"] = [quid, 5, "pimage"];
-        tmpDOs["l"] = 80;
-        var oi = getNuDBFnvp("qposts", 5, null, tmpDOs);
-        doQComm(oi["rq"], null, "renderFlyerImages");
-    }
-}
-
-function renderFlyerImages(theRDa, theRDb, theRDc) {
-    console.log("renderFlyerImages: " + theRDa + " " + theRDb + " " + theRDc);
-    if (currUsrUpdtsObj) {
-        currUsrUpdtsObj["pimage"] = null;
-    }
-    var imagesHtml = '<div class="row">';
-    if (theRDb && theRDb.indexOf("_id") != -1) {
-        var tAiretArr = JSON.parse(theRDb);
-        if (currUsrUpdtsObj) {
-            currUsrUpdtsObj["pimage"] = [];
-            currUsrUpdtsObj["pimage"] = tAiretArr;
-        }
-        for (var i = 0; i < tAiretArr.length; i++) {
-            var img = tAiretArr[i];
-            var imgSrc = "images/ucontent/" + img["p_image"];
-            var title = img["p_title"] ? decodeURIComponent(img["p_title"]) : "No Title";
-            var dateStr = img["p_dadded"] ? new Date(img["p_dadded"] * 1000).toLocaleDateString() : "";
-            if (title.length > 30) {
-                title = title.substring(0, 30) + "...";
-            }
-            imagesHtml += '<div class="col-6 col-md-2 mb-3">';
-            imagesHtml += '<div class="card" style="cursor:pointer;" onclick="loadFlyerTemplate(' + i + ');">';
-            imagesHtml += '<img src="images/ucontent/s_thumb' + img["p_image"] + '" class="card-img-top" alt="' + title + '">';
-            imagesHtml += '<div class="card-body p-2">';
-            imagesHtml += '<p class="card-text mb-1" style="font-size:12px;">' + title + '<br><small class="text-muted">' + dateStr + '</small></p>';
-            imagesHtml += '</div>';
-            imagesHtml += '</div>';
-            imagesHtml += '</div>';
-        }
-    }
-    imagesHtml += '</div>';
-
-    // Create modal
-    var modalId = 'flyersModal';
-    var existingModal = document.getElementById(modalId);
-    if (!existingModal) {
-        var modalHtml = `
-            <div class="modal fade" id="${modalId}" tabindex="-1" aria-labelledby="${modalId}Label" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="${modalId}Label">Select Flyer Image</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" id="${modalId}Body" style="max-height: 70vh; overflow-y: auto;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', modalHtml);
-        existingModal = document.getElementById(modalId);
-    }
-    var modalBody = document.getElementById(modalId + 'Body');
-    modalBody.innerHTML = imagesHtml;
-    var modal = new bootstrap.Modal(existingModal);
-    modal.show();
-}
-
-function loadFlyerTemplate(index) {
-    if (!currUsrUpdtsObj || !currUsrUpdtsObj["pimage"] || index >= currUsrUpdtsObj["pimage"].length) {
-        console.error("loadFlyerTemplate: invalid index or no pimage data");
-        return;
-    }
-    var record = currUsrUpdtsObj["pimage"][index];
-    var flyerHtml = "";
-    var descHtml = "";
-    var title = "";
-
-    if (record.p_vars) {
-        var pVarsStr = decodeURIComponent(record.p_vars);
-        var delimiterIndex = pVarsStr.indexOf("dlmtd");
-        if (delimiterIndex !== -1) {
-            var tZpdProps = pVarsStr.substring(0, delimiterIndex);
-            var tZpdHTML = pVarsStr.substring(delimiterIndex + 5); // "dlmtd".length = 5
-            flyerHtml = LZString.decompressFromEncodedURIComponent(tZpdHTML);
-            var tSlctdPrpsStr = LZString.decompressFromEncodedURIComponent(tZpdProps);
-            var atspaee = JSON.parse(tSlctdPrpsStr);
-            // Set the selected properties array
-            if (typeof JSSHOP !== 'undefined' && JSSHOP.shared && JSSHOP.shared.setSlctdPrpsArr) {
-                JSSHOP.shared.setSlctdPrpsArr(atspaee);
-            }
-        } else {
-            // Fallback for old format
-            flyerHtml = LZString.decompressFromEncodedURIComponent(pVarsStr);
-        }
-    }
-    if (record.p_content) {
-        descHtml = LZString.decompressFromEncodedURIComponent(decodeURIComponent(record.p_content));
-    }
-    if (record.p_title) {
-        title = decodeURIComponent(record.p_title);
-    }
-
-    // Set title
-    if (document.getElementById("tmp_p_title")) {
-        document.getElementById("tmp_p_title").value = title;
-    }
-
-    // Set flyer content to demo editor
-    if (typeof tinyMCE !== 'undefined' && tinyMCE.get('taDemoEdtr')) {
-        tinyMCE.get('taDemoEdtr').setContent(flyerHtml);
-    } else if (document.getElementById("taDemoEdtr")) {
-        document.getElementById("taDemoEdtr").value = flyerHtml;
-    } else {
-        // Fallback similar to trnsltImgPstObj
-        var tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + flyerHtml + "</textarea>";
-        tDVDstr += "<div class=\"clearfix\"></div><br>";
-        if (document.getElementById("dvDemoView")) {
-            document.getElementById("dvDemoView").innerHTML = tDVDstr;
-        }
-                setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
-
-    }
-
-    // Set description content to main editor
-    if (typeof tinyMCE !== 'undefined' && tinyMCE.get('tmp_p_content')) {
-        tinyMCE.get('tmp_p_content').setContent(descHtml);
-    } else if (document.getElementById("tmp_p_content")) {
-        document.getElementById("tmp_p_content").value = descHtml;
-    }
-
-    // Close modal
-    var modal = document.getElementById('flyersModal');
-    if (modal) {
-        var bsModal = bootstrap.Modal.getInstance(modal);
-        if (bsModal) {
-            bsModal.hide();
-        }
-    }
-}
 
 JSSHOP.ads.getEdtrPrpDscStr = function(tPrpDtarr) {
     tEdtrDescStr = "";
@@ -9938,69 +8611,7 @@ JSSHOP.ads.getEdtrPrpDscStr = function(tPrpDtarr) {
 };
 
 
-JSSHOP.ads.getEditorUsrBoxStr = function(tUsrDtObj) {
-    tEdtrUsrStr = "";
-        let contacts = [];
-    let preferred = ['whatsapp', 'telephone', 'email', 'facebook'];
-    for(let pref of preferred){
-        let link = currQUsrLnksArr.find(l => l.k_category === pref);
-        if(link){
-            contacts.push(link);
-            if(contacts.length >= 2) break;
-        }
-    }
-
-      // Seller info
-      // wrapped in table
-       tEdtrUsrStr += '<table><tr><td>';
-    tEdtrUsrStr += '<div class="gallery-item" style="background: rgba(255,255,255,0.9); border-radius: 10px;margin:10px; padding: 5px; box-shadow: 1px 4px 8px rgba(0,0,0,0.1); text-align: center;">';
-         tEdtrUsrStr += "<table><tr><td><div><span style=\"font-size: 32px; color: #007bff; margin-right: 10px;\">&#8226;</span></div></td><td>";
-
-    // tEdtrUsrStr += `<h5 style="margin: 0 0 10px 0; font-size: 16px;">${stxt[912]}...</h5>`;
-    tEdtrUsrStr += '<div style="display: flex; align-items: center;">';
-    tEdtrUsrStr += `<img src="images/user/${u_icon.value}" alt="Agent" style="width: 80px; height: 80px; border-radius: 50%; margin-right: 10px;">`;
-    tEdtrUsrStr += '<div>';
-    tEdtrUsrStr += `<p style="margin: 0; font-weight: bold; font-size: 24px;">${u_fullname.value}</p>`;
-    // tEdtrUsrStr += `<p style="margin: 0; color: #666; font-size: 12px;">${u_email.value}</p>`;
-    if(contacts.length > 0){
-        tEdtrUsrStr += '<div style="margin-top: 10px; display: flex; justify-content: center; gap: 10px;">';
-        for(let contact of contacts){
-            let href = '';
-            if(contact.k_category === 'whatsapp'){
-                href = `https://wa.me/${contact.k_matter}`;
-            } else if(contact.k_category === 'telephone'){
-                href = `tel:${contact.k_matter}`;
-            } else if(contact.k_category === 'email'){
-                href = `mailto:${contact.k_matter}`;
-            } else if(contact.k_category === 'facebook'){
-                href = `https://facebook.com/${contact.k_matter}`;
-            }
-            if(href){
-                // tEdtrPrpsStr += `<a href="${href}" target="_blank"><img src="images/misc/ts-icon-${contact.k_category}.png" alt="${contact.k_category}" style="width: 24px; height: 24px;"></a>`;
-                // show the icon and contact info
-                tEdtrUsrStr += `<div style="text-align: center;">`;
-                tEdtrUsrStr += `<a href="${href}" target="_blank" style="text-decoration: none; color: inherit;">`;
-                tEdtrUsrStr += `<img src="images/misc/ts-icon-${contact.k_category}.png" alt="${contact.k_category}" style="width: 24px; height: 24px;margin: 0 10px 0 0;">`;
-                tEdtrUsrStr += `<span style="font-size: 20px;margin-right: 15px;"><b>${contact.k_matter}</b></span>`;
-                tEdtrUsrStr += `</a>`;
-                tEdtrUsrStr += `</div>`;
-
-            }
-        }
-        tEdtrUsrStr += '</div>';
-    }
-    tEdtrUsrStr += '</div>';
-    tEdtrUsrStr += '</div>';
-       tEdtrUsrStr += "</td><td><span style=\"font-size: 32px; color: #007bff; margin-right: 10px;\">&#8226;</span></td></tr></table>";
-
-   
-    tEdtrUsrStr += '</div>';
-    // end of seller info box
-    tEdtrUsrStr += '</td></tr></table>'; // end of wrapping table
-    return tEdtrUsrStr;
-};
-
-JSSHOP.ads.getEdtrPrpListStr = function(tPrpDtarr, flyrstyle = "default") {
+JSSHOP.ads.getEditorPrpStr = function(tPrpDtarr) {
 
 
     tEdtrPrpsStr = "";
@@ -10067,38 +8678,18 @@ JSSHOP.ads.getEdtrPrpListStr = function(tPrpDtarr, flyrstyle = "default") {
     // use the example tPrpDtarr above to generate the editor string
  // create a div string with a diagonal gradient fill from blue to white
     // tEdtrDescStr is a string listing the titles and prices of selected properties
+           tEdtrPrpsStr += "<div class=\"property-flyer\" style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px;\" id=\"dvTMCdemo\">";
 
-    switch(flyrstyle) {
-        case 'classic':
-            gradientStyle = "background: linear-gradient(to right, #007bff, #ffffff);";
-            break;
-        case 'modern':
-            gradientStyle = "background: linear-gradient(to right, #00bcd4, #2196f3, #3f51b5);";
-            break;
-        case 'vibrant':
-            gradientStyle = "background: linear-gradient(to right, #ff4081, #ff1744, #ffeb3b);";
-            break;
-        default:
-            gradientStyle = "background: linear-gradient(to right, #007bff, #ffffff);";
-            break;
-    }
-
-        tEdtrPrpsStr += "<div class=\"property-flyer\" style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px; " + gradientStyle + "\" id=\"dvTMCdemo\">";
-    
-    tEdtrPrpsStr += "<div class=\"gallery-item\" style=\"position:relative;margin:20px;font-size:32px;font-weight:bold;text-shadow:3px 3px 6px rgba(0,0,0,0.8);line-height:1.2;text-transform:uppercase;letter-spacing:1px;max-width:100%;word-wrap:break-word;background: rgba(255,255,255,0.9); border-radius: 10px; margin: 10px; padding: 5px; box-shadow: 1px 4px 8px rgba(0,0,0,0.1); text-align: center;\">";
-
-  
-   tEdtrPrpsStr += "<table style=\"margin-bottom:10px;margin: 0 auto;\">";
+    // tEdtrPrpsStr += "<div style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px;\" class=\"slmtable brdrClrDlg bkgdClrWhite\" id=\"dvTMCdemo\">";
+    tEdtrPrpsStr += "<table class=\"rtable bkgdClrWhite brdrClrHdr\" style=\"margin-bottom:10px;margin: 0 auto;\">";
     tEdtrPrpsStr += "<tr><td class=\"txtBold txtClrHdr\" style=\"text-align:center;\"><span style=\"font-size:18px;\">" + stxt[10]+ "... " + stxt[10] + "...</span></td></tr>";
     tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\" style=\"text-align:center;\"><span style=\"font-size:14px;\">" + stxt[40]+ "... " + stxt[40] + "... " + stxt[40] + "...</span></td></tr>";
     tEdtrPrpsStr += "</table>";
-    tEdtrPrpsStr += "</div>"; // end of gallery item div
     tEdtrPrpsStr += "<hr>";
      for(i = 0; i < tPrpDtarr.length; i++) {
         tPrpDtObj = tPrpDtarr[i];
         tPrpImgStr = "<img src=\"" + currPrpImgsFldr + "/" + tPrpDtObj.pimage + "\" style=\"min-width:80px;max-width:90px;text-align:center;margin-right:3px;min-height:80px;max-height:90px;\" class=\"slmtable brdrClrDlg\" alt=\"Property Image\">";
-        tEdtrPrpsStr += "<div class=\"gallery-item\" style=\"position:relative;margin:20px;font-size:32px;font-weight:bold;letter-spacing:1px;max-width:100%;word-wrap:break-word;background: rgba(255,255,255,0.9); border-radius: 10px; margin: 10px; padding: 5px; box-shadow: 1px 4px 8px rgba(0,0,0,0.1); text-align: center;\">";
-        tEdtrPrpsStr += "<table>";
+         tEdtrPrpsStr += "<table class=\"rtable bkgdClrWhite brdrClrDlg\">";
         tEdtrPrpsStr += "<tr><td>" + tPrpImgStr + "</td><td style=\"width:100%;vertical-align:top;\">";
         tEdtrPrpsStr += "<div class=\"\" style=\"float:left;\">";
         tEdtrPrpsStr += "<table class=\"\">";
@@ -10109,21 +8700,17 @@ JSSHOP.ads.getEdtrPrpListStr = function(tPrpDtarr, flyrstyle = "default") {
        //  tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\">" + tPrpDtObj.location + "</td></tr>";
 
         tEdtrPrpsStr += "</table>";
-        tEdtrPrpsStr += "</div>"; // end of float left div
+        tEdtrPrpsStr += "</div>"; // end of edtr-grid rtable brdrClrHdr
         tEdtrPrpsStr += "</td></tr></table>";
-        tEdtrPrpsStr += "</div>"; // end of gallery item div
          // only add <hr> if not the last property
         if(i < tPrpDtarr.length - 1) {
             tEdtrPrpsStr += "<hr>";
         }
     }
     tEdtrPrpsStr += "<hr>";
-
-
-/*
     // add the seller information
     tEdtrPrpsStr += "<div class=\"slmtable brdrClrHdr bkgdClrWhite\" style=\"text-align:center;\">";
-       //  tEdtrPrpsStr += "<div class=\"txtBig txtBold txtClrHdr\" style=\"text-align:center;\">" + stxt[912] + "...</div>";
+        tEdtrPrpsStr += "<div class=\"txtBig txtBold txtClrHdr\" style=\"text-align:center;\">" + stxt[912] + "...</div>";
 
     tEdtrPrpsStr += "<table class=\"table table-striped\">";
     tEdtrPrpsStr += "<tr><td><img src=\"images/user/" + u_icon.value + "\" class=\"icnRndnBgUser\"></td>";
@@ -10131,9 +8718,6 @@ JSSHOP.ads.getEdtrPrpListStr = function(tPrpDtarr, flyrstyle = "default") {
     tEdtrPrpsStr += "</tr></table>";
     tEdtrPrpsStr += "</div>"; // end of edtr-grid rtable brdrClrHdr
     tEdtrPrpsStr += "</div>"; // end of seller information div
-*/
-tEdtrPrpsStr += JSSHOP.ads.getEditorUsrBoxStr("nada");
-
 
     // add clear fix to the end of the div
     tEdtrPrpsStr += "<div style=\"clear:both;\" class=\"clearfix\"></div>";
@@ -10143,13 +8727,169 @@ tEdtrPrpsStr += JSSHOP.ads.getEditorUsrBoxStr("nada");
     return tEdtrPrpsStr;
 };
 
- 
-JSSHOP.ads.getEdtrPrpGridStr = function(tPrpDtarr, flyrstyle = 'modern') {
+JSSHOP.ads.getNuEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
     let tEdtrPrpsStr = "";
     let gradientStyle = "";
+    let cardClass = "card shadow";
+    let headerClass = "text-white font-weight-bold";
+    let subHeaderClass = "text-white";
 
     // Define styles
-    switch(flyrstyle) {
+    switch(style) {
+        case 'classic':
+            gradientStyle = "background: linear-gradient(to bottom, #007bff, #ffffff);";
+            cardClass = "card shadow-sm";
+            break;
+        case 'modern':
+            gradientStyle = "background: linear-gradient(to right, #00bcd4, #2196f3, #3f51b5);";
+            cardClass = "card border-0 shadow-lg";
+            break;
+        case 'vibrant':
+            gradientStyle = "background: linear-gradient(to bottom right, #ff4081, #ff1744, #ffeb3b);";
+            cardClass = "card border-0 shadow-xl";
+            break;
+        default:
+            gradientStyle = "background: linear-gradient(to bottom, #007bff, #ffffff);";
+            cardClass = "card shadow";
+    }
+
+    // Start flyer container
+    tEdtrPrpsStr += `<div class="container-fluid p-4" style="${gradientStyle} min-height: 100vh;">`;
+    tEdtrPrpsStr += '<div class="row justify-content-center">';
+    tEdtrPrpsStr += '<div class="col-md-8">';
+
+    // Header
+    tEdtrPrpsStr += '<div class="text-center mb-4">';
+    tEdtrPrpsStr += `<h1 class="display-4 ${headerClass}">${stxt[10]}... ${stxt[10]}...</h1>`;
+    tEdtrPrpsStr += `<p class="lead ${subHeaderClass}">${stxt[40]}... ${stxt[40]}... ${stxt[40]}...</p>`;
+    tEdtrPrpsStr += '</div>';
+
+    // Properties
+    tEdtrPrpsStr += '<div class="row">';
+    for(let i = 0; i < tPrpDtarr.length; i++) {
+        let tPrpDtObj = tPrpDtarr[i];
+        let imgSrc = currPrpImgsFldr + "/" + tPrpDtObj.pimage;
+        let title = LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle);
+        let location = tPrpDtObj.city + ", " + tPrpDtObj.state;
+        let price = tPrpDtObj.price + " ?";
+
+        tEdtrPrpsStr += '<div class="col-md-6 mb-4">';
+        tEdtrPrpsStr += `<div class="${cardClass}">`;
+        tEdtrPrpsStr += '<div class="row no-gutters">';
+        tEdtrPrpsStr += '<div class="col-md-4">';
+        tEdtrPrpsStr += `<img src="${imgSrc}" class="card-img" alt="Property Image" style="height: 100%; object-fit: cover;">`;
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '<div class="col-md-8">';
+        tEdtrPrpsStr += '<div class="card-body">';
+        tEdtrPrpsStr += `<h5 class="card-title font-weight-bold">${title}</h5>`;
+        tEdtrPrpsStr += `<p class="card-text text-muted">${location}</p>`;
+        tEdtrPrpsStr += `<p class="card-text font-weight-bold text-primary h4">${price}</p>`;
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
+    }
+    tEdtrPrpsStr += '</div>';
+
+    // Seller info
+    tEdtrPrpsStr += '<div class="row justify-content-center mt-4">';
+    tEdtrPrpsStr += '<div class="col-md-6">';
+    tEdtrPrpsStr += '<div class="card text-center shadow">';
+    tEdtrPrpsStr += '<div class="card-body">';
+    tEdtrPrpsStr += `<h5 class="card-title">${stxt[912]}...</h5>`;
+    tEdtrPrpsStr += '<div class="d-flex align-items-center justify-content-center">';
+    tEdtrPrpsStr += `<img src="images/user/${u_icon.value}" class="rounded-circle mr-3" style="width: 60px; height: 60px;">`;
+    tEdtrPrpsStr += '<div>';
+    tEdtrPrpsStr += `<p class="mb-0 font-weight-bold">${u_fullname.value}</p>`;
+    tEdtrPrpsStr += `<p class="mb-0 text-muted">${u_email.value}</p>`;
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+
+    // Style selector modal
+    tEdtrPrpsStr += `
+    <!-- Style Selector Modal -->
+    <div class="modal fade" id="styleSelectorModal" tabindex="-1" role="dialog" aria-labelledby="styleSelectorModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="styleSelectorModalLabel">Choose Flyer Style</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-4">
+                <div class="card style-option" data-style="classic" style="cursor: pointer;">
+                  <div class="card-body text-center" style="background: linear-gradient(to bottom, #007bff, #ffffff); height: 100px;">
+                    <h6>Classic</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="card style-option" data-style="modern" style="cursor: pointer;">
+                  <div class="card-body text-center" style="background: linear-gradient(to right, #00bcd4, #2196f3, #3f51b5); height: 100px;">
+                    <h6>Modern</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="card style-option" data-style="vibrant" style="cursor: pointer;">
+                  <div class="card-body text-center" style="background: linear-gradient(to bottom right, #ff4081, #ff1744, #ffeb3b); height: 100px;">
+                    <h6>Vibrant</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+
+    // Button to open style selector
+    tEdtrPrpsStr += '<div class="text-center mt-3">';
+    tEdtrPrpsStr += '<button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#styleSelectorModal">Change Style</button>';
+    tEdtrPrpsStr += '</div>';
+
+    // Add script for style selection
+    tEdtrPrpsStr += `
+    <script>
+    $(document).ready(function() {
+        $('.style-option').on('click', function() {
+            var selectedStyle = $(this).data('style');
+            // Here you would regenerate the flyer with the new style
+            // For example: $('#flyerContainer').html(JSSHOP.ads.getNuEdtrPrpStr(tPrpDtarr, selectedStyle));
+            alert('Selected style: ' + selectedStyle + '. Please implement regeneration logic.');
+            $('#styleSelectorModal').modal('hide');
+        });
+    });
+    </script>
+    `;
+
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+
+    return tEdtrPrpsStr;
+};
+
+JSSHOP.ads.getNurEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
+    let tEdtrPrpsStr = "";
+    let gradientStyle = "";
+    let headerClass = "text-white font-weight-bold";
+    let subHeaderClass = "text-white";
+
+    // Define styles
+    switch(style) {
         case 'classic':
             gradientStyle = "background: linear-gradient(to right, #007bff, #ffffff);";
             break;
@@ -10161,7 +8901,73 @@ JSSHOP.ads.getEdtrPrpGridStr = function(tPrpDtarr, flyrstyle = 'modern') {
             break;
         default:
             gradientStyle = "background: linear-gradient(to right, #007bff, #ffffff);";
+    }
+
+    // Start flyer container - landscape oriented for og:image (approx 1200x630)
+    tEdtrPrpsStr += `<div style="${gradientStyle} width: 1200px; height: 630px; position: relative; padding: 20px; box-sizing: border-box;"  id="dvTMCdemo">`;
+
+    // Header - positioned at top
+    tEdtrPrpsStr += `<div style="text-align: center; margin-bottom: 20px;">`;
+    tEdtrPrpsStr += `<h1 style="color: white; font-weight: bold; font-size: 36px; margin: 0;">${stxt[10]}... ${stxt[10]}...</h1>`;
+    tEdtrPrpsStr += `<p style="color: white; font-size: 18px; margin: 5px 0 0 0;">${stxt[40]}... ${stxt[40]}... ${stxt[40]}...</p>`;
+    tEdtrPrpsStr += '</div>';
+
+    // Properties container - horizontal layout
+    tEdtrPrpsStr += '<div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start; margin-bottom: 20px;">';
+    for(let i = 0; i < tPrpDtarr.length; i++) {
+        let tPrpDtObj = tPrpDtarr[i];
+        let imgSrc = currPrpImgsFldr + "/" + tPrpDtObj.pimage;
+        let title = LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle);
+        let location = tPrpDtObj.city + ", " + tPrpDtObj.state;
+        let price = tPrpDtObj.price + " ?";
+
+        // Property card - floated left for landscape
+        tEdtrPrpsStr += `<div style="float: left; width: ${tPrpDtarr.length > 2 ? '30%' : '45%'}; margin: 10px; background: rgba(255,255,255,0.9); border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); overflow: hidden;">`;
+        tEdtrPrpsStr += `<img src="${imgSrc}" alt="Property Image" style="width: 100%; height: 150px; object-fit: cover;">`;
+        tEdtrPrpsStr += '<div style="padding: 10px;">';
+        tEdtrPrpsStr += `<h5 style="font-weight: bold; margin: 0 0 5px 0; font-size: 16px;">${title}</h5>`;
+        tEdtrPrpsStr += `<p style="color: #666; margin: 0 0 5px 0; font-size: 14px;">${location}</p>`;
+        tEdtrPrpsStr += `<p style="font-weight: bold; color: #007bff; margin: 0; font-size: 18px;">${price}</p>`;
+        tEdtrPrpsStr += '</div>';
+        tEdtrPrpsStr += '</div>';
+    }
+    tEdtrPrpsStr += '<div style="clear: both;"></div>';
+    tEdtrPrpsStr += '</div>';
+
+    // Seller info - positioned at bottom right
+    tEdtrPrpsStr += '<div style="position: absolute; bottom: 20px; right: 20px; background: rgba(255,255,255,0.9); border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center;">';
+    tEdtrPrpsStr += `<h5 style="margin: 0 0 10px 0; font-size: 16px;">${stxt[912]}...</h5>`;
+    tEdtrPrpsStr += '<div style="display: flex; align-items: center;">';
+    tEdtrPrpsStr += `<img src="images/user/${u_icon.value}" alt="Agent" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">`;
+    tEdtrPrpsStr += '<div>';
+    tEdtrPrpsStr += `<p style="margin: 0; font-weight: bold; font-size: 14px;">${u_fullname.value}</p>`;
+    tEdtrPrpsStr += `<p style="margin: 0; color: #666; font-size: 12px;">${u_email.value}</p>`;
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+
+    tEdtrPrpsStr += '</div>';
+
+    return tEdtrPrpsStr;
+};
+
+JSSHOP.ads.getNwstEdtrPrpStr = function(tPrpDtarr, style = 'modern') {
+    let tEdtrPrpsStr = "";
+    let gradientStyle = "";
+
+    // Define styles
+    switch(style) {
+        case 'classic':
+            gradientStyle = "background: linear-gradient(to right, #007bff, #ffffff);";
             break;
+        case 'modern':
+            gradientStyle = "background: linear-gradient(to right, #00bcd4, #2196f3, #3f51b5);";
+            break;
+        case 'vibrant':
+            gradientStyle = "background: linear-gradient(to right, #ff4081, #ff1744, #ffeb3b);";
+            break;
+        default:
+            gradientStyle = "background: linear-gradient(to right, #007bff, #ffffff);";
     }
 
     // Start flyer container - landscape oriented for og:image (1200x630), optimized for mobile viewing
@@ -10176,9 +8982,9 @@ JSSHOP.ads.getEdtrPrpGridStr = function(tPrpDtarr, flyrstyle = 'modern') {
         let title = LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle);
         let location = tPrpDtObj.city + ", " + tPrpDtObj.state;
         let price = tPrpDtObj.price + "  &euro;";
-       
+
         // Property card - larger for better mobile readability
-        tEdtrPCntStr += `<div class=\"gallery-item\" style="float: left; width: ${tPrpDtarr.length > 2 ? '30%' : '45%'}; margin: 5px; background: rgba(255,255,255,0.95); border-radius: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); overflow: hidden;">`;
+        tEdtrPCntStr += `<div style="float: left; width: ${tPrpDtarr.length > 2 ? '30%' : '45%'}; margin: 5px; background: rgba(255,255,255,0.95); border-radius: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); overflow: hidden;">`;
         tEdtrPCntStr += `<img src="${imgSrc}" alt="Property Image" style="width: 100%; height: 180px; object-fit: cover;">`;
         tEdtrPCntStr += '<div style="padding: 15px;">';
         tEdtrPCntStr += `<h5 style="font-weight: bold; margin: 0 0 8px 0; font-size: 20px; line-height: 1.3;">${title}</h5>`;
@@ -10203,21 +9009,198 @@ JSSHOP.ads.getEdtrPrpGridStr = function(tPrpDtarr, flyrstyle = 'modern') {
     tEdtrHdrStr += `<h1 style="color: white; font-weight: bold; font-size: 48px; margin: 0; line-height: 1.2;">${sulltitlestr}</h1>`;
     tEdtrHdrStr += `<p style="color: white; font-size: 24px; margin: 5px 0 0 0; line-height: 1.3;">${stxt[40]}... ${stxt[40]}... ${stxt[40]}...</p>`;
     tEdtrHdrStr += '</div>';
+    tEdtrPrpsStr += tEdtrHdrStr + tEdtrPCntStr;
+    /* demo of currQUsrLnksArr  to be used for the seller information box
+    [
+    {
+        "_id": "408",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24088",
+        "k_category": "facebook",
+        "k_title": "facebook",
+        "k_matter": "sadaw",
+        "k_privacy": "0",
+        "k_dadded": "1760828127"
+    },
+    {
+        "_id": "311",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "46",
+        "k_category": "whatsapp",
+        "k_title": "twitter",
+        "k_matter": "98989999",
+        "k_privacy": "0",
+        "k_dadded": "1745699399"
+    },
+    {
+        "_id": "310",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24088",
+        "k_category": "fax",
+        "k_title": "fax",
+        "k_matter": "fdfdf",
+        "k_privacy": "0",
+        "k_dadded": "1737284296"
+    },
+    {
+        "_id": "309",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24088",
+        "k_category": "facebook",
+        "k_title": "facebook",
+        "k_matter": "kjkhj",
+        "k_privacy": "0",
+        "k_dadded": "1736073494"
+    },
+    {
+        "_id": "308",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24087",
+        "k_category": "twitter",
+        "k_title": "twitter",
+        "k_matter": "ddddd",
+        "k_privacy": "0",
+        "k_dadded": "1735160114"
+    },
+    {
+        "_id": "307",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24087",
+        "k_category": "whatsapp",
+        "k_title": "whatsapp",
+        "k_matter": "ddddd",
+        "k_privacy": "0",
+        "k_dadded": "1735160107"
+    },
+    {
+        "_id": "306",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24087",
+        "k_category": "fax",
+        "k_title": "fax",
+        "k_matter": "ddddd",
+        "k_privacy": "0",
+        "k_dadded": "1735160098"
+    },
+    {
+        "_id": "305",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24087",
+        "k_category": "Telephone",
+        "k_title": "Telephone",
+        "k_matter": "ddddd",
+        "k_privacy": "0",
+        "k_dadded": "1735160092"
+    },
+    {
+        "_id": "304",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "24087",
+        "k_category": "facebook",
+        "k_title": "facebook",
+        "k_matter": "ddddd",
+        "k_privacy": "0",
+        "k_dadded": "1735160086"
+    },
+    {
+        "_id": "298",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "46",
+        "k_category": "email",
+        "k_title": "twitter",
+        "k_matter": "aa@aa.com",
+        "k_privacy": "aa",
+        "k_dadded": "1733097054"
+    },
+    {
+        "_id": "297",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "46",
+        "k_category": "telephone",
+        "k_title": "twitter",
+        "k_matter": "gttrddds",
+        "k_privacy": "aa",
+        "k_dadded": "1731242261"
+    },
+    {
+        "_id": "256",
+        "k_rtype": "5",
+        "k_userid": "46",
+        "k_coid": "46",
+        "k_category": "fax",
+        "k_title": "twitter",
+        "k_matter": "gttrddds",
+        "k_privacy": "aa",
+        "k_dadded": "1729252085"
+    }
+]
+    */
+    let contacts = [];
+    let preferred = ['whatsapp', 'telephone', 'email', 'facebook'];
+    for(let pref of preferred){
+        let link = currQUsrLnksArr.find(l => l.k_category === pref);
+        if(link){
+            contacts.push(link);
+            if(contacts.length >= 2) break;
+        }
+    }
+      // Seller info - positioned at bottom right
+    tEdtrPrpsStr += '<div style="background: rgba(255,255,255,0.9); border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center;">';
+    // tEdtrPrpsStr += `<h5 style="margin: 0 0 10px 0; font-size: 16px;">${stxt[912]}...</h5>`;
+    tEdtrPrpsStr += '<div style="display: flex; align-items: center;">';
+    tEdtrPrpsStr += `<img src="images/user/${u_icon.value}" alt="Agent" style="width: 80px; height: 80px; border-radius: 50%; margin-right: 10px;">`;
+    tEdtrPrpsStr += '<div>';
+    tEdtrPrpsStr += `<p style="margin: 0; font-weight: bold; font-size: 24px;">${u_fullname.value}</p>`;
+    // tEdtrPrpsStr += `<p style="margin: 0; color: #666; font-size: 12px;">${u_email.value}</p>`;
+    if(contacts.length > 0){
+        tEdtrPrpsStr += '<div style="margin-top: 10px; display: flex; justify-content: center; gap: 10px;">';
+        for(let contact of contacts){
+            let href = '';
+            if(contact.k_category === 'whatsapp'){
+                href = `https://wa.me/${contact.k_matter}`;
+            } else if(contact.k_category === 'telephone'){
+                href = `tel:${contact.k_matter}`;
+            } else if(contact.k_category === 'email'){
+                href = `mailto:${contact.k_matter}`;
+            } else if(contact.k_category === 'facebook'){
+                href = `https://facebook.com/${contact.k_matter}`;
+            }
+            if(href){
+                // tEdtrPrpsStr += `<a href="${href}" target="_blank"><img src="images/misc/ts-icon-${contact.k_category}.png" alt="${contact.k_category}" style="width: 24px; height: 24px;"></a>`;
+                // show the icon and contact info
+                tEdtrPrpsStr += `<div style="text-align: center;">`;
+                tEdtrPrpsStr += `<a href="${href}" target="_blank" style="text-decoration: none; color: inherit;">`;
+                tEdtrPrpsStr += `<img src="images/misc/ts-icon-${contact.k_category}.png" alt="${contact.k_category}" style="width: 24px; height: 24px;margin: 0 10px 0 0;">`;
+                tEdtrPrpsStr += `<span style="font-size: 20px;margin-right: 15px;"><b>${contact.k_matter}</b></span>`;
+                tEdtrPrpsStr += `</a>`;
+                tEdtrPrpsStr += `</div>`;
 
-    // !! Table cell wrapper
-    tEdtrPrpsStr += '<table><tr><td>' + tEdtrHdrStr + '</td></tr><tr><td><span style=\"font-size: 32px; color: #007bff; margin-right: 10px;\">&#8226;</span></td></tr><tr><td>' + tEdtrPCntStr + '</td></tr><tr><td><span style=\"font-size: 32px; color: #007bff; margin-right: 10px;\">&#8226;</span></td></tr><tr><td>';
-    
-    
-    tEdtrPrpsStr += JSSHOP.ads.getEditorUsrBoxStr("nada");
+            }
+        }
+        tEdtrPrpsStr += '</div>';
+    }
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    tEdtrPrpsStr += '</div>';
+    // end of seller info box
 
-    tEdtrPrpsStr += '</td></tr><tr><td><span style=\"font-size: 32px; color: #007bff; margin-right: 10px;\">&#8226;</span></td></tr></table>';
+
+
     tEdtrPrpsStr += '</div>'; // end of flyer container
 
     return tEdtrPrpsStr;
 };
-
-
- 
 
 JSSHOP.ads.initInteractiveElements = function(containerId) {
     const container = document.getElementById(containerId);
@@ -10706,17 +9689,6 @@ JSSHOP.ads.getUpdatePVrs = function(tPVUpdtType) {
             tUpdatePVrs["uptype"] = "users";
         }
         break;
-        case "pvideo":
-        tUpdatePVrs["cnfg"] = {};
-        tUpdatePVrs["cnfg"]["inpVidPstCntnt"] = inpVidPstCntnt.value;
-        if(inpVidPstCntnt.value == "props") {
-            tUpdatePVrs["data"] = currSlctdPrpsObj;
-            tUpdatePVrs["uptype"] = "props";
-        } else if(inpVidPstCntnt.value == "users") {
-            tUpdatePVrs["data"] = currSlctdUsrObj;
-            tUpdatePVrs["uptype"] = "users";
-        }
-        break;
     default:
     break;
     }
@@ -10899,9 +9871,9 @@ JSSHOP.ads.doImgPostCnfgPop = function() {
         tDDswprCnttObj["kvIcnsObj"]["props"] = "&#xe5cd;";
         // tDDswprCnttObj["kvIcnsObj"]["users"] = "&#xe5cd;";
         tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprCnttObj);
-
         tSCPopStr += "<br><br><span style=\"\" class=\"cls_button cls_button-small bkgdClrHdr txtClrWhite\" onclick=\"JSSHOP.ui.closeLbox();JSSHOP.ads.trnsltImgPstObj();\">OK</span>";
         tSCPopStr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-small  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";   
+    
         JSSHOP.ui.popFillObox(tSCPopStr, "&#xe5cd;", "Image Update Config", "yes", "no");
         //         setTimeout(function() { doSwpCntntPick("inpSwprCntnt", inpSwprCntnt.value, "Properties"); }, 1000);
 
@@ -11359,12 +10331,7 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
     tImgAdArr = "";
     tImgAdArr = [];
     if(theAIb.indexOf("_id") != -1) {
-        currPrpMediaArr = null;
-        currPrpMediaArr = "";
-        currPrpMediaArr = [];
-
 		tAiretArr = JSON.parse(theAIb);
-        currPrpMediaArr = tAiretArr;
 		awlen = tAiretArr.length;
         tstr = "";
         tpdSocLnksStr = "";
@@ -11386,12 +10353,13 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
         console.log("setNwstPropImages: " + mGPIobj.ptitle + " " + mGPIImg);
 
         // Enhanced property flyer with all elements overlaid on main image
-        tPrpFlyerMImgSTr = "<div class=\"property-flyer\" style=\"position:relative;width:100%;min-height:700px;border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);background-image:url('" + currPrpImgsFldr + "/" + mGPIImg + "');background-size:cover;background-position:center;background-repeat:no-repeat;\" id=\"dvTMCdemo\">";
+        tPrpFlyerMImgSTr = "<div class=\"property-flyer\" style=\"position:relative;width:100%;min-height:700px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);\" id=\"dvTMCdemo\">";
+
+        // Main image background with overlay (tallest to accommodate all overlaid elements)
+        tPrpFlyerMImgSTr += "<div style=\"position:relative;width:100%;height:600px;background-image:url('" + currPrpImgsFldr + "/" + mGPIImg + "');background-size:cover;background-position:center;background-repeat:no-repeat;\">";
+        tPrpFlyerMImgSTr += "<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0.6) 100%);\"></div>";
 
  
-       //  tPrpFlyerMImgSTr += "<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0.6) 100%);\"></div>";
-
-        tPrpFlyerMImgSTr += "<table><tr><td><div style=\"color:white;font-size:24px;font-weight:bold;\">  </div></td><td>";
         // Property title overlay - now wraps around the price balloon
         tPrpFlyerMImgSTr += "<div style=\"color:#fff;z-index:10;display:flex;flex-direction:column;justify-content:flex-start;\">";
 
@@ -11411,7 +10379,7 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
         tPrpFlyerMImgSTr += "</div>";
         
         tPrpFlyerMImgSTr += "</div>"; // End title and price container
-            tPrpFlyerMImgSTr += "</td><td style=\"width:50px;\"> </td></tr></table>";
+    
         // add a clearfix
         tPrpFlyerMImgSTr += "<div style=\"clear:both;\"></div>";    
 
@@ -11488,9 +10456,6 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
 
         tPrpFlyerMImgSTr += "</div>"; // End gallery grid
 
-        tPrpFlyerMImgSTr += "</div>"; // End overlaid gallery section
-
-        
     let contacts = [];
     let preferred = ['whatsapp', 'telephone', 'email', 'facebook'];
     for(let pref of preferred){
@@ -11502,17 +10467,54 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
     }
  
                         // Seller information overlay - now positioned at the bottom of the main image
+ 
         tPrpFlyerMImgSTr += "<div style=\"position:absolute; bottom:10px; left:0; right:0; z-index:12;\">";
+        tPrpFlyerMImgSTr += "<div style=\"background: rgba(255,255,255,0.9); border-radius: 10px; margin: 15px; padding: 5px;box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center;\">";
+        tPrpFlyerMImgSTr += "<div style=\"display:flex;align-items:center;justify-content:center;\">";
+        tPrpFlyerMImgSTr += "<img src=\"images/user/" + u_icon.value + "\" style=\"width:85px;height:85px;border-radius:30%;object-fit:cover;border:1px solid #007bff;margin-right:8px;\" alt=\"Seller\">";
+        tPrpFlyerMImgSTr += "<div>";
+        tPrpFlyerMImgSTr += "<div style=\"font-weight:700;color:#333;font-size:22px;\">" + u_fullname.value + "</div>";
+        // tPrpFlyerMImgSTr += "<div style=\"font-size:18px;color:#666;\">" + u_email.value + "</div>";
+        if(contacts.length > 0){
+            tPrpFlyerMImgSTr += '<div style="margin-top: 5px; display: flex; justify-content: center; gap: 5px;">';
+            for(let contact of contacts){
+                let href = '';
+                if(contact.k_category === 'whatsapp'){
+                    href = `https://wa.me/${contact.k_matter}`;
+                } else if(contact.k_category === 'telephone'){
+                    href = `tel:${contact.k_matter}`;
+                } else if(contact.k_category === 'email'){
+                    href = `mailto:${contact.k_matter}`;
+                } else if(contact.k_category === 'facebook'){
+                    href = `https://facebook.com/${contact.k_matter}`;
+                }
+                if(href){
+        // tEdtrPrpsStr += `<a href="${href}" target="_blank"><img src="images/misc/ts-icon-${contact.k_category}.png" alt="${contact.k_category}" style="width: 24px; height: 24px;"></a>`;
+                // show the icon and contact info
+                tPrpFlyerMImgSTr += `<div style="text-align: center;">`;
+                tPrpFlyerMImgSTr += `<a href="${href}" target="_blank" style="text-decoration: none; color: inherit;">`;
+                tPrpFlyerMImgSTr += `<img src="images/misc/ts-icon-${contact.k_category}.png" alt="${contact.k_category}" style="width: 24px; height: 24px;margin: 0 10px 0 0;">`;
+                tPrpFlyerMImgSTr += `<span style="font-size: 20px;margin-right: 15px;"><b>${contact.k_matter}</b></span>`;
+                tPrpFlyerMImgSTr += `</a>`;
+                tPrpFlyerMImgSTr += `</div>`;                }
+            }
+            tPrpFlyerMImgSTr += '</div>';
+        }
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>";
+        tPrpFlyerMImgSTr += "</div>";
 
- 
-        tPrpFlyerMImgSTr += JSSHOP.ads.getEditorUsrBoxStr("nada");
+     
 
-        tPrpFlyerMImgSTr += "</div>"; // End bottom positioned overlay container
- 
+        tPrpFlyerMImgSTr += "</div>"; // End overlaid gallery section
 
 
+        tPrpFlyerMImgSTr += "<div style=\"clear: both;\"></div>";
 
- 
+   ;
+        tPrpFlyerMImgSTr += "</div>"; // End main image background
+
         tPrpFlyerMImgSTr += "</div>"; // End property flyer
 
         // Create textarea for editing
@@ -11544,80 +10546,6 @@ function getPropertyImages(propData) {
     doQComm(oi["rq"], ipid, "setNwstPropImages");
 }
 
-function getVideoPropertyImages(propData) {
-    console.log("Getting video property images for: " + JSON.stringify(propData));
-    var ipid = propData._id;
-    console.log("getVideoPropertyImages.ipid: " + ipid);
-    var tmpFobj = {};
-    tmpFobj["ws"] = "where m_pid=? and m_rtype=?";
-    tmpFobj["wa"] = [ipid, 5];
-    tmpFobj["o"] = "m_vala desc";
-    oi = getNuDBFnvp("qmedia", 5, null, tmpFobj);
-    doQComm(oi["rq"], propData, "setVideoPropImages");
-}
-
-function setVideoPropImages(theAIa, theAIb, theAIc) {
-    console.log("setVideoPropImages: " + theAIa + " " + theAIb + " " + theAIc);
-    if(theAIb.indexOf("_id") != -1) {
-        var tAiretArr = JSON.parse(theAIb);
-        tmpPrpMediaObj = {};
-        for (var i = 0; i < tAiretArr.length; i++) {
-            tmpPrpMediaObj["prp" + tAiretArr[i]._id] = tAiretArr[i];
-        }
-        vdImgs = [];
-        for (var i = 0; i < tAiretArr.length; i++) {
-            var m = tAiretArr[i];
-            if (m && m.m_file_thumb) {
-                var mImgSrc = m.m_file;
-                var mImgThmbSrc = m.m_file_thumb;
-                var tCatID = m.m_catid;
-                switch (tCatID) {
-                    case "5": // regular
-                        var tmfile = mImgSrc;
-                        if (tmfile.indexOf("updt_") != -1) {
-                            tmfile = tmfile.replace("updt_", "");
-                            vdImgs.push("images/ucontent/" + tmfile);
-                        } else {
-                            vdImgs.push("images/property/" + tmfile);
-                        }
-                        break;
-                    case "20": // streetview
-                        var tNrmlImg = mImgSrc;
-                        var tLZuncompD = LZString.decompressFromEncodedURIComponent(tNrmlImg);
-                        vdImgs.push(tLZuncompD);
-                        break;
-                    case "25": // aerial
-                        tNrmlImg = mImgSrc;
-                        tLZuncompD = LZString.decompressFromEncodedURIComponent(tNrmlImg);
-                        vdImgs.push(tLZuncompD);
-                        break;
-                    case "30": // 3D
-                        var tHmbImg = mImgThmbSrc;
-                        tLZuncompD = LZString.decompressFromEncodedURIComponent(tHmbImg);
-                        vdImgs.push(tLZuncompD);
-                        break;
-                    default:
-                        continue;
-                }
-            }
-        }
-        selectedImages = [];
-        for (var i = 0; i < vdImgs.length; i++) {
-            selectedImages.push({index: i, text: ""});
-        }
-        originalVdImgs = vdImgs.slice();
-        console.log("setVideoPropImages: vdImgs set to", vdImgs);
-        // Now call doVideoDiv
-        var propData = theAIa; // theAIa is propData
-        var tSlctdPrpsArr = [propData];
-        if (typeof getVideoInterfaceHTML === 'function') {
-            doVideoDiv(tSlctdPrpsArr);
-        } else {
-            JSSHOP.loadScript("js/thirdp/CCapture_mod.js", function() { doVideoDiv(tSlctdPrpsArr); }, "js");
-        }
-    }
-}
-
 JSSHOP.ads.trnsltPTpObj = function() {
     tPtypeVal = document.getElementById("p_ptype").value;
     console.log("trnsltPTpObj.tPtypeVal: " + tPtypeVal);
@@ -11630,9 +10558,6 @@ JSSHOP.ads.trnsltPTpObj = function() {
             break;
         case "pcarousel":
             JSSHOP.ads.trnsltSwiperObj();
-            break;
-        case "pvideo":
-            JSSHOP.ads.trnsltVideoPstObj();
             break;
     }
 };
@@ -11714,22 +10639,12 @@ JSSHOP.ui.dragElement =  function(elmnt) {
 	}
   };
 
-JSSHOP.shared.setSlctdPrpsArr = function(tTATStr) {
-    tSlctdPrpsArr = null;
-    tSlctdPrpsArr = "";
-    tSlctdPrpsArr = [];
-    tSlctdPrpsArr = tTATStr;
-};
 
-JSSHOP.shared.getSlctdPrpsArr = function() {
-    return tSlctdPrpsArr;
-};
+ 
 
 
 JSSHOP.ads.trnsltImgPstObj = function() {
     tSCval = inpImgPstCntnt.value;
-    tIMCLytVal = document.getElementById("inpImgPstLayout").value;
-    tIMCStyleVal = document.getElementById("inpImgPstStyle").value;
    console.log("trnsltImgPstObj.tSCval: == props" + tSCval);
 
     if(tSCval == "props") {
@@ -11741,16 +10656,10 @@ JSSHOP.ads.trnsltImgPstObj = function() {
                 tSlctdPrpsArr.push(currSlctdPrpsObj[key]);
             }
         }
-        console.log("trnsltImgPstObj.tSlctdPrpsArr: " + JSON.stringify(tSlctdPrpsArr));
-       if (tSlctdPrpsArr.length === 1) {
-        tFlyrHStr = "";
-        getPropertyImages(tSlctdPrpsArr[0]);
-          } else {
-                if (tIMCLytVal == "grid") {
-                tFlyrHStr = JSSHOP.ads.getEdtrPrpGridStr(tSlctdPrpsArr, tIMCStyleVal);
-                } else {
-                tFlyrHStr = JSSHOP.ads.getEdtrPrpListStr(tSlctdPrpsArr, tIMCStyleVal);
-                 }
+        // if tSlctdPrpsArr has only one property, create a new function to get the property images from q_media
+         // tFlyrHStr = JSSHOP.ads.getInteractiveNwstEdtrPrpStr(tSlctdPrpsArr, "modern");
+   
+        tFlyrHStr = JSSHOP.ads.getNwstEdtrPrpStr(tSlctdPrpsArr, "modern");
         tEdtrDstr = JSSHOP.ads.getEdtrPrpDscStr(tSlctdPrpsArr);
         tPATtls = tSlctdPrpsArr[0].ptitle;
         tPATtlsDecded = decodeURIComponent(tPATtls);
@@ -11758,25 +10667,20 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         document.getElementById("tmp_p_title").value = tSPIttlStr;
          // tDesc = LZString.decompressFromEncodedURIComponent(tSlctdPrps
         console.log("trnsltImgPstObj.tEdtrDstr: " + tEdtrDstr);
-         _ifrm = document.getElementById('tmp_p_content_ifr');
+        // tinyMCE.activeEditor.setContent(tEdtrDstr);
+        _ifrm = document.getElementById('tmp_p_content_ifr');
         _ifrmDoc = _ifrm.contentDocument || _ifrm.contentWindow.document;
         _ifrmDoc.body.innerHTML = tEdtrDstr;
- 
-            tBlkFlyrHStr = "...";
-            // if taDemoEdtr exists, update it
-            if(document.getElementById("taDemoEdtr")) {
-                document.getElementById("taDemoEdtr").value = tFlyrHStr;
-                // update the tinymce.editor content
-                tinyMCE.get("taDemoEdtr").setContent(tFlyrHStr);    
-                
-            } else {    
+    // Seller info - larger text, positioned to use space efficiently
+    // tEdtrPrpsStr += '<div style="position: absolute; bottom: 10px; right: 10px; background: rgba(255,255,255,0.95); border-radius: 15px; padding: 20px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); text-align: center;">';
+    // make it a dragable box at the bottom center
+    // seller info will be added as a dragable div on the generated dvTMCdemo div
+    // so that the user can position it anywhere on the flyer
+  
 
-     tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tFlyrHStr + "</textarea>";
-     tDVDstr += "<div class=\"clearfix\"></div><br>";
-         document.getElementById("dvDemoView").innerHTML = tDVDstr;
-        setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
-            }
-            }
+
+    
+
     } else if(tSCval == "users") {
         tSlctdUsrsArr = null;
         tSlctdUsrsArr = "";
@@ -11788,48 +10692,41 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         }
         tFlyrHStr = JSSHOP.ads.getEditorUStr(tSlctdUsrsArr);
     }
-  
- };
-
-JSSHOP.ads.trnsltVideoPstObj = function() {
-    console.log("trnsltVideoPstObj called");
-    console.log("trnsltVideoPstObj: preparing video post with selected properties");
-    tSlctdPrpsArr = null;
-    tSlctdPrpsArr = "";
-    tSlctdPrpsArr = [];
-    for(var key in currSlctdPrpsObj) {
-        if(currSlctdPrpsObj.hasOwnProperty(key)) {
-            tSlctdPrpsArr.push(currSlctdPrpsObj[key]);
-        }
-    }
-    console.log("trnsltVideoPstObj.tSlctdPrpsArr: " + JSON.stringify(tSlctdPrpsArr));
-    if (tSlctdPrpsArr.length === 1) {
-        var titles = tSlctdPrpsArr.map(function(prop) {
-            return LZString.decompressFromEncodedURIComponent(prop.ptitle || "Property").substring(0, 20);
-        });
-        document.getElementById("tmp_p_title").value = titles.join(", ");
-        console.log("set title to:", titles.join(", "));
-        getVideoPropertyImages(tSlctdPrpsArr[0]);
-    } else if (tSlctdPrpsArr.length > 0) {
-        console.log("tSlctdPrpsArr has", tSlctdPrpsArr.length, "properties");
-        var titles = tSlctdPrpsArr.map(function(prop) {
-            return LZString.decompressFromEncodedURIComponent(prop.ptitle || "Property").substring(0, 20);
-        });
-        document.getElementById("tmp_p_title").value = titles.join(", ");
-        console.log("set title to:", titles.join(", "));
-        // Render video interface in dvDemoView
-        console.log("calling doVideoDiv");
-        if (typeof getVideoInterfaceHTML === 'function') {
-            doVideoDiv(tSlctdPrpsArr);
+    // create new editor in dvDemoView
+        if (tSlctdPrpsArr.length === 1) {
+        getPropertyImages(tSlctdPrpsArr[0]);
+        
         } else {
-            JSSHOP.loadScript("js/thirdp/CCapture_mod.js", function() { doVideoDiv(tSlctdPrpsArr); }, "js");
+   // document.getElementById("dvCanvasView").innerHTML = tFlyrHStr;
+   // setTimeout(function() { JSSHOP.ads.initInteractiveElements('interactiveNwstFlyer');}, 1200);
+
+            tBlkFlyrHStr = "...";
+     tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tFlyrHStr + "</textarea>";
+     tDVDstr += "<div class=\"clearfix\"></div><br>";
+         document.getElementById("dvDemoView").innerHTML = tDVDstr;
+        setTimeout(function() { JSSHOP.ads.intDemoEditor(); }, 1000);
+     /* 
+  tUslrPrpsStr = '<div id="drgblSlrInfo"  style="z-index:999999998;position:fixed;background: rgba(255,255,255,0.95); border-radius: 15px; padding: 20px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); text-align: center; cursor: move;">';
+    tUslrPrpsStr += `<h5 style="margin: 0 0 15px 0; font-size: 20px; line-height: 1.3;">${stxt[912]}...</h5>`;
+    tUslrPrpsStr += '<div style="display: flex; align-items: center;">';
+    tUslrPrpsStr += `<img src="images/user/${u_icon.value}" alt="Agent" style="width: 60px; height: 60px; border-radius: 50%; margin-right: 15px;">`;
+    tUslrPrpsStr += '<div>';
+    tUslrPrpsStr += `<p style="margin: 0; font-weight: bold; font-size: 18px; line-height: 1.4;">${u_fullname.value}</p>`;
+    tUslrPrpsStr += `<p style="margin: 0; color: #666; font-size: 16px; line-height: 1.5;">${u_email.value}</p>`;
+    tUslrPrpsStr += '</div>';
+    tUslrPrpsStr += '</div>';
+    tUslrPrpsStr += '</div>';
+
+        var tempDDDDiv = document.createElement("div");
+     tempDDDDiv.innerHTML = tUslrPrpsStr;
+    // appen as first child
+    dvDemoView.insertBefore(tempDDDDiv, dvDemoView.firstChild);
+     setTimeout(function() { JSSHOP.ui.dragElement(document.getElementById("drgblSlrInfo")); }, 1500);
+
+*/
         }
-        console.log("doVideoDiv called");
-    } else {
-        console.log("no properties selected");
-        document.getElementById("tmp_p_title").value = "Video Post";
-    }
-};
+    // tinyMCE.activeEditor.setContent(tSwprStr);
+ };
 
  JSSHOP.ads.getUpdtMapMrkrs = function(tmmtype, tmmobj) {
     try {
@@ -12019,18 +10916,7 @@ JSSHOP.ads.trnsltSwiperObj = function() {
                 tSlctdPrpsArr.push(currSlctdPrpsObj[key]);
                 tSwprTtlStr += LZString.decompressFromEncodedURIComponent(currSlctdPrpsObj[key].ptitle).substring(0, 20);
                 tSwprTtlStr += ", ";
-                if(currSlctdPrpsObj[key].pdesc) {
-                    console.log("trnsltSwiperObj.pdesc: " + currSlctdPrpsObj[key].pdesc);
-                    tTWIUYPdesc = currSlctdPrpsObj[key].pdesc;
-                    tUnzpPstr = LZString.decompressFromEncodedURIComponent(tTWIUYPdesc);
-                    if(tUnzpPstr.length > 100) {
-                    tSwprDscStr += tUnzpPstr.substring(0, 100) + "...";
-                    } else {    
-                    tSwprDscStr += tUnzpPstr;
-                    }
-                } else {
-                tSwprDscStr += "No description available.";
-                }
+                tSwprDscStr += LZString.decompressFromEncodedURIComponent(currSlctdPrpsObj[key].pdesc).substring(0, 100);
                 tSwprDscStr += "<hr>";
 
             }

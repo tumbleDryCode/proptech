@@ -1,6 +1,17 @@
 
+
 var cachedSlctdPrpsArr = null;
-var isCCapModLoaded = "no";
+
+function getCachedSlctdPrpsArr() {
+    if (!cachedSlctdPrpsArr) {
+        cachedSlctdPrpsArr = JSSHOP.shared.getSlctdPrpsArr() || [];
+    }
+    return cachedSlctdPrpsArr;
+}
+
+function clearCachedSlctdPrpsArr() {
+    cachedSlctdPrpsArr = null;
+}
 var euiFFObjArr = null;
 var euiFFObjArr = [];
 var tmpOldFFvals = null;
@@ -14,20 +25,7 @@ var tmpPstPrpsArr = null;
 var tmpPstPrpsArr = [];
 var tmpSwiperObj = null;
 var tmpSwiperObj = {};
-var tmpInsrtdPstId = 0;
-
-
-function getCachedSlctdPrpsArr() {
-    if (!cachedSlctdPrpsArr) {
-        cachedSlctdPrpsArr = JSSHOP.shared.getSlctdPrpsArr() || [];
-    }
-    return cachedSlctdPrpsArr;
-}
-
-function clearCachedSlctdPrpsArr() {
-    cachedSlctdPrpsArr = null;
-}
-
+ 
 
 /*
 CREATE TABLE `qposts` (
@@ -228,13 +226,6 @@ var doPstTypOpts = function(tPTval) {
         tTChngStrObj["pt_pt"] += "<img src=\"images/misc/updates_map_thumb.jpeg\" alt=\"Map\" title=\"Map\" style=\"float:left;margin-right:6px;max-width:86px;\">Tipo de post alterado para mapa. Um mapa  criado a partir de listagens de usuarios ou propriedades.";
         tTChngStrObj["spa_spa"] += "<img src=\"images/misc/updates_map_thumb.jpeg\" alt=\"Map\" title=\"Map\" style=\"float:left;margin-right:6px;max-width:86px;\">Tipo de publicacion cambiado a mapa. Se crea un mapa a partir de listados de usuarios o propiedades.";
         tTChngStrObj["fr_fr"] += "<img src=\"images/misc/updates_map_thumb.jpeg\" alt=\"Map\" title=\"Map\" style=\"float:left;margin-right:6px;max-width:86px;\">Type de publication chang\u00e9 en carte. Une carte est cr\u00e9\u00e9e \u00e0 partir des utilisateurs ou des propri\u00e9t\u00e9s.";
-        hasSlect = "yes";
-        break;
-        case "pvideo":
-        tTChngStrObj["en_us"] += "Post type changed to video. A video is created from selected property images.";
-        tTChngStrObj["pt_pt"] += "Tipo de post alterado para video. Um video e criado a partir das imagens das propriedades selecionadas.";
-        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a video. Se crea un video a partir de las imagenes de las propiedades seleccionadas.";
-        tTChngStrObj["fr_fr"] += "Type de publication change en video. Une video est cree a partir des images des proprietes selectionnees.";
         hasSlect = "yes";
         break;
         default:
@@ -605,13 +596,7 @@ function setUPostAddSave(tSUPAresp) {
     try {
         var responseObj = JSON.parse(tSUPAresp);
         var insertedPostId = responseObj.data;
-        tmpInsrtdPstId = insertedPostId;
-            tSlctdPstType = document.getElementById("p_ptype").value;
-                if(tSlctdPstType == "pvideo") {
-                  createVideoAutomatically();
-                } else {
         eindex("aa-edit-post", "pid=aa-edit-post&tpstid=" + insertedPostId);
-        }
     } catch(e) {
         console.error("Error parsing response: " + e);
         alert("Error saving post: " + e);
@@ -754,12 +739,6 @@ async function doPostAdd() {
                        html2canvas(daMdiv).then(function(canvas) { savePstCanvasImg(canvas);})
   
             // setPostAdd();
-            break;
-            case "pvideo":
-            tZpd = LZString.compressToEncodedURIComponent(JSON.stringify(JSSHOP.ads.getUpdatePVrs("pvideo")));
-            console.log("doPostAdd.pvideo: " + tZpd);
-                        p_vars.value = tZpd; 
-         savePstCanvasImg(getTmpPstImgCnvs());
             break;
         default:
             setPostAdd();
@@ -905,14 +884,6 @@ currMediaID = prpid;
         }
 
         JSSHOP.loadScript("js/tinymce/tinymce.js", loadTnyI, "js");
-        // Add video option to p_ptype dropdown
-        var ptypeSelect = document.getElementById("p_ptype");
-        if (ptypeSelect) {
-            var opt = document.createElement("option");
-            opt.value = "pvideo";
-            opt.text = "Video";
-            ptypeSelect.appendChild(opt);
-        }
         tDDfullStr = "";
         // dvPrvDispFlds.innerHTML = JSSHOP.ui.getBSdropDstr('p_privacy', stxt[101], svftObj["userpriv"], "doGenDDcb");
 return dmyFnishCntLoad;
@@ -1188,76 +1159,11 @@ function setTPstUsrsArr(a,b,c) {
         }
     }
 
-function doVideoDiv(propsArr) {
-    console.log("doVideoDiv called with propsArr length:", propsArr ? propsArr.length : 0);
-    isCCapModLoaded = "yes";
-    var tVideoHTML = getVideoInterfaceHTML(propsArr);
-    console.log("doVideoDiv: video HTML generated, length:", tVideoHTML.length);
-    document.getElementById("dvDemoView").innerHTML = tVideoHTML;
-    console.log("doVideoDiv: dvDemoView updated with video interface");
-    setTimeout(function() {
-        console.log("doVideoDiv: setTimeout executing, adding tab event listeners");
-        // add tab event listeners
-        var tabs = document.querySelectorAll('#dvDemoView .nav-tabs a');
-        console.log("doVideoDiv: found", tabs.length, "tabs");
-        for (var i = 0; i < tabs.length; i++) {
-            tabs[i].addEventListener('click', function(e) {
-                e.preventDefault();
-                var target = this.getAttribute('href');
-                console.log("doVideoDiv: tab clicked, target:", target);
-                var panes = document.querySelectorAll('#dvDemoView .tab-pane');
-                for (var j = 0; j < panes.length; j++) {
-                    panes[j].classList.remove('active');
-                }
-                document.querySelector(target).classList.add('active');
-                // Remove active from tabs
-                var tabLinks = document.querySelectorAll('#dvDemoView .nav-tabs li');
-                for (var k = 0; k < tabLinks.length; k++) {
-                    tabLinks[k].classList.remove('active');
-                }
-                this.parentElement.classList.add('active');
-                // If video tab, draw collage
-                if (target === '#videoTab') {
-                    console.log("doVideoDiv: drawing video collage");
-                    setTimeout(function() { drawVideoCollage(); }, 100);
-                } else if (target === '#imagesTab') {
-                    console.log("doVideoDiv: setting images tab content");
-                    document.getElementById("divImgsContent").innerHTML = getImgTabContent();
-                    setTimeout(function() {
-                        var sortable = new Sortable(document.getElementById('sortableImages'), {
-                            animation: 150,
-                            handle: '.drag-handle',
-                            onEnd: function(evt) {
-                                // Update selectedImages order
-                                var newOrder = [];
-                                var items = document.querySelectorAll('#sortableImages .sortable-item');
-                                for (var j = 0; j < items.length; j++) {
-                                    var dataIndex = parseInt(items[j].getAttribute('data-index'));
-                                    var obj = selectedImages.find(s => s.index === dataIndex);
-                                    if (obj) newOrder.push(obj);
-                                }
-                                selectedImages = newOrder;
-                            }
-                        });
-                    }, 100);
-                }
-            });
-        }
-        // Initial draw
-        console.log("doVideoDiv: initial drawVideoCollage");
-        drawVideoCollage();
-    }, 500);
-}
-
-    function setTPstPrpsArr(a,b,c) {
+  function setTPstPrpsArr(a,b,c) {
     document.getElementById("dvDemoView").innerHTML = "...../.....";
     tmpPstPrpsArr = null;
     tmpPstPrpsArr = [];
     tmpPstPrpsArr = JSON.parse(b);
-    currSlctdPrpsObj = {};
-    for(var i=0; i<tmpPstPrpsArr.length; i++) {
-        currSlctdPrpsObj["prp" + tmpPstPrpsArr[i]._id] = tmpPstPrpsArr[i];
-    }
     console.log("setTPstPrpsArr: " + tmpPstPrpsArr);
     JSSHOP.ui.closeLbox();
 
@@ -1285,17 +1191,8 @@ function doVideoDiv(propsArr) {
  
                 tImgHTML = JSSHOP.ads.getEditorPrpStr(tmpPstPrpsArr);
                 tinyMCE.activeEditor.setContent(tImgHTML);
-             break;
-             case "pvideo":
-                if (typeof getVideoInterfaceHTML === 'function') {       
-                    console.log("getVideoInterfaceHTML function exists, called doVideoDiv");
-                    doVideoDiv(tmpPstPrpsArr);
-                } else {
-                    console.log("getVideoInterfaceHTML function does not exist, loading CCapture_mod.js");
-                    JSSHOP.loadScript("js/thirdp/CCapture_mod.js", function() { console.log("CCapture_mod.js loaded in setTPstPrpsArr"); doVideoDiv(tmpPstPrpsArr); }, "js");
-                }
-             break;
             default:
+                break;
             }
 
 

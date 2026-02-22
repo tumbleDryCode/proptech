@@ -205,6 +205,10 @@ if(isset($_GET["tupid"])) {
                      if($ppType == "pimage") {
                         $pgType = "image";
                         $oglocation = $image;
+                    } else if($ppType == "pvideo") {
+                         $pgType = "video";
+                         $oglocation = "https://dev.propsgo.com/images/ucontent/" . $row["p_vala"];
+                         
                     } else {
                         $pgType = "website";
                     }   

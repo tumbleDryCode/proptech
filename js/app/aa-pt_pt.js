@@ -741,6 +741,7 @@ tPostsTypeObj["ppost"] = "Post";
 tPostsTypeObj["pimage"] = "Flyer";
 tPostsTypeObj["pcarousel"] = "Swiper";
 tPostsTypeObj["pmap"] = "Mapa";
+tPostsTypeObj["pvideo"] = "Video";
 svftObj["posttype"] = tPostsTypeObj;
 
 tPostsPosObj = null;
