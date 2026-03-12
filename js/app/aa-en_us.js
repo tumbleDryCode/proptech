@@ -513,6 +513,8 @@ stxt[994] = "title, description of property";
 stxt[995] = "Image Type"; 
 stxt[996] = "Image Title"; 
 stxt[997] = "Save Title"; 
+stxt[998] = "Open current property";
+stxt[999] = "Download";
 
 // valdiation error messages
 stxt[1001] = "Username must be good.";

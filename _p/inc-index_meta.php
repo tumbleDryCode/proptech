@@ -26,7 +26,7 @@ global $pgDesc, $pgKeywords, $pgTitle, $siteTitle, $pgType, $image, $oglocation;
 
 $oglocation = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
 $oglocation .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
-
+$ogurl = $oglocation;
 
  // include $_SERVER['DOCUMENT_ROOT'] . "/incasa/_p/DumDatabase.php";
 // $_SERVER['DOCUMENT_ROOT'] does not work in this context, use relative path to _p/DumDatabase.php
@@ -156,7 +156,9 @@ if(isset($_GET["tupid"])) {
                 $tJsonSTr = "";
                  while($row = $fJSonFldQs->fetch_assoc()) {
                  $title = $row["p_title"];
-                 $pgTitle = $title;
+                 $apgTitle = $title;
+                 $pgTitle = urldecode($title);
+
                  /*
                  if($description == "ns") {
                       $description = $title;
@@ -208,7 +210,7 @@ if(isset($_GET["tupid"])) {
                     } else if($ppType == "pvideo") {
                          $pgType = "video";
                          $oglocation = "https://dev.propsgo.com/images/ucontent/" . $row["p_vala"];
-                         
+                        // $ogurl = $oglocation;
                     } else {
                         $pgType = "website";
                     }   
@@ -228,7 +230,9 @@ if(isset($_GET["tupid"])) {
           
             }
 
-
+// url decode $pgDesc and $pgTitle for use in meta tags
+$pgDesc = urldecode($pgDesc);
+$pgTitle = urldecode($pgTitle);
 $tMOGstr = "<meta name=\"description\" content=\"" . $pgDesc . "\">\n";
 $tMOGstr .= "<meta name=\"keywords\" content=\"" . $pgKeywords . "\">\n";
 $tMOGstr .= "<meta property=\"og:description\" content=\"" . $pgDesc . "\">\n";
@@ -236,7 +240,11 @@ $tMOGstr .= "<meta property=\"og:image\" content=\"" . $image . "\">\n";
 $tMOGstr .= "<meta property=\"og:site_name\" content=\"propsgo.com\">\n";
 $tMOGstr .= "<meta property=\"og:title\" content=\"" . $pgTitle . "\">\n";
 $tMOGstr .= "<meta property=\"og:type\" content=\"" . $pgType . "\">\n";
-$tMOGstr .= "<meta property=\"og:url\" content=\"" . $oglocation . "\">\n";
+$tMOGstr .= "<meta property=\"og:url\" content=\"" . $ogurl . "\">\n";
+if($pgType == "video") {
+$tMOGstr .= "<meta property=\"og:video:secure_url\" content=\"" . $oglocation . "\">\n";
+$tMOGstr .= "<meta property=\"og:video\" content=\"" . $oglocation . "\">\n";
+}
 // appID
 $tMOGstr .= "<meta property=\"fb:app_id\" content=\"1814864155722452\">\n";
 $tMOGstr .= "<title>" . $pgTitle . "</title>\n";

@@ -8270,11 +8270,18 @@ tUdtLnkStr += "<td>";
 
 tUdtLnkStr += "</td>";
 tUdtLnkStr += "<td>";
- 
-
 tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('update'," + ided + ");\"><i class=\"menu-material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
-
-tUdtLnkStr += "</td></tr></table>";
+tUdtLnkStr += "</td>";
+if(tUpType == "pvideo") {
+    // add the download icon and link here
+tUdtLnkStr += "<td>";
+var downloadLbl = (typeof stxt !== "undefined" && stxt[999]) ? stxt[999] : "Download";
+ 
+tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\">";                    
+tUdtLnkStr += "<a href=\"images/ucontent/" + tUdtsObj.p_vala + "\" download class=\"txtClrHdr\"><i class=\"menu-material-icons txtClrTtl\" alt=\"download\" title=\"download\" value=\"download\">&#xe2c4;</i>" + " " + downloadLbl + "</a></span>";
+tUdtLnkStr += "</td>";
+}
+tUdtLnkStr += "</tr></table>";
 tUdtLnkStr += "</div>"; // end bkdgClrWhite brdrClrHdr txtSmall txtBold
 console.log("jshp_ads_showUpdtsFeed.tUdtLnkStr: " + tUdtLnkStr);
 
@@ -8446,23 +8453,67 @@ setTimeout(
  
                 break;
                 case "pvideo":
+                    var pvidId = "updVid_" + tUdtsObj._id;
+                    var pvidLinkId = "updVidLink_" + tUdtsObj._id;
+                    var pvidWrapId = "updVidWrap_" + tUdtsObj._id;
+                    var pvidFramePropIds = [];
+                    var pvidFrameDurationSec = 3;
+                    try {
+                        if (tUdtsObj.p_vars) {
+                            var rawPvidVars = LZString.decompressFromEncodedURIComponent(decodeURIComponent(tUdtsObj.p_vars));
+                            var pvidVarsObj = JSON.parse(rawPvidVars || "{}");
+                            if (pvidVarsObj && pvidVarsObj.cnfg) {
+                                if (Array.isArray(pvidVarsObj.cnfg.framePropertyIds)) {
+                                    pvidFramePropIds = pvidVarsObj.cnfg.framePropertyIds.slice();
+                                }
+                                if (!isNaN(parseFloat(pvidVarsObj.cnfg.frameDurationSec))) {
+                                    pvidFrameDurationSec = Math.max(0.5, parseFloat(pvidVarsObj.cnfg.frameDurationSec));
+                                }
+                            }
+                            if (!pvidFramePropIds.length && pvidVarsObj && pvidVarsObj.data && typeof pvidVarsObj.data === "object") {
+                                for (var pKey in pvidVarsObj.data) {
+                                    if (pvidVarsObj.data.hasOwnProperty(pKey) && pvidVarsObj.data[pKey] && typeof pvidVarsObj.data[pKey]._id !== "undefined") {
+                                        pvidFramePropIds.push(String(pvidVarsObj.data[pKey]._id));
+                                    }
+                                }
+                            }
+                        }
+                    } catch (ePvideoVars) {
+                        console.log("pvideo vars parse err: " + ePvideoVars);
+                    }
+
                     // wrap this in a div and add the buttons in the div below the video
-                 tUdtsStr += "<div class=\"mb-4\" style=\"background-image: url('images/ucontent/" + tUdtsObj.p_image + "');\">";
+                 tUdtsStr += "<div class=\"mb-4\" style=\"width:100%;max-height:400px;max-width:400px;background-image: url('images/ucontent/" + tUdtsObj.p_image + "');\">";
                  // make the image "images/ucontent/" + tUdtsObj.p_image as background and add the play icon in the center, on click replace with video player
  // align it in middle of parent div with style=
  
  
                 // embedd the p_vala webm video file found in images/ucontent/ folder
-                tUdtsStr += "<video controls style=\"width:100%;max-height:400px;max-width:400px;\" poster=\"images/ucontent/" + tUdtsObj.p_image + "\">";
+                tUdtsStr += "<video id=\"" + pvidId + "\" controls style=\"width:100%;max-height:400px;max-width:400px;\" poster=\"images/ucontent/" + tUdtsObj.p_image + "\">";
                 // add the poster attribute with the p_image as thumbnail
                 tUdtsStr += "<source src=\"images/ucontent/" + tUdtsObj.p_image + "\" type=\"image/jpeg\">";
                 tUdtsStr += "<source src=\"images/ucontent/" + tUdtsObj.p_vala + "\" type=\"video/webm\">";
                 tUdtsStr += "Your browser does not support the video tag."; 
                 tUdtsStr += "</video>";
+
+
+
                 tUdtsStr += "<div class=\"bg-gray quantity px-4 pt-4\">";
+
+                                if (pvidFramePropIds.length > 0) {
+                    var initPropId = String(pvidFramePropIds[0] || "");
+                    var initHref = currWebHome + "index.html?ditemid=" + initPropId + "-" + usrlang;
+                    var openCurrPropLabel = (typeof stxt !== "undefined" && stxt[998]) ? stxt[998] : "Open current property";
+                    tUdtsStr += "<div id=\"" + pvidWrapId + "\" class=\"txtSmall\" style=\"padding:6px 0 2px 0;\">";
+                    tUdtsStr += "<a id=\"" + pvidLinkId + "\" href=\"" + initHref + "\" target=\"_blank\" rel=\"noopener\" class=\"txtBold\" style=\"display:inline-block;padding:5px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.7);background:rgba(255,255,255,0.9);color:#143a5c;text-decoration:none;\">" + openCurrPropLabel + "</a>";
+                    tUdtsStr += "</div>";
+                    tUdtsStr += "<script>(function(){var v=document.getElementById('" + pvidId + "');var a=document.getElementById('" + pvidLinkId + "');if(!v||!a){return;}var ids=" + JSON.stringify(pvidFramePropIds) + ";var segSec=" + pvidFrameDurationSec + ";var base=(typeof currWebHome==='string')?currWebHome:'" + currWebHome + "';var lng='" + usrlang + "';var mk=function(i){if(i<0||i>=ids.length){return ''; }return base + 'index.html?ditemid=' + ids[i] + '-' + lng;};var sync=function(){if(!ids.length){a.style.display='none';return;}var idx=Math.floor((v.currentTime||0)/segSec);if(idx<0){idx=0;}if(idx>=ids.length){idx=ids.length-1;}a.href=mk(idx);};v.addEventListener('loadedmetadata',sync);v.addEventListener('timeupdate',sync);sync();})();<\/script>";
+                }
+                
                 tUdtsStr += tUpPcontent;
                 tUdtsStr += "</div>"; // end bg-gray quantity px-4 pt-4
                 tUdtsStr += "</div>"; // end mb-4
+                    // add a download link for the video file to tUdtLnkStr += 
 
                  // add the share,msg,fav  buttons here
                     tUdtsStr += tUdtLnkStr;

@@ -510,6 +510,8 @@ stxt[994] = "titulo e descricao";  // titulo e descricao
 stxt[995] = "Tipo de Imagem";  // Tipo de Imagem
 stxt[996] = "Titulo de Imagem"; 
 stxt[997] = "Guardar Titulo";
+stxt[998] = "Abrir imovel atual";
+stxt[999] = "Descarregar";
 
 
 

@@ -71,7 +71,15 @@ if ('serviceWorker' in navigator) {
  
    <script src="js/thirdp/swiper-bundle.min.js" type="text/javascript"></script>    
    <script src="js/jquery.min.js"></script> 
-   <script src="js/thirdp/CCapture.all.min.js" type="text/javascript"></script>
+   <script src="js/thirdp/CCapture/CCapture.js" type="text/javascript"></script>
+   <script src="js/thirdp/CCapture/Whammy.js" type="text/javascript"></script>
+    <script src="js/thirdp/CCapture/download.js" type="text/javascript"></script>
+    <script src="js/thirdp/CCapture/webm-writer.js" type="text/javascript"></script>
+    
+
+  
+   
+
   <script src="js/st/Sortable.js"  language="javascript" type="text/javascript"></script>
    <!-- <script src="js/thirdp/html2canvas.js" type="text/javascript"></script>    
       -->

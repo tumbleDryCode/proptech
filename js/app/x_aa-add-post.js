@@ -299,8 +299,9 @@ var doPstTypOpts = function(tPTval) {
             } else {
 
              tSelPropStr = "<table style=\"margin: 0 auto;\"><tr><td><div class=\"slmtable txtClrHdr txtBold brdrClrHdr crsrPointer txtSmall form-control\" onclick=\"javascript:JSSHOP.ui.getPickerDiv('props');\">" + stxt[635] + " " + tPostsTypeObj[objVal] + "</div></td></tr>";
+             if(objVal == "pimage") {
              tSelPropStr += "<tr><td><div class=\"slmtable txtClrHdr txtBold brdrClrHdr crsrPointer txtSmall form-control\" onclick=\"javascript:openFlyersModalDialog();\">Recent</div></td></tr>";    
-
+             }
              tSelPropStr += "</table>";
                 tFullTTTtxt += tSelPropStr;
 
@@ -608,7 +609,13 @@ function setUPostAddSave(tSUPAresp) {
         tmpInsrtdPstId = insertedPostId;
             tSlctdPstType = document.getElementById("p_ptype").value;
                 if(tSlctdPstType == "pvideo") {
-                  createVideoAutomatically();
+                    var hasQueuedAudio = (typeof hasPendingAudioClipSrcForPost === "function") && hasPendingAudioClipSrcForPost();
+                    if (hasQueuedAudio && typeof createVideoWithAudioStandalone === "function" && typeof consumePendingAudioClipSrcForPost === "function") {
+                        var queuedAudioSrc = consumePendingAudioClipSrcForPost();
+                        createVideoWithAudioStandalone(queuedAudioSrc, true);
+                    } else {
+                        createVideoAutomatically();
+                    }
                 } else {
         eindex("aa-edit-post", "pid=aa-edit-post&tpstid=" + insertedPostId);
         }
@@ -698,6 +705,41 @@ function setPostAdd() {
         }
     }
 
+    if (tSlctdPstType == "pvideo") {
+        try {
+            var pvideoVars = JSSHOP.ads.getUpdatePVrs("pvideo");
+            if (!pvideoVars || typeof pvideoVars !== "object") {
+                pvideoVars = {};
+            }
+            if (!pvideoVars.cnfg || typeof pvideoVars.cnfg !== "object") {
+                pvideoVars.cnfg = {};
+            }
+
+            if (typeof getVideoFramePropertyIdsForPost === "function") {
+                var framePropIds = getVideoFramePropertyIdsForPost();
+                if (framePropIds && framePropIds.length) {
+                    pvideoVars.cnfg.framePropertyIds = framePropIds;
+                }
+            }
+            if (typeof getFrameDurationSeconds === "function") {
+                pvideoVars.cnfg.frameDurationSec = getFrameDurationSeconds();
+            }
+            if (typeof getVideoFps === "function") {
+                pvideoVars.cnfg.frameFps = getVideoFps();
+            }
+            if (typeof getPosterFrameSourceIndexForPost === "function") {
+                var posterFrameSourceIndex = getPosterFrameSourceIndexForPost();
+                if (posterFrameSourceIndex !== "") {
+                    pvideoVars.cnfg.posterFrameSourceIndex = posterFrameSourceIndex;
+                }
+            }
+
+            document.getElementById("p_vars").value = LZString.compressToEncodedURIComponent(JSON.stringify(pvideoVars));
+        } catch (e) {
+            console.log("setPostAdd.pvideo vars err: " + e);
+        }
+    }
+
 
     tmpFobj = null;
     tmpFobj = {};
@@ -756,10 +798,14 @@ async function doPostAdd() {
             // setPostAdd();
             break;
             case "pvideo":
+                /* old code for pvideo post type - now using createVideoWithAudioStandalone function to create video with audio if there is a queued audio clip src for post
+
             tZpd = LZString.compressToEncodedURIComponent(JSON.stringify(JSSHOP.ads.getUpdatePVrs("pvideo")));
             console.log("doPostAdd.pvideo: " + tZpd);
                         p_vars.value = tZpd; 
          savePstCanvasImg(getTmpPstImgCnvs());
+            */
+            doCreateVid();
             break;
         default:
             setPostAdd();
@@ -842,11 +888,14 @@ currMediaID = prpid;
             tDDPTyObj["horvert"] = "horizontal";
             tDDPTyObj["icn"] = "noQvalue";
             tDDPTyObj["kvIcnsObj"] = {};
-            tDDPTyObj["kvIcnsObj"]["ppost"] = "&#xe5cd;";
-            tDDPTyObj["kvIcnsObj"]["pcontent"] = "&#xe5cd;";
-            tDDPTyObj["kvIcnsObj"]["pimage"] = "&#xe5cd;";
-            tDDPTyObj["kvIcnsObj"]["pcarousel"] = "&#xe5cd;";
-            tDDPTyObj["kvIcnsObj"]["pmap"] = "&#xe5cd;";
+            // Use post-type specific Material icons in the same HTML entity format.
+            tDDPTyObj["kvIcnsObj"]["ppost"] = "&#xe89c;";
+            tDDPTyObj["kvIcnsObj"]["pcontent"] = "&#xe873;";
+            tDDPTyObj["kvIcnsObj"]["pimage"] = "&#xe3f4;";
+            tDDPTyObj["kvIcnsObj"]["pcarousel"] = "&#xe8eb;";
+            tDDPTyObj["kvIcnsObj"]["pmap"] = "&#xe55b;";
+            tDDPTyObj["kvIcnsObj"]["pvideo"] = "&#xe04b;";
+
             tDDPTyStr = JSSHOP.ui.getNuBSdropDstr(tDDPTyObj);
             document.getElementById("dvPTypeFld").innerHTML = tDDPTyStr;
 
@@ -1216,36 +1265,65 @@ function doVideoDiv(propsArr) {
                     tabLinks[k].classList.remove('active');
                 }
                 this.parentElement.classList.add('active');
-                // If video tab, draw collage
-                if (target === '#videoTab') {
-                    console.log("doVideoDiv: drawing video collage");
-                    setTimeout(function() { drawVideoCollage(); }, 100);
-                } else if (target === '#imagesTab') {
+                if (target === '#imagesTab') {
                     console.log("doVideoDiv: setting images tab content");
                     document.getElementById("divImgsContent").innerHTML = getImgTabContent();
                     setTimeout(function() {
-                        var sortable = new Sortable(document.getElementById('sortableImages'), {
+                        var sortableEl = document.getElementById('sortableImages');
+                        if (typeof initFramesSortable === 'function') {
+                            initFramesSortable(sortableEl, 'x_aa-add-post-imagesTab');
+                            return;
+                        }
+                        console.log('[FRAMES][SORTABLE][INIT_FALLBACK]', {
+                            source: 'x_aa-add-post-imagesTab',
+                            hasElement: !!sortableEl,
+                            hasSortable: (typeof Sortable !== 'undefined'),
+                            hasInitFn: false
+                        });
+                        if (!sortableEl || typeof Sortable === 'undefined') {
+                            return;
+                        }
+                        new Sortable(sortableEl, {
                             animation: 150,
                             handle: '.drag-handle',
                             onEnd: function(evt) {
-                                // Update selectedImages order
+                                console.log('[FRAMES][SORTABLE][END_FALLBACK]', {
+                                    source: 'x_aa-add-post-imagesTab',
+                                    oldIndex: evt.oldIndex,
+                                    newIndex: evt.newIndex
+                                });
                                 var newOrder = [];
                                 var items = document.querySelectorAll('#sortableImages .sortable-item');
                                 for (var j = 0; j < items.length; j++) {
-                                    var dataIndex = parseInt(items[j].getAttribute('data-index'));
-                                    var obj = selectedImages.find(s => s.index === dataIndex);
-                                    if (obj) newOrder.push(obj);
+                                    var dataIndex = parseInt(items[j].getAttribute('data-index'), 10);
+                                    var obj = selectedImages.find(function(s) { return s.index === dataIndex; });
+                                    if (obj) {
+                                        newOrder.push(obj);
+                                    }
                                 }
                                 selectedImages = newOrder;
+                                if (typeof applyImageOrder === 'function') {
+                                    applyImageOrder();
+                                }
                             }
                         });
                     }, 100);
+                } else if (target === '#audioTab') {
+                    console.log("doVideoDiv: setting audio tab content");
+                    document.getElementById("divAudioContent").innerHTML = getAudioTabContent();
+                } else if (target === '#videoTab') {
+                    if (typeof updatePosterPrependedHint === 'function') {
+                        updatePosterPrependedHint();
+                    }
                 }
             });
         }
         // Initial draw
         console.log("doVideoDiv: initial drawVideoCollage");
         drawVideoCollage();
+        if (typeof updatePosterPrependedHint === 'function') {
+            updatePosterPrependedHint();
+        }
     }, 500);
 }
 

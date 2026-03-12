@@ -501,6 +501,8 @@ stxt[994] = "titre, description de la propri\u00e9t\u00e9";
 stxt[995] = "Type d'image";
 stxt[996] = "Titre de l'image";
 stxt[997] = "Enregistrer le titre";
+stxt[998] = "Ouvrir la propriete actuelle";
+stxt[999] = "Telecharger";
 
 // valdiation error messages
 stxt[1001] = "Le nom d'utilisateur doit \u00eatre correct.";

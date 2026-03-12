@@ -547,6 +547,8 @@ stxt[994] = "titulo y descripcion de la propiedad"; // titulo y descripcion de l
 stxt[995] = "Tipo de imagen"; // Tipo de imagen
 stxt[996] = "Titulo de Imagen"; // Titulo de la imagen
 stxt[997] = "Guardar Titulo"; // Guardar Titulo
+stxt[998] = "Abrir propiedad actual";
+stxt[999] = "Descargar";
 
 
 

@@ -26,26 +26,33 @@ $ud = $_POST['ud'];
 
 $upload_dir = $ud;
  
-$pstimg = $_POST['inpCnvsImg'];
- 
- $unencdImg = urldecode($pstimg);
-                
-                // Include the LZString class
-                include_once 'LZCompressor/LZString.php';
-                include_once 'LZCompressor/LZData.php';
-                include_once 'LZCompressor/LZReverseDictionary.php';
-                include_once 'LZCompressor/LZUtil.php';
-                include_once 'LZCompressor/LZUtil16.php';
-                include_once 'LZCompressor/LZContext.php';
+$data = null;
 
-                // Instantiate the LZString class
-                $lsDCls = new \LZCompressor\LZString();
-                $vfileblob = $lsDCls->decompressFromEncodedURIComponent($unencdImg);
-                // Extract base64 data from DataURL format (data:video/webm;base64,...)
-                if (strpos($vfileblob, ',') !== false) {
-                    $vfileblob = substr($vfileblob, strpos($vfileblob, ',') + 1);
-                }
-                $data = base64_decode($vfileblob);
+if (isset($_FILES['videoFile']) && isset($_FILES['videoFile']['tmp_name']) && is_uploaded_file($_FILES['videoFile']['tmp_name'])) {
+    $data = file_get_contents($_FILES['videoFile']['tmp_name']);
+} else if (isset($_POST['inpCnvsImg'])) {
+    $pstimg = $_POST['inpCnvsImg'];
+    $unencdImg = urldecode($pstimg);
+
+    include_once 'LZCompressor/LZString.php';
+    include_once 'LZCompressor/LZData.php';
+    include_once 'LZCompressor/LZReverseDictionary.php';
+    include_once 'LZCompressor/LZUtil.php';
+    include_once 'LZCompressor/LZUtil16.php';
+    include_once 'LZCompressor/LZContext.php';
+
+    $lsDCls = new \LZCompressor\LZString();
+    $vfileblob = $lsDCls->decompressFromEncodedURIComponent($unencdImg);
+    if (strpos($vfileblob, ',') !== false) {
+        $vfileblob = substr($vfileblob, strpos($vfileblob, ',') + 1);
+    }
+    $data = base64_decode($vfileblob);
+}
+
+if ($data === null || $data === false || strlen($data) === 0) {
+    echo 'Error: No video data uploaded';
+    exit;
+}
  
 
                 
