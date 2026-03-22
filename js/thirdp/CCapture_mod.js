@@ -53,6 +53,113 @@ var NO_STICKER_VALUE = "__NO_STICKER__";
 var stickerPickerPendingPrefix = "";
 var isPrvwngVid = "no";
 var posterFrameSourceIndex = -1;
+var incasaVidCapturePlan = null;
+
+function logNuVideoCaptureProgress(rawPhase, rawMessage, rawPct, rawState, rawMode) {
+    try {
+        var phase = String(rawPhase || "status").toLowerCase();
+        var message = String(rawMessage || "");
+        var pct = parseFloat(rawPct);
+        if (isNaN(pct)) {
+            pct = 0;
+        }
+        pct = Math.max(0, Math.min(100, pct));
+        var state = String(rawState || "running").toLowerCase();
+        var mode = String(rawMode || "video").toLowerCase();
+        var modeLabel = (mode === "standalone") ? "Video+Audio" : "Video";
+
+        console.log("[VID-CAPTURE][PROGRESS]", {
+            phase: phase,
+            pct: pct,
+            state: state,
+            message: message,
+            mode: mode
+        });
+
+        var wrapId = "incasaVidCaptureProgressWrap";
+        var barId = "incasaVidCaptureProgressBar";
+        var txtId = "incasaVidCaptureProgressTxt";
+        var pctId = "incasaVidCaptureProgressPct";
+        var closeId = "incasaVidCaptureProgressClose";
+        var wrapEl = document.getElementById(wrapId);
+        if (!wrapEl) {
+            wrapEl = document.createElement("div");
+            wrapEl.id = wrapId;
+            wrapEl.setAttribute("data-user-hidden", "no");
+            wrapEl.style.position = "fixed";
+            wrapEl.style.left = "14px";
+            wrapEl.style.bottom = "14px";
+            wrapEl.style.zIndex = "999999";
+            wrapEl.style.minWidth = "260px";
+            wrapEl.style.maxWidth = "380px";
+            wrapEl.style.background = "rgba(24,24,24,0.9)";
+            wrapEl.style.color = "#fff";
+            wrapEl.style.padding = "10px 12px";
+            wrapEl.style.borderRadius = "8px";
+            wrapEl.style.boxShadow = "0 2px 12px rgba(0,0,0,0.35)";
+            wrapEl.style.fontSize = "12px";
+            wrapEl.style.lineHeight = "1.35";
+            wrapEl.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">' +
+                '<div id="' + txtId + '" style="flex:1 1 auto;">Preparing video capture...</div>' +
+                '<button id="' + closeId + '" type="button" aria-label="Hide video capture progress" style="border:none;background:transparent;color:#fff;cursor:pointer;font-size:18px;font-weight:700;line-height:1;opacity:0.9;padding:0 4px;">X</button>' +
+                '</div>' +
+                '<div style="height:7px;background:rgba(255,255,255,0.2);border-radius:5px;overflow:hidden;">' +
+                '<div id="' + barId + '" style="height:7px;width:0%;background:#35c759;transition:width 0.2s ease;"></div></div>' +
+                '<div id="' + pctId + '" style="margin-top:6px;text-align:right;opacity:0.9;">0%</div>';
+            document.body.appendChild(wrapEl);
+
+            var closeBtn = document.getElementById(closeId);
+            if (closeBtn) {
+                closeBtn.addEventListener("click", function() {
+                    var pWrap = document.getElementById(wrapId);
+                    if (pWrap) {
+                        pWrap.setAttribute("data-user-hidden", "yes");
+                        pWrap.style.display = "none";
+                    }
+                });
+            }
+        }
+
+        if (phase === "start") {
+            wrapEl.setAttribute("data-user-hidden", "no");
+        }
+        if (wrapEl.getAttribute("data-user-hidden") === "yes" && state === "running") {
+            return;
+        }
+
+        wrapEl.style.display = "block";
+        var txtEl = document.getElementById(txtId);
+        var barEl = document.getElementById(barId);
+        var pctEl = document.getElementById(pctId);
+        if (txtEl) {
+            txtEl.textContent = message || (modeLabel + " capture " + phase + "...");
+        }
+        if (barEl) {
+            barEl.style.width = Math.round(pct) + "%";
+            if (state === "error") {
+                barEl.style.background = "#ff453a";
+            } else if (state === "done") {
+                barEl.style.background = "#35c759";
+            } else {
+                barEl.style.background = "#0a84ff";
+            }
+        }
+        if (pctEl) {
+            pctEl.textContent = Math.round(pct) + "%";
+        }
+
+        if (state === "done" || state === "error") {
+            setTimeout(function() {
+                var doneWrap = document.getElementById(wrapId);
+                if (doneWrap) {
+                    doneWrap.style.display = "none";
+                }
+            }, 2500);
+        }
+    } catch (eVidCaptureProgress) {
+        console.log("logNuVideoCaptureProgress: " + eVidCaptureProgress);
+    }
+}
 
 function logVidAudio(tag, details) {
     if (typeof details === "undefined") {
@@ -210,6 +317,17 @@ function updatePosterPrependedHint() {
     }
 }
 
+function getVideoTabsAndContentHtml() {
+    var tabHtml = '<ul class="nav nav-tabs mb-3" style="display:flex;flex-wrap:wrap;gap:6px;row-gap:6px;"><li class="nav-item active"><a class="nav-link active px-2 px-md-3" style="white-space:nowrap;" href="#videoTab">Video</a></li><li class="nav-item"><a class="nav-link px-2 px-md-3" style="white-space:nowrap;" href="#imagesTab">Frames</a></li><li class="nav-item"><a class="nav-link px-2 px-md-3" style="white-space:nowrap;" href="#audioTab">Audio</a></li><li class="nav-item"><a class="nav-link px-2 px-md-3" style="white-space:nowrap;" href="#settingsTab">Settings</a></li></ul>';
+    var contentHtml = '<div class="tab-content pt-2" style="min-height: 400px;"><div id="videoTab" class="tab-pane active" style="text-align:center;">';
+        // the canvas 340px may be to big for mobile screens. we need to make its width responsive while maintaining its aspect ratio. we can achieve this by wrapping it in a div with max-width and using CSS to make the canvas scale down on smaller screens. 
+ 
+    contentHtml += '<canvas id="vidFramesCanvas" width="300px" height="300px" style="border:1px solid #ccc; background:#222;"></canvas>';
+    
+    contentHtml += '<br><input type="button" id="btnPreview" value="Preview" onclick="doPrevwBtnClick();" class="cls_button cls_button-small txtSmall bkgdClrHdr txtClrWhite" /><div id="posterPrependHint" class="txtSmall txtClrGrey" style="margin-top:6px;display:none;"></div></div><div id="imagesTab" class="tab-pane"><div id="divImgsContent"></div></div><div id="audioTab" class="tab-pane"><div id="divAudioContent"></div></div><div id="settingsTab" class="tab-pane"><div id="divSettingsContent">' + getSettingsTabContent() + '</div></div></div>';
+    return tabHtml + contentHtml;
+}
+
 function getVideoInterfaceHTML(selectedProps) {
     console.log("getVideoInterfaceHTML called with selectedProps:", selectedProps);
     window.selectedPropsArr = selectedProps; // Store for drawVideoCollage
@@ -244,17 +362,14 @@ function getVideoInterfaceHTML(selectedProps) {
         tSlctdPrpsObj["prp" + prop._id].imgSrc = "images/property/" + prop.pimage;
     }
     window.tSlctdPrpsObj = tSlctdPrpsObj;
-    var tabHtml = '<ul class="nav nav-tabs mb-3" style="display:flex;flex-wrap:wrap;gap:6px;row-gap:6px;"><li class="nav-item active"><a class="nav-link active px-2 px-md-3" style="white-space:nowrap;" href="#videoTab">Video</a></li><li class="nav-item"><a class="nav-link px-2 px-md-3" style="white-space:nowrap;" href="#imagesTab">Frames</a></li><li class="nav-item"><a class="nav-link px-2 px-md-3" style="white-space:nowrap;" href="#audioTab">Audio</a></li><li class="nav-item"><a class="nav-link px-2 px-md-3" style="white-space:nowrap;" href="#settingsTab">Settings</a></li></ul>';
-    var contentHtml = '<div class="tab-content pt-2" style="min-height: 400px;"><div id="videoTab" class="tab-pane active" style="text-align:center;"><canvas id="vidFramesCanvas" width="340" height="340" style="border:1px solid #ccc; background:#222;"></canvas><br><input type="button" id="btnPreview" value="Preview" onclick="doPrevwBtnClick();" class="cls_button cls_button-small txtSmall bkgdClrHdr txtClrWhite" /><div id="posterPrependHint" class="txtSmall txtClrGrey" style="margin-top:6px;display:none;"></div></div><div id="imagesTab" class="tab-pane"><div id="divImgsContent"></div></div><div id="audioTab" class="tab-pane"><div id="divAudioContent"></div></div><div id="settingsTab" class="tab-pane"><div id="divSettingsContent">' + getSettingsTabContent() + '</div></div></div>';
-    console.log("getVideoInterfaceHTML returning HTML of length:", (tabHtml + contentHtml).length);
-    return tabHtml + contentHtml;
+    var uiHtml = getVideoTabsAndContentHtml();
+    console.log("getVideoInterfaceHTML returning HTML of length:", uiHtml.length);
+    return uiHtml;
 }
 
 function doCreateVidPop() {
     // Create popup HTML with tabs and canvas
-    var tabHtml = '<ul class="nav nav-tabs mb-3" style="display:flex;flex-wrap:wrap;gap:6px;row-gap:6px;"><li class="nav-item active"><a class="nav-link active px-2 px-md-3" style="white-space:nowrap;" href="#videoTab">Video</a></li><li class="nav-item"><a class="nav-link px-2 px-md-3" style="white-space:nowrap;" href="#imagesTab">Frames</a></li><li class="nav-item"><a class="nav-link px-2 px-md-3" style="white-space:nowrap;" href="#audioTab">Audio</a></li><li class="nav-item"><a class="nav-link px-2 px-md-3" style="white-space:nowrap;" href="#settingsTab">Settings</a></li></ul>';
-    var contentHtml = '<div class="tab-content pt-2" style="min-height: 400px;"><div id="videoTab" class="tab-pane active" style="text-align:center;"><canvas id="vidFramesCanvas" width="340" height="340" style="border:1px solid #ccc; background:#222;"></canvas><br><input type="button" id="btnPreview" value="Preview" onclick="doPrevwBtnClick();" class="cls_button cls_button-small txtSmall bkgdClrHdr txtClrWhite" /><div id="posterPrependHint" class="txtSmall txtClrGrey" style="margin-top:6px;display:none;"></div></div><div id="imagesTab" class="tab-pane"><div id="divImgsContent"></div></div><div id="audioTab" class="tab-pane"><div id="divAudioContent"></div></div><div id="settingsTab" class="tab-pane"><div id="divSettingsContent">' + getSettingsTabContent() + '</div></div></div>';
-    var tVCPopStr = tabHtml + contentHtml;
+    var tVCPopStr = getVideoTabsAndContentHtml();
     JSSHOP.ui.popNurFillLbox(tVCPopStr, "Property Video Maker");
     gatherImages();
 
@@ -467,6 +582,7 @@ function toggleVidRecording() {
 
 function doStartVidCap() {
     // Initialize CCapture (assumes CCapture is loaded globally)
+    logNuVideoCaptureProgress("start", "Preparing video capture...", 2, "running", "ccapture");
     capturer = new CCapture({ format: 'webm', framerate: getVideoFps(), verbose: true });
     capturer.start();
     vidFramesAnimating = "yes";
@@ -483,8 +599,10 @@ function doStopVidCap() {
     // No need to clear requestAnimationFrame as it stops naturally
     if (capturer) {
         capturer.stop();
+        logNuVideoCaptureProgress("saving", "Encoding and saving video...", 95, "running", "ccapture");
         capturer.save(function(blob) {
             console.log("Video saved blob:", blob);
+            logNuVideoCaptureProgress("status", "Video encoded. Uploading...", 96, "running", "ccapture");
             saveVideoFileBlob(blob);
         });
         capturer = null;
@@ -497,6 +615,14 @@ function doStopVidCap() {
 
 function createVideoAutomatically() {
     vidFramesAnimating = "no"; // Stop preview animation
+    var plannedFrames = Math.max(1, ((selectedImages && selectedImages.length) ? selectedImages.length : (vdImgs && vdImgs.length ? vdImgs.length : 1)) * Math.max(1, framesPerImage));
+    incasaVidCapturePlan = {
+        mode: "ccapture",
+        totalFrames: plannedFrames,
+        capturedFrames: 0,
+        startTs: Date.now()
+    };
+    logNuVideoCaptureProgress("start", "Starting video render...", 4, "running", "ccapture");
     var btnPreview = document.getElementById("btnPreview");
     if (btnPreview) {
         btnPreview.disabled = true;
@@ -951,6 +1077,23 @@ function runVidFrames(isRecording = "no") {
     vidFramesAnimating = "yes";
     activeImageEffects = [];
     activeBubbleEffects = [];
+
+    if (isRecording === "yes") {
+        var exactTotalFrames = Math.max(1, vdImgs.length * Math.max(1, framesPerImage));
+        if (!incasaVidCapturePlan) {
+            incasaVidCapturePlan = {
+                mode: "ccapture",
+                totalFrames: exactTotalFrames,
+                capturedFrames: 0,
+                startTs: Date.now()
+            };
+        } else {
+            incasaVidCapturePlan.totalFrames = exactTotalFrames;
+            incasaVidCapturePlan.capturedFrames = 0;
+            incasaVidCapturePlan.mode = "ccapture";
+        }
+        logNuVideoCaptureProgress("status", "Rendering video frames...", 10, "running", "ccapture");
+    }
 }
 
 function startInterval() {
@@ -1373,6 +1516,15 @@ function drawFrame(img, frameInImage) {
     if (isRecordingVid == "yes" && capturer) {
         capturer.capture(vdCanvas);
         console.log(new Date().toISOString() + " - Captured frame for image index: " + vdIncr);
+        if (incasaVidCapturePlan && incasaVidCapturePlan.mode === "ccapture") {
+            incasaVidCapturePlan.capturedFrames += 1;
+            var totalFrames = Math.max(1, parseInt(incasaVidCapturePlan.totalFrames || 1, 10));
+            var capturedFrames = Math.min(totalFrames, incasaVidCapturePlan.capturedFrames);
+            var renderPct = 10 + Math.round((capturedFrames / totalFrames) * 82);
+            if (capturedFrames === 1 || capturedFrames === totalFrames || (capturedFrames % 3) === 0) {
+                logNuVideoCaptureProgress("status", "Rendering frame " + capturedFrames + " of " + totalFrames + "...", renderPct, "running", "ccapture");
+            }
+        }
     }
 }
 
@@ -3107,8 +3259,8 @@ function renderImageSettingsTitlePreview(prefix) {
         : "shadow_text";
     var titlePlacement = normalizeTitlePlacement(placementEl ? placementEl.value : "top_center");
 
-    var virtualW = 340;
-    var virtualH = 340;
+    var virtualW = 300;
+    var virtualH = 300;
     var scaleX = frameW / virtualW;
     var scaleY = frameH / virtualH;
 
@@ -3533,7 +3685,7 @@ function showImageSettings(pos) {
 
     html += '<div class="tab-content pt-1">';
     html += '<div id="' + modalKey + '_frame_title_tab" class="tab-pane fade show active" role="tabpanel">';
-    html += '<label class="form-label small">Frame title text (shown at top of frame).</label>';
+    html += '<label class="form-label small">Frame Title Text (Shown at Top of Frame).</label>';
     html += '<input type="text" id="' + modalKey + '_frame_title_text" class="form-control" value="' + escHtmlAttr(currentFrameTitle) + '" oninput="renderImageSettingsTitlePreview(\'' + modalKey + '\')" />';
     html += '<div class="mt-3">';
     html += '<label class="form-label small">Title Style</label>';
@@ -3622,14 +3774,14 @@ function showImageSettings(pos) {
     html += '<div id="' + modalKey + '_frame_title_preview_frame" style="position:relative;width:100%;max-width:160px;aspect-ratio:1 / 1;margin:0 auto;border:1px solid rgba(255,255,255,0.15);border-radius:6px;overflow:hidden;background-image:url(\'' + escHtmlAttr(previewSrc || '') + '\');background-size:cover;background-position:center;">';
     html += '<div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.32), rgba(0,0,0,0.46));"></div>';
     html += '<canvas id="' + modalKey + '_frame_title_preview_canvas" width="160" height="160" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>';
-    html += '<div id="' + modalKey + '_frame_title_preview_hint" class="small" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#d3d7db;">No title entered</div>';
+    html += '<div id="' + modalKey + '_frame_title_preview_hint" class="small" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#d3d7db;">No Title Entered</div>';
     html += '<div id="' + modalKey + '_frame_title_preview_text" style="display:none;"></div>';
     html += '</div>';
     html += '</div>';
     html += '</div>';
 
     html += '<div id="' + modalKey + '_caption_tab" class="tab-pane fade" role="tabpanel">';
-    html += '<label class="form-label small">Caption text (leave blank for no caption).</label>';
+    html += '<label class="form-label small">Caption Text (Leave Blank for No Caption).</label>';
     html += '<input type="text" id="' + modalKey + '_caption_text" class="form-control" value="' + escHtmlAttr(currentText) + '" />';
     html += '<div class="mt-3">';
     html += '<label class="form-label small">Text Color</label>';
@@ -3718,7 +3870,7 @@ function showImageSettings(pos) {
 
     html += '<div id="' + modalKey + '_effects_tab" class="tab-pane fade" role="tabpanel">';
     html += '<div class="mb-3">';
-    html += '<label class="form-label small">Select frame effect:</label>';
+    html += '<label class="form-label small">Select Frame Effect:</label>';
     html += '<select id="' + modalKey + '_effect" class="form-select" onchange="renderImageSettingsModalFxPreview(\'' + modalKey + '\')">';
     html += '<option value=""' + (currentEffect === "" ? ' selected' : '') + '>Auto (random)</option>';
     html += '<option value="none"' + (currentEffect === "none" ? ' selected' : '') + '>None</option>';
@@ -3733,7 +3885,7 @@ function showImageSettings(pos) {
     html += '</div>';
 
     html += '<div id="' + modalKey + '_particle_wrap" class="border rounded p-2 mb-3" style="display:' + (currentEffect === "particle" ? 'block' : 'none') + ';">';
-    html += '<div class="small text-muted mb-2">Particle settings:</div>';
+    html += '<div class="small text-muted mb-2">Particle Settings:</div>';
     html += '<div class="row g-2">';
     html += '<div class="col-12 col-md-4"><label class="form-label small">Pixel Size</label><input id="' + modalKey + '_particle_pixel" type="number" min="4" max="40" step="1" class="form-control" value="' + escHtmlAttr(currentOptions.pixelSize || 8) + '" /></div>';
     html += '<div class="col-12 col-md-4"><label class="form-label small">Scatter</label><input id="' + modalKey + '_particle_scatter" type="number" min="20" max="240" step="1" class="form-control" value="' + escHtmlAttr(currentOptions.scatter || 70) + '" /></div>';
@@ -3964,7 +4116,7 @@ function sleepMs(ms) {
     });
 }
 
-async function renderFramesStandaloneRealtime(fps, targetDurationSec, shouldStopFn) {
+async function renderFramesStandaloneRealtime(fps, targetDurationSec, shouldStopFn, onProgressFn) {
     vdIncr = 0;
     isRecordingVid = "no";
     vidFramesAnimating = "yes";
@@ -3991,6 +4143,10 @@ async function renderFramesStandaloneRealtime(fps, targetDurationSec, shouldStop
 
     var lastImage = loadedImages.length > 0 ? loadedImages[loadedImages.length - 1] : null;
 
+    if (typeof onProgressFn === "function") {
+        onProgressFn(0, totalFrames, "start");
+    }
+
     for (var frameNo = 0; frameNo < totalFrames; frameNo++) {
         if (shouldStopFn && shouldStopFn()) {
             logVidAudio("RENDER_STOP_REQUESTED", { frameNo: frameNo });
@@ -3998,6 +4154,9 @@ async function renderFramesStandaloneRealtime(fps, targetDurationSec, shouldStop
         }
         if (prependPosterFrame && frameNo === 0) {
             drawSelectedPosterFrameToCanvas(vdCanvas, false);
+            if (typeof onProgressFn === "function") {
+                onProgressFn(frameNo + 1, totalFrames, "render");
+            }
             await sleepMs(frameDelay);
             continue;
         }
@@ -4014,6 +4173,9 @@ async function renderFramesStandaloneRealtime(fps, targetDurationSec, shouldStop
             // Hold final visual frame while audio continues.
             vdIncr = baseTotalFrames - 1;
             drawFrame(lastImage, framesPerImage - 1);
+        }
+        if (typeof onProgressFn === "function") {
+            onProgressFn(frameNo + 1, totalFrames, "render");
         }
         await sleepMs(frameDelay);
     }
@@ -4131,11 +4293,13 @@ async function createVideoWithAudioStandalone(audioSrc, shouldUpload) {
 
     try {
         logVidAudio("START", { audioSrc: audioSrc, shouldUpload: shouldUpload });
+        logNuVideoCaptureProgress("start", "Preparing video+audio capture...", 2, "running", "standalone");
         await prepStandaloneVideoRenderState();
         logVidAudio("PREP_DONE", {
             imageCount: loadedImages.length,
             framesPerImage: framesPerImage
         });
+        logNuVideoCaptureProgress("status", "Assets loaded. Starting frame render...", 8, "running", "standalone");
 
         var fps = getVideoFps();
         var videoDurationSec = (loadedImages.length * framesPerImage) / fps;
@@ -4245,6 +4409,7 @@ async function createVideoWithAudioStandalone(audioSrc, shouldUpload) {
         });
 
         recorder.start(250);
+        logNuVideoCaptureProgress("status", "Recorder started. Rendering frames...", 10, "running", "standalone");
 
         if (audioElement) {
             try {
@@ -4260,8 +4425,16 @@ async function createVideoWithAudioStandalone(audioSrc, shouldUpload) {
             }
         }
 
-        await renderFramesStandaloneRealtime(fps, targetDurationSec);
+        await renderFramesStandaloneRealtime(fps, targetDurationSec, null, function(doneFrames, totalFrames) {
+            var safeTotal = Math.max(1, parseInt(totalFrames || 1, 10));
+            var safeDone = Math.max(0, Math.min(safeTotal, parseInt(doneFrames || 0, 10)));
+            var renderPct = 10 + Math.round((safeDone / safeTotal) * 82);
+            if (safeDone === 0 || safeDone === safeTotal || (safeDone % 4) === 0) {
+                logNuVideoCaptureProgress("status", "Rendering frame " + safeDone + " of " + safeTotal + "...", renderPct, "running", "standalone");
+            }
+        });
         logVidAudio("RENDER_DONE", { finalFrameIndex: vdIncr });
+        logNuVideoCaptureProgress("saving", "Finalizing encoded video...", 94, "running", "standalone");
 
         if (audioElement && audioPlaybackStarted && !audioElement.paused) {
             audioElement.pause();
@@ -4275,6 +4448,7 @@ async function createVideoWithAudioStandalone(audioSrc, shouldUpload) {
         lastVideoOutputMimeType = finalBlob.type || outputMimeType || "";
         updateVideoOutputFormatHint(lastVideoOutputMimeType);
         logVidAudio("FINAL_BLOB", { size: finalBlob.size });
+        logNuVideoCaptureProgress("status", shouldUpload ? "Video encoded. Uploading..." : "Video encoding complete.", shouldUpload ? 96 : 100, shouldUpload ? "running" : "done", "standalone");
 
         if (shouldUpload) {
             logVidAudio("UPLOAD_BEGIN");
@@ -4284,6 +4458,7 @@ async function createVideoWithAudioStandalone(audioSrc, shouldUpload) {
         return finalBlob;
     } catch (e) {
         logVidAudio("ERROR", String(e));
+        logNuVideoCaptureProgress("error", "Video creation failed.", 100, "error", "standalone");
         alert("createVideoWithAudioStandalone: " + e);
         return null;
     } finally {
@@ -4350,12 +4525,14 @@ function fnishSvVidFBlob(tFnishResp) {
 function saveVideoFileBlob(videoBlob, mimeType) {
     try {
         logVidAudio("UPLOAD_PRECHECK", { hasBlob: !!videoBlob, size: videoBlob ? videoBlob.size : 0 });
+        logNuVideoCaptureProgress("status", "Preparing upload...", 96, "running", "video");
         var maxUploadMB = window.maxVideoUploadMB || 20;
         var maxUploadBytes = maxUploadMB * 1024 * 1024;
         if (videoBlob && videoBlob.size > maxUploadBytes) {
             var actualMB = (videoBlob.size / (1024 * 1024)).toFixed(2);
             alert("Video is too large to upload (" + actualMB + " MB). Maximum allowed is " + maxUploadMB + " MB.");
             console.log("saveVideoFileBlob.SKIP: video size " + actualMB + " MB exceeds max " + maxUploadMB + " MB");
+            logNuVideoCaptureProgress("error", "Video is too large to upload.", 100, "error", "video");
             return;
         }
 
@@ -4374,17 +4551,20 @@ function saveVideoFileBlob(videoBlob, mimeType) {
                 logVidAudio("UPLOAD_413");
                 alert("Upload failed: server rejected file as too large (413).");
                 console.log("saveVideoFileBlob.413: Content Too Large");
+                logNuVideoCaptureProgress("error", "Upload failed: file too large (413).", 100, "error", "video");
                 return;
             }
             if (xhr.status < 200 || xhr.status >= 300) {
                 logVidAudio("UPLOAD_HTTP_ERROR", { status: xhr.status, responseText: xhr.responseText });
                 alert("Upload failed: HTTP " + xhr.status);
                 console.log("saveVideoFileBlob.HTTP_ERROR: " + xhr.status + " " + xhr.responseText);
+                logNuVideoCaptureProgress("error", "Upload failed: HTTP " + xhr.status + ".", 100, "error", "video");
                 return;
             }
             var resp = xhr.responseText;
             logVidAudio("UPLOAD_OK", { status: xhr.status, responseText: resp });
             console.log("saveVideoFileBlob.resp: " + resp);
+            logNuVideoCaptureProgress("done", "Video ready and uploaded.", 100, "done", "video");
             fnishSvVidFBlob(resp);
         };
 
@@ -4392,16 +4572,30 @@ function saveVideoFileBlob(videoBlob, mimeType) {
             logVidAudio("UPLOAD_XHR_ERROR", e);
             console.log("saveVideoFileBlob.ERROR: ", e);
             alert("saveVideoFileBlob.ERROR: upload failed");
+            logNuVideoCaptureProgress("error", "Upload failed.", 100, "error", "video");
         };
 
         xhr.ontimeout = function() {
             logVidAudio("UPLOAD_TIMEOUT");
             console.log("saveVideoFileBlob.TIMEOUT");
             alert("saveVideoFileBlob: Request timed out");
+            logNuVideoCaptureProgress("error", "Upload timed out.", 100, "error", "video");
         };
+
+        if (xhr.upload) {
+            xhr.upload.onprogress = function(event) {
+                if (!event || !event.lengthComputable) {
+                    return;
+                }
+                var ratio = Math.max(0, Math.min(1, event.loaded / Math.max(1, event.total)));
+                var pct = 96 + Math.round(ratio * 3);
+                logNuVideoCaptureProgress("upload", "Uploading video...", pct, "running", "video");
+            };
+        }
 
         xhr.send(formData);
     } catch(e) {
+        logNuVideoCaptureProgress("error", "Upload setup failed.", 100, "error", "video");
         alert("saveVideoFileBlob: " + e);
     }
 }

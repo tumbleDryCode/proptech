@@ -1105,6 +1105,44 @@ var finishMPstUld = function(theMMum) {
         currTPrpObj = JSON.parse(tSPIttlStr);
         currSlctdPrpsObj = currTPrpObj["data"];
         if(p_ptype.value == "pmap") {
+                if(currTPrpObj["uptype"] && document.getElementById("inpMapPstCntnt")) {
+                    document.getElementById("inpMapPstCntnt").value = currTPrpObj["uptype"];
+                }
+                if(currTPrpObj["cnfg"] && currTPrpObj["cnfg"]["inpMapPstType"]) {
+                    if (typeof setMapPstTypeValue == "function") {
+                        setMapPstTypeValue(currTPrpObj["cnfg"]["inpMapPstType"]);
+                    } else if (document.getElementById("inpMapPstType")) {
+                        document.getElementById("inpMapPstType").value = currTPrpObj["cnfg"]["inpMapPstType"];
+                    }
+                }
+                if(currTPrpObj["cnfg"] && currTPrpObj["cnfg"]["inpMapPstEffect"]) {
+                    if (typeof setMapPstEffectValue == "function") {
+                        setMapPstEffectValue(currTPrpObj["cnfg"]["inpMapPstEffect"]);
+                    } else if (document.getElementById("inpMapPstEffect")) {
+                        document.getElementById("inpMapPstEffect").value = currTPrpObj["cnfg"]["inpMapPstEffect"];
+                    }
+                }
+                if(currTPrpObj["cnfg"] && currTPrpObj["cnfg"]["inpMapPstFlySpeed"]) {
+                    if (typeof setMapPstFlySpeedValue == "function") {
+                        setMapPstFlySpeedValue(currTPrpObj["cnfg"]["inpMapPstFlySpeed"]);
+                    } else if (document.getElementById("inpMapPstFlySpeed")) {
+                        document.getElementById("inpMapPstFlySpeed").value = currTPrpObj["cnfg"]["inpMapPstFlySpeed"];
+                    }
+                }
+                if(currTPrpObj["cnfg"] && currTPrpObj["cnfg"]["inpMapPstCaptureMoveendGate"]) {
+                    if (typeof setMapPstCaptureMoveendGateValue == "function") {
+                        setMapPstCaptureMoveendGateValue(currTPrpObj["cnfg"]["inpMapPstCaptureMoveendGate"]);
+                    } else if (document.getElementById("inpMapPstCaptureMoveendGate")) {
+                        document.getElementById("inpMapPstCaptureMoveendGate").value = currTPrpObj["cnfg"]["inpMapPstCaptureMoveendGate"];
+                    }
+                }
+                if(currTPrpObj["cnfg"] && currTPrpObj["cnfg"]["inpMapPstForceCanvasRenderer"]) {
+                    if (typeof setMapPstForceCanvasRendererValue == "function") {
+                        setMapPstForceCanvasRendererValue(currTPrpObj["cnfg"]["inpMapPstForceCanvasRenderer"]);
+                    } else if (document.getElementById("inpMapPstForceCanvasRenderer")) {
+                        document.getElementById("inpMapPstForceCanvasRenderer").value = currTPrpObj["cnfg"]["inpMapPstForceCanvasRenderer"];
+                    }
+                }
                   setTimeout(function() {  JSSHOP.ads.trnsltMapPstObj(); }, 1000);
 
         } else {
@@ -1225,14 +1263,70 @@ async function doPostAdd() {
      tSlctdPstType = document.getElementById("p_ptype").value;
      console.log("add-pos:doPostAdd: " + tSlctdPstType);
 
+    var ensureHtml2CanvasLoaded = function() {
+        return new Promise(function(resolve) {
+            if (typeof html2canvas != "undefined" && typeof html2canvas == "function") {
+                resolve(true);
+                return;
+            }
+            if (typeof JSSHOP != "undefined" && JSSHOP && typeof JSSHOP.loadScript == "function") {
+                JSSHOP.loadScript("js/thirdp/html2canvas.js", function() {
+                    resolve(typeof html2canvas != "undefined" && typeof html2canvas == "function");
+                }, "js");
+                return;
+            }
+            resolve(false);
+        });
+    };
+
+    var saveWithCaptureFallback = async function(targetEl, targetLabel) {
+        if (!targetEl) {
+            console.error("Capture target not found: " + targetLabel);
+            return false;
+        }
+
+        try {
+            if (typeof snapdom != "undefined" && snapdom && typeof snapdom.toCanvas == "function") {
+                var snapCanvas = await snapdom.toCanvas(targetEl);
+                if (snapCanvas) {
+                    savePstECnvsImg(snapCanvas);
+                    return true;
+                }
+            }
+        } catch (snapErr) {
+            console.error("snapdom capture failed for " + targetLabel + ": ", snapErr);
+        }
+
+        var hasHtml2Canvas = await ensureHtml2CanvasLoaded();
+        if (!hasHtml2Canvas) {
+            console.error("html2canvas unavailable for fallback capture: " + targetLabel);
+            return false;
+        }
+
+        try {
+            var h2cCanvas = await html2canvas(targetEl, {
+                useCORS: true,
+                allowTaint: false,
+                scale: 2,
+                width: targetEl.offsetWidth,
+                height: targetEl.offsetHeight
+            });
+            savePstECnvsImg(h2cCanvas);
+            return true;
+        } catch (h2cErr) {
+            console.error("html2canvas fallback failed for " + targetLabel + ": ", h2cErr);
+        }
+
+        return false;
+    };
+
     // JSSHOP.ajax.doNuAjaxPost(oi["rq"], setUPostAddSave);
      switch(tSlctdPstType) {
         case "pimage":
             tTgtDv = taDemoEdtr_ifr.contentWindow.document.body;
             // find first child div in tTgtDv
             tTgtChld = tTgtDv.querySelector("div");
-              // html2canvas(taDemoEdtr_ifr.contentWindow.document.body).then(function(canvas) { savePstECnvsImg(canvas);})
-                      const pcanv = await  snapdom.toCanvas(tTgtChld).then(function(canvas) { savePstECnvsImg(canvas);}).catch(function(error) { console.error("Error generating canvas: ", error);});
+              await saveWithCaptureFallback(tTgtChld, "edit-pimage:first-div");
 
             break;
         case "pcarousel":

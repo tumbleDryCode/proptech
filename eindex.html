@@ -7,6 +7,9 @@ tref = document.location.href;
 tpid = "index_main";
 tpu = "pid=index_main";
 tmpcurrUrlArr = null;
+if(!parent || !parent.JSSHOP || !parent.JSSHOP.shared || !parent.JSSHOP.ajax) {
+return;
+}
 if(tref.indexOf("?") != -1) {
 tpu = tref.substring(tref.indexOf("?") + 1, tref.length);
 tmpcurrUrlArr = parent.JSSHOP.shared.urlToArray(tref); 

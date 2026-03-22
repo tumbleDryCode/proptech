@@ -1,0 +1,495 @@
+x_allinit.js:358 doNuAjaxPipe.apUrl: _p/do.php?t=123&f=n&q=select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = 'en_us' or pd.pd_prptlng = 'pt_pt') order by rand() limit 20
+x_allinit.js:366 doNuAjaxPipe.admin-replace: _p/do.php?t=123&f=n&q=select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = 'en_us' or pd.pd_prptlng = 'pt_pt') order by rand() limit 20
+s_thumbupdt_anon_1764523162.png:1   GET https://titan/incasa/images/property/s_thumbupdt_anon_1764523162.png 404 (Not Found)
+Image
+JSSHOP.ui.popNurFillLbox @ x_all.js?version=2:6434
+JSSHOP.ui.getPickerDiv @ x_all.js?version=2:3343
+setCurrPrpsArr @ x_all.js?version=2:3073
+oReq.onreadystatechange @ x_allinit.js:348
+XMLHttpRequest.send
+JSSHOP.ajax.doNuAjaxPipe @ x_allinit.js:370
+doNuQComm @ x_booter.js?version=2:1605
+doQComm @ x_booter.js?version=2:1618
+JSSHOP.ui.getPickerDiv @ x_all.js?version=2:3355
+onclick @ incasa/:1
+s_thumbupdt_anon_1766678966.png:1   GET https://titan/incasa/images/property/s_thumbupdt_anon_1766678966.png 404 (Not Found)
+Image
+JSSHOP.ui.popNurFillLbox @ x_all.js?version=2:6434
+JSSHOP.ui.getPickerDiv @ x_all.js?version=2:3343
+setCurrPrpsArr @ x_all.js?version=2:3073
+oReq.onreadystatechange @ x_allinit.js:348
+XMLHttpRequest.send
+JSSHOP.ajax.doNuAjaxPipe @ x_allinit.js:370
+doNuQComm @ x_booter.js?version=2:1605
+doQComm @ x_booter.js?version=2:1618
+JSSHOP.ui.getPickerDiv @ x_all.js?version=2:3355
+onclick @ incasa/:1
+s_thumbupdt_anon_1771267879.png:1   GET https://titan/incasa/images/property/s_thumbupdt_anon_1771267879.png 404 (Not Found)
+Image
+JSSHOP.ui.popNurFillLbox @ x_all.js?version=2:6434
+JSSHOP.ui.getPickerDiv @ x_all.js?version=2:3343
+setCurrPrpsArr @ x_all.js?version=2:3073
+oReq.onreadystatechange @ x_allinit.js:348
+XMLHttpRequest.send
+JSSHOP.ajax.doNuAjaxPipe @ x_allinit.js:370
+doNuQComm @ x_booter.js?version=2:1605
+doQComm @ x_booter.js?version=2:1618
+JSSHOP.ui.getPickerDiv @ x_all.js?version=2:3355
+onclick @ incasa/:1
+x_all.js?version=2:12225 trnsltPTpObj.tPtypeVal: pmap
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe5cd; :: props
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe5cd; :: users
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe55f; :: street
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe56e; :: satelite
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe56c; :: fitbounds
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe539; :: flyto
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe55b; :: flytobounds
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe5d2; :: panto
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe3c1; :: slowest
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe3c1; :: slower
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe3c1; :: slow
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe863; :: normal
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe9e4; :: fast
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe7fd; :: yes
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe14c; :: no
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe5c8; :: off
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe037; :: on
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe1b2; :: 1
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe1b2; :: 2
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe1b2; :: 3
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe1b2; :: 4
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe1b2; :: 5
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe1b2; :: 6
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe425; :: 250
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe425; :: 333
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe425; :: 500
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe425; :: 700
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe425; :: 900
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe425; :: 1200
+x_all.js?version=2:12628 trnsltMapPstObj.tSCval: props
+x_all.js?version=2:12631 trnsltMapPstObj.tSCval: == propsprops
+x_all.js?version=2:12717 [MAP_DEBUG][trnsltMapPstObj] {source: 'props', scannedProps: 4, scannedUsers: 0, skippedInvalidLatLng: 0, renderedMarkers: 4}
+x_all.js?version=2:12771 trnsltMapPstObj.tAllDescStr: <h3>Moradia independente à venda em Faíl</h3><h3><a href="javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=126');">Moradia independente à venda em Faíl</a></h3>Imagine um ref&uacute;gio encantado onde a serenidade do campo abra&ccedil;a a modernidade com um toPrice: 400.000<hr><h3>Moradia independente à venda na Rua do Covelo</h3><h3><a href="javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=129');">Moradia independente à venda na Rua do Covelo</a></h3>Moradia de Charme Renovada no Cora&ccedil;&atilde;o de Pevidem &ndash; Guimar&atilde;esLote de TerrePrice: 480.000<hr><h3>Apartamento t3 à venda na Rua General Humberto Delgado</h3><h3><a href="javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=127');">Apartamento t3 à venda na Rua General Humberto Delgado</a></h3>Apresentamos este apartamento T3 no r&eacute;s-do-ch&atilde;o, em excelente estado de conserva&ccediPrice: 180.000<hr><h3>Arrendamento de Apartamento T2 na rua Doutor Francisco Abreu Maia, 62</h3><h3><a href="javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=76');">Arrendamento de Apartamento T2 na rua Doutor Francisco Abreu Maia, 62</a></h3><p>PT: Apartamento T2 com uma &aacute;rea de 100 metros quadrados, localizado no R/C, situado na frePrice: 19945
+incasa/:1  Blocked aria-hidden on an element because its descendant retained focus. The focus must not be hidden from assistive technology users. Avoid using aria-hidden on a focused element or its ancestor. Consider using the inert attribute instead, which will also prevent focus. For more details, see the aria-hidden section of the WAI-ARIA specification at https://w3c.github.io/aria/#aria-hidden.
+Element with focus: <div.modal fade#nurModal>
+Ancestor with aria-hidden: <div.modal fade#nurModal> <div class=​"modal fade" id=​"nurModal" tabindex=​"-1" aria-labelledby=​"nurModalLabel" style=​"display:​ block;​" aria-hidden=​"true">​…​</div>​
+x_all.js?version=2:16684 doNuGenMap.tDNGMObj[mdvid]: dvMapsc0j2
+x_all.js?version=2:16692 doNuGenMap.tDGMSmrkrArr: [{"icn":"images/property/s_thumb126_05d320ae53600326.jpg","title":"LIewTghgJglhAEMB2UCmAHVKsBdXwAP4A3LKBVAW3gDEIBbgGyA","lat":"40.6612275","lng":"-7.9098774","price":"400.000","prpid":"126","pdesc":"JIWwhg5glgdgpgAgK4gQJzgMwGRLAYyQBc4BuaAewThnzBiLABMqKYnEwEBnODGKE2aIWCOiAAOVMACM0YbPnxwmUADakuXEBQ5oBQjmIqoUCIhQCOSEYilxuUMADoAot0YId81VwAqAMwANAhQ3BRqzGAh2HAExGTIqABufIZwUGhU+GzJUCQIEmDyCHmpaNSoABbFOgJcOahcMGBESBgAXi4IwDC8aILNZhA0fBTh5nz8VEYATACsAAyLINjcSBKzpCFwkTztI8Y6SYUUcOAIxdb5cETYFPiZ+KQCOSFsRnRCCByMalWITAUKBiJCDFjcMAgGgFCQ0SGiIolCiYPhwZQVHIwIFoCzUahqOAQbAEJ4vR4uACC0gkWQAHlBwGgALS8ELJB6xR5oZ4IWLxEikdDouAyQRUKQVMBqOHsDDcBAQeSPcbjBDWRDcwjsKHmXRaMRgSEhRpUOQKJQqdSkNWyPgWBUa4wwPJCJrOkiSSIVKjlIw0DlqVIMRCIKggdqrPCEQUDKjrMCpH5UOOFND3AVkBk6EJmRpFGAAzJUTBQXY-LhFMKQc7OADyxnkimUqg0JKI6g4Np+Dk83mYTkKSDUkMq+y4kL2mooHVgNTHFFlPCKyhNJgQABZ5qt1pshUYoRI1PkkEZ1ChYFF3uxOKVBjxbLwYFk9kYcRdMGowUJcwJ2CWoWwJwYzIY8uE4EAoAgNVzi8EwYTVA9CSVQdp3gOl207MgKHrBUiHTdEyUdPBcXGEIRngLJwgVWCHCKZsrQ0CgQm4TC1C7FMsFwTNyCgRDEHw+hrmPdIdhgax6DxCckCAnjYQGWgoCKNRcxSNJhGLHhJJksAeLjEIOG4L8QHNI4TnwNRxludUbDTeCCn6MRuJA0gvSgZRkwVXgkC8tgqhgk4ZHofy0ygZJWjCqgnXlCRMgnFEwg7OgGNbUg2I45wEAAVVQAB1ABhI4j1uKhEDMIx+jyFLrWyExiuhBhdS4TAkEUthpXBadUHwGo0GhZxKQQSJwp1AZoh+MJ8AwRgGthcZ3L4lofz1fQuFqjtfBgcMwDCIa4FSMSJIYKgUC4CBihrJovXGxpNxWNYNi2GI4hck4-Q0rJkAEcoJiMKRuEcMUROEbgWLgAArSsLsVEihB9Ly4B80o4FklzCEshUKCQCspUhBUSSVRNEgTMQxo7V1hGcfL11pfawnS7Ce2dCyfIZ7tYLAWUjQfXboV4UHqA8bQKB8Qd+Ve8BdqdU7DUhIVxYSIUzF7dQZkQCnVMrLI+dHIwdFmtVYAcDV8FRxXUl2srUBatpPowYq8SML8OhCIoOnxLEcQsAaxGPcAOy6aq2wi9jGd7EkeMVC6GHvW7imdVQVSWiVobAE3GQQ-FigwVFHgNw68GOy4EBkEwgqZuhLNx3gIHaNbnS9mZuYjlza+5jUQ24H26L4Cc+BbxWS4wA6vG5iV5A6PgmbKKe07BB901017bj4LbnAAKkKSbLwQGA2aoWAWbNwVvhaBAKHNZwgA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""},{"icn":"images/property/s_thumb129_00a7d5d412ec61f9.jpg","title":"LIewTghgJglhAEMB2UCmAHVKsBdXwAP4A3LKBJBAJQFcEoR4BhEUgGxCA","lat":"41.4442486","lng":"-8.2953038","price":"480.000","prpid":"129","pdesc":"LIewTghgJglhAEUCm8DCALCYC2KBKSAdiAG7QLFrgQBkAxnUrADYDcNEALjM8qyIhQAFJCRjJs8GoSgQAzulbwA4gFcY2LB268krJHIAyITimTwAKkjBgiAuiEkBmAHQA2AKwAGbDTmqABwAmJQAfeABFVQhmcWhhW2wYVUlwoTAYMjo48xRUEEIAM3BOEABBANs5Ik4IbBA5AFpmdBQUhHrIWAQaaLpVU1ZCGDoIABp4UtrmXEJTeFtiMlkJgvN7TBwzBCwAR3VTTlVIeHAYAHMYQhj4avgYuHv7AuKwUsQOkGQwYdlkF3gAGUYEdyPAkJIAsw7PBGHMwAJzCIxBIJg5CIwWoiUGoNFouDw+AYJgZavBKiBKjAmPFEDA5NxCOdVEhGncAkhmAh-AhmCBRrEAF60BhMHjsAm6fjkjJiaGXcgTDl88EAD1MhDkAj583MphsMIcznc3l8-mCShQyoQBgcLQQdAy+pgDQQUAa91GACM6jUPSgkPsYAFfXMGi50ldsiH6bCsBA6PqaHB+oMGSN5AAuAhLEWMFgSnR8ARTG5G+4a+j58XaQl6AQQbHTVrghYGDkggTWyaQKtitgIM6Xa7MKwGyh1KHPSSCgrye4AKywsGusjkEw4CYGejAJHABngmigx3nAbkIb7Ba78fgXMF1lOqhlIAXSHe0BGLpH8AAFAApZcNHgK5CggOYeAmdASnGcFODoAEAEp8kFK5MEPL5rGuSYTBiWZ5kDdQQ1kWFHHBaFOARd1fCQLc024Bw5GwgJsXgc46ggVBYk0bhhUvGtJWLcFCk-GokDRUi5HpUxNBI7AoTfFisBImRPznd1fzKVAENbEgah4Z5CF00owF-AA1LTgQZCE3RQEhk1ovRkAEMRLmYDhsjAOghmyBArlMc4umvE5S2YW4kGZSBCD4gdWwosCg1iP4kDKb1Q1KRjzBiMl9geJKlSIORoA9EMTgM153lgTdUx3F1W2PSAvR4HIkAAUVVTFRLVZjJOiws62lLUuRMq1ZQTZqJggDlCpM4i4TixL4mMAUYF40UC1rKUQEzAA5ewagRQR4GRcQIQm8kQFUBjDyuAYPXMXFNDADaiUYlBywTAwtXgUDsliWp1IdRwaBo6rWE8l0STkO15AmapdxgXr-XgMR5yeiAHNYAI4jkAEAElkBuEqEH2CFn36E4xF0kzyxyhbkFh0mIC9WBRhmhAKVVDRmvgY4fWuFwgA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""},{"icn":"images/property/s_thumb127_bebb9bbdbb571ee5.jpg","title":"IIBwhgTgLmC2CmA7KB7ABFAzGgB2gbkgCZhqKkBKArqQOJLwRgA2aAElbAEaOpoAi8ZgHMwRFEA","lat":"38.6769641","lng":"-8.4579240","price":"180.000","prpid":"127","pdesc":"IIBwTgpgzhB2AuBDAtgeygAmvCHEkTCWTnlQwBUBmDWcsAMgkQGMBXHAbigFoATVDxYALBongBLADZ8InVABosyLAA8WEKaVzZEAjLIwtUsGGABuiBiw19pnMZJlzFGKahaIpEgF57ydEaoYFY2EHZSDuLSsvIGiEYSfHq4hgBqcMmYAHKollAAdBgAqsgJqCDB8GywSSkYISEYAI5suMbIAEYSsAkaCCHeyYYdGGwq0ATWtvbkEKo4YBLBGAxsrBxytcYFAPIYEsgMqBtc5ppBCH2oKvCMECwSYCzcLetE6EqoAGYQkP36cjGWDfKpzPAYb41R4mLx1QywB7QKBiU5yJboDAEJrkOwJBJ4pSpXSeHgwLGacgoEDuN49JBSNQsKRsKASczkJLMRnYgnQb5gDiEAy4NAkBCYxBUsBudmQJSQGpPCHfFAMCRozjecpsIxLYUJKDrDA+WEityIHx-ClgKCw7x+ZIFYBuDxwvzTcL2RwxFxGUiDDAAc0IiAQuHAqFUh3huGuR2Y7C4z2WSjM5gknoi8igRKgxikiEwuDuYaglSI0CUZDAvVgAh45BAf1+EjIWNDbwgKks7iWfghHVQdmGxIwGfOMsC-TuuL6sYKAGUIAArBK8jDCRDdJBZ73RZxxcDHTXgDUYVC6ocHWDnKCScXtlEnJNyIaubC4airRObThjMomU0bQLwrapalHWhyBIZ5-HNDJ6yLDBcnyAogA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""},{"icn":"images/property/s_thumb76_d58faa0fa24bbeab.jpg","title":"IIJxFMDsBMEMFsoBcD2ACa43AA6xEgsugCoBMaksaIArtQCIq2ohoBiIskAxgJYBnHumAAjCLTQBZWH1gAaNADYyQA","lat":"38.838","lng":"-0.51721","price":"19945","prpid":"76","pdesc":"DwBwfACgKgXABAQRAQwE4BdkFsCmA7dAezigCY4BjQrOAVy2TgDJlkLb0cBuVHRgExxwAjAAZRcXOlSEAznACOtZP1Qq5AGjgAbQhWTaAlgC91cPMQBKAegDCW2YfTL+xPIwBmvAOa0cjgSEEVCpjHF0tHBoIQgIhQTgAGUMGADpgACNUOGswABFDADdDWSZCdENtQS5-GEzs3IBaOAAJA204BPxpFWR6nLBm8iU0InkACll8VzoaQW1-OFlaJxwASi1iQg4ZRWUMYk4aGVoQHENdqIyOQ1d+prhbQmNDPAALRio5-zO8WT6sgNmsFUPQ5DkkshCsg8Pw0IYAQ1BnAAMoGT7UODQtSwxFAkRwADuFEo1BACyIcAA1AT3EsVpx7siAKKyTi4joJE4oczEHAAD04qEMhFQTJismWhjgyFecNmjG8aGQ3iicA8OAoH3lXzgP2QTAoFBw-EqXGIKDUcHI+lQMlkWl1pAAzJIcNJwSNVOoHUsnC5GHT9IV4hbUEw+OxOFxTYR0oDchBw5GONxY3AQHIpXqFtDXKhHZi2P5ZMQWN41CGuHAlWpVVh40iAPIyy2YXAEPlslhsVPV15TYUzPD0DPJ3vR9MJV0wuG8X0CijaWiOaEdzhwD4ZJxsEXubSFmjIX7IeTkLc7w3G03aLhlCpVbiLTPZEAlONMxJ6AwmA1Gk1miwD7VGGRSVDg3gIvKjCulgrwcOCjAgBGE7cJ0xDGgQuxvCU6BlKhPCGFQnRCDEcQkUkKTII2AwAGJEYwjjOGYABWtCdjKxB-teZq0AkMzCsQyQMFoIBqAi6rLsUBh6hmJQUK8jBYOxRGGCgHQZGqXzEDMABqlSMJY7qyh0EBoAA1hRZEbgkwnUXASb4VG3D8ikOlCF8KHOTwCmHGopq+fusmmiGqD-PIyxnKgHhMAi3kKYsXw4CECIlKSWDEAgiR5AAkloECvN4xB5HoOBaDlcSoAwIRvF5fZaAAQsKXxoFqdXRrJTwEK83Q4DRuQFGyjCkKkACscDmXMbhOX2FHFpKZYqpWaEIKQADsskIM6-VgF1ppXgBt73pU1SLAkaC8Li66EHUCbIsIbpTPIXLTIwNLkLgT0UfotAHTed7IMB3CEMA1jgEAA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""}]
+x_all.js?version=2:13556 addNuMapTileLayer.mapType: street
+x_all.js?version=2:13572 addNuMapTileLayer.renderer: tileLayer.canvas
+x_all.js?version=2:16723 doNuGenMap.ts: {"icn":"images/property/s_thumb126_05d320ae53600326.jpg","title":"LIewTghgJglhAEMB2UCmAHVKsBdXwAP4A3LKBVAW3gDEIBbgGyA","lat":"40.6612275","lng":"-7.9098774","price":"400.000","prpid":"126","pdesc":"JIWwhg5glgdgpgAgK4gQJzgMwGRLAYyQBc4BuaAewThnzBiLABMqKYnEwEBnODGKE2aIWCOiAAOVMACM0YbPnxwmUADakuXEBQ5oBQjmIqoUCIhQCOSEYilxuUMADoAot0YId81VwAqAMwANAhQ3BRqzGAh2HAExGTIqABufIZwUGhU+GzJUCQIEmDyCHmpaNSoABbFOgJcOahcMGBESBgAXi4IwDC8aILNZhA0fBTh5nz8VEYATACsAAyLINjcSBKzpCFwkTztI8Y6SYUUcOAIxdb5cETYFPiZ+KQCOSFsRnRCCByMalWITAUKBiJCDFjcMAgGgFCQ0SGiIolCiYPhwZQVHIwIFoCzUahqOAQbAEJ4vR4uACC0gkWQAHlBwGgALS8ELJB6xR5oZ4IWLxEikdDouAyQRUKQVMBqOHsDDcBAQeSPcbjBDWRDcwjsKHmXRaMRgSEhRpUOQKJQqdSkNWyPgWBUa4wwPJCJrOkiSSIVKjlIw0DlqVIMRCIKggdqrPCEQUDKjrMCpH5UOOFND3AVkBk6EJmRpFGAAzJUTBQXY-LhFMKQc7OADyxnkimUqg0JKI6g4Np+Dk83mYTkKSDUkMq+y4kL2mooHVgNTHFFlPCKyhNJgQABZ5qt1pshUYoRI1PkkEZ1ChYFF3uxOKVBjxbLwYFk9kYcRdMGowUJcwJ2CWoWwJwYzIY8uE4EAoAgNVzi8EwYTVA9CSVQdp3gOl207MgKHrBUiHTdEyUdPBcXGEIRngLJwgVWCHCKZsrQ0CgQm4TC1C7FMsFwTNyCgRDEHw+hrmPdIdhgax6DxCckCAnjYQGWgoCKNRcxSNJhGLHhJJksAeLjEIOG4L8QHNI4TnwNRxludUbDTeCCn6MRuJA0gvSgZRkwVXgkC8tgqhgk4ZHofy0ygZJWjCqgnXlCRMgnFEwg7OgGNbUg2I45wEAAVVQAB1ABhI4j1uKhEDMIx+jyFLrWyExiuhBhdS4TAkEUthpXBadUHwGo0GhZxKQQSJwp1AZoh+MJ8AwRgGthcZ3L4lofz1fQuFqjtfBgcMwDCIa4FSMSJIYKgUC4CBihrJovXGxpNxWNYNi2GI4hck4-Q0rJkAEcoJiMKRuEcMUROEbgWLgAArSsLsVEihB9Ly4B80o4FklzCEshUKCQCspUhBUSSVRNEgTMQxo7V1hGcfL11pfawnS7Ce2dCyfIZ7tYLAWUjQfXboV4UHqA8bQKB8Qd+Ve8BdqdU7DUhIVxYSIUzF7dQZkQCnVMrLI+dHIwdFmtVYAcDV8FRxXUl2srUBatpPowYq8SML8OhCIoOnxLEcQsAaxGPcAOy6aq2wi9jGd7EkeMVC6GHvW7imdVQVSWiVobAE3GQQ-FigwVFHgNw68GOy4EBkEwgqZuhLNx3gIHaNbnS9mZuYjlza+5jUQ24H26L4Cc+BbxWS4wA6vG5iV5A6PgmbKKe07BB901017bj4LbnAAKkKSbLwQGA2aoWAWbNwVvhaBAKHNZwgA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""}
+x_all.js?version=2:16723 doNuGenMap.ts: {"icn":"images/property/s_thumb129_00a7d5d412ec61f9.jpg","title":"LIewTghgJglhAEMB2UCmAHVKsBdXwAP4A3LKBJBAJQFcEoR4BhEUgGxCA","lat":"41.4442486","lng":"-8.2953038","price":"480.000","prpid":"129","pdesc":"LIewTghgJglhAEUCm8DCALCYC2KBKSAdiAG7QLFrgQBkAxnUrADYDcNEALjM8qyIhQAFJCRjJs8GoSgQAzulbwA4gFcY2LB268krJHIAyITimTwAKkjBgiAuiEkBmAHQA2AKwAGbDTmqABwAmJQAfeABFVQhmcWhhW2wYVUlwoTAYMjo48xRUEEIAM3BOEABBANs5Ik4IbBA5AFpmdBQUhHrIWAQaaLpVU1ZCGDoIABp4UtrmXEJTeFtiMlkJgvN7TBwzBCwAR3VTTlVIeHAYAHMYQhj4avgYuHv7AuKwUsQOkGQwYdlkF3gAGUYEdyPAkJIAsw7PBGHMwAJzCIxBIJg5CIwWoiUGoNFouDw+AYJgZavBKiBKjAmPFEDA5NxCOdVEhGncAkhmAh-AhmCBRrEAF60BhMHjsAm6fjkjJiaGXcgTDl88EAD1MhDkAj583MphsMIcznc3l8-mCShQyoQBgcLQQdAy+pgDQQUAa91GACM6jUPSgkPsYAFfXMGi50ldsiH6bCsBA6PqaHB+oMGSN5AAuAhLEWMFgSnR8ARTG5G+4a+j58XaQl6AQQbHTVrghYGDkggTWyaQKtitgIM6Xa7MKwGyh1KHPSSCgrye4AKywsGusjkEw4CYGejAJHABngmigx3nAbkIb7Ba78fgXMF1lOqhlIAXSHe0BGLpH8AAFAApZcNHgK5CggOYeAmdASnGcFODoAEAEp8kFK5MEPL5rGuSYTBiWZ5kDdQQ1kWFHHBaFOARd1fCQLc024Bw5GwgJsXgc46ggVBYk0bhhUvGtJWLcFCk-GokDRUi5HpUxNBI7AoTfFisBImRPznd1fzKVAENbEgah4Z5CF00owF-AA1LTgQZCE3RQEhk1ovRkAEMRLmYDhsjAOghmyBArlMc4umvE5S2YW4kGZSBCD4gdWwosCg1iP4kDKb1Q1KRjzBiMl9geJKlSIORoA9EMTgM153lgTdUx3F1W2PSAvR4HIkAAUVVTFRLVZjJOiws62lLUuRMq1ZQTZqJggDlCpM4i4TixL4mMAUYF40UC1rKUQEzAA5ewagRQR4GRcQIQm8kQFUBjDyuAYPXMXFNDADaiUYlBywTAwtXgUDsliWp1IdRwaBo6rWE8l0STkO15AmapdxgXr-XgMR5yeiAHNYAI4jkAEAElkBuEqEH2CFn36E4xF0kzyxyhbkFh0mIC9WBRhmhAKVVDRmvgY4fWuFwgA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""}
+x_all.js?version=2:16723 doNuGenMap.ts: {"icn":"images/property/s_thumb127_bebb9bbdbb571ee5.jpg","title":"IIBwhgTgLmC2CmA7KB7ABFAzGgB2gbkgCZhqKkBKArqQOJLwRgA2aAElbAEaOpoAi8ZgHMwRFEA","lat":"38.6769641","lng":"-8.4579240","price":"180.000","prpid":"127","pdesc":"IIBwTgpgzhB2AuBDAtgeygAmvCHEkTCWTnlQwBUBmDWcsAMgkQGMBXHAbigFoATVDxYALBongBLADZ8InVABosyLAA8WEKaVzZEAjLIwtUsGGABuiBiw19pnMZJlzFGKahaIpEgF57ydEaoYFY2EHZSDuLSsvIGiEYSfHq4hgBqcMmYAHKollAAdBgAqsgJqCDB8GywSSkYISEYAI5suMbIAEYSsAkaCCHeyYYdGGwq0ATWtvbkEKo4YBLBGAxsrBxytcYFAPIYEsgMqBtc5ppBCH2oKvCMECwSYCzcLetE6EqoAGYQkP36cjGWDfKpzPAYb41R4mLx1QywB7QKBiU5yJboDAEJrkOwJBJ4pSpXSeHgwLGacgoEDuN49JBSNQsKRsKASczkJLMRnYgnQb5gDiEAy4NAkBCYxBUsBudmQJSQGpPCHfFAMCRozjecpsIxLYUJKDrDA+WEityIHx-ClgKCw7x+ZIFYBuDxwvzTcL2RwxFxGUiDDAAc0IiAQuHAqFUh3huGuR2Y7C4z2WSjM5gknoi8igRKgxikiEwuDuYaglSI0CUZDAvVgAh45BAf1+EjIWNDbwgKks7iWfghHVQdmGxIwGfOMsC-TuuL6sYKAGUIAArBK8jDCRDdJBZ73RZxxcDHTXgDUYVC6ocHWDnKCScXtlEnJNyIaubC4airRObThjMomU0bQLwrapalHWhyBIZ5-HNDJ6yLDBcnyAogA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""}
+x_all.js?version=2:16723 doNuGenMap.ts: {"icn":"images/property/s_thumb76_d58faa0fa24bbeab.jpg","title":"IIJxFMDsBMEMFsoBcD2ACa43AA6xEgsugCoBMaksaIArtQCIq2ohoBiIskAxgJYBnHumAAjCLTQBZWH1gAaNADYyQA","lat":"38.838","lng":"-0.51721","price":"19945","prpid":"76","pdesc":"DwBwfACgKgXABAQRAQwE4BdkFsCmA7dAezigCY4BjQrOAVy2TgDJlkLb0cBuVHRgExxwAjAAZRcXOlSEAznACOtZP1Qq5AGjgAbQhWTaAlgC91cPMQBKAegDCW2YfTL+xPIwBmvAOa0cjgSEEVCpjHF0tHBoIQgIhQTgAGUMGADpgACNUOGswABFDADdDWSZCdENtQS5-GEzs3IBaOAAJA204BPxpFWR6nLBm8iU0InkACll8VzoaQW1-OFlaJxwASi1iQg4ZRWUMYk4aGVoQHENdqIyOQ1d+prhbQmNDPAALRio5-zO8WT6sgNmsFUPQ5DkkshCsg8Pw0IYAQ1BnAAMoGT7UODQtSwxFAkRwADuFEo1BACyIcAA1AT3EsVpx7siAKKyTi4joJE4oczEHAAD04qEMhFQTJismWhjgyFecNmjG8aGQ3iicA8OAoH3lXzgP2QTAoFBw-EqXGIKDUcHI+lQMlkWl1pAAzJIcNJwSNVOoHUsnC5GHT9IV4hbUEw+OxOFxTYR0oDchBw5GONxY3AQHIpXqFtDXKhHZi2P5ZMQWN41CGuHAlWpVVh40iAPIyy2YXAEPlslhsVPV15TYUzPD0DPJ3vR9MJV0wuG8X0CijaWiOaEdzhwD4ZJxsEXubSFmjIX7IeTkLc7w3G03aLhlCpVbiLTPZEAlONMxJ6AwmA1Gk1miwD7VGGRSVDg3gIvKjCulgrwcOCjAgBGE7cJ0xDGgQuxvCU6BlKhPCGFQnRCDEcQkUkKTII2AwAGJEYwjjOGYABWtCdjKxB-teZq0AkMzCsQyQMFoIBqAi6rLsUBh6hmJQUK8jBYOxRGGCgHQZGqXzEDMABqlSMJY7qyh0EBoAA1hRZEbgkwnUXASb4VG3D8ikOlCF8KHOTwCmHGopq+fusmmiGqD-PIyxnKgHhMAi3kKYsXw4CECIlKSWDEAgiR5AAkloECvN4xB5HoOBaDlcSoAwIRvF5fZaAAQsKXxoFqdXRrJTwEK83Q4DRuQFGyjCkKkACscDmXMbhOX2FHFpKZYqpWaEIKQADsskIM6-VgF1ppXgBt73pU1SLAkaC8Li66EHUCbIsIbpTPIXLTIwNLkLgT0UfotAHTed7IMB3CEMA1jgEAA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""}
+x_all.js?version=2:16142 [MAP-VIDEO] control skip: effect {mapDivId: 'dvMapsc0j2', effect: 'fitbounds'}
+x_booter.js?version=2:30 donada: inpMapPstEffect
+x_booter.js?version=2:30 donada: inpMapPstShowSeller
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe5cd; :: props
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe5cd; :: users
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe55f; :: street
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe56e; :: satelite
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe56c; :: fitbounds
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe539; :: flyto
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe55b; :: flytobounds
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe5d2; :: panto
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe3c1; :: slowest
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe3c1; :: slower
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe3c1; :: slow
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe863; :: normal
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe9e4; :: fast
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe7fd; :: yes
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe14c; :: no
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe5c8; :: off
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe037; :: on
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe1b2; :: 1
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe1b2; :: 2
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe1b2; :: 3
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe1b2; :: 4
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe1b2; :: 5
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe1b2; :: 6
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe425; :: 250
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe425; :: 333
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe425; :: 500
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe425; :: 700
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe425; :: 900
+x_all.js?version=2:7250 tBBSSObj.kvIcnsObj[key]: &#xe425; :: 1200
+x_all.js?version=2:12628 trnsltMapPstObj.tSCval: props
+x_all.js?version=2:12631 trnsltMapPstObj.tSCval: == propsprops
+x_all.js?version=2:12717 [MAP_DEBUG][trnsltMapPstObj] {source: 'props', scannedProps: 4, scannedUsers: 0, skippedInvalidLatLng: 0, renderedMarkers: 4}
+x_all.js?version=2:12771 trnsltMapPstObj.tAllDescStr: <h3>Moradia independente à venda em Faíl</h3><h3><a href="javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=126');">Moradia independente à venda em Faíl</a></h3>Imagine um ref&uacute;gio encantado onde a serenidade do campo abra&ccedil;a a modernidade com um toPrice: 400.000<hr><h3>Moradia independente à venda na Rua do Covelo</h3><h3><a href="javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=129');">Moradia independente à venda na Rua do Covelo</a></h3>Moradia de Charme Renovada no Cora&ccedil;&atilde;o de Pevidem &ndash; Guimar&atilde;esLote de TerrePrice: 480.000<hr><h3>Apartamento t3 à venda na Rua General Humberto Delgado</h3><h3><a href="javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=127');">Apartamento t3 à venda na Rua General Humberto Delgado</a></h3>Apresentamos este apartamento T3 no r&eacute;s-do-ch&atilde;o, em excelente estado de conserva&ccediPrice: 180.000<hr><h3>Arrendamento de Apartamento T2 na rua Doutor Francisco Abreu Maia, 62</h3><h3><a href="javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=76');">Arrendamento de Apartamento T2 na rua Doutor Francisco Abreu Maia, 62</a></h3><p>PT: Apartamento T2 com uma &aacute;rea de 100 metros quadrados, localizado no R/C, situado na frePrice: 19945
+x_all.js?version=2:16684 doNuGenMap.tDNGMObj[mdvid]: dvMapwo5wp
+x_all.js?version=2:16692 doNuGenMap.tDGMSmrkrArr: [{"icn":"images/property/s_thumb126_05d320ae53600326.jpg","title":"LIewTghgJglhAEMB2UCmAHVKsBdXwAP4A3LKBVAW3gDEIBbgGyA","lat":"40.6612275","lng":"-7.9098774","price":"400.000","prpid":"126","pdesc":"JIWwhg5glgdgpgAgK4gQJzgMwGRLAYyQBc4BuaAewThnzBiLABMqKYnEwEBnODGKE2aIWCOiAAOVMACM0YbPnxwmUADakuXEBQ5oBQjmIqoUCIhQCOSEYilxuUMADoAot0YId81VwAqAMwANAhQ3BRqzGAh2HAExGTIqABufIZwUGhU+GzJUCQIEmDyCHmpaNSoABbFOgJcOahcMGBESBgAXi4IwDC8aILNZhA0fBTh5nz8VEYATACsAAyLINjcSBKzpCFwkTztI8Y6SYUUcOAIxdb5cETYFPiZ+KQCOSFsRnRCCByMalWITAUKBiJCDFjcMAgGgFCQ0SGiIolCiYPhwZQVHIwIFoCzUahqOAQbAEJ4vR4uACC0gkWQAHlBwGgALS8ELJB6xR5oZ4IWLxEikdDouAyQRUKQVMBqOHsDDcBAQeSPcbjBDWRDcwjsKHmXRaMRgSEhRpUOQKJQqdSkNWyPgWBUa4wwPJCJrOkiSSIVKjlIw0DlqVIMRCIKggdqrPCEQUDKjrMCpH5UOOFND3AVkBk6EJmRpFGAAzJUTBQXY-LhFMKQc7OADyxnkimUqg0JKI6g4Np+Dk83mYTkKSDUkMq+y4kL2mooHVgNTHFFlPCKyhNJgQABZ5qt1pshUYoRI1PkkEZ1ChYFF3uxOKVBjxbLwYFk9kYcRdMGowUJcwJ2CWoWwJwYzIY8uE4EAoAgNVzi8EwYTVA9CSVQdp3gOl207MgKHrBUiHTdEyUdPBcXGEIRngLJwgVWCHCKZsrQ0CgQm4TC1C7FMsFwTNyCgRDEHw+hrmPdIdhgax6DxCckCAnjYQGWgoCKNRcxSNJhGLHhJJksAeLjEIOG4L8QHNI4TnwNRxludUbDTeCCn6MRuJA0gvSgZRkwVXgkC8tgqhgk4ZHofy0ygZJWjCqgnXlCRMgnFEwg7OgGNbUg2I45wEAAVVQAB1ABhI4j1uKhEDMIx+jyFLrWyExiuhBhdS4TAkEUthpXBadUHwGo0GhZxKQQSJwp1AZoh+MJ8AwRgGthcZ3L4lofz1fQuFqjtfBgcMwDCIa4FSMSJIYKgUC4CBihrJovXGxpNxWNYNi2GI4hck4-Q0rJkAEcoJiMKRuEcMUROEbgWLgAArSsLsVEihB9Ly4B80o4FklzCEshUKCQCspUhBUSSVRNEgTMQxo7V1hGcfL11pfawnS7Ce2dCyfIZ7tYLAWUjQfXboV4UHqA8bQKB8Qd+Ve8BdqdU7DUhIVxYSIUzF7dQZkQCnVMrLI+dHIwdFmtVYAcDV8FRxXUl2srUBatpPowYq8SML8OhCIoOnxLEcQsAaxGPcAOy6aq2wi9jGd7EkeMVC6GHvW7imdVQVSWiVobAE3GQQ-FigwVFHgNw68GOy4EBkEwgqZuhLNx3gIHaNbnS9mZuYjlza+5jUQ24H26L4Cc+BbxWS4wA6vG5iV5A6PgmbKKe07BB901017bj4LbnAAKkKSbLwQGA2aoWAWbNwVvhaBAKHNZwgA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""},{"icn":"images/property/s_thumb129_00a7d5d412ec61f9.jpg","title":"LIewTghgJglhAEMB2UCmAHVKsBdXwAP4A3LKBJBAJQFcEoR4BhEUgGxCA","lat":"41.4442486","lng":"-8.2953038","price":"480.000","prpid":"129","pdesc":"LIewTghgJglhAEUCm8DCALCYC2KBKSAdiAG7QLFrgQBkAxnUrADYDcNEALjM8qyIhQAFJCRjJs8GoSgQAzulbwA4gFcY2LB268krJHIAyITimTwAKkjBgiAuiEkBmAHQA2AKwAGbDTmqABwAmJQAfeABFVQhmcWhhW2wYVUlwoTAYMjo48xRUEEIAM3BOEABBANs5Ik4IbBA5AFpmdBQUhHrIWAQaaLpVU1ZCGDoIABp4UtrmXEJTeFtiMlkJgvN7TBwzBCwAR3VTTlVIeHAYAHMYQhj4avgYuHv7AuKwUsQOkGQwYdlkF3gAGUYEdyPAkJIAsw7PBGHMwAJzCIxBIJg5CIwWoiUGoNFouDw+AYJgZavBKiBKjAmPFEDA5NxCOdVEhGncAkhmAh-AhmCBRrEAF60BhMHjsAm6fjkjJiaGXcgTDl88EAD1MhDkAj583MphsMIcznc3l8-mCShQyoQBgcLQQdAy+pgDQQUAa91GACM6jUPSgkPsYAFfXMGi50ldsiH6bCsBA6PqaHB+oMGSN5AAuAhLEWMFgSnR8ARTG5G+4a+j58XaQl6AQQbHTVrghYGDkggTWyaQKtitgIM6Xa7MKwGyh1KHPSSCgrye4AKywsGusjkEw4CYGejAJHABngmigx3nAbkIb7Ba78fgXMF1lOqhlIAXSHe0BGLpH8AAFAApZcNHgK5CggOYeAmdASnGcFODoAEAEp8kFK5MEPL5rGuSYTBiWZ5kDdQQ1kWFHHBaFOARd1fCQLc024Bw5GwgJsXgc46ggVBYk0bhhUvGtJWLcFCk-GokDRUi5HpUxNBI7AoTfFisBImRPznd1fzKVAENbEgah4Z5CF00owF-AA1LTgQZCE3RQEhk1ovRkAEMRLmYDhsjAOghmyBArlMc4umvE5S2YW4kGZSBCD4gdWwosCg1iP4kDKb1Q1KRjzBiMl9geJKlSIORoA9EMTgM153lgTdUx3F1W2PSAvR4HIkAAUVVTFRLVZjJOiws62lLUuRMq1ZQTZqJggDlCpM4i4TixL4mMAUYF40UC1rKUQEzAA5ewagRQR4GRcQIQm8kQFUBjDyuAYPXMXFNDADaiUYlBywTAwtXgUDsliWp1IdRwaBo6rWE8l0STkO15AmapdxgXr-XgMR5yeiAHNYAI4jkAEAElkBuEqEH2CFn36E4xF0kzyxyhbkFh0mIC9WBRhmhAKVVDRmvgY4fWuFwgA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""},{"icn":"images/property/s_thumb127_bebb9bbdbb571ee5.jpg","title":"IIBwhgTgLmC2CmA7KB7ABFAzGgB2gbkgCZhqKkBKArqQOJLwRgA2aAElbAEaOpoAi8ZgHMwRFEA","lat":"38.6769641","lng":"-8.4579240","price":"180.000","prpid":"127","pdesc":"IIBwTgpgzhB2AuBDAtgeygAmvCHEkTCWTnlQwBUBmDWcsAMgkQGMBXHAbigFoATVDxYALBongBLADZ8InVABosyLAA8WEKaVzZEAjLIwtUsGGABuiBiw19pnMZJlzFGKahaIpEgF57ydEaoYFY2EHZSDuLSsvIGiEYSfHq4hgBqcMmYAHKollAAdBgAqsgJqCDB8GywSSkYISEYAI5suMbIAEYSsAkaCCHeyYYdGGwq0ATWtvbkEKo4YBLBGAxsrBxytcYFAPIYEsgMqBtc5ppBCH2oKvCMECwSYCzcLetE6EqoAGYQkP36cjGWDfKpzPAYb41R4mLx1QywB7QKBiU5yJboDAEJrkOwJBJ4pSpXSeHgwLGacgoEDuN49JBSNQsKRsKASczkJLMRnYgnQb5gDiEAy4NAkBCYxBUsBudmQJSQGpPCHfFAMCRozjecpsIxLYUJKDrDA+WEityIHx-ClgKCw7x+ZIFYBuDxwvzTcL2RwxFxGUiDDAAc0IiAQuHAqFUh3huGuR2Y7C4z2WSjM5gknoi8igRKgxikiEwuDuYaglSI0CUZDAvVgAh45BAf1+EjIWNDbwgKks7iWfghHVQdmGxIwGfOMsC-TuuL6sYKAGUIAArBK8jDCRDdJBZ73RZxxcDHTXgDUYVC6ocHWDnKCScXtlEnJNyIaubC4airRObThjMomU0bQLwrapalHWhyBIZ5-HNDJ6yLDBcnyAogA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""},{"icn":"images/property/s_thumb76_d58faa0fa24bbeab.jpg","title":"IIJxFMDsBMEMFsoBcD2ACa43AA6xEgsugCoBMaksaIArtQCIq2ohoBiIskAxgJYBnHumAAjCLTQBZWH1gAaNADYyQA","lat":"38.838","lng":"-0.51721","price":"19945","prpid":"76","pdesc":"DwBwfACgKgXABAQRAQwE4BdkFsCmA7dAezigCY4BjQrOAVy2TgDJlkLb0cBuVHRgExxwAjAAZRcXOlSEAznACOtZP1Qq5AGjgAbQhWTaAlgC91cPMQBKAegDCW2YfTL+xPIwBmvAOa0cjgSEEVCpjHF0tHBoIQgIhQTgAGUMGADpgACNUOGswABFDADdDWSZCdENtQS5-GEzs3IBaOAAJA204BPxpFWR6nLBm8iU0InkACll8VzoaQW1-OFlaJxwASi1iQg4ZRWUMYk4aGVoQHENdqIyOQ1d+prhbQmNDPAALRio5-zO8WT6sgNmsFUPQ5DkkshCsg8Pw0IYAQ1BnAAMoGT7UODQtSwxFAkRwADuFEo1BACyIcAA1AT3EsVpx7siAKKyTi4joJE4oczEHAAD04qEMhFQTJismWhjgyFecNmjG8aGQ3iicA8OAoH3lXzgP2QTAoFBw-EqXGIKDUcHI+lQMlkWl1pAAzJIcNJwSNVOoHUsnC5GHT9IV4hbUEw+OxOFxTYR0oDchBw5GONxY3AQHIpXqFtDXKhHZi2P5ZMQWN41CGuHAlWpVVh40iAPIyy2YXAEPlslhsVPV15TYUzPD0DPJ3vR9MJV0wuG8X0CijaWiOaEdzhwD4ZJxsEXubSFmjIX7IeTkLc7w3G03aLhlCpVbiLTPZEAlONMxJ6AwmA1Gk1miwD7VGGRSVDg3gIvKjCulgrwcOCjAgBGE7cJ0xDGgQuxvCU6BlKhPCGFQnRCDEcQkUkKTII2AwAGJEYwjjOGYABWtCdjKxB-teZq0AkMzCsQyQMFoIBqAi6rLsUBh6hmJQUK8jBYOxRGGCgHQZGqXzEDMABqlSMJY7qyh0EBoAA1hRZEbgkwnUXASb4VG3D8ikOlCF8KHOTwCmHGopq+fusmmiGqD-PIyxnKgHhMAi3kKYsXw4CECIlKSWDEAgiR5AAkloECvN4xB5HoOBaDlcSoAwIRvF5fZaAAQsKXxoFqdXRrJTwEK83Q4DRuQFGyjCkKkACscDmXMbhOX2FHFpKZYqpWaEIKQADsskIM6-VgF1ppXgBt73pU1SLAkaC8Li66EHUCbIsIbpTPIXLTIwNLkLgT0UfotAHTed7IMB3CEMA1jgEAA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""}]
+x_all.js?version=2:13556 addNuMapTileLayer.mapType: street
+x_all.js?version=2:13572 addNuMapTileLayer.renderer: tileLayer.canvas
+x_all.js?version=2:16723 doNuGenMap.ts: {"icn":"images/property/s_thumb126_05d320ae53600326.jpg","title":"LIewTghgJglhAEMB2UCmAHVKsBdXwAP4A3LKBVAW3gDEIBbgGyA","lat":"40.6612275","lng":"-7.9098774","price":"400.000","prpid":"126","pdesc":"JIWwhg5glgdgpgAgK4gQJzgMwGRLAYyQBc4BuaAewThnzBiLABMqKYnEwEBnODGKE2aIWCOiAAOVMACM0YbPnxwmUADakuXEBQ5oBQjmIqoUCIhQCOSEYilxuUMADoAot0YId81VwAqAMwANAhQ3BRqzGAh2HAExGTIqABufIZwUGhU+GzJUCQIEmDyCHmpaNSoABbFOgJcOahcMGBESBgAXi4IwDC8aILNZhA0fBTh5nz8VEYATACsAAyLINjcSBKzpCFwkTztI8Y6SYUUcOAIxdb5cETYFPiZ+KQCOSFsRnRCCByMalWITAUKBiJCDFjcMAgGgFCQ0SGiIolCiYPhwZQVHIwIFoCzUahqOAQbAEJ4vR4uACC0gkWQAHlBwGgALS8ELJB6xR5oZ4IWLxEikdDouAyQRUKQVMBqOHsDDcBAQeSPcbjBDWRDcwjsKHmXRaMRgSEhRpUOQKJQqdSkNWyPgWBUa4wwPJCJrOkiSSIVKjlIw0DlqVIMRCIKggdqrPCEQUDKjrMCpH5UOOFND3AVkBk6EJmRpFGAAzJUTBQXY-LhFMKQc7OADyxnkimUqg0JKI6g4Np+Dk83mYTkKSDUkMq+y4kL2mooHVgNTHFFlPCKyhNJgQABZ5qt1pshUYoRI1PkkEZ1ChYFF3uxOKVBjxbLwYFk9kYcRdMGowUJcwJ2CWoWwJwYzIY8uE4EAoAgNVzi8EwYTVA9CSVQdp3gOl207MgKHrBUiHTdEyUdPBcXGEIRngLJwgVWCHCKZsrQ0CgQm4TC1C7FMsFwTNyCgRDEHw+hrmPdIdhgax6DxCckCAnjYQGWgoCKNRcxSNJhGLHhJJksAeLjEIOG4L8QHNI4TnwNRxludUbDTeCCn6MRuJA0gvSgZRkwVXgkC8tgqhgk4ZHofy0ygZJWjCqgnXlCRMgnFEwg7OgGNbUg2I45wEAAVVQAB1ABhI4j1uKhEDMIx+jyFLrWyExiuhBhdS4TAkEUthpXBadUHwGo0GhZxKQQSJwp1AZoh+MJ8AwRgGthcZ3L4lofz1fQuFqjtfBgcMwDCIa4FSMSJIYKgUC4CBihrJovXGxpNxWNYNi2GI4hck4-Q0rJkAEcoJiMKRuEcMUROEbgWLgAArSsLsVEihB9Ly4B80o4FklzCEshUKCQCspUhBUSSVRNEgTMQxo7V1hGcfL11pfawnS7Ce2dCyfIZ7tYLAWUjQfXboV4UHqA8bQKB8Qd+Ve8BdqdU7DUhIVxYSIUzF7dQZkQCnVMrLI+dHIwdFmtVYAcDV8FRxXUl2srUBatpPowYq8SML8OhCIoOnxLEcQsAaxGPcAOy6aq2wi9jGd7EkeMVC6GHvW7imdVQVSWiVobAE3GQQ-FigwVFHgNw68GOy4EBkEwgqZuhLNx3gIHaNbnS9mZuYjlza+5jUQ24H26L4Cc+BbxWS4wA6vG5iV5A6PgmbKKe07BB901017bj4LbnAAKkKSbLwQGA2aoWAWbNwVvhaBAKHNZwgA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""}
+x_all.js?version=2:16723 doNuGenMap.ts: {"icn":"images/property/s_thumb129_00a7d5d412ec61f9.jpg","title":"LIewTghgJglhAEMB2UCmAHVKsBdXwAP4A3LKBJBAJQFcEoR4BhEUgGxCA","lat":"41.4442486","lng":"-8.2953038","price":"480.000","prpid":"129","pdesc":"LIewTghgJglhAEUCm8DCALCYC2KBKSAdiAG7QLFrgQBkAxnUrADYDcNEALjM8qyIhQAFJCRjJs8GoSgQAzulbwA4gFcY2LB268krJHIAyITimTwAKkjBgiAuiEkBmAHQA2AKwAGbDTmqABwAmJQAfeABFVQhmcWhhW2wYVUlwoTAYMjo48xRUEEIAM3BOEABBANs5Ik4IbBA5AFpmdBQUhHrIWAQaaLpVU1ZCGDoIABp4UtrmXEJTeFtiMlkJgvN7TBwzBCwAR3VTTlVIeHAYAHMYQhj4avgYuHv7AuKwUsQOkGQwYdlkF3gAGUYEdyPAkJIAsw7PBGHMwAJzCIxBIJg5CIwWoiUGoNFouDw+AYJgZavBKiBKjAmPFEDA5NxCOdVEhGncAkhmAh-AhmCBRrEAF60BhMHjsAm6fjkjJiaGXcgTDl88EAD1MhDkAj583MphsMIcznc3l8-mCShQyoQBgcLQQdAy+pgDQQUAa91GACM6jUPSgkPsYAFfXMGi50ldsiH6bCsBA6PqaHB+oMGSN5AAuAhLEWMFgSnR8ARTG5G+4a+j58XaQl6AQQbHTVrghYGDkggTWyaQKtitgIM6Xa7MKwGyh1KHPSSCgrye4AKywsGusjkEw4CYGejAJHABngmigx3nAbkIb7Ba78fgXMF1lOqhlIAXSHe0BGLpH8AAFAApZcNHgK5CggOYeAmdASnGcFODoAEAEp8kFK5MEPL5rGuSYTBiWZ5kDdQQ1kWFHHBaFOARd1fCQLc024Bw5GwgJsXgc46ggVBYk0bhhUvGtJWLcFCk-GokDRUi5HpUxNBI7AoTfFisBImRPznd1fzKVAENbEgah4Z5CF00owF-AA1LTgQZCE3RQEhk1ovRkAEMRLmYDhsjAOghmyBArlMc4umvE5S2YW4kGZSBCD4gdWwosCg1iP4kDKb1Q1KRjzBiMl9geJKlSIORoA9EMTgM153lgTdUx3F1W2PSAvR4HIkAAUVVTFRLVZjJOiws62lLUuRMq1ZQTZqJggDlCpM4i4TixL4mMAUYF40UC1rKUQEzAA5ewagRQR4GRcQIQm8kQFUBjDyuAYPXMXFNDADaiUYlBywTAwtXgUDsliWp1IdRwaBo6rWE8l0STkO15AmapdxgXr-XgMR5yeiAHNYAI4jkAEAElkBuEqEH2CFn36E4xF0kzyxyhbkFh0mIC9WBRhmhAKVVDRmvgY4fWuFwgA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""}
+x_all.js?version=2:16723 doNuGenMap.ts: {"icn":"images/property/s_thumb127_bebb9bbdbb571ee5.jpg","title":"IIBwhgTgLmC2CmA7KB7ABFAzGgB2gbkgCZhqKkBKArqQOJLwRgA2aAElbAEaOpoAi8ZgHMwRFEA","lat":"38.6769641","lng":"-8.4579240","price":"180.000","prpid":"127","pdesc":"IIBwTgpgzhB2AuBDAtgeygAmvCHEkTCWTnlQwBUBmDWcsAMgkQGMBXHAbigFoATVDxYALBongBLADZ8InVABosyLAA8WEKaVzZEAjLIwtUsGGABuiBiw19pnMZJlzFGKahaIpEgF57ydEaoYFY2EHZSDuLSsvIGiEYSfHq4hgBqcMmYAHKollAAdBgAqsgJqCDB8GywSSkYISEYAI5suMbIAEYSsAkaCCHeyYYdGGwq0ATWtvbkEKo4YBLBGAxsrBxytcYFAPIYEsgMqBtc5ppBCH2oKvCMECwSYCzcLetE6EqoAGYQkP36cjGWDfKpzPAYb41R4mLx1QywB7QKBiU5yJboDAEJrkOwJBJ4pSpXSeHgwLGacgoEDuN49JBSNQsKRsKASczkJLMRnYgnQb5gDiEAy4NAkBCYxBUsBudmQJSQGpPCHfFAMCRozjecpsIxLYUJKDrDA+WEityIHx-ClgKCw7x+ZIFYBuDxwvzTcL2RwxFxGUiDDAAc0IiAQuHAqFUh3huGuR2Y7C4z2WSjM5gknoi8igRKgxikiEwuDuYaglSI0CUZDAvVgAh45BAf1+EjIWNDbwgKks7iWfghHVQdmGxIwGfOMsC-TuuL6sYKAGUIAArBK8jDCRDdJBZ73RZxxcDHTXgDUYVC6ocHWDnKCScXtlEnJNyIaubC4airRObThjMomU0bQLwrapalHWhyBIZ5-HNDJ6yLDBcnyAogA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""}
+x_all.js?version=2:16723 doNuGenMap.ts: {"icn":"images/property/s_thumb76_d58faa0fa24bbeab.jpg","title":"IIJxFMDsBMEMFsoBcD2ACa43AA6xEgsugCoBMaksaIArtQCIq2ohoBiIskAxgJYBnHumAAjCLTQBZWH1gAaNADYyQA","lat":"38.838","lng":"-0.51721","price":"19945","prpid":"76","pdesc":"DwBwfACgKgXABAQRAQwE4BdkFsCmA7dAezigCY4BjQrOAVy2TgDJlkLb0cBuVHRgExxwAjAAZRcXOlSEAznACOtZP1Qq5AGjgAbQhWTaAlgC91cPMQBKAegDCW2YfTL+xPIwBmvAOa0cjgSEEVCpjHF0tHBoIQgIhQTgAGUMGADpgACNUOGswABFDADdDWSZCdENtQS5-GEzs3IBaOAAJA204BPxpFWR6nLBm8iU0InkACll8VzoaQW1-OFlaJxwASi1iQg4ZRWUMYk4aGVoQHENdqIyOQ1d+prhbQmNDPAALRio5-zO8WT6sgNmsFUPQ5DkkshCsg8Pw0IYAQ1BnAAMoGT7UODQtSwxFAkRwADuFEo1BACyIcAA1AT3EsVpx7siAKKyTi4joJE4oczEHAAD04qEMhFQTJismWhjgyFecNmjG8aGQ3iicA8OAoH3lXzgP2QTAoFBw-EqXGIKDUcHI+lQMlkWl1pAAzJIcNJwSNVOoHUsnC5GHT9IV4hbUEw+OxOFxTYR0oDchBw5GONxY3AQHIpXqFtDXKhHZi2P5ZMQWN41CGuHAlWpVVh40iAPIyy2YXAEPlslhsVPV15TYUzPD0DPJ3vR9MJV0wuG8X0CijaWiOaEdzhwD4ZJxsEXubSFmjIX7IeTkLc7w3G03aLhlCpVbiLTPZEAlONMxJ6AwmA1Gk1miwD7VGGRSVDg3gIvKjCulgrwcOCjAgBGE7cJ0xDGgQuxvCU6BlKhPCGFQnRCDEcQkUkKTII2AwAGJEYwjjOGYABWtCdjKxB-teZq0AkMzCsQyQMFoIBqAi6rLsUBh6hmJQUK8jBYOxRGGCgHQZGqXzEDMABqlSMJY7qyh0EBoAA1hRZEbgkwnUXASb4VG3D8ikOlCF8KHOTwCmHGopq+fusmmiGqD-PIyxnKgHhMAi3kKYsXw4CECIlKSWDEAgiR5AAkloECvN4xB5HoOBaDlcSoAwIRvF5fZaAAQsKXxoFqdXRrJTwEK83Q4DRuQFGyjCkKkACscDmXMbhOX2FHFpKZYqpWaEIKQADsskIM6-VgF1ppXgBt73pU1SLAkaC8Li66EHUCbIsIbpTPIXLTIwNLkLgT0UfotAHTed7IMB3CEMA1jgEAA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""}
+x_all.js?version=2:16155 [MAP-VIDEO] control add {mapDivId: 'dvMapwo5wp', markerCount: 4, effect: 'flyto'}
+x_all.js?version=2:16242 [MAP-VIDEO] control click {mapDivId: 'dvMapwo5wp'}
+x_all.js?version=2:14901 [MAP-VIDEO] request {input: 'dvMapwo5wp'}
+x_all.js?version=2:14061 [MAP-VIDEO][PROGRESS] {mapDivId: 'dvMapwo5wp', phase: 'start', pct: 2, state: 'running', message: 'Preparing map video capture...'}
+x_all.js?version=2:14954 [MAP-VIDEO] init {mapDivId: 'dvMapwo5wp', markerCount: 4, effect: 'flyto', speed: 'normal', captureReplaySpeed: 'capture_super_slow'}
+x_all.js?version=2:14061 [MAP-VIDEO][PROGRESS] {mapDivId: 'dvMapwo5wp', phase: 'start', pct: 6, state: 'running', message: 'Loading capture libraries...'}
+x_all.js?version=2:14490 [MAP-VIDEO] ensure libs {useSnapdomFallback: true}
+x_all.js?version=2:14494 [MAP-VIDEO] libs ready {hasCCapture: true, hasSnapdom: true, hasHtml2Canvas: true}
+x_all.js?version=2:14061 [MAP-VIDEO][PROGRESS] {mapDivId: 'dvMapwo5wp', phase: 'status', pct: 12, state: 'running', message: 'Capture frames ready: 49'}
+x_all.js?version=2:15018 [MAP-VIDEO] renderer probe {hasDirectCanvas: true, directCanvasSize: '256x256', tileImageCount: 0, rendererType: 'unknown'}
+x_all.js?version=2:14854 [MAP-VIDEO] ghost debug visibility applied {enabled: false, panels: 1}
+x_all.js?version=2:16449 doNurGenMap.tNMOPDVID: dvMapGhostCapture_dvMapwo5wp_1773590620426
+x_all.js?version=2:16457 doNurGenMap.tDGMSmrkrArr: [{"icn":"images/property/s_thumb126_05d320ae53600326.jpg","title":"LIewTghgJglhAEMB2UCmAHVKsBdXwAP4A3LKBVAW3gDEIBbgGyA","lat":"40.6612275","lng":"-7.9098774","price":"400.000","prpid":"126","pdesc":"JIWwhg5glgdgpgAgK4gQJzgMwGRLAYyQBc4BuaAewThnzBiLABMqKYnEwEBnODGKE2aIWCOiAAOVMACM0YbPnxwmUADakuXEBQ5oBQjmIqoUCIhQCOSEYilxuUMADoAot0YId81VwAqAMwANAhQ3BRqzGAh2HAExGTIqABufIZwUGhU+GzJUCQIEmDyCHmpaNSoABbFOgJcOahcMGBESBgAXi4IwDC8aILNZhA0fBTh5nz8VEYATACsAAyLINjcSBKzpCFwkTztI8Y6SYUUcOAIxdb5cETYFPiZ+KQCOSFsRnRCCByMalWITAUKBiJCDFjcMAgGgFCQ0SGiIolCiYPhwZQVHIwIFoCzUahqOAQbAEJ4vR4uACC0gkWQAHlBwGgALS8ELJB6xR5oZ4IWLxEikdDouAyQRUKQVMBqOHsDDcBAQeSPcbjBDWRDcwjsKHmXRaMRgSEhRpUOQKJQqdSkNWyPgWBUa4wwPJCJrOkiSSIVKjlIw0DlqVIMRCIKggdqrPCEQUDKjrMCpH5UOOFND3AVkBk6EJmRpFGAAzJUTBQXY-LhFMKQc7OADyxnkimUqg0JKI6g4Np+Dk83mYTkKSDUkMq+y4kL2mooHVgNTHFFlPCKyhNJgQABZ5qt1pshUYoRI1PkkEZ1ChYFF3uxOKVBjxbLwYFk9kYcRdMGowUJcwJ2CWoWwJwYzIY8uE4EAoAgNVzi8EwYTVA9CSVQdp3gOl207MgKHrBUiHTdEyUdPBcXGEIRngLJwgVWCHCKZsrQ0CgQm4TC1C7FMsFwTNyCgRDEHw+hrmPdIdhgax6DxCckCAnjYQGWgoCKNRcxSNJhGLHhJJksAeLjEIOG4L8QHNI4TnwNRxludUbDTeCCn6MRuJA0gvSgZRkwVXgkC8tgqhgk4ZHofy0ygZJWjCqgnXlCRMgnFEwg7OgGNbUg2I45wEAAVVQAB1ABhI4j1uKhEDMIx+jyFLrWyExiuhBhdS4TAkEUthpXBadUHwGo0GhZxKQQSJwp1AZoh+MJ8AwRgGthcZ3L4lofz1fQuFqjtfBgcMwDCIa4FSMSJIYKgUC4CBihrJovXGxpNxWNYNi2GI4hck4-Q0rJkAEcoJiMKRuEcMUROEbgWLgAArSsLsVEihB9Ly4B80o4FklzCEshUKCQCspUhBUSSVRNEgTMQxo7V1hGcfL11pfawnS7Ce2dCyfIZ7tYLAWUjQfXboV4UHqA8bQKB8Qd+Ve8BdqdU7DUhIVxYSIUzF7dQZkQCnVMrLI+dHIwdFmtVYAcDV8FRxXUl2srUBatpPowYq8SML8OhCIoOnxLEcQsAaxGPcAOy6aq2wi9jGd7EkeMVC6GHvW7imdVQVSWiVobAE3GQQ-FigwVFHgNw68GOy4EBkEwgqZuhLNx3gIHaNbnS9mZuYjlza+5jUQ24H26L4Cc+BbxWS4wA6vG5iV5A6PgmbKKe07BB901017bj4LbnAAKkKSbLwQGA2aoWAWbNwVvhaBAKHNZwgA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""},{"icn":"images/property/s_thumb129_00a7d5d412ec61f9.jpg","title":"LIewTghgJglhAEMB2UCmAHVKsBdXwAP4A3LKBJBAJQFcEoR4BhEUgGxCA","lat":"41.4442486","lng":"-8.2953038","price":"480.000","prpid":"129","pdesc":"LIewTghgJglhAEUCm8DCALCYC2KBKSAdiAG7QLFrgQBkAxnUrADYDcNEALjM8qyIhQAFJCRjJs8GoSgQAzulbwA4gFcY2LB268krJHIAyITimTwAKkjBgiAuiEkBmAHQA2AKwAGbDTmqABwAmJQAfeABFVQhmcWhhW2wYVUlwoTAYMjo48xRUEEIAM3BOEABBANs5Ik4IbBA5AFpmdBQUhHrIWAQaaLpVU1ZCGDoIABp4UtrmXEJTeFtiMlkJgvN7TBwzBCwAR3VTTlVIeHAYAHMYQhj4avgYuHv7AuKwUsQOkGQwYdlkF3gAGUYEdyPAkJIAsw7PBGHMwAJzCIxBIJg5CIwWoiUGoNFouDw+AYJgZavBKiBKjAmPFEDA5NxCOdVEhGncAkhmAh-AhmCBRrEAF60BhMHjsAm6fjkjJiaGXcgTDl88EAD1MhDkAj583MphsMIcznc3l8-mCShQyoQBgcLQQdAy+pgDQQUAa91GACM6jUPSgkPsYAFfXMGi50ldsiH6bCsBA6PqaHB+oMGSN5AAuAhLEWMFgSnR8ARTG5G+4a+j58XaQl6AQQbHTVrghYGDkggTWyaQKtitgIM6Xa7MKwGyh1KHPSSCgrye4AKywsGusjkEw4CYGejAJHABngmigx3nAbkIb7Ba78fgXMF1lOqhlIAXSHe0BGLpH8AAFAApZcNHgK5CggOYeAmdASnGcFODoAEAEp8kFK5MEPL5rGuSYTBiWZ5kDdQQ1kWFHHBaFOARd1fCQLc024Bw5GwgJsXgc46ggVBYk0bhhUvGtJWLcFCk-GokDRUi5HpUxNBI7AoTfFisBImRPznd1fzKVAENbEgah4Z5CF00owF-AA1LTgQZCE3RQEhk1ovRkAEMRLmYDhsjAOghmyBArlMc4umvE5S2YW4kGZSBCD4gdWwosCg1iP4kDKb1Q1KRjzBiMl9geJKlSIORoA9EMTgM153lgTdUx3F1W2PSAvR4HIkAAUVVTFRLVZjJOiws62lLUuRMq1ZQTZqJggDlCpM4i4TixL4mMAUYF40UC1rKUQEzAA5ewagRQR4GRcQIQm8kQFUBjDyuAYPXMXFNDADaiUYlBywTAwtXgUDsliWp1IdRwaBo6rWE8l0STkO15AmapdxgXr-XgMR5yeiAHNYAI4jkAEAElkBuEqEH2CFn36E4xF0kzyxyhbkFh0mIC9WBRhmhAKVVDRmvgY4fWuFwgA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""},{"icn":"images/property/s_thumb127_bebb9bbdbb571ee5.jpg","title":"IIBwhgTgLmC2CmA7KB7ABFAzGgB2gbkgCZhqKkBKArqQOJLwRgA2aAElbAEaOpoAi8ZgHMwRFEA","lat":"38.6769641","lng":"-8.4579240","price":"180.000","prpid":"127","pdesc":"IIBwTgpgzhB2AuBDAtgeygAmvCHEkTCWTnlQwBUBmDWcsAMgkQGMBXHAbigFoATVDxYALBongBLADZ8InVABosyLAA8WEKaVzZEAjLIwtUsGGABuiBiw19pnMZJlzFGKahaIpEgF57ydEaoYFY2EHZSDuLSsvIGiEYSfHq4hgBqcMmYAHKollAAdBgAqsgJqCDB8GywSSkYISEYAI5suMbIAEYSsAkaCCHeyYYdGGwq0ATWtvbkEKo4YBLBGAxsrBxytcYFAPIYEsgMqBtc5ppBCH2oKvCMECwSYCzcLetE6EqoAGYQkP36cjGWDfKpzPAYb41R4mLx1QywB7QKBiU5yJboDAEJrkOwJBJ4pSpXSeHgwLGacgoEDuN49JBSNQsKRsKASczkJLMRnYgnQb5gDiEAy4NAkBCYxBUsBudmQJSQGpPCHfFAMCRozjecpsIxLYUJKDrDA+WEityIHx-ClgKCw7x+ZIFYBuDxwvzTcL2RwxFxGUiDDAAc0IiAQuHAqFUh3huGuR2Y7C4z2WSjM5gknoi8igRKgxikiEwuDuYaglSI0CUZDAvVgAh45BAf1+EjIWNDbwgKks7iWfghHVQdmGxIwGfOMsC-TuuL6sYKAGUIAArBK8jDCRDdJBZ73RZxxcDHTXgDUYVC6ocHWDnKCScXtlEnJNyIaubC4airRObThjMomU0bQLwrapalHWhyBIZ5-HNDJ6yLDBcnyAogA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""},{"icn":"images/property/s_thumb76_d58faa0fa24bbeab.jpg","title":"IIJxFMDsBMEMFsoBcD2ACa43AA6xEgsugCoBMaksaIArtQCIq2ohoBiIskAxgJYBnHumAAjCLTQBZWH1gAaNADYyQA","lat":"38.838","lng":"-0.51721","price":"19945","prpid":"76","pdesc":"DwBwfACgKgXABAQRAQwE4BdkFsCmA7dAezigCY4BjQrOAVy2TgDJlkLb0cBuVHRgExxwAjAAZRcXOlSEAznACOtZP1Qq5AGjgAbQhWTaAlgC91cPMQBKAegDCW2YfTL+xPIwBmvAOa0cjgSEEVCpjHF0tHBoIQgIhQTgAGUMGADpgACNUOGswABFDADdDWSZCdENtQS5-GEzs3IBaOAAJA204BPxpFWR6nLBm8iU0InkACll8VzoaQW1-OFlaJxwASi1iQg4ZRWUMYk4aGVoQHENdqIyOQ1d+prhbQmNDPAALRio5-zO8WT6sgNmsFUPQ5DkkshCsg8Pw0IYAQ1BnAAMoGT7UODQtSwxFAkRwADuFEo1BACyIcAA1AT3EsVpx7siAKKyTi4joJE4oczEHAAD04qEMhFQTJismWhjgyFecNmjG8aGQ3iicA8OAoH3lXzgP2QTAoFBw-EqXGIKDUcHI+lQMlkWl1pAAzJIcNJwSNVOoHUsnC5GHT9IV4hbUEw+OxOFxTYR0oDchBw5GONxY3AQHIpXqFtDXKhHZi2P5ZMQWN41CGuHAlWpVVh40iAPIyy2YXAEPlslhsVPV15TYUzPD0DPJ3vR9MJV0wuG8X0CijaWiOaEdzhwD4ZJxsEXubSFmjIX7IeTkLc7w3G03aLhlCpVbiLTPZEAlONMxJ6AwmA1Gk1miwD7VGGRSVDg3gIvKjCulgrwcOCjAgBGE7cJ0xDGgQuxvCU6BlKhPCGFQnRCDEcQkUkKTII2AwAGJEYwjjOGYABWtCdjKxB-teZq0AkMzCsQyQMFoIBqAi6rLsUBh6hmJQUK8jBYOxRGGCgHQZGqXzEDMABqlSMJY7qyh0EBoAA1hRZEbgkwnUXASb4VG3D8ikOlCF8KHOTwCmHGopq+fusmmiGqD-PIyxnKgHhMAi3kKYsXw4CECIlKSWDEAgiR5AAkloECvN4xB5HoOBaDlcSoAwIRvF5fZaAAQsKXxoFqdXRrJTwEK83Q4DRuQFGyjCkKkACscDmXMbhOX2FHFpKZYqpWaEIKQADsskIM6-VgF1ppXgBt73pU1SLAkaC8Li66EHUCbIsIbpTPIXLTIwNLkLgT0UfotAHTed7IMB3CEMA1jgEAA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""}]
+x_all.js?version=2:13556 addNuMapTileLayer.mapType: street
+x_all.js?version=2:13572 addNuMapTileLayer.renderer: tileLayer.canvas
+x_all.js?version=2:16499 doNurGenMap.ts: {"icn":"images/property/s_thumb126_05d320ae53600326.jpg","title":"LIewTghgJglhAEMB2UCmAHVKsBdXwAP4A3LKBVAW3gDEIBbgGyA","lat":"40.6612275","lng":"-7.9098774","price":"400.000","prpid":"126","pdesc":"JIWwhg5glgdgpgAgK4gQJzgMwGRLAYyQBc4BuaAewThnzBiLABMqKYnEwEBnODGKE2aIWCOiAAOVMACM0YbPnxwmUADakuXEBQ5oBQjmIqoUCIhQCOSEYilxuUMADoAot0YId81VwAqAMwANAhQ3BRqzGAh2HAExGTIqABufIZwUGhU+GzJUCQIEmDyCHmpaNSoABbFOgJcOahcMGBESBgAXi4IwDC8aILNZhA0fBTh5nz8VEYATACsAAyLINjcSBKzpCFwkTztI8Y6SYUUcOAIxdb5cETYFPiZ+KQCOSFsRnRCCByMalWITAUKBiJCDFjcMAgGgFCQ0SGiIolCiYPhwZQVHIwIFoCzUahqOAQbAEJ4vR4uACC0gkWQAHlBwGgALS8ELJB6xR5oZ4IWLxEikdDouAyQRUKQVMBqOHsDDcBAQeSPcbjBDWRDcwjsKHmXRaMRgSEhRpUOQKJQqdSkNWyPgWBUa4wwPJCJrOkiSSIVKjlIw0DlqVIMRCIKggdqrPCEQUDKjrMCpH5UOOFND3AVkBk6EJmRpFGAAzJUTBQXY-LhFMKQc7OADyxnkimUqg0JKI6g4Np+Dk83mYTkKSDUkMq+y4kL2mooHVgNTHFFlPCKyhNJgQABZ5qt1pshUYoRI1PkkEZ1ChYFF3uxOKVBjxbLwYFk9kYcRdMGowUJcwJ2CWoWwJwYzIY8uE4EAoAgNVzi8EwYTVA9CSVQdp3gOl207MgKHrBUiHTdEyUdPBcXGEIRngLJwgVWCHCKZsrQ0CgQm4TC1C7FMsFwTNyCgRDEHw+hrmPdIdhgax6DxCckCAnjYQGWgoCKNRcxSNJhGLHhJJksAeLjEIOG4L8QHNI4TnwNRxludUbDTeCCn6MRuJA0gvSgZRkwVXgkC8tgqhgk4ZHofy0ygZJWjCqgnXlCRMgnFEwg7OgGNbUg2I45wEAAVVQAB1ABhI4j1uKhEDMIx+jyFLrWyExiuhBhdS4TAkEUthpXBadUHwGo0GhZxKQQSJwp1AZoh+MJ8AwRgGthcZ3L4lofz1fQuFqjtfBgcMwDCIa4FSMSJIYKgUC4CBihrJovXGxpNxWNYNi2GI4hck4-Q0rJkAEcoJiMKRuEcMUROEbgWLgAArSsLsVEihB9Ly4B80o4FklzCEshUKCQCspUhBUSSVRNEgTMQxo7V1hGcfL11pfawnS7Ce2dCyfIZ7tYLAWUjQfXboV4UHqA8bQKB8Qd+Ve8BdqdU7DUhIVxYSIUzF7dQZkQCnVMrLI+dHIwdFmtVYAcDV8FRxXUl2srUBatpPowYq8SML8OhCIoOnxLEcQsAaxGPcAOy6aq2wi9jGd7EkeMVC6GHvW7imdVQVSWiVobAE3GQQ-FigwVFHgNw68GOy4EBkEwgqZuhLNx3gIHaNbnS9mZuYjlza+5jUQ24H26L4Cc+BbxWS4wA6vG5iV5A6PgmbKKe07BB901017bj4LbnAAKkKSbLwQGA2aoWAWbNwVvhaBAKHNZwgA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""}
+x_all.js?version=2:16499 doNurGenMap.ts: {"icn":"images/property/s_thumb129_00a7d5d412ec61f9.jpg","title":"LIewTghgJglhAEMB2UCmAHVKsBdXwAP4A3LKBJBAJQFcEoR4BhEUgGxCA","lat":"41.4442486","lng":"-8.2953038","price":"480.000","prpid":"129","pdesc":"LIewTghgJglhAEUCm8DCALCYC2KBKSAdiAG7QLFrgQBkAxnUrADYDcNEALjM8qyIhQAFJCRjJs8GoSgQAzulbwA4gFcY2LB268krJHIAyITimTwAKkjBgiAuiEkBmAHQA2AKwAGbDTmqABwAmJQAfeABFVQhmcWhhW2wYVUlwoTAYMjo48xRUEEIAM3BOEABBANs5Ik4IbBA5AFpmdBQUhHrIWAQaaLpVU1ZCGDoIABp4UtrmXEJTeFtiMlkJgvN7TBwzBCwAR3VTTlVIeHAYAHMYQhj4avgYuHv7AuKwUsQOkGQwYdlkF3gAGUYEdyPAkJIAsw7PBGHMwAJzCIxBIJg5CIwWoiUGoNFouDw+AYJgZavBKiBKjAmPFEDA5NxCOdVEhGncAkhmAh-AhmCBRrEAF60BhMHjsAm6fjkjJiaGXcgTDl88EAD1MhDkAj583MphsMIcznc3l8-mCShQyoQBgcLQQdAy+pgDQQUAa91GACM6jUPSgkPsYAFfXMGi50ldsiH6bCsBA6PqaHB+oMGSN5AAuAhLEWMFgSnR8ARTG5G+4a+j58XaQl6AQQbHTVrghYGDkggTWyaQKtitgIM6Xa7MKwGyh1KHPSSCgrye4AKywsGusjkEw4CYGejAJHABngmigx3nAbkIb7Ba78fgXMF1lOqhlIAXSHe0BGLpH8AAFAApZcNHgK5CggOYeAmdASnGcFODoAEAEp8kFK5MEPL5rGuSYTBiWZ5kDdQQ1kWFHHBaFOARd1fCQLc024Bw5GwgJsXgc46ggVBYk0bhhUvGtJWLcFCk-GokDRUi5HpUxNBI7AoTfFisBImRPznd1fzKVAENbEgah4Z5CF00owF-AA1LTgQZCE3RQEhk1ovRkAEMRLmYDhsjAOghmyBArlMc4umvE5S2YW4kGZSBCD4gdWwosCg1iP4kDKb1Q1KRjzBiMl9geJKlSIORoA9EMTgM153lgTdUx3F1W2PSAvR4HIkAAUVVTFRLVZjJOiws62lLUuRMq1ZQTZqJggDlCpM4i4TixL4mMAUYF40UC1rKUQEzAA5ewagRQR4GRcQIQm8kQFUBjDyuAYPXMXFNDADaiUYlBywTAwtXgUDsliWp1IdRwaBo6rWE8l0STkO15AmapdxgXr-XgMR5yeiAHNYAI4jkAEAElkBuEqEH2CFn36E4xF0kzyxyhbkFh0mIC9WBRhmhAKVVDRmvgY4fWuFwgA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""}
+x_all.js?version=2:16499 doNurGenMap.ts: {"icn":"images/property/s_thumb127_bebb9bbdbb571ee5.jpg","title":"IIBwhgTgLmC2CmA7KB7ABFAzGgB2gbkgCZhqKkBKArqQOJLwRgA2aAElbAEaOpoAi8ZgHMwRFEA","lat":"38.6769641","lng":"-8.4579240","price":"180.000","prpid":"127","pdesc":"IIBwTgpgzhB2AuBDAtgeygAmvCHEkTCWTnlQwBUBmDWcsAMgkQGMBXHAbigFoATVDxYALBongBLADZ8InVABosyLAA8WEKaVzZEAjLIwtUsGGABuiBiw19pnMZJlzFGKahaIpEgF57ydEaoYFY2EHZSDuLSsvIGiEYSfHq4hgBqcMmYAHKollAAdBgAqsgJqCDB8GywSSkYISEYAI5suMbIAEYSsAkaCCHeyYYdGGwq0ATWtvbkEKo4YBLBGAxsrBxytcYFAPIYEsgMqBtc5ppBCH2oKvCMECwSYCzcLetE6EqoAGYQkP36cjGWDfKpzPAYb41R4mLx1QywB7QKBiU5yJboDAEJrkOwJBJ4pSpXSeHgwLGacgoEDuN49JBSNQsKRsKASczkJLMRnYgnQb5gDiEAy4NAkBCYxBUsBudmQJSQGpPCHfFAMCRozjecpsIxLYUJKDrDA+WEityIHx-ClgKCw7x+ZIFYBuDxwvzTcL2RwxFxGUiDDAAc0IiAQuHAqFUh3huGuR2Y7C4z2WSjM5gknoi8igRKgxikiEwuDuYaglSI0CUZDAvVgAh45BAf1+EjIWNDbwgKks7iWfghHVQdmGxIwGfOMsC-TuuL6sYKAGUIAArBK8jDCRDdJBZ73RZxxcDHTXgDUYVC6ocHWDnKCScXtlEnJNyIaubC4airRObThjMomU0bQLwrapalHWhyBIZ5-HNDJ6yLDBcnyAogA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""}
+x_all.js?version=2:16499 doNurGenMap.ts: {"icn":"images/property/s_thumb76_d58faa0fa24bbeab.jpg","title":"IIJxFMDsBMEMFsoBcD2ACa43AA6xEgsugCoBMaksaIArtQCIq2ohoBiIskAxgJYBnHumAAjCLTQBZWH1gAaNADYyQA","lat":"38.838","lng":"-0.51721","price":"19945","prpid":"76","pdesc":"DwBwfACgKgXABAQRAQwE4BdkFsCmA7dAezigCY4BjQrOAVy2TgDJlkLb0cBuVHRgExxwAjAAZRcXOlSEAznACOtZP1Qq5AGjgAbQhWTaAlgC91cPMQBKAegDCW2YfTL+xPIwBmvAOa0cjgSEEVCpjHF0tHBoIQgIhQTgAGUMGADpgACNUOGswABFDADdDWSZCdENtQS5-GEzs3IBaOAAJA204BPxpFWR6nLBm8iU0InkACll8VzoaQW1-OFlaJxwASi1iQg4ZRWUMYk4aGVoQHENdqIyOQ1d+prhbQmNDPAALRio5-zO8WT6sgNmsFUPQ5DkkshCsg8Pw0IYAQ1BnAAMoGT7UODQtSwxFAkRwADuFEo1BACyIcAA1AT3EsVpx7siAKKyTi4joJE4oczEHAAD04qEMhFQTJismWhjgyFecNmjG8aGQ3iicA8OAoH3lXzgP2QTAoFBw-EqXGIKDUcHI+lQMlkWl1pAAzJIcNJwSNVOoHUsnC5GHT9IV4hbUEw+OxOFxTYR0oDchBw5GONxY3AQHIpXqFtDXKhHZi2P5ZMQWN41CGuHAlWpVVh40iAPIyy2YXAEPlslhsVPV15TYUzPD0DPJ3vR9MJV0wuG8X0CijaWiOaEdzhwD4ZJxsEXubSFmjIX7IeTkLc7w3G03aLhlCpVbiLTPZEAlONMxJ6AwmA1Gk1miwD7VGGRSVDg3gIvKjCulgrwcOCjAgBGE7cJ0xDGgQuxvCU6BlKhPCGFQnRCDEcQkUkKTII2AwAGJEYwjjOGYABWtCdjKxB-teZq0AkMzCsQyQMFoIBqAi6rLsUBh6hmJQUK8jBYOxRGGCgHQZGqXzEDMABqlSMJY7qyh0EBoAA1hRZEbgkwnUXASb4VG3D8ikOlCF8KHOTwCmHGopq+fusmmiGqD-PIyxnKgHhMAi3kKYsXw4CECIlKSWDEAgiR5AAkloECvN4xB5HoOBaDlcSoAwIRvF5fZaAAQsKXxoFqdXRrJTwEK83Q4DRuQFGyjCkKkACscDmXMbhOX2FHFpKZYqpWaEIKQADsskIM6-VgF1ppXgBt73pU1SLAkaC8Li66EHUCbIsIbpTPIXLTIwNLkLgT0UfotAHTed7IMB3CEMA1jgEAA","sellerName":"","sellerIcon":"","markerLabelText":"","markerLabelTextColor":"","markerLabelBgColor":"","markerLabelBorderColor":"","markerLabelContainerStyle":"","markerLabelBgOpacity":"","markerLabelFontSize":"","markerLabelFontFamily":"","markerLabelBold":"","markerLabelItalic":""}
+x_all.js?version=2:16142 [MAP-VIDEO] control skip: effect {mapDivId: 'dvMapGhostCapture_dvMapwo5wp_1773590620426', effect: 'fitbounds'}
+x_all.js?version=2:15860 [MAP-VIDEO] precomputed start on ghost map {ghostMapDivId: 'dvMapGhostCapture_dvMapwo5wp_1773590620426'}
+x_all.js?version=2:15746 [MAP-VIDEO] capture started {mapDivId: 'dvMapwo5wp', totalMs: 40100, frameIntervalMs: 500, effectiveCaptureFps: 4, useFrameCompensation: false, …}
+x_all.js?version=2:14061 [MAP-VIDEO][PROGRESS] {mapDivId: 'dvMapwo5wp', phase: 'start', pct: 14, state: 'running', message: 'Capturing map frames...'}
+x_all.js?version=2:15787 [MAP-VIDEO] keyframe step {mapDivId: 'dvMapwo5wp', idx: 0, elapsedMs: 0, capturedFrames: 0, holdFrames: 2}
+x_all.js?version=2:14061 [MAP-VIDEO][PROGRESS] {mapDivId: 'dvMapwo5wp', phase: 'status', pct: 14, state: 'running', message: 'Capturing frame 1 of 49...'}
+html2canvas.js:5269 [Violation] Avoid using document.write().
+DocumentCloner.toIFrame @ html2canvas.js:5269
+(anonymous) @ html2canvas.js:7757
+step @ html2canvas.js:86
+(anonymous) @ html2canvas.js:67
+(anonymous) @ html2canvas.js:60
+__awaiter @ html2canvas.js:56
+renderElement @ html2canvas.js:7711
+html2canvas @ html2canvas.js:7706
+renderWithHtml2Canvas @ x_all.js?version=2:15617
+captureFromComposedContainer @ x_all.js?version=2:15646
+captureFrameOnce @ x_all.js?version=2:15649
+holdCapture @ x_all.js?version=2:15814
+(anonymous) @ x_all.js?version=2:15825
+pollFn @ x_all.js?version=2:15340
+waitForMapStable @ x_all.js?version=2:15350
+processKeyframe @ x_all.js?version=2:15798
+(anonymous) @ x_all.js?version=2:15843
+setTimeout
+startCaptureLoop @ x_all.js?version=2:15842
+(anonymous) @ x_all.js?version=2:15861
+setTimeout
+(anonymous) @ x_all.js?version=2:15858
+waitFn @ x_all.js?version=2:15222
+initGhostCaptureMap @ x_all.js?version=2:15232
+(anonymous) @ x_all.js?version=2:15847
+(anonymous) @ x_all.js?version=2:14499
+(anonymous) @ x_all.js?version=2:14483
+handleLoad @ x_booter.js?version=2:636
+script
+JSSHOP.loadScript @ x_booter.js?version=2:610
+loadHtml2Canvas @ x_all.js?version=2:14482
+(anonymous) @ x_all.js?version=2:14493
+loadSnapdom @ x_all.js?version=2:14460
+(anonymous) @ x_all.js?version=2:14492
+loadCCapture @ x_all.js?version=2:14442
+JSSHOP.ads.ensureNuMapCaptureLibs @ x_all.js?version=2:14491
+JSSHOP.ads.getMapVideo @ x_all.js?version=2:14962
+(anonymous) @ x_all.js?version=2:16243
+o @ DomEvent.js:108
+x_all.js?version=2:15842 [Violation] 'setTimeout' handler took 250ms
+s_thumbupdt_anon_1764523162.png:1   GET https://titan/incasa/images/property/s_thumbupdt_anon_1764523162.png 404 (Not Found)
+Image
+DocumentCloner.toIFrame @ html2canvas.js:5272
+(anonymous) @ html2canvas.js:7757
+step @ html2canvas.js:86
+(anonymous) @ html2canvas.js:67
+(anonymous) @ html2canvas.js:60
+__awaiter @ html2canvas.js:56
+renderElement @ html2canvas.js:7711
+html2canvas @ html2canvas.js:7706
+renderWithHtml2Canvas @ x_all.js?version=2:15617
+captureFromComposedContainer @ x_all.js?version=2:15646
+captureFrameOnce @ x_all.js?version=2:15649
+holdCapture @ x_all.js?version=2:15814
+(anonymous) @ x_all.js?version=2:15825
+pollFn @ x_all.js?version=2:15340
+waitForMapStable @ x_all.js?version=2:15350
+processKeyframe @ x_all.js?version=2:15798
+(anonymous) @ x_all.js?version=2:15843
+setTimeout
+startCaptureLoop @ x_all.js?version=2:15842
+(anonymous) @ x_all.js?version=2:15861
+setTimeout
+(anonymous) @ x_all.js?version=2:15858
+waitFn @ x_all.js?version=2:15222
+initGhostCaptureMap @ x_all.js?version=2:15232
+(anonymous) @ x_all.js?version=2:15847
+(anonymous) @ x_all.js?version=2:14499
+(anonymous) @ x_all.js?version=2:14483
+handleLoad @ x_booter.js?version=2:636
+script
+JSSHOP.loadScript @ x_booter.js?version=2:610
+loadHtml2Canvas @ x_all.js?version=2:14482
+(anonymous) @ x_all.js?version=2:14493
+loadSnapdom @ x_all.js?version=2:14460
+(anonymous) @ x_all.js?version=2:14492
+loadCCapture @ x_all.js?version=2:14442
+JSSHOP.ads.ensureNuMapCaptureLibs @ x_all.js?version=2:14491
+JSSHOP.ads.getMapVideo @ x_all.js?version=2:14962
+(anonymous) @ x_all.js?version=2:16243
+o @ DomEvent.js:108
+s_thumbupdt_anon_1771267879.png:1   GET https://titan/incasa/images/property/s_thumbupdt_anon_1771267879.png 404 (Not Found)
+Image
+DocumentCloner.toIFrame @ html2canvas.js:5272
+(anonymous) @ html2canvas.js:7757
+step @ html2canvas.js:86
+(anonymous) @ html2canvas.js:67
+(anonymous) @ html2canvas.js:60
+__awaiter @ html2canvas.js:56
+renderElement @ html2canvas.js:7711
+html2canvas @ html2canvas.js:7706
+renderWithHtml2Canvas @ x_all.js?version=2:15617
+captureFromComposedContainer @ x_all.js?version=2:15646
+captureFrameOnce @ x_all.js?version=2:15649
+holdCapture @ x_all.js?version=2:15814
+(anonymous) @ x_all.js?version=2:15825
+pollFn @ x_all.js?version=2:15340
+waitForMapStable @ x_all.js?version=2:15350
+processKeyframe @ x_all.js?version=2:15798
+(anonymous) @ x_all.js?version=2:15843
+setTimeout
+startCaptureLoop @ x_all.js?version=2:15842
+(anonymous) @ x_all.js?version=2:15861
+setTimeout
+(anonymous) @ x_all.js?version=2:15858
+waitFn @ x_all.js?version=2:15222
+initGhostCaptureMap @ x_all.js?version=2:15232
+(anonymous) @ x_all.js?version=2:15847
+(anonymous) @ x_all.js?version=2:14499
+(anonymous) @ x_all.js?version=2:14483
+handleLoad @ x_booter.js?version=2:636
+script
+JSSHOP.loadScript @ x_booter.js?version=2:610
+loadHtml2Canvas @ x_all.js?version=2:14482
+(anonymous) @ x_all.js?version=2:14493
+loadSnapdom @ x_all.js?version=2:14460
+(anonymous) @ x_all.js?version=2:14492
+loadCCapture @ x_all.js?version=2:14442
+JSSHOP.ads.ensureNuMapCaptureLibs @ x_all.js?version=2:14491
+JSSHOP.ads.getMapVideo @ x_all.js?version=2:14962
+(anonymous) @ x_all.js?version=2:16243
+o @ DomEvent.js:108
+s_thumbupdt_anon_1766678966.png:1   GET https://titan/incasa/images/property/s_thumbupdt_anon_1766678966.png 404 (Not Found)
+Image
+DocumentCloner.toIFrame @ html2canvas.js:5272
+(anonymous) @ html2canvas.js:7757
+step @ html2canvas.js:86
+(anonymous) @ html2canvas.js:67
+(anonymous) @ html2canvas.js:60
+__awaiter @ html2canvas.js:56
+renderElement @ html2canvas.js:7711
+html2canvas @ html2canvas.js:7706
+renderWithHtml2Canvas @ x_all.js?version=2:15617
+captureFromComposedContainer @ x_all.js?version=2:15646
+captureFrameOnce @ x_all.js?version=2:15649
+holdCapture @ x_all.js?version=2:15814
+(anonymous) @ x_all.js?version=2:15825
+pollFn @ x_all.js?version=2:15340
+waitForMapStable @ x_all.js?version=2:15350
+processKeyframe @ x_all.js?version=2:15798
+(anonymous) @ x_all.js?version=2:15843
+setTimeout
+startCaptureLoop @ x_all.js?version=2:15842
+(anonymous) @ x_all.js?version=2:15861
+setTimeout
+(anonymous) @ x_all.js?version=2:15858
+waitFn @ x_all.js?version=2:15222
+initGhostCaptureMap @ x_all.js?version=2:15232
+(anonymous) @ x_all.js?version=2:15847
+(anonymous) @ x_all.js?version=2:14499
+(anonymous) @ x_all.js?version=2:14483
+handleLoad @ x_booter.js?version=2:636
+script
+JSSHOP.loadScript @ x_booter.js?version=2:610
+loadHtml2Canvas @ x_all.js?version=2:14482
+(anonymous) @ x_all.js?version=2:14493
+loadSnapdom @ x_all.js?version=2:14460
+(anonymous) @ x_all.js?version=2:14492
+loadCCapture @ x_all.js?version=2:14442
+JSSHOP.ads.ensureNuMapCaptureLibs @ x_all.js?version=2:14491
+JSSHOP.ads.getMapVideo @ x_all.js?version=2:14962
+(anonymous) @ x_all.js?version=2:16243
+o @ DomEvent.js:108
+x_all.js?version=2:15603 [MAP-VIDEO] composed render watchdog fallback {elapsedMs: 0, tick: 1, mapDivId: 'dvMapwo5wp'}
+html2canvas.js:5269 [Violation] Avoid using document.write().
+DocumentCloner.toIFrame @ html2canvas.js:5269
+(anonymous) @ html2canvas.js:7757
+step @ html2canvas.js:86
+(anonymous) @ html2canvas.js:67
+(anonymous) @ html2canvas.js:60
+__awaiter @ html2canvas.js:56
+renderElement @ html2canvas.js:7711
+html2canvas @ html2canvas.js:7706
+drawPaneByIndex @ x_all.js?version=2:15537
+captureFromHybridCanvas @ x_all.js?version=2:15552
+(anonymous) @ x_all.js?version=2:15608
+setTimeout
+captureFromComposedContainer @ x_all.js?version=2:15602
+captureFrameOnce @ x_all.js?version=2:15649
+holdCapture @ x_all.js?version=2:15814
+(anonymous) @ x_all.js?version=2:15825
+pollFn @ x_all.js?version=2:15340
+waitForMapStable @ x_all.js?version=2:15350
+processKeyframe @ x_all.js?version=2:15798
+(anonymous) @ x_all.js?version=2:15843
+setTimeout
+startCaptureLoop @ x_all.js?version=2:15842
+(anonymous) @ x_all.js?version=2:15861
+setTimeout
+(anonymous) @ x_all.js?version=2:15858
+waitFn @ x_all.js?version=2:15222
+initGhostCaptureMap @ x_all.js?version=2:15232
+(anonymous) @ x_all.js?version=2:15847
+(anonymous) @ x_all.js?version=2:14499
+(anonymous) @ x_all.js?version=2:14483
+handleLoad @ x_booter.js?version=2:636
+script
+JSSHOP.loadScript @ x_booter.js?version=2:610
+loadHtml2Canvas @ x_all.js?version=2:14482
+(anonymous) @ x_all.js?version=2:14493
+loadSnapdom @ x_all.js?version=2:14460
+(anonymous) @ x_all.js?version=2:14492
+loadCCapture @ x_all.js?version=2:14442
+JSSHOP.ads.ensureNuMapCaptureLibs @ x_all.js?version=2:14491
+JSSHOP.ads.getMapVideo @ x_all.js?version=2:14962
+(anonymous) @ x_all.js?version=2:16243
+o @ DomEvent.js:108
+x_all.js?version=2:15602 [Violation] 'setTimeout' handler took 200ms
+s_thumbupdt_anon_1771267879.png:1   GET https://titan/incasa/images/property/s_thumbupdt_anon_1771267879.png 404 (Not Found)
+Image
+DocumentCloner.toIFrame @ html2canvas.js:5272
+(anonymous) @ html2canvas.js:7757
+step @ html2canvas.js:86
+(anonymous) @ html2canvas.js:67
+(anonymous) @ html2canvas.js:60
+__awaiter @ html2canvas.js:56
+renderElement @ html2canvas.js:7711
+html2canvas @ html2canvas.js:7706
+drawPaneByIndex @ x_all.js?version=2:15537
+captureFromHybridCanvas @ x_all.js?version=2:15552
+(anonymous) @ x_all.js?version=2:15608
+setTimeout
+captureFromComposedContainer @ x_all.js?version=2:15602
+captureFrameOnce @ x_all.js?version=2:15649
+holdCapture @ x_all.js?version=2:15814
+(anonymous) @ x_all.js?version=2:15825
+pollFn @ x_all.js?version=2:15340
+waitForMapStable @ x_all.js?version=2:15350
+processKeyframe @ x_all.js?version=2:15798
+(anonymous) @ x_all.js?version=2:15843
+setTimeout
+startCaptureLoop @ x_all.js?version=2:15842
+(anonymous) @ x_all.js?version=2:15861
+setTimeout
+(anonymous) @ x_all.js?version=2:15858
+waitFn @ x_all.js?version=2:15222
+initGhostCaptureMap @ x_all.js?version=2:15232
+(anonymous) @ x_all.js?version=2:15847
+(anonymous) @ x_all.js?version=2:14499
+(anonymous) @ x_all.js?version=2:14483
+handleLoad @ x_booter.js?version=2:636
+script
+JSSHOP.loadScript @ x_booter.js?version=2:610
+loadHtml2Canvas @ x_all.js?version=2:14482
+(anonymous) @ x_all.js?version=2:14493
+loadSnapdom @ x_all.js?version=2:14460
+(anonymous) @ x_all.js?version=2:14492
+loadCCapture @ x_all.js?version=2:14442
+JSSHOP.ads.ensureNuMapCaptureLibs @ x_all.js?version=2:14491
+JSSHOP.ads.getMapVideo @ x_all.js?version=2:14962
+(anonymous) @ x_all.js?version=2:16243
+o @ DomEvent.js:108
+s_thumbupdt_anon_1764523162.png:1   GET https://titan/incasa/images/property/s_thumbupdt_anon_1764523162.png 404 (Not Found)
+Image
+DocumentCloner.toIFrame @ html2canvas.js:5272
+(anonymous) @ html2canvas.js:7757
+step @ html2canvas.js:86
+(anonymous) @ html2canvas.js:67
+(anonymous) @ html2canvas.js:60
+__awaiter @ html2canvas.js:56
+renderElement @ html2canvas.js:7711
+html2canvas @ html2canvas.js:7706
+drawPaneByIndex @ x_all.js?version=2:15537
+captureFromHybridCanvas @ x_all.js?version=2:15552
+(anonymous) @ x_all.js?version=2:15608
+setTimeout
+captureFromComposedContainer @ x_all.js?version=2:15602
+captureFrameOnce @ x_all.js?version=2:15649
+holdCapture @ x_all.js?version=2:15814
+(anonymous) @ x_all.js?version=2:15825
+pollFn @ x_all.js?version=2:15340
+waitForMapStable @ x_all.js?version=2:15350
+processKeyframe @ x_all.js?version=2:15798
+(anonymous) @ x_all.js?version=2:15843
+setTimeout
+startCaptureLoop @ x_all.js?version=2:15842
+(anonymous) @ x_all.js?version=2:15861
+setTimeout
+(anonymous) @ x_all.js?version=2:15858
+waitFn @ x_all.js?version=2:15222
+initGhostCaptureMap @ x_all.js?version=2:15232
+(anonymous) @ x_all.js?version=2:15847
+(anonymous) @ x_all.js?version=2:14499
+(anonymous) @ x_all.js?version=2:14483
+handleLoad @ x_booter.js?version=2:636
+script
+JSSHOP.loadScript @ x_booter.js?version=2:610
+loadHtml2Canvas @ x_all.js?version=2:14482
+(anonymous) @ x_all.js?version=2:14493
+loadSnapdom @ x_all.js?version=2:14460
+(anonymous) @ x_all.js?version=2:14492
+loadCCapture @ x_all.js?version=2:14442
+JSSHOP.ads.ensureNuMapCaptureLibs @ x_all.js?version=2:14491
+JSSHOP.ads.getMapVideo @ x_all.js?version=2:14962
+(anonymous) @ x_all.js?version=2:16243
+o @ DomEvent.js:108
+s_thumbupdt_anon_1766678966.png:1   GET https://titan/incasa/images/property/s_thumbupdt_anon_1766678966.png 404 (Not Found)
+Image
+DocumentCloner.toIFrame @ html2canvas.js:5272
+(anonymous) @ html2canvas.js:7757
+step @ html2canvas.js:86
+(anonymous) @ html2canvas.js:67
+(anonymous) @ html2canvas.js:60
+__awaiter @ html2canvas.js:56
+renderElement @ html2canvas.js:7711
+html2canvas @ html2canvas.js:7706
+drawPaneByIndex @ x_all.js?version=2:15537
+captureFromHybridCanvas @ x_all.js?version=2:15552
+(anonymous) @ x_all.js?version=2:15608
+setTimeout
+captureFromComposedContainer @ x_all.js?version=2:15602
+captureFrameOnce @ x_all.js?version=2:15649
+holdCapture @ x_all.js?version=2:15814
+(anonymous) @ x_all.js?version=2:15825
+pollFn @ x_all.js?version=2:15340
+waitForMapStable @ x_all.js?version=2:15350
+processKeyframe @ x_all.js?version=2:15798
+(anonymous) @ x_all.js?version=2:15843
+setTimeout
+startCaptureLoop @ x_all.js?version=2:15842
+(anonymous) @ x_all.js?version=2:15861
+setTimeout
+(anonymous) @ x_all.js?version=2:15858
+waitFn @ x_all.js?version=2:15222
+initGhostCaptureMap @ x_all.js?version=2:15232
+(anonymous) @ x_all.js?version=2:15847
+(anonymous) @ x_all.js?version=2:14499
+(anonymous) @ x_all.js?version=2:14483
+handleLoad @ x_booter.js?version=2:636
+script
+JSSHOP.loadScript @ x_booter.js?version=2:610
+loadHtml2Canvas @ x_all.js?version=2:14482
+(anonymous) @ x_all.js?version=2:14493
+loadSnapdom @ x_all.js?version=2:14460
+(anonymous) @ x_all.js?version=2:14492
+loadCCapture @ x_all.js?version=2:14442
+JSSHOP.ads.ensureNuMapCaptureLibs @ x_all.js?version=2:14491
+JSSHOP.ads.getMapVideo @ x_all.js?version=2:14962
+(anonymous) @ x_all.js?version=2:16243
+o @ DomEvent.js:108
+x_all.js?version=2:14854 [MAP-VIDEO] ghost debug visibility applied {enabled: true, panels: 2}
+x_all.js?version=2:16229 [MAP-VIDEO] ghost capture debug {enabled: true, mapDivId: 'dvMapwo5wp'}

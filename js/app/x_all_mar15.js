@@ -1,4 +1,3 @@
-
  
 if (!window.JSSHOP) {
     var JSSHOP = new Object();
@@ -30,11 +29,10 @@ if (!window.JSSHOP.shop) {
     JSSHOP.shop = new Object();
 }
 
+
         var tSlctdPrpsArr = [];
         var intervals = [];
-
-
-
+ 
         function clear(i){
             return function(){
                 clearInterval(intervals[i]);
@@ -8428,17 +8426,6 @@ console.log("jshp_ads_showUpdtsFeed.tUdtLnkStr: " + tUdtLnkStr);
                             tMapShowSellerForPost = "no";
                         }
                         tALeavesObj["showSellerBadge"] = tMapShowSellerForPost;
-                        tMapAutoPlayForPost = "off";
-                        if (tUpPvrsObj.cnfg && tUpPvrsObj.cnfg["inpMapPstAutoPlay"]) {
-                            tMapAutoPlayForPost = String(tUpPvrsObj.cnfg["inpMapPstAutoPlay"]).toLowerCase();
-                        }
-                        if (tMapAutoPlayForPost == "yes" || tMapAutoPlayForPost == "true") {
-                            tMapAutoPlayForPost = "on";
-                        }
-                        if (tMapAutoPlayForPost != "on") {
-                            tMapAutoPlayForPost = "off";
-                        }
-                        tALeavesObj["autoPlay"] = tMapAutoPlayForPost;
                         tALeavesObj["sellerName"] = String(tUdtsObj.u_fullname || "");
                         tALeavesObj["sellerIcon"] = String(tUdtsObj.u_icon || "");
                         tALeavesObj["sellerUid"] = String(tUdtsObj.p_uid || "");
@@ -10926,20 +10913,6 @@ JSSHOP.ads.getUpdatePVrs = function(tPVUpdtType) {
         } else {
             tUpdatePVrs["cnfg"]["inpMapPstShowSeller"] = "no";
         }
-        if (typeof getMapPstAutoPlayValue == "function") {
-            tUpdatePVrs["cnfg"]["inpMapPstAutoPlay"] = getMapPstAutoPlayValue();
-        } else if (document.getElementById("inpMapPstAutoPlay")) {
-            tUpdatePVrs["cnfg"]["inpMapPstAutoPlay"] = document.getElementById("inpMapPstAutoPlay").value;
-        } else {
-            tUpdatePVrs["cnfg"]["inpMapPstAutoPlay"] = "off";
-        }
-        if (typeof getMapPstCaptureMoveendGateValue == "function") {
-            tUpdatePVrs["cnfg"]["inpMapPstCaptureMoveendGate"] = getMapPstCaptureMoveendGateValue();
-        } else if (document.getElementById("inpMapPstCaptureMoveendGate")) {
-            tUpdatePVrs["cnfg"]["inpMapPstCaptureMoveendGate"] = document.getElementById("inpMapPstCaptureMoveendGate").value;
-        } else {
-            tUpdatePVrs["cnfg"]["inpMapPstCaptureMoveendGate"] = "no";
-        }
         // tUpdatePVrs["cnfg"]["inpMapLat"] = inpMapLat.value;
         // tUpdatePVrs["cnfg"]["inpMapLng"] = inpMapLng.value;
         // tUpdatePVrs["cnfg"]["inpMapZoom"] = inpMapZoom.value;
@@ -11277,22 +11250,6 @@ function ensureMapPstShowSellerField() {
     return mapShowSellerEl;
 }
 
-function ensureMapPstAutoPlayField() {
-    var mapAutoPlayEl = document.getElementById("inpMapPstAutoPlay");
-    if (!mapAutoPlayEl) {
-        mapAutoPlayEl = document.createElement("input");
-        mapAutoPlayEl.type = "hidden";
-        mapAutoPlayEl.id = "inpMapPstAutoPlay";
-        mapAutoPlayEl.name = "inpMapPstAutoPlay";
-        mapAutoPlayEl.value = "off";
-        document.body.appendChild(mapAutoPlayEl);
-    }
-    if (!mapAutoPlayEl.value) {
-        mapAutoPlayEl.value = "off";
-    }
-    return mapAutoPlayEl;
-}
-
 function ensureMapPstCaptureFpsField() {
     var mapCaptureFpsEl = document.getElementById("inpMapPstCaptureFps");
     if (!mapCaptureFpsEl) {
@@ -11347,86 +11304,6 @@ function ensureMapPstCaptureIntervalField() {
     return mapCaptureIntervalEl;
 }
 
-function ensureMapPstForceCanvasRendererField() {
-    var mapForceCanvasRendererEl = document.getElementById("inpMapPstForceCanvasRenderer");
-    if (!mapForceCanvasRendererEl) {
-        mapForceCanvasRendererEl = document.createElement("input");
-        mapForceCanvasRendererEl.type = "hidden";
-        mapForceCanvasRendererEl.id = "inpMapPstForceCanvasRenderer";
-        mapForceCanvasRendererEl.name = "inpMapPstForceCanvasRenderer";
-        mapForceCanvasRendererEl.value = "yes";
-        document.body.appendChild(mapForceCanvasRendererEl);
-    }
-    if (!mapForceCanvasRendererEl.value) {
-        mapForceCanvasRendererEl.value = "yes";
-    }
-    return mapForceCanvasRendererEl;
-}
-
-function getMapPstForceCanvasRendererValue() {
-    var mapForceCanvasRendererEl = ensureMapPstForceCanvasRendererField();
-    var forceVal = String(mapForceCanvasRendererEl.value || "yes").toLowerCase();
-    if (forceVal == "yes" || forceVal == "true" || forceVal == "on" || forceVal == "1") {
-        forceVal = "yes";
-    } else {
-        forceVal = "no";
-    }
-    mapForceCanvasRendererEl.value = forceVal;
-    return forceVal;
-}
-
-function setMapPstForceCanvasRendererValue(rawVal) {
-    var mapForceCanvasRendererEl = ensureMapPstForceCanvasRendererField();
-    var forceVal = String(rawVal || "yes").toLowerCase();
-    if (forceVal == "yes" || forceVal == "true" || forceVal == "on" || forceVal == "1") {
-        forceVal = "yes";
-    } else {
-        forceVal = "no";
-    }
-    mapForceCanvasRendererEl.value = forceVal;
-    return forceVal;
-}
-
-function ensureMapPstCaptureMoveendGateField() {
-    var mapCaptureMoveendEl = document.getElementById("inpMapPstCaptureMoveendGate");
-    if (!mapCaptureMoveendEl) {
-        mapCaptureMoveendEl = document.createElement("input");
-        mapCaptureMoveendEl.type = "hidden";
-        mapCaptureMoveendEl.id = "inpMapPstCaptureMoveendGate";
-        mapCaptureMoveendEl.name = "inpMapPstCaptureMoveendGate";
-        mapCaptureMoveendEl.value = "no";
-        document.body.appendChild(mapCaptureMoveendEl);
-    }
-    if (!mapCaptureMoveendEl.value) {
-        mapCaptureMoveendEl.value = "no";
-    }
-    return mapCaptureMoveendEl;
-}
-
-function getMapPstCaptureMoveendGateValue() {
-    var mapCaptureMoveendEl = ensureMapPstCaptureMoveendGateField();
-    var moveendVal = String(mapCaptureMoveendEl.value || "no").toLowerCase();
-    if (moveendVal == "yes" || moveendVal == "true" || moveendVal == "on" || moveendVal == "1") {
-        moveendVal = "yes";
-    } else {
-        moveendVal = "no";
-    }
-    mapCaptureMoveendEl.value = moveendVal;
-    return moveendVal;
-}
-
-function setMapPstCaptureMoveendGateValue(rawVal) {
-    var mapCaptureMoveendEl = ensureMapPstCaptureMoveendGateField();
-    var moveendVal = String(rawVal || "no").toLowerCase();
-    if (moveendVal == "yes" || moveendVal == "true" || moveendVal == "on" || moveendVal == "1") {
-        moveendVal = "yes";
-    } else {
-        moveendVal = "no";
-    }
-    mapCaptureMoveendEl.value = moveendVal;
-    return moveendVal;
-}
-
 function getMapPstCaptureIntervalValue() {
     var mapCaptureIntervalEl = ensureMapPstCaptureIntervalField();
     var mapCaptureIntervalVal = parseInt(mapCaptureIntervalEl.value, 10);
@@ -11470,30 +11347,6 @@ function setMapPstShowSellerValue(showSellerVal) {
         newVal = "no";
     }
     mapShowSellerEl.value = newVal;
-    return newVal;
-}
-
-function getMapPstAutoPlayValue() {
-    var mapAutoPlayEl = ensureMapPstAutoPlayField();
-    var autoPlayVal = String(mapAutoPlayEl.value || "off").toLowerCase();
-    if (autoPlayVal == "yes" || autoPlayVal == "true" || autoPlayVal == "on") {
-        autoPlayVal = "on";
-    } else {
-        autoPlayVal = "off";
-    }
-    mapAutoPlayEl.value = autoPlayVal;
-    return autoPlayVal;
-}
-
-function setMapPstAutoPlayValue(autoPlayVal) {
-    var mapAutoPlayEl = ensureMapPstAutoPlayField();
-    var newVal = String(autoPlayVal || "off").toLowerCase();
-    if (newVal == "yes" || newVal == "true" || newVal == "on") {
-        newVal = "on";
-    } else {
-        newVal = "off";
-    }
-    mapAutoPlayEl.value = newVal;
     return newVal;
 }
 
@@ -11556,7 +11409,6 @@ JSSHOP.ads.doMapPostCnfgPop = function() {
         ensureMapPstShowSellerField();
         ensureMapPstCaptureFpsField();
         ensureMapPstCaptureIntervalField();
-        ensureMapPstCaptureMoveendGateField();
         tSCPopStr = "   <br><br>";
         tDDswprCnttObj = {};
         tDDswprCnttObj["ddtype"] = "noQvalue";
@@ -11650,22 +11502,6 @@ JSSHOP.ads.doMapPostCnfgPop = function() {
         tDDmapSellerObj["icn"] = "noQvalue";
         tDDmapSellerObj["kvIcnsObj"] = {"yes": "&#xe7fd;", "no": "&#xe14c;"};
         tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDmapSellerObj);
-
-        tDDmapCaptureMoveendObj = {};
-        tDDmapCaptureMoveendObj["ddtype"] = "noQvalue";
-        tDDmapCaptureMoveendObj["fld"] = "inpMapPstCaptureMoveendGate";
-        tDDmapCaptureMoveendObj["lbl"] = "Capture Gate (Safe Test)";
-        tDDmapCaptureMoveendObj["val"] = getMapPstCaptureMoveendGateValue();
-        tDDmapCaptureMoveendObj["kvpObj"] = {"no": "Current (tile stable)", "yes": "MoveEnd callback"};
-        tDDmapCaptureMoveendObj["cb"] = "donada";
-        tDDmapCaptureMoveendObj["fldcls"] = "nav-link dropdown-toggle txtSmall";
-        tDDmapCaptureMoveendObj["lblcls"] = "txtSmall";
-        tDDmapCaptureMoveendObj["valcls"] = "txtSmall";
-        tDDmapCaptureMoveendObj["icncls"] = "nav-material-icons txtBold txtClrGrey";
-        tDDmapCaptureMoveendObj["horvert"] = "horizontal";
-        tDDmapCaptureMoveendObj["icn"] = "noQvalue";
-        tDDmapCaptureMoveendObj["kvIcnsObj"] = {"no": "&#xe5d2;", "yes": "&#xe8d5;"};
-        tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDmapCaptureMoveendObj);
 
         tSCPopStr += "<span style=\"\" class=\"cls_button cls_button-small bkgdClrHdr txtClrWhite\" onclick=\"JSSHOP.ui.closeLbox();JSSHOP.ads.trnsltMapPstObj();\">OK</span>";
         tSCPopStr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-small  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";   
@@ -12334,21 +12170,6 @@ JSSHOP.ads.trnsltPTpObj = function() {
             JSSHOP.ads.trnsltImgPstObj();
             break;
         case "pmap":
-            // Always switch to Preview tab before rendering map
-            var previewTab = document.querySelector('#dvInlinePTypeTabs a[href="#inlinePreviewTab"]');
-            if (previewTab) {
-                previewTab.classList.add('active');
-                var allTabs = document.querySelectorAll('#dvInlinePTypeTabs a');
-                for (var i = 0; i < allTabs.length; i++) {
-                    if (allTabs[i] !== previewTab) allTabs[i].classList.remove('active');
-                }
-                var previewPane = document.getElementById('dvDemoView');
-                var markersPane = document.getElementById('dvInlineMarkersPane');
-                var settingsPane = document.getElementById('dvInlineSettingsPane');
-                if (previewPane) previewPane.style.display = 'block';
-                if (markersPane) markersPane.style.display = 'none';
-                if (settingsPane) settingsPane.style.display = 'none';
-            }
             JSSHOP.ads.trnsltMapPstObj();
             break;
         case "pcarousel":
@@ -12450,7 +12271,6 @@ JSSHOP.shared.getSlctdPrpsArr = function() {
 
 
 JSSHOP.ads.trnsltImgPstObj = function() {
-    setInlineDemoViewCaptureMode("pimage");
     tSCval = inpImgPstCntnt.value;
     tIMCLytVal = document.getElementById("inpImgPstLayout").value;
     tIMCStyleVal = document.getElementById("inpImgPstStyle").value;
@@ -12516,7 +12336,6 @@ JSSHOP.ads.trnsltImgPstObj = function() {
  };
 
 JSSHOP.ads.trnsltVideoPstObj = function() {
-    setInlineDemoViewCaptureMode("pvideo");
     console.log("trnsltVideoPstObj called");
     console.log("trnsltVideoPstObj: preparing video post with selected properties");
     tSlctdPrpsArr = null;
@@ -12591,23 +12410,7 @@ JSSHOP.ads.isValidMapLatLng = function(rawLat, rawLng) {
                             continue;
                         }
                         tLeavesObj["icn"] = currPrpImgsFldr + "/" + "s_thumb" + tmmobj[key].pimage;
-                        if (typeof JSSHOP.ads.getNuMapMarkerIconUrl == "function") {
-                            tLeavesObj["icn"] = JSSHOP.ads.getNuMapMarkerIconUrl(tLeavesObj["icn"], "images/logo_small_oct.png");
-                        }
-                        // Robust fallback logic for marker title (matches getInlineMapMarkerDisplayTitle)
-                        if (tmmobj[key].mapMarkerTitleText && String(tmmobj[key].mapMarkerTitleText).trim() !== "") {
-                            tLeavesObj["title"] = String(tmmobj[key].mapMarkerTitleText);
-                        } else if (tmmobj[key].ptitle && String(tmmobj[key].ptitle).trim() !== "") {
-                            try {
-                                tLeavesObj["title"] = LZString.decompressFromEncodedURIComponent(String(tmmobj[key].ptitle));
-                            } catch (ePttl) {
-                                tLeavesObj["title"] = String(tmmobj[key].ptitle);
-                            }
-                        } else if (tmmobj[key].cname && String(tmmobj[key].cname).trim() !== "") {
-                            tLeavesObj["title"] = String(tmmobj[key].cname);
-                        } else {
-                            tLeavesObj["title"] = "Property " + (tMapLeavesArr.length + 1);
-                        }
+                        tLeavesObj["title"] = tmmobj[key].ptitle;
                         tLeavesObj["lat"] = tmmobj[key].ploclat;
                         tLeavesObj["lng"] = tmmobj[key].ploclng;
                         tLeavesObj["price"] = tmmobj[key].price;
@@ -12706,47 +12509,17 @@ function syncInlinePTypePreviewFromRenderer() {
     }
 }
 
-function setInlineDemoViewCaptureMode(postType) {
-    try {
-        var dvPrev = document.getElementById("dvDemoView");
-        if (!dvPrev) {
-            return;
-        }
-        if (!dvPrev.getAttribute("data-incasa-orig-style")) {
-            dvPrev.setAttribute("data-incasa-orig-style", dvPrev.getAttribute("style") || "");
-        }
-        var originalStyle = dvPrev.getAttribute("data-incasa-orig-style") || "";
-        var normalizedType = String(postType || "").toLowerCase();
-        if (normalizedType == "pmap") {
-            // dvPrev.setAttribute("style", originalStyle + ";width:340px;min-width:340px;max-width:340px;height:340px;min-height:340px;max-height:340px;overflow:hidden;margin:5px auto;");
-            // The above fixed dimensions caused issues with mobile width that can be smaller than 340px, so switching to a more flexible style that maintains a square aspect ratio while allowing it to scale down on smaller screens with a max width of 340px
-             dvPrev.setAttribute("style", originalStyle + ";width:100%;max-width:340px;height:0;padding-bottom:100%;position:relative;overflow:hidden;margin:5px auto;");
-             
-            console.log("[MAP-VIDEO] dvDemoView mode: pmap-fixed-340");
-        } else {
-            dvPrev.setAttribute("style", originalStyle);
-            console.log("[MAP-VIDEO] dvDemoView mode: restore-default", { postType: normalizedType || "unknown" });
-        }
-    } catch (eSetInlineDemoViewCaptureMode) {
-        console.log("setInlineDemoViewCaptureMode: " + eSetInlineDemoViewCaptureMode);
-    }
-}
-
 
 
 
  JSSHOP.ads.trnsltMapPstObj = function() {
-        ensureMapPstForceCanvasRendererField();
-     setInlineDemoViewCaptureMode("pmap");
     ensureInlinePTypeTabsFromRenderer("pmap");
      ensureMapPstTypeField();
      ensureMapPstEffectField();
      ensureMapPstFlySpeedField();
      ensureMapPstShowSellerField();
-     ensureMapPstAutoPlayField();
      ensureMapPstCaptureFpsField();
      ensureMapPstCaptureIntervalField();
-    ensureMapPstCaptureMoveendGateField();
     var mapDebugCounters = {
         source: "",
         scannedProps: 0,
@@ -12810,37 +12583,8 @@ function setInlineDemoViewCaptureMode(postType) {
                 tLeavesObj = null;
                 tLeavesObj = "";
                 tLeavesObj = {};
-                /*
                 tLeavesObj["icn"] = "images/property/s_thumb" + currSlctdPrpsObj[key].pimage;
-                if (typeof JSSHOP.ads.getNuMapMarkerIconUrl == "function") {
-                    tLeavesObj["icn"] = JSSHOP.ads.getNuMapMarkerIconUrl(tLeavesObj["icn"], "images/logo_small_oct.png");
-                }
-                */
-                lowerSrc = currSlctdPrpsObj[key].pimage;
-                if (lowerSrc.indexOf("updt_") != -1) {
-                    cleanName = lowerSrc.replace("updt_", "");
-                    tLeavesObj["icn"] =  "images/ucontent/" + cleanName;
-                } else {
-                    tLeavesObj["icn"] = "images/property/s_thumb" + currSlctdPrpsObj[key].pimage;
-                }
-                // Robust fallback logic for marker title (matches getInlineMapMarkerDisplayTitle)
-                if (currSlctdPrpsObj[key].mapMarkerTitleText && String(currSlctdPrpsObj[key].mapMarkerTitleText).trim() !== "") {
-                                        console.debug("[DEBUG] Using mapMarkerTitleText for marker", key, currSlctdPrpsObj[key].mapMarkerTitleText);
-                    tLeavesObj["title"] = String(currSlctdPrpsObj[key].mapMarkerTitleText);
-                } else if (currSlctdPrpsObj[key].ptitle && String(currSlctdPrpsObj[key].ptitle).trim() !== "") {
-                                        console.debug("[DEBUG] Using ptitle for marker", key, currSlctdPrpsObj[key].ptitle);
-                    try {
-                        tLeavesObj["title"] = LZString.decompressFromEncodedURIComponent(String(currSlctdPrpsObj[key].ptitle));
-                    } catch (ePttl) {
-                        tLeavesObj["title"] = String(currSlctdPrpsObj[key].ptitle);
-                    }
-                } else if (currSlctdPrpsObj[key].cname && String(currSlctdPrpsObj[key].cname).trim() !== "") {
-                                        console.debug("[DEBUG] Using cname for marker", key, currSlctdPrpsObj[key].cname);
-                                        console.debug("[DEBUG] Using fallback property label for marker", key);
-                    tLeavesObj["title"] = String(currSlctdPrpsObj[key].cname);
-                } else {
-                    tLeavesObj["title"] = "Property " + (tMapLeavesArr.length + 1);
-                }
+                tLeavesObj["title"] = currSlctdPrpsObj[key].ptitle;
                 tLeavesObj["lat"] = currSlctdPrpsObj[key].ploclat;
                 tLeavesObj["lng"] = currSlctdPrpsObj[key].ploclng;
                 tLeavesObj["price"] = currSlctdPrpsObj[key].price;
@@ -12849,18 +12593,6 @@ function setInlineDemoViewCaptureMode(postType) {
                 tLeavesObj["sellerName"] = currSlctdPrpsObj[key].u_fullname || currSlctdPrpsObj[key].u_name || "";
                 tLeavesObj["sellerIcon"] = currSlctdPrpsObj[key].u_icon || "";
                 tLeavesObj["markerLabelText"] = currSlctdPrpsObj[key].mapMarkerTitleText || "";
-                                console.debug("[DEBUG] Saving marker options for marker", key, {
-                                    markerLabelText: tLeavesObj["markerLabelText"],
-                                    markerLabelTextColor: currSlctdPrpsObj[key].mapMarkerTitleTextColor,
-                                    markerLabelBgColor: currSlctdPrpsObj[key].mapMarkerTitleBgColor,
-                                    markerLabelBorderColor: currSlctdPrpsObj[key].mapMarkerTitleBorderColor,
-                                    markerLabelContainerStyle: currSlctdPrpsObj[key].mapMarkerTitleContainerStyle,
-                                    markerLabelBgOpacity: currSlctdPrpsObj[key].mapMarkerTitleBgOpacity,
-                                    markerLabelFontSize: currSlctdPrpsObj[key].mapMarkerTitleFontSize,
-                                    markerLabelFontFamily: currSlctdPrpsObj[key].mapMarkerTitleFontFamily,
-                                    markerLabelBold: currSlctdPrpsObj[key].mapMarkerTitleBold,
-                                    markerLabelItalic: currSlctdPrpsObj[key].mapMarkerTitleItalic
-                                });
                 tLeavesObj["markerLabelTextColor"] = currSlctdPrpsObj[key].mapMarkerTitleTextColor || "";
                 tLeavesObj["markerLabelBgColor"] = currSlctdPrpsObj[key].mapMarkerTitleBgColor || "";
                 tLeavesObj["markerLabelBorderColor"] = currSlctdPrpsObj[key].mapMarkerTitleBorderColor || "";
@@ -12929,7 +12661,6 @@ function setInlineDemoViewCaptureMode(postType) {
         if(tMapLeavesArr.length > 1) {
             tAllTitlesStr = "";
             for(var i = 0; i < tMapLeavesArr.length; i++) {
-                console.log("Marker " + i + " title before decoding: " + tMapLeavesArr[i].title);
                 tAllTitlesStr += decodeMapFieldText(tMapLeavesArr[i].title, "Map View").substring(0, 20);
                 if(i < tMapLeavesArr.length - 1) {
                     tAllTitlesStr += "... , ";
@@ -12982,16 +12713,13 @@ function setInlineDemoViewCaptureMode(postType) {
     tMapFullObj["mapEffect"] = getMapPstEffectValue();
     tMapFullObj["mapFlySpeed"] = getMapPstFlySpeedValue();
     tMapFullObj["showSellerBadge"] = getMapPstShowSellerValue();
-    tMapFullObj["autoPlay"] = getMapPstAutoPlayValue();
     tMapFullObj["captureFps"] = getMapPstCaptureFpsValue();
     tMapFullObj["captureFrameIntervalMs"] = getMapPstCaptureIntervalValue();
-    tMapFullObj["captureUseMoveendGate"] = getMapPstCaptureMoveendGateValue();
-    tMapFullObj["forceCanvasRenderer"] = getMapPstForceCanvasRendererValue();
     tMapFullObj["sellerName"] = (typeof u_fullname != "undefined" && u_fullname && u_fullname.value) ? u_fullname.value : "";
     tMapFullObj["sellerIcon"] = (typeof u_icon != "undefined" && u_icon && u_icon.value) ? u_icon.value : "";
     tMapFullObj["sellerUid"] = (typeof quid != "undefined") ? String(quid) : "";
     tMapFullObj["mdvid"] = "dvMap" + tRansSTr;
-    tNewDvStr = "<div id=\"dvMap" + tRansSTr + "\" style=\"width:100%;height:100%;min-height:340px;\"></div>";
+    tNewDvStr = "<div id=\"dvMap" + tRansSTr + "\" style=\"min-height: 340px; width: 100%;\"></div>";
 
     document.getElementById("dvDemoView").innerHTML = "";
     document.getElementById("dvDemoView").innerHTML = tNewDvStr;
@@ -13004,7 +12732,6 @@ function setInlineDemoViewCaptureMode(postType) {
 
 
 JSSHOP.ads.trnsltSwiperObj = function() {
-    setInlineDemoViewCaptureMode("pcarousel");
     ensureInlinePTypeTabsFromRenderer("pcarousel");
     tSwprTtlStr = "";
     tSwprDscStr = "";
@@ -13825,17 +13552,6 @@ JSSHOP.ads.getNormalizedMapFlySpeed = function(rawMapFlySpeed, fallbackMapFlySpe
     return mapFlySpeedVal;
 };
 
-JSSHOP.ads.getNuMapAutoPlayValue = function(rawAutoPlay, fallbackAutoPlay) {
-    var autoPlayVal = String(rawAutoPlay || fallbackAutoPlay || "off").toLowerCase();
-    if (autoPlayVal == "yes" || autoPlayVal == "true") {
-        autoPlayVal = "on";
-    }
-    if (autoPlayVal != "on") {
-        autoPlayVal = "off";
-    }
-    return autoPlayVal;
-};
-
 if (!JSSHOP.ads.nuMapPlaybackRegistry) {
     JSSHOP.ads.nuMapPlaybackRegistry = {};
 }
@@ -13847,18 +13563,11 @@ JSSHOP.ads.registerNuMapPlaybackState = function(mapDivId, mapObj, boundsObj, ma
         }
         var cfgObj = (mapConfigObj && typeof mapConfigObj == "object") ? mapConfigObj : {};
         var captureCompOn = false;
-        var captureMoveendGateOn = false;
         try {
             var rawCompVal = String((cfgObj.captureFrameCompensation || cfgObj.captureCompensation || "no") || "no").toLowerCase();
             captureCompOn = (rawCompVal == "yes" || rawCompVal == "true" || rawCompVal == "1" || rawCompVal == "on");
         } catch (eCompCfg) {
             captureCompOn = false;
-        }
-        try {
-            var rawMoveendVal = String((cfgObj.captureUseMoveendGate || cfgObj.captureMoveendGate || "no") || "no").toLowerCase();
-            captureMoveendGateOn = (rawMoveendVal == "yes" || rawMoveendVal == "true" || rawMoveendVal == "1" || rawMoveendVal == "on");
-        } catch (eMoveendCfg) {
-            captureMoveendGateOn = false;
         }
         JSSHOP.ads.nuMapPlaybackRegistry[mapDivId] = {
             map: mapObj,
@@ -13871,7 +13580,6 @@ JSSHOP.ads.registerNuMapPlaybackState = function(mapDivId, mapObj, boundsObj, ma
             captureFps: 4,
             captureFrameIntervalMs: 250,
             captureFrameCompensation: captureCompOn ? "yes" : "no",
-            captureUseMoveendGate: captureMoveendGateOn ? "yes" : "no",
             captureEffectType: "cinematic",
             captureEffect: "particle",
             captureFrameBoundsArr: [],
@@ -14080,8 +13788,6 @@ JSSHOP.ads.buildNuMapCaptureFrameBoundsArray = function(playbackObj, forceRebuil
         if (isNaN(captureIntervalForHold) || captureIntervalForHold <= 0) {
             captureIntervalForHold = 250;
         }
-        var captureFpsForFrames = Math.max(1, Math.round(1000 / captureIntervalForHold));
-        var lowFpsFrameMode = (captureFpsForFrames <= 4 || captureIntervalForHold >= 250);
         var markerHoldFloorFrames = Math.max(1, Math.round(2000 / captureIntervalForHold));
         markerZoomHoldFrames = Math.max(markerZoomHoldFrames, markerHoldFloorFrames);
         finalMarkerZoomHoldFrames = Math.max(finalMarkerZoomHoldFrames, markerHoldFloorFrames);
@@ -14130,16 +13836,10 @@ JSSHOP.ads.buildNuMapCaptureFrameBoundsArray = function(playbackObj, forceRebuil
             pushFrame([endLat, endLng], startZoomForMarker, 1);
 
             var zoomInSteps = Math.max(6, captureEffectProfile.zoomInSteps);
-            if (lowFpsFrameMode) {
-                zoomInSteps = Math.max(12, zoomInSteps);
-            } else if (captureFpsForFrames <= 6) {
-                zoomInSteps = Math.max(9, zoomInSteps);
-            }
-            var zoomStepHoldFrames = lowFpsFrameMode ? 1 : 2;
             for (var zi = 1; zi <= zoomInSteps; zi++) {
                 var zProg = zi / zoomInSteps;
                 var zZoom = startZoomForMarker + ((markerMaxZoom - startZoomForMarker) * zProg);
-                pushFrame([endLat, endLng], zZoom, zoomStepHoldFrames);
+                pushFrame([endLat, endLng], zZoom, 2);
             }
 
             pushFrame([endLat, endLng], markerMaxZoom, (isLastTarget ? finalMarkerZoomHoldFrames : markerZoomHoldFrames));
@@ -14210,13 +13910,14 @@ JSSHOP.ads.setNuMapCaptureTiming = function(mapDivId, rawCaptureFps, rawFrameInt
             return false;
         }
 
-        if (hasFps) {
-            parsedFps = Math.max(4, Math.min(30, parsedFps));
-            playbackObj.captureFps = parsedFps;
-        }
         if (hasInterval) {
             parsedInterval = Math.max(120, Math.min(2500, parsedInterval));
             playbackObj.captureFrameIntervalMs = parsedInterval;
+            playbackObj.captureFps = Math.max(4, Math.min(30, Math.round(1000 / parsedInterval)));
+        } else {
+            parsedFps = Math.max(4, Math.min(30, parsedFps));
+            playbackObj.captureFps = parsedFps;
+            playbackObj.captureFrameIntervalMs = Math.max(120, Math.round(1000 / parsedFps));
         }
         return true;
     } catch (eSetMapCaptureTiming) {
@@ -14391,89 +14092,6 @@ JSSHOP.ads.logNuMapCaptureProgress = function(mapDivId, rawPhase, rawMessage, ra
     }
 };
 
-
-// Record version of replayNuMapEffect for recording workflow
-JSSHOP.ads.recordNuMapEffect = function(mapDivId, onComplete) {
-    try {
-        console.log('[RECORD] recordNuMapEffect called for', mapDivId);
-        if (!JSSHOP.ads.nuMapPlaybackRegistry || !JSSHOP.ads.nuMapPlaybackRegistry[mapDivId]) {
-            console.log('[RECORD] No playback registry for', mapDivId);
-            if (typeof window.restoreAllMapControls === 'function') window.restoreAllMapControls();
-            if (typeof onComplete === 'function') onComplete();
-            return;
-        }
-        var playbackObj = JSSHOP.ads.nuMapPlaybackRegistry[mapDivId];
-        if (!playbackObj.map || !playbackObj.bounds) {
-            console.log('[RECORD] No map or bounds for', mapDivId);
-            if (typeof window.restoreAllMapControls === 'function') window.restoreAllMapControls();
-            if (typeof onComplete === 'function') onComplete();
-            return;
-        }
-        if (playbackObj.markers && playbackObj.markers.length <= 1) {
-            console.log('[RECORD] Not enough markers for', mapDivId);
-            if (typeof window.restoreAllMapControls === 'function') window.restoreAllMapControls();
-            if (typeof onComplete === 'function') onComplete();
-            return;
-        }
-        if (String(playbackObj.isReplayPlaying || "no").toLowerCase() == "yes") {
-            console.log('[RECORD] Replay already playing for', mapDivId);
-            JSSHOP.ads.stopNuMapReplay(mapDivId);
-            if (typeof window.restoreAllMapControls === 'function') window.restoreAllMapControls();
-            if (typeof onComplete === 'function') onComplete();
-            return;
-        }
-        playbackObj.isReplayPlaying = "yes";
-        JSSHOP.ads.setNuMapReplayButtonState(mapDivId, true);
-        JSSHOP.ads.setNuMapDebugTogglePlayMode(mapDivId, true);
-        try {
-            if (typeof JSSHOP.ads.isNuMapGhostCaptureDebugEnabled == "function" && JSSHOP.ads.isNuMapGhostCaptureDebugEnabled()) {
-                JSSHOP.ads.setNuMapGhostCaptureDebug(false);
-            }
-        } catch (eReplayDbgOff) {
-            console.log("recordNuMapEffect.debugOff: " + eReplayDbgOff);
-        }
-        if (playbackObj.map.invalidateSize) {
-            playbackObj.map.invalidateSize();
-        }
-        var onRecordDone = function() {
-            try {
-                if (!JSSHOP.ads.nuMapPlaybackRegistry || !JSSHOP.ads.nuMapPlaybackRegistry[mapDivId]) {
-                    console.log('[RECORD] onRecordDone: playback registry missing for', mapDivId);
-                    if (typeof window.restoreAllMapControls === 'function') window.restoreAllMapControls();
-                    if (typeof onComplete === 'function') onComplete();
-                    return;
-                }
-                JSSHOP.ads.nuMapPlaybackRegistry[mapDivId].isReplayPlaying = "no";
-                JSSHOP.ads.setNuMapReplayButtonState(mapDivId, false);
-                JSSHOP.ads.setNuMapDebugTogglePlayMode(mapDivId, false);
-                console.log('[RECORD] Animation complete for', mapDivId);
-            } catch (eRecordDone) {
-                console.log("recordNuMapEffect.onRecordDone: " + eRecordDone);
-            }
-            if (typeof window.restoreAllMapControls === 'function') window.restoreAllMapControls();
-            if (typeof onComplete === 'function') onComplete();
-        };
-        console.log('[RECORD] Starting fly to animation for', mapDivId);
-        JSSHOP.ads.applyNuMapViewportEffect(
-            playbackObj.map,
-            playbackObj.bounds,
-            playbackObj.markers,
-            playbackObj.effect,
-            "fitbounds",
-            playbackObj.flySpeed,
-            "normal",
-            {
-                onComplete: onRecordDone,
-                onCancel: onRecordDone
-            }
-        );
-    } catch (eRecordMap) {
-        console.log("recordNuMapEffect: " + eRecordMap);
-        if (typeof window.restoreAllMapControls === 'function') window.restoreAllMapControls();
-        if (typeof onComplete === 'function') onComplete();
-    }
-};
-
 JSSHOP.ads.replayNuMapEffect = function(mapDivId) {
     try {
         if (!JSSHOP.ads.nuMapPlaybackRegistry || !JSSHOP.ads.nuMapPlaybackRegistry[mapDivId]) {
@@ -14596,15 +14214,11 @@ JSSHOP.ads.setNuMapDebugTogglePlayMode = function(mapDivId, isPlaying) {
             if (isPlaying) {
                 dBtn.style.pointerEvents = "none";
                 dBtn.style.opacity = "0.35";
-                dBtn.setAttribute("data-incasa-replay-disabled", "yes");
-                dBtn.setAttribute("aria-disabled", "true");
                 dBtn.title = "Ghost Debug (disabled while playing)";
                 dBtn.setAttribute("aria-label", "Ghost Debug disabled while playing");
             } else {
                 dBtn.style.pointerEvents = "";
                 dBtn.style.opacity = "";
-                dBtn.setAttribute("data-incasa-replay-disabled", "no");
-                dBtn.setAttribute("aria-disabled", "false");
                 dBtn.title = "Toggle Ghost Capture Debug";
                 dBtn.setAttribute("aria-label", "Toggle Ghost Capture Debug");
             }
@@ -14775,7 +14389,7 @@ JSSHOP.ads.ensureNuMapCaptureLibs = function(cbDone, useSnapdomFallback) {
     };
 
     var loadHtml2Canvas = function(nextFn) {
-        if (useSnapdom) {
+        if (!useSnapdom) {
             nextFn();
             return;
         }
@@ -14792,7 +14406,7 @@ JSSHOP.ads.ensureNuMapCaptureLibs = function(cbDone, useSnapdomFallback) {
         nextFn();
     };
 
-    console.log("[MAP-VIDEO] ensure libs", { useSnapdomFallback: useSnapdom, rendererMode: useSnapdom ? "snapdom-only" : "html2canvas-only" });
+    console.log("[MAP-VIDEO] ensure libs", { useSnapdomFallback: useSnapdom });
     loadCCapture(function() {
         loadSnapdom(function() {
             loadHtml2Canvas(function() {
@@ -14856,17 +14470,11 @@ JSSHOP.ads.setNuMapCaptureMode = function(mapObj, isCaptureMode) {
             var capStyleEl = document.createElement("style");
             capStyleEl.id = capCssId;
             capStyleEl.type = "text/css";
-            capStyleEl.innerHTML = ".incasa-map-capture-mode *::before,.incasa-map-capture-mode *::after{content:none!important;animation:none!important;transition:none!important;}" +
-                ".incasa-map-capture-mode a,.incasa-map-capture-mode .leaflet-tooltip{pointer-events:none!important;}";
+            capStyleEl.innerHTML = ".incasa-map-capture-mode *::before,.incasa-map-capture-mode *::after{content:none!important;animation:none!important;transition:none!important;}";
             document.head.appendChild(capStyleEl);
         }
         if (isCaptureMode) {
             mapContainer.classList.add("incasa-map-capture-mode");
-            try {
-                if (typeof JSSHOP.ads.normalizeNuMapCaptureMarkerIconSrcs == "function") {
-                    JSSHOP.ads.normalizeNuMapCaptureMarkerIconSrcs(mapContainer);
-                }
-            } catch (eCapModeNormIcons) {}
         } else {
             mapContainer.classList.remove("incasa-map-capture-mode");
         }
@@ -14896,77 +14504,6 @@ JSSHOP.ads.setNuMapCaptureMode = function(mapObj, isCaptureMode) {
         }
     } catch (eMapCapMode) {
         console.log("setNuMapCaptureMode: " + eMapCapMode);
-    }
-};
-
-JSSHOP.ads.normalizeNuMapCaptureMarkerIconSrcs = function(rootEl) {
-    try {
-        if (!rootEl || !rootEl.querySelectorAll) {
-            return 0;
-        }
-        var fixedCount = 0;
-        var markerImgs = rootEl.querySelectorAll(".leaflet-marker-pane img, img.leaflet-marker-icon, .leaflet-tooltip-pane img, .leaflet-popup-pane img");
-        for (var mi = 0; mi < markerImgs.length; mi++) {
-            var imgEl = markerImgs[mi];
-            if (!imgEl) {
-                continue;
-            }
-            var rawSrc = String(imgEl.getAttribute("src") || imgEl.src || "").trim();
-            if (!rawSrc) {
-                continue;
-            }
-            var normSrc = rawSrc;
-            if (typeof JSSHOP.ads.getNuMapMarkerIconUrl == "function") {
-                normSrc = JSSHOP.ads.getNuMapMarkerIconUrl(rawSrc, rawSrc);
-            }
-            if (normSrc === rawSrc && String(rawSrc).toLowerCase().indexOf("updt_") != -1) {
-                var quickName = String(rawSrc).replace(/\\/g, "/");
-                quickName = quickName.substring(quickName.lastIndexOf("/") + 1);
-                quickName = quickName.replace(/^s_thumb/i, "").replace(/updt_/ig, "");
-                if (quickName) {
-                    normSrc = "images/ucontent/" + quickName;
-                }
-            }
-            if (normSrc && normSrc !== rawSrc) {
-                imgEl.setAttribute("src", normSrc);
-                imgEl.src = normSrc;
-                if (imgEl.hasAttribute("srcset")) {
-                    imgEl.setAttribute("srcset", "");
-                }
-                fixedCount++;
-            }
-        }
-        var bgEls = rootEl.querySelectorAll(".leaflet-marker-pane *, .leaflet-tooltip-pane *, .leaflet-popup-pane *");
-        for (var bi = 0; bi < bgEls.length; bi++) {
-            var bgEl = bgEls[bi];
-            if (!bgEl || !bgEl.style) {
-                continue;
-            }
-            var bgImg = String(bgEl.style.backgroundImage || "");
-            if (!bgImg || bgImg.indexOf("url(") == -1 || bgImg.toLowerCase().indexOf("updt_") == -1) {
-                continue;
-            }
-            var m = bgImg.match(/url\(["']?([^"')]+)["']?\)/i);
-            if (!m || !m[1]) {
-                continue;
-            }
-            var bgSrc = String(m[1]);
-            var normBgSrc = bgSrc;
-            if (typeof JSSHOP.ads.getNuMapMarkerIconUrl == "function") {
-                normBgSrc = JSSHOP.ads.getNuMapMarkerIconUrl(bgSrc, bgSrc);
-            }
-            if (normBgSrc && normBgSrc !== bgSrc) {
-                bgEl.style.backgroundImage = "url('" + normBgSrc + "')";
-                fixedCount++;
-            }
-        }
-        if (fixedCount > 0) {
-            console.log("[MAP-VIDEO] normalized marker icon src", { fixedCount: fixedCount });
-        }
-        return fixedCount;
-    } catch (eNormCapMapIcn) {
-        console.log("normalizeNuMapCaptureMarkerIconSrcs: " + eNormCapMapIcn);
-        return 0;
     }
 };
 
@@ -15110,7 +14647,6 @@ JSSHOP.ads.applyNuMapGhostCaptureDebugVisibility = function(rawEnabled) {
                 gd.style.left = "auto";
                 gd.style.right = "16px";
                 gd.style.top = "132px";
-                gd.style.transform = "none";
                 gd.style.opacity = "1";
                 gd.style.visibility = "visible";
                 gd.style.display = "block";
@@ -15130,13 +14666,12 @@ JSSHOP.ads.applyNuMapGhostCaptureDebugVisibility = function(rawEnabled) {
                 gd.style.visibility = "visible";
                 gd.style.display = "block";
                 gd.style.pointerEvents = "none";
-                gd.style.zIndex = "2";
+                gd.style.zIndex = "1";
                 gd.style.border = "0";
                 gd.style.boxShadow = "none";
                 gd.style.background = "transparent";
                 gd.style.maxWidth = "none";
                 gd.style.maxHeight = "none";
-                gd.style.transform = "none";
                 if (hdEl) {
                     hdEl.style.display = "none";
                 }
@@ -15223,38 +14758,13 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
             return;
         }
         var playbackObj = JSSHOP.ads.nuMapPlaybackRegistry[mapDivId];
-        var baseMarkersArr = (playbackObj && playbackObj.markers && playbackObj.markers.length) ? playbackObj.markers : [];
-        var captureMarkersArr = [];
-        try {
-            captureMarkersArr = JSON.parse(JSON.stringify(baseMarkersArr));
-        } catch (eCloneCaptureMarkers) {
-            captureMarkersArr = baseMarkersArr.slice ? baseMarkersArr.slice(0) : [];
-        }
-        try {
-            for (var cmi = 0; cmi < captureMarkersArr.length; cmi++) {
-                if (!captureMarkersArr[cmi]) {
-                    continue;
-                }
-                if (typeof JSSHOP.ads.getNuMapMarkerIconUrl == "function") {
-                    captureMarkersArr[cmi].icn = JSSHOP.ads.getNuMapMarkerIconUrl(captureMarkersArr[cmi].icn, "images/logo_small_oct.png");
-                }
-            }
-            playbackObj.markers = captureMarkersArr;
-            console.log("[MAP-VIDEO] capture markers snapshot", {
-                mapDivId: mapDivId,
-                markerCount: captureMarkersArr.length,
-                markers: captureMarkersArr
-            });
-        } catch (eNormCaptureMarkers) {
-            console.log("getMapVideo.normalizeCaptureMarkers: " + eNormCaptureMarkers);
-        }
         JSSHOP.ads.logNuMapCaptureProgress(mapDivId, "start", "Preparing map video capture...", 2, "running");
         if (!playbackObj.map || !playbackObj.bounds) {
             console.log("[MAP-VIDEO] abort: missing map or bounds", { mapDivId: mapDivId });
             JSSHOP.ads.logNuMapCaptureProgress(mapDivId, "error", "Map capture aborted: missing map or bounds.", 100, "error");
             return;
         }
-        var markerCount = (captureMarkersArr && captureMarkersArr.length) ? captureMarkersArr.length : 0;
+        var markerCount = (playbackObj.markers && playbackObj.markers.length) ? playbackObj.markers.length : 0;
         if (markerCount <= 2) {
             console.log("[MAP-VIDEO] abort: insufficient markers", { markerCount: markerCount });
             JSSHOP.ads.logNuMapCaptureProgress(mapDivId, "error", "Map capture aborted: select at least 3 markers.", 100, "error");
@@ -15281,54 +14791,13 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
             console.log("getMapVideo.showDbgToggle: " + eShowDbgToggleStart);
         }
         var originalFlySpeedForCapture = String(playbackObj.flySpeed || "normal");
-        var useCanvasRenderer = "html2canvas";
-        var forceCanvasRenderer = true;
-        var configCanvasRenderer = "";
-                    var rawForceCanvasRenderer = String(
-                        playbackObj.forceCanvasRenderer ||
-                        playbackObj.captureForceCanvasRenderer ||
-                        playbackObj.inpMapPstForceCanvasRenderer ||
-                        (playbackObj.mapConfigObj && (
-                            playbackObj.mapConfigObj.forceCanvasRenderer ||
-                            playbackObj.mapConfigObj.captureForceCanvasRenderer ||
-                            playbackObj.mapConfigObj.inpMapPstForceCanvasRenderer
-                        )) ||
-                        "yes"
-                    ).toLowerCase();
-                    if (rawForceCanvasRenderer == "yes" || rawForceCanvasRenderer == "true" || rawForceCanvasRenderer == "on" || rawForceCanvasRenderer == "1") {
-                        forceCanvasRenderer = true;
-                    } else {
-                        forceCanvasRenderer = false;
-                    }
-        try {
-            configCanvasRenderer = String(
-                (playbackObj.captureCanvasRenderer ||
-                (playbackObj.mapConfigObj && playbackObj.mapConfigObj.captureCanvasRenderer) ||
-                playbackObj.useCanvasRenderer ||
-                (playbackObj.mapConfigObj && playbackObj.mapConfigObj.useCanvasRenderer) ||
-                "")
-            ).toLowerCase();
-            if (forceCanvasRenderer !== true) {
-                if (configCanvasRenderer == "html2canvas") {
-                    useCanvasRenderer = "html2canvas";
-                } else if (configCanvasRenderer == "snapdom") {
-                    useCanvasRenderer = "snapdom";
-                }
-            }
-        } catch (eRendererPref) {}
-        console.log("[MAP-VIDEO] renderer resolved", {
-            useCanvasRenderer: useCanvasRenderer,
-            forceCanvasRenderer: forceCanvasRenderer,
-            configCanvasRenderer: configCanvasRenderer
-        });
         playbackObj.flySpeed = "capture_super_slow";
         console.log("[MAP-VIDEO] init", {
             mapDivId: mapDivId,
             markerCount: markerCount,
             effect: mapEffectVal,
             speed: originalFlySpeedForCapture,
-            captureReplaySpeed: playbackObj.flySpeed,
-            useCanvasRenderer: useCanvasRenderer
+            captureReplaySpeed: playbackObj.flySpeed
         });
         JSSHOP.ads.logNuMapCaptureProgress(mapDivId, "start", "Loading capture libraries...", 6, "running");
         JSSHOP.ads.ensureNuMapCaptureLibs(function() {
@@ -15361,7 +14830,6 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                 var ghostMapDivId = "";
                 var ghostMapDivEl = null;
                 var ghostMapCreated = false;
-                var captureSnapdomTargetEl = null;
 
                 var precomputedFrames = [];
                 try {
@@ -15409,13 +14877,9 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                     frameIntervalMs = 250;
                 }
                 frameIntervalMs = Math.max(120, Math.min(2500, frameIntervalMs));
-                var effectiveCaptureFps = Math.max(4, Math.min(30, captureFps));
-                var intervalLimitedCaptureFps = Math.max(1, Math.round(1000 / frameIntervalMs));
-                var outputCaptureFps = Math.max(1, Math.min(effectiveCaptureFps, intervalLimitedCaptureFps));
-                var captureFrameDurationMs = Math.max(1, Math.round(1000 / outputCaptureFps));
-                var frameCompensationPrefOn = (String((playbackObj.captureFrameCompensation || "no")).toLowerCase() == "yes");
-                var useFrameCompensation = frameCompensationPrefOn;
-                var useMoveendCaptureGate = (String((playbackObj.captureUseMoveendGate || (playbackObj.mapConfigObj && playbackObj.mapConfigObj.captureUseMoveendGate) || "no")).toLowerCase() == "yes");
+                var effectiveCaptureFps = Math.max(4, Math.min(30, Math.round(1000 / frameIntervalMs)));
+                var captureFrameDurationMs = Math.max(1, Math.round(1000 / effectiveCaptureFps));
+                var useFrameCompensation = (String((playbackObj.captureFrameCompensation || "no")).toLowerCase() == "yes");
                 var captureTimer = null;
                 var finishTimeoutId = null;
                 var watchdogTimer = null;
@@ -15424,58 +14888,22 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                 var capturedFrames = 0;
                 var captureTickCount = 0;
                 var captureModeOn = false;
-                var snapdomTargetCaptureModeOn = false;
                 var noFrameCycles = 0;
                 var lastCapturedFrameTs = 0;
                 var captureLoopStarted = false;
-                var activeFrameMeta = null;
-                var useSimpleGhostCaptureMode = false;
-                var captureOverlayImageCache = {};
-                var fixedCaptureWidth = 340;
-                var fixedCaptureHeight = 340;
-                var fixedCaptureCanvas = null;
                 var nativeSetInterval = window.setInterval.bind(window);
                 var nativeClearInterval = window.clearInterval.bind(window);
                 var nativeSetTimeout = window.setTimeout.bind(window);
                 var nativeClearTimeout = window.clearTimeout.bind(window);
-                var capturer = new CCapture({ format: 'webm', framerate: outputCaptureFps, verbose: false });
-                var ghostDebugCaptureEnabled = (typeof JSSHOP.ads.isNuMapGhostCaptureDebugEnabled == "function") ? JSSHOP.ads.isNuMapGhostCaptureDebugEnabled() : false;
-                // Ensure global intVidFrameNum
-                if (typeof window.intVidFrameNum === "undefined") {
-                    window.intVidFrameNum = 0;
-                }
-                var intVidFrameNum = window.intVidFrameNum;
-                console.log("[MAP-VIDEO] capture mode", {
-                    mapDivId: mapDivId,
-                    simpleGhostMode: useSimpleGhostCaptureMode,
-                    composedPreferred: true,
-                    rendererPreference: useCanvasRenderer,
-                    keyframes: (precomputedFrames && precomputedFrames.length) ? precomputedFrames.length : 0,
-                    effectiveCaptureFps: effectiveCaptureFps,
-                    outputCaptureFps: outputCaptureFps,
-                    frameIntervalMs: frameIntervalMs,
-                    ghostDebugEnabled: ghostDebugCaptureEnabled,
-                    moveendCaptureGate: useMoveendCaptureGate
-                });
-                try {
-                    var previewSnapdomTarget = document.getElementById("dvDemoView");
-                    if (previewSnapdomTarget) {
-                        captureSnapdomTargetEl = previewSnapdomTarget;
-                    } else {
-                        captureSnapdomTargetEl = mapContainer;
-                    }
-                    console.log("[MAP-VIDEO] preview snapdom target", {
-                        mapDivId: mapDivId,
-                        targetId: String((captureSnapdomTargetEl && captureSnapdomTargetEl.id) || ""),
-                        targetTag: String((captureSnapdomTargetEl && captureSnapdomTargetEl.tagName) || "")
-                    });
-                } catch (ePreviewSnapdomTarget) {
-                    captureSnapdomTargetEl = mapContainer;
-                    console.log("getMapVideo.previewSnapdomTarget: " + ePreviewSnapdomTarget);
-                }
+                var capturer = new CCapture({ format: 'webm', framerate: effectiveCaptureFps, verbose: false });
 
                 var cleanupGhostCaptureMap = function() {
-                    var keepDebugVisible = (ghostDebugCaptureEnabled === true);
+                    var keepDebugVisible = false;
+                    try {
+                        keepDebugVisible = (typeof JSSHOP.ads.isNuMapGhostCaptureDebugEnabled == "function") ? JSSHOP.ads.isNuMapGhostCaptureDebugEnabled() : false;
+                    } catch (eGhostDebugRead2) {
+                        keepDebugVisible = false;
+                    }
                     var doCleanup = function() {
                         try {
                             if (captureMapObj && ghostMapCreated && captureMapObj != mapObj && typeof captureMapObj.remove == "function") {
@@ -15500,7 +14928,6 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                         }
                         captureMapObj = mapObj;
                         captureMapContainer = mapContainer;
-                        captureSnapdomTargetEl = null;
                     };
 
                     if (keepDebugVisible && ghostMapDivEl) {
@@ -15522,33 +14949,13 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                 var initGhostCaptureMap = function(cbReady) {
                     var doneFn = (typeof cbReady == "function") ? cbReady : function(){};
                     try {
-                        var srcW = parseInt(mapContainer.clientWidth || mapContainer.offsetWidth || mapContainer.scrollWidth || 0, 10);
-                        var srcH = parseInt(mapContainer.clientHeight || mapContainer.offsetHeight || mapContainer.scrollHeight || 0, 10);
-                        try {
-                            if (mapObj && typeof mapObj.getSize == "function") {
-                                var mapSz = mapObj.getSize();
-                                if (mapSz && mapSz.x && mapSz.y) {
-                                    srcW = Math.max(srcW || 0, parseInt(mapSz.x, 10) || 0);
-                                    srcH = Math.max(srcH || 0, parseInt(mapSz.y, 10) || 0);
-                                }
-                            }
-                        } catch (eGhostSrcMapSize) {}
-                        try {
-                            if (mapContainer && typeof mapContainer.getBoundingClientRect == "function") {
-                                var srcRect = mapContainer.getBoundingClientRect();
-                                if (srcRect) {
-                                    srcW = Math.max(srcW || 0, parseInt(srcRect.width || 0, 10) || 0);
-                                    srcH = Math.max(srcH || 0, parseInt(srcRect.height || 0, 10) || 0);
-                                }
-                            }
-                        } catch (eGhostSrcRect) {}
-                        srcW = Math.max(640, parseInt(srcW || 0, 10));
-                        srcH = Math.max(420, parseInt(srcH || 0, 10));
+                        var srcW = Math.max(320, parseInt(mapContainer.clientWidth || mapContainer.offsetWidth || mapContainer.scrollWidth || 640, 10));
+                        var srcH = Math.max(220, parseInt(mapContainer.clientHeight || mapContainer.offsetHeight || mapContainer.scrollHeight || 420, 10));
                         ghostMapDivId = "dvMapGhostCapture_" + String(mapDivId).replace(/[^a-zA-Z0-9_-]/g, "") + "_" + Date.now();
                         ghostMapDivEl = document.createElement("div");
                         ghostMapDivEl.id = ghostMapDivId;
                         ghostMapDivEl.style.position = "fixed";
-                        var ghostDebugOn = (ghostDebugCaptureEnabled === true);
+                        var ghostDebugOn = (typeof JSSHOP.ads.isNuMapGhostCaptureDebugEnabled == "function") ? JSSHOP.ads.isNuMapGhostCaptureDebugEnabled() : false;
                         if (ghostDebugOn) {
                             ghostMapDivEl.style.left = "auto";
                             ghostMapDivEl.style.right = "16px";
@@ -15572,13 +14979,12 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                             ghostMapDivEl.style.visibility = "visible";
                             ghostMapDivEl.style.display = "block";
                             ghostMapDivEl.style.pointerEvents = "none";
-                            ghostMapDivEl.style.zIndex = "2";
+                            ghostMapDivEl.style.zIndex = "1";
                             ghostMapDivEl.style.border = "0";
                             ghostMapDivEl.style.boxShadow = "none";
                             ghostMapDivEl.style.background = "transparent";
                             ghostMapDivEl.style.maxWidth = "none";
                             ghostMapDivEl.style.maxHeight = "none";
-                            ghostMapDivEl.style.transform = "none";
                         }
                         ghostMapDivEl.style.width = srcW + "px";
                         ghostMapDivEl.style.height = srcH + "px";
@@ -15594,7 +15000,7 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
 
                         var cfgBase = (playbackObj.mapConfigObj && typeof playbackObj.mapConfigObj == "object") ? playbackObj.mapConfigObj : {};
                         var ghostCfg = {
-                            mrkrs: captureMarkersArr || [],
+                            mrkrs: playbackObj.markers || [],
                             mapType: cfgBase.mapType || "street",
                             mapEffect: "fitbounds",
                             mapFlySpeed: "normal",
@@ -15606,13 +15012,6 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                             captureFrameIntervalMs: frameIntervalMs,
                             mdvid: ghostMapDivId
                         };
-
-                        console.log("[MAP-VIDEO] ghost marker payload", {
-                            mapDivId: mapDivId,
-                            ghostMapDivId: ghostMapDivId,
-                            markerCount: (ghostCfg.mrkrs && ghostCfg.mrkrs.length) ? ghostCfg.mrkrs.length : 0,
-                            markers: ghostCfg.mrkrs
-                        });
 
                         JSSHOP.ads.doNurGenMap(ghostCfg, ghostMapDivId);
                         ghostMapCreated = true;
@@ -15631,15 +15030,6 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                             if (ghostMapObj && ghostContainer && ghostCanvasProbe) {
                                 captureMapObj = ghostMapObj;
                                 captureMapContainer = ghostContainer;
-                                captureSnapdomTargetEl = ghostMapDivEl || ghostContainer;
-                                try {
-                                    if (captureMapObj && typeof captureMapObj.invalidateSize == "function") {
-                                        captureMapObj.invalidateSize({ animate: false, pan: false });
-                                        nativeSetTimeout(function() {
-                                            try { captureMapObj.invalidateSize({ animate: false, pan: false }); } catch (eGhostInvSize2) {}
-                                        }, 30);
-                                    }
-                                } catch (eGhostInvSize) {}
                                 try { map = mapObj; } catch (eRestoreMapRef2) {}
                                 doneFn(true);
                                 return;
@@ -15679,72 +15069,20 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                     return copies;
                 };
 
-                var getFixedCaptureCanvas = function(frameCanvas, sourceName) {
-                    try {
-                        if (!frameCanvas || !frameCanvas.width || !frameCanvas.height) {
-                            return frameCanvas;
-                        }
-                        if (!fixedCaptureCanvas) {
-                            fixedCaptureCanvas = document.createElement("canvas");
-                            fixedCaptureCanvas.width = fixedCaptureWidth;
-                            fixedCaptureCanvas.height = fixedCaptureHeight;
-                        }
-                        var fxCtx = fixedCaptureCanvas.getContext("2d", { alpha: true });
-                        if (!fxCtx) {
-                            return frameCanvas;
-                        }
-                        fxCtx.clearRect(0, 0, fixedCaptureWidth, fixedCaptureHeight);
-                        fxCtx.drawImage(frameCanvas, 0, 0, fixedCaptureWidth, fixedCaptureHeight);
-                        return fixedCaptureCanvas;
-                    } catch (eFixedCaptureCanvas) {
-                        console.log("getMapVideo.fixedCaptureCanvas: " + eFixedCaptureCanvas, { source: sourceName || "unknown" });
-                        return frameCanvas;
-                    }
-                };
-
                 var captureFrameWithCompensation = function(frameCanvas, forceSingleCopy) {
                     if (!frameCanvas || didStop) {
                         return;
                     }
-                    var captureCanvasFinal = getFixedCaptureCanvas(frameCanvas, "captureFrameWithCompensation");
                     var copies = 1;
                     if (forceSingleCopy !== true && useFrameCompensation === true) {
                         copies = getCompensatedFrameCopies();
-                        var isAtMaxMarkerZoom = false;
-                        try {
-                            if (activeFrameMeta && activeFrameMeta.isMarkerFrame === true && activeFrameMeta.isAtMaxMarkerZoom === true) {
-                                isAtMaxMarkerZoom = true;
-                            }
-                        } catch (eCompActiveMeta) {}
-                        if (!isAtMaxMarkerZoom && copies > 2) {
-                            copies = 2;
-                        }
                     }
                     for (var ci = 0; ci < copies; ci++) {
-                        capturer.capture(captureCanvasFinal);
+                        capturer.capture(frameCanvas);
                         capturedFrames++;
                     }
                     if (copies > 1) {
                         console.log("[MAP-VIDEO] frame compensation", { copies: copies, frameDurationMs: captureFrameDurationMs, intervalMs: frameIntervalMs });
-                    }
-                };
-
-                var setSnapdomTargetCaptureMode = function(isOn) {
-                    try {
-                        if (!captureSnapdomTargetEl || !captureSnapdomTargetEl.classList) {
-                            return;
-                        }
-                        if (isOn) {
-                            captureSnapdomTargetEl.classList.add("incasa-map-capture-mode");
-                            snapdomTargetCaptureModeOn = true;
-                        } else {
-                            if (snapdomTargetCaptureModeOn) {
-                                captureSnapdomTargetEl.classList.remove("incasa-map-capture-mode");
-                            }
-                            snapdomTargetCaptureModeOn = false;
-                        }
-                    } catch (eSnapTargetMode) {
-                        console.log("getMapVideo.setSnapdomTargetCaptureMode: " + eSnapTargetMode);
                     }
                 };
 
@@ -15765,49 +15103,22 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                         nativeClearInterval(watchdogTimer);
                         watchdogTimer = null;
                     }
-                    var hadCaptureError = false;
-                    var captureErrorMsg = "";
-                    if (capturedFrames <= 0) {
-                        try {
-                            var fallbackCanvasAtFinish = JSSHOP.ads.getNuMapCaptureCanvas(captureMapObj);
-                            if (fallbackCanvasAtFinish && fallbackCanvasAtFinish.width && fallbackCanvasAtFinish.height) {
-                                captureFrameWithCompensation(fallbackCanvasAtFinish, true);
-                                console.log("[MAP-VIDEO] finish fallback captured direct canvas", {
-                                    mapDivId: mapDivId,
-                                    w: fallbackCanvasAtFinish.width,
-                                    h: fallbackCanvasAtFinish.height,
-                                    capturedFrames: capturedFrames
-                                });
-                            }
-                        } catch (eFinishFallbackCapture) {
-                            console.log("getMapVideo.finish.fallbackCapture: " + eFinishFallbackCapture);
-                        }
-                    }
-                    if (capturedFrames <= 0) {
-                        hadCaptureError = true;
-                        captureErrorMsg = "Map capture failed: no frames were captured.";
-                    }
                     try {
                         capturer.stop();
                     } catch (eCapStop) {
                         console.log("getMapVideo.stop: " + eCapStop);
                     }
-                    if (!hadCaptureError) {
-                        try {
-                            JSSHOP.ads.logNuMapCaptureProgress(mapDivId, "saving", "Saving video file...", 97, "running");
-                            console.log("[MAP-VIDEO] saving", { mapDivId: mapDivId, capturedFrames: capturedFrames, totalMs: totalMs, fps: captureFps });
-                            capturer.save();
-                        } catch (eCapSave) {
-                            hadCaptureError = true;
-                            captureErrorMsg = "Map capture failed while saving the video.";
-                            console.log("getMapVideo.save: " + eCapSave);
-                        }
+                    try {
+                        JSSHOP.ads.logNuMapCaptureProgress(mapDivId, "saving", "Saving video file...", 97, "running");
+                        console.log("[MAP-VIDEO] saving", { mapDivId: mapDivId, capturedFrames: capturedFrames, totalMs: totalMs, fps: captureFps });
+                        capturer.save();
+                    } catch (eCapSave) {
+                        console.log("getMapVideo.save: " + eCapSave);
                     }
                     if (captureModeOn) {
                         JSSHOP.ads.setNuMapCaptureMode(captureMapObj, false);
                         captureModeOn = false;
                     }
-                    setSnapdomTargetCaptureMode(false);
                     cleanupGhostCaptureMap();
                     playbackObj.isCapturingVideo = "no";
                     try {
@@ -15819,11 +15130,7 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                     }
                     playbackObj.flySpeed = originalFlySpeedForCapture;
                     console.log("[MAP-VIDEO] finished", { mapDivId: mapDivId, capturedFrames: capturedFrames });
-                    if (hadCaptureError) {
-                        JSSHOP.ads.logNuMapCaptureProgress(mapDivId, "error", captureErrorMsg || "Map video capture failed.", 100, "error");
-                    } else {
-                        JSSHOP.ads.logNuMapCaptureProgress(mapDivId, "done", "Map video ready. Download should begin.", 100, "done");
-                    }
+                    JSSHOP.ads.logNuMapCaptureProgress(mapDivId, "done", "Map video ready. Download should begin.", 100, "done");
                 };
 
                 var waitForMapStable = function(cbDone) {
@@ -15855,50 +15162,12 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                     pollFn();
                 };
 
-                var waitForMapMoveComplete = function(cbDone) {
-                    var doneFn = (typeof cbDone == "function") ? cbDone : function(){};
-                    if (!captureMapObj || typeof captureMapObj.once != "function") {
-                        doneFn();
-                        return;
-                    }
-                    var doneOnce = false;
-                    var fallbackTimer = null;
-                    var finish = function(reason) {
-                        if (doneOnce) {
-                            return;
-                        }
-                        doneOnce = true;
-                        if (fallbackTimer) {
-                            nativeClearTimeout(fallbackTimer);
-                            fallbackTimer = null;
-                        }
-                        nativeSetTimeout(function() {
-                            doneFn();
-                        }, 18);
-                    };
-                    try {
-                        captureMapObj.once("moveend", function() {
-                            finish("moveend");
-                        });
-                        captureMapObj.once("zoomend", function() {
-                            finish("zoomend");
-                        });
-                    } catch (eMoveendBind) {
-                        doneFn();
-                        return;
-                    }
-                    fallbackTimer = nativeSetTimeout(function() {
-                        finish("timeout");
-                    }, Math.max(500, frameIntervalMs * 3));
-                };
-
                 var captureFrameOnce = function(cbDone, progressRatio) {
                     var doneFn = (typeof cbDone == "function") ? cbDone : function(){};
                     if (didStop) {
                         doneFn();
                         return;
                     }
-
                     var frameStartedAt = Date.now();
                     var didFinishFrame = false;
                     var renderWatchdogId = null;
@@ -15913,27 +15182,6 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                             renderWatchdogId = null;
                         }
                         doneFn();
-                    };
-
-                    var sanitizeCloneLinks = function(clonedDoc) {
-                        try {
-                            if (!clonedDoc || !clonedDoc.querySelectorAll) {
-                                return;
-                            }
-                            var jsLinks = clonedDoc.querySelectorAll("a[href^='javascript:'], a[href^='JavaScript:']");
-                            for (var ai = 0; ai < jsLinks.length; ai++) {
-                                var aEl = jsLinks[ai];
-                                if (!aEl) {
-                                    continue;
-                                }
-                                aEl.setAttribute("href", "#");
-                                aEl.setAttribute("onclick", "return false;");
-                                aEl.style.pointerEvents = "none";
-                            }
-                            if (typeof JSSHOP.ads.normalizeNuMapCaptureMarkerIconSrcs == "function") {
-                                JSSHOP.ads.normalizeNuMapCaptureMarkerIconSrcs(clonedDoc);
-                            }
-                        } catch (eSanitizeCloneLinks) {}
                     };
 
                     var isCanvasLikelyBlack = function(cnv) {
@@ -15986,11 +15234,10 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                                         elapsedMs: (Date.now() - frameStartedAt)
                                     });
                                 }
-                                safeDone();
                             } catch (eCapFrameDirect) {
                                 console.log("getMapVideo.captureFrame.direct: " + eCapFrameDirect);
-                                safeDone();
                             }
+                            safeDone();
                             return;
                         }
                         noFrameCycles++;
@@ -16003,36 +15250,6 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                             });
                         }
                         safeDone();
-                    };
-
-                    var captureFromHybridCanvas = function(sourceReason) {
-                        var directMapCanvas = null;
-                        try {
-                            directMapCanvas = JSSHOP.ads.getNuMapCaptureCanvas(captureMapObj);
-                        } catch (eHybridDirectProbe) {
-                            directMapCanvas = null;
-                        }
-                        if (!directMapCanvas || !directMapCanvas.width || !directMapCanvas.height) {
-                            captureFromDirectCanvas((sourceReason || "hybrid") + "-no-direct");
-                            return;
-                        }
-
-                        var outCanvas = document.createElement("canvas");
-                        outCanvas.width = directMapCanvas.width;
-                        outCanvas.height = directMapCanvas.height;
-                        var outCtx = outCanvas.getContext("2d", { alpha: true });
-                        if (!outCtx) {
-                            captureFromDirectCanvas((sourceReason || "hybrid") + "-no-ctx");
-                            return;
-                        }
-                        try {
-                            outCtx.clearRect(0, 0, outCanvas.width, outCanvas.height);
-                            outCtx.drawImage(directMapCanvas, 0, 0, outCanvas.width, outCanvas.height);
-                        } catch (eHybridBaseDraw) {
-                            captureFromDirectCanvas((sourceReason || "hybrid") + "-base-draw");
-                            return;
-                        }
-                        handleRenderedCanvas(outCanvas, "hybrid-direct-only");
                     };
 
                     var handleRenderedCanvas = function(renderedCanvas, sourceName) {
@@ -16050,7 +15267,7 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                                     h: renderedCanvas.height,
                                     elapsedMs: (Date.now() - frameStartedAt)
                                 });
-                                captureFromHybridCanvas(sourceName + "-black");
+                                captureFromDirectCanvas(sourceName + "-black");
                                 return;
                             }
                             captureFrameWithCompensation(renderedCanvas, true);
@@ -16076,51 +15293,14 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                             return;
                         }
 
-                        try {
-                            if (typeof JSSHOP.ads.normalizeNuMapCaptureMarkerIconSrcs == "function") {
-                                JSSHOP.ads.normalizeNuMapCaptureMarkerIconSrcs(captureMapContainer);
-                            }
-                        } catch (eNormCaptureIcons) {}
-
                         renderWatchdogId = nativeSetTimeout(function() {
                             console.log("[MAP-VIDEO] composed render watchdog fallback", {
                                 elapsedMs: (Date.now() - frameStartedAt),
                                 tick: captureTickCount,
                                 mapDivId: mapDivId
                             });
-                            captureFromDirectCanvas("watchdog-direct");
+                            captureFromDirectCanvas("watchdog");
                         }, Math.max(1200, frameIntervalMs * 4));
-
-                        var renderWithSnapdom = function() {
-                            try {
-                                if (typeof snapdom == "undefined" || !snapdom || typeof snapdom.toCanvas != "function") {
-                                    captureFromDirectCanvas("no-snapdom");
-                                    return;
-                                }
-                                var snapTarget = captureSnapdomTargetEl || ghostMapDivEl || captureMapContainer;
-                                if (!snapTarget) {
-                                    captureFromDirectCanvas("no-snap-target");
-                                    return;
-                                }
-                                if ((captureTickCount <= 2 || (captureTickCount % 10) === 0)) {
-                                    console.log("[MAP-VIDEO] snapdom target", {
-                                        id: String(snapTarget.id || ""),
-                                        className: String(snapTarget.className || ""),
-                                        tagName: String(snapTarget.tagName || ""),
-                                        isGhostWrapper: !!(ghostMapDivEl && snapTarget === ghostMapDivEl)
-                                    });
-                                }
-                                snapdom.toCanvas(snapTarget, { scale: 1 }).then(function(renderedCanvas) {
-                                    handleRenderedCanvas(renderedCanvas, "snapdom");
-                                }).catch(function(eSnapdomCap) {
-                                    console.log("getMapVideo.captureFrame.snapdom.err: " + eSnapdomCap);
-                                    captureFromDirectCanvas("snapdom-catch");
-                                });
-                            } catch (eSnapdomOuter) {
-                                console.log("getMapVideo.captureFrame.snapdom.outer: " + eSnapdomOuter);
-                                captureFromDirectCanvas("snapdom-outer");
-                            }
-                        };
 
                         var renderWithHtml2Canvas = function() {
                             try {
@@ -16128,61 +15308,64 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                                     captureFromDirectCanvas("no-html2canvas");
                                     return;
                                 }
-                                var h2cTarget = captureSnapdomTargetEl || ghostMapDivEl || captureMapContainer;
-                                if (!h2cTarget) {
-                                    captureFromDirectCanvas("no-html2canvas-target");
-                                    return;
-                                }
-                                if ((captureTickCount <= 2 || (captureTickCount % 10) === 0)) {
-                                    console.log("[MAP-VIDEO] html2canvas target", {
-                                        id: String(h2cTarget.id || ""),
-                                        className: String(h2cTarget.className || ""),
-                                        tagName: String(h2cTarget.tagName || "")
-                                    });
-                                }
-                                html2canvas(h2cTarget, {
+                                html2canvas(captureMapContainer, {
                                     backgroundColor: null,
-                                    scale: 1,
                                     useCORS: true,
+                                    allowTaint: true,
                                     logging: false,
-                                    onclone: function(clonedDoc) {
-                                        sanitizeCloneLinks(clonedDoc);
+                                    scale: 1,
+                                    ignoreElements: function(el) {
+                                        try {
+                                            if (!el || !el.classList) {
+                                                return false;
+                                            }
+                                            return el.classList.contains("incasa-map-debug-overlay-header");
+                                        } catch (eIgnoreHtml2CanvasEl) {
+                                            return false;
+                                        }
                                     }
                                 }).then(function(renderedCanvas) {
                                     handleRenderedCanvas(renderedCanvas, "html2canvas");
-                                }).catch(function(eHtml2Cap) {
-                                    console.log("getMapVideo.captureFrame.html2canvas.err: " + eHtml2Cap);
+                                }).catch(function(eHtml2CanvasCap) {
+                                    console.log("getMapVideo.captureFrame.html2canvas.err: " + eHtml2CanvasCap);
                                     captureFromDirectCanvas("html2canvas-catch");
                                 });
-                            } catch (eHtml2Outer) {
-                                console.log("getMapVideo.captureFrame.html2canvas.outer: " + eHtml2Outer);
+                            } catch (eHtml2CanvasOuter) {
+                                console.log("getMapVideo.captureFrame.html2canvas.outer: " + eHtml2CanvasOuter);
                                 captureFromDirectCanvas("html2canvas-outer");
                             }
                         };
 
-                        if (useCanvasRenderer == "html2canvas") {
-                            if (typeof html2canvas == "function") {
-                                renderWithHtml2Canvas();
-                            } else if (typeof snapdom != "undefined" && snapdom && typeof snapdom.toCanvas == "function") {
-                                console.log("[MAP-VIDEO] renderer fallback", { from: "html2canvas", to: "snapdom" });
-                                renderWithSnapdom();
-                            } else {
-                                captureFromDirectCanvas("renderer-missing-html2canvas");
-                            }
-                        } else {
+                        try {
                             if (typeof snapdom != "undefined" && snapdom && typeof snapdom.toCanvas == "function") {
-                                renderWithSnapdom();
-                            } else if (typeof html2canvas == "function") {
-                                console.log("[MAP-VIDEO] renderer fallback", { from: "snapdom", to: "html2canvas" });
-                                renderWithHtml2Canvas();
-                            } else {
-                                captureFromDirectCanvas("renderer-missing-snapdom");
+                                var snapOpts = {
+                                    scale: 1,
+                                    backgroundColor: null,
+                                    useCORS: true
+                                };
+                                snapdom.toCanvas(captureMapContainer, snapOpts).then(function(renderedCanvas) {
+                                    handleRenderedCanvas(renderedCanvas, "snapdom");
+                                }).catch(function(eSnapdomCap) {
+                                    console.log("getMapVideo.captureFrame.snapdom.err: " + eSnapdomCap);
+                                    renderWithHtml2Canvas();
+                                });
+                                return;
                             }
+                        } catch (eSnapdomOuter) {
+                            console.log("getMapVideo.captureFrame.snapdom.outer: " + eSnapdomOuter);
                         }
+
+                        renderWithHtml2Canvas();
                     };
 
-                    if (useSimpleGhostCaptureMode === true) {
-                        captureFromDirectCanvas("simple-ghost-mode");
+                    var ghostDebugEnabled = false;
+                    try {
+                        ghostDebugEnabled = (typeof JSSHOP.ads.isNuMapGhostCaptureDebugEnabled == "function") ? JSSHOP.ads.isNuMapGhostCaptureDebugEnabled() : false;
+                    } catch (eGhostDbgReadCap) {
+                        ghostDebugEnabled = false;
+                    }
+                    if (!ghostDebugEnabled) {
+                        captureFromDirectCanvas("direct-preferred");
                         return;
                     }
 
@@ -16265,196 +15448,143 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                     captureLoopStarted = true;
                     JSSHOP.ads.setNuMapCaptureMode(captureMapObj, true);
                     captureModeOn = true;
-                    setSnapdomTargetCaptureMode(true);
                     capturer.start();
                     captureStartTs = Date.now();
                     lastCapturedFrameTs = captureStartTs;
                     var keyframes = precomputedFrames;
-                    var expandedFrameQueue = [];
-                    var mapMaxZoomForComp = 21;
-                    try {
-                        if (captureMapObj && typeof captureMapObj.getMaxZoom == "function") {
-                            var mzComp = parseFloat(captureMapObj.getMaxZoom());
-                            if (!isNaN(mzComp)) {
-                                mapMaxZoomForComp = Math.max(3, Math.floor(mzComp));
-                            }
-                        }
-                    } catch (eMapMaxZoomComp) {}
-                    // Cap marker frames to 15
+                    var totalHoldFrames = 0;
                     for (var kfi = 0; kfi < keyframes.length; kfi++) {
                         var kHold = parseInt((keyframes[kfi] && keyframes[kfi].holdFrames) ? keyframes[kfi].holdFrames : 1, 10);
-                        var qfBase = keyframes[kfi] || {};
-                        var qfBaseZoom = parseFloat(qfBase.zoom);
-                        var qfIsMarkerFrame = (!qfBase.bounds || (qfBase.bounds && qfBase.bounds.length < 4)) && !isNaN(qfBaseZoom);
-                        if (qfIsMarkerFrame && kHold > 15) {
-                            kHold = 15;
-                        }
                         if (isNaN(kHold) || kHold < 1) {
                             kHold = 1;
                         }
-                        for (var khi = 0; khi < kHold; khi++) {
-                            var qf = keyframes[kfi] || {};
-                            expandedFrameQueue.push({
-                                bounds: qf.bounds,
-                                center: qf.center,
-                                zoom: qf.zoom,
-                                holdFrames: kHold,
-                                __keyframeIdx: kfi,
-                                __holdSeq: (khi + 1),
-                                __holdTotal: kHold,
-                                __isMarkerFrame: qfIsMarkerFrame,
-                                __isAtMaxMarkerZoom: (qfIsMarkerFrame && !isNaN(qfBaseZoom) && qfBaseZoom >= mapMaxZoomForComp),
-                                __isHoldContinuation: (khi > 0)
-                            });
-                        }
+                        totalHoldFrames += kHold;
                     }
+                    var keyframePauseMs = Math.max(frameIntervalMs, Math.round(totalMs / Math.max(1, keyframes.length)));
+                    var perFrameBudgetMs = frameIntervalMs + 120;
                     var expectedCaptureMs = Math.max(
                         totalMs,
-                        (expandedFrameQueue.length * frameIntervalMs) + 1600
+                        (keyframes.length * keyframePauseMs) + (totalHoldFrames * perFrameBudgetMs)
                     );
-                    var expectedPerFrameMs = Math.max(frameIntervalMs, 900);
-                    var safeExpectedCaptureMs = Math.max(expectedCaptureMs, (expandedFrameQueue.length * expectedPerFrameMs) + 3000);
                     console.log("[MAP-VIDEO] capture started", {
                         mapDivId: mapDivId,
                         totalMs: totalMs,
                         frameIntervalMs: frameIntervalMs,
                         effectiveCaptureFps: effectiveCaptureFps,
-                        outputCaptureFps: outputCaptureFps,
                         useFrameCompensation: useFrameCompensation,
-                        expectedCaptureMs: safeExpectedCaptureMs,
-                        totalFrames: expandedFrameQueue.length,
+                        keyframePauseMs: keyframePauseMs,
+                        expectedCaptureMs: expectedCaptureMs,
+                        totalHoldFrames: totalHoldFrames,
                         startReason: startReason,
                         keyframes: keyframes.length
                     });
                     JSSHOP.ads.logNuMapCaptureProgress(mapDivId, "start", "Capturing map frames...", 14, "running");
-                    // Refactored loop: use integer index and setInterval
 
-                    var intervalId = null;
-                    var frameTickBusy = false;
-                    // Reset global intVidFrameNum before starting loop
-                    window.intVidFrameNum = 0;
-                    intVidFrameNum = window.intVidFrameNum;
-                    console.log("[MAP-VIDEO][DEBUG] Interval setup", { intervalMs: frameIntervalMs, totalFrames: expandedFrameQueue.length });
-                    function processFrameTick() {
-                        intVidFrameNum = window.intVidFrameNum;
-                        if (didStop || frameTickBusy) {
+                    var processKeyframe = function(kIdx) {
+                        if (didStop) {
                             return;
                         }
-                        if (intVidFrameNum >= expandedFrameQueue.length) {
-                            clearInterval(intervalId);
+                        if (kIdx >= keyframes.length) {
                             finishCapture();
                             return;
                         }
-                        frameTickBusy = true;
                         captureTickCount++;
                         var elapsedMs = Date.now() - captureStartTs;
-                        var kf = expandedFrameQueue[intVidFrameNum] || {};
-                        var prevKf = (intVidFrameNum > 0) ? (expandedFrameQueue[intVidFrameNum - 1] || null) : null;
-                        var isHoldContinuation = !!(kf && kf.__isHoldContinuation === true && prevKf && prevKf.__keyframeIdx === kf.__keyframeIdx);
-                        if (isHoldContinuation) {
-                            console.log("[MAP-VIDEO] hold-continuation (no view update)", {
-                                mapDivId: mapDivId,
-                                frameIdx: intVidFrameNum,
-                                holdSeq: (kf.__holdSeq || 1),
-                                holdTotal: (kf.__holdTotal || 1)
-                            });
-                        }
-                        activeFrameMeta = {
-                            isMarkerFrame: (kf.__isMarkerFrame === true),
-                            isAtMaxMarkerZoom: (kf.__isAtMaxMarkerZoom === true),
-                            zoom: kf.zoom
-                        };
-                        var progressRatio = Math.max(0, Math.min(1, intVidFrameNum / Math.max(1, expandedFrameQueue.length)));
-                        var progressPct = Math.round(progressRatio * 100);
+                        var kf = keyframes[kIdx] || {};
+                        var progressRatio = Math.max(0, Math.min(1, kIdx / Math.max(1, keyframes.length)));
+                        var progressPct = 14 + Math.round(progressRatio * 80);
                         try {
-                            var runCaptureAfterViewUpdate = function() {
-                                waitForMapStable(function() {
-                                    captureFrameOnce(function() {
-                                        frameTickBusy = false;
-                                        window.intVidFrameNum++;
-                                        intVidFrameNum = window.intVidFrameNum;
-                                        if (intVidFrameNum >= expandedFrameQueue.length) {
-                                            clearInterval(intervalId);
-                                            finishCapture();
-                                        }
-                                    }, progressRatio);
-                                });
-                            };
-                            if (useMoveendCaptureGate && !isHoldContinuation) {
-                                waitForMapMoveComplete(runCaptureAfterViewUpdate);
-                            }
-                            // Always update preview map bounds/zoom every frame
                             if (kf.bounds && kf.bounds.length >= 4 && typeof captureMapObj.fitBounds == "function") {
                                 captureMapObj.fitBounds([[kf.bounds[0], kf.bounds[1]], [kf.bounds[2], kf.bounds[3]]], {
                                     animate: false,
                                     padding: [0, 0]
                                 });
-                            } else if (kf.center && typeof captureMapObj.setView == "function") {
+                            } else {
                                 captureMapObj.setView(kf.center, kf.zoom, { animate: false });
                             }
                             syncCaptureMarkerTooltip(kf);
-                            if (!useMoveendCaptureGate || isHoldContinuation) {
-                                runCaptureAfterViewUpdate();
-                            }
-                        } catch (eSetViewFrame) {
-                            console.log("[MAP-VIDEO] interval frame setView err", { idx: intVidFrameNum, err: eSetViewFrame });
-                            frameTickBusy = false;
-                            if (!didStop) {
-                                window.intVidFrameNum++;
-                                intVidFrameNum = window.intVidFrameNum;
-                            }
+                        } catch (eSetViewKf) {
+                            console.log("[MAP-VIDEO] keyframe setView err", { idx: kIdx, err: eSetViewKf });
                         }
                         if (captureTickCount === 1 || (captureTickCount % 10) === 0) {
                             console.log("[MAP-VIDEO] keyframe step", {
                                 mapDivId: mapDivId,
-                                idx: (typeof kf.__keyframeIdx != "undefined") ? kf.__keyframeIdx : intVidFrameNum,
-                                frameIdx: intVidFrameNum,
+                                idx: kIdx,
                                 elapsedMs: elapsedMs,
                                 capturedFrames: capturedFrames,
-                                holdSeq: (kf.__holdSeq || 1),
-                                holdTotal: (kf.__holdTotal || 1)
+                                holdFrames: (kf.holdFrames || 1)
                             });
                         }
-                        console.log("[MAP-VIDEO] frame gate", {
-                            mapDivId: mapDivId,
-                            frameIdx: intVidFrameNum,
-                            gateMode: useMoveendCaptureGate ? "moveend" : "tile-stable"
-                        });
-                        var progressMsg = "Capturing frame " + (intVidFrameNum + 1) + " of " + expandedFrameQueue.length + " (" + progressPct + "%)...";
-                        JSSHOP.ads.logNuMapCaptureProgress(
-                            mapDivId,
-                            "status",
-                            progressMsg,
-                            progressPct,
-                            "running"
-                        );
-                        console.log("[MAP-VIDEO][DEBUG] FrameTick", {
-                            intVidFrameNum: intVidFrameNum,
-                            totalFrames: expandedFrameQueue.length,
-                            progressPct: progressPct,
-                            didStop: didStop,
-                            frameTickBusy: frameTickBusy
-                        });
-                        if (intVidFrameNum >= expandedFrameQueue.length) {
-                            console.log("[MAP-VIDEO][DEBUG] Loop exit", { intVidFrameNum: intVidFrameNum, totalFrames: expandedFrameQueue.length });
+                        if (captureTickCount === 1 || (captureTickCount % 4) === 0) {
+                            JSSHOP.ads.logNuMapCaptureProgress(mapDivId, "status", "Capturing frame " + (kIdx + 1) + " of " + keyframes.length + "...", progressPct, "running");
                         }
-                    }
-                    intervalId = setInterval(processFrameTick, frameIntervalMs);
+                        waitForMapStable(function() {
+                            var holdCount = parseInt(kf.holdFrames || 1, 10);
+                            if (isNaN(holdCount) || holdCount < 1) {
+                                holdCount = 1;
+                            }
+                            var holdCapture = function(hIdx) {
+                                if (didStop) {
+                                    return;
+                                }
+                                if (hIdx >= holdCount) {
+                                    captureTimer = nativeSetTimeout(function() {
+                                        processKeyframe(kIdx + 1);
+                                    }, keyframePauseMs);
+                                    return;
+                                }
+                                var holdFrameStartedAt = Date.now();
+                                captureFrameOnce(function() {
+                                    if (didStop) {
+                                        return;
+                                    }
+                                    var holdFrameElapsedMs = Date.now() - holdFrameStartedAt;
+                                    var nextDelayMs = Math.max(0, frameIntervalMs - holdFrameElapsedMs);
+                                    captureTimer = nativeSetTimeout(function() {
+                                        holdCapture(hIdx + 1);
+                                    }, nextDelayMs);
+                                }, progressRatio);
+                            };
+                            holdCapture(0);
+                        });
+                    };
+
+                    finishTimeoutId = nativeSetTimeout(function() {
+                        console.log("[MAP-VIDEO] timeout finalize", { mapDivId: mapDivId, elapsedMs: (Date.now() - captureStartTs), capturedFrames: capturedFrames });
+                        finishCapture();
+                    }, Math.max(expectedCaptureMs + 1800, (keyframes.length * keyframePauseMs * 2.4)));
+
+                    watchdogTimer = nativeSetInterval(function() {
+                        var elapsed = Date.now() - captureStartTs;
+                        if (!didStop && elapsed > Math.max((expectedCaptureMs * 1.75), (keyframes.length * keyframePauseMs * 4.2))) {
+                            console.log("[MAP-VIDEO] watchdog finalize", { mapDivId: mapDivId, elapsedMs: elapsed, capturedFrames: capturedFrames });
+                            finishCapture();
+                        }
+                    }, 500);
+
+                    captureTimer = nativeSetTimeout(function() {
+                        processKeyframe(0);
+                    }, 40);
                 };
 
-                if (captureMapObj && typeof captureMapObj.invalidateSize == "function") {
-                    try {
-                        captureMapObj.invalidateSize({ animate: false, pan: false });
-                    } catch (ePreviewInvSize) {
-                        try { captureMapObj.invalidateSize(); } catch (ePreviewInvSize2) {}
+                initGhostCaptureMap(function(isGhostReady) {
+                    if (!isGhostReady || !captureMapObj || !captureMapContainer) {
+                        cleanupGhostCaptureMap();
+                        playbackObj.flySpeed = originalFlySpeedForCapture;
+                        playbackObj.isCapturingVideo = "no";
+                        JSSHOP.ads.logNuMapCaptureProgress(mapDivId, "error", "Ghost map capture container failed to initialize.", 100, "error");
+                        return;
                     }
-                }
-                nativeSetTimeout(function() {
-                    if (!captureLoopStarted) {
-                        console.log("[MAP-VIDEO] precomputed start on preview map", { mapDivId: mapDivId });
-                        startCaptureLoop("preview-map-bounds");
+                    if (captureMapObj.invalidateSize) {
+                        captureMapObj.invalidateSize();
                     }
-                }, 120);
+                    nativeSetTimeout(function() {
+                        if (!captureLoopStarted) {
+                            console.log("[MAP-VIDEO] precomputed start on ghost map", { ghostMapDivId: ghostMapDivId });
+                            startCaptureLoop("ghost-map-bounds");
+                        }
+                    }, 120);
+                });
             } catch (eMapVidInner) {
                 console.log("getMapVideo.inner: " + eMapVidInner);
                 try {
@@ -16480,7 +15610,7 @@ JSSHOP.ads.getMapVideo = function(mapDivIdOrIndex) {
                 }
                 JSSHOP.ads.logNuMapCaptureProgress(mapDivId, "error", "Map video capture failed.", 100, "error");
             }
-        }, (useCanvasRenderer == "snapdom"));
+        }, true);
     } catch (eMapVideo) {
         console.log("getMapVideo: " + eMapVideo);
         try {
@@ -16501,44 +15631,6 @@ JSSHOP.ads.escapeMapLabelHtml = function(rawTxt) {
             .replace(/'/g, "&#39;");
     } catch (eEscMapLbl) {
         return "";
-    }
-};
-
-JSSHOP.ads.decodeNuMapLzText = function(rawVal) {
-    try {
-        var baseVal = String(rawVal || "");
-        if (!baseVal) {
-            return "";
-        }
-        var decodedVal = baseVal;
-        try {
-            decodedVal = decodeURIComponent(baseVal);
-        } catch (eDecodeNuMapTxtUri) {
-            decodedVal = baseVal;
-        }
-        if (typeof LZString != "undefined" && LZString && typeof LZString.decompressFromEncodedURIComponent == "function") {
-            var lzVal1 = "";
-            var lzVal2 = "";
-            try {
-                lzVal1 = LZString.decompressFromEncodedURIComponent(decodedVal);
-            } catch (eDecodeNuMapTxtLz1) {
-                lzVal1 = "";
-            }
-            if (lzVal1 && typeof lzVal1 == "string") {
-                return lzVal1;
-            }
-            try {
-                lzVal2 = LZString.decompressFromEncodedURIComponent(baseVal);
-            } catch (eDecodeNuMapTxtLz2) {
-                lzVal2 = "";
-            }
-            if (lzVal2 && typeof lzVal2 == "string") {
-                return lzVal2;
-            }
-        }
-        return decodedVal;
-    } catch (eDecodeNuMapTxt) {
-        return String(rawVal || "");
     }
 };
 
@@ -16604,8 +15696,7 @@ JSSHOP.ads.getMapMarkerTooltipHtml = function(markerObj, defaultTitleHtml, defau
 
         var customText = "";
         if (markerObj["markerLabelText"] && String(markerObj["markerLabelText"]).trim() !== "") {
-            customText = (typeof JSSHOP.ads.decodeNuMapLzText == "function") ? JSSHOP.ads.decodeNuMapLzText(markerObj["markerLabelText"]) : String(markerObj["markerLabelText"]);
-            customText = String(customText || "").trim();
+            customText = String(markerObj["markerLabelText"]).trim();
         }
         var containerMode = getContainerMode(markerObj);
         if (containerMode == "default") {
@@ -16791,8 +15882,22 @@ JSSHOP.ads.addNuMapVideoControl = function(mapObj, mapDivId, mapEffectVal, marke
             var ctrlDiv = L.DomUtil.create('div', 'leaflet-bar leaflet-control incasa-map-download-control');
             ctrlDiv.style.marginTop = '4px';
 
-            // FC button (Frame Compensation)
-            /*
+            var dbgBtn = L.DomUtil.create('a', '', ctrlDiv);
+            dbgBtn.href = 'javascript:void(0);';
+            dbgBtn.title = 'Toggle Ghost Capture Debug';
+            dbgBtn.setAttribute('aria-label', 'Toggle Ghost Capture Debug');
+            dbgBtn.innerHTML = '<i class="material-icons txtClrHdr" style="font-size:20px;line-height:30px;">&#xe868;</i>';
+            dbgBtn.style.width = '30px';
+            dbgBtn.style.height = '30px';
+            dbgBtn.style.lineHeight = '30px';
+            dbgBtn.style.textAlign = 'center';
+            dbgBtn.style.textDecoration = 'none';
+            dbgBtn.style.cursor = 'pointer';
+            dbgBtn.style.borderBottom = '1px solid rgba(0,0,0,0.12)';
+            dbgBtn.className = 'incasa-map-debug-toggle-btn';
+            dbgBtn.setAttribute('data-incasa-mapdivid', String(mapDivId));
+            dbgBtn.style.display = 'none';
+
             var compBtn = L.DomUtil.create('a', '', ctrlDiv);
             compBtn.href = 'javascript:void(0);';
             compBtn.title = 'Toggle Frame Compensation';
@@ -16807,20 +15912,17 @@ JSSHOP.ads.addNuMapVideoControl = function(mapObj, mapDivId, mapEffectVal, marke
             compBtn.style.borderBottom = '1px solid rgba(0,0,0,0.12)';
             compBtn.className = 'incasa-map-comp-toggle-btn';
             compBtn.setAttribute('data-incasa-mapdivid', String(mapDivId));
-            // Uncomment handler if needed
-            // L.DomEvent.on(compBtn, 'click', function(e) {
-            //     L.DomEvent.stop(e);
-            //     var compOn = false;
-            //     if (typeof JSSHOP.ads.setNuMapCaptureFrameCompensation == "function") {
-            //         compOn = JSSHOP.ads.setNuMapCaptureFrameCompensation(mapDivId);
-            //     }
-            //     compBtn.style.background = compOn ? 'rgba(52,199,89,0.20)' : '';
-            //     console.log("[MAP-VIDEO] frame compensation", { enabled: compOn, mapDivId: mapDivId });
-            // });
-            */
 
-            // Download button
-            /*
+            var setCompBtnState = function(isOn) {
+                compBtn.style.background = isOn ? 'rgba(52,199,89,0.20)' : '';
+            };
+            var playbackForComp = (JSSHOP.ads.nuMapPlaybackRegistry && JSSHOP.ads.nuMapPlaybackRegistry[mapDivId]) ? JSSHOP.ads.nuMapPlaybackRegistry[mapDivId] : null;
+            setCompBtnState(String((playbackForComp && playbackForComp.captureFrameCompensation) || 'no').toLowerCase() == 'yes');
+
+            if (typeof JSSHOP.ads.syncNuMapGhostDebugButtonStates == "function") {
+                JSSHOP.ads.syncNuMapGhostDebugButtonStates((typeof JSSHOP.ads.isNuMapGhostCaptureDebugEnabled == "function") ? JSSHOP.ads.isNuMapGhostCaptureDebugEnabled() : false);
+            }
+
             var ctrlBtn = L.DomUtil.create('a', '', ctrlDiv);
             ctrlBtn.href = 'javascript:void(0);';
             ctrlBtn.title = 'Download Video';
@@ -16832,83 +15934,37 @@ JSSHOP.ads.addNuMapVideoControl = function(mapObj, mapDivId, mapEffectVal, marke
             ctrlBtn.style.textAlign = 'center';
             ctrlBtn.style.textDecoration = 'none';
             ctrlBtn.style.cursor = 'pointer';
-            ctrlBtn.className = 'incasa-map-download-toggle-btn';
-            ctrlBtn.setAttribute('data-incasa-mapdivid', String(mapDivId));
-            // Uncomment handler if needed
-            // L.DomEvent.on(ctrlBtn, 'click', function(e) {
-            //     L.DomEvent.stop(e);
-            //     JSSHOP.ads.getMapVideo(mapDivId);
-            // });
-            */
-
-            // Record button
-            var recordBtn = L.DomUtil.create('a', '', ctrlDiv);
-            recordBtn.href = 'javascript:void(0);';
-            recordBtn.title = 'Record Fly To Animation';
-            recordBtn.setAttribute('aria-label', 'Record Fly To Animation');
-            recordBtn.innerHTML = '<i class="material-icons txtClrHdr" style="font-size:21px;line-height:34px;">&#xe061;</i>';
-            recordBtn.style.width = '34px';
-            recordBtn.style.height = '34px';
-            recordBtn.style.lineHeight = '34px';
-            recordBtn.style.textAlign = 'center';
-            recordBtn.style.textDecoration = 'none';
-            recordBtn.style.cursor = 'pointer';
-            recordBtn.className = 'incasa-map-record-toggle-btn';
-            recordBtn.setAttribute('data-incasa-mapdivid', String(mapDivId));
 
             L.DomEvent.disableClickPropagation(ctrlDiv);
-          L.DomEvent.on(recordBtn, 'click', function(e) {
-    L.DomEvent.stop(e);
-    // Hide the Record button immediately
-    recordBtn.style.display = 'none';
-    // Hide zoom controls
-    var zoomControls = document.querySelectorAll('.leaflet-control-zoom');
-    zoomControls.forEach(function(ctrl) {
-        ctrl.style.display = 'none';
-    });
-    // Hide replay control
-    var replayControls = document.querySelectorAll('.incasa-map-replay-toggle-btn');
-    replayControls.forEach(function(ctrl) {
-        ctrl.style.display = 'none';
-    });
-    // Helper to restore all controls
-    function restoreAllControls() {
-        recordBtn.style.display = '';
-        zoomControls.forEach(function(ctrl) {
-            ctrl.style.display = '';
-        });
-        replayControls.forEach(function(ctrl) {
-            ctrl.style.display = '';
-        });
-    }
-    // Start recording and animation only after permission is granted
-    if (typeof window.toggleMapRecording === 'function') {
-        window.toggleMapRecording({
-            onPermissionGranted: function() {
-                // Use recordNuMapEffect to start animation and handle completion
-                if (typeof JSSHOP.ads.recordNuMapEffect === 'function') {
-                    JSSHOP.ads.recordNuMapEffect(mapDivId, function() {
-                        // Stop recording after animation ends
-                        if (typeof window.toggleMapRecording === 'function') {
-                            window.toggleMapRecording({ stop: true });
-                        }
-                        restoreAllControls();
-                    });
-                } else {
-                    // fallback: restore controls if record function is missing
-                    restoreAllControls();
+            L.DomEvent.on(dbgBtn, 'click', function(e) {
+                L.DomEvent.stop(e);
+                var dbgOn = false;
+                if (typeof JSSHOP.ads.setNuMapGhostCaptureDebug == "function") {
+                    dbgOn = JSSHOP.ads.setNuMapGhostCaptureDebug();
                 }
-            },
-            onError: function() {
-                // Restore all controls on error
-                restoreAllControls();
+                console.log("[MAP-VIDEO] ghost capture debug", { enabled: dbgOn, mapDivId: mapDivId });
+            });
+            L.DomEvent.on(compBtn, 'click', function(e) {
+                L.DomEvent.stop(e);
+                var compOn = false;
+                if (typeof JSSHOP.ads.setNuMapCaptureFrameCompensation == "function") {
+                    compOn = JSSHOP.ads.setNuMapCaptureFrameCompensation(mapDivId);
+                }
+                setCompBtnState(compOn);
+                console.log("[MAP-VIDEO] frame compensation", { enabled: compOn, mapDivId: mapDivId });
+            });
+            L.DomEvent.on(ctrlBtn, 'click', function(e) {
+                L.DomEvent.stop(e);
+                console.log("[MAP-VIDEO] control click", { mapDivId: mapDivId });
+                JSSHOP.ads.getMapVideo(mapDivId);
+            });
+            try {
+                if (typeof JSSHOP.ads.updateNuMapGhostDebugToggleVisibility == "function") {
+                    JSSHOP.ads.updateNuMapGhostDebugToggleVisibility(mapDivId);
+                }
+            } catch (eDbgBtnInitVis) {
+                console.log("addNuMapVideoControl.dbgVis: " + eDbgBtnInitVis);
             }
-        });
-    } else {
-        alert('Recording function not available.');
-        restoreAllControls();
-    }
-});
             return ctrlDiv;
         };
         videoControl.addTo(mapObj);
@@ -16985,6 +16041,7 @@ JSSHOP.ads.applyNuMapViewportEffect = function(targetMap, targetBounds, targetMa
             clearTimeout(targetMap._nuFlyToTimeouts[ti]);
         }
         targetMap._nuFlyToTimeouts = [];
+        cancelOnce();
     }
     if (targetMap._nuFlyToDoneTimeout) {
         clearTimeout(targetMap._nuFlyToDoneTimeout);
@@ -17106,28 +16163,15 @@ JSSHOP.ads.doNurGenMap = function(tAADNGMObj, tNMOPDVID) {
          tDNGMObj = "";
             tDNGMObj = tAADNGMObj;
 
-        console.log("doNurGenMap.tNMOPDVID: " + tNMOPDVID);
-        // console.log("doNurGenMap: " + JSON.stringify(tDNGMObj));
+        console.log("doNuGenMap.tNMOPDVID: " + tNMOPDVID);
+        // console.log("doNuGenMap: " + JSON.stringify(tDNGMObj));
         spinner.stop();
 smlspinner.stop();
          tDGMSmrkrArr = null;
          tDGMSmrkrArr = [];
         map = L.map(tNMOPDVID, JSSHOP.ads.getLeafletCanvasMapOptions({renderer: L.canvas()})).setView([39.0667, -8.6167], 13);
         tDGMSmrkrArr = tDNGMObj["mrkrs"];
-        try {
-            for (var nmi = 0; nmi < (tDGMSmrkrArr ? tDGMSmrkrArr.length : 0); nmi++) {
-                if (!tDGMSmrkrArr[nmi]) {
-                    continue;
-                }
-                if (typeof JSSHOP.ads.getNuMapMarkerIconUrl == "function") {
-                    tDGMSmrkrArr[nmi].icn = JSSHOP.ads.getNuMapMarkerIconUrl(tDGMSmrkrArr[nmi].icn, "images/logo_small_oct.png");
-                }
-            }
-            tDNGMObj["mrkrs"] = tDGMSmrkrArr;
-        } catch (eDoNurNormMarkers) {
-            console.log("doNurGenMap.normalizeMarkers: " + eDoNurNormMarkers);
-        }
-        console.log("doNurGenMap.tDGMSmrkrArr: " + JSON.stringify(tDGMSmrkrArr));
+        console.log("doNuGenMap.tDGMSmrkrArr: " + JSON.stringify(tDGMSmrkrArr));
         /*
         L.tileLayer.canvas('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -17151,10 +16195,6 @@ smlspinner.stop();
         if (tDNGMObj && tDNGMObj["mapFlySpeed"]) {
             tRenderMapFlySpeed = tDNGMObj["mapFlySpeed"];
         }
-        tRenderMapAutoPlay = "off";
-        if (typeof JSSHOP.ads.getNuMapAutoPlayValue == "function") {
-            tRenderMapAutoPlay = JSSHOP.ads.getNuMapAutoPlayValue((tDNGMObj && tDNGMObj["autoPlay"]), "off");
-        }
         JSSHOP.ads.addNuMapTileLayer(map, tRenderMapType, "random");
         var bounds = L.latLngBounds() // Instantiate LatLngBounds object
         var LeafIcon = L.Icon.extend({
@@ -17169,7 +16209,7 @@ smlspinner.stop();
             iti = 0;
             while(iti < tPArr.length) {
                 ts = tPArr[iti];
-                console.log("doNurGenMap.ts: " + JSON.stringify(ts));
+                console.log("doNuGenMap.ts: " + JSON.stringify(ts));
                 tIcnQcStr = "images/logo_small_green_oct.png"
                 tLatQcStr = ts.lat;
                 tLngQcStr = ts.lng;
@@ -17180,19 +16220,15 @@ smlspinner.stop();
                 tLngQcFlt = parseFloat(tLngQcStr);
                 tMOPrice = ts.price;
                 tAMOttl = ts.title;
-                tUNZdttle = (typeof JSSHOP.ads.decodeNuMapLzText == "function") ? JSSHOP.ads.decodeNuMapLzText(tAMOttl) : LZString.decompressFromEncodedURIComponent(tAMOttl);
+                tUNZdttle = LZString.decompressFromEncodedURIComponent(tAMOttl);
                 tMOShortttl = tUNZdttle.substring(0,40) + "...<br><b>" + tMOPrice + "</b>";
                 tMOttl = tMOShortttl;
                 tMOttl = JSSHOP.ads.getMapMarkerTooltipHtml(ts, tMOttl, tMOPrice);
                 ttImgstr = ts.icn;
-                tIcnQcStr = JSSHOP.ads.getNuMapMarkerIconUrl(ttImgstr, "images/logo_small_oct.png");
-                if (String(tIcnQcStr || "").toLowerCase().indexOf("updt_") != -1) {
-                    tTmpMapIcnName = String(tIcnQcStr).replace(/\\/g, "/");
-                    tTmpMapIcnName = tTmpMapIcnName.substring(tTmpMapIcnName.lastIndexOf("/") + 1);
-                    tTmpMapIcnName = tTmpMapIcnName.replace(/^s_thumb/i, "").replace(/updt_/ig, "");
-                    if (tTmpMapIcnName) {
-                        tIcnQcStr = "images/ucontent/" + tTmpMapIcnName;
-                    }
+                if(ttImgstr.indexOf(".") != -1) {
+                    tIcnQcStr = ttImgstr;
+                } else {
+                    tIcnQcStr = "images/logo_small_oct.png";
                 }
 
                 // ttSSurl = "javascript:JSSHOP.ads.doGenPrpPop(" + iti + ");";
@@ -17229,7 +16265,6 @@ smlspinner.stop();
                            //  doGenPrpPop(e.target.options.iti);
                           eindex('aa-show-prop','pid=aa-show-prop&prpid=' + tPrpID);
                         });
-                                                JSSHOP.ads.attachNuMapMarkerIconFallback(mRed, "images/logo_small_oct.png");
         
 
                         // add a balloon to the marker showing the price and title
@@ -17244,17 +16279,7 @@ smlspinner.stop();
             }
           iti++;
           }
-           if (tRenderMapAutoPlay == "on") {
-               JSSHOP.ads.applyNuMapViewportEffect(map, bounds, tDGMSmrkrArr, tRenderMapEffect, "fitbounds", tRenderMapFlySpeed, "normal");
-           } else {
-               try {
-                   if (bounds && typeof bounds.isValid == "function" && bounds.isValid()) {
-                       map.fitBounds(bounds, {padding: [20, 20], animate: false});
-                   }
-               } catch (eMapNoAutoPlayBounds) {
-                   console.log("doNurGenMap.fitBounds: " + eMapNoAutoPlayBounds);
-               }
-           }
+           JSSHOP.ads.applyNuMapViewportEffect(map, bounds, tDGMSmrkrArr, tRenderMapEffect, "fitbounds", tRenderMapFlySpeed, "normal"); 
            JSSHOP.ads.registerNuMapPlaybackState(tNMOPDVID, map, bounds, tDGMSmrkrArr, tRenderMapEffect, tRenderMapFlySpeed, tDNGMObj);
            if (typeof JSSHOP.ads.setNuMapCaptureTiming == "function") {
                JSSHOP.ads.setNuMapCaptureTiming(tNMOPDVID, tDNGMObj["captureFps"], tDNGMObj["captureFrameIntervalMs"]);
@@ -17268,97 +16293,6 @@ smlspinner.stop();
 
 
 };
-
-JSSHOP.ads.getNuMapMarkerIconUrl = function(rawIconUrl, fallbackUrl) {
-    try {
-        var fb = String(fallbackUrl || "images/logo_small_oct.png");
-        var src = String(rawIconUrl || "").trim();
-        if (!src) {
-            return fb;
-        }
-        if (src.indexOf("data:") === 0) {
-            return src;
-        }
-        try {
-            src = decodeURIComponent(src);
-        } catch (eDecMapIcn) {}
-        src = src.replace(/\\/g, "/");
-        src = src.replace(/\s+/g, "");
-        src = src.replace(/#.*$/, "");
-        src = src.replace(/\?.*$/, "");
-
-        var lowerSrc = src.toLowerCase();
-        if (lowerSrc.indexOf("updt_") != -1) {
-            var cleanName = src;
-            cleanName = cleanName.replace(/^images\/property\/s_thumb/i, "");
-            cleanName = cleanName.replace(/^images\/property\//i, "");
-            cleanName = cleanName.replace(/^images\/ucontent\/s_thumb/i, "");
-            cleanName = cleanName.replace(/^images\/ucontent\//i, "");
-            cleanName = cleanName.replace(/^s_thumb/i, "");
-            if (cleanName.indexOf("/") != -1) {
-                cleanName = cleanName.substring(cleanName.lastIndexOf("/") + 1);
-            }
-            cleanName = cleanName.replace(/updt_/ig, "");
-            cleanName = cleanName.replace(/^s_thumb/i, "");
-            if (cleanName) {
-                return "images/ucontent/" + cleanName;
-            }
-        }
-        // Marker icon caching: preload and reuse
-        if (src.indexOf(".") == -1) {
-            return fb;
-        }
-        // Cache marker images in a global object
-        if (!window.incasaMarkerIconCache) {
-            window.incasaMarkerIconCache = {};
-        }
-        if (!window.incasaMarkerIconCache[src]) {
-            var img = new Image();
-            img.src = src;
-            window.incasaMarkerIconCache[src] = img;
-        }
-        return src;
-    } catch (eGetMapIcnUrl) {
-        return String(fallbackUrl || "images/logo_small_oct.png");
-    }
-};
-
-JSSHOP.ads.attachNuMapMarkerIconFallback = function(markerObj, fallbackUrl) {
-    try {
-        if (!markerObj) {
-            return;
-        }
-        var fb = String(fallbackUrl || "images/logo_small_oct.png");
-        var bindErr = function() {
-            try {
-                var icnEl = markerObj._icon;
-                if (!icnEl || icnEl.tagName != "IMG") {
-                    return;
-                }
-                if (icnEl.getAttribute("data-incasa-icn-fallback-bound") == "yes") {
-                    return;
-                }
-                icnEl.setAttribute("data-incasa-icn-fallback-bound", "yes");
-                icnEl.onerror = function() {
-                    try {
-                        if (icnEl.getAttribute("data-incasa-icn-fallback-used") == "yes") {
-                            return;
-                        }
-                        icnEl.setAttribute("data-incasa-icn-fallback-used", "yes");
-                        icnEl.src = fb;
-                    } catch (eMapIcnOnErr) {}
-                };
-            } catch (eBindMapIcnErr) {}
-        };
-        if (typeof markerObj.on == "function") {
-            markerObj.on("add", bindErr);
-        }
-        bindErr();
-    } catch (eAttachMapIcnFallback) {
-        console.log("attachNuMapMarkerIconFallback: " + eAttachMapIcnFallback);
-    }
-};
-
 JSSHOP.ads.doNuGenMap = function(tAADNGMObj) {
        tDNGMObj = null;
          tDNGMObj = "";
@@ -17367,24 +16301,11 @@ JSSHOP.ads.doNuGenMap = function(tAADNGMObj) {
         console.log("doNuGenMap.tDNGMObj[mdvid]: " + tDNGMObj["mdvid"]);
         // console.log("doNuGenMap: " + JSON.stringify(tDNGMObj));
         spinner.stop();
-        smlspinner.stop();
+smlspinner.stop();
          tDGMSmrkrArr = null;
          tDGMSmrkrArr = [];
         map = L.map(tDNGMObj["mdvid"], JSSHOP.ads.getLeafletCanvasMapOptions({renderer: L.canvas()})).setView([39.0667, -8.6167], 13);
         tDGMSmrkrArr = tDNGMObj["mrkrs"];
-        try {
-            for (var nmi2 = 0; nmi2 < (tDGMSmrkrArr ? tDGMSmrkrArr.length : 0); nmi2++) {
-                if (!tDGMSmrkrArr[nmi2]) {
-                    continue;
-                }
-                if (typeof JSSHOP.ads.getNuMapMarkerIconUrl == "function") {
-                    tDGMSmrkrArr[nmi2].icn = JSSHOP.ads.getNuMapMarkerIconUrl(tDGMSmrkrArr[nmi2].icn, "images/logo_small_oct.png");
-                }
-            }
-            tDNGMObj["mrkrs"] = tDGMSmrkrArr;
-        } catch (eDoNuNormMarkers) {
-            console.log("doNuGenMap.normalizeMarkers: " + eDoNuNormMarkers);
-        }
         console.log("doNuGenMap.tDGMSmrkrArr: " + JSON.stringify(tDGMSmrkrArr));
         tPreviewMapType = "street";
         if (tDNGMObj && tDNGMObj["mapType"]) {
@@ -17397,10 +16318,6 @@ JSSHOP.ads.doNuGenMap = function(tAADNGMObj) {
         tPreviewMapFlySpeed = "normal";
         if (tDNGMObj && tDNGMObj["mapFlySpeed"]) {
             tPreviewMapFlySpeed = tDNGMObj["mapFlySpeed"];
-        }
-        tPreviewMapAutoPlay = "off";
-        if (typeof JSSHOP.ads.getNuMapAutoPlayValue == "function") {
-            tPreviewMapAutoPlay = JSSHOP.ads.getNuMapAutoPlayValue((tDNGMObj && tDNGMObj["autoPlay"]), "off");
         }
         JSSHOP.ads.addNuMapTileLayer(map, tPreviewMapType, "street");
         var bounds = L.latLngBounds() // Instantiate LatLngBounds object
@@ -17427,19 +16344,15 @@ JSSHOP.ads.doNuGenMap = function(tAADNGMObj) {
                 tLngQcFlt = parseFloat(tLngQcStr);
                 tMOPrice = ts.price;
                 tAMOttl = ts.title;
-                tUNZdttle = (typeof JSSHOP.ads.decodeNuMapLzText == "function") ? JSSHOP.ads.decodeNuMapLzText(tAMOttl) : LZString.decompressFromEncodedURIComponent(tAMOttl);
+                tUNZdttle = LZString.decompressFromEncodedURIComponent(tAMOttl);
                 tMOShortttl = tUNZdttle.substring(0,40) + "...<br><b>" + tMOPrice + "</b>";
                 tMOttl = tMOShortttl;
                 tMOttl = JSSHOP.ads.getMapMarkerTooltipHtml(ts, tMOttl, tMOPrice);
                 ttImgstr = ts.icn;
-                tIcnQcStr = JSSHOP.ads.getNuMapMarkerIconUrl(ttImgstr, "images/logo_small_oct.png");
-                if (String(tIcnQcStr || "").toLowerCase().indexOf("updt_") != -1) {
-                    tTmpMapIcnName = String(tIcnQcStr).replace(/\\/g, "/");
-                    tTmpMapIcnName = tTmpMapIcnName.substring(tTmpMapIcnName.lastIndexOf("/") + 1);
-                    tTmpMapIcnName = tTmpMapIcnName.replace(/^s_thumb/i, "").replace(/updt_/ig, "");
-                    if (tTmpMapIcnName) {
-                        tIcnQcStr = "images/ucontent/" + tTmpMapIcnName;
-                    }
+                if(ttImgstr.indexOf(".") != -1) {
+                    tIcnQcStr = ttImgstr;
+                } else {
+                    tIcnQcStr = "images/logo_small_oct.png";
                 }
 
                 // ttSSurl = "javascript:JSSHOP.ads.doGenPrpPop(" + iti + ");";
@@ -17476,7 +16389,6 @@ JSSHOP.ads.doNuGenMap = function(tAADNGMObj) {
                            //  doGenPrpPop(e.target.options.iti);
                           eindex('aa-show-prop','pid=aa-show-prop&prpid=' + tPrpID + '&cid=' + currShopsArr[e.target.options.iti].pcoid);
                         });
-                                                JSSHOP.ads.attachNuMapMarkerIconFallback(mRed, "images/logo_small_oct.png");
         
 
                         // add a balloon to the marker showing the price and title
@@ -17491,17 +16403,7 @@ JSSHOP.ads.doNuGenMap = function(tAADNGMObj) {
             }
           iti++;
           }
-           if (tPreviewMapAutoPlay == "on") {
-               JSSHOP.ads.applyNuMapViewportEffect(map, bounds, tDGMSmrkrArr, tPreviewMapEffect, "fitbounds", tPreviewMapFlySpeed, "normal");
-           } else {
-               try {
-                   if (bounds && typeof bounds.isValid == "function" && bounds.isValid()) {
-                       map.fitBounds(bounds, {padding: [20, 20], animate: false});
-                   }
-               } catch (eMapPreviewNoAutoPlayBounds) {
-                   console.log("doNuGenMap.fitBounds: " + eMapPreviewNoAutoPlayBounds);
-               }
-           }
+           JSSHOP.ads.applyNuMapViewportEffect(map, bounds, tDGMSmrkrArr, tPreviewMapEffect, "fitbounds", tPreviewMapFlySpeed, "normal"); 
            JSSHOP.ads.registerNuMapPlaybackState(tDNGMObj["mdvid"], map, bounds, tDGMSmrkrArr, tPreviewMapEffect, tPreviewMapFlySpeed, tDNGMObj);
            if (typeof JSSHOP.ads.setNuMapCaptureTiming == "function") {
                JSSHOP.ads.setNuMapCaptureTiming(tDNGMObj["mdvid"], tDNGMObj["captureFps"], tDNGMObj["captureFrameIntervalMs"]);

@@ -756,6 +756,18 @@ border:thin; border-style:solid; border-color:black; color:white; font-weight:bo
 
 .vert_sep {color:#DEDEDE; }
 
+#clr-picker .incasa-coloris-close-btn {
+  position: absolute !important;
+  inset-block-start: 6px !important;
+  inset-inline-end: 6px !important;
+  top: 6px !important;
+  right: 6px !important;
+  left: auto !important;
+  bottom: auto !important;
+  z-index: 30 !important;
+  margin: 0 !important;
+}
+
 
 
 

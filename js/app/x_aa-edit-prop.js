@@ -1651,6 +1651,7 @@ var doThreeDPop = function() {
             tt3DpopStr += "<input id=\"btnAEPRecord\" type=\"button\" class=\"cls_button cls_button-small txtSmall bkgdClrHdr txtClrWhite\" value=\"Record\" onclick=\"javascript:toggleNuTDRecording();\">";
 
         }
+            tt3DpopStr += "<input id=\"btnAEPRecord\" type=\"button\" class=\"cls_button cls_button-small txtSmall bkgdClrHdr txtClrWhite\" value=\"Record\" onclick=\"javascript:toggleNuTDRecording();\">";
 
         tt3DpopStr += "</td><td>";
         if(tMdiaID != "noQvalue") {
@@ -2803,6 +2804,8 @@ function rndrNuUpdtIThbSlction(theRDa, theRDb, theRDc) {
         var len = tAiretArr.length;
         iint = 0;
         while (iint < len) {
+            if(tAiretArr[iint]["p_ptype"] == "pimage") {
+
             tChTstr = tAiretArr[iint]["p_title"];
             tUrlDecd = decodeURIComponent(tChTstr);
             tChoppedTstr = tUrlDecd;
@@ -2817,6 +2820,9 @@ function rndrNuUpdtIThbSlction(theRDa, theRDb, theRDc) {
             tThmbStr += "<img src=\"images/ucontent/m_thumb" + tAiretArr[iint]["p_image"] + "\" style=\"width:140px; height:120px; margin:5px;\">";
             tThmbStr += "<div style=\"font-size:12px; padding:5px;\">" + (aChoppedTstr || "No Title") + "</div>";
             tThmbStr += "</div>";
+        } else {
+                             console.log("rndrNuUpdtIThbSlction: skipping pimage type: " + tAiretArr[iint]["p_type"]);
+            }  
             iint++;
         }
     }
