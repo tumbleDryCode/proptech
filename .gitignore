@@ -10,3 +10,6 @@ images/property/
 images/tmpi/
 dev/
 trash/
+/remote/
+/remote/**
+
