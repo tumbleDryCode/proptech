@@ -3,7 +3,7 @@ if((quid == 0) || (quid == "noQvalue")) {
 }
 
 currPgTitle = stxt[31] + " " + stxt[56];
-document.title = currPgTitle; 
+document.title = currPgTitle;
 var euiFFObjArr = null;
 var euiFFObjArr = [];
 
@@ -15,7 +15,7 @@ ck_password =  /^[A-Za-z0-9!@#$%^&*()_]{6,20}$/;
 
 function popUsrZoneMap() {
     try {
-   
+
     // alert("getUsrZoneMap");
     /*
     tLeavesObj["icn"] = "admin/property/sthumb_" + currSlctdPrpsObj[key].pimage;
@@ -35,7 +35,7 @@ function popUsrZoneMap() {
     tMrkrUZMapObj["lat"] = tmp_u_loclat.value;
     tMrkrUZMapObj["lng"] = tmp_u_loclng.value;
     tFullUZMapArr.push(tMrkrUZMapObj);
- 
+
     // alert(JSON.stringify(tFullUZMapArr));
     tFullUZMapObj["mrkrs"] = tFullUZMapArr;
     tFullUZMapObj["mdvid"] = "dvUZMapView";
@@ -59,7 +59,7 @@ hasr = "n";
 fullstr = "";
 tFullTknCoSTr = "";
 var arrUsrsEd = JSON.parse(theResp);
- 
+
 var len = arrUsrsEd.length;
 var iint = 0;
 var pcid = 0;
@@ -126,7 +126,7 @@ JSSHOP.cookies.setCookie("cuid",tFullTknCoSTr,"90","","","");
 }
 
 };
- 
+
 
 
 
@@ -153,7 +153,7 @@ document.getElementById("btnEUsave").disabled=true;
 // smlspinner.spin(dvSpinner);
 doNUserEdit();
 }
-// var cars = ["tmp_u_name","tmp_u_pass"]; 
+// var cars = ["tmp_u_name","tmp_u_pass"];
 // if(JSSHOP.shared.valFieldVals(cars)) {doNUserEdit();}
 };
 
@@ -179,7 +179,7 @@ return aCurrFFieldOb;
 
 
 
- 
+
 var fnishDlayCntLoad = function() {
 };
 
@@ -217,14 +217,14 @@ var removeAccount = function() {
     JSSHOP.ui.popAndFillLbox(tFillstr);
 }
 
-var fnshUImgPDel = function(aa,bb,cc) { 
- 
+var fnshUImgPDel = function(aa,bb,cc) {
+
     getUiconImgs();
     JSSHOP.ui.closeLbox();
-    
+
     };
 
-var fnshUImgMDel = function(aa,bb,cc) { 
+var fnshUImgMDel = function(aa,bb,cc) {
     // alert(bb);
     if(JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", "default_user.png") == u_icon.value) {
         u_icon.value = "default_user.png";
@@ -234,27 +234,27 @@ var fnshUImgMDel = function(aa,bb,cc) {
         JSSHOP.ui.closeLbox();
     }
 
-    
+
     };
 
-var doUMIDelete = function() { 
+var doUMIDelete = function() {
     if(confirm(stxt[42] + " " + stxt[19] + "?")) {
     procNuUIitem("qmedia","m_rtype",JSSHOP.shared.getFrmFieldVal("qmedia", "_id", 0),"0","fnshUImgMDel");
     }
 };
 
 
-var fnshUimgMain = function(aa,bb,cc) { 
+var fnshUimgMain = function(aa,bb,cc) {
     // alert(bb);
     document.getElementById("u_icon").value = JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0);
     imgIedit.src = "images/user/" + JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0);
     // getUiconImgs();
     JSSHOP.ui.closeLbox();
-    
+
     };
-    
-    
-    var doUimgMain = function() { 
+
+
+    var doUimgMain = function() {
     if(confirm("Set as main picture?" + JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0))) {
     procNuUIitem("quser","u_icon",quid,JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0),"fnshUimgMain");
         }
@@ -265,7 +265,7 @@ var getUIEditDv = function(tpIncrNPI, tpFImg) {
 tpPIEDv = document.createElement('div');
 JSSHOP.shared.setFrmFieldVal("qmedia", "_id", tpIncrNPI);
 JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tpFImg);
- 
+
 tmpRetStr = "<img src=\"images/user/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
  try {
 tmpRetStr += "<div class=\"\"><input type=\"button\" class=\"form-control\" value=\"" + stxt[521] + "\" onclick=\"javascript:doUimgMain();\">";
@@ -273,7 +273,7 @@ if(tpFImg != "default_user.png") {
 tmpRetStr += "   |  <input type=\"button\" class=\"form-control\" value=\"" + stxt[42] + "\" onclick=\"javascript:doUMIDelete();\"></div>";
 }
 tmpRetStr += "<br><br>";
- 
+
 return tmpRetStr;
 } catch(e) {
 alert("getUIEditDv " + e);
@@ -306,7 +306,7 @@ function getPrvcyBSDDstr() {
     tGUPDDstr += JSSHOP.ui.getNuBSdropDstr(tDDBPrvojA);
     return tGUPDDstr;
 }
- 
+
 function doKLksPckChg(tZPCel, tZPVal, tZPtxt) {
     console.log("doKLksPckChg: " + tZPCel + " " + tZPVal + " " + tZPtxt);
     try {
@@ -327,7 +327,7 @@ function doKLksPckChg(tZPCel, tZPVal, tZPtxt) {
         tKMtrStrObj["kother"]["en_us"] = "Please enter your " + tZPtxt + " information";
         tKMtrStrObj["kother"]["pt_pt"] = "Por favor, insira a sua informacao " + tZPtxt;
         tKMtrStrObj["kother"]["spa_spa"] = "Por favor, ingrese su informacion " + tZPtxt;
-         
+
         switch(tZPVal) {
                 case "facebook":
                 case "linkedin":
@@ -363,10 +363,10 @@ function doKLksPckChg(tZPCel, tZPVal, tZPtxt) {
 }
 
 
-    
+
 
 function getKLinksBSDDstr() {
-    
+
 
     var tStr = "";
     tmpKLnksSlctObj = {};
@@ -400,7 +400,7 @@ function getKLinksBSDDstr() {
 
 
 function doZoneDD(thePrx, theSTat) {
-    try {   
+    try {
 
         // alert("doZoneDD: " + thePrx + " " + theSTat);
         if(theSTat == "ok") {
@@ -416,7 +416,7 @@ function doZoneDD(thePrx, theSTat) {
         dvUsrPrivacy.innerHTML = tPRvBSDDstr;
         // doCountryPckChg("dvCountryDD", u_country.value, u_country.value);
         getRegionDropStr(u_country.value, "u_region", "setUregionDD");
-        
+
      } catch(e) {
         alert("doZoneDD: " + e);
     }
@@ -444,7 +444,7 @@ var setUiconImgs = function(theAIa, theAIb, theAIc) {
             }
  			tstr += "<img src=\"images/user/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getUIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
 			tstr += "</div>";
- 
+
 			iint++;
 		}
         if(u_icon.value == "default_user.png") {
@@ -470,7 +470,7 @@ var getUiconImgs = function() {
     doQComm(oi["rq"], null, "setUiconImgs");
 };
 
-var fnshUIcnLoad = function(aa,bb,cc) { 
+var fnshUIcnLoad = function(aa,bb,cc) {
     scrollToElement("dvUImgs");
     JSSHOP.ui.setCBBClickClr(document.getElementById("dvProdImgs"),'cls_button cls_button-medium brdrClrDlg txtClrHdr',document.getElementById("dvUImgs").className, function(){void(0)});
 
@@ -479,14 +479,14 @@ var fnshUIcnLoad = function(aa,bb,cc) {
 
 var finishUPupload = function(theMMum) {
     try {
-    
+
 
         image = null;
         image = new Image();
         image.src = "images/user/" + theMMum;
         document.getElementById("dvProdImgs").appendChild(image);
 
-        // document.getElementById('dvUImgs').style.backgroundImage="url(images/users/s_thumb" + theMMum + ")";    
+        // document.getElementById('dvUImgs').style.backgroundImage="url(images/users/s_thumb" + theMMum + ")";
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_file_thumb", "s_thumb" + theMMum);
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", theMMum);
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_coid", quid);
@@ -516,7 +516,7 @@ function fillUserFrm(arr,brr,crr) {
 tmpDOs = null;
 tmpDOs = {};
 tmpDOs["ws"] = "where k_userid=? and k_coid=? and k_rtype=?";
-tmpDOs["wa"] = [quid,quid,5]; 
+tmpDOs["wa"] = [quid,quid,5];
 oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
 doQComm(oi["rq"], "y", "setCurrCoLinks");
  }
@@ -525,7 +525,7 @@ var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
     if((quid == 0) || (quid == "noQvalue")) {
          document.location.href = "index.html?pid=login";
-    }  else { 
+    }  else {
         JSSHOP.shared.setDynFrmVals(document["quser"], "tmp_");
 
         // tEUhdrStr = "Edit User - more options coming soon.";
@@ -536,8 +536,8 @@ fnishCntLoad = function() {
 tifo = nCurrFFieldOb();
 tifo.fid = "tmp_u_name";
 tifo.fdv = stxt[48];
-tifo.lid = "lbl_u_name"; 
-tifo.ltxt = stxt[48]; 
+tifo.lid = "lbl_u_name";
+tifo.ltxt = stxt[48];
 // tifo.fvr = ck_username;
 tifo.fve = stxt[1001];
 euiFFObjArr.push(tifo);
@@ -545,8 +545,8 @@ euiFFObjArr.push(tifo);
 tfui = nCurrFFieldOb();
 tfui.fid = "tmp_u_pass";
 tfui.fdv = stxt[49];
-tfui.lid = "lbl_u_pass"; 
-tfui.ltxt = stxt[49]; 
+tfui.lid = "lbl_u_pass";
+tfui.ltxt = stxt[49];
 // tfui.fvr = ck_password;
 tfui.fve = stxt[1001];
 euiFFObjArr.push(tfui);
@@ -556,8 +556,8 @@ euiFFObjArr.push(tfui);
 tfue = nCurrFFieldOb();
 tfue.fid = "tmp_u_email";
 tfue.fdv = stxt[50];
-tfue.lid = "lbl_u_email"; 
-tfue.ltxt = stxt[50]; 
+tfue.lid = "lbl_u_email";
+tfue.ltxt = stxt[50];
 tfue.fve = stxt[1001];
 euiFFObjArr.push(tfue);
 */
@@ -572,8 +572,8 @@ tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){doCoLinkAdd()
 tfuh = nCurrFFieldOb();
 tfuh.fid = "tmp_u_header";
 tfuh.fdv = stxt[51];
-tfuh.lid = "lbl_u_header"; 
-tfuh.ltxt = stxt[51]; 
+tfuh.lid = "lbl_u_header";
+tfuh.ltxt = stxt[51];
 euiFFObjArr.push(tfuh);
 
 tfsb = nCurrFFieldOb();
@@ -587,7 +587,7 @@ JSSHOP.shared.initFrmComps(euiFFObjArr);
 //
 if(arrAllForms.quser) {
 // JSSHOP.shared.setFrmVals("quser",arrAllForms.quser.v[0],function() { JSSHOP.shared.setDynFieldVals(JSSHOP.shared.getDynFrmVals(document["quser"], ""),"tmp_"); });
- 
+
 // JSSHOP.shared.setDynFieldVals(arrAllForms.quser.v[0],"tmp_");
 } else {
     // tmp_u_name.value = u_name.value;
@@ -607,10 +607,10 @@ if(arrAllForms.quser) {
 JSSHOP.loadScript("misc/x_countries.js", doZoneDD,  "js");
 
 
- 
- 
+
+
 tUcat = document.getElementById("tmp_u_cat");
- 
+
 // alert("u_cat.value: " + u_cat.value);
 if((u_cat.value == "5") || (currUrlArr.da)) {
 svftObj["usercat"]["5"] = "Admin";
@@ -623,7 +623,7 @@ oi = getNuDBFnvp("qco",5,null,tmpDOs);
 doQComm(oi["rq"], null, "doShopsList");
 }
 JSSHOP.shared.addCurrSlctObj(svftObj["usercat"], tUcat, u_cat.value, "noQvalue", "noQvalue");
- 
+
 
 
 
@@ -650,20 +650,20 @@ var aEditUser = function() {
  fnishDlayCntLoad(); // was not working with fnishCntLoad function
 };
 
- 
+
 // Link adding functions
 
 
 var doCoLinkDelete = function(tmpCLindex, tmpQlid) {
     //carr = currCoLinksArr[tmpVindex];
     cnnarr = removeArrElement(currCoLinksArr, tmpCLindex);
- 
+
     currCoLinksArr = null;
     currCoLinksArr = cnnarr;
     JSSHOP.ui.setCBBClickClr(dvCoLinks,'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr bkgdClrWhite', function(){JSSHOP.ui.closeLbox()});
 
     procNuUIitem("qlinks","k_rtype",tmpQlid,"0","rndrCoLnks");
- 
+
 };
 
 
@@ -734,12 +734,12 @@ if(tKcategory == "telephone") {
     tKfnlMatter = tKshrtMatter;
     }
 
-    // else if 
+    // else if
 
     // tKfnlMatter = tKshrtMatter;
- 
 
-// rcnsDv.className = "collection-item txtDecorNone margleft"; 
+
+// rcnsDv.className = "collection-item txtDecorNone margleft";
 rcL += "<tr><td><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span></td>";
 rcL += "<td>" + tKfnlMatter;
 
@@ -772,20 +772,20 @@ var fnshCoLinkAdd = function(tCCLA, tCCLB, tCCLC) {
     JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium bkgdBBlue txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
     currCoLinksArr.push(JSSHOP.shared.getFrmObj(document["qlinks"]));
         rndrCoLnks(tCCLA, JSON.stringify(currCoLinksArr), tCCLC);
-  
+
 /*
     // JSSHOP.ui.setCBBClickClr(btnAddSoLink,'txtXLrg txtBold slmtable bkgdClrDGreen txtClrWhite','txtXLrg txtBold slmtable bkgdClrWhite brdrNone txtClrDrkGrn', function(){document.getElementById("btnAddSoLink").disabled=false;});
    //  document.getElementById("btnAddSoLink").innerHTML="<i class=\"txtBold txtClrDrkGrn brdrClrWhite bkgdClrWhite material-icons\" alt=\"add\" title=\"add\">&#xe145;</i>";
         tmpDOs = null;
         tmpDOs = {};
         tmpDOs["ws"] = "where k_userid=? and  k_coid=? and k_rtype=?";
-        tmpDOs["wa"] = [quid,quid,5]; 
+        tmpDOs["wa"] = [quid,quid,5];
         oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
         doQComm(oi["rq"], "y", "setCurrCoLinks");
 
 */
-    }; 
-    
+    };
+
     var setCurrCoLinks = function(tCCLA, tCCLB, tCCLC) {
         if(tCCLB.indexOf("_id") != -1) {
             currCoLinksArr = null;
@@ -795,7 +795,7 @@ var fnshCoLinkAdd = function(tCCLA, tCCLB, tCCLC) {
         rndrCoLnks(tCCLA, tCCLB, tCCLC);
         }
         }
-    
+
 var doCoLinkAdd = function() {
     JSSHOP.shared.setFrmFieldVal("qlinks", "k_userid", quid);
     JSSHOP.shared.setFrmFieldVal("qlinks", "k_coid", quid);
@@ -812,7 +812,7 @@ var doCoLinkAdd = function() {
         stopSpin("btnAddSoLink");
         btnAddSoLink.innerHTML = "";
         // JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDYellow txtClrWhite','cls_button cls_button-medium bkgdBBlue txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
-    
+
         return;
     }
     if((JSSHOP.shared.getFrmFieldVal("qlinks", "k_title", 0) == "") || (JSSHOP.shared.getFrmFieldVal("qlinks", "k_title", 0) == "noQvalue")){
@@ -820,7 +820,7 @@ var doCoLinkAdd = function() {
         stopSpin("btnAddSoLink");
         btnAddSoLink.innerHTML = "";
         // JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDYellow txtClrWhite','cls_button cls_button-medium bkgdBBlue txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
-    
+
         return;
     }
     if((JSSHOP.shared.getFrmFieldVal("qlinks", "k_category", 0) == "") || (JSSHOP.shared.getFrmFieldVal("qlinks", "k_category", 0) == "Select")){
@@ -868,9 +868,9 @@ var doCoLinkAdd = function() {
 
 
     // startSpin("btnAddSoLink");
-    // check if the 
+    // check if the
     // alert("doCoLinkAdd: " + oi["rq"]);
-    
+
     oi = getNuDBFnvp("qlinks", 6, null, tmpFobj);
     doQComm(oi["rq"], null, "fnshCoLinkAdd");
 };
@@ -902,22 +902,22 @@ CREATE TABLE `quser` (
   `u_dadded` varchar(14) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
- 
-INSERT INTO `quser` (`_id`, `u_rtype`, `u_cat`, `u_name`, `u_fullname`, `u_location`, `u_region`, `u_country`, `u_loclat`, `u_loclng`, `u_email`, `u_pass`, `u_header`, `u_desc`, `u_icon`, `u_privacy`, `u_prfs`, `u_socauthtype`, `u_socauthid`, `u_socauthtoke`, `u_dadded`) VALUES
-(48, 5, 1, '1', 'Juan Pérez', 'Madrid', 'Madrid', 'Spain', '40.4168', '-3.7038', 'juanp@propsgo.com', 'juanp', '¡Soy un gran agente inmobiliario!', 'Mi descripción de agente inmobiliario es sobre mi amor por ayudar a las personas a encontrar su hogar ideal.', '48_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
-(49, 5, 1, '1', 'María López', 'Barcelona', 'Barcelona', 'Spain', '41.3851', '2.1734', 'marial@propsgo.com', 'marial', '¡Tu sueño es mi misión!', 'Como agente inmobiliario, me apasiona ayudar a mis clientes a encontrar la propiedad perfecta.', '49_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
-(50, 5, 1, '1', 'Carlos García', 'Valencia', 'Valencia', 'Spain', '39.4699', '-0.3763', 'carlosg@propsgo.com', 'carlosg', '¡Experiencia y dedicación!', 'Con años de experiencia en el sector inmobiliario, estoy aquí para guiarte en cada paso del camino.', '50_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
-(51, 5, 1, '1', 'Laura Martínez', 'Sevilla', 'Sevilla', 'Spain', '37.3886', '-5.9823', 'lauram@propsgo.com', 'lauram', '¡Tu confianza es mi prioridad!', 'Me esfuerzo por construir relaciones sólidas con mis clientes y brindar un servicio excepcional.', '51_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
-(52, 5, 1, '1', 'David Sánchez', 'Bilbao', 'Bilbao', 'Spain', '43.2630', '-2.9340', 'davids@propsgo.com', 'davids', '¡Resultados que hablan por sí mismos!', 'Mi enfoque centrado en el cliente garantiza que obtendrás los mejores resultados en tu búsqueda inmobiliaria.', '52_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036');
 
- 
+INSERT INTO `quser` (`_id`, `u_rtype`, `u_cat`, `u_name`, `u_fullname`, `u_location`, `u_region`, `u_country`, `u_loclat`, `u_loclng`, `u_email`, `u_pass`, `u_header`, `u_desc`, `u_icon`, `u_privacy`, `u_prfs`, `u_socauthtype`, `u_socauthid`, `u_socauthtoke`, `u_dadded`) VALUES
+(48, 5, 1, '1', 'Juan PÃ©rez', 'Madrid', 'Madrid', 'Spain', '40.4168', '-3.7038', 'juanp@propsgo.com', 'juanp', 'Â¡Soy un gran agente inmobiliario!', 'Mi descripciÃ³n de agente inmobiliario es sobre mi amor por ayudar a las personas a encontrar su hogar ideal.', '48_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(49, 5, 1, '1', 'MarÃ­a LÃ³pez', 'Barcelona', 'Barcelona', 'Spain', '41.3851', '2.1734', 'marial@propsgo.com', 'marial', 'Â¡Tu sueÃ±o es mi misiÃ³n!', 'Como agente inmobiliario, me apasiona ayudar a mis clientes a encontrar la propiedad perfecta.', '49_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(50, 5, 1, '1', 'Carlos GarcÃ­a', 'Valencia', 'Valencia', 'Spain', '39.4699', '-0.3763', 'carlosg@propsgo.com', 'carlosg', 'Â¡Experiencia y dedicaciÃ³n!', 'Con aÃ±os de experiencia en el sector inmobiliario, estoy aquÃ­ para guiarte en cada paso del camino.', '50_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(51, 5, 1, '1', 'Laura MartÃ­nez', 'Sevilla', 'Sevilla', 'Spain', '37.3886', '-5.9823', 'lauram@propsgo.com', 'lauram', 'Â¡Tu confianza es mi prioridad!', 'Me esfuerzo por construir relaciones sÃ³lidas con mis clientes y brindar un servicio excepcional.', '51_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(52, 5, 1, '1', 'David SÃ¡nchez', 'Bilbao', 'Bilbao', 'Spain', '43.2630', '-2.9340', 'davids@propsgo.com', 'davids', 'Â¡Resultados que hablan por sÃ­ mismos!', 'Mi enfoque centrado en el cliente garantiza que obtendrÃ¡s los mejores resultados en tu bÃºsqueda inmobiliaria.', '52_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036');
+
+
 INSERT INTO `property` (`prtype`, `pcoid`, `ptitle`, `pcontent`, `ptype`, `bhk`, `stype`, `bedroom`, `bathroom`, `balcony`, `kitchen`, `hall`, `pfloors`, `size`, `price`, `pdoornum`, `pstreet`, `location`, `city`, `state`, `country`, `pzipcode`, `ploclat`, `ploclng`, `feature`, `pimage`, `pprf_showslr`, `pprf_showftd`, `pprf_showloc`, `pprf_prvcy`, `uid`, `pstatus`, `mapimage`, `topmapimage`, `groundmapimage`, `totalfloor`, `pdadded`) VALUES
-(95, 48, 'Casa en Ciudad de México', 'Hermosa casa en el corazón de la ciudad.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 120, '3.500.000', '123', 'Calle Falsa', 'Colonia Centro', 'Ciudad de México', 'CDMX', 'Mexico', '06000', '19.4326', '-99.1332', '5', 'default.jpg', '48', 'public', 'public', 'public', 48, 'available', '5', '5', '5', '5', '1758500000'),
+(95, 48, 'Casa en Ciudad de MÃ©xico', 'Hermosa casa en el corazÃ³n de la ciudad.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 120, '3.500.000', '123', 'Calle Falsa', 'Colonia Centro', 'Ciudad de MÃ©xico', 'CDMX', 'Mexico', '06000', '19.4326', '-99.1332', '5', 'default.jpg', '48', 'public', 'public', 'public', 48, 'available', '5', '5', '5', '5', '1758500000'),
 (96, 49, 'Departamento en Guadalajara', 'Moderno departamento con vista a la ciudad.', 'apartment', 'on', 'sell', 3, 2, 1, 1, 1, '1', 85, '2.800.000', '456', 'Avenida Siempre Viva', 'Zapopan', 'Guadalajara', 'Jalisco', 'Mexico', '44100', '20.6597', '-103.3496', '5', 'default.jpg', '49', 'public', 'public', 'public', 49, 'available', '5', '5', '5', '5', '1758501000'),
-(97, 50, 'Villa en Monterrey', 'Exclusiva villa con piscina y jardín.', 'villa', 'on', 'sell', 4, 4, 1, 1, 1, '2', 200, '5.500.000', '789', 'Boulevard de los Sueños Rotos', 'San Pedro Garza García', 'Monterrey', 'Nuevo León', 'Mexico', '66220', '25.6866', '-100.3161', '5', 'default.jpg', '50', 'public', 'public', 'public', 50, 'available', '5', '5', '5', '5', '1758502000'),
-(98, 51, 'Casa en Puebla', 'Acogedora casa cerca del centro histórico.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 110, '3.200.000', '321', 'Calle de la Amargura', 'Centro', 'Puebla', 'Puebla', 'Mexico', '72000', '19.0414', '-98.2063', '5', 'default.jpg', '51', 'public', 'public', 'public', 51, 'available', '5', '5', '5', '5', '1758503000'),
-(99, 52, 'Condominio en Cancún', 'Condominio frente al mar con todas las comodidades.', 'condo', 'on', 'sell', 3, 2, 1, 1, 1, '1', 90, '4.000.000', '654', 'Avenida Kukulcán', 'Zona Hotelera', 'Cancún', 'Quintana Roo', 'Mexico', '77500', '21.1619', '-86.8515', '5', 'default.jpg', '52', 'public', 'public', 'public', 52, 'available', '5', '5', '5', '5', '1758504000'); 
- 
+(97, 50, 'Villa en Monterrey', 'Exclusiva villa con piscina y jardÃ­n.', 'villa', 'on', 'sell', 4, 4, 1, 1, 1, '2', 200, '5.500.000', '789', 'Boulevard de los SueÃ±os Rotos', 'San Pedro Garza GarcÃ­a', 'Monterrey', 'Nuevo LeÃ³n', 'Mexico', '66220', '25.6866', '-100.3161', '5', 'default.jpg', '50', 'public', 'public', 'public', 50, 'available', '5', '5', '5', '5', '1758502000'),
+(98, 51, 'Casa en Puebla', 'Acogedora casa cerca del centro histÃ³rico.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 110, '3.200.000', '321', 'Calle de la Amargura', 'Centro', 'Puebla', 'Puebla', 'Mexico', '72000', '19.0414', '-98.2063', '5', 'default.jpg', '51', 'public', 'public', 'public', 51, 'available', '5', '5', '5', '5', '1758503000'),
+(99, 52, 'Condominio en CancÃºn', 'Condominio frente al mar con todas las comodidades.', 'condo', 'on', 'sell', 3, 2, 1, 1, 1, '1', 90, '4.000.000', '654', 'Avenida KukulcÃ¡n', 'Zona Hotelera', 'CancÃºn', 'Quintana Roo', 'Mexico', '77500', '21.1619', '-86.8515', '5', 'default.jpg', '52', 'public', 'public', 'public', 52, 'available', '5', '5', '5', '5', '1758504000');
+
 
 CREATE TABLE `quser` (
   `_id` int(11) NOT NULL,
@@ -947,11 +947,11 @@ CREATE TABLE `quser` (
 -- Dumping data for table `quser`
 --
 
-INSERT INTO `quser` (`_id`, `u_rtype`, `u_cat`, `u_name`, `u_fullname`, `u_location`, `u_region`, `u_country`, `u_loclat`, `u_loclng`, `u_email`, `u_pass`, `u_header`, `u_desc`, `u_icon`, `u_privacy`, `u_prfs`, `u_socauthtype`, `u_socauthid`, `u_socauthtoke`, `u_dadded`) VALUES 
-(63, 5, 1, '1', 'Luís Ferreira', 'Porto', 'Porto', 'Portugal', '41.1496', '-8.6109', 'luisferreira@propsgo.com', 'luisferreira', 'Seu sonho é minha missão!', 'Como agente imobiliário, sou apaixonado por ajudar meus clientes a encontrar a propriedade perfeita.', '64_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
-(64, 5, 1, '1', 'Sofia Costa', 'Coimbra', 'Coimbra', 'Portugal', '40.2033', '-8.4103', 'sofiacosta@propsgo.com', 'sofiacosta', 'Experiência e dedicação!', 'Com anos de experiência no setor imobiliário, estou aqui para guiá-lo em cada passo do caminho.', '65_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
-(65, 5, 1, '1', 'Diego Almeida', 'Braga', 'Braga', 'Portugal', '41.5503', '-8.4265', 'diegoalmeida@propsgo.com', 'diegoalmeida', 'Sua confiança é minha prioridade!', 'Esforço-me para construir relacionamentos sólidos com meus clientes e fornecer um serviço excepcional.', '66_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
-(66, 5, 1, '1', 'Valentina Santos', 'Funchal', 'Madeira', 'Portugal', '32.6665', '-16.9245', 'valentinasantos@propsgo.com', 'valentinasantos', 'Resultados que falam por si mesmos!', 'Minha abordagem centrada no cliente garante que você obterá os melhores resultados em sua busca imobiliária.', '67_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036');
+INSERT INTO `quser` (`_id`, `u_rtype`, `u_cat`, `u_name`, `u_fullname`, `u_location`, `u_region`, `u_country`, `u_loclat`, `u_loclng`, `u_email`, `u_pass`, `u_header`, `u_desc`, `u_icon`, `u_privacy`, `u_prfs`, `u_socauthtype`, `u_socauthid`, `u_socauthtoke`, `u_dadded`) VALUES
+(63, 5, 1, '1', 'LuÃ­s Ferreira', 'Porto', 'Porto', 'Portugal', '41.1496', '-8.6109', 'luisferreira@propsgo.com', 'luisferreira', 'Seu sonho Ã© minha missÃ£o!', 'Como agente imobiliÃ¡rio, sou apaixonado por ajudar meus clientes a encontrar a propriedade perfeita.', '64_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(64, 5, 1, '1', 'Sofia Costa', 'Coimbra', 'Coimbra', 'Portugal', '40.2033', '-8.4103', 'sofiacosta@propsgo.com', 'sofiacosta', 'ExperiÃªncia e dedicaÃ§Ã£o!', 'Com anos de experiÃªncia no setor imobiliÃ¡rio, estou aqui para guiÃ¡-lo em cada passo do caminho.', '65_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(65, 5, 1, '1', 'Diego Almeida', 'Braga', 'Braga', 'Portugal', '41.5503', '-8.4265', 'diegoalmeida@propsgo.com', 'diegoalmeida', 'Sua confianÃ§a Ã© minha prioridade!', 'EsforÃ§o-me para construir relacionamentos sÃ³lidos com meus clientes e fornecer um serviÃ§o excepcional.', '66_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036'),
+(66, 5, 1, '1', 'Valentina Santos', 'Funchal', 'Madeira', 'Portugal', '32.6665', '-16.9245', 'valentinasantos@propsgo.com', 'valentinasantos', 'Resultados que falam por si mesmos!', 'Minha abordagem centrada no cliente garante que vocÃª obterÃ¡ os melhores resultados em sua busca imobiliÃ¡ria.', '67_1742930288.jpg', 'private', 'public', 5, '5', '5', '1742930036');
 
 
 CREATE TABLE `property` (
@@ -996,26 +996,26 @@ CREATE TABLE `property` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-// create insert statements of a new property for property table for user Luís Ferreira (id 63) and Sofia Costa (id 64) and Diego Almeida (id 65) and Valentina Santos (id 66) with different cities in Portugal
+// create insert statements of a new property for property table for user LuÃ­s Ferreira (id 63) and Sofia Costa (id 64) and Diego Almeida (id 65) and Valentina Santos (id 66) with different cities in Portugal
 
 INSERT INTO `property` (`prtype`, `pcoid`, `ptitle`, `pcontent`, `ptype`, `bhk`, `stype`, `bedroom`, `bathroom`, `balcony`, `kitchen`, `hall`, `pfloors`, `size`, `price`, `pdoornum`, `pstreet`, `location`, `city`, `state`, `country`, `pzipcode`, `ploclat`, `ploclng`, `feature`, `pimage`, `pprf_showslr`, `pprf_showftd`, `pprf_showloc`, `pprf_prvcy`, `uid`, `pstatus`, `mapimage`, `topmapimage`, `groundmapimage`, `totalfloor`, `pdadded`) VALUES
 (100, 63, 'Apartamento em Lisboa', 'Apartamento moderno no centro de Lisboa.', 'apartment', 'on', 'sell', 3, 2, 1, 1, 1, '1', 90, '350.000', '10', 'Rua da Liberdade', 'Baixa', 'Lisboa', 'Lisboa', 'Portugal', '1100-123', '38.7223', '-9.1393', '5', 'default.jpg', '63', 'public', 'public', 'public', 63, 'available', '5', '5', '5', '5', '1758600000'),
-(101, 64, 'Moradia em Faro', 'Moradia espaçosa perto da praia.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 150, '450.000', '20', 'Avenida do Mar', 'Vila Real de Santo António', 'Faro', 'Faro', 'Portugal', '8900-123', '37.0179', '-7.9304', '5', 'default.jpg', '64', 'public', 'public', 'public', 64, 'available', '5', '5', '5', '5', '1758601000'),
+(101, 64, 'Moradia em Faro', 'Moradia espaÃ§osa perto da praia.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 150, '450.000', '20', 'Avenida do Mar', 'Vila Real de Santo AntÃ³nio', 'Faro', 'Faro', 'Portugal', '8900-123', '37.0179', '-7.9304', '5', 'default.jpg', '64', 'public', 'public', 'public', 64, 'available', '5', '5', '5', '5', '1758601000'),
 (102, 65, 'T2 em Braga', 'Apartamento T2 no centro de Braga.', 'apartment', 'on', 'sell', 2, 1, 1, 1, 1, '1', 75, '200.000', '30', 'Rua do Souto', 'Centro', 'Braga', 'Braga', 'Portugal', '4700-123', '41.5503', '-8.4265', '5', 'default.jpg', '65', 'public', 'public', 'public', 65, 'available', '5', '5', '5', '5', '1758602000'),
-(103, 66, 'Apartamento em Coimbra', 'Apartamento acolhedor perto da Universidade.', 'apartment', 'on', 'sell', 2, 1, 1, 1, 1, '1', 80, '220.000', '40', 'Rua da Sofia', 'Santo António dos Olivais', 'Coimbra', 'Coimbra', 'Portugal', '3000-123', '40.2033', '-8.4103', '5', 'default.jpg', '66', 'public', 'public', 'public', 66, 'available', '5', '5', '5', '5', '1758603000');    
+(103, 66, 'Apartamento em Coimbra', 'Apartamento acolhedor perto da Universidade.', 'apartment', 'on', 'sell', 2, 1, 1, 1, 1, '1', 80, '220.000', '40', 'Rua da Sofia', 'Santo AntÃ³nio dos Olivais', 'Coimbra', 'Coimbra', 'Portugal', '3000-123', '40.2033', '-8.4103', '5', 'default.jpg', '66', 'public', 'public', 'public', 66, 'available', '5', '5', '5', '5', '1758603000');
 
-// create insert statements of a new property for property table for user Luís Ferreira (id 63) and Sofia Costa (id 64) and Diego Almeida (id 65) and Valentina Santos (id 66) with different cities in Portugal not used in the previous insert statements
+// create insert statements of a new property for property table for user LuÃ­s Ferreira (id 63) and Sofia Costa (id 64) and Diego Almeida (id 65) and Valentina Santos (id 66) with different cities in Portugal not used in the previous insert statements
 
 INSERT INTO `property` (`prtype`, `pcoid`, `ptitle`, `pcontent`, `ptype`, `bhk`, `stype`, `bedroom`, `bathroom`, `balcony`, `kitchen`, `hall`, `pfloors`, `size`, `price`, `pdoornum`, `pstreet`, `location`, `city`, `state`, `country`, `pzipcode`, `ploclat`, `ploclng`, `feature`, `pimage`, `pprf_showslr`, `pprf_showftd`, `pprf_showloc`, `pprf_prvcy`, `uid`, `pstatus`, `mapimage`, `topmapimage`, `groundmapimage`, `totalfloor`, `pdadded`) VALUES
 (104, 63, 'Moradia em Sintra', 'Moradia charmosa com vista para o mar.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 130, '600.000', '50', 'Rua das Flores', 'Colares', 'Sintra', 'Lisboa', 'Portugal', '2700-123', '38.8029', '-9.3817', '5', 'default.jpg', '63', 'public', 'public', 'public', 63, 'available', '5', '5', '5', '5', '1758604000'),
-(105, 64, 'Apartamento em Aveiro', 'Apartamento moderno com vista para os canais.', 'apartment', 'on', 'sell', 3, 2, 1, 1, 1, '1', 95, '300.000', '60', 'Avenida Dr. Lourenço Peixinho', 'Centro', 'Aveiro', 'Aveiro', 'Portugal', '3800-123', '40.6405', '-8.6538', '5', 'default.jpg', '64', 'public', 'public', 'public', 64, 'available', '5', '5', '5', '5', '1758605000'),
-(106, 65, 'Casa em Viseu', 'Casa tradicional com quintal espaçoso.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 140, '400.000', '70', 'Rua Direita', 'Centro', 'Viseu', 'Viseu', 'Portugal', '3500-123', '40.6610', '-7.9097', '5', 'default.jpg', '65', 'public', 'public', 'public', 65, 'available', '5', '5', '5', '5', '1758606000'),
-(107, 66, 'Apartamento em Évora', 'Apartamento acolhedor no centro histórico.', 'apartment', 'on', 'sell', 2, 1, 1, 1, 1, '1', 70, '180.000', '80', 'Rua do Raimundo', 'Centro', 'Évora', 'Évora', 'Portugal', '7000-123', '38.5719', '-7.9135', '5', 'default.jpg', '66', 'public', 'public', 'public', 66, 'available', '5', '5', '5', '5', '1758607000');
+(105, 64, 'Apartamento em Aveiro', 'Apartamento moderno com vista para os canais.', 'apartment', 'on', 'sell', 3, 2, 1, 1, 1, '1', 95, '300.000', '60', 'Avenida Dr. LourenÃ§o Peixinho', 'Centro', 'Aveiro', 'Aveiro', 'Portugal', '3800-123', '40.6405', '-8.6538', '5', 'default.jpg', '64', 'public', 'public', 'public', 64, 'available', '5', '5', '5', '5', '1758605000'),
+(106, 65, 'Casa em Viseu', 'Casa tradicional com quintal espaÃ§oso.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 140, '400.000', '70', 'Rua Direita', 'Centro', 'Viseu', 'Viseu', 'Portugal', '3500-123', '40.6610', '-7.9097', '5', 'default.jpg', '65', 'public', 'public', 'public', 65, 'available', '5', '5', '5', '5', '1758606000'),
+(107, 66, 'Apartamento em Ã‰vora', 'Apartamento acolhedor no centro histÃ³rico.', 'apartment', 'on', 'sell', 2, 1, 1, 1, 1, '1', 70, '180.000', '80', 'Rua do Raimundo', 'Centro', 'Ã‰vora', 'Ã‰vora', 'Portugal', '7000-123', '38.5719', '-7.9135', '5', 'default.jpg', '66', 'public', 'public', 'public', 66, 'available', '5', '5', '5', '5', '1758607000');
 
-// create insert statements of a new property for property table for user Luís Ferreira (id 63) and Sofia Costa (id 64) and Diego Almeida (id 65) and Valentina Santos (id 66) with different cities in Portugal not used in the previous insert statements
+// create insert statements of a new property for property table for user LuÃ­s Ferreira (id 63) and Sofia Costa (id 64) and Diego Almeida (id 65) and Valentina Santos (id 66) with different cities in Portugal not used in the previous insert statements
 INSERT INTO `property` (`prtype`, `pcoid`, `ptitle`, `pcontent`, `ptype`, `bhk`, `stype`, `bedroom`, `bathroom`, `balcony`, `kitchen`, `hall`, `pfloors`, `size`, `price`, `pdoornum`, `pstreet`, `location`, `city`, `state`, `country`, `pzipcode`, `ploclat`, `ploclng`, `feature`, `pimage`, `pprf_showslr`, `pprf_showftd`, `pprf_showloc`, `pprf_prvcy`, `uid`, `pstatus`, `mapimage`, `topmapimage`, `groundmapimage`, `totalfloor`, `pdadded`) VALUES
 (108, 63, 'Apartamento em Braga', 'Apartamento moderno no centro de Braga.', 'apartment', 'on', 'sell', 3, 2, 1, 1, 1, '1', 90, '320.000', '90', 'Rua do Souto', 'Centro', 'Braga', 'Braga', 'Portugal', '4700-456', '41.5503', '-8.4265', '5', 'default.jpg', '63', 'public', 'public', 'public', 63, 'available', '5', '5', '5', '5', '1758608000'),
-(109, 64, 'Moradia em Guimarães', 'Moradia espaçosa perto do centro histórico.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 150, '480.000', '100', 'Avenida Dom Afonso Henriques', 'Centro', 'Guimarães', 'Braga', 'Portugal', '4800-123', '41.4445', '-8.2960', '5', 'default.jpg', '64', 'public', 'public', 'public', 64, 'available', '5', '5', '5', '5', '1758609000'),
-(110, 65, 'T2 em Coimbra', 'Apartamento T2 no centro de Coimbra.', 'apartment', 'on', 'sell', 2, 1, 1, 1, 1, '1', 75, '210.000', '110', 'Rua da Sofia', 'Santo António dos Olivais', 'Coimbra', 'Coimbra', 'Portugal', '3000-456', '40.2033', '-8.4103', '5', 'default.jpg', '65', 'public', 'public', 'public', 65, 'available', '5', '5', '5', '5', '1758610000'),
-(111, 66, 'Apartamento em Leiria', 'Apartamento acolhedor perto do centro.', 'apartment', 'on', 'sell', 2, 1, 1, 1, 1, '1', 80, '230.000', '120', 'Avenida Heróis de Angola', 'Centro', 'Leiria', 'Leiria', 'Portugal', '2400-123', '39.7436', '-8.8070', '5', 'default.jpg', '66', 'public', 'public', 'public', 66, 'available', '5', '5', '5', '5', '1758611000');   
+(109, 64, 'Moradia em GuimarÃ£es', 'Moradia espaÃ§osa perto do centro histÃ³rico.', 'house', 'on', 'sell', 4, 3, 1, 1, 1, '2', 150, '480.000', '100', 'Avenida Dom Afonso Henriques', 'Centro', 'GuimarÃ£es', 'Braga', 'Portugal', '4800-123', '41.4445', '-8.2960', '5', 'default.jpg', '64', 'public', 'public', 'public', 64, 'available', '5', '5', '5', '5', '1758609000'),
+(110, 65, 'T2 em Coimbra', 'Apartamento T2 no centro de Coimbra.', 'apartment', 'on', 'sell', 2, 1, 1, 1, 1, '1', 75, '210.000', '110', 'Rua da Sofia', 'Santo AntÃ³nio dos Olivais', 'Coimbra', 'Coimbra', 'Portugal', '3000-456', '40.2033', '-8.4103', '5', 'default.jpg', '65', 'public', 'public', 'public', 65, 'available', '5', '5', '5', '5', '1758610000'),
+(111, 66, 'Apartamento em Leiria', 'Apartamento acolhedor perto do centro.', 'apartment', 'on', 'sell', 2, 1, 1, 1, 1, '1', 80, '230.000', '120', 'Avenida HerÃ³is de Angola', 'Centro', 'Leiria', 'Leiria', 'Portugal', '2400-123', '39.7436', '-8.8070', '5', 'default.jpg', '66', 'public', 'public', 'public', 66, 'available', '5', '5', '5', '5', '1758611000');
  */

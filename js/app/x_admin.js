@@ -34,9 +34,9 @@ function doALI() {
     JSSHOP.cookies.deleteCookie('qtype','','');
     document.location.href='index.html?pid=login&u=' + tmp_u_email.value + '&p=' + tmp_u_pass.value;
     }
-    
+
     var removeDiacritics = function(str) {
-    
+
       var defaultDiacriticsRemovalMap = [
         {'base':'A', 'letters':/[\u0041\u24B6\uFF21\u00C0\u00C1\u00C2\u1EA6\u1EA4\u1EAA\u1EA8\u00C3\u0100\u0102\u1EB0\u1EAE\u1EB4\u1EB2\u0226\u01E0\u00C4\u01DE\u1EA2\u00C5\u01FA\u01CD\u0200\u0202\u1EA0\u1EAC\u1EB6\u1E00\u0104\u023A\u2C6F]/g},
         {'base':'AA','letters':/[\uA732]/g},
@@ -123,7 +123,7 @@ function doALI() {
         {'base':'y','letters':/[\u0079\u24E8\uFF59\u1EF3\u00FD\u0177\u1EF9\u0233\u1E8F\u00FF\u1EF7\u1E99\u1EF5\u01B4\u024F\u1EFF]/g},
         {'base':'z','letters':/[\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763]/g}
       ];
-    
+
       for(var i=0; i<defaultDiacriticsRemovalMap.length; i++) {
         try {
             str = str.replace(defaultDiacriticsRemovalMap[i].letters, defaultDiacriticsRemovalMap[i].base);
@@ -131,21 +131,21 @@ function doALI() {
             // str = " ";
         }
       }
-    
+
       return str;
-    
+
     };
-    
-    
-    
-    
-    
+
+
+
+
+
     var doSaveRedir = function(a,b,c) {
     document.location.href = "index.html?pid=" + pid + "&ppid=" + ppid;
     };
 
 
-    
+
        var getTblSortStr = function(theTBhdr, theTBbdy) {
            strFhtml = "<div class=\"tabler\"  style=\"margin: 0 auto;min-width:90%;max-width:95%;\" ><table style=\"margin: 0 auto;min-width:90%;max-width:95%;\" class=\"table table-sm table-striped table-hover txtSmall\" width=\"100%\" cellpadding=\"0px;\"  cellspacing=\"0px;\">";
            strFhtml += "<THEAD>" + theTBhdr + "</THEAD><TBODY>";
@@ -158,8 +158,8 @@ function doALI() {
         strFhtml += theTBbdy + "</div>";
         return strFhtml;
     };
-    
-    
+
+
     var removeArrElement = function(theArray, theIndex) {
         try {
         theArray.splice(theIndex,1);
@@ -169,24 +169,24 @@ function doALI() {
         }
         return theArray;
     };
-    
-    
-    
-    
-    
+
+
+
+
+
     var getCurrListArr = function(theObj) {
-     
+
                 var theSelIndex = theObj.selectedIndex;
                 var theVal = theObj.options[theSelIndex].value;
                 var theString = theObj.options[theSelIndex].text;
-    
+
             theArr = [theVal, theString]
                 // alert(theString +  " : " + theVal);
                 return theArr;
     }
-    
-    
-    
+
+
+
     function switchOccurrences(haystack, needle, arrs)
     {
         count = 0;
@@ -196,16 +196,16 @@ function doALI() {
             {
             haystack = haystack.replace(haystack.charAt(i), "'" + arrs[count] + "'");
             // haystack = haystack.replace(haystack.charAt(i),  arrs[count]);
-    
+
             count++;
-            } 
+            }
         }
         return haystack;
     }
-    
-    
-     
-    
+
+
+
+
             var setCurrListIndex = function(theObj, indexVal) {
                 theIndexVal = "noQvalue";
                 var selection = theObj;
@@ -221,7 +221,7 @@ function doALI() {
                 }
                 return theIndexVal;
             };
-    
+
             var getCurrListVal = function(theObj) {
                 var theSelIndex = theObj.selectedIndex;
                 var theString = theObj.options[theSelIndex].text;
@@ -229,25 +229,25 @@ function doALI() {
                 // alert(theString +  " : " + theVal);
                 return theVal;
             };
-     
+
            var addCurrListVal = function(theObj, theText, theVal) {
            theObj.options[theObj.options.length] = new Option(theText, theVal);
            };
-    
-    
-    
+
+
+
     var getDBFnvp = function(t,m,da,de) {
     getNuDBFnvp(t,m,da,null)
     };
-    
+
     var hu = function(a,b,c) {
     JSSHOP.ui.popAndFillLbox(b);
     };
-    
-    
-    
-    
-    
+
+
+
+
+
     var checkCatEdit = function(t,am) {
     if((am == 7) && (ppid == 0)) { // not edit, its add category
     m = 6;
@@ -269,17 +269,17 @@ function doALI() {
     // JSSHOP.ui.popAndFillLbox(oi["rq"]);
     // app.getJsnPrs(tsas);
     };
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
     var rREditCat = function(theElem, theResp, marble) {
     hasr = "n";
     fullstr = "";
@@ -297,7 +297,7 @@ function doALI() {
     }
     if(document.getElementById(gkey)) {
     // document.getElementById("includedContent").value = ts[gkey];
-    }  
+    }
     }
     fullstr += "</tr><tr>"
     iint++;
@@ -305,7 +305,7 @@ function doALI() {
     fullstr += "</tr></table>";
     document.getElementById("includedContent").innerHTML = fullstr;
     };
-    
+
     var rRListProds = function(theElem, theResp, marble) {
     hasr = "n";
     fullstr = "";
@@ -323,7 +323,7 @@ function doALI() {
     }
     if(document.getElementById(gkey)) {
     // document.getElementById("includedContent").value = ts[gkey];
-    }  
+    }
     }
     fullstr += "</tr><tr>"
     iint++;
@@ -331,9 +331,9 @@ function doALI() {
     fullstr += "</tr></table>";
     document.getElementById("includedContent").innerHTML = fullstr;
     };
-    
-    
-    
+
+
+
     var rEditCat = function(theElem, theResp, marble) {
     hasr = "n";
     fullstr = "";
@@ -349,51 +349,51 @@ function doALI() {
     addCurrListVal(theO, ts.CategoryTitle, ts._id);
     }
     for(var gkey in ts) {
-    if(iint < 1) { 
+    if(iint < 1) {
     if(ppid == 0) {
     if(document.getElementById(gkey)) {
     arrDBnDocFNames.push(gkey);
     }
     }
-    arrDBFNames.push(gkey); 
+    arrDBFNames.push(gkey);
     }
-    
-    
-    
+
+
+
     if(ts._id == ppid) {
     pcid = ts.ParentCategoryID;
     if(document.getElementById(gkey)) {
     arrDBnDocFNames.push(gkey);
     document.getElementById(gkey).value = ts[gkey];
-    }  
-    
     }
-    
+
+    }
+
     fullstr += gkey + " . " + ts[gkey] +  "\n";
     } // end for(var....
-    
+
     iint++;
     }
-    
+
     setCurrListIndex(theO, pcid);
     // alert(pcid);
     };
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-     
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     var rAddCat = function() {
     };
     var aListCat = function() {
@@ -409,13 +409,13 @@ function doALI() {
     }
     */
     };
-     
+
     var aListProds = function() {
     doQComm('select * from product order by _id desc limit 100', null, "rRListProds")
     }
-    
-    
-    
+
+
+
     var rFFFVs = function(theElem, theResp, marble) {
     hasr = "n";
     fullstr = "";
@@ -428,12 +428,12 @@ function doALI() {
     for(var gkey in ts) {
     if(document.getElementById(gkey)) {
     document.getElementById(gkey).value = ts[gkey];
-    }  
+    }
     }
     iint++;
     }
     };
-    
+
     var doMCartLink = function() {
     strTuel = "index.html";
     if((cid == 0) || (ppid == 0)) {
@@ -443,14 +443,14 @@ function doALI() {
     document.location.href = strTuel;
     }
     };
-     
-    
-    
-    
-    
-    
-    
-     
+
+
+
+
+
+
+
+
     var decPrefCky = function(cString) {
         try {
             strPa = cString.split("x1").join("[{\"");
@@ -466,9 +466,9 @@ function doALI() {
         }
           return strPh;
     };
-    
+
     var encPrefCky = function(cString) {
-     
+
         try {
             strPa = cString.split("[{\"").join("x1");
             strPb = strPa.split("\":\"").join("x2");
@@ -483,21 +483,21 @@ function doALI() {
         }
           return strPh;
     };
-    
-    
-    
+
+
+
     /*
     * basic funtion to update
     * one field in db table
-    */ 
+    */
     var procNuUIAitem = function(fromWhere,thetble,thecol,theid,theVal,tmpCB) {
     try {
         tmpVpar = null;
         tmpSobj = null;
-        tmpFobj = null; 
+        tmpFobj = null;
         tmpVpar = [];
         tmpSobj = {};
-        tmpFobj = {}; 
+        tmpFobj = {};
         tmpSobj["t"] = thecol;
         tmpSobj["v"] = theVal;
         tmpVpar.push(tmpSobj);
@@ -507,7 +507,7 @@ function doALI() {
         oi = getNuDBFnvp(thetble,7,null,tmpFobj);
         // alert("procNuUIitem: " + oi["rq"]);
         JSSHOP.logJSdbug("procNuUIAitem", arguments, fromWhere + " :: " + "q: " + oi["rq"]);
-    
+
     if(fromWhere == "remote") {
          doQSynchComm(getShopDir("local"), oi["rq"], fromWhere, tmpCB);
     } else {
@@ -517,19 +517,19 @@ function doALI() {
         JSSHOP.logJSdbug("procNuUIAitem.ERROR", arguments, fromWhere + " :: " + e);
     }
     };
-     
-    
+
+
     /*
     * basic funtion to update
     * one field in db table and set timestamp
-    */ 
+    */
     var procNuUIitem = function(thetble,thecol,theid,theVal,atmpCB) {
         tmpVpar = null;
         tmpSobj = null;
-        tmpFobj = null; 
+        tmpFobj = null;
         tmpVpar = [];
         tmpSobj = {};
-        tmpFobj = {}; 
+        tmpFobj = {};
         tmpSobj["t"] = thecol;
         tmpSobj["v"] = theVal;
         tmpVpar.push(tmpSobj);
@@ -540,9 +540,9 @@ function doALI() {
         // alert("procNuUIitem: " + oi["rq"]);
         doQComm(oi["rq"], null, atmpCB);
     };
-    
-    
-    
+
+
+
     var procUIitem = function(theElem) {
     ts = JSSHOP.shared.getElemDUrl(theElem);
     if(theElem.getAttribute("data-prval") != null) {
@@ -558,7 +558,7 @@ function doALI() {
     };
 
     function doFinishIAdd() {
-       
+
     }
     var tFnishPrdAdd = function(theTFon) {
       tbtSar = [];
@@ -566,14 +566,14 @@ function doALI() {
       tbtSObj["cls"] = "noQvalue";
       tbtSObj["txt"] = "noQvalue";
       tbtSObj["cb"] = "javascript:eindex('aa-edit-parts-category', 'pid=aa-edit-parts-category&cid=" + cid + "');";
- 
+
       tbtSar.push(tbtSObj);
       JSSHOP.ui.doAlertBox("success", stxt[605], stxt[606], tbtSar);
         console.log("tFnishPrdAdd.admin: " + JSON.stringify(theTFon));
         };
-        
-    
- 
+
+
+
 function getListPrices() {
     if(currPUrlObj.mk == null ||  currPUrlObj.mk < 0) {
       JSSHOP.ui.doAlertBox("warning", stxt[82] + " " + stxt[102], stxt[82] + " " + stxt[102], "noQvalue");
@@ -588,10 +588,10 @@ function getListPrices() {
         // replace everything that is not a number or a period or a comma
         if(ttMpKVal == "" || ttMpKVal == null || ttMpKVal == "undefined") {
           // console.log("getListPrices.invalid: " + key + " -> " + ttMpKVal);
-      
+
         } else {
           ttMpKAVal = ttMpKVal.replace(/[^0-9.,]/g, '');
-  
+
           ttMpKBVal = ttMpKAVal.replace(/,/g, '.');
           document.getElementById("i_price_b").value = ttMpKBVal;
           if(document.getElementById(key)) {
@@ -622,8 +622,8 @@ function getListPrices() {
         tFGPLstr += "</table></div>";
         // add a button str that calls the doSavePartG function
          tFGPLstr += "<div class=\"cls_button cls_button-medium bkgdBBlue txtSmall\" onclick=\"javascript:doNuSavePartG();\">" + stxt[70] + "</div>";
-        
-  
+
+
         JSSHOP.ui.popAndFillLbox(tFGPLstr);
       } else {
         JSSHOP.ui.doAlertBox("warning", stxt[1016], stxt[1017], "noQvalue");
@@ -647,10 +647,10 @@ function getListPrices() {
     }
     */
   }
-  
-  
-  
-  
+
+
+
+
   function doSavePartG() {
     document.getElementById("cat_coid").value = cid;
     tRetPopStr = "";
@@ -662,14 +662,14 @@ function getListPrices() {
         // replace everything that is not a number or a period or a comma
         if(ttMpKVal == "" || ttMpKVal == null || ttMpKVal == "undefined") {
          //   console.log("doSavePartG.invalid: " + key + " -> isnull");
-      
+
         } else {
-  
+
           console.log("doSavePartG: " + key + " -> " + ttMpKVal);
 
-  
+
           ttMpKAVal = ttMpKVal.replace(/[^0-9.,]/g, '');
-  
+
           ttMpKBVal = ttMpKAVal.replace(/,/g, '.');
           document.getElementById("i_price_b").value = ttMpKBVal;
           if(document.getElementById(key)) {
@@ -684,30 +684,30 @@ function getListPrices() {
               tPGPPcatid = tDSplit[1];
               tPGPPnm = tDSplit[2];
               document.getElementById("cat_title").value = tPGPPnm;
-  
+
               document.getElementById("i_catid").value = tPGPPcatid;
               document.getElementById("i_title").value = tPGPPnm;
               document.getElementById("i_pid").value = tPGPPid;
               document.getElementById("i_agent").value = currPUrlObj.mk;
               document.getElementById("i_vala").value = currPUrlObj.si;
-              tccCHCHstR = ":" + tPGPPcatid + ":"; 
+              tccCHCHstR = ":" + tPGPPcatid + ":";
               tccCIStr =  ":" + tPGPPid + ":";
-  
-  
+
+
               if((currCoCatsStr.indexOf(tccCHCHstR) != -1) && (currCoCatsStr.indexOf(tccCIStr) != -1)){
                 console.log("doSavePartG.tccCHCHstR: " + tccCHCHstR + " and tccCIStr " + tccCIStr + " already in " + currCoCatsStr);
-  
+
               } else {
                 console.log("doSavePartG.tccCHCHstR: " + tccCHCHstR + " not in " + currCoCatsStr);
-  
-  
+
+
                 if(currCoCatsStr.indexOf(tccCHCHstR) != -1) {
 
- 
+
                   console.log("doSavePartG.tccCHCHstR: " + tccCHCHstR + " already in " + currCoCatsStr);
                 } else {
                   console.log("doSavePartG.tccCHCHstR: " + tccCHCHstR + " not in " + currCoCatsStr);
-  
+
                 document.getElementById("cat_pid").value = tccCHCHstR;
                 document.getElementById("cat_id").value = tccCHCHstR;
                 document.getElementById("cat_uid").value = quid;
@@ -722,56 +722,56 @@ function getListPrices() {
                 oi = getNuDBFnvp("qcat",6,null,tmpDOs);
                 doDynQArrComm(tmpEPADDArr, oi["rq"], "includedContent", "doNada");
                 }
-  
-                 
-  
+
+
+
                   if(currCoCatsStr.indexOf(tccCIStr) != -1) {
                     console.log("doSavePartG:.tccCIStr " + tccCIStr + " already in " + currCoCatsStr);
                 } else {
                   console.log("doSavePartG:.tccCIStr " + tccCIStr + " not in " + currCoCatsStr);
 
-  
+
                   currCoCatsStr += tPGPPid + ":";
                   document.getElementById("cat_title").value = tPGPPnm;
-  
+
                   document.getElementById("cat_pid").value = tccCHCHstR;
                   document.getElementById("cat_id").value = tPGPPid;
-  
+
                   tmpDOs = null;
                   tmpDOs = {};
                   tmpDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qcat"], "nada");
                   oi = getNuDBFnvp("qcat",6,null,tmpDOs);
                   doDynQArrComm(tmpEPADDArr, oi["rq"], "includedContent", "doNada");
-  
-   
-  
+
+
+
                   document.getElementById("i_catid").value = tPGPPid;
-   
+
                     tmpADOs = null;
                     tmpADOs = {};
                     tmpADOs["knvp"] = JSSHOP.shared.getFrmVals(document["qitem"], "nada");
                     oir = getNuDBFnvp("qitem",6,null,tmpADOs);
                     doDynQArrComm(tmpEPADDArr, oir["rq"], "includedContent", "doNada");
                 }
-               
-  
+
+
               }
-  
+
               tRetPopStr += "<tr><td><div class=\"collection-item crsrPointer\" onclick=\"javascript:setShpPartCatID('" + tPGPPid + "','" + tPGPPcatid + "','" + tPGPPnm + "');\">" + tPGPPnm + "</div></td><td>" + ttMpKBVal + "</td></tr>";
-  
-  
+
+
             }
           }
-   
+
         }
-   
+
       }
-   
+
     }
-   
+
     console.log("getListPrices.final: " + JSON.stringify(tmpEPADDArr));
     if(tRetPopStr != "") {
-      
+
     doACFrmQ = nCurrCnxOb();
   doACFrmQ["q"] = "batch" + JSON.stringify(tmpEPADDArr);
   // alert("a: " + JSON.stringify(tmpCAArr));
@@ -784,7 +784,7 @@ function getListPrices() {
       JSSHOP.ui.toggleNuModule('dvTglPSmain','dvPartsMain');
       }
     }
-  
+
   }
 
 
@@ -801,14 +801,14 @@ function getListPrices() {
         // replace everything that is not a number or a period or a comma
         if(ttMpKVal == "" || ttMpKVal == null || ttMpKVal == "undefined") {
          //   console.log("doSavePartG.invalid: " + key + " -> isnull");
-      
+
         } else {
-  
+
           console.log("doSavePartG: " + key + " -> " + ttMpKVal);
 
-  
+
           ttMpKAVal = ttMpKVal.replace(/[^0-9.,]/g, '');
-  
+
           ttMpKBVal = ttMpKAVal.replace(/,/g, '.');
           document.getElementById("i_price_b").value = ttMpKBVal;
           if(document.getElementById(key)) {
@@ -837,7 +837,7 @@ for (var i = 0; i < tFullSPartArr.length; i++) {
 
   tPGPPFlnm = tFSplit[2] + " " + stxt[569] + " " + currPUrlObj.make + " " + currPUrlObj.series;
   tPGPPval = tFSplit[3];
-  tccCHCHstR = ":" + tPGPPcatid + ":"; 
+  tccCHCHstR = ":" + tPGPPcatid + ":";
   tccCIStr =  ":" + tPGPPid + ":";
 
   document.getElementById("i_catid").value = tPGPPcatid;
@@ -901,7 +901,7 @@ var tFnshSvsCatSv = function(theTFon) {
   JSSHOP.ui.doAlertBox("success", stxt[605] + " -ha", stxt[606], tbtSar);
     console.log("tFnshSvsCatSv.admin: " + JSON.stringify(theTFon));
     };
-               
+
 function doSvsCatSave() {
   tmpCatSvArr = [];
   canSave = "no";
@@ -924,7 +924,7 @@ function doSvsCatSave() {
       // replace everything that is not a number or a period or a comma
       if(ttMpKVal == "" || ttMpKVal == null || ttMpKVal == "undefined") {
        //   console.log("doSavePartG.invalid: " + key + " -> isnull");
-    
+
       } else {
        //  canSave = "no";
         if(document.getElementById(key)) {
@@ -939,12 +939,12 @@ function doSvsCatSave() {
             theTrType = theTkndArr[2];
             } else {
               theTval = theTTkndval;
-              
+
               theTrType = "5";
-            } 
+            }
             document.getElementById("cat_rtype").value = "5";
- 
-            
+
+
             theTTkndStr = ":" + theTval + ":";
             console.log("doSvsCatSave.tTmpK.value: " + key + " -> " + ttMpKVal);
             if(tTmpK.checked) {
@@ -954,7 +954,7 @@ function doSvsCatSave() {
               document.getElementById("cat_pid").value = theTval;
               document.getElementById("cat_id").value = theTval;
               document.getElementById("cat_title").value = tChcbCNm;
-              tOldDescInp = document.getElementById("cat_desc");  
+              tOldDescInp = document.getElementById("cat_desc");
               tOldCDescID = "inpOldDpc" + theTval;
               tOldDescVal = document.getElementById(tOldCDescID).value;
               tNewDescId = "dvOldDpc" + theTval;
@@ -966,7 +966,7 @@ function doSvsCatSave() {
 
                canDoNada = "yes";
               } else {
-            
+
                 canSave = "yes";
               }
               document.getElementById("cat_desc").value = tNewDescVal;
@@ -976,14 +976,14 @@ function doSvsCatSave() {
 
                 document.getElementById("cat_rtype").value = "5";
                 canSave = "yes";
-              } 
-         
+              }
+
 
               if(currCoCatsStr.indexOf(theTTkndStr) != -1) {
                 console.log("doSvsCatSave.currCoCatsStr indexOf: "  +  theTTkndStr);
 
 
-                
+
 
                   tmpAsDOs = null;
                   tmpAsDOs = {};
@@ -991,11 +991,11 @@ function doSvsCatSave() {
                   tmpAsDOs["wa"] = [theTid];
                   // set qcat _id to the Tval
                   JSSHOP.shared.setFrmFieldVal("qcat", "_id", theTid);
-  
+
                   tmpAsDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qcat"], "nada");
                   oi = getNuDBFnvp("qcat",7,null,tmpAsDOs);
                   doDynQArrComm(tmpCatSvArr, oi["rq"], "includedContent", "doNada");
-              
+
                 // tChkArr.push(tTmpK.value);
               } else {
                 console.log("doSvsCatSave.currCoCatsStr not indexOf: "  +  theTTkndStr);
@@ -1057,10 +1057,10 @@ if(canSave == "yes") {
   console.log("doSvsCatSave.canSave: " + canSave);
   JSSHOP.ui.doAlertBox("warning", stxt[906], stxt[908], "noQvalue");
   return;
-} 
+}
 
 }
-  
+
 // this doShpPrtsLst function is the same as doPartsList but it is used as shops to add parts to the list
 
 JSSHOP.admin.doShpPrtsLst = function(theTPDiv) {
@@ -1074,103 +1074,103 @@ JSSHOP.admin.doShpPrtsLst = function(theTPDiv) {
     currDynMenuArr = null;
     currDynMenuArr = "";
     currDynMenuArr = [];
- 
-    mbrdrCls = "rtable brdrClrHdr"; 
+
+    mbrdrCls = "rtable brdrClrHdr";
     if(theTPDiv == "noQvalue") {
     mbrdrCls = "";
     }
     tPSBstr = "<table style=\"margin: 0 auto;width:90%\" align=\"center\" class=\"txtClrHdr" + mbrdrCls + "\">";
     tPSBstr += "<tr><td>";
     tPSBstr += "<div  class=\"slmtable bkgdClrNrml\" id=\"dvDoPSWrds\" style=\"margin: 0 auto;text-align:left\"></div>";
-    
+
     tPSBstr += "<input type=\"hidden\" id=\"inpImpTParts\" value=\"\">";
     tPSBstr += "</td></tr>";
-    
+
     tPSBstr += "<tr><td>";
- 
+
     tPSBstr += "</td></tr>";
-    
+
     tPSBstr += "<tr><td>&nbsp;</td></tr>";
-     
-    
-    
-    
-    
+
+
+
+
+
     tPSBstr += "<tr><td>";
-    
- 
+
+
     tPSBstr += "<table style=\"margin: 0 auto;\" width=\"98%\" align=\"center\"><tr>";
-    
+
     tPSBstr += "<td style=\"width:100%\">";
-  
+
     tdITPplhldr = "<span class=\"txtSmall txtClrGrey\">Ex: Alternador</span>";
- 
+
     if(JSSHOP.shared.isMobile()) {
         // tPSBstr += "<div name=\"inpTParts\"  id=\"inpTParts\"  class=\"form-control brdrClrRed bkgdClrNrml\" style=\"min-height:20px;\" contenteditable=\"true\"  placeholder=\"Parts\" value=\"\" onfocus=\"javascript:this.scrollIntoView({behavior: 'smooth', block: 'start'});doInpTFocus();\"  spellckeck=\"false\" data-ms-editor=\"false\">" + tdITPplhldr + "</div>";
     } else {
        //  tPSBstr += "<div name=\"inpTParts\"  id=\"inpTParts\"  class=\"form-control brdrClrRed bkgdClrNrml\" style=\"min-height:20px;\" contenteditable=\"true\"  placeholder=\"Parts\" value=\"\" onfocus=\"javascript:doInpTFocus();\"  spellckeck=\"false\" data-ms-editor=\"false\">" + tdITPplhldr + "</div>";
     }
     tPSBstr += "<div name=\"inpTParts\"  id=\"inpTParts\"  class=\"form-control brdrClrRed bkgdClrNrml\" style=\"min-height:20px;display:none;visibility:hidden;\" contenteditable=\"true\"  placeholder=\"Parts\" value=\"\" onfocus=\"javascript:doInpTFocus();\"  spellckeck=\"false\" data-ms-editor=\"false\">" + tdITPplhldr + "</div>";
-    tPSBstr += stxt[561] + "<br>" + stxt[562];  
- 
+    tPSBstr += stxt[561] + "<br>" + stxt[562];
+
     tPSBstr += "</td>";
     // tPSBstr += "<td valign=\"top\">&nbsp;&nbsp; &nbsp;</td>";
     // tPSBstr += "<td valign=\"top\"><button class=\"brdrNone crsrPointer bkgdClrWhite\" onclick=\"javascript:inpTParts.value='';if(inpTParts.innerText)inpTParts.innerText='';JSSHOP.shared.closePartsList();JSSHOP.shared.doPartsWords(6,'prti');\"><i class=\"material-icons txtBigger txtClrDlg\" title=\"delete\">&#xe14c;</i></button></td>";
-    
+
     tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPSmain','dvPartsMain','tglPartsMain');";
-    
+
     // tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPSmain','dvPCmain','tglPrtsMain');";
     tPSBstr += "<td valign=\"top\" style=\"max-height: 42px\"></td>";
-    
+
     tPSBstr += "</tr>";
     tPSBstr += "</table>";
-    
+
     tPSBstr += "</td></tr>";
-    
+
     tPSBstr += "<tr><td>&nbsp;</td></tr>";
-    
+
     tPSBstr += "<tr><td valign=\"top\">";
     // <button id="btnPSearch" class="form-control"><ti data-ison="stxt[78]" data-desc="btn_search" onclick="javascript:qlDoNuPlSearch('tmp_qv','dvPSList',qlShowPlacesRes);">Search</ti></button>
     // tPSBstr += "<button class=\"form-control cls_hoover slmtable txtSmall bkgdClrRed crsrPonter txtClrWhite brdrClrHdr\" onclick=\"javascript:JSSHOP.shared.doPartsSearch('inpTParts')\">";
      // tPSBstr += "<button class=\"cls_button cls_button-medium\" onclick=\"javascript:JSSHOP.shared.doPartsSearch('inpTParts')\">";
-    
+
     // tPSBstr += "<i class=\"nav-material-icons coll-menu-item txtClrWhite\" title=\"search\" style=\"vertical-align:center\">&#xe8b6;</i>&nbsp;<span data-ison=\"\" data-desc=\"btn_search\"  style=\"vertical-align:center\" class=\"txtBold txtClrWhite\">" + stxt[78] + "</span></button>
     tPSBstr += "</td></tr>";
     tPSBstr += "<tr><td>";
-    
-    
+
+
     if(currUrlArr.prti != null) {
-    
+
         // tmpDvOLStr = "<div><a href=\"javascript:JSSHOP.ads.doPgLnkMedia('ebay',30);\">Ebay</a> | <a href=\"javascript:JSSHOP.ads.doPgLnkMedia('ggl',30);\")\">Google</a></div>";
        //  tPSBstr += tmpDvOLStr;
-    // shout out stuff here!!! 
+    // shout out stuff here!!!
     // tPSBstr += "&nbsp; &nbsp; &nbsp;<img class=\"slmtable icndbtn brdrCldrDlg txtClrHdr\" style=\"margin-top: 5px;font-size:16px;margin-right:6px;\" alt=\"speaker\" title=\"speaker\" src=\"images/misc/shout_out.gif\"></img>  <a href=\"javascript:JSSHOP.shared.setListing();\" class=\"txtDecorNone\">List this Item</a>";
     }
     tPSBstr += "</td></tr>";
     tPSBstr += "<tr><td>&nbsp;</td></tr>";
     tPSBstr += "<tr><td><div class=\"crsrPointer txtBold txtClrRed bkgdClrNrml\" nowrap=\"nowrap\" onclick=\"javascript:" + tJSstr + "\">" + stxt[512];
     tPSBstr += "<div id=\"dvTglPSmain\" style=\"float:right\"><i class=\"material-icons txtClrDlg\" title=\"expand_more\">&#xe5cf;</i></div></div></td></tr>";
-    
-    
+
+
     tPSBstr += "<tr><td id=\"dvPartsMain\" style=\"visibility:hidden;display:none\" class=\"bkgdClrWhite\">";
-    
-    
-    
-    
-    
+
+
+
+
+
     tEPobj = currPartsObj;
     tPPobj = tEPobj.pcats;
-    
+
     tCatArrStr += tPSBstr;
-    
-    
+
+
     thePPBrdrClr = "brdrClrRed";
     thePPTextClr = "txtClrRed";
-    
-    
-    
+
+
+
     for(var gkey in tPPobj) {
-    
+
     // tCatArrStr +=  "<br>";
     tDynMunuObj = null;
     tDynMunuObj = "";
@@ -1188,27 +1188,27 @@ JSSHOP.admin.doShpPrtsLst = function(theTPDiv) {
     currDynMenuArr.push(tDynMunuObj);
     currPPrtCatArr.push(gkey + ":" + tPPobj[gkey]);
     tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPC" + gkey + "','dvPC" + gkey + "','tglPrts" + gkey + "');";
-    
+
     tCatArrStr += "<div style=\"word-wrap:break-word;word-break: break-word;\" class=\"crsrPointer\" onclick=\"javascript:" + tJSstr + "\"><table class=\"collection\"  cellpadding=\"0px\" cellspacing=\"0px\">";
     tCatArrStr += "<tr><td><img src=\"images/misc/" + gkey + ".gif\" class=\"slmtable " + thePPBrdrClr + "\" style=\"max-width:30px;margin:0px;\"></td>";
     tCatArrStr += "<td class=\"txtSmall txtBold " + thePPTextClr + "\" style=\"word-wrap:break-word;word-break: break-word;text-align: left;width:100%\">&nbsp;" + tPPobj[gkey] + "</td>";
-    
+
     tCatArrStr += "<td><div id=\"dvTglPC" + gkey + "\" class=\"icnbtn crsrPointer\"  style=\"float:right\">";
     tCatArrStr += "<i class=\"small-material-icons\" title=\"expand_more\">&#xe5cf;</i></div></td></tr></table></div>";
-    
+
     // javascript:JSSHOP.ui.tglPrefModule('dvTglPCpc1','dvPCpc1','tglPrtspc1')
-    
-    
-    
-    
-    
+
+
+
+
+
     if(tEPobj.pprts[gkey].pts){
     tCatArrStr += "<div style=\"display:none;visibility:hidden;word-wrap:break-word;word-break: break-word;\" class=\"collection\" id=\"dvPC" + gkey + "\">";
     tCatArrStr += "<table style=\"width:100%\" class=\"collection\" cellpadding=\"0px\" cellspacing=\"0px\">";
     tCatArrStr += "<tr><td>" + stxt[404] + "</td><td>" + stxt[18] + "</td></tr>";
-    
-    
-    
+
+
+
     tCatPtsobj = tEPobj.pprts[gkey].pts;
     for(var pcgkey in tCatPtsobj) {
     tCleanName = tCatPtsobj[pcgkey].n.replace(/[^a-zA-Z0-9- ]/g, "");
@@ -1222,7 +1222,7 @@ JSSHOP.admin.doShpPrtsLst = function(theTPDiv) {
      }
     tCatArrStr += "</table></div>";
     }
-    
+
     if(thePPBrdrClr == "brdrClrRed") {
     thePPBrdrClr = "brdrClrHdr";
     thePPTextClr = "txtClrHdr";
@@ -1230,9 +1230,9 @@ JSSHOP.admin.doShpPrtsLst = function(theTPDiv) {
     thePPBrdrClr = "brdrClrRed";
     thePPTextClr = "txtClrRed";
     }
-     
+
     } // end for gkey in tPPobj
-    
+
     if(cid == 0) {
     // alert("cid: " + cid);
     currMenuArr = currDynMenuArr;
@@ -1240,7 +1240,7 @@ JSSHOP.admin.doShpPrtsLst = function(theTPDiv) {
     // doMainTreeLoad();
     // doCatTreeLoad();
     // doShopMnuLd("nada",JSON.stringify(currDynMenuArr),null);
-    
+
     } else {
     // doShopMnuLd("nada",JSON.stringify(currMenuArr),null);
     }
@@ -1260,21 +1260,21 @@ JSSHOP.admin.doShpPrtsLst = function(theTPDiv) {
     // return tCatArrStr;
     // JSSHOP.ui.popAndFillLbox(tCatArrStr);
     };  // end of doShpPrtsLst
-    
+
 
     setAPartsBox = function() {
       console.log("setAPartsBox: " + pid + " " + JSON.stringify(currPartsObj) + " " + pid.indexOf("-edit-"));
-   
+
   tTmpPartsL = JSSHOP.admin.doShpPrtsLst("noQvalue");
-   
-   
+
+
   document.getElementById("dvATBPList").innerHTML = tTmpPartsL;
-   
-   
+
+
   JSSHOP.shared.fnshPartsList();
   };
 
-  JSSHOP.admin.doSvsCatEdt = function(ttGkey) { 
+  JSSHOP.admin.doSvsCatEdt = function(ttGkey) {
     console.log("doSvsCatEdt: " + ttGkey)
 
     cleanttGk = ttGkey.replace("pc", "");
@@ -1294,7 +1294,7 @@ JSSHOP.admin.doShpPrtsLst = function(theTPDiv) {
     tTglAEstr = "dvPCpc" + tTeglEstr;
     tTglDvstr = "dvTglPCpc" + tTeglEstr;
     tTglBEdiStr = "dvTglEdpc" + tTeglEstr;
-     
+
     // if the element is checked
     if(tCHFxElem.checked) {
     //  JSSHOP.ui.showHideElement(tTglAEstr, "show");
@@ -1303,7 +1303,7 @@ JSSHOP.admin.doShpPrtsLst = function(theTPDiv) {
     } else {
    JSSHOP.ui.showHideElement(tTglDvstr, "show");
     }
-   
+
    tTDiv = document.getElementById(tTglDvstr);
    theCapt = tTDiv.innerHTML;
    if(theCapt.indexOf("expand_more") == -1) {
@@ -1397,14 +1397,14 @@ JSSHOP.admin.doShpPrtsLst = function(theTPDiv) {
     currDynMenuArr.push(tDynMunuObj);
     currPPrtCatArr.push(gkey + ":" + tPPobj[gkey]);
     tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPC" + gkey + "','dvPC" + gkey + "','tglPrts" + gkey + "');";
-  
+
     tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\"><table  class=\"collection\"  cellpadding=\"0px\" cellspacing=\"0px\"  style=\"width:100%\">";
     tCatArrStr += "<tr><td>";
     // add a checkbox here
     tCatArrStr += "<input type=\"checkbox\" id=\"chkPSvc" + gkey + "\" name=\"chkPSvc" + gkey + "\" value=\"" + gkey.replace("pc","") + "\" onclick=\"javascript:JSSHOP.admin.doCHbUIFix(this);\" class=\"txtBig\">";
     // tCatArrStr += "<input type=\"checkbox\" id=\"chkPSvc" + gkey + "\" name=\"chkPSvc" + gkey + "\" value=\"" + gkey.replace("pc","") + "\">";
     tCatArrStr += "<input type=\"hidden\" id=\"inpOldD" + gkey + "\" name=\"inpOldD" + gkey + "\" value=\"" + gkey.replace("pc","") + "\">";
-   
+
     tCatArrStr += "</td>";
     tCatArrStr += "<td><img src=\"images/misc/" + gkey + ".gif\" class=\"slmtable " + thePPBrdrClr + "\" style=\"max-width:30px;margin:10px;\"></td>";
     tCatArrStr += "<td style=\"width:100%\"><div class=\"txtSmall txtBold " + thePPTextClr + "\" style=\"word-wrap:break-word;word-break: break-word;text-align: left;width:100%\">" + tPPobj[gkey] + "<div></td>";
@@ -1429,7 +1429,7 @@ JSSHOP.admin.doShpPrtsLst = function(theTPDiv) {
     } else { // not 1000
 
     if(tChdrStr.indexOf(":") != -1) {
-        tChdrSplit = tChdrStr.split(":");   
+        tChdrSplit = tChdrStr.split(":");
         tCsplyLen = tChdrSplit.length;
         tCinci = 0;
 
@@ -1452,15 +1452,15 @@ JSSHOP.admin.doShpPrtsLst = function(theTPDiv) {
      }
 } // end else if(tChdrStr.indexOf("1000") != -1)
 
- 
+
     tCatArrStr += "<div id=\"dvOldD" + gkey + "\" name=\"dvOldD" + gkey + "\" class=\"form-control\" style=\"min-height:20px;\" contenteditable=\"true\"  placeholder=\"Description\" value=\"\"  spellckeck=\"false\" data-ms-editor=\"false\">" +  tDefCatStr + "</div>";
     tCatArrStr += "</div>";
     /*
     if(tEPobj.pprts[gkey].pts){
- 
+
     for(var pcgkey in tCatPtsobj) {
     tCleanName = tCatPtsobj[pcgkey].n.replace(/[^a-zA-Z0-9- ]/g, "");
-     
+
     }
     tCatArrStr += "</table></div>";
     }
@@ -1491,7 +1491,7 @@ JSSHOP.admin.doShpPrtsLst = function(theTPDiv) {
     theTPDiv.innerHTML = tCatArrStr;
     }
     };
-  
+
 
 JSSHOP.admin.getAddPartsBox = function(aw, bw,cw) {
   // remove all elements from dvPartsList
@@ -1502,16 +1502,16 @@ JSSHOP.admin.getAddPartsBox = function(aw, bw,cw) {
   // alert("getPartsBox: " + cw);
   tCatArrStr = "";
   currPartsObj = null;
-   
+
   currPartsObj = JSON.parse(bw);
   boolShwPrtsB = "no";
-  
-   
+
+
   dvPartsList.innerHTML = "";
   tIMtglbObj = null;
   tIMtglbObj = "";
   tIMtglbObj = JSSHOP.ui.nTglBxOb();
-  
+
   console.log("getPartsBox.boolShwPrtsB.edit: " + pid);
   tIMtglbObj["ttl"] = stxt[17]; // the toggle box title
   tIMtglbObj["dvid"] = "dvATBPList"; // the toggle box div id
@@ -1525,17 +1525,17 @@ JSSHOP.admin.getAddPartsBox = function(aw, bw,cw) {
   tIMtglbObj["appnd"] = "y"; // append to parent node, will just return text if noQvalue
   // tIMtglbObj["clsmaintbl"] = "slmtable brdrClrRed bkgdClrWhite"; // main table class
   tIMtglbObj["clsmaintbl"] = "gradient-pop"; // main table class
-  
+
   tIMtglbObj["clstitletd"] = "txtBold txtClrHdr"; // title box class
   tIMtglbObj["clsttltxt"] = "txtSmall txtBold txtClrNrml"; // title box text class
-   
+
   JSSHOP.ui.doTglBox(tIMtglbObj);
-  
+
   if(dvMMainParts.style.display == "block") {
   } else {
       JSSHOP.ui.showHideElement('dvMMainParts','show');
   }
-   
+
   // JSSHOP.shared.doPartsList(document.getElementById("dvPartsList"));
   };
 
@@ -1545,13 +1545,13 @@ JSSHOP.admin.getAddPartsBox = function(aw, bw,cw) {
 
   setASvcBox = function() {
     console.log("setAPartsBox: " + pid + " " + JSON.stringify(currPartsObj) + " " + pid.indexOf("-edit-"));
- 
+
 tTmpPartsL = JSSHOP.admin.doShpSvcLst("noQvalue");
- 
- 
+
+
 document.getElementById("dvATBPList").innerHTML = tTmpPartsL;
- 
- 
+
+
 JSSHOP.shared.fnshPartsList();
 };
 
@@ -1601,8 +1601,8 @@ JSSHOP.shared.fnshPartsList();
     }
     // JSSHOP.shared.doPartsList(document.getElementById("dvPartsList"));
     };
-  
-  
+
+
   var doInpTFocus = function() {
       tINTcstr = inpTParts.innerHTML;
       if(tINTcstr.indexOf("Ex:") != -1) {
@@ -1610,13 +1610,13 @@ JSSHOP.shared.fnshPartsList();
       }
       if(dvPartsMain.style.display == "block") {
          JSSHOP.ui.setNuCBBClickClr(dvPartsMain,'rtable brdrClrRed txtBold mrgin10',dvPartsMain.className, function() { void(0); }, 300);
-  
+
       } else {
           JSSHOP.ui.toggleNuModule('dvTglPSmain','dvPartsMain');
           JSSHOP.ui.setNuCBBClickClr(dvPartsMain,'rtable brdrClrRed txtBold mrgin10',dvPartsMain.className, function() { void(0); }, 300);
       }
   };
-  
+
   JSSHOP.admin.setSvsMksArr = function(theObj, theMkID) {
     console.log("setSvsMksArr: " + theObj + " " + theMkID);
     // alert("setSvsMksArr: " + theObj + " " + theMkID);
@@ -1654,7 +1654,7 @@ JSSHOP.shared.fnshPartsList();
           tmpSvsMksStr = ":" + tmpSvsMksStr + ":";
       }
      if(tmpSvsMksStr.indexOf(theTMstr) != -1) {
-     
+
         nuTServs = tmpSvsMksStr.replace(theTMstr,"");
         tmpSvsMksStr = nuTServs;
         tmpSvsMksArr.splice(tmpSvsMksArr.indexOf(theMkID),1);
@@ -1673,16 +1673,16 @@ JSSHOP.shared.fnshPartsList();
     console.log("setSvsMksArr.tmpSvsMksArr: " + JSON.stringify(tmpSvsMksArr));
     console.log("setSvsMksArr.tmpSvsMksStr: " + tmpSvsMksStr);
   };
-  
+
   function fnshSvsMksSave(aa,bb,cc) {
     console.log("fnshSvsMksSave.tmpSvsMksArr: " + JSON.stringify(tmpSvsMksArr));
     console.log("fnshSvsMksSave.tmpSvsMksStr: " + tmpSvsMksStr);
-   
+
     JSSHOP.ui.closeLbox();
-    
+
   }
 
-  
+
   JSSHOP.admin.doSvsMksSave = function() {
     tmpCleanSvsMksStr = tmpSvsMksStr.replace(/::/gi, ":");
     if(tmpCleanSvsMksStr.indexOf(":") != -1) {
@@ -1717,11 +1717,11 @@ JSSHOP.admin.doSvsMakesPop = function(tMCBBstr) {
       tLpdID = tLpdSplit[0];
       tLpdName = tLpdSplit[1];
       tLpdmgMStr = imgPLicon.src = "images/mlogos/" + tLpdName.toLowerCase().replace(" ", "-") + "-logo.png";
-   tPYS += "<img src=\"" + tLpdmgMStr + "\" style=\"max-width:30px;max-height:30px;\"></img>";   
+   tPYS += "<img src=\"" + tLpdmgMStr + "\" style=\"max-width:30px;max-height:30px;\"></img>";
   trArr.push();
   }
   tPYS += "</div>";
-  
+
   tPYS += "<div class=\"txtBold txtClrHdr\">" + stxt[82] + " " + stxt[102] + ":</div>";
   // add a clear all button here
   tPYS += "<table style=\"width:95%;margin: 0 auto\"><tr>";
@@ -1731,16 +1731,16 @@ JSSHOP.admin.doSvsMakesPop = function(tMCBBstr) {
   // add a check all button here
    tPYS += "<div class=\"cls_button cls_button-small bkgdBBlue txtSmall\" onclick=\"javascript:JSSHOP.admin.doSvsMksSave();\">" + stxt[21] + "</div></td>";
   tPYS += "</tr></table>";
- 
+
   console.log("doMakesPop.trArr: " + JSON.stringify(trArr));
-  
-  
+
+
   tPYS += "<div class=\"collection\">";
   // add a checkbox here
   tPYS += "<div id=\"dvSSVSMk1000\" class=\"collection-item crsrPointer txtBold txtClrHdr\" onclick=\"javascript:JSSHOP.admin.setSvsMksArr(this,'1000');\">";
   tPYS += "<input type=\"checkbox\" id=\"chkc1\" name=\"chkc1\" value=\"pc1\">";
   tPYS += stxt[905] + "</div>";
- 
+
 
   tMkObj = objAllMakes;
   for(var gkey in tMkObj) {
@@ -1768,14 +1768,14 @@ JSSHOP.admin.doSvsMakesPop = function(tMCBBstr) {
   return tPYS;
   }
   };
-   
 
- 
 
-  
+
+
+
 JSSHOP.admin.setCatDemo = function(tDemoInt, tDemoCAtELem) {
   /*
-  
+
 // english Engine and Transmission Repair strings
 catSVSStrObj["pc6"] = {};
 catSVSStrObj["pc6"]["n"] = cattxtObj["pc6"];
@@ -1806,11 +1806,11 @@ catSVSStrObj["pc6"]["blist"][5] = "We are experts in repairing car engines and t
 
   tDemoStr = "<div class=\"txtBold txtClrHdr\">" + tCatDemoObj["d"] + "</div>";
   tDemoStr += "<div>" + tCatImgSTr + "</div>";
-  // tDemoStr += 
+  // tDemoStr +=
   tDemoStr += "<div class=\"txtSmall\">" + tULstr + "</div>";
   /*
   if(tDemoInt == 5) {
-  
+
  return LZString.compressToEncodedURIComponent(tDemoStr);
   } else {
   document.getElementById("tmp_cat_desc").innerHTML = tDemoStr;
@@ -1835,49 +1835,49 @@ catSVSStrObj["pc6"]["blist"][5] = "We are experts in repairing car engines and t
 
 // data can be a string, Blob, File, or dataURL
 
-		 
-						 
-						 
+
+
+
 function download(data, strFileName, strMimeType) {
-	
+
 	var self = window, // this script is only for browsers anyway...
 		u = "application/octet-stream", // this default mime also triggers iframe downloads
-		m = strMimeType || u, 
+		m = strMimeType || u,
 		x = data,
 		D = document,
 		a = D.createElement("a"),
 		z = function(a){return String(a);},
-		
-		
+
+
 		B = self.Blob || self.MozBlob || self.WebKitBlob || z,
 		BB = self.MSBlobBuilder || self.WebKitBlobBuilder || self.BlobBuilder,
 		fn = strFileName || "download",
-		blob, 
+		blob,
 		b,
 		ua,
 		fr;
 
 	//if(typeof B.bind === 'function' ){ B=B.bind(self); }
-	
+
 	if(String(this)==="true"){ //reverse arguments, allowing download.bind(true, "text/xml", "export.xml") to act as a callback
 		x=[x, m];
 		m=x[0];
-		x=x[1]; 
+		x=x[1];
 	}
-	
-	
-	
+
+
+
 	//go ahead and download dataURLs right away
 	if(String(x).match(/^data\:[\w+\-]+\/[\w+\-]+[,;]/)){
 		return navigator.msSaveBlob ?  // IE10 can't do a[download], only Blobs:
-			navigator.msSaveBlob(d2b(x), fn) : 
+			navigator.msSaveBlob(d2b(x), fn) :
 			saver(x) ; // everyone else can save dataURLs un-processed
 	}//end if dataURL passed?
-	
+
 	try{
-	
-		blob = x instanceof B ? 
-			x : 
+
+		blob = x instanceof B ?
+			x :
 			new B([x], {type: m}) ;
 	}catch(y){
 		if(BB){
@@ -1885,11 +1885,11 @@ function download(data, strFileName, strMimeType) {
 			b.append([x]);
 			blob = b.getBlob(m); // the blob
 		}
-		
+
 	}
-	
-	
-	
+
+
+
 	function d2b(u) {
 		var p= u.split(/[:;,]/),
 		t= p[1],
@@ -1903,11 +1903,11 @@ function download(data, strFileName, strMimeType) {
 
 		return new B([uia], {type: t});
 	 }
-	  
+
 	function saver(url, winMode){
-		
-		
-		if ('download' in a) { //html5 A[download] 			
+
+
+		if ('download' in a) { //html5 A[download]
 			a.href = url;
 			a.setAttribute("download", fn);
 			a.innerHTML = "downloading...";
@@ -1920,43 +1920,43 @@ function download(data, strFileName, strMimeType) {
 			}, 66);
 			return true;
 		}
-		
+
 		//do iframe dataURL download (old ch+FF):
 		var f = D.createElement("iframe");
 		D.body.appendChild(f);
 		if(!winMode){ // force a mime that will download:
 			url="data:"+url.replace(/^data:([\w\/\-\+]+)/, u);
 		}
-		 
-	
+
+
 		f.src = url;
 		setTimeout(function(){ D.body.removeChild(f); }, 333);
-		
-	}//end saver 
-		
+
+	}//end saver
+
 
 	if (navigator.msSaveBlob) { // IE10+ : (has Blob, but not a[download] or URL)
 		return navigator.msSaveBlob(blob, fn);
-	} 	
-	
+	}
+
 	if(self.URL){ // simple fast and modern way using Blob and URL:
 		saver(self.URL.createObjectURL(blob), true);
 	}else{
 		// handle non-Blob()+non-URL browsers:
 		if(typeof blob === "string" || blob.constructor===z ){
 			try{
-				return saver( "data:" +  m   + ";base64,"  +  self.btoa(blob)  ); 
+				return saver( "data:" +  m   + ";base64,"  +  self.btoa(blob)  );
 			}catch(y){
-				return saver( "data:" +  m   + "," + encodeURIComponent(blob)  ); 
+				return saver( "data:" +  m   + "," + encodeURIComponent(blob)  );
 			}
 		}
-		
+
 		// Blob but not URL:
 		fr=new FileReader();
 		fr.onload=function(e){
-			saver(this.result); 
+			saver(this.result);
 		};
 		fr.readAsDataURL(blob);
-	}	
+	}
 	return true;
 } /* end download() */

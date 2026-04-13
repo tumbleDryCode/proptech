@@ -1,7 +1,7 @@
 
 
 function doGsearchOnPart(thePath, theMessage) {
-    
+
 try {
 console.log("doGsearchOnPart: " + theMessage);
 srDv = document.createElement("div");
@@ -91,7 +91,7 @@ console.log("doGsearchOnPart.results: " + JSON.stringify(results));
 
 
 
- 
+
 const myResultsReadyCallback = function(gname, q, promos, results, resultsDiv) {
 		console.log("myResultsReadyCallback : " + JSON.stringify(results));
       const makePromoElt = (promo) => {
@@ -187,7 +187,7 @@ tIMtglbObj["appnd"] = "y"; // the parent node, will just return text if noQvalue
 tBoxStr = JSSHOP.ui.doTglBox(tIMtglbObj);
 
 */
-           
+
 
 
       }

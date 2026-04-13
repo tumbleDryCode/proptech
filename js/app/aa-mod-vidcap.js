@@ -71,7 +71,7 @@ function createVideoAutomatically() {
 
 // Example: Animate property images on canvas
 function runVidFrames(isRecording = "no") {
-   
+
     vdCanvas = document.getElementById("vidFramesCanvas");
     if (!vdCanvas) return;
     vdCtx = vdCanvas.getContext("2d");
@@ -85,7 +85,7 @@ function runVidFrames(isRecording = "no") {
            const mImgThmbSrc = m.m_file_thumb;
             switch(mcat) {
                 case "5": // regular
- 
+
                 tmfile = mImgSrc;
                 if(tmfile.indexOf("updt_") != -1) {
                     tmfile = tmfile.replace("updt_", "");
@@ -109,7 +109,7 @@ function runVidFrames(isRecording = "no") {
 
                 case "30": // 3D
                 tHmbImg = mImgThmbSrc;
- 
+
                 tLZuncompD = LZString.decompressFromEncodedURIComponent(tHmbImg);
                 vdImgs.push(tLZuncompD);
                     break;
@@ -183,7 +183,7 @@ function animate(currentTime) {
 }
 
 function drawFrame(img) {
- 
+
     console.log("Drawing frame. Current image index: " + vdIncr);
     vdCtx.clearRect(0, 0, vdCanvas.width, vdCanvas.height);
     // Draw image centered

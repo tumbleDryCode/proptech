@@ -1,5 +1,5 @@
 
- 
+
 if (!window.JSSHOP) {
     var JSSHOP = new Object();
 }
@@ -17,6 +17,9 @@ if (!window.JSSHOP.shared) {
 }
 if (!window.JSSHOP.ui) {
     JSSHOP.ui = new Object();
+}
+if (!window.JSSHOP.core) {
+    JSSHOP.core = new Object();
 }
 
 
@@ -47,7 +50,7 @@ if (!window.JSSHOP.shop) {
                 intervals[i] = setInterval(fn, ts);
             }
         }
-   
+
 function ntoast(tstrt) {
 JSSHOP.ui.popAndFillLbox(tstrt);
 }
@@ -140,7 +143,7 @@ ditemidParts = currUrlArr.ditemid.split("-");
 itDitemiD = ditemidParts[0];
 usrlang = ditemidParts[1];
 JSSHOP.cookies.setCookie("usrlang", usrlang, "30", "", "", "");
-} 
+}
 }
 // set a cuarrr cookie with LZString.compressToEncodedURIComponent(tCurllArrStr);
 JSSHOP.cookies.setCookie("cuarr",LZString.compressToEncodedURIComponent(tCurllArrStr),"1","","","");
@@ -154,14 +157,14 @@ JSSHOP.shared.getEmojiCntryFlag = function(tCountryCode) {
     // use page https://unicode.org/emoji/charts/emoji-list.html to get the country code emojis
     try {
         var tFlagEmoji = "";
-        
-// EXAMPLE PORTUGAL 
+
+// EXAMPLE PORTUGAL
             var firstChar = tCountryCode.charCodeAt(0) - 65 + 0x1F1E6;
             var secondChar = tCountryCode.charCodeAt(1) - 65 + 0x1F1E6;
             tFlagEmoji = String.fromCodePoint(firstChar) + String.fromCodePoint(secondChar);
             console.log("tFlagEmoji: " + tFlagEmoji);
 
-      
+
         return tFlagEmoji;
     } catch (e) {
         JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getEmojiCntryFlag");
@@ -219,9 +222,9 @@ JSSHOP.shared.getCountryCodeFromName = function(tCountryName) {
 };
 
 JSSHOP.shared.showUserProfile = function(tSUPID) {
-    try {  
+    try {
         tFNlSPID = 0;
-             
+
         if (tSUPID == 0) {
             tSUPID = quid;
         } else {
@@ -301,11 +304,11 @@ JSSHOP.shared.setOGtags = function() {
                 tOGimg = "https://recamby.com/imgs/ogimg.jpg";
                 break;
         }
-        
+
         /*
         document.getElementById("ogsite_name").content = tOGsite_name;
         document.getElementById("ogapp_id").content = tOGapp_id;
-        document.getElementById("ogadmins").content = tOGadmins;    
+        document.getElementById("ogadmins").content = tOGadmins;
         document.getElementById("oglocale").content = tOGlocale;
         document.getElementById("ogvideo").content = tOGvideo;
         document.getElementById("ogaudio").content = tOGaudio;
@@ -342,7 +345,7 @@ JSSHOP.shared.getPlaceELink = function() {
         tPTXT = " ";
         tPTXT = "";
         // close the lbox
- 
+
         tPTXT += "<div class=\"collection-item txtSmall txtClrHdr\" style=\"text-align:left\">" + c_name.value + "</div>";
     tUrlEncdn = encodeURIComponent(currPlaceObj.c_name);
     tPTXT += "<div class=\"collection-item txtClrHdr\" style=\"text-align:left\">" + stxt[555] + " <a class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrHdr txtBold\" href=\"index.html?pid=aa-contactus&cid=" + currPlaceObj._id + "&tpnm=" + tUrlEncdn  + "\">" + stxt[86] + " ListID: " + currPlaceObj._id + "</a></div><hr>";
@@ -352,7 +355,7 @@ JSSHOP.shared.getPlaceELink = function() {
 
         if((quid == 0) || (quid == "noQvalue")){
             tPTXT += "<div class=\"collection-item txtClrHdr\" style=\"text-align:left\">" + stxt[724] + "</div>";
-   
+
             tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\">" + stxt[725] + "</div>";
             tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\"><a href=\"index.html?pid=login\">Login</a></div>";
             JSSHOP.ui.popAndFillLbox(tPTXT);
@@ -368,7 +371,7 @@ JSSHOP.shared.getPlaceELink = function() {
                         tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\">" + stxt[713] + ". " + stxt[717] + ": " + u_email.value + " " + stxt[718] + ".</div>";
                         tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\"><a href=\"javascript:JSSHOP.shared.doMMailer('emailconf');\">" + stxt[720] + "</a></div>";
                         tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\">" + stxt[719] + ".</div>";
-  
+
                     } else {
                         tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\">" + stxt[724] + "</div>";
                         tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\"><a href=\"javascript:procNuUIitem('qco', 'c_uid'," + currPlaceObj._id + "," + quid + ",'loadPlaceLink');\">" + stxt[722] + "</a></div>";
@@ -376,29 +379,29 @@ JSSHOP.shared.getPlaceELink = function() {
 
                     }
                     } else {
-  
+
                     tPTXT += "<div style=\"text-align: left;\" class=\"txtSmall txtBold txtClrHdr\">" + stxt[723] + "</div>";
-                       
+
                     }
                     if(isJApp == "ayes") {
 
 tOldHref = document.location.href;
         if(tOldHref.indexOf("recamby.com") != -1) {
             tnewHref = "https://www.recamby.com/clean.html";
-     
+
         } else {
             tnewHref = "https://titan/recamby/clean.html";
         }
         tcloseBstr  = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrRed crsrPointer\" style=\"float:right\"><i class=\"menu-material-icons txtBold txtClrRed\" alt=\"close\" title=\"close\" value=\"close\">&#xe5cd;</i></div>";
         tAPTXT = tcloseBstr + tPTXT;
         tInnerHSTR = LZString.compressToEncodedURIComponent(tAPTXT);
-        app.setPagePopUp(tnewHref,tInnerHSTR);                 
+        app.setPagePopUp(tnewHref,tInnerHSTR);
        } else {
                     JSSHOP.ui.popAndFillLbox(tPTXT);
                     }
                 }
             }
-     
+
     } catch (e) {
         JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getPlaceLink");
         alert(e);
@@ -440,7 +443,7 @@ document.location.href='index.html?lgo=y';
 JSSHOP.shared.strToObj = function(url) {
 // alert(url);
     try {
-	 
+
         var request = {};
         var arr = [];
         var pairs = url.split('&');
@@ -521,7 +524,7 @@ JSSHOP.shared.convertTo24Hour = function(thettHr) {
  // it will take a string as its only argument
  // example input is '12:30am' or '12:30pm' or '9 am' or '9 pm' or '9:00 pm'
     // example output is 24 hour time '09:00' or '21:00'
-    try {  
+    try {
     console.log("convertTo24Hour: " + thettHr);
     var atime = thettHr.toLowerCase();
     console.log("convertTo24Hour: " + atime);
@@ -558,7 +561,7 @@ JSSHOP.shared.convertTo24Hour = function(thettHr) {
     return "NotGood";
 }
 };
- 
+
 
 
 JSSHOP.shared.getQryVar = function(theUrlString, theVar) {
@@ -612,7 +615,7 @@ JSSHOP.shared.doMMailer = function(tMMtype) {
     tEmto = "";
     tEmsubj = "";
     tEmbody = "";
-    tFootr = stxt[716];  
+    tFootr = stxt[716];
     tMMurl = "_p/rss/mtest.php?";
 try {
     switch(tMMtype) {
@@ -655,8 +658,8 @@ try {
         break;
      }
 
- 
- 
+
+
 } catch(e) {
 JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.doMMailer");
 }
@@ -688,8 +691,8 @@ function walkTheDOM(node, func) {
        		if(currentNode.id){
                   tmpNID = currentNode.id;
 			} else {
-			tmpNID = currentNode.name;			
-			}      
+			tmpNID = currentNode.name;
+			}
             tNodeName = currentNode.nodeName.toUpperCase();
             switch(tNodeName) {
             case "INPUT":
@@ -706,9 +709,9 @@ function walkTheDOM(node, func) {
 		tmpNVal = currentNode.firstChild.nodeValue;
 		}
 		}
-		 tmpUstring += "&" + tmpNID.trim() + "=" + tmpNVal.trim();		
-    }		
-//		tmpUstring += "&" + escape(JSSHOP.shared.trim(tmpNID)) + "=" + escape(JSSHOP.shared.trim(tmpNVal));		}		
+		 tmpUstring += "&" + tmpNID.trim() + "=" + tmpNVal.trim();
+    }
+//		tmpUstring += "&" + escape(JSSHOP.shared.trim(tmpNID)) + "=" + escape(JSSHOP.shared.trim(tmpNVal));		}
 		}
 
     }
@@ -716,21 +719,21 @@ function walkTheDOM(node, func) {
     return tmpUstring;
 };
 
-    
+
         JSSHOP.shared.getOptIndex = function(selection, indexVal) {
                     theOptIndex = 0;
-         
+
                         for(var i = 0; i < selection.length; i++) {
                              currIndexVal = selection.options[i].value;
                             if(currIndexVal == indexVal) {
                                 theOptIndex = i;
                                 break;
                             }
-         
+
                     }
                     return theOptIndex;
         };
-    
+
         JSSHOP.shared.setCurrSelectOpt = function(theObj, indexVal) {
                     theIndexVal = "noQvalue";
                     var selection = theObj;
@@ -746,8 +749,8 @@ function walkTheDOM(node, func) {
                     }
                     return theIndexVal;
                 };
-    
-    
+
+
         JSSHOP.shared.getCurrSelectTxt = function(theObj) {
                     var theSelIndex = theObj.selectedIndex;
                     var theString = theObj.options[theSelIndex].text;
@@ -755,8 +758,8 @@ function walkTheDOM(node, func) {
                     // alert(theString +  " : " + theVal);
                     return theString;
                 };
-    
-    
+
+
         JSSHOP.shared.getCurrSelectOpt = function(theObj) {
             tREtSOval = "noQvalue";
             try {
@@ -767,7 +770,7 @@ function walkTheDOM(node, func) {
             JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.getCurrSelectOpt");
             return tREtSOval;
             }
-    
+
                     // alert(theString +  " : " + theVal);
                     return tREtSOval;
                 };
@@ -776,7 +779,7 @@ function walkTheDOM(node, func) {
                 JSSHOP.shared.addCurrSlctObj = function(tObjN, tFelem, tSlctVal, tDefkey, tDefVal) {
                     if(tDefVal == "noQvalue") {
                     } else {
-                    JSSHOP.shared.addCurrSelectOpt(tFelem, tDefkey, tDefVal, "selected");	
+                    JSSHOP.shared.addCurrSelectOpt(tFelem, tDefkey, tDefVal, "selected");
                     }
                     for (var [key,val] of Object.entries(tObjN)) {
                     if(key == tSlctVal) {
@@ -788,7 +791,7 @@ function walkTheDOM(node, func) {
                     }
                     };
 
-                    
+
         JSSHOP.shared.addCurrSelectOpt = function(theObj, theVal, theText, theCssClsn) {
             if(theCssClsn == "selected") {
          theObj.options[theObj.options.length] = new Option(theText, theVal, true, true);
@@ -822,7 +825,7 @@ JSSHOP.shared.addOptAtVal = function(theObj, theIVal, theVal, theText, theCssCls
                  tmpVhasV = "yes";
                      JSSHOP.shared.addOptAtIndex(theObj, i+1, theVal, theText, theCssClsn);
                     }
- 
+
                 }
             if(tmpVhasV == "no") {
                 // JSSHOP.shared.addOptAtIndex(theObj, theObj.options.length, theVal, theText, theCssClsn);
@@ -841,11 +844,11 @@ JSSHOP.shared.removeOptions = function(selectbox)
 
 
 /*
-* validation method using data-ison attr in element 
+* validation method using data-ison attr in element
 * to validate it (form fields)
-* parsing values delmited  by : 
+* parsing values delmited  by :
 * data-ison="y:3:22"
-*/ 
+*/
 
 
 JSSHOP.shared.valVOarr = function(theVOarr, theErrDiv) {
@@ -856,7 +859,7 @@ document.getElementById(theErrDiv).innerHTML = "";
     isValid = true;
     isFValid = true;
     len = theVOarr.length;
-    
+
     while (iint < len) {
 	  isFValid = true;
         ts = null;
@@ -937,10 +940,10 @@ actType = tmpTDivars[0];
 if(actType == "v") {
 veType = tmpTDivars[1];
 veMinLen = tmpTDivars[2];
-veMaxLength = tmpTDivars[3]; 
+veMaxLength = tmpTDivars[3];
 veDefVal = tmpTDivars[4];
 veLblElID = tmpTDivars[5];
-veAlertStr = tmpTDivars[6]; 
+veAlertStr = tmpTDivars[6];
 veDefTtl = tmpTDivars[7];
 veDefCls = tmpTDivars[8];
 
@@ -961,7 +964,7 @@ theElem.focus();
 document.getElementById(veLblElID).className = "txtBold txtClrRed";
 document.getElementById(veLblElID).innerHTML = stxt[veAlertStr];
 }
-} 
+}
 }
 }
 }
@@ -1011,7 +1014,7 @@ tAstr += e + " :: " +  JSON.stringify(ts) + "<br>";
 
 
 if(ts.fdv !== "noQvalue") {
- 
+
 if(ts.fty == "button") {
 theB.style.color = "#ffffff";
 } else {
@@ -1023,7 +1026,7 @@ JSSHOP.ui.setDefFval(theB, ts.fdv, ts.fda);
 if(ts.fda !== "noQvalue") {
 
 }
- 
+
 	  iint++;
     }
 
@@ -1070,10 +1073,10 @@ JSSHOP.shared.doModelsPip();
 
 
 
- 
 
 
- 
+
+
 
 
 /*
@@ -1101,7 +1104,7 @@ aTmpAtvtyOb["garr"] = "currRcntFavsArr"; // the global array it will be working 
 aTmpAtvtyOb["gstr"] = "currRcntFavsStr"; // the global str it will be working with
 return aTmpAtvtyOb;
 };
- 
+
 
 
 JSSHOP.shared.doAtvty = function(tAtvtyObj) {
@@ -1115,7 +1118,7 @@ tii = 0;
 } else {
 window[tAtvtyObj["gstr"]] = LZString.decompressFromEncodedURIComponent(JSSHOP.cookies.getCookie(tAtvtyObj.cckie));
 }
- 
+
 if(window[tAtvtyObj["gstr"]].length > 5) {
 tii = 0;
 if(window[tAtvtyObj["garr"]].length > 0) {
@@ -1169,7 +1172,7 @@ document.getElementById(tAtvtyObj["pnid"]).className = "material-icons txtClrRed
 // alert("doRF: " + currRcntFavsStr);
 JSSHOP.cookies.setCookie(tAtvtyObj["cckie"],LZString.compressToEncodedURIComponent(window[tAtvtyObj["gstr"]]),"30","","","");
 };
- 
+
 
 
 
@@ -1228,7 +1231,7 @@ tPrtMkObj = theTIPobj.pprts;
       /*append the DIV element as a child of the autocomplete container:*/
       this.parentNode.appendChild(a);
       /*for each item in the array...*/
- 
+
 
 for(var gpkey in tPrtMkObj) {
 
@@ -1238,7 +1241,7 @@ tPEPobj = currPartsObj;
 if(tPrtMkObj[gpkey].pts){
 tCatPtsobj = tPrtMkObj[gpkey].pts;
 for(var pcgkey in tCatPtsobj) {
- 
+
 
        // for (i = 0; i < arr.length; i++) {
 
@@ -1246,7 +1249,7 @@ for(var pcgkey in tCatPtsobj) {
 
         /*check if the item starts with the same letters as the text field value:*/
 
- 
+
 
 		 TMPnOBJ = tCatPtsobj[pcgkey];
 		 tSSv = tCatPtsobj[pcgkey].n;
@@ -1254,11 +1257,11 @@ for(var pcgkey in tCatPtsobj) {
 		 tSStN = tSSaN;
 		if((tSSv.toUpperCase().indexOf(val.toUpperCase()) != -1) && (val.length > 1)){
 		  //  if(tSSv.substr(0, val.length).toUpperCase() == val.toUpperCase()){
-		  
+
 		 tSSI =  TMPnOBJ.id;
 		 tSSfN = tSSaN;
 		 tSSppcat = TMPnOBJ.pi;
-		 tSSfstr = 
+		 tSSfstr =
           /*create a DIV element for each matching element:*/
           b = document.createElement("DIV");
           /*make the matching letters bold:*/
@@ -1274,7 +1277,7 @@ for(var pcgkey in tCatPtsobj) {
 
 		  // tmpFPSstr = tUtoL + "&part=" + tInpSplit[1] + "&prti=" + tInpSplit[2] + "&q=" + encodeURIComponent(currUrlArr.make + " " + currUrlArr.series + " " + tInpSplit[1]);
 
-		  // document.getElementById("inpImpParts").value = this.getElementsByTagName("input")[0].value;	  
+		  // document.getElementById("inpImpParts").value = this.getElementsByTagName("input")[0].value;
              //  mprtinp.value = tInpSplit[1];
 			mprtinp.innerText = tInpSplit[1];
 			mprtinp.focus();
@@ -1285,16 +1288,16 @@ for(var pcgkey in tCatPtsobj) {
 /*
 var len = currMenuArr.length;
 var iint = 0;
- 
+
 while(iint < len) {
 ts = currMenuArr[iint];
 if(ts.cat_vala == tInpSplit[2]) { // add only main categories to list
-JSSHOP.shared.setFieldVal("i_coid", ts.cat_coid); 
+JSSHOP.shared.setFieldVal("i_coid", ts.cat_coid);
 JSSHOP.shared.setFieldVal("i_catid", ts._id);
 // JSSHOP.shared.setFieldVal("i_cat_vala", tInpSplit[2]);
-} 
+}
 iint++;
-} 
+}
 
 tmpDOs = null;
 tmpDOs = {};
@@ -1385,13 +1388,13 @@ tMkPrfx = "m" + tMakeId;
 tMkNme = objAllMakes[tMkPrfx].n;
 // JSSHOP.shared.setMakeStuff(tMakeId,tMkNme,'noQvalue');
 }
- 
+
 };
 
 
 
 
- 
+
 
 var doInpTFocus = function() {
     tINTcstr = inpTParts.innerHTML;
@@ -1408,7 +1411,7 @@ var doInpTFocus = function() {
 };
 
 
-  
+
 
 JSSHOP.shared.setFieldVal = function(theField, theVal) {
 	try {
@@ -1469,7 +1472,7 @@ JSSHOP.shared.sort = function(data, theIndex, theOrder) {
             currentValue = toNumberIfNumeric(currentObj[theIndex]);
             j= i-1;
             compareObj = data[j];
-            compareValue = toNumberIfNumeric(compareObj[theIndex]);  
+            compareValue = toNumberIfNumeric(compareObj[theIndex]);
             while(j >=0 && (
                 (typeof compareValue === 'number' && typeof currentValue === 'number' && compareValue > currentValue) ||
                 (typeof compareValue !== 'number' || typeof currentValue !== 'number') && compareValue > currentValue
@@ -1479,7 +1482,7 @@ JSSHOP.shared.sort = function(data, theIndex, theOrder) {
                 if (j >=0) {
                     compareObj = data[j];
                     compareValue = toNumberIfNumeric(compareObj[theIndex]);
-                }        
+                }
             }
             data[j+1] = currentObj;
         }
@@ -1489,7 +1492,7 @@ JSSHOP.shared.sort = function(data, theIndex, theOrder) {
             currentValue = toNumberIfNumeric(currentObj[theIndex]);
             j= i-1;
             compareObj = data[j];
-            compareValue = toNumberIfNumeric(compareObj[theIndex]);  
+            compareValue = toNumberIfNumeric(compareObj[theIndex]);
             while(j >=0 && (
                 (typeof compareValue === 'number' && typeof currentValue === 'number' && compareValue < currentValue) ||
                 (typeof compareValue !== 'number' || typeof currentValue !== 'number') && compareValue < currentValue
@@ -1499,7 +1502,7 @@ JSSHOP.shared.sort = function(data, theIndex, theOrder) {
                 if (j >=0) {
                     compareObj = data[j];
                     compareValue = toNumberIfNumeric(compareObj[theIndex]);
-                }        
+                }
             }
             data[j+1] = currentObj;
         }
@@ -1507,11 +1510,11 @@ JSSHOP.shared.sort = function(data, theIndex, theOrder) {
     return data;
 }
 
- 
 
 
 
- 
+
+
 
 
 JSSHOP.shared.setArrVals = function(theMarr, theAIndx, theArr) {
@@ -1598,7 +1601,7 @@ JSSHOP.shared.getKNVParr = function(theArr) {
 
 
 JSSHOP.shared.setDynFrmVals = function(oFormElement, dPrfx) {
- 
+
         var oField, sFieldType, nFile, sSearch;
 	  tmpVpar =  null;
 	  tmpVpar = [];
@@ -1626,7 +1629,7 @@ JSSHOP.shared.setDynFrmVals = function(oFormElement, dPrfx) {
 
 
 
- 
+
 
 
 		if((dPrfx == "dyn_") || (document.getElementById(fnode).nodeName.toUpperCase() == "DIV")){
@@ -1635,9 +1638,9 @@ JSSHOP.shared.setDynFrmVals = function(oFormElement, dPrfx) {
 		allNs += fnode + ",";
 		// alert(fnode + " ;; " + fv);
 		JSSHOP.shared.setFieldVal(fnode, fv);
-		}		
+		}
             }
- 
+
 		}
 
 		}
@@ -1646,7 +1649,7 @@ JSSHOP.shared.setDynFrmVals = function(oFormElement, dPrfx) {
 };
 
 JSSHOP.shared.getFrmObj = function(oFormElement) {
- 
+
         var oField, sFieldType, nFile, sSearch;
 	  tmpVpar =  null;
 	  tmpVpar = [];
@@ -1668,9 +1671,9 @@ JSSHOP.shared.getFrmObj = function(oFormElement) {
             if(document.getElementById(fnode)) {
 		tNN = document.getElementById(fnode).nodeName.toUpperCase();
 		if((tNN == "DIV") || (tNN == "SPAN")){
-		fv = document.getElementById(fnode).innerText;		
+		fv = document.getElementById(fnode).innerText;
 		} else if(tNN == "SELECT") {
-		fv = JSSHOP.shared.getCurrSelectOpt(document.getElementById(fnode));			      
+		fv = JSSHOP.shared.getCurrSelectOpt(document.getElementById(fnode));
 		} else {
 		fv = document.getElementById(fnode).value;
 		}
@@ -1692,7 +1695,7 @@ JSSHOP.shared.getFrmObj = function(oFormElement) {
         // fv = fv.replace(/(\b\S+\b)(?=.*?\1)/g, "");
         // escape the fv for sql insertion
 
- 
+
 		// if(fv.length > 0) {
 		// tmpSobj["t"] = fn;
 		// tmpSobj["v"] = fv;
@@ -1705,7 +1708,7 @@ JSSHOP.shared.getFrmObj = function(oFormElement) {
 };
 
 JSSHOP.shared.getDynFrmVals = function(oFormElement, dPrfx) {
- 
+
     var oField, sFieldType, nFile, sSearch;
   tmpVpar =  null;
   tmpVpar = [];
@@ -1727,9 +1730,9 @@ JSSHOP.shared.getDynFrmVals = function(oFormElement, dPrfx) {
         if(document.getElementById(fnode)) {
     tNN = document.getElementById(fnode).nodeName.toUpperCase();
     if((tNN == "DIV") || (tNN == "SPAN")){
-    fv = document.getElementById(fnode).innerText;		
+    fv = document.getElementById(fnode).innerText;
     } else if(tNN == "SELECT") {
-    fv = JSSHOP.shared.getCurrSelectOpt(document.getElementById(fnode));			      
+    fv = JSSHOP.shared.getCurrSelectOpt(document.getElementById(fnode));
     } else {
     fv = document.getElementById(fnode).value;
     }
@@ -1772,28 +1775,28 @@ JSSHOP.shared.getFrmVals = function(oFormElement, oHdrStr) {
 	  tmpVpar = [];
 	  tmpSobj = {};
         for (var nItem = 0; nItem < oFormElement.elements.length; nItem++) {
-  	try {          
+  	try {
             oField = oFormElement.elements[nItem];
             if (!oField.getAttribute("name")) {
                 continue;
             }
 	  	tmpSobj = null;
        	  tmpSobj = {};
-		 
+
             sFieldType = oField.nodeName.toUpperCase() === "INPUT" ? oField.getAttribute("type").toUpperCase() : "TEXT";
             if (sFieldType === "FILE") {
                 for (nFile = 0; nFile < oField.files.length; sSearch += "&" + escape(oField.name) + "=" + escape(oField.files[nFile++].name));
             } else if ((sFieldType !== "RADIO" && sFieldType !== "CHECKBOX") || oField.checked) {
- 
+
 		fva = oField.value;
 		if(fva.length >= 0) {
-	
+
 		fvb = fva.replace("\"", " ");
 		fvv = fva.replace("'", " ");
             fn = escape(oField.name);
 		fv = fvv;
 
-		
+
 		tmpSobj["t"] = fn;
 		tmpSobj["v"] = fv;
 		tmpVpar.push(tmpSobj);
@@ -1818,10 +1821,10 @@ JSSHOP.shared.setDynFieldVals = function(theResp, thePrefx) {
 
 if(theResp) {
 var len = theResp.length;
- 
+
 // var arrToFill = theResp;
- 
- 
+
+
 var iint = 0;
 
 for(var gkey in theResp) {
@@ -1870,9 +1873,9 @@ document[theForm][gkey].value = theResp[gkey];
 } catch(e) {
 }
 }
- 
+
 theTmpCB();
- 
+
 }
 };
 
@@ -1886,9 +1889,9 @@ theTmpCB();
 * JSSHOP.shared.rndrDynFrmVals(document["qmsgs"], "tmp_");
 * save button still has to be added
 */
- 
+
 JSSHOP.shared.rndrDynFrmVals = function(oFormElement, dPrfx, tFAllowed, tSavBtnObj) {
- 
+
         var oField, sFieldType, nFile, sSearch;
 	  tmpVstr =  "";
         tmpFval = "";
@@ -1897,7 +1900,7 @@ JSSHOP.shared.rndrDynFrmVals = function(oFormElement, dPrfx, tFAllowed, tSavBtnO
 	  retRndrObj = null;
 	  retRndrObj = {};
  	  rndrFFObjArr = null;
-	  rndrFFObjArr = [];  
+	  rndrFFObjArr = [];
 		tmpFlbl = "...";
         for (var nItem = 0; nItem < oFormElement.elements.length; nItem++) {
             oField = oFormElement.elements[nItem];
@@ -1917,7 +1920,7 @@ JSSHOP.shared.rndrDynFrmVals = function(oFormElement, dPrfx, tFAllowed, tSavBtnO
 			} else {
                 tmpFlbl = ttmpFlbl;
 			// tmpFlbl = eval(ttmpFlbl);
-			
+
 			}
  			tmpVstr += "data-flbl=\"" + tmpFlbl + "\" ";
 
@@ -1931,7 +1934,7 @@ JSSHOP.shared.rndrDynFrmVals = function(oFormElement, dPrfx, tFAllowed, tSavBtnO
 			}
 			tmpLid = "lbl_" + tmpFid;
 			tmpVstr += "id=\"" + tmpLid + "\">";
-            } 
+            }
 			tmpVstr += tmpFlbl + "</span>&nbsp;&nbsp;<br>";
 
 			// tmpVstr += "<span id=\"" + tmpLid + "\" style=\"min-width: 80%\">" + tmpFlbl + "</span>&nbsp;&nbsp;<br>";
@@ -1942,7 +1945,7 @@ JSSHOP.shared.rndrDynFrmVals = function(oFormElement, dPrfx, tFAllowed, tSavBtnO
 			} else {
 			tmpFval = atmpFval;
 			}
-            } 
+            }
 
             if (oField.getAttribute("data-ftype")) {
               switch(oField.getAttribute("data-ftype")) {
@@ -1970,7 +1973,7 @@ JSSHOP.shared.rndrDynFrmVals = function(oFormElement, dPrfx, tFAllowed, tSavBtnO
 			default:
 			break;
 			}
-            } 
+            }
 
 
 
@@ -1980,8 +1983,8 @@ atfuh = null;
 atfuh = nCurrFFieldOb();
 atfuh.fid = tmpFid;
 atfuh.fdv = tmpFval;
-atfuh.lid = tmpLid; 
-atfuh.ltxt = tmpFlbl; 
+atfuh.lid = tmpLid;
+atfuh.ltxt = tmpFlbl;
 rndrFFObjArr.push(atfuh);
 
 tmpVstr += "</div>";
@@ -2006,21 +2009,21 @@ for(iha = 0; iha < tHHdrArr.length; iha++) {
     // tStchHstr = "position: sticky; left: 0; z-index: 3;";
     }
     if((tHlnkObj.ulnk) && (tHlnkObj.ulnk == "noQvalue")) {
-     tHdrStr += "<th style=\"text-align: left; " + tStchHstr + "\"><a class=\"txtBold txtClrHdr\">" + tHlnkObj.nm + "</a></th>";	
+     tHdrStr += "<th style=\"text-align: left; " + tStchHstr + "\"><a class=\"txtBold txtClrHdr\">" + tHlnkObj.nm + "</a></th>";
     } else {
-    tHdrStr += "<th style=\"text-align: left\"><a href=\"javascript:rnderFItems('" + tHlnkObj.fld + "');\" class=\"txtBold txtClrHdr\">" + tHlnkObj.nm + "</a></th>";	
+    tHdrStr += "<th style=\"text-align: left\"><a href=\"javascript:rnderFItems('" + tHlnkObj.fld + "');\" class=\"txtBold txtClrHdr\">" + tHlnkObj.nm + "</a></th>";
     }
 }
     return tHdrStr;
 };
 JSSHOP.shared.getNuTblHdrs = function(tHHdrArr, THHdrCB) {
     tHdrStr = "";
-  
+
 for(iha = 0; iha < tHHdrArr.length; iha++) {
     tdefcls = "txtBold txtClrHdr";
     tHlnkObj = tHHdrArr[iha];
     if((tHlnkObj.ulnk) && (tHlnkObj.ulnk == "noQvalue")) {
-     tHdrStr += "<th style=\"text-align: left\"><a class=\"txtBold txtClrHdr\">" + tHlnkObj.nm + "</a></th>";	
+     tHdrStr += "<th style=\"text-align: left\"><a class=\"txtBold txtClrHdr\">" + tHlnkObj.nm + "</a></th>";
     } else {
         if((pid.indexOf("psearch") != -1) || (pid.indexOf("main") != -1)) {
                 if(currSortObj["psearch"]["sindex"] == tHlnkObj.fld) {
@@ -2032,7 +2035,7 @@ for(iha = 0; iha < tHHdrArr.length; iha++) {
                 }
         }
 
-    tHdrStr += "<th style=\"text-align: left; ;background-color: #FFFFFF;\"><a href=\"javascript:rnderFItems('" + tHlnkObj.fld + "');\" class=\"" + tdefcls + "\">" + tHlnkObj.nm + "</a></th>";	
+    tHdrStr += "<th style=\"text-align: left; ;background-color: #FFFFFF;\"><a href=\"javascript:rnderFItems('" + tHlnkObj.fld + "');\" class=\"" + tdefcls + "\">" + tHlnkObj.nm + "</a></th>";
     }
 }
     return tHdrStr;
@@ -2055,13 +2058,13 @@ for(iha = 0; iha < tHHdrArr.length; iha++) {
 
     tHlnkObj = tHHdrArr[iha];
     if((tHlnkObj.ulnk) && (tHlnkObj.ulnk == "noQvalue")) {
-     tHdrStr += "<div  style=\"text-align: left; margin:2px;padding;2px;float:left;padding-right:5px;\" class=\"slmtable bkgdClrWhite txtSmall txtBold txtClrRed crsrPointer\"><a class=\"txtBold txtClrHdr txtDecorNone\">" + tHlnkObj.nm + "</a></div>";	
+     tHdrStr += "<div  style=\"text-align: left; margin:2px;padding;2px;float:left;padding-right:5px;\" class=\"slmtable bkgdClrWhite txtSmall txtBold txtClrRed crsrPointer\"><a class=\"txtBold txtClrHdr txtDecorNone\">" + tHlnkObj.nm + "</a></div>";
     } else {
         if((pid.indexOf("psearch") != -1) || (pid.indexOf("main") != -1)) {
             if(currSortObj["psearch"]["sindex"] == tHlnkObj.fld) {
                 tAdefcls = "slmtable bkgdClrNrml txtSmall txtBold txtClrRed crsrPointer txtDecorNone brdrClrHdr";
-                
-            
+
+
             }
     } else {
             if(currSortObj["msearch"]["sindex"] == tHlnkObj.fld) {
@@ -2072,8 +2075,8 @@ for(iha = 0; iha < tHHdrArr.length; iha++) {
         tAdefcls = "slmtable bkgdClrNrml txtSmall txtBold txtClrRed crsrPointer txtDecorNone gradient-pop";
 
     }
-   //  tHdrStr += "<div style=\"float: left; text-align: left; margin:2px;padding;2px;float:left;padding-right:5px;\" class=\"slmtable bkgdClrWhite txtSmall txtBold txtClrHdr crsrPointer txtDecorNone brdrClrHdr\" onclick=\"javascript:if(currBtnSort != null)currBtnSort.className='slmtable bkgdClrWhite txtSmall txtBold txtClrHdr crsrPointer txtDecorNone brdrClrHdr';this.className='slmtable bkgdClrWhite txtSmall txtBold txtClrRed crsrPointer txtDecorNone brdrClrHdr';currBtnSort=this;" + THHdrCB + "('" + tHlnkObj.fld + "');\" >" + tHlnkObj.nm + "</div>";	
-     tHdrStr += "<div id=\"btnSort_" +  tHlnkObj.fld + "\" style=\"float: left; text-align: left; margin:2px;padding;2px;float:left;padding-right:5px;\" class=\"" + tAdefcls + "\" onclick=\"javascript:if(currBtnSort != null)currBtnSort.className='slmtable bkgdClrWhite txtSmall txtBold txtClrHdr crsrPointer txtDecorNone brdrClrHdr';this.className='slmtable bkgdClrWhite txtSmall txtBold txtClrRed crsrPointer txtDecorNone brdrClrHdr';currBtnSort=this;" + THHdrCB + "('" + tHlnkObj.fld + "');\" >" + tHlnkObj.nm + "</div>";	
+   //  tHdrStr += "<div style=\"float: left; text-align: left; margin:2px;padding;2px;float:left;padding-right:5px;\" class=\"slmtable bkgdClrWhite txtSmall txtBold txtClrHdr crsrPointer txtDecorNone brdrClrHdr\" onclick=\"javascript:if(currBtnSort != null)currBtnSort.className='slmtable bkgdClrWhite txtSmall txtBold txtClrHdr crsrPointer txtDecorNone brdrClrHdr';this.className='slmtable bkgdClrWhite txtSmall txtBold txtClrRed crsrPointer txtDecorNone brdrClrHdr';currBtnSort=this;" + THHdrCB + "('" + tHlnkObj.fld + "');\" >" + tHlnkObj.nm + "</div>";
+     tHdrStr += "<div id=\"btnSort_" +  tHlnkObj.fld + "\" style=\"float: left; text-align: left; margin:2px;padding;2px;float:left;padding-right:5px;\" class=\"" + tAdefcls + "\" onclick=\"javascript:if(currBtnSort != null)currBtnSort.className='slmtable bkgdClrWhite txtSmall txtBold txtClrHdr crsrPointer txtDecorNone brdrClrHdr';this.className='slmtable bkgdClrWhite txtSmall txtBold txtClrRed crsrPointer txtDecorNone brdrClrHdr';currBtnSort=this;" + THHdrCB + "('" + tHlnkObj.fld + "');\" >" + tHlnkObj.nm + "</div>";
    }
 }
 tHdrStr += "<div class=\"clearfix\"></div>";
@@ -2155,7 +2158,7 @@ JSSHOP.shared.utf8_encode = function( argString ) {
 
 
 // some shared user preferences functions
-// sets prefs by passing the checkbox, the preference array name, 
+// sets prefs by passing the checkbox, the preference array name,
 // the preference key, selected and unselected values.
 JSSHOP.shared.setChckbxPref = function(tChckbx, tPrefArr, tPrefKey, tVsel, tVunsel) {
 	try {
@@ -2251,7 +2254,7 @@ var XMLHttpFactories = [
     return xmlhttp;
 };
 
- 
+
 JSSHOP.ajax.doNuResponse = function(tmpArrDRS) {
 // alert("doNuResponse: " + tmpArrDRS.cb + " : " + tmpArrDRS.rs);
 // JSSHOP.ui.popAndFillLbox("doNuResponse: " + tmpArrDRS.cb + " : " + tmpArrDRS.rs);
@@ -2262,13 +2265,13 @@ tmpNArrDRS = tmpArrDRS;
 if(tmpArrDRS.st == "nofile") {
 JSSHOP.ajax.doResponseSave(tmpArrDRS);
 } else {
-if(tmpArrDRS.lz == "y") { 
+if(tmpArrDRS.lz == "y") {
 strTmpDAS = tmpArrDRS.rs;
 strTmpDS = strTmpDAS.replace("\"", "");
 tmpDFEUStr = LZString.decompressFromEncodedURIComponent(strTmpDS);
 tmpNArrDRS.rs = tmpDFEUStr;
-// alert("tmpDFEUStr: " + tmpDFEUStr);	
-}  
+// alert("tmpDFEUStr: " + tmpDFEUStr);
+}
 
 if(tmpArrDRS.ls == "n") {
 } else {
@@ -2277,7 +2280,7 @@ tLSStr = getNuLclStrg(tmpArrDRS.ls, tmpArrDRS.cb, "noQvalue");
 if(tLSStr == "noQvalue") {
 setNuLclStrg("localStorage", tmpArrDRS.cb, tmpArrDRS.rs);
 }
- 
+
 }
 
 }
@@ -2292,11 +2295,11 @@ theRespCB(tmpNArrDRS);
 
 JSSHOP.ajax.doResponseSave = function(tmpsArrDRS) {
 // alert("doResponseSave: " + tmpsArrDRS.cb  + " : " + tmpsArrDRS.fn + " : " + tmpsArrDRS.rs );
-if(tmpsArrDRS.lz == "y") { 
+if(tmpsArrDRS.lz == "y") {
 JSSHOP.shared.setFrmFieldVal("qconn", "rs",  LZString.compressToEncodedURIComponent(tmpsArrDRS.rs));
 } else {
 JSSHOP.shared.setFrmFieldVal("qconn", "rs", tmpsArrDRS.rs.replace(/\\(.)/mg, "$1"));
-}	
+}
 JSSHOP.shared.setFrmFieldVal("qconn", "fn", tmpsArrDRS.fn);
 JSSHOP.shared.setFrmFieldVal("qconn", "fc", "save");
 document["qconn"].submit();
@@ -2316,11 +2319,11 @@ aRespArr = null;
 aRespArr = {};
           aRespArr = JSON.parse(tmpRCstr);
           tmpNDRCArr.st = "error";
- 
+
 	    tmpNDRCArr.rs = "noQvalue";
- 
- 	     // alert("aRespArr.data: " + " : " + aRespArr.data);	
- 
+
+ 	     // alert("aRespArr.data: " + " : " + aRespArr.data);
+
 	    tmpNDRCArr.rs = JSON.stringify(aRespArr.data);
 		// alert(JSON.stringify("tmpNDRCArr.rs: " + tmpNDRCArr.rs));
 	    JSSHOP.ajax.doNuResponse(tmpNDRCArr);
@@ -2328,10 +2331,10 @@ aRespArr = {};
 console.log("doRespConstruct: " + e + " :: " + tmpRCstr);
 alert("doRespConstruct: " + e + " :: " + tmpRCstr);
 }
- 
+
 };
 
- 
+
 
 
 JSSHOP.ajax.doNurAjaxPipe = function(theAxObj) {
@@ -2357,9 +2360,9 @@ pUrl = cpUrl;
 	 //  oReq.setRequestHeader("Content-Type", "text/html; charset=iso-8859-2");
 	 tUTA = JSSHOP.shared.urlToArray(pUrl);
 
- 
+
 	   if(oReq == false) {
-		
+
             theCB(theNAxObj);
 	  } else {
 
@@ -2367,8 +2370,8 @@ pUrl = cpUrl;
             if (oReq.readyState == 4) {
 			//  alert("oReq.readyState == 4: " + oReq.responseText);
                 JSSHOP.ajax.doRespConstruct(theAxObj, oReq.responseText);
-			
-            }  
+
+            }
         }
         oReq.onerror = function() {
 	  // theNAxObj.st = "error";
@@ -2388,7 +2391,7 @@ pUrl = cpUrl;
 
 
 
-// prepare the request 
+// prepare the request
 JSSHOP.ajax.doRequestPrep = function(tmppArrDRP) {
 
 tmppNArrDRP = null;
@@ -2413,7 +2416,7 @@ JSSHOP.ajax.doNuResponse(tmppNArrDRP);
 }  // tLSStr not noQvalue
 } // ls is not "n";
 
-}; 
+};
 
 
 JSSHOP.ajax.doNuGenAjaxPost = function(tFormName, tNameValArr, tUrl, tMethdType, tCB) {
@@ -2466,7 +2469,7 @@ try {
     var xhr = new XMLHttpRequest();
     xhr.open(tMethdType, tUrl, true);
     xhr.onreadystatechange = function() {
-					 
+
         console.log("doNuAjaxPost: " + xhr.responseText);
 
 }
@@ -2474,7 +2477,7 @@ try {
 
 xhr.onload = function(e) {
 currVRPCLIresp = xhr.responseText;
- 
+
 tCB(currVRPCLIresp);
 
 };
@@ -2682,17 +2685,17 @@ JSSHOP.ajax.xdoNuAjaxPipe = function(theElem,apUrl,tmpCB) {
         oReq.onreadystatechange = function() {
             if (oReq.readyState == 4) {
  			//  return oReq.responseText;
-		  if(theElem == "give") {  } 
+		  if(theElem == "give") {  }
                 //     tCleanForJSON = oReq.responseText;
             tCleanForJSON = oReq.responseText.replace(/\\(.)/mg, "$1");
                tmpCB(theElem,tCleanForJSON,tUTA);
 
-		  
-            }  
+
+            }
         }
         oReq.onerror = function() {
              alert("yikes, we have a connection problem...");
- 
+
         }
         bpUrl = apUrl.replace("index.php", "");
         cpUrl = bpUrl.replace("admin/", "");
@@ -2700,7 +2703,7 @@ JSSHOP.ajax.xdoNuAjaxPipe = function(theElem,apUrl,tmpCB) {
   	  oReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded;charset=ISO-8859-1');
         picr = oReq.send(null);
 	   }
-        } catch (e) { 
+        } catch (e) {
 		alert("doNuAjaxPipe: " + e);
                tmpCB(theElem,"Error: " + e,tUTA);
     	  }
@@ -2797,7 +2800,7 @@ JSSHOP.loadScript("js/app/" + jscssprefix + "x_content.js", JSSHOP.ajax.mDynfnis
 } catch(e) {
     alert("JSSHOP.ajax.mDynfnishCntLoad.error: " + a + " : " + e);
     }
-}; 
+};
 
 
 JSSHOP.ajax.doDynMainContent = function() {
@@ -2806,7 +2809,7 @@ try {
 // alert("JSSHOP.ajax.doDynMainContent: " + content)
 if(content == "noQvalue") {
 
-// spinTextDiv.innerHTML = " ... "; 
+// spinTextDiv.innerHTML = " ... ";
 fCa = getFArr();
 // this should be fixed. authentication.
 if((pid.indexOf("edit-") != -1)  && ((quid == 0) || (quid == "noQvalue"))) {
@@ -2854,11 +2857,11 @@ try {
 
 
 if(tDlMStr == pid) {
-tDlMObj = JSSHOP.shared.urlToArray(document.location.href); 
+tDlMObj = JSSHOP.shared.urlToArray(document.location.href);
 } else if(tDlMStr == "noQvalue") {
-tDlMObj = JSSHOP.shared.urlToArray(document.location.href); 
+tDlMObj = JSSHOP.shared.urlToArray(document.location.href);
 } else {
-tDlMObj = JSSHOP.shared.strToObj(tDlMUstr); 
+tDlMObj = JSSHOP.shared.strToObj(tDlMUstr);
 
 }
 for(var aRsRgkey in tDlMObj) {
@@ -2868,7 +2871,7 @@ window[aRsRgkey] = dcdedRk;
 currUrlArr[aRsRgkey] = dcdedRk;
 // currUrlArr[aRsRgkey] = decodeURIComponent(JSSHOP.shared.encode_utf8(tDlMObj[aRsRgkey]));
 }
- 
+
 if(tDlMObj.pid) {
 pid = tDlMObj.pid;
 }
@@ -2924,7 +2927,7 @@ alert("JSSHOP.ajax.doAjaxGVals: " + e);
 }
 }
 */
- 
+
 
 
 function eindex(tDlMStr, tDlMUstr) {
@@ -2956,7 +2959,7 @@ alert("eindex: " + e);
 }
 }
 
- 
+
 function doMLinkM(tMDlMStr, tMDlMUstr) {
     eindex(tMDlMStr, tMDlMUstr)
 }
@@ -3063,7 +3066,7 @@ function setCurrUsrsArr(tCUAstrA, tCUAstrB, tCUAstrC) {
         JSSHOP.logJSerror(e, arguments, "setCurrUsrsArr");
     }
 }
- 
+
 function setCurrPrpsArr(tCPAstrA, tCPAstrB, tCPAstrC) {
     try {
         currPstsPrpsArr = null;
@@ -3094,7 +3097,7 @@ function setCurrPrpsArrForModal(tCPAstrA, tCPAstrB, tCPAstrC) {
 }
 
 JSSHOP.ui.setPickerVal = function(tPVelem, tPVtype, tPVixd, tPVid) {
-//  currSlctdUsrArr  currSlctdPrpsArr 
+//  currSlctdUsrArr  currSlctdPrpsArr
     try {
     switch(tPVtype) {
         case "users":
@@ -3103,7 +3106,7 @@ JSSHOP.ui.setPickerVal = function(tPVelem, tPVtype, tPVixd, tPVid) {
             // currSlctdUsrArr = [];
             // currSlctdUsrArr.push(currPstsUsrArr[tPVid]);
             if(tPVelem.className == "crsrPointer bkgdClrWhite") {
-            tShrtSlctdUObj = {}; 
+            tShrtSlctdUObj = {};
             tFllUsrObj = currPstsUsrArr[tPVixd];
             tShrtSlctdUObj["_id"] = tFllUsrObj._id;
             tShrtSlctdUObj["u_name"] = tFllUsrObj.u_fullname;
@@ -3150,7 +3153,7 @@ JSSHOP.ui.setPickerVal = function(tPVelem, tPVtype, tPVixd, tPVid) {
             }
 
             // currSlctdPrpsArr = [];
-             
+
             break;
             default:
             break;
@@ -3173,10 +3176,10 @@ JSSHOP.ui.getPickerStr = function(tPDtype, includeButtons) {
             } else {
             tGPSstr += "<div class=\"crsrPointer bkgdClrWhite\" onclick=\"JSSHOP.ui.setPickerVal(this, 'users','" + i + "','" + currPstsUsrArr[i]["_id"]  + "');\">" + currPstsUsrArr[i].u_fullname + "</div>";
             }
-        }   
+        }
         break;
         case "props":
-            /* 
+            /*
         for(var i = 0; i < currPstsPrpsArr.length; i++) {
             decdPttleSA = decodeURIComponent(currPstsPrpsArr[i].pd_prptitle);
 
@@ -3198,7 +3201,7 @@ JSSHOP.ui.getPickerStr = function(tPDtype, includeButtons) {
             lzdPrpDesc = LZString.decompressFromEncodedURIComponent(decdPrpDescSA);
             if(currSlctdPrpsObj["ob" + currPstsPrpsArr[i]["_id"]]) {
                 tGPSstr += "<div class=\"crsrPointer bkgdClrDlg\" style=\"border: 1px solid #ccc;padding:5px;margin-bottom:5px;\" onclick=\"JSSHOP.ui.setPickerVal(this, 'props','" + i +  "','" + currPstsPrpsArr[i]["_id"] + "');\">";
-            } else {    
+            } else {
             tGPSstr += "<div class=\"crsrPointer bkgdClrWhite\" style=\"border: 1px solid #ccc;padding:5px;margin-bottom:5px;\" onclick=\"JSSHOP.ui.setPickerVal(this, 'props','" + i +  "','" + currPstsPrpsArr[i]["_id"] + "');\">";
             }
             // wrap the image and title, a short 200 char desc, and price in a div with border and make it look like a list with the image on the left and the text on the right
@@ -3330,14 +3333,14 @@ JSSHOP.ui.getPickerDiv = function(tPDtype) {
                 tmpDOs["ws"] = "where _id > ?";
                 tmpDOs["wa"] = [0];
                 tmpDOs["l"] = 12;
-                
+
                 oi = getNuDBFnvp("quser",5,null,tmpDOs);
                 currRQtable = "quser";
                 currRQstr = oi["rq"];
-    
+
                 // alert("edit users currRQstr: " + currRQstr);
                 doQComm(oi["rq"], null, "setCurrUsrsArr");
-            }  
+            }
             break;
         case "props":
             if(currPstsPrpsArr[0]) {
@@ -3373,7 +3376,7 @@ JSSHOP.ui.doNuAutoComp = function(inp, arr, dvResO) {
         tdvACres.classList.toggle('closed');
     }
 
-     
+
 
 /*the autocomplete function takes two arguments,
 the text field element and an array of possible autocompleted values:*/
@@ -3413,19 +3416,19 @@ inp.addEventListener("input", function(e) {
         // b.innerHTML += "<input type='hidden' value='" + i + "'>";
         /*execute a function when someone clicks on the item value (DIV element):*/
             b.addEventListener("click", function(e) {
-    
+
             /*insert the value for the autocomplete text field:*/
 
-  
 
-     
+
+
             /*close the list of autocompleted values,
             (or any other open lists of autocompleted values:*/
             closeAllLists();
-        
+
         });
 
-    
+
       }
 
 
@@ -3433,7 +3436,7 @@ inp.addEventListener("input", function(e) {
 
     tmpDVAC = document.createElement("DIV");
 
-   
+
      tmpDVAC.innerHTML = "";
      // tmpDVAC.setAttribute("id", "dvACres");
         tmpDVAC.setAttribute("class", "acdropdown-menu");
@@ -3442,7 +3445,7 @@ inp.addEventListener("input", function(e) {
     tmpDVAC.style.overflow = "auto";
     tmpDVAC.style.paddingRight = "22px";
     tmpDVAC.style.marginRight = "22px";
- 
+
 
      tmpHdrStr = "";
      for(i = 0; i < currACTblCnt; i++) {
@@ -3454,7 +3457,7 @@ inp.addEventListener("input", function(e) {
      astrFhtml = "<div class=\"atabler\"  style=\"margin: 0 auto;max-width:95%;\" ><table style=\"margin: 0 auto;max-width:95%;\" class=\"table table-sm table-striped table-hover txtSmall\" width=\"100%\" cellpadding=\"0px;\"  cellspacing=\"0px;\">";
     astrFhtml += "<THEAD>" + tTHstr + "</THEAD><TBODY>";
     astrFhtml += strFhtml + "</TBODY></table></div>";
- 
+
 
      tmpDVAC.innerHTML = getTblSortStr(tTHstr,strFhtml);
     // b.innerHTML = strFhtml;
@@ -3525,7 +3528,7 @@ function closeAllLists() {
   except the one passed as an argument:*/
   var x = document.getElementsByClassName("acdropdown-item");
   for (var i = 0; i < x.length; i++) {
- 
+
     x[i].parentNode.removeChild(x[i]);
 }
 var xpar = document.getElementsByClassName("acdropdown-menu");
@@ -3534,10 +3537,10 @@ for (var i = 0; i < xpar.length; i++) {
     xpars.parentNode.removeChild(xpars);
 }
 } catch (e) {
- 
+
     console.log("closeAllLists.error: " + e);
     document.removeEventListener("click", documentClickHandler);
- 
+
 }
 }
 
@@ -3558,7 +3561,7 @@ JSSHOP.ui.doAutoComp = function(inp, arr) {
         tdvACres.classList.toggle('closed');
     }
 
-     
+
 
 /*the autocomplete function takes two arguments,
 the text field element and an array of possible autocompleted values:*/
@@ -3598,19 +3601,19 @@ inp.addEventListener("input", function(e) {
         // b.innerHTML += "<input type='hidden' value='" + i + "'>";
         /*execute a function when someone clicks on the item value (DIV element):*/
             b.addEventListener("click", function(e) {
-    
+
             /*insert the value for the autocomplete text field:*/
 
-  
 
-     
+
+
             /*close the list of autocompleted values,
             (or any other open lists of autocompleted values:*/
             closeAllLists();
-        
+
         });
 
-    
+
       }
 
 
@@ -3618,7 +3621,7 @@ inp.addEventListener("input", function(e) {
 
     tmpDVAC = document.createElement("DIV");
 
-   
+
      tmpDVAC.innerHTML = "";
      tmpDVAC.setAttribute("id", "dvACres");
         tmpDVAC.setAttribute("class", "acdropdown-menu");
@@ -3627,7 +3630,7 @@ inp.addEventListener("input", function(e) {
     tmpDVAC.style.overflow = "auto";
     tmpDVAC.style.paddingRight = "22px";
     tmpDVAC.style.marginRight = "22px";
- 
+
 
      tmpHdrStr = "";
      for(i = 0; i < currACTblCnt; i++) {
@@ -3639,7 +3642,7 @@ inp.addEventListener("input", function(e) {
      astrFhtml = "<div class=\"atabler\"  style=\"margin: 0 auto;max-width:95%;\" ><table style=\"margin: 0 auto;max-width:95%;\" class=\"table table-sm table-striped table-hover txtSmall\" width=\"100%\" cellpadding=\"0px;\"  cellspacing=\"0px;\">";
     astrFhtml += "<THEAD>" + tTHstr + "</THEAD><TBODY>";
     astrFhtml += strFhtml + "</TBODY></table></div>";
- 
+
 
      tmpDVAC.innerHTML = getTblSortStr(tTHstr,strFhtml);
     // b.innerHTML = strFhtml;
@@ -3723,7 +3726,7 @@ JSSHOP.ui.doTglBox(tIMLStglbObj);
 JSSHOP.ui.fnishNewsO = function(fnaw, fnbw,fncw) {
 // alert("fnishNewsO");
 tStrFinalNLogo = "<a href=\"https://news.google.com\" target=\"_blank\" class=\"txtDecorNone\">";
-tStrFinalNLogo += "<img src=\"images/misc/gnews.jpg\" style=\"height: 22px; width: 100px; border-width: 0px\"></a>"; 
+tStrFinalNLogo += "<img src=\"images/misc/gnews.jpg\" style=\"height: 22px; width: 100px; border-width: 0px\"></a>";
 
 tIMLStglbObj = null;
 tIMLStglbObj = "";
@@ -3753,7 +3756,7 @@ tIMLStglbObj = null;
 tIMLStglbObj = "";
 tIMLStglbObj = JSSHOP.ui.nTglBxOb();
 tIMLStglbObj["ttl"] = stxt[301]; // the toggle box title
-tIMLStglbObj["dvid"] = "dvTglZip"; // the toggle box div id 
+tIMLStglbObj["dvid"] = "dvTglZip"; // the toggle box div id
 tIMLStglbObj["cntntFnc"] =  "JSSUIsetZipBox";
 tIMLStglbObj["content"] = "noQvalue"; // the toggle that goes in above toggle div
 tIMLStglbObj["btn"] = "btnTglZip" // the toogle btn id
@@ -3787,7 +3790,7 @@ JSSHOP.ui.getNuLocList = function(tVala, tValb, tValc) {
     document.getElementById("includedContent").innerHTML = tLocStr;
 
 };
- 
+
 JSSHOP.ui.getRegionsList = function() {
 tCatArrStr = "";
 tRegionsArr = currRegionsObj[usrlang];
@@ -3823,7 +3826,7 @@ JSSHOP.ui.getSvsPage = function() {
 document.getElementById('includedShops').innerHTML='';
 window['sw']=null;
 currUrlArr.sw=null;
-JSSHOP.shared.setPrtSvsPnl('dvGetSvcsLnk', function() {JSSHOP.ui.doDefCBBCC('dvMMGetSvcsLnk', null, eindex('aa-show-msearch','pid=aa-show-msearch&amp;st=main'));});    
+JSSHOP.shared.setPrtSvsPnl('dvGetSvcsLnk', function() {JSSHOP.ui.doDefCBBCC('dvMMGetSvcsLnk', null, eindex('aa-show-msearch','pid=aa-show-msearch&amp;st=main'));});
 };
 
 JSSHOP.ui.getAtvtyRndr = function(atvtyArr, atvtyTTgl, atvtyCount) {
@@ -3871,11 +3874,11 @@ if(theITimgVal == "noQvalue") {
 } else {
 theIimgVal = theITimgVal;
 }
-} 
+}
 
 tmpImfstr = "<img class=\"icnsmlbtn\" src=\"" + theIimgVal + "\" align=\"absmiddle\">";
 
-// strRFHtml += theTfavId + " :: " + theTfavUrl + " :: " + theTfavTtl + " :: " + theIimgVal + "<br>"; 
+// strRFHtml += theTfavId + " :: " + theTfavUrl + " :: " + theTfavTtl + " :: " + theIimgVal + "<br>";
 strRFHtml += "<div>";
 if(atvtyTTgl == "y") {
 currFTclr = "small-material-icons txtClrRed";
@@ -3888,7 +3891,7 @@ tfi++;
 } else {
 strRFHtml += "No Favorites";
 
- 
+
 }
 return strRFHtml;
 }
@@ -3939,11 +3942,11 @@ JSSHOP.ui.doAlertBox = function(atype, attl, acntnt, abtArr) {
             break;
     }
 
-    
+
     tDABStr = "<div style=\"float:left;\"><table><tr><td><i class=\"material-icons " + tDABicnClsStr + "\" style=\"font-size: 24px;\">" + tDABicnStr + "</i>";
     tDABStr += "</td><td><span class=\"txtClrHdr txtBold " + tDABTtlClsStr + "\" style=\"font-size: 18px;verticle-align:middle;padding-bottom:8px;\">" + attl + "</span>";
     tDABStr += "</td></tr></table></div>";
-    
+
     tDABStr += "<div class=\"bkgdClrWhite\" style=\"width: 100%;\">";
     tDABStr += "<table style=\"width: 100%\" class=\"bkgdClrWhite\">";
     tDABStr += "<tr><td>"
@@ -3960,7 +3963,7 @@ JSSHOP.ui.doAlertBox = function(atype, attl, acntnt, abtArr) {
         tDABStr += "<button class=\"" + tsBtnOCls + "\" onclick=\"" + tsBtnOCB + "\">" + tsBtnOTxt + "</button>";
         } else {
 
-    for(var i = 0; i < abtArr.length; i++) {  
+    for(var i = 0; i < abtArr.length; i++) {
         tsBtnObj = abtArr[i];
         tsBtnOCB = tsBtnObj.cb;
         tsBtnOCls = tsBtnObj.cls;
@@ -4037,9 +4040,9 @@ JSSHOP.ui.doTglTitle = function(theTglBoxObj) {
             break;
 
     }
-   
+
     tTBxTtlDv = document.getElementById(theTglBoxObj.dvid + "Ttl");
-    tTBxTtlDv.innerHTML = theTglBoxObj.ttl;  
+    tTBxTtlDv.innerHTML = theTglBoxObj.ttl;
   } catch(e) {
         alert("doTglTitle: " + e);
     }
@@ -4080,7 +4083,7 @@ JSSHOP.ui.getEmojiPickerHTML = function(theEEditorDiv, theEEmojiDiv) {
         // also close the emoji picker after inserting the emoji
         emojiPickerHTML += '<span class="emoji" style="font-size:24px; cursor:pointer; margin:5px;" onclick="JSSHOP.ui.insertEmoji(\'' + theEEditorDiv + '\', \'' + emoji + '\');JSSHOP.ui.toggleEmojiPicker(\'' + theEEmojiDiv + '\')">' + emoji + '</span>';
     });
- 
+
     } catch(e) {
         alert("getEmojiPickerHTML: " + e);
     }
@@ -4121,18 +4124,18 @@ tPSBstr += "<table style=\"margin: 0 auto;max-width:98%\" align=\"center\"><tr>"
 
 // tPSBstr += "<table style=\"margin: 0 auto;max-width:98%\" align=\"center\" class=\"" + theTglBoxObj["clstitletd"] + "\"><tr>";
 tPSBstr += "<td>";
-tPSBstr += "<div id=\"" + theTglBoxObj.dvid + "Icn\">"; 
+tPSBstr += "<div id=\"" + theTglBoxObj.dvid + "Icn\">";
 tPSBstr += "<i class=\"menu-material-icons coll-menu-item\" title=\"" + theTglBoxObj.ttl + "\">" + theTglBoxObj.icn + "</i>";
 tPSBstr += "</div>";
 tPSBstr += "</td>";
 tPSBstr += "<td style=\"width:100%\" class=\"crsrPointer\"   onclick=\"javascript:JSSHOP.ui.tglTBPrefModule('" + theTglBoxObj.dvid + "');\">";
-tPSBstr += "<div class=\"" + theTglBoxObj["clsttltxt"] + "\" style=\"vertical-align:super;padding-left:12px;padding-bottom:12px;margin-bottom:12px;\" id=\"" + theTglBoxObj.dvid + "Ttl\">"; 
+tPSBstr += "<div class=\"" + theTglBoxObj["clsttltxt"] + "\" style=\"vertical-align:super;padding-left:12px;padding-bottom:12px;margin-bottom:12px;\" id=\"" + theTglBoxObj.dvid + "Ttl\">";
 tPSBstr += theTglBoxObj.ttl;
 tPSBstr += "</div></td>";
 tPSBstr += "<td valign=\"top\" style=\"max-height: 42px\">&nbsp;&nbsp; &nbsp;</td>";
 
 if(theTglBoxObj.btn == "noQvalue") { // dont show the toggle button
-} else { 
+} else {
 tJSstr = "JSSHOP.ui.tglTBPrefModule('" + theTglBoxObj.dvid + "');";
 tPSBstr += "<td valign=\"top\" style=\"max-height: 42px\"><div id=\"" + theTglBoxObj.btn + "\" class=\"icnbtn crsrPointer\" nowrap=\"nowrap\" style=\"float:right\"  onclick=\"javascript:" + tJSstr + "\">";
 tPSBstr += "<i class=\"material-icons txtClrDlg\" title=\"expand_more\">&#xe5cf;</i></div></td>";
@@ -4149,26 +4152,26 @@ tPSBstr += "<tr><td>";
 if(currUrlArr.prti != null) {
 // tPSBstr += "&nbsp; &nbsp; &nbsp;<a href=\"javascript:JSSHOP.ui.showMsgBox('product','" + currUrlArr.prti + "','JSSHOP.shared.doYearsPop');\" class=\"txtDecorNone\"><img class=\"slmtable icndbtn brdrCldrDlg txtClrHdr\" style=\"float: right;margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"speaker\" title=\"speaker\" src=\"images/misc/shout_out.gif\"></img></a>";
 }
- 
+
 tPSBstr += "</td></tr><tr>";
 
-tPSBstr += "<td id=\"" + theTglBoxObj.dvid + "\" style=\"visibility:hidden;display:none\">"; 
+tPSBstr += "<td id=\"" + theTglBoxObj.dvid + "\" style=\"visibility:hidden;display:none\">";
 
 
 /*
 if(tUTlPrefs == "show") {
-if(tTBXCnt == "noQvalue") { 
+if(tTBXCnt == "noQvalue") {
 alert("haveTglFnc: " + theTglBoxObj.cntntFnc);
 ttbcf = theTglBoxObj.cntntFnc;
 setTimeout(ttbcf(), 800);
 
 // ttbcf();
- 
+
 } else {
 if((theTglBoxObj.cut > 0) && (tTBXCnt.length > theTglBoxObj.cut)) {
 ntTBXCnt = new CutString(tTBXCnt,theTglBoxObj.cut);
 newCutString = ntTBXCnt.cut() + "<a href=\"javascript:JSSHOP.ui.showHideElement('" + theTglBoxObj.dvid + "','hide');JSSHOP.ui.showHideElement('m" + theTglBoxObj.dvid + "','show');\">" + stxt[62].toLowerCase() + "...</a>";
-newCutString += "<td id=\"m" + theTglBoxObj.dvid + "\" style=\"visibility:hidden;display:none\">"; 
+newCutString += "<td id=\"m" + theTglBoxObj.dvid + "\" style=\"visibility:hidden;display:none\">";
 newCutString += tTBXCnt;
 newCutString += "</td>";
 
@@ -4181,7 +4184,7 @@ tPSBstr += newCutString;
 
 */
 
-tPSBstr += "<td id=\"m" + theTglBoxObj.dvid + "\" style=\"visibility:hidden;display:none\">"; 
+tPSBstr += "<td id=\"m" + theTglBoxObj.dvid + "\" style=\"visibility:hidden;display:none\">";
 tPSBstr += tTBXCnt;
 tPSBstr += "</td>";
 
@@ -4312,7 +4315,7 @@ alert("no JSSHOP.ui.showShareBox: " + " " + tmpMsgType + " " + e);
     tShareMsgTtl = "";
     tShareMsgDsc = "";
 
-    
+
     switch(tmpMsgType) {
         case "product":
             tShareMsgSTr = stxt[72] + " " + stxt[19];
@@ -4351,8 +4354,8 @@ alert("no JSSHOP.ui.showShareBox: " + " " + tmpMsgType + " " + e);
                 tShareMsgTtl = tCleanMsgTtl.substring(0, 100);
                 tShareMsgDsc = tCleanMsgDsc.substring(0, 100);
                 console.log("tShareMsgTtl: " + tShareMsgTtl);
-                console.log("tShareMsgDsc: " + tShareMsgDsc);   
-                console.log("tShareMsgImg: " + tShareMsgImg); 
+                console.log("tShareMsgDsc: " + tShareMsgDsc);
+                console.log("tShareMsgImg: " + tShareMsgImg);
                 console.log("tShareThmbImg: " + tShareThmbImg);
                 break;
         case "category":
@@ -4375,18 +4378,18 @@ tClogoimg = c_logoimg.value;
 } else {
     tClogoimg = currWebHome + "images/slogos/" + c_logoimg.value;
     tShareThmbImg = currWebHome + "images/slogos/s_thumb" + c_logoimg.value;
-}  
+}
 } else {
     tClogoimg = currWebHome + "images/logo_og.png";
     tShareThmbImg = currWebHome + "images/logo_og.png";
-}         
+}
 
             tShareMsgSTr = stxt[72];
             tShareMsgUrl = currWebHome + "index.html?dcid=" + tmpMsgVal;
             tShareMsgImg = tClogoimg;
             tShareMsgTtl = c_name.value;
             tShareMsgDsc = tCdescStr;
-            break;  
+            break;
             case "update":
                 tUpdateObj  = currUpdateArr[tmpMsgVal];
                 console.log("tUpdateObj: " + JSON.stringify(tUpdateObj));
@@ -4395,8 +4398,8 @@ tClogoimg = c_logoimg.value;
             tShareMsgImg = currWebHome + "images/ucontent/" + tUpdateObj.p_image;
             console.log("tUpdateObj.p_image: " + tUpdateObj.p_image);
             console.log("tUpdateObj.p_ptpe: " + tUpdateObj.p_ptype);
-            tShareThmbImg = "images/ucontent/s_thumb" + tUpdateObj.p_image;     
- 
+            tShareThmbImg = "images/ucontent/s_thumb" + tUpdateObj.p_image;
+
             tmShareMsgTtl = tUpdateObj.p_title;
             tShareMsgTtl = /* url decoded */ decodeURIComponent(tmShareMsgTtl);
             if(tShareMsgTtl.length < 1) {
@@ -4414,7 +4417,7 @@ tClogoimg = c_logoimg.value;
                 tShareMsgDsc = "Check out this update on 1Place4Ads";
             }
 
-            break;         
+            break;
             default:
             break;
     }
@@ -4431,25 +4434,25 @@ tClogoimg = c_logoimg.value;
     tShareMsgStr += "<div style=\"padding:7px;\"><table><tbody><tr><td><i class=\"material-icons txtClrDlg\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></td><td>&nbsp;<span class=\"txtSmall txtBold\">" + stxt[72] + "</span></td></tr></tbody></table></div>";
     tShareMsgStr += "<table style=\"width: 100%\" class=\"bigtable bkgdClrNrml brdrClrHdr txtBold txtBig\">";
     tShareMsgStr += "<tr><td>";
-    tShareMsgStr += "<div class=\"txtClrHdr\" style=\"padding:10px;\"><img src=\"" + tShareThmbImg + "\" class=\"icndbtn\"></div>"; 
-    tShareMsgStr += "</td><td>"; 
+    tShareMsgStr += "<div class=\"txtClrHdr\" style=\"padding:10px;\"><img src=\"" + tShareThmbImg + "\" class=\"icndbtn\"></div>";
+    tShareMsgStr += "</td><td>";
     tShareMsgStr += "<div class=\"txtClrHdr\">" + tShareMsgTtl + "</div>";
     tShareMsgStr += "<div class=\"txtSmall txtClrGrey\">" + tShareMsgDsc + "</div>";
     tShareMsgStr += "</td></tr>";
     tShareMsgStr += "</table>";
     tShareMsgStr += "</div>";
-    
+
     tShareMsgStr += "<div class=\"collection-item\">";
     tShareMsgStr += "<div class=\"txtClrHdr txtBold\">" + stxt[72] + "</div>";
     tShareMsgStr += "<div class=\"txtClrHdr\">";
     for(var i = 0; i < tShareSIteArr.length; i++) {
-        
+
         // fix tShareMsgTtl and tShareMsgDsc to escape ALL single quotes
 
 
         tShareMsgTtla = tShareMsgTtl.replace("'", "&#39;");
         tShareMsgTtlb = encodeURIComponent(tShareMsgTtla);
- 
+
         tShareMsgDsca = tShareMsgDsc.replace(/'/g, "&#39;");
         tShareMsgDscb = encodeURIComponent(tShareMsgDsca);
         tShareMsgTtl = tShareMsgTtlb;
@@ -4481,19 +4484,19 @@ alert(e);
 };
 
 
-  
+
 
 var doMediaBtnSetup = function(tmpMBtnId, tmpMBtnPrfx, tmpMBtnCB, tmpMBtnFldr) {
 try {
 ttbtn = document.getElementById(tmpMBtnId);
-if(isJApp == "yes")  { 
-  // alert("doMediaBtnSetup JAPP: " + tmpMBtnId + " :: " + tmpMBtnPrfx + " :: " + tmpMBtnCB + " :: " + tmpMBtnFldr);  
+if(isJApp == "yes")  {
+  // alert("doMediaBtnSetup JAPP: " + tmpMBtnId + " :: " + tmpMBtnPrfx + " :: " + tmpMBtnCB + " :: " + tmpMBtnFldr);
   JSSHOP.ui.addEvent(ttbtn, "click", function() { JSSHOP.jndroid.doPagePopUp("media_chooser.html", "noQvalue");return false; });
 
 // JSSHOP.ui.addEvent(ttbtn, "click", function() { JSSHOP.jndroid.openBrowser();return false; });
 // app.setQIMeta(doQIMeta());
 } else {
-     
+
 currMediaBtnPrfx = tmpMBtnPrfx;
 currMediaBtnCB = tmpMBtnCB;
 currMediaFldr = tmpMBtnFldr;
@@ -4539,7 +4542,7 @@ ttstr += "<span><a href=\"javascript:JSSHOP.ui.showReplyMsgBox('nada','" + tts.m
 ttstr += "</div>";
 annewel = document.createElement('div');
 annewel.innerHTML = ttstr;
-// 
+//
 tDStr = "dvMsgT" + tts.ms_threadid;
 // tmpTDQI.innerHTML = "";
 if(currUrlArr.threadid){
@@ -4578,7 +4581,7 @@ if(tarrToFill[0]) {
 
 
 JSSHOP.ui.doMsgList = function(a,theResp,ttcb) {
- 
+
 
 hasr = "n";
 fullstr = "";
@@ -4610,7 +4613,7 @@ tstr += "<div class=\"txtClrHdr\" style=\"margin-left: 7px\"><span><a href=\"ind
 tstr += "</div>";
 iint++;
 }
- 
+
 if(arrToFill[0]) {
 } else {
 }
@@ -4677,7 +4680,7 @@ JSSHOP.ui.doNuMsgList = function(a,theResp,ttcb) {
         } else {
             tstr += "<div style=\"width:30px;height:30px;border-radius:50%;background:#ccc;margin-right:10px;display:flex;align-items:center;justify-content:center;font-weight:bold;\">" + otherUserName.charAt(0).toUpperCase() + "</div>";
         }
-    
+
 
         tstr += "<div style=\"flex:1;\">";
         tstr += "<span class=\"txtClrHdr txtBold\">" + otherUserName +  "</span>" + tIAGstr;
@@ -4730,7 +4733,7 @@ JSSHOP.ui.doNuMsgThread = function(a,theResp,c) {
     tarrToFill = "";
     tarrToFill = [];
     tarrToFill = JSON.parse(theResp);
- 
+
     tarrTemp = JSON.parse(theResp);
  // tarrTemp.sort((a, b) => b.ms_dadded - a.ms_dadded); // Sort by date added descending
     console.log("tarrTemp: " + JSON.stringify(tarrTemp));
@@ -4741,14 +4744,14 @@ JSSHOP.ui.doNuMsgThread = function(a,theResp,c) {
     var tpcid = 0;
     ttstr = "";
     var threadId = "";
- 
+
     while(tiint < tlen) {
         ttstr = "";
         thasr = "n";
         tts = tarrTemp[tiint];
         nthreadId = tts.ms_threadid; // Store thread ID for later use
 
-       
+
         // Message content
 
         tThrdMtr = tts.ms_matter;
@@ -4767,7 +4770,7 @@ JSSHOP.ui.doNuMsgThread = function(a,theResp,c) {
         ttmpdate = new Date(tts.ms_dadded * 1000);
         ttmpdstr = ("0" + ttmpdate.getHours()).slice(-2) + ":" + ("0" + ttmpdate.getMinutes()).slice(-2);
         ttstr += "<div style=\"font-size:11px;margin-top:5px;opacity:0.7;\">" + ttmpdstr + "</div>";
- 
+
 
         // Media if exists
         if(tts.ms_media && tts.ms_media.indexOf(".") != -1) {
@@ -4784,17 +4787,17 @@ JSSHOP.ui.doNuMsgThread = function(a,theResp,c) {
             tastmpTDQI = document.getElementById(tDStr);
 
             tastmpTDQI.innerHTML = ttstr; // Clear previous content
-  
+
         }
         tiint++;
     }
 
-     
 
- 
+
+
 };
 
- 
+
 
 
 function doUMsgThread(atmdiv,theResp,ttcb) {
@@ -4805,9 +4808,9 @@ function doUMsgThread(atmdiv,theResp,ttcb) {
     var iint = 0;
     var tstr = "";
 
-    
+
     /*
-    
+
 CREATE TABLE `qmsg` (
   `_id` int(11) NOT NULL,
   `ms_rtype` int(11) DEFAULT NULL,
@@ -4867,7 +4870,7 @@ INSERT INTO `qmsg` (`_id`, `ms_rtype`, `ms_threadid`, `ms_from`, `ms_to`, `ms_vi
         console.log("Found #PROPID: in message matter");
         var tpropArr = tTMMstr.split("#PROPID:");
         var tpropid = tpropArr[1];
- 
+
         console.log("Extracted property ID:" + tpropid);
         tATMMstr = tTMMstr.replace("#PROPID:" + tpropid, "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + tpropid + "')\"><u>#PROPID:" + tpropid + "</u></a>");
         tFTMMstr = tATMMstr;
@@ -4920,7 +4923,7 @@ document.getElementById("ms_threadid").value = "";
 document.getElementById("ms_threadid").value = tFllArr[0]._id;
 document.getElementById("ms_from").value = quid;
 document.getElementById("ms_dadded").value = JSSHOP.getUnixTimeStamp();
-    
+
     /* qmsgs table structure
     CREATE TABLE `qmsgs` (
   `_id` int(11) NOT NULL,
@@ -4965,7 +4968,7 @@ document.getElementById("ms_dadded").value = JSSHOP.getUnixTimeStamp();
 
         var tSpropid = tmsgmatter.split("#PROPID:");
         var tpropid = tSpropid[1];
-        console.log("Extracted property ID for link: " + tpropid);                              
+        console.log("Extracted property ID for link: " + tpropid);
         tAsmsgmatter = tmsgmatter.replace("#PROPID:"+tpropid, "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid="+tpropid+"')\">#PROPID:"+tpropid+"</a>");
         tMsgSTR += tAsmsgmatter;
         console.log("tmsgmatter with propid link: " + tAsmsgmatter);
@@ -4979,7 +4982,7 @@ document.getElementById("ms_dadded").value = JSSHOP.getUnixTimeStamp();
     tstr += "</div>";
     */
    // use facebook style colors depending on who sent the message in tstr
-   if(ts.msg_userid == quid) { 
+   if(ts.msg_userid == quid) {
     tstr += "<div id=\"dvMsgHdr" + ts._id + "\" style=\"min-height: 45px;margin:15px;margin-bottom:18px;\" class=\"rtable bkgdClrBBlue slmtblpadding txtClrWhite\">";
    } else {
     tstr += "<div id=\"dvMsgHdr" + ts._id + "\" style=\"min-height: 45px;margin:15px;margin-bottom:18px;\" class=\"rtable bkgdClrNrml slmtblpadding\">";
@@ -4988,7 +4991,7 @@ document.getElementById("ms_dadded").value = JSSHOP.getUnixTimeStamp();
     ttmpdstr = "<b>" + ("0" + ttmpdate.getDate()).slice(-2) + "</b>/" + ("0" + (ttmpdate.getMonth() + 1)).slice(-2);
     // tstr += "<span style=\"margin-left: 7px;\">" + ttmpdstr + " - " + ts.msg_from + "</span><br>";
     tstr += "<div style=\"margin-left: 7px\">" + tMsgSTR + "</div>";
- 
+
     tstr += "</div>";
     iint++;
   }
@@ -5004,7 +5007,7 @@ doQComm(oi["rq"], atmdiv, "doUMsgThread");
 
   } else {
     // document.getElementById(atmdiv).innerHTML = "<div class=\"txtClrHdr\" style=\"margin-left: 7px\">No messages found</div>";
-    // show a facebook type from incom with view profile link 
+    // show a facebook type from incom with view profile link
     document.getElementById(atmdiv).innerHTML = "<div class=\"rtable bkgdClrNrml slmtblpadding txtClrHdr\" style=\"min-height: 45px;margin:15px;margin-bottom:18px;\">Start a new message</div>";
   }
 
@@ -5026,21 +5029,21 @@ try {
 // JSSHOP.ui.popAndFillLbox(tamsg + tbmsg + tcmsg);
 
 procNuUIitem("qmsgs","msg_dmodified",tamsg,JSSHOP.getUnixTimeStamp(),tamsg);
- 
+
 } catch(e) {
 alert("no showReplyMsgSave: " + e);
 }
 }
- 
+
 JSSHOP.ui.doReplyMsgSave = function(tmpMsgType, tmpMsgVal, tTrmsCB){
 try {
 alert("JSSHOP.ui.doReplyMsgSave: " + tmpMsgType + " .." + tmpMsgVal)
 JSSHOP.shared.setFrmFieldVal("qmsg","ms_threadid", tmpMsgVal);
 JSSHOP.shared.setFrmFieldVal("qmsg", "ms_from", quid);
-JSSHOP.shared.setFrmFieldVal("qmsg", "ms_dadded", JSSHOP.getUnixTimeStamp()); 
+JSSHOP.shared.setFrmFieldVal("qmsg", "ms_dadded", JSSHOP.getUnixTimeStamp());
 
-JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_dmodified", JSSHOP.getUnixTimeStamp()); 
-JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_modifiedby", cartID); 
+JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_dmodified", JSSHOP.getUnixTimeStamp());
+JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_modifiedby", cartID);
 
 
 // JSSHOP.shared.setDynFrmVals(document["qmsg"], "tmp_");
@@ -5090,11 +5093,11 @@ JSSHOP.ui.popAndFillLbox(tamsg + tbmsg + tcmsg);
 function fnishGstMsgSave(tamsg, tbmsg, tcmsg){
 try {
 JSSHOP.ui.popAndFillLbox(stxt[709]); // thank you message
-} catch(e) {    
+} catch(e) {
 alert("no fnishGstMsgSave: " + e);
 }
 }
- 
+
 JSSHOP.ui.doMsgSave = function(tmpMsgType, tmpMsgVal, tempCB){
    //  JSSHOP.shared.setDynFrmVals(document["qmsgs"], "tmp_");
     console.log("doMsgSave: " + tmpMsgType + " :: " + tmpMsgVal + " :: " + tempCB);
@@ -5103,9 +5106,9 @@ JSSHOP.shared.setFrmFieldVal("qmsgs","msg_threadid", tmpmtid);
 JSSHOP.shared.setFrmFieldVal("qmsgs","msg_userid", quid);
 // JSSHOP.shared.setFrmFieldVal("qmsgs","msg_cartid", cartID);
 JSSHOP.shared.setFrmFieldVal("qmsgs","msg_prodid", itemid);
-JSSHOP.shared.setFrmFieldVal("qmsgs","msg_dmodified", JSSHOP.getUnixTimeStamp()); 
+JSSHOP.shared.setFrmFieldVal("qmsgs","msg_dmodified", JSSHOP.getUnixTimeStamp());
 // JSSHOP.shared.setFrmFieldVal("qmsgs","msg_to", c_uid.value);
-JSSHOP.shared.setFrmFieldVal("qmsgs","msg_dadded", JSSHOP.getUnixTimeStamp()); 
+JSSHOP.shared.setFrmFieldVal("qmsgs","msg_dadded", JSSHOP.getUnixTimeStamp());
 tChatInpstr = "chat-input-" + tmpMsgVal;
 tMsgMatter = document.getElementById(tChatInpstr).innerHTML;
 // alert("tMsgMatter: " + document.getElementById("msg_matter").value);
@@ -5121,7 +5124,7 @@ if((quid == "0") || (quid == 0) || (quid == "noQvalue")) {
     JSSHOP.shared.setFrmFieldVal("qmsgs","msg_fromsg_tel", document.getElementById("tmp_msg_fromsg_tel").value);
     JSSHOP.shared.setFrmFieldVal("qmsgs","msg_fromsg_email", document.getElementById("tmp_msg_fromsg_email").value);
     // JSSHOP.shared.setFrmFieldVal("qmsgs","msg_subject", JSSHOP.shared.getCurrSelectTxt(document.getElementById("tmp_msg_subject")));
-    
+
 }
 tmpDOs = {};
 // tmpDOs["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qmsgs"], "tmp_"));
@@ -5175,7 +5178,7 @@ function doUMsglinks(tULUID, tdivMID) {
     tmpDOs = null;
     tmpDOs = {};
     tmpDOs["ws"] = "where k_userid=? and k_rtype=?";
-    tmpDOs["wa"] = [tULUID,5]; 
+    tmpDOs["wa"] = [tULUID,5];
     oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
     doQComm(oi["rq"], tdivMID, "getUMsgLnkStr");
      //  JSSHOP.ui.showMsgBox(tPPrpTy,tPPrpI,tTPcb);
@@ -5194,7 +5197,7 @@ function doUMsglinks(tULUID, tdivMID) {
         rcnsDv = document.createElement('div');
         // rcL = "<table style=\"width:100%;\"><tr>";
         while(rciint < rclen) {
-        
+
         rcts = theTRndrArr[rciint];
         tKcat = rcts.k_category;
         tKmatter = unescape(decodeURIComponent(rcts.k_matter));
@@ -5204,19 +5207,19 @@ function doUMsglinks(tULUID, tdivMID) {
             tKshrtMatter = tKmatter.substring(0,20) + "...";
         }
         /*
-        
+
     // create buttons to send email or sms
     tRSstr += "<div id=\"dvApraiseBtns\" style=\"margin:5px;\"><table><tr>";
     if(hasGCPemail == "y") {
         // JSSHOP.ui.setNuCBBC
-       
+
     tRSstr += "<td><span class=\"form-control bkgdClrTtl brdrClrHdr txtClrRed crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'email','" + theTprfx + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_email\" title=\"email\" value=\"email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0be;</i> Email</span></td>";
     }
     if(hasGCPSms == "y") {
     tRSstr += "<td>&nbsp;</td><td><span class=\"form-control bkgdClrTtl brdrClrHdr txtClrRed crsrPointer\" onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'sms','" + theTprfx + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_sms\" title=\"sms\" value=\"btn_email\" styke=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe625;</i> SMS</span></td>";
     }
     tRSstr += "</tr></table></div>";
-    
+
  */
         switch(tKcat) {
             case "sms":
@@ -5234,7 +5237,7 @@ function doUMsglinks(tULUID, tdivMID) {
                         break;
         }
 
- 
+
          rciint++;
         }
        //  rcL += "<td></td></tr></table>";
@@ -5246,20 +5249,20 @@ function doUMsglinks(tULUID, tdivMID) {
         // document.getElementById(za).innerHTML = rcL;
          };
 
-  
+
   var rndrUMsgLnks = function(za,zb,zc) {
     console.log("rndrUMsgLnks: " + zb);
     // dvCoLinks.innerHTML = "";
-    
+
     theArr = JSON.parse(zb);
-    
+
     // alert("rndrCoLnks: " + theArr);
     var rclen = theArr.length;
     var rciint = 0;
     var rcsblen = 0;
     var lastcatID = "";
     rcts = null;
-    
+
     var tmpScatA = {};
     rcnsDv = document.createElement('div');
     rcL = "<table style=\"width:100%;\">";
@@ -5270,18 +5273,18 @@ function doUMsglinks(tULUID, tdivMID) {
     tKfnlMatter = "";
     if(tKmatter.length > 20) {
         tKshrtMatter = tKmatter.substring(0,20) + "...";
-    
+
     }
     if(tKmatter.indexOf("http") != -1) {
         tKfnlMatter = "<a href=\"" + tKmatter + "\" target=\"_blank\">" + tKshrtMatter + "</a>";
     } else {
         tKfnlMatter = tKshrtMatter;
     }
-    
-    // rcnsDv.className = "collection-item txtDecorNone margleft"; 
+
+    // rcnsDv.className = "collection-item txtDecorNone margleft";
     rcL += "<tr><td><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span></td>";
     rcL += "<td>" + tKfnlMatter;
-    
+
     //rcL += "<tr><td><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span></td><td><span class=\"txtSmall txtClrGrey\">" + rcts.k_title + "</span></td><td>" + unescape(decodeURIComponent(rcts.k_matter));
     rcL += "</td><td><button  onclick=\"javascript:doCoLinkDelete(" + rciint + "," + rcts._id + ");\" class=\"crsrPointer txtXLrg txtBold slmtable bkgdClrWhite brdrNone txtClrDrkGrn\"><i class=\"txtClrRed brdrClrWhite bkgdClrWhite menu-material-icons\" alt=\"delete\" title=\"delete\">&#xe92b;</i></button>";
     rcL += "</td></tr>";
@@ -5289,12 +5292,12 @@ function doUMsglinks(tULUID, tdivMID) {
     rciint++;
     }
     rcL += "</table>";
-   
-    // just the message buttons for now 
+
+    // just the message buttons for now
     // document.getElementById(za).innerHTML = rcL;
     rndrUMsgBtns(za,zb,zc);
    };
-  
+
   var getUMsgLnkStr = function(tCCLA, tCCLB, tCCLC) {
     if(tCCLB.indexOf("_id") != -1) {
         currCoLinksArr = null;
@@ -5304,8 +5307,8 @@ function doUMsglinks(tULUID, tdivMID) {
     // rndrUMsgLnks(tCCLA, tCCLB, tCCLC);
     }
     }
- 
- 
+
+
  JSSHOP.ui.showNuMsgBox = function(ttMsgBxObj){
 
 
@@ -5348,7 +5351,7 @@ JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_to_icon", ttMsgBxObj["m_to_icon"]);
 JSSHOP.shared.setFrmFieldVal("qmsgs", "msg_from_icon", ttMsgBxObj["m_from_icon"]);
 
 var tSNMBItemID = "noQvalue";
- 
+
 var tmpMsgType = "";
 var tmpMsgVal = "";
 var theTStrAllwd = "";
@@ -5380,12 +5383,12 @@ tfsb.ltxt = "stxt[70]";
 tsbstr = "";
 tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){JSSHOP.ui.doMsgSave(tmpMsgType, tmpMsgVal, atmpCB)}) };
 if((boolDoAnx == "y") || (boolDoAnx == "yes")) {
-tsbstr += "<div id=\"mmprogressBar\"></div>"; 
-tsbstr += "<div id=\"mmprogressOuter\"></div>"; 
-tsbstr += "<div id=\"mmmsgBox\"></div>"; 
-tsbstr += "<div id=\"mmdragbox\"></div>"; 
+tsbstr += "<div id=\"mmprogressBar\"></div>";
+tsbstr += "<div id=\"mmprogressOuter\"></div>";
+tsbstr += "<div id=\"mmmsgBox\"></div>";
+tsbstr += "<div id=\"mmdragbox\"></div>";
 tsbstr += "<div id=\"dvUploadBtn\" onclick=\"JSSHOP.shared.setFrmFieldVal('qmsgs', 'msg_dadded', JSSHOP.getUnixTimeStamp());\"  style=\"display:block;visibility:visible;margin-right:10px\"><button id=\"mmuploadBtn\" class=\"cls_button cls_button-small\"><ti data-ison=\"" + stxt[70] + "\" data-desc=\"btn_save\">Add</ti></button></div>";
-} 
+}
 
 tAllowedStr = theTStrAllwd;
 
@@ -5393,7 +5396,7 @@ tAllowedStr = theTStrAllwd;
 // retRndrObj["rndrStr"] = tmpVstr;
 // retRndrObj["rndrFobj"] = rndrFFObjArr;
 tMsgBxHdrSTr = "New Message";
- 
+
     /*
 // tMsgBxHdrSTr = "User Message";
 // tMsgBxHdrSTr is a div wuth the current tuid s_thumb u_icon on left and u_fullname on right
@@ -5437,7 +5440,7 @@ tIprpIdx = parseInt(ttMsgBxObj["m_item"], 10);
             tCleanPrpIcn = ttToPrpIcn.replace("updt_", "");
             tToPrpIcn = "images/ucontent/" + tCleanPrpIcn;
         }
-             if(ttToPrpIcn.indexOf("updt3d_") != -1) {   
+             if(ttToPrpIcn.indexOf("updt3d_") != -1) {
                 tCleanPrpIcn = ttToPrpIcn.replace("updt3d_", "");
                 tLZunzpdAurldecd = LZString.decompressFromEncodedURIComponent(tCleanPrpIcn);
                 tToPrpIcn = tLZunzpdAurldecd;
@@ -5453,7 +5456,7 @@ tIprpIdx = parseInt(ttMsgBxObj["m_item"], 10);
 tMBemojistr = JSSHOP.ui.getEmojiPickerHTML('chat-input-' + ttMsgBxObj["m_to_userid"], 'dvEmogiList' + ttMsgBxObj["m_to_userid"]);
 // if quid == 0 or "noQvalue" then add a sending as guest message
 if(quid == "0" || quid == "noQvalue") {
- tMsgBxHdrSTr += '<div style="margin-bottom:2px; padding:2px; background:#fff3cd; border:1px solid #ffeeba; border-radius:4px; color:#856404;" class="txtSmall">Please provide your email and phone number.</div>';    
+ tMsgBxHdrSTr += '<div style="margin-bottom:2px; padding:2px; background:#fff3cd; border:1px solid #ffeeba; border-radius:4px; color:#856404;" class="txtSmall">Please provide your email and phone number.</div>';
 // add name and tel or email fields
 tMsgBxHdrSTr += '<div style="display:flex; flex-direction:column;">' +
 // add the name input field
@@ -5508,21 +5511,21 @@ tMsgBxHdrSTr += '<div class="chat-topics" style="padding:10px; background:white;
 
 } else {
 
-tMsgBxHdrSTr += '<div class="chat-messages" id="chat-messages-' + ttMsgBxObj["m_to_userid"] + '" style="flex:1; padding:4px; overflow-y:auto; background:#f0f0f0;">';   
+tMsgBxHdrSTr += '<div class="chat-messages" id="chat-messages-' + ttMsgBxObj["m_to_userid"] + '" style="flex:1; padding:4px; overflow-y:auto; background:#f0f0f0;">';
 
 tMsgBxHdrSTr += '<!-- Messages will be loaded here based on qmsgs table -->';
 tMsgBxHdrSTr += '</div>';
 }
- 
+
 // crea
 tMsgBxHdrSTr += '<div class="chat-input-area" style="padding:4px; background:white;  display:flex;">';
 
 if(quid == "0" || quid == "noQvalue") {
     tShowImstr = "no";
-      
+
 } else {
 // add a unicode icon button to show a div of smileys and emojis only if quid != "0" or "noQvalue"
-tMsgBxHdrSTr += '<button onclick="JSSHOP.ui.toggleEmojiPicker(\'dvEmogiList' + ttMsgBxObj["m_to_userid"] + '\');" style="padding:4px 8px; background:#f5f6f7; border:none; border-radius:4px; cursor:pointer; margin-right:10px;"><i class="nav-material-icons txtClrDrkGrn" style="font-size:20px;">&#xe420;</i></button>' + 
+tMsgBxHdrSTr += '<button onclick="JSSHOP.ui.toggleEmojiPicker(\'dvEmogiList' + ttMsgBxObj["m_to_userid"] + '\');" style="padding:4px 8px; background:#f5f6f7; border:none; border-radius:4px; cursor:pointer; margin-right:10px;"><i class="nav-material-icons txtClrDrkGrn" style="font-size:20px;">&#xe420;</i></button>' +
 // create dvEmogiList with a list of emojis and smileys to pick from. they will be inserted into the chat input div at cursor position
 '<div id="dvEmogiList' + ttMsgBxObj["m_to_userid"] + '" style="display:none; position:absolute; bottom:60px; background:white; border:1px solid #ccc; border-radius:4px; padding:10px; box-shadow:0 2px 8px rgba(0,0,0,0.2); max-width:280px; max-height:200px; overflow-y:auto;min-width:280px;min-height:200px;">' +
  tMBemojistr +
@@ -5534,7 +5537,7 @@ tMsgBxHdrSTr += '</div>';
 tMsgBxHdrSTr += '<button onclick="JSSHOP.ui.sendChatMessage(' + ttMsgBxObj["m_to_userid"] + ',\'' + tSNMBItemID + '\')" style="padding:8px 12px; background:#4267b2; color:white; border:none; border-radius:4px; cursor:pointer;" class="txtSmall">' + stxt[708] + '</button>' +
 '</div>'; // end chat-input-area
 
- 
+
 '</div>'; // end fb-chat-box
 JSSHOP.ui.popNuFillLbox(tMsgBxHdrSTr + tsbstr, 10);
 // Add event listener to phone input for contact method selection
@@ -5549,7 +5552,7 @@ if(quid == "0" || quid == "noQvalue") {
                         contactDiv = document.createElement('div');
                         contactDiv.id = 'dvContactMethods';
                         contactDiv.style.cssText = 'margin-top:5px; display:flex; gap:10px; flex-wrap:wrap;';
-                        contactDiv.innerHTML = 
+                        contactDiv.innerHTML =
                             '<label style="cursor:pointer; padding:2px 2px; background:white; color:black; border-radius:2px; white-space:nowrap; display:inline-block;"><input type="checkbox" name="contact_method" value="whatsapp"  style="margin-right:5px;">WhatsApp</label>' +
                             '<label style="cursor:pointer; padding:2px 2px; background:white; color:black; border-radius:2px; white-space:nowrap; display:inline-block;"><input type="checkbox" name="contact_method" value="sms"   style="margin-right:5px;">SMS</label>' +
                             '<label style="cursor:pointer; padding:2px 2px; background:white; color:black; border-radius:2px; white-space:nowrap; display:inline-block;"><input type="checkbox" name="contact_method" value="call"  style="margin-right:5px;">Call</label>';
@@ -5633,14 +5636,14 @@ JSSHOP.ui.popGuestMsgBox = function(cMAinc) {
     ttToShowMsg = tgnewMsg;
     // add links to urls in tToShowMsg
    var  urlPattern = /(https?:\/\/[^\s<]+)/g;
-   // 
+   //
     ttToShowMsg = ttToShowMsg.replace(urlPattern, '<a href="$1" target="_blank">$1</a>');
    /*
           if(tTMMstr.indexOf("#PROPID:") != -1) {
         console.log("Found #PROPID: in message matter");
         var tpropArr = tTMMstr.split("#PROPID:");
         var tpropid = tpropArr[1];
- 
+
         console.log("Extracted property ID:" + tpropid);
         tATMMstr = tTMMstr.replace("#PROPID:" + tpropid, "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + tpropid + "')\"><u>#PROPID:" + tpropid + "</u></a>");
         tFTMMstr = tATMMstr;
@@ -5687,7 +5690,7 @@ function fnshNuMsgIDSave(tCCLA, tCCLB, tCCLC) {
         alert("Error saving message ID: " + tCCLB);
     } else {
          alert("Message ID saved: " + tCCLB);
-  
+
     }
 }
 
@@ -5732,12 +5735,12 @@ function fnishNuMsgSave(tCCLA, tCCLB, tCCLC) {
 JSSHOP.ui.sendChatMessage = function(toUserId, tMitemID) {
     var inputField = document.getElementById('chat-input-' + toUserId);
     var message = inputField.innerText || inputField.textContent;
-    
+
 
         if(tMitemID && tMitemID != "noQvalue") {
         message += " #PROPID:" + tMitemID + " ";
-    } 
-   
+    }
+
     // document.getElementById("ms_matter").value = message;
     // document.getElementById("ms_matter").value = message;
     document.getElementById("ms_to").value = toUserId;
@@ -5754,7 +5757,7 @@ JSSHOP.ui.sendChatMessage = function(toUserId, tMitemID) {
     inputField.textContent = "";
 
     // Optionally, append the message to the chat window
-  
+
     newMsg =  message.replace(/\n/g, '<br>');
        // newMsg = newMsg.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     newMsg = newMsg.replace(/(\r\n|\n|\r)/g, '<br>');
@@ -5763,7 +5766,7 @@ JSSHOP.ui.sendChatMessage = function(toUserId, tMitemID) {
     newMsg = newMsg.replace(/(\uD83E[\uDD00-\uDFFF])/g, '<span class="emoji">$1</span>');
     newMsg = newMsg.replace(/(\uD83D[\uDE00-\uDE4F])/g, '<span class="emoji">$1</span>');
     newMsg = newMsg.replace(/(\u2600-\u27BF)/g, '<span class="emoji">$1</span>');
-    newMsg = newMsg.replace(/(\uD83C[\uDFFB-\uDFFF])/g, '<span class="emoji">$1</span>');   
+    newMsg = newMsg.replace(/(\uD83C[\uDFFB-\uDFFF])/g, '<span class="emoji">$1</span>');
     newMsg = newMsg.replace(/(\uD83E[\uDD00-\uDFFF])/g, '<span class="emoji">$1</span>');
     newMsg = newMsg.replace(/(\uD83D[\uDE00-\uDE4F])/g, '<span class="emoji">$1</span>');
     newMsg = newMsg.replace(/(\u2600-\u27BF)/g, '<span class="emoji">$1</span>');
@@ -5775,14 +5778,14 @@ JSSHOP.ui.sendChatMessage = function(toUserId, tMitemID) {
     tToShowMsg = newMsg;
     // add links to urls in tToShowMsg
    var  urlPattern = /(https?:\/\/[^\s<]+)/g;
-   // 
+   //
     tToShowMsg = tToShowMsg.replace(urlPattern, '<a href="$1" target="_blank">$1</a>');
    /*
           if(tTMMstr.indexOf("#PROPID:") != -1) {
         console.log("Found #PROPID: in message matter");
         var tpropArr = tTMMstr.split("#PROPID:");
         var tpropid = tpropArr[1];
- 
+
         console.log("Extracted property ID:" + tpropid);
         tATMMstr = tTMMstr.replace("#PROPID:" + tpropid, "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + tpropid + "')\"><u>#PROPID:" + tpropid + "</u></a>");
         tFTMMstr = tATMMstr;
@@ -5794,8 +5797,8 @@ JSSHOP.ui.sendChatMessage = function(toUserId, tMitemID) {
        }
        console.log("Final message to show:", tToShowMsg);
 
-       if(quid == "0" || quid == "noQvalue") {  // if guest 
- 
+       if(quid == "0" || quid == "noQvalue") {  // if guest
+
            //  document.getElementById("msg_matter").value = encodeURIComponent(newMsg);
            tContctMethdStr = "";
     var contactMethods = document.getElementsByName('contact_method');
@@ -5816,11 +5819,11 @@ JSSHOP.ui.sendChatMessage = function(toUserId, tMitemID) {
     messagesDiv.appendChild(messageElem);
         // Scroll to the bottom of the messages div
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    
+
 // if ms_threadid is empty, doMsgSave to create a new thread id
 if(document.getElementById("ms_threadid").value == "") {
     // document.getElementById("msg_matter").value = message;
-    // fix message to preserve emojis and line breaks when being sent to database and not returned as something like  😂
+    // fix message to preserve emojis and line breaks when being sent to database and not returned as something like Â ðŸ˜‚
     document.getElementById("msg_matter").value = encodeURIComponent(newMsg);
  tJFarr = JSSHOP.shared.getDynFrmVals(document["qmsgs"], "tmp_");
 
@@ -5858,8 +5861,8 @@ JSSHOP.ui.showMsgBox = function(tmpMsgType, tmpMsgVal,atmpCB){
     alert("no JSSHOP.ui.showMsgBox: " + e);
     }
     };
-    
- 
+
+
 
 JSSHOP.ui.showPopHelp = function(tmpHlpKey){
 try {
@@ -5876,7 +5879,7 @@ JSSHOP.ui.popAndFillLbox(tmppHlpD);
 } catch(e) {
 alert("no JSSHOP.ui.showPopHelp: " + e);
 }
- 
+
 };
 
 
@@ -5897,7 +5900,7 @@ JSSHOP.ui.popAndFillLbox(tmpAHlpD);
 } catch(e) {
 alert("no showPopHelp: " + e);
 }
- 
+
 };
 
 
@@ -5924,7 +5927,7 @@ currHlpKey = tmpHlpStr;
 tmpGetHCO = "js/app/" + jscssprefix + "helpstrings_" + usrlang + ".js?"; // help-arr url
 JSSHOP.loadScript(tmpGetHCO, JSSHOP.ui.setNPopHelp,"js");
 }
- 
+
 };
 
 
@@ -5978,7 +5981,7 @@ JSSHOP.ui.toggleDivSlide = function(rowname) {
 // make rowname div slide up and down depending on its current state
     try {
         theRow = document.getElementById(rowname);
-         
+
         if (!theRow.style.height || theRow.style.height === '0px') {
             theRow.style.height = window.getComputedStyle(theRow).height;
         } else {
@@ -5990,9 +5993,9 @@ JSSHOP.ui.toggleDivSlide = function(rowname) {
 };
 
 JSSHOP.ui.toggleVisibility = function(rowname) {
-    try { 
+    try {
         theRow = document.getElementById(rowname);
-     
+
         if(theRow.style.display == "none") {
             tRCn = "";
             tRCn = theRow.className;
@@ -6016,17 +6019,17 @@ JSSHOP.ui.toggleVisibility = function(rowname) {
 
         }
       } catch (e) {
- 
+
         JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.toggleVisibility");
         }
-   
+
 };
 
 JSSHOP.ui.toggleMnuVisibility = function(rowname) {
- 
+
     try {
-        theRow = document.getElementById(rowname);    
-         
+        theRow = document.getElementById(rowname);
+
         if((theRow.style.display == "block") || (theRow.style.display == "inline-block")) {
                                           gmnu = document.getElementById("dvMnuT").innerHTML;
                                           	document.getElementById("dvMnuT").innerHTML = "";
@@ -6041,10 +6044,10 @@ JSSHOP.ui.toggleMnuVisibility = function(rowname) {
                  		 document.getElementById("dvMnuT").innerHTML = gmnu;
             theRow.style.display = "block";
             theRow.style.visibility = "visible";
- 
+
 
         }
-	
+
     } catch (e) {
     JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.toggleVisibility");
     }
@@ -6075,17 +6078,17 @@ JSSHOP.ui.toggleModule = function(linkElem, tglElemID, showMore, showLess) {
 
 
 JSSHOP.ui.toggleNuModule = function(linkElem, tglElemID) {
-    try {  
+    try {
         caption = document.getElementById(linkElem).innerHTML;
- 
+
         JSSHOP.ui.toggleVisibility(tglElemID);
-   
+
             if (caption.indexOf("more") != -1) {
                 document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" alt=\"btn_show_less\">&#xe5ce;</i>";
             } else {
                 document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" alt=\"btn_show_more\">&#xe5cf;</i>";
             }
- 
+
   } catch (e) {
 		alert(e + " : " + linkElem + " : " + tglElemID);
       //   JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.toggleNuModule");
@@ -6097,16 +6100,16 @@ JSSHOP.ui.tglPrefModule = function(linkElem, tglElemID, tglPrefKey) {
         caption = document.getElementById(linkElem).innerHTML;
  	  tmpPrvVal = "show";
         JSSHOP.ui.toggleVisibility(tglElemID);
-   
+
             if (caption.indexOf("more") != -1) {
-			
+
                 document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" title=\"expand_less\">&#xe5ce;</i>";
             } else {
  	  		tmpPrvVal = "hide";
                 document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" title=\"expand_more\">&#xe5cf;</i>";
             }
 JSSHOP.user.setCkiePrfKV('prfsSHOPuser',tglPrefKey,tmpPrvVal);
- 
+
     } catch (e) {
 	alert(e);
         // JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.tglPrefModule");
@@ -6116,19 +6119,19 @@ JSSHOP.user.setCkiePrfKV('prfsSHOPuser',tglPrefKey,tmpPrvVal);
 JSSHOP.ui.tglTBPrefModule = function(tvmpTglBxid) {
     try {
 
-         tTBxOBjFTM = currTglBxsObj[tvmpTglBxid]; 
+         tTBxOBjFTM = currTglBxsObj[tvmpTglBxid];
          linkElem = tTBxOBjFTM.btn;
 		tglElemID = tvmpTglBxid;
-		tglPrefKey = tTBxOBjFTM.pref; 
+		tglPrefKey = tTBxOBjFTM.pref;
         caption = document.getElementById(linkElem).innerHTML;
  	  tmpPrvVal = "show";
         JSSHOP.ui.toggleVisibility(tglElemID);
-   
+
             if (caption.indexOf("more") != -1) {
                 tTBxCntntstr = document.getElementById(tvmpTglBxid).innerHTML;
                 if(tTBxCntntstr.length < 10) {
 			  tglElCB = window[tTBxOBjFTM.cntntFnc];
-				tglElCB();  
+				tglElCB();
                 }
                 document.getElementById(linkElem).innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" title=\"expand_less\">&#xe5ce;</i>";
                 if(tvmpTglBxid == "dvTBPList") {
@@ -6143,7 +6146,7 @@ JSSHOP.ui.tglTBPrefModule = function(tvmpTglBxid) {
 
             }
 JSSHOP.user.setCkiePrfKV('prfsSHOPuser',tglPrefKey,tmpPrvVal);
- 
+
     } catch (e) {
 	alert(e);
         // JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.tglPrefModule");
@@ -6168,18 +6171,18 @@ JSSHOP.ui.setCBBClickEnd = function(theElem, theID, theCBclss, theCB) {
 };
 
 
- 
+
 JSSHOP.ui.setNuCBBClickClr = function(theElem, theCclss, theCBclss, theCB, theNBCDelay) {
     try {
     		strJobThread = JSSHOP.getUnixTimeStamp();
    		//  theMElem = document.getElementById(theElem);
     		theElem.className = theCclss;
- 
+
             setTimeout(function () {
                 JSSHOP.ui.setCBBClickEnd(theElem, strJobThread, theCBclss, theCB);
-              
+
         }, 250);
-  
+
     } catch(e) {
     		JSSHOP.startIntervalEvent(trgr_bclck[strJobThread], function() { JSSHOP.ui.setCBBClickEnd(theElem, strJobThread, theCBclss, theCB);}, theNBCDelay);
 
@@ -6188,9 +6191,9 @@ JSSHOP.ui.setNuCBBClickClr = function(theElem, theCclss, theCBclss, theCB, theNB
     }
 };
 
- 
+
 JSSHOP.ui.setCBBClickClr = function(theElem, theCclss, theCBclss, theCB) {
-JSSHOP.ui.setNuCBBClickClr(theElem, theCclss, theCBclss, theCB, 380); 
+JSSHOP.ui.setNuCBBClickClr(theElem, theCclss, theCBclss, theCB, 380);
 };
 
 JSSHOP.ui.setNuSaveBtnEnd = function(theObj,theCB) {
@@ -6242,7 +6245,7 @@ JSSHOP.ui.deleteRow = function(r) {
 try {
     tmpTRowI = r.parentNode.parentNode.rowIndex;
     // document.getElementById("myTable").deleteRow(tmpTRowI);
-    r.parentNode.parentNode.deleteRow(tmpTRowI);	
+    r.parentNode.parentNode.deleteRow(tmpTRowI);
 } catch(e) {
 JSSHOP.logJSerror(e, arguments, "JSSHOP.ui.deleteRow");
 }
@@ -6300,7 +6303,7 @@ JSSHOP.ui.popAFImgUrl = function(theImgUrl) {
 tIUrlStr = "<img src=\"" + theImgUrl + "\" width=\"100%\">";
 JSSHOP.ui.popAndFillLbox(tIUrlStr);
 };
- 
+
 JSSHOP.ui.popAndFillLbox = function(theFill) {
 JSSHOP.ui.popNurFillLbox(theFill, "&#xe5cd;", "The Title");
 }
@@ -6328,9 +6331,9 @@ JSSHOP.ui.popFillObox = function(theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUse
     // <button type="button" class="btn-close" aria-label="Close"  onclick=\"JSSHOP.ui.closeLbox();\"></button>
     //tcloseBstr  = "<button type=\"button\" class=\"btn btn-close\" aria-label=\"Close\"  onclick=\"JSSHOP.ui.closeLbox();\"  style=\"float:right\"></button>";
     try {
-    
-     
-    
+
+
+
     tmpLbox = document.getElementById('lightbox');
     tmpLCbox = document.getElementById('lightbox_content');
     tmpLbox.style.display="inline";
@@ -6361,17 +6364,17 @@ JSSHOP.ui.popFillObox = function(theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUse
     tclrdv = document.createElement('div');
     tclrdv.style.clear="both";
     tmpLCbox.appendChild(tclrdv);
-    
-     
-    
+
+
+
     tmpLbox.style.height = tmpLCbox.clientHeight + 180;
     }
     tmpLCbox.style.display='block';
-    
+
     // stop = window.pageYOffset + 30;
     stop = getScrollTop() + 30;
     tmpLCbox.style.top=stop+"px";
-    
+
     // window.scrollTo(0,0);
     // tmpLCbox.style.height="100%";
     // tmpLCbox.style.top="5px";
@@ -6380,13 +6383,13 @@ JSSHOP.ui.popFillObox = function(theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUse
     // if(iMdl < 5) { iMdl = 5; }
     // if(iMdl < 40) { iMdl = 15; }
     tmpLCbox.style.left=iMdl+"px";
-    
-    
+
+
     // make tmpLCbox pop in from top
-     
+
     JSSHOP.ui.setNuCBBClickClr(tmpLCbox, 'slmtable brdrClrHdr bkgdClrTrnsp', tmpLCbox.className, function() { donada(0,1,2); }, 200);
-    
-    
+
+
     // tmpLCbox.style.position="fixed";
     } catch(e) {
         alert("JSSHOP.ui.popNuFillLbox: " + e);
@@ -6394,7 +6397,7 @@ JSSHOP.ui.popFillObox = function(theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUse
         if(isJApp == "yes") {
             app.doscrllVwToTop();
             // app.getWVScrollY();
-            } 
+            }
 
 };
 
@@ -6446,8 +6449,8 @@ JSSHOP.ui.popNuFillLbox = function(theFill, theTofst) {
 //tcloseBstr  = "<button type=\"button\" class=\"btn btn-close\" aria-label=\"Close\"  onclick=\"JSSHOP.ui.closeLbox();\"  style=\"float:right\"></button>";
 try {
 
- 
- 
+
+
 tmpLbox = document.getElementById('lightbox');
 tmpLCbox = document.getElementById('lightbox_content');
 // make tmpLCbox fit to content
@@ -6456,7 +6459,7 @@ tmpLCbox = document.getElementById('lightbox_content');
 // tmpLCbox.style.maxHeight = "600px";
 // center the lightbox content
 tmpLCbox.style.marginRight = "20px";
- 
+
 tmpLbox.style.display="inline";
 if(theFill == "noQvalue") {
 } else if(theFill == "dbug") {
@@ -6466,12 +6469,12 @@ tmpLCbox.innerHTML= "<div style=\"overflow:auto;min-height: 231px; min-width: 36
     doNuSpinSet("lightbox_content", "big", null, "...");
 // tmpLCbox.innerHTML= "<img src=\"images/misc/loading.gif\">";
 } else {
-if(theTofst == 5) { 
+if(theTofst == 5) {
 tmpLCbox.innerHTML= tcloseBstr +  theFill;
-} else {    
+} else {
 tmpLCbox.innerHTML = theFill;
 }
- 
+
 }
 tmpLCbox.style.position="absolute";
 tmpVheight = document.documentElement.clientHeight || document.body.clientHeight || window.innerHeight;
@@ -6485,7 +6488,7 @@ tclrdv = document.createElement('div');
 tclrdv.style.clear="both";
 tmpLCbox.appendChild(tclrdv);
 
- 
+
 
 tmpLbox.style.height = tmpLCbox.clientHeight + 180;
 }
@@ -6512,7 +6515,7 @@ tmpLCbox.style.margin = "20px;";
 tmpLCbox.style.top=stop+"px";
 JSSHOP.ui.setNuCBBClickClr(tmpLCbox, 'slmtable brdrClrHdr bkgdClrTrnsp', tmpLCbox.className, function() { void(0); }, 150);
 
- 
+
 
 } catch(e) {
     alert("JSSHOP.ui.popNuFillLbox: " + e);
@@ -6520,11 +6523,11 @@ JSSHOP.ui.setNuCBBClickClr(tmpLCbox, 'slmtable brdrClrHdr bkgdClrTrnsp', tmpLCbo
     if(isJApp == "yes") {
         app.doscrllVwToTop();
         // app.getWVScrollY();
-        } 
+        }
 };
 
 
- 
+
 
 
 JSSHOP.ui.popLbox = function() {
@@ -6565,7 +6568,7 @@ if (modals.length > 0) {
 }
 
 };
- 
+
 JSSHOP.ui.closePopMenus = function() {
 try {
 document.getElementById('lightbox').style.display='none';
@@ -6613,7 +6616,7 @@ JSSHOP.logJSerror(e, arguments, "JSSHOP.setfaction");
 return " - ";
 }
 };
- 
+
 JSSHOP.ui.setLblHighlight = function(theTmpFld,theTmpFldTxt,theTmpLbl,theTmpLblTxt) {
 
 try {
@@ -6649,7 +6652,7 @@ theElem.style.color="#000000";
 JSSHOP.logJSerror(e, arguments, doInputFocusEv);
 }
 };
- 
+
 JSSHOP.ui.doInpDVBlurEv = function(theElem, theDefText) {
 try {
 if(theElem.value == ""){
@@ -6673,7 +6676,7 @@ theElem.style.color="#000000";
 JSSHOP.logJSerror(e, arguments, doDivFocusEv);
 }
 };
- 
+
 JSSHOP.ui.doDivDVBlurEv = function(theElem, theDefText) {
 try {
 if(theElem.innerText.length < 3){
@@ -6761,7 +6764,7 @@ JSSHOP.ui.stopEvent = function(evt){
 	return false;
 };
 
- 
+
 
 JSSHOP.ui.createLfButton = function(label, container) {
     var btn = L.DomUtil.create('div', '', container);
@@ -6805,7 +6808,7 @@ JSSHOP.ads.getLeafletCanvasMapOptions = function(baseMapOpts) {
 
 JSSHOP.ui.doGenMap = function(ttLatStr, ttLngStr) {
     try {
-iti = 0; 
+iti = 0;
 
 xaCstr = document.getElementById('map').innerHTML;
   if(xaCstr.length > 4){
@@ -6813,7 +6816,7 @@ xaCstr = document.getElementById('map').innerHTML;
     map.eachLayer(function (layer) {
           map.removeLayer(layer);
         console.log("Layer: " + layer);
-     
+
     });
     */
 /*
@@ -6844,11 +6847,11 @@ var tDestLng = tRAObj.lng;
 
     var LeafIcon = L.Icon.extend({
         options: {
- 
+
             iconSize:     [26, 26],
- 
+
             iconAnchor:   [-1, -1],
- 
+
             popupAnchor:  [-3, -16]
         }
     });
@@ -6862,7 +6865,7 @@ var tDestLng = tRAObj.lng;
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
 
- 
+
 
     var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
         maxZoom: 18,
@@ -6925,12 +6928,12 @@ map.setView(new L.LatLng( ttLatStr,  ttLngStr),14);
 
 
     var baseMaps = {
-            'OpenStreetMap': osm,	
+            'OpenStreetMap': osm,
         'Goodle Satellite': mqi,
         "Street": googleStreets
 
 
-/*		
+/*
         'Goodle Streets': googleStreets,
         'Goodle Satellite': mqi,
         'Goodle Hybrid': googleHybrid,
@@ -6943,7 +6946,7 @@ map.setView(new L.LatLng( ttLatStr,  ttLngStr),14);
 */
 
     bounds = L.latLngBounds() // Instantiate LatLngBounds object
- 
+
 
 
  layerControl = L.control.layers(baseMaps).addTo(map);
@@ -6960,8 +6963,8 @@ var popup = L.popup({closeOnClick: false, autoClose: false, closeButton: true, a
 popup.className = "brdrClrHdr";
 
 
- 
- 
+
+
 
 //   var routeArray = new Array();
 //   routeArray = routeControl.getWaypoints();
@@ -7018,7 +7021,7 @@ L.DomEvent.on(startBtn, 'click', function(e) {
 var mtImDSStr = "leaflet/images/tr6.gif";
 var mredIcon = new LeafIcon({iconUrl: mtImDSStr});
 
- 
+
 
 var options = {
                         icon: mredIcon
@@ -7027,8 +7030,8 @@ var options = {
 
                     // JSSHOP.ui.setMapMrkrs(currMapMrkrArr);
                 // 	currNavIcon = L.marker([qlogc_lat.value, qlogc_lng.value], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:dropMrkr(o);">DROP</a></span>').addTo(map);
-             
- 
+
+
                     return "OK";
 // currNavIcon = L.marker([qlogc_lat.value, qlogc_lng.value]).addTo(map);
    //    setTimeout("dupe()", 1000);
@@ -7039,7 +7042,7 @@ var options = {
         return "ERR" + e
 }
 };
- 
+
 JSSHOP.ui.popLboxMap = function(tLocLat, tLocLng, thePLMFunc) {
 // spinner.stop();
 try {
@@ -7050,8 +7053,8 @@ try {
 
 
 
-  
-  
+
+
 tmpLbox = document.getElementById('lightbox');
 tmpLCbox = document.getElementById('dvSandMap');
 tmpLbox.style.display="inline";
@@ -7066,7 +7069,7 @@ tmpLCbox.appendChild(newel);
 tmpLbox.style.height = tmpLCbox.clientHeight + 180;
 }
 tmpLCbox.style.display='block';
- 
+
 
 stop = getScrollTop() + 10;
 tmpLCbox.style.top=stop+"px";
@@ -7107,7 +7110,7 @@ if (typeof(Number.prototype.toRad) === "undefined") {
     }
   }
 
-  
+
 JSSHOP.ui.stringToColour = function(str) {
     var hash = 0;
     for (var i = 0; i < str.length; i++) {
@@ -7124,7 +7127,7 @@ JSSHOP.ui.stringToColour = function(str) {
   /* ui functions for bootstrap */
 
 
-  
+
   JSSHOP.ui.doGenBSDDcb = function(tDDPloadVal, tDDCBel, tDDCBval, tDDCBtxt, thFnlcb) {
 
     tTDHstr = "tdDD" + tDDCBel;
@@ -7148,7 +7151,7 @@ JSSHOP.ui.stringToColour = function(str) {
                 tdOldEl.className = "bkgdClrWhite";
             }
             tdCurrEl = document.getElementById("liDD" + tDDCBel + tDDCBval);
-        tdCurrEl.className = "bkgdClrNrml";    
+        tdCurrEl.className = "bkgdClrNrml";
 
         tdHel.innerHTML = tDDCBtxt;
         tMainEL.value = tDDCBval;
@@ -7165,14 +7168,14 @@ JSSHOP.ui.stringToColour = function(str) {
 
     }
    //  alert("doGenDDcb: " + tDDCBel + " " + tDDCBval + " " + tDDCBtxt);
-     
+
     };
 
 
 
   JSSHOP.ui.getBSDDOptsO = function() {
     tBSDDOptsO = {};
-    tBSDDOptsO["ddtype"] = "noQvalue";    
+    tBSDDOptsO["ddtype"] = "noQvalue";
     tBSDDOptsO["fld"] = "noQvalue";
     tBSDDOptsO["fldcls"] = "nav-link dropdown-toggle txtSmall";
     tBSDDOptsO["icn"] = "noQvalue";
@@ -7186,7 +7189,7 @@ JSSHOP.ui.stringToColour = function(str) {
     tBSDDOptsO["horvert"] = "vertical";
     tBSDDOptsO["cb"] = "doGenDDcb";
    //  tDDBojA["kvIcnsObj"] =  {"public":"&#xe5cd;","private":"&#xe5cd;","members":"noQvalue"};
- 
+
     return tBSDDOptsO;
     };
 
@@ -7242,7 +7245,7 @@ JSSHOP.ui.stringToColour = function(str) {
             tDDItmCls = "";
             if(key == tDDelem.value) {
                 tDDItmCls = "bkgdClrNrml";
-            }  
+            }
             if(tBBSSObj.kvIcnsObj) {
             if(tBBSSObj.kvIcnsObj[key]) {
             if(tBBSSObj.kvIcnsObj[key] == "noQvalue") {
@@ -7315,7 +7318,7 @@ JSSHOP.ui.stringToColour = function(str) {
 
   // end ui functions
 */
- 
+
 
 /*
 * shop funcitions
@@ -7373,7 +7376,7 @@ var xdoAddFnsh = function(theObj,b,iei) {
     tmpDOs = null;
     tmpDOs = {};
     tmpDOs["ws"] = "where ci_uid=? and ci_coid=? and ci_cartqty >? and ci_rtype=? and ci_cartid=?";
-    tmpDOs["wa"] = [quid,cid,0,5,cartID]; 
+    tmpDOs["wa"] = [quid,cid,0,5,cartID];
     oi = getNuDBFnvp("qcartitem",5,null,tmpDOs);
     doQComm(oi["rq"], null, "setPopCartIArr");
 
@@ -7414,7 +7417,7 @@ tmpVindex = iei;
 tsa = {};
 tsa = currProdsArr[thePrdsArna][iei];
 // alert("JSSHOP.shop.doQIadd"  + thePrdsArna + ":: " + iei + ":: " + JSON.stringify(currProdsArr[thePrdsArna][iei]));
- 
+
 strRecID = tsa._id;
 strRecType = 51;
 
@@ -7456,7 +7459,7 @@ JSSHOP.shop.doItemShowPop = function() {
 
 
 
- 
+
 
 
 JSSHOP.shop.doCartAddPop = function() {
@@ -7487,15 +7490,15 @@ JSSHOP.shop.getIShowstr = function (thePrdsArna, rid, tmprhtml) {
 
 
 JSSHOP.shop.getPrdPriceStr = function(thePrdsArna, prcInt, prcID, prcA, prcB){
- 
+
 	 // retStrPrHtml +=  "<img src=\"images/cart_r.gif\" class=\"crsrPointer icndbtn\"  id=\"tdCI" + thePrdsArna  + prcID + "\" onclick=\"javascript:JSSHOP.shop.doQIadd('" + thePrdsArna + "',this.id," + prcID + "," + prcInt + ");\">";
 
- 
+
 		try {
  	na = prcA - prcB;
 	nd = Math.round((na / prcA) * 100);
 	retStrPrHtml = "";
-        retStrPrHtml =  prcB +   " \u20AC"; // unicode ? is 
+        retStrPrHtml =  prcB +   " \u20AC"; // unicode ? is
 	 // retStrPrHtml =  "<br><span class=\"txtBig txtClrDlg\">" + prcB + "</span>";
 	//  retStrPrHtml +=  "<img src=\"images/cart_r.gif\" class=\"crsrPointer icndbtn\"  id=\"tdCI" + thePrdsArna + prcID + "\" onclick=\"javascript:JSSHOP.shop.doQIadd('" + thePrdsArna + "',this.id," + prcID + "," + prcInt + ");\">";
 
@@ -7516,10 +7519,10 @@ JSSHOP.shop.getPrdImgStr = function(tTAnme, tmpVala){
 		}
  		if(tmpVala.indexOf(".") != -1) {
 		if((tTAnme == "prodpg") || (tTAnme == "modItem")) {
-		retIstrI = "images/pimgs/" + tmpVala;	
+		retIstrI = "images/pimgs/" + tmpVala;
 		} else {
-		retIstrI = "images/pimgs/s_thumb" + tmpVala;	
-		}  
+		retIstrI = "images/pimgs/s_thumb" + tmpVala;
+		}
 		}
 		if(isPhP == "no") {
 
@@ -7546,7 +7549,7 @@ JSSHOP.shop.getPrdImgStr = function(tTAnme, tmpVala){
 		retIstrI = "data:image/jpeg;base64, " + fullIstr;
 
             } else {
- 
+
 		tmpEstr = app.doGifStr(tmpVala);
 		document.getElementById("fldChallArray").value = tmpEstr;
 		fullIstr = document.getElementById("fldChallArray").value;
@@ -7572,11 +7575,11 @@ JSSHOP.shop.getPrdImgStr = function(tTAnme, tmpVala){
 
 JSSHOP.shop.setPrdImg = function(tsCatArrNm, tCIL) {
 try {
- 
+
 if(ntImgCtr[tsCatArrNm] >= tCIL){
 clear(tsCatArrNm)();
 // currPgTitle = "c" + JSSHOP.getUnixTimeStamp();
-// document.title = currPgTitle; 
+// document.title = currPgTitle;
 } else {
 ass = null;
 ass = currProdsArr[tsCatArrNm][ntImgCtr[tsCatArrNm]];
@@ -7592,12 +7595,12 @@ ass = currProdsArr[tsCatArrNm][ntImgCtr[tsCatArrNm]];
 	} else {
        document.getElementById(tsCatArrNm + ass._id).src = image.src;
 	}
-	   } else { 
+	   } else {
 	   // alert(tsCatArrNm + ass._id);
 	   }
 	ntImgCtr[tsCatArrNm] = ntImgCtr[tsCatArrNm] + 1;
 	// currPgTitle = JSSHOP.getUnixTimeStamp();
-	// document.title = currPgTitle; 
+	// document.title = currPgTitle;
     }
     image.onerror = function() {
 	   ntImgCtr[tsCatArrNm] = ntImgCtr[tsCatArrNm] + 1;
@@ -7615,14 +7618,14 @@ ntImgCtr[tsCatArrNm] = ntImgCtr[tsCatArrNm] + 1;
 // clear(tsCatArrNm)();
 }
 };
- 
- 
+
+
 
 
 
 JSSHOP.shop.setCatPrdImgs = function(tCatArrNm) {
 try {
- 
+
 ntImgCtr[tCatArrNm] = 0;
 restart(tCatArrNm, function() { JSSHOP.shop.setPrdImg(tCatArrNm, currProdsArr[tCatArrNm].length) }, currImgSleep)();
 // JSSHOP.startNuIntrvlEvnt(tCatArrNm,  function() { JSSHOP.shop.setPrdImg(tCatArrNm, currProdsArr[tCatArrNm].length) }, currImgSleep);
@@ -7645,7 +7648,7 @@ alert("rndrPrdMedia " + e);
 
 
 JSSHOP.shop.getPrdMedia = function(tmpCatId,tmpIid,tmpGPMCB) {
- 
+
 try {
     tmpDOs = null;
     tmpDOs = {};
@@ -7654,22 +7657,22 @@ try {
     tmpDOs["ws"] = "where m_coid=? and m_pid=?";
     tmpDOs["wa"] = [cid,tmpIid];
     oi = getNuDBFnvp("qmedia", 5, null, tmpDOs);
-    doQComm(oi["rq"], null,tmpGPMCB); 
+    doQComm(oi["rq"], null,tmpGPMCB);
 } catch(e) {
 alert("JSSHOP.shop.getPrdMedia: " + e);
 }
 };
- 
 
 
 
-/* 
-* this function takes an items array and returns 
+
+/*
+* this function takes an items array and returns
 * the html for displaying those items
 */
 
 JSSHOP.shop.getPrdsFullStr = function(thePrdsArna, thePrdsArr, thePrdsClss, thePrdsElem, thePrdsCB){
- 
+
 
 currProdsArr[thePrdsArna] = thePrdsArr;
 // alert("getPrdsFullStr: " + JSON.stringify(thePrdsArr));
@@ -7696,13 +7699,13 @@ strMLinks = "";
 strImgDsct = "";
 
 var len = thePrdsArr.length;
- 
+
 tstr = "";
 iint = 0;
 
 // product-grid
 strHtml += "<div><ol class=\"float\" style=\"list-style:none;\">";
- 
+
 ts = null;
 
 while(iint < len) {
@@ -7723,19 +7726,19 @@ strImgDsct = "";
       strImgDsct += "<a href=\"javascript:eindex('aa-show-item','pid=aa-show-item&itemid=" + ts._id + "&cid=" + ts.i_coid + "&catid=" + ts.i_catid + "');\">";
 	if(upRefs == "r") {
       strImgDsct += "<img id=\"" + thePrdsArna +  ts._id + "\" src=\"images/misc/example_thumb.png\" class=\"prodRowImage\">";
-	} else {	
+	} else {
       strImgDsct += "<img id=\"" + thePrdsArna +  ts._id + "\" src=\"images/misc/example_thumb.png\" class=\"prodImage\">";
 	}
       strImgDsct += "</a>";
 	}
-   
+
 
 	if((thePrdsArna == "prodpg") && (pid == "aa-show-item")){
  	strHtml += "<li  class=\"prodBigBox\">";
  	} else {
 	if(upRefs == "r") {
  	 strHtml += "<li  class=\"prodRowBox\" style=\"width:100%;\">";
- 
+
 
  	} else {
 	strHtml += "<li class=\"prodBox float-item\" style=\"\">";
@@ -7766,7 +7769,7 @@ strImgDsct = "";
 	if(thePrdsArna == "prodpg") {
 
 
- 
+
 
 
 
@@ -7780,8 +7783,8 @@ strImgDsct = "";
 
 
 
- 
- 	
+
+
 
 
 
@@ -7789,10 +7792,10 @@ strImgDsct = "";
 
 	 strHtml += "<span class=\"txtBold txtClrDrkGrn\"  style=\"margin: 15px;float:right;\">" + strPriceHtml + "</span>";
 
- /* no cart for now 
+ /* no cart for now
 	strHtml += "<div  id=\"tdCI" + ts._id + "\" onclick=\"javascript:JSSHOP.shop.doQIadd('" + thePrdsArna + "',this.id,'" + ts._id + "','" + iint + "');\" class=\"cls_button cls_button-xxsmall bkgdClrNrml brdrClrDlg txtClrHdr\">";
 	strHtml += "<i class=\"material-icons\" alt=\"add cart\" title=\"add\" value=\"shopping_cart\">&#xe8cc;</i>";
-	strHtml += "<i class=\"material-icons\" alt=\"add cart\" title=\"add\" value=\"add\">&#xe145;</i>"; 
+	strHtml += "<i class=\"material-icons\" alt=\"add cart\" title=\"add\" value=\"add\">&#xe145;</i>";
          // <img src=\"images/cart_r.gif\" class=\"icnsmlbtn brdrClrWhite crsrPointer\">";
 	strHtml += "</div>";
     */
@@ -7807,15 +7810,15 @@ strImgDsct = "";
     if(thePrdsArna == "prodpg") {
 	strHtml += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\"  onclick=\"JSSHOP.ui.showMsgBox('product', ts._id,'showMsgSave');\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span>";
     }
- 
+
 	strHtml += "</div>";
- 
+
 	strHtml += "<input type=\"hidden\" id=\"prd" + 5 + iint + "\" value=\"\">";
     strHtml += "<div class=\"clearfix\"></div>";
 	strHtml += "</li>";
- 
+
 	}
- 
+
 } catch(e) {
 // strHtml += e + "<br>";
 }
@@ -7848,11 +7851,11 @@ JSSHOP.shop.loadCatChunk = function (theCurrPage) {
     tmpDvPartOpts = document.createElement("div");
     tmpDvPartOpts.innerHTML = tmpDvOLStr;
     // document.getElementById("includedContent").appendChild(tmpDvPartOpts);
-     
+
      // document.getElementById("dvEBSearchRes").appendChild(trrDiv);
      document.getElementById("dvEBSearchRes").innerHTML = raresp;
 
-      
+
         var swiper = new Swiper('.swiper', {
             slidesPerView: 1,
             spaceBetween: 30,
@@ -7878,7 +7881,7 @@ JSSHOP.shop.loadCatChunk = function (theCurrPage) {
     }
 
 };
- 
+
 // to delete. will try shared.getGenPagination
 
 JSSHOP.shop.getDefaultPageNav = function(currentPage, nrOfPages) {
@@ -7889,11 +7892,11 @@ try {
 var delta = 1,range = [];
 pgnString = "<ol class=\"pagination\">";
 startPg = (currentPage - delta) > 0 ? currentPage - delta : 1;
-endPg = (currentPage + delta + 2) > nrOfPages ? nrOfPages : currentPage + delta + 2; 
+endPg = (currentPage + delta + 2) > nrOfPages ? nrOfPages : currentPage + delta + 2;
 
 for(ika = startPg; ika < endPg; ika++) {
 range.push(ika);
-}  
+}
 range.push(endPg);
 
 		if(startPg - 2 > 0) {
@@ -7908,10 +7911,10 @@ range.push(endPg);
 		} else {
 	      pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">...</a></li>";
 		}
-		}	
- 
+		}
+
 		for(idd = 0; idd < range.length; idd++) {
- 
+
 		currPAlink = "javascript:scrollToElement('dvHdr');JSSHOP.shop.loadCatChunk(" + range[idd] + ")";
  		if(range[idd] == currentPage + 1) {
 	      pgnString += "<li class=\"page\"><b>" + range[idd] + "</b></li>";
@@ -7928,13 +7931,13 @@ range.push(endPg);
 		} else {
 	      pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">...</a></li>";
 		}
-		}		
+		}
 
 
  		if(endPg + 2 <= nrOfPages) {
 		currPAlink = "javascript:scrollToElement('dvHdr');JSSHOP.shop.loadCatChunk(" + nrOfPages + ")";
 	      pgnString += "<li class=\"page\"><a href=\"" + currPAlink + "\">" + nrOfPages + "</a></li>";
-		}	
+		}
             pgnString += "</ol>";
     		return pgnString;
 
@@ -7943,12 +7946,12 @@ alert(e);
 }
 };
 
- 
+
 
 
 
 JSSHOP.shop.renderNuCartItems = function(tmpJustTotals, tmpUseCloseLnk, tmpNumCItems) {
- 
+
     tstr = "";
     iint = 0;
     ppint = 1;
@@ -7961,7 +7964,7 @@ JSSHOP.shop.renderNuCartItems = function(tmpJustTotals, tmpUseCloseLnk, tmpNumCI
     len = tmpNumCItems;
     }
     var strOnlyTtls = "";
-    strHtml = "<div class=\"txtSmall txtBold mintwofh highZ tatCross\">"; 
+    strHtml = "<div class=\"txtSmall txtBold mintwofh highZ tatCross\">";
     if(tmpUseCloseLnk == "y") {
     strHtml += "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrRed txtBold brdrClrRed crsrPointer\" style=\"float:right\">Close</div>";
     }
@@ -7971,7 +7974,7 @@ JSSHOP.shop.renderNuCartItems = function(tmpJustTotals, tmpUseCloseLnk, tmpNumCI
     if (currCartIArr.length) {
        strHtml += "<div onclick=\"javascript:document.location.href='index.html?pid=aa-show-cart&cid=" + cid + "&ppid=" + ppid + "'\" class=\"rtable txtClrHdr bkdgClrDlg txtBold crsrPointer\" style=\"margin-bottom: 18px;max-width: 65%; margin: 0 auto;text-align: center\">Go To Cart/Checkout -></div>";
    }
-            strHtml += "<div style=\"padding-top: 8px; margin: 8px; border-bottom: 1px dashed #D1D5D1;\">"; 
+            strHtml += "<div style=\"padding-top: 8px; margin: 8px; border-bottom: 1px dashed #D1D5D1;\">";
 	      strHtml += "</div>";
 
 	ts = null;
@@ -7985,7 +7988,7 @@ JSSHOP.shop.renderNuCartItems = function(tmpJustTotals, tmpUseCloseLnk, tmpNumCI
 
 
         if (ts._id > 0) {
- 
+
 
 	na = ts.ci_price_a - ts.ci_price_b;
 	nd = Math.round((na / ts.ci_price_a) * 100);
@@ -8012,7 +8015,7 @@ JSSHOP.shop.renderNuCartItems = function(tmpJustTotals, tmpUseCloseLnk, tmpNumCI
 
 	      strOnlyTtls += strTTHtml;
             strHtml +=  strTTHtml;
-  
+
 
 
 
@@ -8022,20 +8025,20 @@ JSSHOP.shop.renderNuCartItems = function(tmpJustTotals, tmpUseCloseLnk, tmpNumCI
              strHtml += "</div>";
 
 
-     
 
-            strHtml += "<div style=\"padding-top: 8px; margin: 8px; border-bottom: 1px dashed #D1D5D1;\">"; 
+
+            strHtml += "<div style=\"padding-top: 8px; margin: 8px; border-bottom: 1px dashed #D1D5D1;\">";
 	      strHtml += "</div>";
 
- 
-
- 
 
 
- 
+
+
+
+
             strHtml += "<input type=\"hidden\" id=\"prd" + 5 + iint + "\" value=\"\">";
 
- 
+
             strHtml += "<input type=\"hidden\" name=\"item_name_" + ppint + "\" value=\"" +  ts.ci_title + "\">";
             strHtml += "<input type=\"hidden\" name=\"item_number_" + ppint + "\" value=\"" +  ts._id + "\">";
             strHtml += "<input type=\"hidden\" name=\"quantity_" + ppint + "\" value=\"" + ts.ci_cartqty + "\">";
@@ -8047,8 +8050,8 @@ JSSHOP.shop.renderNuCartItems = function(tmpJustTotals, tmpUseCloseLnk, tmpNumCI
         iint++;
     }
     if (currCartIArr.length) {
- 
-      strHtml += "<div style=\"text-align: right\">Total:<b>" + cartTtl.toFixed(2) + "</b></div>"; 
+
+      strHtml += "<div style=\"text-align: right\">Total:<b>" + cartTtl.toFixed(2) + "</b></div>";
       strHtml += "<div onclick=\"javascript:document.location.href='index.html?pid=aa-show-cart&cid=" + cid + "&ppid=" + ppid + "'\" class=\"rtable txtClrHdr bkdgClrDlg txtBold crsrPointer\" style=\"margin-bottom: 18px;max-width: 65%; margin: 0 auto;text-align: center\">Go To Cart/Checkout -></div>";
 
    } else {
@@ -8067,7 +8070,7 @@ JSSHOP.shop.renderNuCartItems = function(tmpJustTotals, tmpUseCloseLnk, tmpNumCI
 	}
 
 return strHtml;
- 
+
 
 
 
@@ -8113,7 +8116,7 @@ function doUpdteMDDSlct(apld, aaw,aww,cww) {
         tDDiid = tPsLctPlarr[0];
         tDDiidx = tPsLctPlarr[1];
         }
-  
+
     console.log('doUpdteMDDSlct: ' +  apld + " :: " + aaw + " :: " + aww);
    switch(aww) {
     case "edit":
@@ -8139,7 +8142,7 @@ function doUpdteMDDSlct(apld, aaw,aww,cww) {
     default:
       alert('doUpdteMDDSlct - default');
       break;
-  
+
   }
   }
 
@@ -8155,7 +8158,7 @@ function jshp_ads_showUpdtsFeed(aaup,bbup,ccup) {
     tUdtsObj = null;
     tUdtsObj = "";
     tDDUdteObj = null;
- 
+
     currUpdateArr = null;
      currUpdateArr = "";
     currUpdateArr = [];
@@ -8167,7 +8170,7 @@ function jshp_ads_showUpdtsFeed(aaup,bbup,ccup) {
         tCanPost = "yes";
         tDDUpdateStr = "";
 
-        
+
 tDDUdtePLdStr  = tUdtsObj._id + ":" + ided;
 
 tUpdteListObj = null;
@@ -8178,7 +8181,7 @@ if((quid == tUdtsObj.p_uid) || (u_cat.value == "5")) {
     // tPrpMMListObj["delete"] = stxt[109];
     // tPrpMMListObj["privacy"] = stxt[101];
     }
- 
+
 tUpdteListObj["view"] = stxt[53];
 tUpdteListObj["share"] = stxt[72];
 tUpdteListObj["fav"] = stxt[73];
@@ -8204,7 +8207,7 @@ tUpdteListObj["fav"] = stxt[73];
         tDDUdteObj["kvIcnsObj"]["view"] = "&#xe8f4;";
         tDDUdteObj["kvIcnsObj"]["share"] = "&#xe80d;";
         tDDUdteObj["kvIcnsObj"]["fav"] = "&#xe87d;";
- 
+
 
 
         tDDUpdateStr = JSSHOP.ui.getNuBSdropDstr(tDDUdteObj);
@@ -8224,8 +8227,8 @@ svftObj["postauth"] = tPostsAuthObj;
          tUdtsStr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;margin: 0 auto;\">";
         } else if(tpauther == "co") {
          tUdtsStr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;margin: 0 auto;border-left: 4px solid #4caf50;\">";
-        } else if(tpauther == "anon") { 
-            tUdtsStr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;margin: 0 auto;border-left: 4px solid #9e9e9e;\">";    
+        } else if(tpauther == "anon") {
+            tUdtsStr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;margin: 0 auto;border-left: 4px solid #9e9e9e;\">";
         } else {
             tyyy = "ytt";
             tUdtsStr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;margin: 0 auto;\">";
@@ -8255,7 +8258,7 @@ svftObj["postauth"] = tPostsAuthObj;
 
         tUdtsStr += "<div class=\"mb-4\">";
 
- 
+
         tUpType = tUdtsObj.p_ptype;
 
 
@@ -8263,13 +8266,13 @@ svftObj["postauth"] = tPostsAuthObj;
         tZpUpPcntnt = tUdtsObj.p_content;
         tDcdedUcntnt = decodeURIComponent(tZpUpPcntnt);
         ttUpPcontent = LZString.decompressFromEncodedURIComponent(tDcdedUcntnt);
- 
+
         // tHtmlStrpd = ttUpPcontent.replace(/(<([^>]+)>)/ig,"");
         // only allow img and a tags
         if(pid == "aa-show-update") {
 //            javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=129 ')
 // if #PROPID: is present in content, replace with link to property
-         
+
            //  tUpPcontent = ttUpPcontent;
               tUpPcontent = ttUpPcontent.replace(/#PROPID:([0-9]+)/g, function(match, p1) {
                 return "<a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + p1 + "');\" class=\"txtClrHdr txtBold\"><u>#PROPID:" + p1 + "</u></a>";
@@ -8283,17 +8286,17 @@ svftObj["postauth"] = tPostsAuthObj;
         }
         }
         // tUpPcontent = tHtmlStrpd.substring(0, 100) + "...";
-       
+
         // modify returned string to add buttons and icons div here
 tUdtLnkStr = "<div class=\"bkdgClrWhite brdrClrHdr txtSmall txtBold\" style=\"padding:4px;margin:2px;\">";
 tUdtLnkStr += "<table style=\"margin:0 auto;width:100%;\"><tr><td>";
-// check if already a favorite and make it red if so   
+// check if already a favorite and make it red if so
 currFTclr = "menu-material-icons txtClrTtl";
  if(currFavsIdstr.indexOf(tUdtsObj._id + "::") != -1) {
 currFTclr = "menu-material-icons txtClrRed";
 }
-tUdtLnkStr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-update&tupid=" + tUdtsObj._id + "','" + tUdtsObj.p_title + "','images/ucontent/m_thumb" + tUdtsObj.p_image + "','" + tUdtsObj._id + "','btnFavs" + tUdtsObj._id + "');\"><i id=\"btnFavs" + tUdtsObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";   
-tUdtLnkStr += "</td>";  
+tUdtLnkStr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-update&tupid=" + tUdtsObj._id + "','" + tUdtsObj.p_title + "','images/ucontent/m_thumb" + tUdtsObj.p_image + "','" + tUdtsObj._id + "','btnFavs" + tUdtsObj._id + "');\"><i id=\"btnFavs" + tUdtsObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
+tUdtLnkStr += "</td>";
 tUdtLnkStr += "<td>";
 if(quid == tUdtsObj.p_uid) {
 tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"eindex('aa-edit-post', 'pid=aa-edit-post&tpstid=" + tUdtsObj._id + "');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"edit\" title=\"edit\" value=\"edit\">&#xe3c9;</i>" + " " + stxt[31] + "</span>";
@@ -8311,8 +8314,8 @@ if(tUpType == "pvideo") {
     // add the download icon and link here
 tUdtLnkStr += "<td>";
 var downloadLbl = (typeof stxt !== "undefined" && stxt[999]) ? stxt[999] : "Download";
- 
-tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\">";                    
+
+tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\">";
 tUdtLnkStr += "<a href=\"images/ucontent/" + tUdtsObj.p_vala + "\" download class=\"txtClrHdr\"><i class=\"menu-material-icons txtClrTtl\" alt=\"download\" title=\"download\" value=\"download\">&#xe2c4;</i>" + " " + downloadLbl + "</a></span>";
 tUdtLnkStr += "</td>";
 }
@@ -8333,11 +8336,11 @@ console.log("jshp_ads_showUpdtsFeed.tUdtLnkStr: " + tUdtLnkStr);
                 // imgprefx = "m_thumb";
                 imgprefx = "";
                 if(pid == "aa-show-update"){
-                imgprefx = "";    
+                imgprefx = "";
                 tUdtsStr += "<img src=\"images/ucontent/" + imgprefx + tUdtsObj.p_image + "\" alt=\"pimage\" class=\"img100p\">";
                              // add the share,msg,fav  buttons here
                 tUdtsStr += tUdtLnkStr;
-                
+
 
                 tUdtsStr += "<div id=\"dvUpdtCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + tUpPcontent + "</div>";
                 tUdtsStr += "<div id=\"dvUpdtCBtn\" class=\"clsPcntnt\" style=\"padding:10px;height:40px;\"><a href=\"javascript:void(0);\" class=\"txtClrHdr txtBold\" onclick=\"javascript:showMoreUpdtCntnt('dvUpdtCntnt','dvUpdtCBtn');\">" + stxt[110] + "</a></div>";
@@ -8369,20 +8372,20 @@ console.log("jshp_ads_showUpdtsFeed.tUdtLnkStr: " + tUdtLnkStr);
                         tRansSTr = Math.random().toString(36).substring(2, 7);
                         tDvaMpID = "dvUpMap" + tRansSTr;
                         tUdtsStr += "<div id=\"" + tDvaMpID +  "\" style=\"min-height: 240px; max-height: 240px; width: 100%;\"></div>";
-      
-                 
+
+
                  if(pid == "aa-show-update"){
                      tUdtsStr += tUdtLnkStr;
                                     tUdtsStr += "<div id=\"dvUpdtCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + tUpPcontent + "</div>";
                 tUdtsStr += "<div id=\"dvUpdtCBtn\" class=\"clsPcntnt\" style=\"padding:10px;height:40px;\"><a href=\"javascript:void(0);\" class=\"txtClrHdr txtBold\" onclick=\"javascript:showMoreUpdtCntnt('dvUpdtCntnt','dvUpdtCBtn');\">" + stxt[110] + "</a></div>";
-                                } else {       
+                                } else {
                 tUdtsStr += "<div class=\"bg-gray quantity px-4 pt-4\">";
                 tUdtsStr += tUpPcontent;
                 tUdtsStr += "</div>"; // end bg-gray quantity px-4 pt-4
-                        // add the share,msg,fav  buttons here   tUdtLnkStr  
-                         tUdtsStr += tUdtLnkStr;   
+                        // add the share,msg,fav  buttons here   tUdtLnkStr
+                         tUdtsStr += tUdtLnkStr;
                                 }
-                               
+
 
 
                         tALeavesObj = null;
@@ -8482,20 +8485,20 @@ setTimeout(
                             for(var key in tNwSptObj) {
                                 tNwSptArr.push(tNwSptObj[key]);
                             }
-                         
+
                             taNewPstr = "";
                             if(tUpPvrsObj["uptype"] == "props") {
 
                                 taNewPstr = JSSHOP.ads.getNuSwprPrpStr("cls" + tUdtsObj._id, tNwSptArr);
-                               
+
                             } else {
-                                taNewPstr = JSSHOP.ads.getNuSwiperUStr("cls" + tUdtsObj._id, tNwSptArr); 
-                            
+                                taNewPstr = JSSHOP.ads.getNuSwiperUStr("cls" + tUdtsObj._id, tNwSptArr);
+
                             }
                             tUdtsStr +=  taNewPstr;
 
                             if(pid == "aa-show-update"){
-                                  tUdtsStr += tUdtLnkStr; 
+                                  tUdtsStr += tUdtLnkStr;
                                                 tUdtsStr += "<div id=\"dvUpdtCntnt\" class=\"clsPcntnt\" style=\"padding:10px;height:300px;overflow:hidden;\">" + tUpPcontent + "</div>";
 
                 tUdtsStr += "<div id=\"dvUpdtCBtn\" class=\"clsPcntnt\" style=\"padding:10px;height:40px;\"><a href=\"javascript:void(0);\" class=\"txtClrHdr txtBold\" onclick=\"javascript:showMoreUpdtCntnt('dvUpdtCntnt','dvUpdtCBtn');\">" + stxt[110] + "</a></div>";
@@ -8506,11 +8509,11 @@ setTimeout(
                 tUdtsStr += "</div>"; // end bg-gray quantity px-4 pt-4
                 tUdtsStr += tUdtLnkStr;
                           }                          // add the share,msg,fav  buttons here
-            
+
                         }
 
-                                       
-                
+
+
                         taSwpCnfgObj = "";
                         taSwpCnfgObj = {};
                         taSwpCnfgObj["cls"] =  ".cls" + tUdtsObj._id;
@@ -8533,11 +8536,11 @@ setTimeout(
                          // setTimeout(function() { JSSHOP.ads.loadNuSwiperObj(tSwpCnfgObj); }, tIntTO);
                          console.log("jshp_ads_showUpdtsFeed.taSwpCnfgObj: " + JSON.stringify(taSwpCnfgObj));
                          currSwpCnfgArr.push(taSwpCnfgObj);
-                        
-                }     
-               
- 
- 
+
+                }
+
+
+
                 break;
                 case "pvideo":
                     var pvidId = "updVid_" + tUdtsObj._id;
@@ -8573,14 +8576,14 @@ setTimeout(
                  tUdtsStr += "<div class=\"mb-4\" style=\"width:100%;max-height:400px;max-width:400px;background-image: url('images/ucontent/" + tUdtsObj.p_image + "');\">";
                  // make the image "images/ucontent/" + tUdtsObj.p_image as background and add the play icon in the center, on click replace with video player
  // align it in middle of parent div with style=
- 
- 
+
+
                 // embedd the p_vala webm video file found in images/ucontent/ folder
                 tUdtsStr += "<video id=\"" + pvidId + "\" controls style=\"width:100%;max-height:400px;max-width:400px;\" poster=\"images/ucontent/" + tUdtsObj.p_image + "\">";
                 // add the poster attribute with the p_image as thumbnail
                 tUdtsStr += "<source src=\"images/ucontent/" + tUdtsObj.p_image + "\" type=\"image/jpeg\">";
                 tUdtsStr += "<source src=\"images/ucontent/" + tUdtsObj.p_vala + "\" type=\"video/webm\">";
-                tUdtsStr += "Your browser does not support the video tag."; 
+                tUdtsStr += "Your browser does not support the video tag.";
                 tUdtsStr += "</video>";
 
 
@@ -8596,11 +8599,11 @@ setTimeout(
                     tUdtsStr += "</div>";
                     tUdtsStr += "<script>(function(){var v=document.getElementById('" + pvidId + "');var a=document.getElementById('" + pvidLinkId + "');if(!v||!a){return;}var ids=" + JSON.stringify(pvidFramePropIds) + ";var segSec=" + pvidFrameDurationSec + ";var base=(typeof currWebHome==='string')?currWebHome:'" + currWebHome + "';var lng='" + usrlang + "';var mk=function(i){if(i<0||i>=ids.length){return ''; }return base + 'index.html?ditemid=' + ids[i] + '-' + lng;};var sync=function(){if(!ids.length){a.style.display='none';return;}var idx=Math.floor((v.currentTime||0)/segSec);if(idx<0){idx=0;}if(idx>=ids.length){idx=ids.length-1;}a.href=mk(idx);};v.addEventListener('loadedmetadata',sync);v.addEventListener('timeupdate',sync);sync();})();<\/script>";
                 }
-                
+
                 tUdtsStr += tUpPcontent;
                 tUdtsStr += "</div>"; // end bg-gray quantity px-4 pt-4
                 tUdtsStr += "</div>"; // end mb-4
-                    // add a download link for the video file to tUdtLnkStr += 
+                    // add a download link for the video file to tUdtLnkStr +=
 
                  // add the share,msg,fav  buttons here
                     tUdtsStr += tUdtLnkStr;
@@ -8620,19 +8623,19 @@ setTimeout(
     tDVufeeds = document.createElement("div");
     tDVufeeds.innerHTML = tUdtsStr;
     // document.getElementById("dvMainUdtsLst").innerHTML = tUdtsStr;
- 
+
         document.getElementById("includedContent").appendChild(tDVufeeds);
-   
+
     console.log("jshp_ads_showUpdtsFeed: " + tUdtsStr);
 
   if(tHasSlider == "yes") {
     console.log("jshp_ads_showUpdtsFeed.currSwpCnfgArr: " + JSON.stringify(currSwpCnfgArr));
     JSSHOP.ads.loadNuSwiperArr(currSwpCnfgArr);
- 
+
    //  JSSHOP.ads.loadNuSwiperArr(currSwpCnfgArr);
 } // end of if tHasSlider
- 
- 
+
+
 }
 // Further improved Updates Feed with privacy logic
 JSSHOP.ads.doNurUpdatesFeed = function(tUFCnfObj) {
@@ -8739,7 +8742,7 @@ JSSHOP.ads.doUpdatesFeed = function(tUFCnfObj) {
     tupcb = "donada";
     tuppstid = 0;
     tQstr = "";
-    
+
     if(tUFCnfObj.uppstid) {
         tuppstid = tUFCnfObj.uppstid;
         tQstr += "select psts.*, u.u_icon, u.u_fullname from qposts psts, quser u where psts._id > 0 and psts.p_uid = u._id and psts._id = " + tuppstid;
@@ -8765,7 +8768,7 @@ tQstr += " order by case when psts.p_lang = '" + usrlang + "' then 1 else 2 end,
     // tQstr += " order by psts._id desc";
     if(tUFCnfObj.uplmt) {
         tuplmt = tUFCnfObj.uplmt;
-        tQstr += " limit " + tuplmt; 
+        tQstr += " limit " + tuplmt;
     }
 
 
@@ -8847,7 +8850,7 @@ JSSHOP.ads.intDemoEditor = function() {
         content_css: [
             'css/x_dev.css','css/bootstrap.min.css','css/font-awesome.min.css','css/primer.css'
         ]
-            
+
 
         // ads custom fumction to preview the content
         // setup: function (editor) {
@@ -8870,9 +8873,9 @@ JSSHOP.ads.intDemoEditor = function() {
         //         }
         //     });
         // }
-        
+
     };
-  
+
 
     if(usrlang == "en_us") {
     tinymce.init(tDemoMCEobj);
@@ -8882,7 +8885,7 @@ JSSHOP.ads.intDemoEditor = function() {
         tDemoMCEobj["language_url"] = "js/tinymce/langs/" + tTinyTransFileStr + ".js";
         tinymce.init(tDemoMCEobj);
     }
-    
+
 
 
     editor = tinymce.activeEditor;
@@ -8905,11 +8908,11 @@ JSSHOP.ads.intDemoEditor = function() {
                 setup: function (editor) {
                     this.setValue('Title');
                 }
-             
+
             })
         }
     });
- 
+
     */
 tinymce.PluginManager.add('mediapop', function (editor, url) {
     // Add toolbar button
@@ -8924,11 +8927,11 @@ tinymce.PluginManager.add('mediapop', function (editor, url) {
         icon: false,
         onclick: openMediaPickerDialog
     });
-});    
+});
 
 tinymce.PluginManager.add('bgcolorpicker', function (editor, url) {
-    
-     
+
+
     // Add toolbar button
     editor.addButton('bgcolorpicker', {
         text: stxt[665], // Background Color
@@ -8957,7 +8960,7 @@ tinymce.PluginManager.add('textshadow', function(editor, url) {
     });
 });
 tinymce.PluginManager.add('flyerlayout', function(editor, url) {
-    editor.addButton('flyerlayout', {   
+    editor.addButton('flyerlayout', {
         text: stxt[666], // Flyer Layouts
         onclick: function() {
             openFlyerLayoutDialog();
@@ -8981,7 +8984,7 @@ tinymce.PluginManager.add('flyersmodal', function(editor, url) {
         onclick: openFlyersModalDialog
     });
     // Add menu item
-    editor.addMenuItem('flyersmodal', {     
+    editor.addMenuItem('flyersmodal', {
         text: 'Flyers',
         icon: false,
         onclick: openFlyersModalDialog
@@ -9153,7 +9156,7 @@ function setFlyerStyle(styleName) {
 }
 
 
-function openMediaPickerDialog() { 
+function openMediaPickerDialog() {
       var amppropArr = [];
     try {
         if (window.currPstsPrpsArr && window.currPstsPrpsArr.length) {
@@ -9218,7 +9221,7 @@ function openMediaPickerDialog() {
         imagesHtml += '<img src="' + imgSrc + '" style="width:90px;height:70px;object-fit:cover;border-radius:6px;" />';
         imagesHtml += '<div style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:5px;">' + title + '</div></div>';
         }
-    
+
 
     imagesHtml += '<p style="margin-top:10px;font-size:12px;color:#666;">' + stxt[654] + '</p></div>';
 
@@ -10206,7 +10209,7 @@ JSSHOP.ads.getEditorUsrBoxStr = function(tUsrDtObj) {
     tEdtrUsrStr += '</div>';
        tEdtrUsrStr += "</td><td><span style=\"font-size: 32px; color: #007bff; margin-right: 10px;\">&#8226;</span></td></tr></table>";
 
-   
+
     tEdtrUsrStr += '</div>';
     // end of seller info box
     tEdtrUsrStr += '</td></tr></table>'; // end of wrapping table
@@ -10297,10 +10300,10 @@ JSSHOP.ads.getEdtrPrpListStr = function(tPrpDtarr, flyrstyle = "default") {
     }
 
         tEdtrPrpsStr += "<div class=\"property-flyer\" style=\"background-color:#FFFFFF;background: linear-gradient(to bottom,rgb(94, 157, 182), #ffffff); padding: 20px; " + gradientStyle + "\" id=\"dvTMCdemo\">";
-    
+
     tEdtrPrpsStr += "<div class=\"gallery-item\" style=\"position:relative;margin:20px;font-size:32px;font-weight:bold;text-shadow:3px 3px 6px rgba(0,0,0,0.8);line-height:1.2;text-transform:uppercase;letter-spacing:1px;max-width:100%;word-wrap:break-word;background: rgba(255,255,255,0.9); border-radius: 10px; margin: 10px; padding: 5px; box-shadow: 1px 4px 8px rgba(0,0,0,0.1); text-align: center;\">";
 
-  
+
    tEdtrPrpsStr += "<table style=\"margin-bottom:10px;margin: 0 auto;\">";
     tEdtrPrpsStr += "<tr><td class=\"txtBold txtClrHdr\" style=\"text-align:center;\"><span style=\"font-size:18px;\">" + stxt[10]+ "... " + stxt[10] + "...</span></td></tr>";
     tEdtrPrpsStr += "<tr><td class=\"txtSmall txtClrHdr\" style=\"text-align:center;\"><span style=\"font-size:14px;\">" + stxt[40]+ "... " + stxt[40] + "... " + stxt[40] + "...</span></td></tr>";
@@ -10351,12 +10354,12 @@ tEdtrPrpsStr += JSSHOP.ads.getEditorUsrBoxStr("nada");
     // add clear fix to the end of the div
     tEdtrPrpsStr += "<div style=\"clear:both;\" class=\"clearfix\"></div>";
     tEdtrPrpsStr += "</div>"; // end of vertical gradient div
-    
-    
+
+
     return tEdtrPrpsStr;
 };
 
- 
+
 JSSHOP.ads.getEdtrPrpGridStr = function(tPrpDtarr, flyrstyle = 'modern') {
     let tEdtrPrpsStr = "";
     let gradientStyle = "";
@@ -10389,7 +10392,7 @@ JSSHOP.ads.getEdtrPrpGridStr = function(tPrpDtarr, flyrstyle = 'modern') {
         let title = LZString.decompressFromEncodedURIComponent(tPrpDtObj.ptitle);
         let location = tPrpDtObj.city + ", " + tPrpDtObj.state;
         let price = tPrpDtObj.price + "  &euro;";
-       
+
         // Property card - larger for better mobile readability
         tEdtrPCntStr += `<div class=\"gallery-item\" style="float: left; width: ${tPrpDtarr.length > 2 ? '30%' : '45%'}; margin: 5px; background: rgba(255,255,255,0.95); border-radius: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); overflow: hidden;">`;
         tEdtrPCntStr += `<img src="${imgSrc}" alt="Property Image" style="width: 100%; height: 180px; object-fit: cover;">`;
@@ -10403,7 +10406,7 @@ JSSHOP.ads.getEdtrPrpGridStr = function(tPrpDtarr, flyrstyle = 'modern') {
     tEdtrPCntStr += '<div style="clear: both;"></div>';
     tEdtrPCntStr += '</div>'; // end of properties container
     tEdtrPCntStr += '<div style="clear: both;"></div>';
- 
+
 
     let sulltitlestr = "";
     for(let prop of tPrpDtarr){
@@ -10419,8 +10422,8 @@ JSSHOP.ads.getEdtrPrpGridStr = function(tPrpDtarr, flyrstyle = 'modern') {
 
     // !! Table cell wrapper
     tEdtrPrpsStr += '<table><tr><td>' + tEdtrHdrStr + '</td></tr><tr><td><span style=\"font-size: 32px; color: #007bff; margin-right: 10px;\">&#8226;</span></td></tr><tr><td>' + tEdtrPCntStr + '</td></tr><tr><td><span style=\"font-size: 32px; color: #007bff; margin-right: 10px;\">&#8226;</span></td></tr><tr><td>';
-    
-    
+
+
     tEdtrPrpsStr += JSSHOP.ads.getEditorUsrBoxStr("nada");
 
     tEdtrPrpsStr += '</td></tr><tr><td><span style=\"font-size: 32px; color: #007bff; margin-right: 10px;\">&#8226;</span></td></tr></table>';
@@ -10430,7 +10433,7 @@ JSSHOP.ads.getEdtrPrpGridStr = function(tPrpDtarr, flyrstyle = 'modern') {
 };
 
 
- 
+
 
 JSSHOP.ads.initInteractiveElements = function(containerId) {
     const container = document.getElementById(containerId);
@@ -10830,7 +10833,7 @@ JSSHOP.ads.getInteractiveNwstEdtrPrpStr = function(tPrpDtarr, style = 'modern') 
     tEdtrPrpsStr += '</div>';
 
     tEdtrPrpsStr += '</div>';
- 
+
 
     return tEdtrPrpsStr;
 };
@@ -10880,14 +10883,14 @@ JSSHOP.ads.getUpdatePVrs = function(tPVUpdtType) {
     switch(tPVUpdtType) {
         case "pcarousel":
 
-  
+
     tUpdatePVrs["cnfg"] = {};
     tUpdatePVrs["cnfg"]["inpSwprCntnt"] = inpSwprCntnt.value;
     tUpdatePVrs["cnfg"]["inpSwprType"] = inpSwprType.value;
     tUpdatePVrs["cnfg"]["inpSwprNav"] = inpSwprNav.value;
     tUpdatePVrs["cnfg"]["inpSwprPag"] = inpSwprPag.value;
     tUpdatePVrs["cnfg"]["inpSwprLoop"] = inpSwprLoop.value;
-    if(inpSwprCntnt.value == "props") { 
+    if(inpSwprCntnt.value == "props") {
         tUpdatePVrs["data"] = currSlctdPrpsObj;
         tUpdatePVrs["uptype"] = "props";
     } else if(inpSwprCntnt.value == "users") {
@@ -10991,12 +10994,12 @@ JSSHOP.ads.getNuxSwprPrpStr = function(tSwpCla, tSwParr) {
         tSwpStr += "<div class=\"swiper-slide\">";
         tSuTstr = "<img class=\"rtable\" src=\"" + currPrpImgsFldr + "/m_thumb" + tSwPObj.pimage + "\" style=\"width:100%;\">";
 /*
-        tSwpStr += "<table class=\"\">"; 
+        tSwpStr += "<table class=\"\">";
         tSwpStr += "<tr><td>" + tSuTstr + "</td></tr><tr><td>" + tSwPObj.ptitle + "</td></tr>";
         tSwpStr += "</table>";
         */
         tSwpStr += "</div>";
- 
+
     }
     tSwpStr += "</div>";
     tSwpStr += "<div class=\"swiper-pagination clsP" + tSwpCla + "\"></div>";
@@ -11011,7 +11014,7 @@ JSSHOP.ads.getNuSwprPrpStr = function(tdSwpCla, taSwUarr) {
     taWSwpStr = "";
     taWSwpStr += "<div class=\"swiper " + tdSwpCla + "\" style=\"max-height:220px;\">";
     taWSwpStr += "<div class=\"swiper-wrapper\" style=\"min-height:60px;max-height:180px;max-width:99%;margin: 0 auto\">";
-    
+
     for(iAA = 0; iAA < taSwUarr.length; iAA++) {
         taSwUObj = taSwUarr[iAA];
         console.log("JSSHOP.ads.getNuSwprPrpStr.taSwUObj: " + JSON.stringify(taSwUObj));
@@ -11020,7 +11023,7 @@ JSSHOP.ads.getNuSwprPrpStr = function(tdSwpCla, taSwUarr) {
         // tShrtSwpStr += price and state
         tShrtSwpStr = tDBHObj[taSwUObj.ptype];
         tShrtSwpStr += " - " + taSwUObj.price + "<span class=\"txtSmall txtClrGrey\">\u20AC</span>";
-        tShrtSwpStr += "<br>" + taSwUObj.state;  
+        tShrtSwpStr += "<br>" + taSwUObj.state;
         if(tLZunzSwpr.length > 20) {
            //  tShrtSwpStr = tLZunzSwpr.substring(0, 20) + "...";
         }
@@ -11057,11 +11060,11 @@ JSSHOP.ads.getNuSwiperUStr = function(tSwpCla, tSwUarr) {
         tSwUObj = tSwUarr[iSS];
         tSuTstr = "<img src=\"images/user/" + tSwUObj.u_icon + "\" style=\"width:100%;\">";
         tSwpStr += "<div class=\"swiper-slide\">";
-        tSwpStr += "<table class=\"\">"; 
+        tSwpStr += "<table class=\"\">";
         tSwpStr += "<tr><td>" + tSuTstr + "</td></tr><tr><td>" + tSwUObj.u_fullname + "</td></tr>";
         tSwpStr += "</table>";
         tSwpStr += "</div>";
- 
+
     }
     tSwpStr += "</div>";
     tSwpStr += "<div class=\"swiper-pagination clsP" + tSwpCla + "\"></div>";
@@ -11157,7 +11160,7 @@ JSSHOP.ads.doImgPostCnfgPop = function() {
         tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprCnttObj);
 
         tSCPopStr += "<br><br><span style=\"\" class=\"cls_button cls_button-small bkgdClrHdr txtClrWhite\" onclick=\"JSSHOP.ui.closeLbox();JSSHOP.ads.trnsltImgPstObj();\">OK</span>";
-        tSCPopStr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-small  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";   
+        tSCPopStr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-small  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";
         JSSHOP.ui.popFillObox(tSCPopStr, "&#xe5cd;", "Image Update Config", "yes", "no");
         //         setTimeout(function() { doSwpCntntPick("inpSwprCntnt", inpSwprCntnt.value, "Properties"); }, 1000);
 
@@ -11668,8 +11671,8 @@ JSSHOP.ads.doMapPostCnfgPop = function() {
         tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDmapCaptureMoveendObj);
 
         tSCPopStr += "<span style=\"\" class=\"cls_button cls_button-small bkgdClrHdr txtClrWhite\" onclick=\"JSSHOP.ui.closeLbox();JSSHOP.ads.trnsltMapPstObj();\">OK</span>";
-        tSCPopStr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-small  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";   
-    
+        tSCPopStr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-small  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";
+
         JSSHOP.ui.popFillObox(tSCPopStr, "&#xe5cd;", "Image Update Config", "yes", "no");
         //         setTimeout(function() { doSwpCntntPick("inpSwprCntnt", inpSwprCntnt.value, "Properties"); }, 1000);
 
@@ -11751,7 +11754,7 @@ JSSHOP.ads.doSwprConfigPop = function() {
             tDDXtraCntObj["kvIcnsObj"]["images"] = "&#xe5cd;";
             tDDXtraCntObj["kvIcnsObj"]["templates"] = "&#xe5cd;";
             tDDXtraCntObj["kvIcnsObj"]["snippets"] = "&#xe5cd;";
- 
+
             */
     try {
         tSCPopStr = "";
@@ -11835,7 +11838,7 @@ JSSHOP.ads.doSwprConfigPop = function() {
         tSCPopStr += JSSHOP.ui.getNuBSdropDstr(tDDswprNavObj);
 
 
-        
+
         // swiper use loop yes or no
         tDDswprLoopObj = JSSHOP.ui.getBSDDOptsO();
         tDDswprLoopObj["ddtype"] = "noQvalue";
@@ -11984,13 +11987,13 @@ JSSHOP.ads.doSwprConfigPop = function() {
 
     */
 
-    
+
         tSCPopStr += "<span style=\"\" class=\"cls_button cls_button-small bkgdClrHdr txtClrWhite\" onclick=\"JSSHOP.ui.closeLbox();JSSHOP.ads.trnsltSwiperObj();\">OK</span>";
-        tSCPopStr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-small  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";   
-        
+        tSCPopStr += "&nbsp;&nbsp;&nbsp;<span style=\"\" class=\"cls_button cls_button-small  bkgdClrGrey txtClrHdr\" onclick=\"JSSHOP.ui.closeLbox();\">Cancel</span>";
+
         JSSHOP.ui.popFillObox(tSCPopStr, "&#xe5cd;", "Swiper Config", "yes", "no");
        // setTimeout(function() { doSwpCntntPick("inpSwprCntnt", inpSwprCntnt.value, "Properties"); }, 1000);
-        
+
 } catch(e) {
 console.log("doSwiperConfigPop: " + e);
 }
@@ -12016,7 +12019,7 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
             }
  			tstr += "<img src=\"admin/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
 			tstr += "</div>";
- 
+
 			iint++;
 		}
 		document.getElementById("dvProdImgs").innerHTML = tstr;
@@ -12031,7 +12034,7 @@ var panorama;
 async function initGMap() {
     tLocLat = ploclat.value;
 tLocLng = ploclng.value;
- 
+
     if(currGglSVloaded == "no") {
         currGglSVloaded = "yes";
 (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
@@ -12043,20 +12046,20 @@ tLocLng = ploclng.value;
     }
 
       var { Map3DElement, MapMode, Marker3DElement, Marker3DInteractiveElement } = await google.maps.importLibrary("maps3d");
- 
+
     var { LatLng } = await google.maps.importLibrary("geometry");
      var { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
      var { PinElement } = await google.maps.importLibrary("marker");
     var { DrawingLibrary } = await google.maps.importLibrary("drawing");
- 
-     
+
+
   }
- 
 
 
- 
 
- 
+
+
+
 
 
 var setNwstPropImages = function(theAIa, theAIb, theAIc) {
@@ -12096,7 +12099,7 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
         // Enhanced property flyer with all elements overlaid on main image
         tPrpFlyerMImgSTr = "<div class=\"property-flyer\" style=\"position:relative;width:100%;min-height:700px;border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);background-image:url('" + currPrpImgsFldr + "/" + mGPIImg + "');background-size:cover;background-position:center;background-repeat:no-repeat;\" id=\"dvTMCdemo\">";
 
- 
+
        //  tPrpFlyerMImgSTr += "<div style=\"position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0.6) 100%);\"></div>";
 
         tPrpFlyerMImgSTr += "<table><tr><td><div style=\"color:white;font-size:24px;font-weight:bold;\">  </div></td><td>";
@@ -12112,16 +12115,16 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
             tPrpFlyerMImgSTr += "<div style=\"font-size:18px;color:#fff;\">" + mGPIobj.state + "</div>";
         }
         if (mGPIobj.area) {
-            tPrpFlyerMImgSTr += "<div style=\"font-size:18px;color:#fff;\">" + mGPIobj.area + " m�</div>";
+            tPrpFlyerMImgSTr += "<div style=\"font-size:18px;color:#fff;\">" + mGPIobj.area + " m²</div>";
         }
         tPrpFlyerMImgSTr += "</div>";
         tPrpFlyerMImgSTr += tSPIttlStr;
         tPrpFlyerMImgSTr += "</div>";
-        
+
         tPrpFlyerMImgSTr += "</div>"; // End title and price container
             tPrpFlyerMImgSTr += "</td><td style=\"width:50px;\"> </td></tr></table>";
         // add a clearfix
-        tPrpFlyerMImgSTr += "<div style=\"clear:both;\"></div>";    
+        tPrpFlyerMImgSTr += "<div style=\"clear:both;\"></div>";
 
 
         // Overlaid property images gallery section - positioned at bottom of main image
@@ -12198,7 +12201,7 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
 
         tPrpFlyerMImgSTr += "</div>"; // End overlaid gallery section
 
-        
+
     let contacts = [];
     let preferred = ['whatsapp', 'telephone', 'email', 'facebook'];
     for(let pref of preferred){
@@ -12208,19 +12211,19 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
             if(contacts.length >= 2) break;
         }
     }
- 
+
                         // Seller information overlay - now positioned at the bottom of the main image
         tPrpFlyerMImgSTr += "<div style=\"position:absolute; bottom:10px; left:0; right:0; z-index:12;\">";
 
- 
+
         tPrpFlyerMImgSTr += JSSHOP.ads.getEditorUsrBoxStr("nada");
 
         tPrpFlyerMImgSTr += "</div>"; // End bottom positioned overlay container
- 
 
 
 
- 
+
+
         tPrpFlyerMImgSTr += "</div>"; // End property flyer
 
         // Create textarea for editing
@@ -12232,10 +12235,10 @@ var setNwstPropImages = function(theAIa, theAIb, theAIc) {
 };
 
 
- 
 
 
- 
+
+
 
 function getPropertyImages(propData) {
     // Create a new function to get the property images from q_media
@@ -12318,10 +12321,16 @@ function setVideoPropImages(theAIa, theAIb, theAIc) {
         // Now call doVideoDiv
         var propData = theAIa; // theAIa is propData
         var tSlctdPrpsArr = [propData];
-        if (typeof getVideoInterfaceHTML === 'function') {
+        if (typeof doVideoDiv === "function" && typeof getVideoInterfaceHTML === "function") {
             doVideoDiv(tSlctdPrpsArr);
         } else {
-            JSSHOP.loadScript("js/thirdp/CCapture_mod.js", function() { doVideoDiv(tSlctdPrpsArr); }, "js");
+            JSSHOP.loadScript("js/thirdp/CCapture_mod.js", function() {
+                if (typeof doVideoDiv === "function" && typeof getVideoInterfaceHTML === "function") {
+                    doVideoDiv(tSlctdPrpsArr);
+                } else {
+                    console.log("setVideoPropImages: video UI functions unavailable after CCapture_mod load");
+                }
+            }, "js");
         }
     }
 }
@@ -12485,15 +12494,15 @@ JSSHOP.ads.trnsltImgPstObj = function() {
          _ifrm = document.getElementById('tmp_p_content_ifr');
         _ifrmDoc = _ifrm.contentDocument || _ifrm.contentWindow.document;
         _ifrmDoc.body.innerHTML = tEdtrDstr;
- 
+
             tBlkFlyrHStr = "...";
             // if taDemoEdtr exists, update it
             if(document.getElementById("taDemoEdtr")) {
                 document.getElementById("taDemoEdtr").value = tFlyrHStr;
                 // update the tinymce.editor content
-                tinyMCE.get("taDemoEdtr").setContent(tFlyrHStr);    
-                
-            } else {    
+                tinyMCE.get("taDemoEdtr").setContent(tFlyrHStr);
+
+            } else {
 
      tDVDstr = "<textarea class=\"inpDemoEdtr form-control\" name=\"taDemoEdtr\" id=\"taDemoEdtr\" rows=\"4\" cols=\"30\">" + tFlyrHStr + "</textarea>";
      tDVDstr += "<div class=\"clearfix\"></div><br>";
@@ -12512,7 +12521,7 @@ JSSHOP.ads.trnsltImgPstObj = function() {
         }
         tFlyrHStr = JSSHOP.ads.getEditorUStr(tSlctdUsrsArr);
     }
-  
+
  };
 
 JSSHOP.ads.trnsltVideoPstObj = function() {
@@ -12544,10 +12553,16 @@ JSSHOP.ads.trnsltVideoPstObj = function() {
         console.log("set title to:", titles.join(", "));
         // Render video interface in dvDemoView
         console.log("calling doVideoDiv");
-        if (typeof getVideoInterfaceHTML === 'function') {
+        if (typeof doVideoDiv === "function" && typeof getVideoInterfaceHTML === "function") {
             doVideoDiv(tSlctdPrpsArr);
         } else {
-            JSSHOP.loadScript("js/thirdp/CCapture_mod.js", function() { doVideoDiv(tSlctdPrpsArr); }, "js");
+            JSSHOP.loadScript("js/thirdp/CCapture_mod.js", function() {
+                if (typeof doVideoDiv === "function" && typeof getVideoInterfaceHTML === "function") {
+                    doVideoDiv(tSlctdPrpsArr);
+                } else {
+                    console.log("trnsltVideoPstObj: video UI functions unavailable after CCapture_mod load");
+                }
+            }, "js");
         }
         console.log("doVideoDiv called");
     } else {
@@ -12571,22 +12586,79 @@ JSSHOP.ads.isValidMapLatLng = function(rawLat, rawLng) {
     return true;
 };
 
+JSSHOP.ads.decodeMapFieldText = function(value, fallback) {
+    var fb = (typeof fallback === "string") ? fallback : "";
+    if (value === null || typeof value === "undefined") {
+        return fb;
+    }
+
+    var rawVal = String(value).trim();
+    if (rawVal === "") {
+        return fb;
+    }
+
+    var tryDecodeLz = function(candidate) {
+        if (!candidate) {
+            return "";
+        }
+        try {
+            var out = LZString.decompressFromEncodedURIComponent(candidate);
+            if (typeof out === "string" && out !== "") {
+                var rt = "";
+                try {
+                    rt = LZString.compressToEncodedURIComponent(out);
+                } catch (eRt) {
+                    rt = "";
+                }
+                if (rt === candidate) {
+                    return out;
+                }
+            }
+        } catch (eLz) {
+            return "";
+        }
+        return "";
+    };
+
+    var lzFromRaw = tryDecodeLz(rawVal);
+    if (lzFromRaw !== "") {
+        return lzFromRaw;
+    }
+
+    var decodedVal = rawVal;
+    try {
+        decodedVal = decodeURIComponent(rawVal);
+    } catch (eDec) {
+        decodedVal = rawVal;
+    }
+
+    var lzFromDecoded = tryDecodeLz(decodedVal);
+    if (lzFromDecoded !== "") {
+        return lzFromDecoded;
+    }
+
+    if (decodedVal !== "") {
+        return decodedVal;
+    }
+    return fb;
+};
+
  JSSHOP.ads.getUpdtMapMrkrs = function(tmmtype, tmmobj) {
     try {
-        console.log("getUpdtMapMrkrs: " + tmmtype + " " + JSON.stringify(tmmobj));  
+        console.log("getUpdtMapMrkrs: " + tmmtype + " " + JSON.stringify(tmmobj));
         tMapLeavesArr = null;
         tMapLeavesArr = "";
         tMapLeavesArr = [];
-  
+
        switch(tmmtype) {
             case "props":
-               
+
                 for(var key in tmmobj) {
                     tLeavesObj = null;
                     tLeavesObj = "";
                     tLeavesObj = {};
                     if(tmmobj.hasOwnProperty(key)) {
-                         console.log("getUpdtMapMrkrs: " + key + " " + tmmobj[key].ptitle + " " + tmmobj[key].ploclat + " " + tmmobj[key].ploclng);  
+                         console.log("getUpdtMapMrkrs: " + key + " " + tmmobj[key].ptitle + " " + tmmobj[key].ploclat + " " + tmmobj[key].ploclng);
                         if (!JSSHOP.ads.isValidMapLatLng(tmmobj[key].ploclat, tmmobj[key].ploclng)) {
                             continue;
                         }
@@ -12594,15 +12666,21 @@ JSSHOP.ads.isValidMapLatLng = function(rawLat, rawLng) {
                         if (typeof JSSHOP.ads.getNuMapMarkerIconUrl == "function") {
                             tLeavesObj["icn"] = JSSHOP.ads.getNuMapMarkerIconUrl(tLeavesObj["icn"], "images/logo_small_oct.png");
                         }
+                        // Prefer propdescs title/desc payloads and decode defensively.
+                        var resolvedPropTitle = "";
+                        var resolvedPropDesc = "";
+                        if (typeof JSSHOP.ads.decodeMapFieldText === "function") {
+                            resolvedPropTitle = JSSHOP.ads.decodeMapFieldText(tmmobj[key].pd_prptitle || tmmobj[key].ptitle, "");
+                            resolvedPropDesc = JSSHOP.ads.decodeMapFieldText(tmmobj[key].pd_prpdesc || tmmobj[key].pdesc, "");
+                        } else {
+                            resolvedPropTitle = String(tmmobj[key].pd_prptitle || tmmobj[key].ptitle || "");
+                            resolvedPropDesc = String(tmmobj[key].pd_prpdesc || tmmobj[key].pdesc || "");
+                        }
                         // Robust fallback logic for marker title (matches getInlineMapMarkerDisplayTitle)
                         if (tmmobj[key].mapMarkerTitleText && String(tmmobj[key].mapMarkerTitleText).trim() !== "") {
                             tLeavesObj["title"] = String(tmmobj[key].mapMarkerTitleText);
-                        } else if (tmmobj[key].ptitle && String(tmmobj[key].ptitle).trim() !== "") {
-                            try {
-                                tLeavesObj["title"] = LZString.decompressFromEncodedURIComponent(String(tmmobj[key].ptitle));
-                            } catch (ePttl) {
-                                tLeavesObj["title"] = String(tmmobj[key].ptitle);
-                            }
+                        } else if (resolvedPropTitle && String(resolvedPropTitle).trim() !== "") {
+                            tLeavesObj["title"] = String(resolvedPropTitle);
                         } else if (tmmobj[key].cname && String(tmmobj[key].cname).trim() !== "") {
                             tLeavesObj["title"] = String(tmmobj[key].cname);
                         } else {
@@ -12612,6 +12690,7 @@ JSSHOP.ads.isValidMapLatLng = function(rawLat, rawLng) {
                         tLeavesObj["lng"] = tmmobj[key].ploclng;
                         tLeavesObj["price"] = tmmobj[key].price;
                         tLeavesObj["prpid"] = tmmobj[key]._id;
+                        tLeavesObj["pdesc"] = resolvedPropDesc;
                         tLeavesObj["sellerName"] = tmmobj[key].u_fullname || tmmobj[key].u_name || "";
                         tLeavesObj["sellerIcon"] = tmmobj[key].u_icon || "";
                         tLeavesObj["markerLabelText"] = tmmobj[key].mapMarkerTitleText || tmmobj[key].markerLabelText || "";
@@ -12630,7 +12709,7 @@ JSSHOP.ads.isValidMapLatLng = function(rawLat, rawLng) {
                 }
                 break;
             case "users":
-               
+
                 for(var key in tmmobj) {
                     if(tmmobj.hasOwnProperty(key)) {
                         if (!JSSHOP.ads.isValidMapLatLng(tmmobj[key].u_loclat, tmmobj[key].u_loclng)) {
@@ -12656,7 +12735,7 @@ JSSHOP.ads.isValidMapLatLng = function(rawLat, rawLng) {
                     }
                 }
                 break;
-        } 
+        }
         return tMapLeavesArr;
     } catch(e) {
         alert("getUpdtMapMrkrs: " + e);
@@ -12721,7 +12800,7 @@ function setInlineDemoViewCaptureMode(postType) {
             // dvPrev.setAttribute("style", originalStyle + ";width:340px;min-width:340px;max-width:340px;height:340px;min-height:340px;max-height:340px;overflow:hidden;margin:5px auto;");
             // The above fixed dimensions caused issues with mobile width that can be smaller than 340px, so switching to a more flexible style that maintains a square aspect ratio while allowing it to scale down on smaller screens with a max width of 340px
              dvPrev.setAttribute("style", originalStyle + ";width:100%;max-width:340px;height:0;padding-bottom:100%;position:relative;overflow:hidden;margin:5px auto;");
-             
+
             console.log("[MAP-VIDEO] dvDemoView mode: pmap-fixed-340");
         } else {
             dvPrev.setAttribute("style", originalStyle);
@@ -12754,35 +12833,7 @@ function setInlineDemoViewCaptureMode(postType) {
         skippedInvalidLatLng: 0,
         renderedMarkers: 0
     };
-    var decodeMapFieldText = function(value, fallback) {
-        var fb = (typeof fallback === "string") ? fallback : "";
-        if (value === null || typeof value === "undefined") {
-            return fb;
-        }
-
-        var rawVal = String(value);
-        var decodedVal = rawVal;
-        try {
-            decodedVal = decodeURIComponent(rawVal);
-        } catch (e) {
-            decodedVal = rawVal;
-        }
-
-        var lzVal = null;
-        try {
-            lzVal = LZString.decompressFromEncodedURIComponent(decodedVal);
-        } catch (e) {
-            lzVal = null;
-        }
-
-        if (typeof lzVal === "string" && lzVal !== "") {
-            return lzVal;
-        }
-        if (decodedVal !== "") {
-            return decodedVal;
-        }
-        return fb;
-    };
+    var decodeMapFieldText = JSSHOP.ads.decodeMapFieldText;
     tMapFullObj = {};
     tMapFullObj["leaves"] = [];
     tMapLeavesArr = null;
@@ -12797,7 +12848,7 @@ function setInlineDemoViewCaptureMode(postType) {
 
         tSlctdPrpsArr = [];
         for(var key in currSlctdPrpsObj) {
-   
+
 
 
             if(currSlctdPrpsObj.hasOwnProperty(key)) {
@@ -12806,7 +12857,7 @@ function setInlineDemoViewCaptureMode(postType) {
                     mapDebugCounters.skippedInvalidLatLng++;
                     continue;
                 }
-             
+
                 tLeavesObj = null;
                 tLeavesObj = "";
                 tLeavesObj = {};
@@ -12823,17 +12874,16 @@ function setInlineDemoViewCaptureMode(postType) {
                 } else {
                     tLeavesObj["icn"] = "images/property/s_thumb" + currSlctdPrpsObj[key].pimage;
                 }
+                // Prefer propdescs title/desc payloads and decode defensively.
+                var resolvedPropTitle = decodeMapFieldText(currSlctdPrpsObj[key].pd_prptitle || currSlctdPrpsObj[key].ptitle, "");
+                var resolvedPropDesc = decodeMapFieldText(currSlctdPrpsObj[key].pd_prpdesc || currSlctdPrpsObj[key].pdesc, "");
                 // Robust fallback logic for marker title (matches getInlineMapMarkerDisplayTitle)
                 if (currSlctdPrpsObj[key].mapMarkerTitleText && String(currSlctdPrpsObj[key].mapMarkerTitleText).trim() !== "") {
                                         console.debug("[DEBUG] Using mapMarkerTitleText for marker", key, currSlctdPrpsObj[key].mapMarkerTitleText);
                     tLeavesObj["title"] = String(currSlctdPrpsObj[key].mapMarkerTitleText);
-                } else if (currSlctdPrpsObj[key].ptitle && String(currSlctdPrpsObj[key].ptitle).trim() !== "") {
-                                        console.debug("[DEBUG] Using ptitle for marker", key, currSlctdPrpsObj[key].ptitle);
-                    try {
-                        tLeavesObj["title"] = LZString.decompressFromEncodedURIComponent(String(currSlctdPrpsObj[key].ptitle));
-                    } catch (ePttl) {
-                        tLeavesObj["title"] = String(currSlctdPrpsObj[key].ptitle);
-                    }
+                } else if (resolvedPropTitle && String(resolvedPropTitle).trim() !== "") {
+                                        console.debug("[DEBUG] Using resolved prop title for marker", key, resolvedPropTitle);
+                    tLeavesObj["title"] = String(resolvedPropTitle);
                 } else if (currSlctdPrpsObj[key].cname && String(currSlctdPrpsObj[key].cname).trim() !== "") {
                                         console.debug("[DEBUG] Using cname for marker", key, currSlctdPrpsObj[key].cname);
                                         console.debug("[DEBUG] Using fallback property label for marker", key);
@@ -12845,7 +12895,7 @@ function setInlineDemoViewCaptureMode(postType) {
                 tLeavesObj["lng"] = currSlctdPrpsObj[key].ploclng;
                 tLeavesObj["price"] = currSlctdPrpsObj[key].price;
                 tLeavesObj["prpid"] = currSlctdPrpsObj[key]._id
-                tLeavesObj["pdesc"] = currSlctdPrpsObj[key].pdesc;
+                tLeavesObj["pdesc"] = resolvedPropDesc;
                 tLeavesObj["sellerName"] = currSlctdPrpsObj[key].u_fullname || currSlctdPrpsObj[key].u_name || "";
                 tLeavesObj["sellerIcon"] = currSlctdPrpsObj[key].u_icon || "";
                 tLeavesObj["markerLabelText"] = currSlctdPrpsObj[key].mapMarkerTitleText || "";
@@ -12915,7 +12965,7 @@ function setInlineDemoViewCaptureMode(postType) {
             }
         }
        //  tSwprStr = JSSHOP.ads.getSwiperUStr(tSlctdUsrsArr);
-     
+
     }  // end if
     console.log("[MAP_DEBUG][trnsltMapPstObj]", mapDebugCounters);
     // set the tmp_p_title input to the title of the first marker
@@ -13022,7 +13072,7 @@ JSSHOP.ads.trnsltSwiperObj = function() {
                     tUnzpPstr = LZString.decompressFromEncodedURIComponent(tTWIUYPdesc);
                     if(tUnzpPstr.length > 100) {
                     tSwprDscStr += tUnzpPstr.substring(0, 100) + "...";
-                    } else {    
+                    } else {
                     tSwprDscStr += tUnzpPstr;
                     }
                 } else {
@@ -13047,9 +13097,9 @@ JSSHOP.ads.trnsltSwiperObj = function() {
     }
     document.getElementById("dvDemoView").innerHTML = tSwprStr;
         syncInlinePTypePreviewFromRenderer();
- 
+
       // currSlctdPrpsObj;
-        
+
         // currPstsPrpsArr
 
  /*
@@ -13184,7 +13234,7 @@ JSSHOP.ads.loadSwiperObj = function(tSwpLoadObj) {
     try {
 
 
-        
+
     var swiper = new Swiper(tSwpLoadObj.cls, {
         slidesPerView: tSwpLoadObj.spv,
         spaceBetween: tSwpLoadObj.spaceBetween,
@@ -13248,8 +13298,8 @@ JSSHOP.ads.getPPlgIcnStr = function(tPPICnt, tPPIClass, tPPICB) {
     tFlRanSTr = "";
     tPYS = "";
     // select 3 unique random indexes from the array currPPrtCatArr
-    
-    
+
+
     tFPCArInt = 0;
     for(i = 0; i < 30; i++) {
     tRanNum = Math.random() * tPPICarr.length;
@@ -13258,11 +13308,11 @@ JSSHOP.ads.getPPlgIcnStr = function(tPPICnt, tPPIClass, tPPICB) {
     tdds = "noQvalue";
     } else {
     tFPCArInt++;
-    
+
     tFlRanSTr += tLpdIDstr + " ";
     // tFlRanSTr += new img tag with tLpdIDstr as src and tPPIClass as class
     tPPICstr = "<img src=\"images/pimgs/" + tLpdIDstr + ".jpg\" class=\"" + tPPIClass + "\" onclick=\"" + tPPICB + "\" style=\"max-width:30px\">";
- 
+
     tPYS += tPPICstr + " ";
     if(tFPCArInt > tPPICnt) {
         i = 30;
@@ -13286,12 +13336,12 @@ JSSHOP.ads.doLocalShops = function(tLSlimit, tLSorder, tLtr, tDLScb){
         }
         if(usrlang == "pt_pt") {
             tccode = 351;
-        
+
         } else {
             tccode = 34;
         // tmpDOs["ws"] = "where c_ccode=? and c_email like ?";
         // tmpDOs["wa"] = [usrcc,'%@%'];
-        
+
         }
 
         if(usrlang == "pt_pt") {
@@ -13299,9 +13349,9 @@ JSSHOP.ads.doLocalShops = function(tLSlimit, tLSorder, tLtr, tDLScb){
         }
         if(pid.indexOf("psearch") != -1) {
             tLSCatID = 202;
-        }  
+        }
 
-            
+
 
 if(JSSHOP.ads.getPrtsPrefCC("qloc") == "noQvalue") {
 
@@ -13312,7 +13362,7 @@ tmpDOs["o"] = "c_revs desc";
 
 
 } else {
-    
+
     tUtdzip = JSSHOP.ads.getPrtsPrefCC("qloc");
     if(tUtdzip.indexOf("|") != -1) {
         tstrLat = msw.split("|")[0];
@@ -13320,7 +13370,7 @@ tmpDOs["o"] = "c_revs desc";
                     // convert tstrLat to float and tstrLng to float
                     tfloatLat = parseFloat(tstrLat);
                     tfloatLong = parseFloat(tstrLng);
-            
+
                     // get a 20km radius from the lat lng
                     tmpDOs["ws"] = "where c_rtype=? and c_ccode =?  and c_category = ? and c_loc_lat > ? and c_loc_lat < ? and c_loc_lng > ? and c_loc_lng < ?";
                     tmpDOs["wa"] = [5,tccode,tLSCatID,tfloatLat - 0.1,tfloatLat + 0.3,tfloatLong - 0.1,tfloatLong + 0.3];
@@ -13335,8 +13385,8 @@ tmpDOs["o"] = "c_location asc";
 
 
     }
-    
- 
+
+
 }
 
 
@@ -13379,7 +13429,7 @@ JSSHOP.ads.doGenericPlug = function(tPtype, tPresQty, tPtDiv) {
 console.log("JSSHOP.ads.doGenericPlug: " + tPtype + " " + tPresQty + " " + tPtDiv);
 try {
 
-    // imgPLicon.src = "logoicon.png"; 
+    // imgPLicon.src = "logoicon.png";
 fretPlugStr = "...";
 retPlugStr = "...";
 tcanShowPlug = "yes";
@@ -13411,16 +13461,16 @@ document.title = stxt[912];
 break;
 
 case "aa-show-featured":
-// imgPLicon.src = "logoicon.png"; 
+// imgPLicon.src = "logoicon.png";
 dvPartLicon.innerHTML =  "<img src=\"images/logo/logo-small.png\" style=\"margin-top: 5px;max-height:30px;max-width:30px;\" alt=\"account\" title=\"account\" class=\"account\">";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[940] + "</div>";
 document.title = stxt[940];
-break; 
+break;
 case "aa-show-search":
     dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"account\" title=\"account\"> &#xe8b6;</i>";
     fretPlugStr = "<div class=\"txtSmall\">" + stxt[936] + "</div>";
     document.title = stxt[936];
-break; 
+break;
 case "aa-show-user":
     dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"account\" title=\"account\"> &#xe7fd;</i>";
     fretPlugStr = "<div class=\"txtSmall\">" + stxt[903] + "</div>";
@@ -13429,14 +13479,14 @@ case "aa-show-user":
     break;
 
 case "aa-edit-user":
-// imgPLicon.src = "logoicon.png"; 
+// imgPLicon.src = "logoicon.png";
 dvPartLicon.innerHTML =  "<i class=\"material-icons txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;\" alt=\"search\" title=\"search\"> &#xe851;</i>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[825] + "</div>";
 // fretPlugStr = doNuCollsLoad("links");
     document.title = stxt[825];
 break;
 case "aa-remove":
-// imgPLicon.src = "logoicon.png";    
+// imgPLicon.src = "logoicon.png";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[815] + "</div>";
 document.title = stxt[815];
 break;
@@ -13446,14 +13496,14 @@ tDGPstr = stxt[985];
 if(currUrlArr.prpid) {
     tDGPstr += " - ID: " + currUrlArr.prpid;
 }
-// imgPLicon.src = "logoicon.png"; 
+// imgPLicon.src = "logoicon.png";
 dvPartLicon.innerHTML =  "<span  style=\"color:rgba(41,71,89,.25);text-shadow: 0 0 0 rgba(41,71,89,.65);font-size:27px;\" alt=\"apartment\" title=\"apartment\">&#x1F3D9;</span>";
 fretPlugStr = "<div class=\"txtSmall\">" + tDGPstr + "</div>";
 // fretPlugStr = doNuCollsLoad("links");
 document.title = tDGPstr;
 break;
 case "aa-add-prop":
-// imgPLicon.src = "logoicon.png"; 
+// imgPLicon.src = "logoicon.png";
 dvPartLicon.innerHTML =  "<span  style=\"color:rgba(41,71,89,.25);text-shadow: 0 0 0 rgba(41,71,89,.65);font-size:27px;vertical-align: middle;\" alt=\"apartment\" title=\"apartment\">&#x1F3D9;</span>";
 fretPlugStr = "<div class=\"txtSmall\" style=\"vertical-align: middle;\"><i class=\"menu-material-icons txtClrHdr\" style=\"vertical-align: middle;\" alt=\"add\" title=\"add\"> &#xe145;</i>" + stxt[906] + "</div>";
 // fretPlugStr = doNuCollsLoad("links");
@@ -13477,14 +13527,14 @@ fretPlugStr = "<div  style=\"vertical-align: middle;\"><i class=\"menu-material-
 document.title = stxt[401];
 break;
 case "aa-edit-posts":
-// imgPLicon.src = "logoicon.png"; 
+// imgPLicon.src = "logoicon.png";
 dvPartLicon.innerHTML =  "<i class=\"material-icons-two-tone txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;font-weight: bold;font-size: 27px;vertical-align: middle;\" alt=\"search\" title=\"search\"> &#xe871;</i>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[402] + "</div>";
 document.title = stxt[402];
 // fretPlugStr = doNuCollsLoad("links");
 break;
 case "aa-show-update":
-// imgPLicon.src = "logoicon.png"; 
+// imgPLicon.src = "logoicon.png";
 dvPartLicon.innerHTML =  "<i class=\"material-icons-two-tone txtClrHdr\" style=\"margin-top: 5px;font-size:27px;margin-right:6px;font-weight: bold;font-size: 27px;vertical-align: middle;\" alt=\"search\" title=\"search\"> &#xe871;</i>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[100] + "</div>";
 document.title = stxt[100];
@@ -13492,7 +13542,7 @@ document.title = stxt[100];
 break;
 case "aa-edit-uprops":
 case "aa-edit-aprops":
-// imgPLicon.src = "logoicon.png"; 
+// imgPLicon.src = "logoicon.png";
 // <span  style="color:rgba(41,71,89,.25);text-shadow: 0 0 0 rgba(41,71,89,.65);font-size:36px;">&#x1F3D9;</span>
 dvPartLicon.innerHTML =  "<span  style=\"color:rgba(41,71,89,.25);text-shadow: 0 0 0 rgba(41,71,89,.65);font-size:27px;\" alt=\"apartment\" title=\"apartment\">&#x1F3D9;</span>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[634] + "</div>";
@@ -13506,7 +13556,7 @@ fretPlugStr = "<div class=\"txtSmall\">" + stxt[710] + "</div>";
 document.title = stxt[710];
 break;
 case "aa-show-prop":
-// imgPLicon.src = "logoicon.png"; 
+// imgPLicon.src = "logoicon.png";
 dvPartLicon.innerHTML =  "<span  style=\"color:rgba(41,71,89,.25);text-shadow: 0 0 0 rgba(41,71,89,.65);font-size:27px;\" alt=\"apartment\" title=\"apartment\">&#x1F3D9;</span>";
 fretPlugStr = "<div class=\"txtSmall\">" + stxt[118] + "</div>";
 document.title = stxt[118];
@@ -13514,7 +13564,7 @@ document.title = stxt[118];
 break;
 
 case "index_main":
-// imgPLicon.src = "logoicon.png"; 
+// imgPLicon.src = "logoicon.png";
 dvPartLicon.innerHTML =  "<img src=\"images/logo/logo-small.png\" style=\"margin-top: 5px;max-height:30px;max-width:27px;\" alt=\"account\" title=\"account\" class=\"account\">";
 fretPlugStr = "<div class=\"txtSmall\">" + shopTitle + "</div>";
 // fretPlugStr = doNuCollsLoad("links");
@@ -13526,13 +13576,13 @@ fretPlugStr = "<div class=\"txtSmall\">" + stxt[913] + "</div>";
 document.title = stxt[913];
 break;
 default:
- 
- 
+
+
 fretPlugStr = "<div class=\"txtSmall\">.... </div>";
 document.title = "....";
- 
+
 // fretPlugStr = "<div class=\"txtSmall\">Default</div>";
- 
+
 break;
 }
 
@@ -13569,36 +13619,36 @@ function getLvsTglBox() {
 function getLeaves() {
     // document.getElementById("smap").innerHTML = "";
     // document.getElementById("smap").style = "min-height:300px";
-    // document.getElementById("smap").innerHTML = "";  
-    iti = 0; 
+    // document.getElementById("smap").innerHTML = "";
+    iti = 0;
 
-    
-    
+
+
     // check if L.map already exists
-      
-   
+
+
         var map = L.map('smap', JSSHOP.ads.getLeafletCanvasMapOptions({})).setView([39.0667, -8.6167], 13);
-    
+
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
         var bounds = L.latLngBounds() // Instantiate LatLngBounds object
         var LeafIcon = L.Icon.extend({
             options: {
-     
-                iconSize:     [42, 42],
-     
 
-     
+                iconSize:     [42, 42],
+
+
+
                 popupAnchor:  [-3, -16]
             }
         });
-    
+
         if(currShopsArr.length > 0) {
             // alert(b);
             tPArr  = null;
             tPArr = currShopsArr;
-    
+
     while(iti < tPArr.length) {
       ts = tPArr[iti];
       tIcnQcStr = "images/logo_small_green_oct.png"
@@ -13611,14 +13661,14 @@ function getLeaves() {
         tLngQcFlt = parseFloat(tLngQcStr);
         ttImgstr = ts.pimage;
         // console.log("getLeaves.ts.cccd: " + ts.cccd + " " + ttImgstr + " " + ts.c_name);
-     
+
 
         if(ttImgstr.indexOf(".") != -1) {
       tIcnQcStr = currPrpImgsFldr + "/"  + ts.pimage;
         } else {
         tIcnQcStr = "images/logo_small_oct.png";
         }
-        
+
       ttSSurl = "javascript:JSSHOP.ads.doGenPrpPop(" + iti + ");";
 
       tCnameQcStr = "<a href=\"" + ttSSurl + "\">" + ts.c_name + "</a>";
@@ -13627,7 +13677,7 @@ function getLeaves() {
       console.log("getLeaves: " + tLatQcStr + " " + tLngQcStr + " " + tIcnQcStr + " " + tCnameQcStr);
       try {
     // check if lat and lng are floats
-    if((tLatQcStr.indexOf(".") != -1) && (tLngQcStr.indexOf(".") != -1))  { 
+    if((tLatQcStr.indexOf(".") != -1) && (tLngQcStr.indexOf(".") != -1))  {
       // if((tLatQcStr.indexOf(".") != -1) && (tLngQcStr.indexOf(".") != -1))  {
         console.log("getLeaves: " + tLatQcStr + " " + tLngQcStr);
 
@@ -13640,11 +13690,11 @@ function getLeaves() {
     // set marker options
     mRed = L.marker([tLatQcStr,tLngQcStr], {icon: redIcon, iti: iti}).addTo(map).on('click', function(e) {
         // print out the e.options.iti
-        console.log("L.marker iti: " + JSON.stringify(e.target.options.iti));   
+        console.log("L.marker iti: " + JSON.stringify(e.target.options.iti));
         doGenPrpPop(e.target.options.iti);
 
     });
-  
+
     bounds.extend(lat_lng);
       }
       } catch(e) {
@@ -13653,12 +13703,12 @@ function getLeaves() {
     iti++;
     }
      map.fitBounds(bounds);
-    
+
     }
-    
+
     // add a long press listener to the map
     map.on('contextmenu', function(e) {
-       
+
           markers = [];
         // add a marker to show where you clicked.
           markers.push(L.marker(e.latlng).addTo(map));
@@ -13667,17 +13717,17 @@ function getLeaves() {
         // get the lat and lng values
         var lat = coords.lat;
         var lng = coords.lng;
-        // 
+        //
         JSSHOP.ads.setPrtsPrefCC("qloc", lat + "|" + lng);
         if(pid == "aa-show-msearch") {
             document.getElementById('includedShops').innerHTML='';window['sw']=null;currUrlArr.sw=null;JSSHOP.shared.setPrtSvsPnl('dvGetSvcsLnk', function() {eindex('aa-show-msearch','pid=aa-show-msearch&st=main')});
         } else if(pid == "aa-show-psearch") {
-            document.getElementById('includedShops').innerHTML='';window['sw']=null;currUrlArr.sw=null;JSSHOP.shared.setPrtSvsPnl('dvGetPLnk', function() {eindex('aa-show-psearch','pid=aa-show-psearch&st=main')}); 
+            document.getElementById('includedShops').innerHTML='';window['sw']=null;currUrlArr.sw=null;JSSHOP.shared.setPrtSvsPnl('dvGetPLnk', function() {eindex('aa-show-psearch','pid=aa-show-psearch&st=main')});
         } else {
-            document.getElementById('includedShops').innerHTML='This is odd'; 
+            document.getElementById('includedShops').innerHTML='This is odd';
         }
        //  eindex(pid, "pid=" + pid + "&st=pslist&sw=" + lat + "|" + lng);
- 
+
         // alert("You clicked the map at latitude: " + lat + " and longitude: " + lng);
         // show them in the inputs
         // document.getElementById('lat').value = lat;
@@ -13686,10 +13736,10 @@ function getLeaves() {
     });
     }  // end of getLeaves
 
-    
+
 JSSHOP.ads.doGenMapShow = function() {
     if(isJApp == "yes") {
-        /* */ // 
+        /* */ //
         // string of currUrlArr
 
         tOldHref = document.location.href;
@@ -13698,7 +13748,7 @@ JSSHOP.ads.doGenMapShow = function() {
         tOldHref = document.location.href;
         if(tOldHref.indexOf("recamby.com") != -1) {
             tnewHref = "https://recamby.com/clean.html";
-     
+
         } else {
             tnewHref = "https://titan/incasa/clean.html";
         }
@@ -13708,30 +13758,30 @@ JSSHOP.ads.doGenMapShow = function() {
             // get everything after the ?
             tAddonSTr = tOldHref.split("?")[1];
 
-  tnewHref = tnewHref + "?" + tAddonSTr + "&st=map";        
+  tnewHref = tnewHref + "?" + tAddonSTr + "&st=map";
 
         } else {
             tnewHref = tnewHref + "?st=map";
         }
         theFill = "This is a test";
         document.location.href = tnewHref;
-      
+
       //  app.setPagePopUp(tnewHref,LZString.compressToEncodedURIComponent(theFill));
-     
-      
+
+
   // document.getElementsByTagName('body')[0].style.overflow = 'hidden';
     } else {
     JSSHOP.ui.toggleNuModule("dvTglPMap","smapWrpr");
      // JSSHOP.ui.toggleVisibility('smapWrpr');
     if(document.getElementById('smap').innerHTML == "") {
-   
+
         document.getElementById('smap').style.position='relative';
         document.getElementById('smap').style.top='auto';
         document.getElementById('smap').style.left='auto';
         getLeaves();
-    }   
     }
- 
+    }
+
 };
 // create async functionn to call doNuGenMap after 1 second
 async function callDoNuGenMap(tAADNGMObj) {
@@ -14572,11 +14622,11 @@ JSSHOP.ads.setNuMapReplayButtonState = function(mapDivId, isPlaying) {
             if (!btn) {
                 continue;
             }
-            btn.title = isPlaying ? "Stop" : "Play";
-            btn.setAttribute("aria-label", isPlaying ? "Stop" : "Play");
+            btn.title = isPlaying ? "Pause" : "Play";
+            btn.setAttribute("aria-label", isPlaying ? "Pause" : "Play");
             btn.style.background = isPlaying ? "rgba(10,132,255,0.20)" : "";
             btn.innerHTML = isPlaying
-                ? '<i class="material-icons txtClrHdr" style="font-size:22px;line-height:34px;">&#xe047;</i>'
+                ? '<i class="material-icons txtClrHdr" style="font-size:22px;line-height:34px;">&#xe034;</i>'
                 : '<i class="material-icons txtClrHdr" style="font-size:22px;line-height:34px;">&#xe037;</i>';
         }
     } catch (eSetReplayBtnState) {
@@ -16506,36 +16556,54 @@ JSSHOP.ads.escapeMapLabelHtml = function(rawTxt) {
 
 JSSHOP.ads.decodeNuMapLzText = function(rawVal) {
     try {
-        var baseVal = String(rawVal || "");
+        var baseVal = String(rawVal || "").trim();
         if (!baseVal) {
             return "";
         }
+
+        var tryDecodeLz = function(candidate) {
+            if (!candidate || typeof LZString == "undefined" || !LZString || typeof LZString.decompressFromEncodedURIComponent != "function") {
+                return "";
+            }
+            try {
+                var out = LZString.decompressFromEncodedURIComponent(candidate);
+                if (typeof out === "string" && out !== "") {
+                    var rt = "";
+                    try {
+                        rt = LZString.compressToEncodedURIComponent(out);
+                    } catch (eMapLabelRt) {
+                        rt = "";
+                    }
+                    if (rt === candidate) {
+                        return out;
+                    }
+                }
+            } catch (eMapLabelLz) {
+                return "";
+            }
+            return "";
+        };
+
         var decodedVal = baseVal;
         try {
             decodedVal = decodeURIComponent(baseVal);
         } catch (eDecodeNuMapTxtUri) {
             decodedVal = baseVal;
         }
-        if (typeof LZString != "undefined" && LZString && typeof LZString.decompressFromEncodedURIComponent == "function") {
-            var lzVal1 = "";
-            var lzVal2 = "";
-            try {
-                lzVal1 = LZString.decompressFromEncodedURIComponent(decodedVal);
-            } catch (eDecodeNuMapTxtLz1) {
-                lzVal1 = "";
-            }
-            if (lzVal1 && typeof lzVal1 == "string") {
-                return lzVal1;
-            }
-            try {
-                lzVal2 = LZString.decompressFromEncodedURIComponent(baseVal);
-            } catch (eDecodeNuMapTxtLz2) {
-                lzVal2 = "";
-            }
-            if (lzVal2 && typeof lzVal2 == "string") {
-                return lzVal2;
-            }
+
+        var lzFromRaw = tryDecodeLz(baseVal);
+        if (lzFromRaw !== "") {
+            console.log("[MAP_LABEL_DEBUG][decodeNuMapLzText] lzFromRaw", { in: baseVal, out: lzFromRaw });
+            return lzFromRaw;
         }
+
+        var lzFromDecoded = tryDecodeLz(decodedVal);
+        if (lzFromDecoded !== "") {
+            console.log("[MAP_LABEL_DEBUG][decodeNuMapLzText] lzFromDecoded", { in: baseVal, decoded: decodedVal, out: lzFromDecoded });
+            return lzFromDecoded;
+        }
+
+        console.log("[MAP_LABEL_DEBUG][decodeNuMapLzText] passthrough", { in: baseVal, out: decodedVal });
         return decodedVal;
     } catch (eDecodeNuMapTxt) {
         return String(rawVal || "");
@@ -16608,6 +16676,13 @@ JSSHOP.ads.getMapMarkerTooltipHtml = function(markerObj, defaultTitleHtml, defau
             customText = String(customText || "").trim();
         }
         var containerMode = getContainerMode(markerObj);
+        console.log("[MAP_LABEL_DEBUG][tooltip]", {
+            prpid: markerObj["prpid"] || markerObj["_id"] || "",
+            containerMode: containerMode,
+            markerLabelTextRaw: markerObj["markerLabelText"] || "",
+            markerLabelTextDecoded: customText,
+            defaultTitleHtml: defaultTitleHtml || ""
+        });
         if (containerMode == "default") {
             return defaultTitleHtml || "";
         }
@@ -17132,7 +17207,7 @@ smlspinner.stop();
         L.tileLayer.canvas('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-    
+
         L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
         maxZoom: 18,
         subdomains:['mt0','mt1','mt2','mt3'],
@@ -17184,6 +17259,15 @@ smlspinner.stop();
                 tMOShortttl = tUNZdttle.substring(0,40) + "...<br><b>" + tMOPrice + "</b>";
                 tMOttl = tMOShortttl;
                 tMOttl = JSSHOP.ads.getMapMarkerTooltipHtml(ts, tMOttl, tMOPrice);
+                console.log("[MAP_LABEL_DEBUG][doNurGenMap.marker]", {
+                    idx: iti,
+                    prpid: ts.prpid || ts._id || "",
+                    rawTitle: tAMOttl,
+                    decodedTitle: tUNZdttle,
+                    markerLabelText: ts.markerLabelText || "",
+                    markerLabelContainerStyle: ts.markerLabelContainerStyle || "",
+                    finalTooltipHtml: tMOttl
+                });
                 ttImgstr = ts.icn;
                 tIcnQcStr = JSSHOP.ads.getNuMapMarkerIconUrl(ttImgstr, "images/logo_small_oct.png");
                 if (String(tIcnQcStr || "").toLowerCase().indexOf("updt_") != -1) {
@@ -17230,22 +17314,73 @@ smlspinner.stop();
                           eindex('aa-show-prop','pid=aa-show-prop&prpid=' + tPrpID);
                         });
                                                 JSSHOP.ads.attachNuMapMarkerIconFallback(mRed, "images/logo_small_oct.png");
-        
+
 
                         // add a balloon to the marker showing the price and title
                         // mRed.bindPopup('<span class="txtBold txtClrRed">' + tCnameQcStr + '</span><br><span class="txtBold txtClrHdr">Price: ' + redIcon.options.price + '</span><br><span class="txtBold txtClrDlg">Title: ' + redIcon.options.ttl + '</span>');
 
-                      
+
 
                     }
-               
+
             } catch(e) {
             console.log("getLeaves.ERROR: " + e);
             }
           iti++;
           }
+           JSSHOP.ads.registerNuMapPlaybackState(tNMOPDVID, map, bounds, tDGMSmrkrArr, tRenderMapEffect, tRenderMapFlySpeed, tDNGMObj);
+           if (typeof JSSHOP.ads.setNuMapCaptureTiming == "function") {
+               JSSHOP.ads.setNuMapCaptureTiming(tNMOPDVID, tDNGMObj["captureFps"], tDNGMObj["captureFrameIntervalMs"]);
+           }
+           JSSHOP.ads.addNuMapReplayControl(map, tNMOPDVID, tRenderMapEffect, tDGMSmrkrArr);
+           if(pid == "aa-add-post" || pid == "aa-edit-post") {
+           JSSHOP.ads.addNuMapVideoControl(map, tNMOPDVID, tRenderMapEffect, tDGMSmrkrArr);
+           }
+           JSSHOP.ads.addNuMapSellerBadgeControl(map, tDNGMObj, tDGMSmrkrArr);
+
            if (tRenderMapAutoPlay == "on") {
-               JSSHOP.ads.applyNuMapViewportEffect(map, bounds, tDGMSmrkrArr, tRenderMapEffect, "fitbounds", tRenderMapFlySpeed, "normal");
+               try {
+                   if (JSSHOP.ads.nuMapPlaybackRegistry && JSSHOP.ads.nuMapPlaybackRegistry[tNMOPDVID]) {
+                       JSSHOP.ads.nuMapPlaybackRegistry[tNMOPDVID].isReplayPlaying = "yes";
+                   }
+                   JSSHOP.ads.setNuMapReplayButtonState(tNMOPDVID, true);
+                   JSSHOP.ads.setNuMapDebugTogglePlayMode(tNMOPDVID, true);
+               } catch (eAutoPlayUiStart) {
+                   console.log("doNurGenMap.autoPlayUiStart: " + eAutoPlayUiStart);
+               }
+               JSSHOP.ads.applyNuMapViewportEffect(
+                   map,
+                   bounds,
+                   tDGMSmrkrArr,
+                   tRenderMapEffect,
+                   "fitbounds",
+                   tRenderMapFlySpeed,
+                   "normal",
+                   {
+                       onComplete: function() {
+                           try {
+                               if (JSSHOP.ads.nuMapPlaybackRegistry && JSSHOP.ads.nuMapPlaybackRegistry[tNMOPDVID]) {
+                                   JSSHOP.ads.nuMapPlaybackRegistry[tNMOPDVID].isReplayPlaying = "no";
+                               }
+                               JSSHOP.ads.setNuMapReplayButtonState(tNMOPDVID, false);
+                               JSSHOP.ads.setNuMapDebugTogglePlayMode(tNMOPDVID, false);
+                           } catch (eAutoPlayDone) {
+                               console.log("doNurGenMap.autoPlayDone: " + eAutoPlayDone);
+                           }
+                       },
+                       onCancel: function() {
+                           try {
+                               if (JSSHOP.ads.nuMapPlaybackRegistry && JSSHOP.ads.nuMapPlaybackRegistry[tNMOPDVID]) {
+                                   JSSHOP.ads.nuMapPlaybackRegistry[tNMOPDVID].isReplayPlaying = "no";
+                               }
+                               JSSHOP.ads.setNuMapReplayButtonState(tNMOPDVID, false);
+                               JSSHOP.ads.setNuMapDebugTogglePlayMode(tNMOPDVID, false);
+                           } catch (eAutoPlayCancel) {
+                               console.log("doNurGenMap.autoPlayCancel: " + eAutoPlayCancel);
+                           }
+                       }
+                   }
+               );
            } else {
                try {
                    if (bounds && typeof bounds.isValid == "function" && bounds.isValid()) {
@@ -17255,16 +17390,9 @@ smlspinner.stop();
                    console.log("doNurGenMap.fitBounds: " + eMapNoAutoPlayBounds);
                }
            }
-           JSSHOP.ads.registerNuMapPlaybackState(tNMOPDVID, map, bounds, tDGMSmrkrArr, tRenderMapEffect, tRenderMapFlySpeed, tDNGMObj);
-           if (typeof JSSHOP.ads.setNuMapCaptureTiming == "function") {
-               JSSHOP.ads.setNuMapCaptureTiming(tNMOPDVID, tDNGMObj["captureFps"], tDNGMObj["captureFrameIntervalMs"]);
-           }
-           JSSHOP.ads.addNuMapReplayControl(map, tNMOPDVID, tRenderMapEffect, tDGMSmrkrArr);
-           JSSHOP.ads.addNuMapVideoControl(map, tNMOPDVID, tRenderMapEffect, tDGMSmrkrArr);
-           JSSHOP.ads.addNuMapSellerBadgeControl(map, tDNGMObj, tDGMSmrkrArr);
-          
+
           }
-     
+
 
 
 };
@@ -17431,6 +17559,15 @@ JSSHOP.ads.doNuGenMap = function(tAADNGMObj) {
                 tMOShortttl = tUNZdttle.substring(0,40) + "...<br><b>" + tMOPrice + "</b>";
                 tMOttl = tMOShortttl;
                 tMOttl = JSSHOP.ads.getMapMarkerTooltipHtml(ts, tMOttl, tMOPrice);
+                console.log("[MAP_LABEL_DEBUG][doNuGenMap.marker]", {
+                    idx: iti,
+                    prpid: ts.prpid || ts._id || "",
+                    rawTitle: tAMOttl,
+                    decodedTitle: tUNZdttle,
+                    markerLabelText: ts.markerLabelText || "",
+                    markerLabelContainerStyle: ts.markerLabelContainerStyle || "",
+                    finalTooltipHtml: tMOttl
+                });
                 ttImgstr = ts.icn;
                 tIcnQcStr = JSSHOP.ads.getNuMapMarkerIconUrl(ttImgstr, "images/logo_small_oct.png");
                 if (String(tIcnQcStr || "").toLowerCase().indexOf("updt_") != -1) {
@@ -17477,22 +17614,71 @@ JSSHOP.ads.doNuGenMap = function(tAADNGMObj) {
                           eindex('aa-show-prop','pid=aa-show-prop&prpid=' + tPrpID + '&cid=' + currShopsArr[e.target.options.iti].pcoid);
                         });
                                                 JSSHOP.ads.attachNuMapMarkerIconFallback(mRed, "images/logo_small_oct.png");
-        
+
 
                         // add a balloon to the marker showing the price and title
                         // mRed.bindPopup('<span class="txtBold txtClrRed">' + tCnameQcStr + '</span><br><span class="txtBold txtClrHdr">Price: ' + redIcon.options.price + '</span><br><span class="txtBold txtClrDlg">Title: ' + redIcon.options.ttl + '</span>');
 
-                      
+
 
                     }
-               
+
             } catch(e) {
             console.log("getLeaves.ERROR: " + e);
             }
           iti++;
           }
+           JSSHOP.ads.registerNuMapPlaybackState(tDNGMObj["mdvid"], map, bounds, tDGMSmrkrArr, tPreviewMapEffect, tPreviewMapFlySpeed, tDNGMObj);
+           if (typeof JSSHOP.ads.setNuMapCaptureTiming == "function") {
+               JSSHOP.ads.setNuMapCaptureTiming(tDNGMObj["mdvid"], tDNGMObj["captureFps"], tDNGMObj["captureFrameIntervalMs"]);
+           }
+           JSSHOP.ads.addNuMapReplayControl(map, tDNGMObj["mdvid"], tPreviewMapEffect, tDGMSmrkrArr);
+           JSSHOP.ads.addNuMapVideoControl(map, tDNGMObj["mdvid"], tPreviewMapEffect, tDGMSmrkrArr);
+           JSSHOP.ads.addNuMapSellerBadgeControl(map, tDNGMObj, tDGMSmrkrArr);
+
            if (tPreviewMapAutoPlay == "on") {
-               JSSHOP.ads.applyNuMapViewportEffect(map, bounds, tDGMSmrkrArr, tPreviewMapEffect, "fitbounds", tPreviewMapFlySpeed, "normal");
+               try {
+                   if (JSSHOP.ads.nuMapPlaybackRegistry && JSSHOP.ads.nuMapPlaybackRegistry[tDNGMObj["mdvid"]]) {
+                       JSSHOP.ads.nuMapPlaybackRegistry[tDNGMObj["mdvid"]].isReplayPlaying = "yes";
+                   }
+                   JSSHOP.ads.setNuMapReplayButtonState(tDNGMObj["mdvid"], true);
+                   JSSHOP.ads.setNuMapDebugTogglePlayMode(tDNGMObj["mdvid"], true);
+               } catch (eAutoPlayPreviewUiStart) {
+                   console.log("doNuGenMap.autoPlayUiStart: " + eAutoPlayPreviewUiStart);
+               }
+               JSSHOP.ads.applyNuMapViewportEffect(
+                   map,
+                   bounds,
+                   tDGMSmrkrArr,
+                   tPreviewMapEffect,
+                   "fitbounds",
+                   tPreviewMapFlySpeed,
+                   "normal",
+                   {
+                       onComplete: function() {
+                           try {
+                               if (JSSHOP.ads.nuMapPlaybackRegistry && JSSHOP.ads.nuMapPlaybackRegistry[tDNGMObj["mdvid"]]) {
+                                   JSSHOP.ads.nuMapPlaybackRegistry[tDNGMObj["mdvid"]].isReplayPlaying = "no";
+                               }
+                               JSSHOP.ads.setNuMapReplayButtonState(tDNGMObj["mdvid"], false);
+                               JSSHOP.ads.setNuMapDebugTogglePlayMode(tDNGMObj["mdvid"], false);
+                           } catch (eAutoPlayPreviewDone) {
+                               console.log("doNuGenMap.autoPlayDone: " + eAutoPlayPreviewDone);
+                           }
+                       },
+                       onCancel: function() {
+                           try {
+                               if (JSSHOP.ads.nuMapPlaybackRegistry && JSSHOP.ads.nuMapPlaybackRegistry[tDNGMObj["mdvid"]]) {
+                                   JSSHOP.ads.nuMapPlaybackRegistry[tDNGMObj["mdvid"]].isReplayPlaying = "no";
+                               }
+                               JSSHOP.ads.setNuMapReplayButtonState(tDNGMObj["mdvid"], false);
+                               JSSHOP.ads.setNuMapDebugTogglePlayMode(tDNGMObj["mdvid"], false);
+                           } catch (eAutoPlayPreviewCancel) {
+                               console.log("doNuGenMap.autoPlayCancel: " + eAutoPlayPreviewCancel);
+                           }
+                       }
+                   }
+               );
            } else {
                try {
                    if (bounds && typeof bounds.isValid == "function" && bounds.isValid()) {
@@ -17502,16 +17688,9 @@ JSSHOP.ads.doNuGenMap = function(tAADNGMObj) {
                    console.log("doNuGenMap.fitBounds: " + eMapPreviewNoAutoPlayBounds);
                }
            }
-           JSSHOP.ads.registerNuMapPlaybackState(tDNGMObj["mdvid"], map, bounds, tDGMSmrkrArr, tPreviewMapEffect, tPreviewMapFlySpeed, tDNGMObj);
-           if (typeof JSSHOP.ads.setNuMapCaptureTiming == "function") {
-               JSSHOP.ads.setNuMapCaptureTiming(tDNGMObj["mdvid"], tDNGMObj["captureFps"], tDNGMObj["captureFrameIntervalMs"]);
-           }
-           JSSHOP.ads.addNuMapReplayControl(map, tDNGMObj["mdvid"], tPreviewMapEffect, tDGMSmrkrArr);
-           JSSHOP.ads.addNuMapVideoControl(map, tDNGMObj["mdvid"], tPreviewMapEffect, tDGMSmrkrArr);
-           JSSHOP.ads.addNuMapSellerBadgeControl(map, tDNGMObj, tDGMSmrkrArr);
-          
+
           }
-     
+
 
 
 
@@ -17602,10 +17781,10 @@ JSSHOP.ads.addNuMapSellerBadgeControl = function(mapObj, mapConfigObj, markersAr
 };
 
 
-     
+
 
 JSSHOP.ads.doGenCoStr = function(tCoRecObj, tCoRecIdx) {
-   
+
     ts = tCoRecObj;
     ttSrtel = ts.c_tel;
     ttSrtel = ttSrtel.replace(/\s/g, '');
@@ -17629,7 +17808,7 @@ currFTclr = "menu-material-icons collection-item txtClrRed";
 }
 
 tCResShpStr = "<div tid=\"dvCoFavBtn\">";
-tCResShpStr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + ttSweb + "','" +  ts.c_name + "','noQvalue','" + quid + "','nbtnFavs" + tCoRecIdx + "');\"><i id=\"nbtnFavs" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+tCResShpStr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + ttSweb + "','" +  ts.c_name + "','noQvalue','" + quid + "','nbtnFavs" + tCoRecIdx + "');\"><i id=\"nbtnFavs" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
 tCResShpStr += "</div>";
 
 
@@ -17643,7 +17822,7 @@ atstr += "<div class=\"collection-item\">";
 atstr += "<div style=\"padding-top:12px;\"><a href=\"" + ttGCSSurl + "\" class=\"txtBold\">" + ts.c_name + "</a>  <span class=\"txtSmall txtClrGrey\">"  + ts.c_location + "</span></div>";
 atstr += "<div style=\"word-wrap: break-word;padding-bottom:12px;\">";
 
- 
+
     if(ttSrtel.indexOf("351") != -1) {
         atstr += " <div tid=\"dv_c_tel\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','nbtnTel" + tCoRecIdx + "');\"><i id=\"nbtnTel" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"btn_tel\">&#xe551;</i></span></div>";
     }
@@ -17656,14 +17835,14 @@ atstr += "<div style=\"word-wrap: break-word;padding-bottom:12px;\">";
     if(ttSwhours.indexOf("?") != -1) {
         atstr += " <div tid=\"dv_c_tel\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','nbtnWH" + tCoRecIdx + "');\"><i id=\"nbtnWH" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"btn_hours\">&#xe190;</i></span></div>";
     }
- 
+
 
 atstr += "<a href=\"javascript:JSSHOP.ui.popAFImgUrl('" + tBimgU + "')\"><img src=\"" + tBimgU + "\" class=\"icnbtn\" style=\"margin-right:8px;padding-right:6px;max-width:50px;\" onerror=\"doGglImgLdErr('" + ts._id + "');\"></a>";
 atstr += "</div></div></td>";
 
 atstr += "</tr>";
 // rewrite atst with a facebook like style
- 
+
     return atstr;
 };
 
@@ -17698,13 +17877,13 @@ JSSHOP.ads.getNMyShpLnks = function() {
     tRtGMSIstr += JSSHOP.shared.getPlaceELink();
     if(currPlaceObj.c_uid  == quid) {
         document.location.href = "index.html?pid=aa-edit-place&tpid=" + cid;
-    }  
+    }
     return tRtGMSIstr;
 };
 JSSHOP.ads.doGenCoMsgPop = function(tCowRecInc) {
      // msgbox with object
      atmpMBobj = nTmpMsgBxOb();
-     atmpMBobj["m_type"] = "product"; // interna� msg type
+     atmpMBobj["m_type"] = "product"; // internaï¿½ msg type
      atmpMBobj["m_val"] = "1"; // internal msg token
      /// atmpMBobj["m_strAll"] = tAllowedStr; // message form values to render
      atmpMBobj["m_useAnx"] = "y"; // add image upload btn
@@ -17718,7 +17897,7 @@ JSSHOP.ads.doGenCoMsgPop = function(tCowRecInc) {
     tsrdid = tsraaq["_id"];
     console.log("doGenCoMsgPop: " + tsrdid);
      JSSHOP.shared.setFrmFieldVal("qmsgs","msg_to", tsrdid);
-     JSSHOP.ui.showNuMsgBox(atmpMBobj); 
+     JSSHOP.ui.showNuMsgBox(atmpMBobj);
 };
 
 JSSHOP.ads.setGCoPopPanel = function(tggntype, tPPInt) {
@@ -17733,15 +17912,15 @@ JSSHOP.ads.setGCoPopPanel = function(tggntype, tPPInt) {
         case "dvGetCMsg":
             document.getElementById("dvGCPBody").innerHTML = "Message";
            //  document.getElementById("dvGCPHDR").innerHTML =  "Message";
- 
+
             break;
         case "dvGetCAprase":
             document.getElementById("dvGCPBody").innerHTML = JSSHOP.ads.getARApraseStr(tPPInt);
-            // document.getElementById("dvGCPHDR").innerHTML = "Info";  
+            // document.getElementById("dvGCPHDR").innerHTML = "Info";
             break;
         case "dvGetMSInf":
             document.getElementById("dvGCPBody").innerHTML = JSSHOP.ads.getMyShpLnks(tPPInt);
-                // document.getElementById("dvGCPHDR").innerHTML = "Info";  
+                // document.getElementById("dvGCPHDR").innerHTML = "Info";
             break;
         default:
             document.getElementById("dvGCPBody").innerHTML = JSSHOP.ads.doGenCoStr(currShopsArr[tPPInt], tPPInt);
@@ -17771,7 +17950,7 @@ console.log("fnshGCFSave: " + b);
         document.location.href = "index.html?pid=aa-edit-user&cit=y";
         }
     }
-} catch(e) {    
+} catch(e) {
 console.log("fnshGCFSave: " + e);
 }
     }
@@ -17812,19 +17991,19 @@ JSSHOP.ads.doGenCoAPpd = function() {
     rweint = 0;
     while(rweint < tSARR.length) {
         tsasa = null;
-     
+
     tsasa = tSARR[rweint];
-     
+
     if(tVSARR[rweint] == c_category.value) {
         console.log("tVSARR[rweint]: " + tVSARR[rweint] + " : " + tSARR[rweint] + " : " +  c_category.value);
-    
+
         JSSHOP.shared.addCurrSelectOpt(tmp_c_category, tVSARR[rweint], tSARR[rweint], "selected");
     } else {
         console.log("tVSARR[rweint]:no " + tVSARR[rweint] + " : " + tSARR[rweint] + " : " +  c_category.value);
-    
+
     JSSHOP.shared.addCurrSelectOpt(tmp_c_category, tVSARR[rweint], tSARR[rweint], "");
     }
-    rweint++; 
+    rweint++;
     }
 };
 JSSHOP.ads.doGenCoAPopd = function(tAbCd, tAbCdA, tAbCdB) {
@@ -17858,9 +18037,9 @@ tIncStr = "images/slogos/s_thumb" + currPlaceObj.c_logoimg;
  tIstr = "<img class=\"avatar\" id=\"dvPLogoImg\" src=\"" + tIncStr + "\" width=\"48\" height=\"48\" />";
  tCdescStr = currPlaceObj.c_desc;
  if((tCdescStr == "ns") || (tCdescStr == "5")){
- 
+
      tCdescStr = c_name.value + "  " + stxt[559] + " " + c_location.value + ". " ;
-  
+
  }
 document.getElementById("pprv_dvPIDHDRstr").innerHTML =  "<div style=\"float:left;padding-right:6px;padding-bottom:6px;\">" + tIstr + "</div>" + currPlaceObj.c_name + "<br><span class=\"txtSmall\">" + tCdescStr + "</span>";
 
@@ -17881,10 +18060,10 @@ if(tFPFtel.indexOf("34 ") != -1) {
 tttFPFtel = ttFPFtel.replace(/\s/g, "");
 // if the first number in ttFPFtel is 9 then it is a mobile number
 if((tttFPFtel.charAt(0) == "9") || (tttFPFtel.charAt(0) == "6") || (tttFPFtel.charAt(0) == "7")) {
-   
+
     pprv_c_tel.innerHTML = "<a href=\"tel:" + tttFPFtel + "\">" + tttFPFtel + "</a>";
 } else {
-  
+
     pprv_c_tel.innerHTML = "<a href=\"tel:" + tttFPFtel + "\">" + tttFPFtel + "</a>";
 }
 
@@ -17892,7 +18071,7 @@ if((tttFPFtel.charAt(0) == "9") || (tttFPFtel.charAt(0) == "6") || (tttFPFtel.ch
 
 tWUTtl = tWebVal;
 if(tWebVal.indexOf(".") != -1) {
-     
+
     if(tWebVal.indexOf("http") != -1) {
     } else {
         tWUAdr = "http://" + tWebVal;
@@ -17921,7 +18100,7 @@ if(tWebVal.indexOf(".") != -1) {
 }
 
 pprv_dvQteBox.innerHTML = "";
-pprv_dvQteBox.innerHTML = JSSHOP.ads.getCoAprsDiv(currPlaceObj, "pprv"); 
+pprv_dvQteBox.innerHTML = JSSHOP.ads.getCoAprsDiv(currPlaceObj, "pprv");
 tDlen = pprv_dvQteBox.innerHTML.length;
 if(tDlen > 10) {
     if(arrUprefs["prfsSHOPuser"][0].tglDvAprs) {
@@ -17935,7 +18114,7 @@ if(tDlen > 10) {
         tOldHref = document.location.href;
         if(tOldHref.indexOf("recamby.com") != -1) {
             tnewHref = "https://recamby.com/clean.html";
-     
+
         } else {
             tnewHref = "https://titan/recamby/clean.html";
         }
@@ -17971,7 +18150,7 @@ JSSHOP.ads.doGenCoPop = function(tCowRecInc) {
     try {
         tGCoPpObj = currShopsArr[tCowRecInc];
         currPlaceObj = "";
-        currPlaceObj = {};  
+        currPlaceObj = {};
         currPlaceObj = tGCoPpObj;
         tgcps = tGCoPpObj;
         hasGCPcntact = "n";
@@ -17990,9 +18169,9 @@ JSSHOP.ads.doGenCoPop = function(tCowRecInc) {
         hasGCPloc_lng = "n";
         hasGCPmsg = "n";
 
-     
 
- 
+
+
 
 
 
@@ -18007,7 +18186,7 @@ JSSHOP.ads.doGenCoPop = function(tCowRecInc) {
         if(currRcntFavsStr.indexOf(tgcps.c_name) != -1) {
             currFTclr = "menu-material-icons collection-item txtClrRed";
         }
-   
+
         if(tgcps.c_email.indexOf("@") != -1) {
             hasGCPemail = "y";
         }
@@ -18037,7 +18216,7 @@ tPTXT += "<div tid=\"dvCoLogoImg\" style=\"background-image: url('" + tgcps.c_lo
 tPTXT += "</a></div>";
 tPTXT += "</td><td style=\"text-align:left\">";
 tPTXT += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
-tPTXT += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  tgcps.c_name + "','noQvalue','" + quid + "','btnFavs" + tCowRecInc + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+tPTXT += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  tgcps.c_name + "','noQvalue','" + quid + "','btnFavs" + tCowRecInc + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
 tPTXT += "</div>";
 
 tPTXT += "<div  tid=\"tmp_c_name\"  style=\"min-height:20px;text-align: left;max-width:98%;word-wrap: break-word;word-break: break-word;width: 100%\" class=\"txtSmall txtBold txtClrHdr\"><a class=\"txtDecorNone txtBig txtSmall txtClrHdr\" href=\"" + tCurl + "\"  target=\"" + tGRPtgt + "\">" +  removeDiacritics(tgcps.c_name) + "</a></div>";
@@ -18094,7 +18273,7 @@ atstr += "<a href=\"javascript:JSSHOP.ui.popAFImgUrl('" + tBimgU + "')\"><img sr
 atstr += "</div>";
 
 atstr += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
-atstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+atstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
 atstr += "</div>";
 
 
@@ -18148,13 +18327,13 @@ JSSHOP.ads.doGenMyCoPop = function() {
         if(currRcntFavsStr.indexOf(tgcps.c_name) != -1) {
             currFTclr = "menu-material-icons collection-item txtClrRed";
         }
-   
+
 
         if(tgcps.c_web.indexOf(".") != -1) {
             hasGCPweb = "y";
             tCurl = tgcps.c_web;
         }
- 
+
         if(tgcps.c_whours.indexOf("?") != -1) {
             hasGCPwhours = "y";
         }
@@ -18177,7 +18356,7 @@ tPTXT += "<div tid=\"dvCoLogoImg\" style=\"background-image: url('" + tgcps.c_lo
 tPTXT += "</a></div>";
 tPTXT += "</td><td style=\"text-align:left\">";
 tPTXT += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
-tPTXT += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  tgcps.c_name + "','noQvalue','" + quid + "','btnFavs" + tCowRecInc + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+tPTXT += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  tgcps.c_name + "','noQvalue','" + quid + "','btnFavs" + tCowRecInc + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
 tPTXT += "</div>";
 
 tPTXT += "<div  tid=\"tmp_c_name\"  style=\"min-height:20px;text-align: left;max-width:98%;word-wrap: break-word;word-break: break-word;width: 100%\" class=\"txtSmall txtBold txtClrHdr\"><a class=\"txtDecorNone txtBig txtSmall txtClrHdr\" href=\"" + tCurl + "\"  target=\"" + tGRPtgt + "\">" +  removeDiacritics(tgcps.c_name) + "</a></div>";
@@ -18234,7 +18413,7 @@ atstr += "<a href=\"javascript:JSSHOP.ui.popAFImgUrl('" + tBimgU + "')\"><img sr
 atstr += "</div>";
 
 atstr += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
-atstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+atstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
 atstr += "</div>";
 
 
@@ -18281,7 +18460,7 @@ JSSHOP.ads.doGenCoNStr = function(tCoRecInc) {
         tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\"><a href=\"sms:" + ts.c_tel + "?body=" + stxt[200] + "\">" + ts.c_tel + "</a></div>";
         } else {
     tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_tel + "</div>";
-        }    
+        }
 }
     if(ts.c_email) {
     // tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_email + "</div>";
@@ -18290,9 +18469,9 @@ JSSHOP.ads.doGenCoNStr = function(tCoRecInc) {
     tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_web + "</div>";
     }
     if(ts.c_whours) {
-        // na| 9 am–6:30 pm| 9 am–6:30 pm| 9 am–6:30 pm| 9 am–6:30 pm| 9 am–6:30 pm| na
+        // na| 9â€¯amâ€“6:30â€¯pm| 9â€¯amâ€“6:30â€¯pm| 9â€¯amâ€“6:30â€¯pm| 9â€¯amâ€“6:30â€¯pm| 9â€¯amâ€“6:30â€¯pm| na
         twBstr = ts.c_whours;
- 
+
         // replace all non alpha numeric minus space and | with ;
         twAstr = twBstr.replace(/[^a-zA-Z0-9\s\-\|]/g, ";");
         // replace all ;;; with -
@@ -18331,7 +18510,7 @@ iii = 0;
 while(iii < tmpWordDaysArr.length) {
     tWDA = tmpWordDaysArr[iii];
     if(tWDA.indexOf("na") != -1) {
-        tmpRetWhrStr += tmpDaysArrAb[iii] + ": " + stxt[201] + "<br>";  
+        tmpRetWhrStr += tmpDaysArrAb[iii] + ": " + stxt[201] + "<br>";
     // not open
     } else {
     // open
@@ -18357,7 +18536,7 @@ while(iii < tmpWordDaysArr.length) {
     tmpWD1Arr = tmpWD1.split("-");
     tmpWD1Start = tmpWD1Arr[0];
     tmpWD1End = tmpWD1Arr[1];
-    tmpRetWhrStr += tmpDaysArrAb[iii] + ": " + tmpWD1Start + " - " + tmpWD1End + "<br>";    
+    tmpRetWhrStr += tmpDaysArrAb[iii] + ": " + tmpWD1Start + " - " + tmpWD1End + "<br>";
 
     }
     }
@@ -18384,16 +18563,16 @@ while(iii < tmpWordDaysArr.length) {
     }
 
     tRSstr += "</td><td>";
-    
+
     // tRSstr += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
-    // tRSstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+    // tRSstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
     // tRSstr += "</div>";
     tRSstr += "</td></tr></table>";
     // return tRSstr;
 
     return tRSstr;
     // JSSHOP.ui.popAndFillLbox(tRSstr);
- 
+
 };
 
 JSSHOP.ads.doAprasePop = function(tCoRecInc) {
@@ -18409,7 +18588,7 @@ JSSHOP.ads.doAprasePop = function(tCoRecInc) {
 
 
 JSSHOP.ads.getCoAprsDiv = function(tPlcObj, theTprfx) {
- 
+
     tCoRecObj = tPlcObj;
     ts = tCoRecObj;
     hasGCPemail = "n";
@@ -18420,13 +18599,13 @@ JSSHOP.ads.getCoAprsDiv = function(tPlcObj, theTprfx) {
     if(tCoRecObj.c_email) {
         console.log("tCoRecObj.c_email: " + tCoRecObj.c_email);
     tEmailAddr = tCoRecObj.c_email;
-    
+
     if(tEmailAddr == "") {
         tEmailAddr = "noQvalue";
     }
     if(tEmailAddr.indexOf("@") != -1) {
         hasGCPemail = "y";
- 
+
     }
     }
     if(tCoRecObj.c_tel) {
@@ -18466,14 +18645,14 @@ JSSHOP.ads.getCoAprsDiv = function(tPlcObj, theTprfx) {
 
         tRSstr += stxt[129];
         tRSstr += "</div>";
-    }  
+    }
     tRSstr += "<div id=\"" + theTprfx + "dvApraiseTitle\" style=\"padding-left:10px;\" class=\"txtSmall txtClrGrey\">" + stxt[135] + "</div>";
     tRSstr += "<div  style=\"margin:6px;\"><span class=\"txtSmall txtBold bkgdClrTtl\">" + stxt[706] + ":</span></div>";
     tRSstr += "<div id=\"" + theTprfx + "dvApraiseDesc\">";
     // tFFFstr = "Hi, I am requestiong a quote to replace the [PartName] on my: [CarYear:2001] [Make:Ford] [Series:Fiesta] [Model:F1].";
     tFFFstr = "";
 
-    
+
 
         tRSstr += "<div  id=\"" + theTprfx + "dvAprsMsg\" class=\"form-control bkgdClrTtl\" contenteditable=\"true\" spellcheck=\"false\" data-ms-editor=\"false\">";
     if(JSSHOP.ads.getPrtsPrefCC("mk") == "noQvalue") {
@@ -18490,7 +18669,7 @@ JSSHOP.ads.getCoAprsDiv = function(tPlcObj, theTprfx) {
      if(JSSHOP.ads.getPrtsPrefCC("year") != "noQvalue") {
         tYrStr = JSSHOP.ads.getPrtsPrefCC("year");
     }
-    
+
     tSeriStr = "";
     if(JSSHOP.ads.getPrtsPrefCC("series") != "noQvalue") {
         tSeriStr = " - " + JSSHOP.ads.getPrtsPrefCC("series");
@@ -18505,12 +18684,12 @@ JSSHOP.ads.getCoAprsDiv = function(tPlcObj, theTprfx) {
     tRSstr += tFFFstr;
 
     tRSstr += "</div>";
-    
+
     // create buttons to send email or sms
     tRSstr += "<div id=\"dvApraiseBtns\" style=\"margin:5px;\"><table><tr>";
     if(hasGCPemail == "y") {
         // JSSHOP.ui.setNuCBBC
-       
+
     tRSstr += "<td><span class=\"form-control bkgdClrTtl brdrClrHdr txtClrRed crsrPointer\"  onclick=\"JSSHOP.ui.setCBBClickClr(this,this.className + ' txtBig txtBold',this.className, function(){JSSHOP.ads.doGenShpActn(0,'email','" + theTprfx + "');});\"><i class=\"nav-material-icons  txtClrHdr\" alt=\"btn_email\" title=\"email\" value=\"email\" style=\"margin-bottom:4px;margin-left:4px;margin-right:2px;vertical-align: middle;\">&#xe0be;</i> Email</span></td>";
     }
     if(hasGCPSms == "y") {
@@ -18520,7 +18699,7 @@ JSSHOP.ads.getCoAprsDiv = function(tPlcObj, theTprfx) {
 // clearfix div
     tRSstr += "<div class=\"clearfix\"><br></div>";
 
-    
+
     tRSstr += "</div>";
     tRSstr += "</div>";
 
@@ -18530,12 +18709,12 @@ JSSHOP.ads.getCoAprsDiv = function(tPlcObj, theTprfx) {
     tRSstr += "</table>";
     tRSstr += "</div>";
 
-     
-    
+
+
     }
     return tRSstr;
     // JSSHOP.ui.popAndFillLbox(tRSstr);
- 
+
 };
 JSSHOP.ads.getARApraseStr = function(tCoRecInc) {
     iint = tCoRecInc;
@@ -18555,7 +18734,7 @@ JSSHOP.ads.getARApraseStr = function(tCoRecInc) {
         tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\"><a href=\"sms:" + ts.c_tel + "?body=" + stxt[200] + "\">" + ts.c_tel + "</a></div>";
         } else {
     tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_tel + "</div>";
-        }    
+        }
 }
     if(ts.c_email) {
     tRSstr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_email + "</div>";
@@ -18565,11 +18744,11 @@ JSSHOP.ads.getARApraseStr = function(tCoRecInc) {
     }
      // this is the apraise pop up. create an editable div with prefilled text accrding to the make and model
 
-    
+
     tRSstr += "</td><td>";
-    
+
     tRSstr += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
-    tRSstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+    tRSstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
     tRSstr += "</div>";
     tRSstr += "</td></tr></table>";
     // return tRSstr;
@@ -18596,12 +18775,12 @@ JSSHOP.ads.getARApraseStr = function(tCoRecInc) {
     tRSstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox('');\"><i class=\"menu-material-icons collection-item txtClrTtl\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
     tRSstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox('');\"><i class=\"menu-material-icons collection-item txtClrTtl\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
     tRSstr += "</div>";
-    
+
     tRSstr += "</div>";
     tRSstr += "</div>";
     return tRSstr;
     // JSSHOP.ui.popAndFillLbox(tRSstr);
- 
+
 };
 
 JSSHOP.ads.getUPrpAprsStr = function(tUprpAint) {
@@ -18612,7 +18791,7 @@ tMsgBxHdrSTr += "<table style=\"margin:0 auto\"><tr><td><img src=\"" + currPrpIm
 JSSHOP.ui.popAndFillLbox(tMsgBxHdrSTr);
 };
 
-JSSHOP.ads.sortGenShpArr = function(thePGIdx){ 
+JSSHOP.ads.sortGenShpArr = function(thePGIdx){
 
   //   doNuSpinSet("dvResWrap", "small", null, "...");
 // document.getElementById("includedContent").innerHTML = "";
@@ -18641,7 +18820,7 @@ if(pid.indexOf("psearch") != -1) {
     currSortObj["msearch"]["sindex"] = thePGIdx;
 }
 console.log("sortGenShpArr: " + tSOrdrStr);
-// conver currSortObj to string and save to local storage   
+// conver currSortObj to string and save to local storage
 // localStorage.setItem("currSortObj", JSON.stringify(currSortObj));
 // set currSortObj cookie with LZString.compressToUTF16(JSON.stringify(currSortObj))
 JSSHOP.cookies.setCookie("currSortObj", LZString.compressToEncodedURIComponent(JSON.stringify(currSortObj)), 365);
@@ -18700,9 +18879,9 @@ JSSHOP.ads.doGenShpActn = function(tmPGIdx, tmPGact, tmPrfx){
         }
     break;
     case "email":
-   
+
     window.location.href = "mailto:" + tCoARecObj.c_email + "?subject=" + stxt[134] + "&body=" + dvAprsMsg;
- 
+
     break;
     case "web":
     if(tss.c_web) {
@@ -18725,7 +18904,7 @@ JSSHOP.ads.doGenShpActn = function(tmPGIdx, tmPGact, tmPrfx){
     JSSHOP.ui.popAndFillLbox("doGenShpActn.ERROR: " + e);
 }
 };
- 
+
 JSSHOP.ads.doGenShpStr = function(theGresObj, theGresIdx, theGresOrdr) {
 return JSSHOP.ads.doNuGenShpStr(theGresObj, theGresIdx, theGresOrdr, "onlydef");
 };
@@ -18735,14 +18914,14 @@ JSSHOP.ads.doNuGenShpStr = function(theGresObj, theGresIdx, theGresOrdr, theGres
     theTResType = "shops";
     hasr = "n";
     fullstr = "";
- 
+
     tToFill = null;
     tToFill = [];
     ttarrToFill = null;
     ttarrToFill = [];
     tToFill = theGresObj;
 
-    
+
 tHdrArr = null;
 tHdrArr = "";
 tHdrArr = [];
@@ -18750,8 +18929,8 @@ tAHdFObj = {};
 tAHdFObj["fld"] = "c_name";
 tAHdFObj["nm"] = stxt[404]; // Name
 tHdrArr.push(tAHdFObj);
- 
- 
+
+
 tAHdFObj = {};
 tAHdFObj["fld"] = "c_location";
 tAHdFObj["nm"] = stxt[79]; // Location
@@ -18779,10 +18958,10 @@ tmpACarr = null;
 tmpACarr = "";
 tmpACarr = [];
 
- 
+
     ttarrToFill = JSSHOP.shared.sort(theGresObj, theGresIdx, theGresOrdr);
     console.log("JSSHOP.ads.ttarrToFill.sorted: " + JSON.stringify(ttarrToFill));
-  
+
     var len = ttarrToFill.length;
     tIsCntctble = 10;
     var iint = 0;
@@ -18879,8 +19058,8 @@ tmpACarr = [];
         tAesShpStr += "</table>";
         tAesShpStr += "</div>";
         // tAesShpStr += "<br>";
-        tCResShpStr += tAesShpStr;  
-        
+        tCResShpStr += tAesShpStr;
+
         // not showing map
         /*
         tCResShpStr += "<div class=\"prodRowBox slmtable brdrClrRed gradient-color\" style=\"max-width: 95%;word-wrap: break-word;margin-top:0px;padding-right:9px;max-height:100%;min-height:15px;\">";
@@ -18889,12 +19068,12 @@ tmpACarr = [];
         tCResShpStr += "<td class=\"crsrPointer txtClrWhite\"><div id=\"dvTglPMap\" class=\"icnbtn crsrPointer txtClrWhite\" nowrap=\"nowrap\" style=\"float:right\">";
         tCResShpStr += "<i class=\"small-material-icons txtClrWhite\" title=\"expand_more\">&#xe5cf;</i></div></td></tr></table></div></a>";
 
- 
+
         tCResShpStr += "<div id=\"smapWrpr\" style=\"min-height:300px;visibility:hidden;display:none;min-width:99%;\" onfocus=\"\" onblur=\"\">";
-      
+
         tCResShpStr += "<div id=\"smap\" style=\"min-width:99%;min-height:300px;visibility:visible;display:block;position:fixed;top:-500px;\"></div>";
-        tCResShpStr += "<div class=\"txtClrWhite\">" + stxt[531] + "</div>"; 
-        tCResShpStr += "<div class=\"txtClrWhite\">" + stxt[556] + "</div>"; 
+        tCResShpStr += "<div class=\"txtClrWhite\">" + stxt[531] + "</div>";
+        tCResShpStr += "<div class=\"txtClrWhite\">" + stxt[556] + "</div>";
 
         tCResShpStr += "</div>";
         tCResShpStr += "</div>";
@@ -18916,17 +19095,17 @@ tmpACarr = [];
     if(ts.c_name) {
         ts.c_name = ts.c_name;
     }
-    
+
     if(ts.c_name) {
     taCTV = ts.c_name;
-    
+
     tCttl = taCTV.replace("/", " - ");
     tCshortttl = tCttl.substring(0, 1);
     } else {
     tCttl = "noQvalue";
-    tCshortttl = "noQvalue";    
+    tCshortttl = "noQvalue";
     }
-    
+
     tCWebStr = "";
     tCweb = "noQvalue";
     tCurl = "";
@@ -18935,8 +19114,8 @@ tmpACarr = [];
     }
     if(ts.c_web) {
     tCweb = ts.c_web;
-    
-    
+
+
     taCWStr = tCweb;
     tCWStr = taCWStr;
     if(tCweb.indexOf("http") != -1) {
@@ -18945,32 +19124,32 @@ tmpACarr = [];
     tdCWStr = tcCWStr.replace("www.", "");
     taCWStr = tdCWStr;
     } else {
-    
+
     tCweb = "http://" + tCweb;
     }
     tCWStr = taCWStr;
     if(taCWStr.length > 40){
     tCWStr = taCWStr.substring(0, 40) + "...";
-    }  
+    }
     if((tCurl == "noQvalue") ||  (tCurl == "noQxalue")) {
     }  else {
     tCWebStr = "<a href=\"javasvript:JSSHOP.ads.doGenShpActn(" + tCoRecIdx + ",'web');\">" + tCWStr  + "</a>";
     }
-    
-    } 
+
+    }
 
 
     ttSrtel = ts.c_tel;
     ttSweb = ts.c_web;
     ttSemail = ts.c_email;
- 
+
          if(ttSrtel != "") {
         if(ttSrtel.indexOf("3") != -1) {
             if(ttSrtel.indexOf("1 9") != -1) {
             tIsCntctble = 15;
-             }  
+             }
         }
-    
+
         }
         if(ttSemail != "") {
         if(ttSemail.indexOf("@") != -1) {
@@ -18983,11 +19162,11 @@ tmpACarr = [];
          }
     }
     tIBclsStr = "slmtable icndbtn";
-    
+
     // if(tCWStr == "noQvalue") {}
     if(theTResType == "shops") {
     tGRPtgt = "_blank";
-     
+
     ttSSurl = "index.html?pid=aa-show-shop&cid=" + ts._id + "&q=" + removeDiacritics(ts.c_name + " " + ts.c_location);
     if(theTResType == "shops") {
         tGRPtgt = "_self";
@@ -18995,7 +19174,7 @@ tmpACarr = [];
     }
     tCurl = ttSSurl;
     tCWebStr = "<a href=\"" + tCweb + "\">" + stxt[62]  + "...</a>";
-    } // end of if above. using catchall testing 
+    } // end of if above. using catchall testing
     tttLImg = ts.c_logoimg;
     if(tttLImg.indexOf(".") != -1) {
      if(tttLImg.indexOf("http") != -1) {
@@ -19024,20 +19203,20 @@ tmpACarr = [];
     if(tIsCntctble == 15) {
     tStrBrdrClr = " brdrClrRed";
     }
-    atstr = ""; 
+    atstr = "";
            if(iint == 0) {
-            
+
             // atstr += "<div id=\"dvTglShpItms\"  style=\"word-wrap: break-word;margin-top:0px;padding-right:9px;max-height:90%;\"  class=\"prodRowBox slmtable" + tStrBrdrClr + "\"></div>";
     }
      if(len > 3) {
     if(iint == 3) {
        //  alert("iint: " + iint);
        atstr += "<div id=\"dvEBSearM\"  style=\"word-wrap: break-word;margin-top:0px;padding-right:9px;max-height:90%;\"  class=\"prodRowBox slmtable" + tStrBrdrClr + "\"></div>";
-       
-     }  
+
+     }
     } else {
         if(iint == 0) {
-            
+
     atstr += "<div id=\"dvEBSearM\"  style=\"word-wrap: break-word;margin-top:0px;padding-right:9px;max-height:90%;\"  class=\"prodRowBox slmtable" + tStrBrdrClr + "\"></div>";
         }
     }
@@ -19054,10 +19233,10 @@ tmpACarr = [];
     }
     atstr += "</div>";
     atstr += "<div tid=\"dvCoPopBtn\" style=\"float: right\">";
-    atstr += "<span id=\"btnCoPop" + ts._id + "\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:JSSHOP.ads.doGenCoPop(" + iint + ");\"><i class=\"" + currFTclr + "\" alt=\"open in modal\" title=\"open in modal\">&#xe89e;</i></span>"; 
+    atstr += "<span id=\"btnCoPop" + ts._id + "\" class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:JSSHOP.ads.doGenCoPop(" + iint + ");\"><i class=\"" + currFTclr + "\" alt=\"open in modal\" title=\"open in modal\">&#xe89e;</i></span>";
     atstr += "</div>";
     atstr += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
-    atstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-place&cid=" + ts._id + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + ts._id + "');\"><i  id=\"btnFavs" + ts._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+    atstr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-place&cid=" + ts._id + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + ts._id + "');\"><i  id=\"btnFavs" + ts._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
     atstr += "</div>";
 
     // tCurl = "javascript:eindex('aa-show-place','pid=aa-show-place&cid=" + ts._id + "');";
@@ -19066,9 +19245,9 @@ tmpACarr = [];
     } else {
         tQsrchName = stxt[3001];
     }
-     
+
 tQsrchName = JSSHOP.ads.getPrtsPrfStr("thin");
- 
+
      // tCurl = "index.html?pid=aa-show-place&cid=" + ts._id + "&q=" + removeDiacritics(ts.c_name + " " + ts.c_location);
     tCurl = "javascript:eindex('aa-show-place','pid=aa-show-place&cid=" + ts._id + "&q=" + tQsrchName + "');";
     // tCurl = "index.html?pid=aa-show-place&cid=" + ts._id + "&q=" + tQsrchName;
@@ -19086,10 +19265,10 @@ tQsrchName = JSSHOP.ads.getPrtsPrfStr("thin");
 
 
 
- 
 
 
-    
+
+
     if(theTResType == "shopsaas") {
     ttSrtel = ts.c_tel;
     ttSweb = ts.c_web;
@@ -19099,8 +19278,8 @@ tQsrchName = JSSHOP.ads.getPrtsPrfStr("thin");
     ttGCSSurl = "javascript:JSSHOP.ads.doGenCoPop(" + iint + ");";
     aaatstr = "";
     aaatstr += "<div class=\"collection-item\">";
-  
-    
+
+
     ttGCSSurl = "javascript:JSSHOP.ads.doGenCoPop(" + iint + ");";
         if(ttSrtel != "") {
         if(ttSrtel.indexOf("3") != -1) {
@@ -19111,7 +19290,7 @@ tQsrchName = JSSHOP.ads.getPrtsPrfStr("thin");
                 aaatstr += " <div tid=\"dv_c_tel\"  class=\"txtSmall txtBold txtClrHdr\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:JSSHOP.ads.doGenShpActn(" + tCoRecIdx + ",'tel');\"><i id=\"nbtnTel" + tCoRecIdx + "\" class=\"" + currFTclr + "\" alt=\"tel\" title=\"tel\" value=\"btn_tel\">&#xe551;</i></span></div>";
             }
         }
-    
+
         }
         if(ttSemail != "") {
         if(ttSemail.indexOf("@") != -1) {
@@ -19137,22 +19316,22 @@ tQsrchName = JSSHOP.ads.getPrtsPrfStr("thin");
         aaatstr += "<div tid=\"dv_c_tel\"  class=\"txtSmall txtBold txtClrHdr bkgdClrRed\" style=\"float:right\"><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" style=\"margin:2px;\"  onclick=\"JSSHOP.ads.doGenCoMsgPop(" + tCoRecIdx + ");\"><i class=\"material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i></span></div>";
 
     }
-     
+
     aaatstr += "</div>";
     atstr += aaatstr;
 
     }
     atstr += "</div>";
 
- 
-    
+
+
     tCResBStr += atstr;
     iint++;
     }
-    tCResBStr += "</div>"; // dvResWrap 
+    tCResBStr += "</div>"; // dvResWrap
 
     newel = document.createElement('div');
- 
+
    // resultsDiv.innerHTML = "";
    if(theGresObj[0]) {
     strATHhtml = JSSHOP.shared.getNurTblHdrs(tHdrArr, "JSSHOP.ads.sortGenShpArr");
@@ -19172,9 +19351,9 @@ tQsrchName = JSSHOP.ads.getPrtsPrfStr("thin");
         return tCResShpStr + tmpFstr;
     // return "No res: " + tCResBStr;
     }
-    
 
-    
+
+
     } catch(e) {
         console.log("JSSHOP.ads.doGenShpStr.error: " + e);
         return "doNuGenShpStr: " + e;
@@ -19184,7 +19363,7 @@ tQsrchName = JSSHOP.ads.getPrtsPrfStr("thin");
 
 
 
-    
+
 JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
  try {
     theTResType = a;
@@ -19210,7 +19389,7 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
     tmpOldTitle = "noQvalue";
     tCResBStr = "";
     tCResShpStr = "";
- 
+
     while(iint < len) {
         // tIsCntctble = 10;
         tIsCntctble = 3;
@@ -19221,14 +19400,14 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
         ttSQAemail = tsar.c_email;
         ttSQAwhours = tsar.c_whours;
         ttSQACSSurl = "javascript:JSSHOP.ads.doGenCoPop(" + iint + ");";
-        
+
         if(ttSQAtel != "") {
         if(ttSQAtel.indexOf("3") != -1) {
             if((ttSQAtel.indexOf("1 9") != -1) || (ttSQAtel.indexOf("4 6") != -1) || (ttSQAtel.indexOf("4 7") != -1)) {
             tIsCntctble = tIsCntctble + 50;
             } else {
                 tIsCntctble = tIsCntctble + 5;
-            } 
+            }
         }
 
             }
@@ -19242,7 +19421,7 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
                 tIsCntctble = tIsCntctble + 4;
             }
         }
- 
+
 
         if(currRcntFavsStr.indexOf(tsar.c_name) != -1) {
             tIsFavd = 15;
@@ -19251,12 +19430,12 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
     currShopsArr[iint].cccd = tIsCntctble;
     currShopsArr[iint].cfavd = tIsFavd;
     currShopsArr[iint]._id = tsar._id;
-  
+
     iint++;
     }
     // check for currSortObj in localstorage
    // and log it if it exists
-    
+
         tmpSrtIdx = "cccd";
         tmpSrtOrdr = "sortDesc";
              console.log("JSSHOP.ads.doNuGenericRes.currSortObj: " + localStorage.getItem("currSortObj"));
@@ -19264,24 +19443,24 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
                 tmpSrtIdx = currSortObj["psearch"]["sindex"];
                 tmpSrtOrdr = currSortObj["psearch"]["sorder"];
             } else {
- 
+
                 tmpSrtIdx = currSortObj["msearch"]["sindex"];
                 tmpSrtOrdr = currSortObj["msearch"]["sorder"];
             }
-      
 
-    
+
+
             if(isJApp == "yes") {
                 tCmprsdStr = JSON.stringify(ttarrToFill);
                 tFnlCmprsdStr = LZString.compressToEncodedURIComponent(tCmprsdStr);
                 app.setCShpAStr(tFnlCmprsdStr);
             }
-    
+
     return JSSHOP.ads.doGenShpStr(currShopsArr, tmpSrtIdx, tmpSrtOrdr, "onlydef");
- 
+
     // resultsDiv.innerHTML = "";
     // return currShopsArr;
-   
+
     } catch(e) {
         if(isJApp == "yes") {
             tCmprsdStr = JSON.stringify(ttarrToFill);
@@ -19292,9 +19471,9 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
         console.log("JSSHOP.ads.doNuGenericRes.error: " + e);
         // return "doNuGenericRes.error: " + e;
         return JSSHOP.ads.doGenShpStr(currShopsArr, tmpSrtIdx, tmpSrtOrdr, "onlydef");
- 
-        } 
-  
+
+        }
+
 
     };
 
@@ -19310,9 +19489,9 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
         fullstr = "";
         console.log("JSSHOP.ads.doGenericRes: " + theResp);
         var arrToFill = JSON.parse(theResp);
-        
+
         var len = arrToFill.length;
-        
+
         var iint = 0;
         var pcid = 0;
         tstr = "";
@@ -19326,7 +19505,7 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
             tCResShpStr += "<div><a href=\"javascript:JSSHOP.ui.toggleVisibility('smap')\">tgl</a></div>";
              tCResShpStr += "<div id=\"smap\" style=\"min-height:300px;visibility:visible;display:block\"></div>";
            //  getLvsTglBox();
-         
+
         }
         while(iint < len) {
         ts = arrToFill[iint];
@@ -19337,17 +19516,17 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
         if(ts.c_name) {
             ts.c_name = ts.c_name;
         }
-        
+
         if(ts.c_name) {
         taCTV = ts.c_name;
-        
+
         tCttl = taCTV.replace("/", " - ");
         tCshortttl = tCttl.substring(0, 1);
         } else {
         tCttl = "noQvalue";
-        tCshortttl = "noQvalue";    
+        tCshortttl = "noQvalue";
         }
-        
+
         tCWebStr = "";
         tCweb = "noQvalue";
         tCurl = "";
@@ -19356,8 +19535,8 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
         }
         if(ts.c_web) {
         tCweb = ts.c_web;
-        
-        
+
+
         taCWStr = tCweb;
         tCWStr = taCWStr;
         if(tCweb.indexOf("http") != -1) {
@@ -19366,29 +19545,29 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
         tdCWStr = tcCWStr.replace("www.", "");
         taCWStr = tdCWStr;
         } else {
-        
+
         tCweb = "http://" + tCweb;
         }
         tCWStr = taCWStr;
         if(taCWStr.length > 40){
         tCWStr = taCWStr.substring(0, 40) + "...";
-        }  
+        }
         if((tCurl.indexOf("paginas") != -1) ||  (tCurl == "noQvalue") ||  (tCurl == "noQxalue")) {
         } else if(tCurl.indexOf("rover") != -1) {
         tCWebStr = "<a href=\"" + tCweb + "\"></a>";
         } else {
         tCWebStr = "<a href=\"" + tCweb + "\" target=\"_blank\">" + tCWStr  + "</a>";
         }
-        
-        } 
+
+        }
         // if(tCWStr == "noQvalue") {}
         if(theTResType == "shops") {
         tGRPtgt = "_blank";
-         
+
         ttSSurl = "index.html?pid=aa-show-shop&cid=" + ts._id + "&q=" + removeDiacritics(ts.c_name + " " + ts.c_location);
         tCurl = ttSSurl;
         tCWebStr = "<a href=\"" + tCweb + "\">" + stxt[62]  + "...</a>";
-        } // end of if above. using catchall testing 
+        } // end of if above. using catchall testing
         tttLImg = ts.c_logoimg;
         if((ts.c_logoimg == "noQvalue") || (ts.c_logoimg == "noQvlaue")) {
         } else if(tttLImg.indexOf("http") != -1) {
@@ -19402,17 +19581,17 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
             currFTclr = "menu-material-icons collection-item txtClrRed";
             }
         console.log("c_logoimg: " + ts.c_logoimg);
-        
-        
-        
-         
+
+
+
+
         if((ts.c_location == tmpOldStreet) && (ts.c_name == tmpOldTitle)) {
         procNuUIitem("qco","c_rtype",ts._id,10,"doNada");
         }
         tmpOldTitle = ts.c_name;
         tmpOldStreet = ts.c_location;
-        
-         
+
+
         if(theTResType == "shops") {
         tCResShpStr += "<table style=\"width: 100%\"><tr><td>";
         tCResShpStr += "<div tid=\"dvCoLogoImg\" style=\"background-image: url('" + tBimgU + "');background-position: center; background-repeat: no-repeat; background-size: contain;min-height:50px; min-width:50px;max-height:60px; max-width:60px;width:55px;\" class=\"txtBig txtBold txtClrHdr\"><a class=\"ttxtDecorNone\" href=\"" + tCurl + "\"  target=\"_blank\">";
@@ -19424,9 +19603,9 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
         tCResShpStr += "<div class=\"txtSmall txtClrGery\" style=\"margin-right:20px;\">" + ts.c_location + "</div>";
         }
         tCResShpStr += "</td><td>";
-        
+
         tCResShpStr += "<div tid=\"dvCoFavBtn\" style=\"float: right\">";
-        tCResShpStr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i id=\"btnFavs" + iint + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+        tCResShpStr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i id=\"btnFavs" + iint + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
         tCResShpStr += "</div>";
         tCResShpStr += "</td></tr></table>";
         } else {
@@ -19455,7 +19634,7 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
         }
         if(ts.c_location) {
         // tCResShpStr += "<div class=\"txtSmall txtClrGery\" style=\"float:left;margin-right:20px;\">" + ts.c_location + "</div>";
-        
+
         tCResBStr += "<td><div class=\"txtClrHdr\" style=\"float:left;margin-right:20px;\">" + ts.c_location + "</div></td>";
         }
         // tCResBStr += "<a  href=\"javascript:JSSHOP.ui.doDefCBBCC('aLnkCall', null, doRegion() );\"><div class=\"txtSmall txtBold\" style=\"float:left\">" + ts.c_region + "</div></a>";
@@ -19464,17 +19643,17 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
         if(ts.c_tel) {
         tCResBStr += "<td><div tid=\"dv_c_tel\"  class=\"txtSmall txtBold txtClrHdr\">" + ts.c_tel + "</div></td></tr><tr>";
         }
-        
+
         tCResBStr += "<td><div tid=\"dvCweb\"  class=\"txtSmall txtBold txtClrHdr\" style=\"word-wrap: break-word;word-break: break-word;max-width: 90%;\">" + tCWebStr + "</div></td></tr>";
         tCResBStr += "</table></td></tr></table></td></tr><tr><td>&nbsp;</td></tr><tr><td>";
         tCResBStr += "<table style=\"width: 100%\" class=\"bkgdClrNrml\"><tr><td>";
-        
-        
-        
+
+
+
         tCResBStr += "<div tid=\"dvCoFavBtn\">";
-        tCResBStr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i id=\"btnFavs" + iint + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+        tCResBStr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + tCurl + "','" +  ts.c_name + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i id=\"btnFavs" + iint + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
         tCResBStr += "</div>";
-        
+
         /*
         tCResBStr += "<td style=\"text-align: center\"><a tid=\"aLnkCall\" href=\"javascript:JSSHOP.ui.doDefCBBCC('aLnkCall', null, doCall() );\"><i class=\"material-icons\"  style=\"margin-top: 5px;font-size:32px;\" alt=\"call\" title=\"call\">&#xe0cd;</i><br>Call</a></td>";
         tCResBStr += "<td style=\"text-align: center\"><a href=\"javascript:JSSHOP.ui.doDefCBBCC('ahSettingsIcon', null, document.location.href='index.html?pid=aa-contactus&cid=' + cid);\" class=\"txtClrHdr\"><i class=\"material-icons txtClrHdr\"  style=\"margin-top: 5px;font-size:32px;\" alt=\"message\" title=\"message\">&#57527;</i><br>Msg</a></td>";
@@ -19485,28 +19664,28 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
         tCResBStr += "<td style=\"background-color: #F3F3F3\"></td></tr><tr><td></td></tr><tr><td></td></tr></table>";
 
          tCResBStr += "</div>"; // en swiper-slide
-        
+
         }
         iint++;
         }
-        
+
         newel = document.createElement('div');
-        
+
         if(arrToFill[0]) {
-        
+
         } else {
         // no results
         }
-        
+
         if(theTResType == "shops") {
-        
-        
+
+
         console.log("JSSHOP.ads.shops.tCResShpStr: " + tCResShpStr);
-        
+
         return tCResShpStr;
         } else {
         // wrap tCResBStr in the swiper div
-        
+
     tmpFFstr = "<div  style=\"max-width:300px;margin: 0 auto;\"><div class=\"swiper\"><div class=\"swiper-wrapper\">" + tCResBStr + "</div>";
     tmpFFstr += "<div class=\"swiper-pagination\"></div>";
     tmpFFstr += "<div class=\"swiper-button-prev txtSmall txtBold txtClrRed\"></div>";
@@ -19514,17 +19693,17 @@ JSSHOP.ads.doNuGenericRes = function(a,theResp,c) {
 
     tmpFFstr += "</div>";
     tmpFFstr += "<div class=\"clearfix\"></div>";
- 
+
     tmpFFstr += "<div class=\"slmtable txtClrHdr crsrPointer\" onclick=\"javascript:eindex('aa-show-esearch','pid=aa-show-esearch&eatype=ebay');\" style=\"text-align:center\">"  + stxt[557] + "</div>";
     tmpFFstr += "</div>";
 newStr = tmpFFstr;
 
         return tCResBStr;
         }
-        
+
         };
 
-/* 
+/*
 * g ads function
 */
 
@@ -19547,8 +19726,8 @@ currCstmQstr = currCstmQstr.replace(/[^a-zA-Z0-9\s\-]/g, '');
 // remove duplicate words from currCstmQstr
 currCstmQstr = currCstmQstr.replace(/\b(\w+)\s+\1\b/g, '$1');
 
- 
- 
+
+
 if(tDPLMtype == "ggl") {
 // dvGGlSres.setAttribute("data-resultSetSize", tDPLMres);
 console.log("doPgLnkMedia:getGsearchOnP2 " + tDPLMtype + "::" + tDPLMres)
@@ -19568,12 +19747,12 @@ JSSHOP.ads.getGsearchOnP("Search");
 tDPLMtStr = "ebay";
 }
 
- 
- 
+
+
 
 };
 
-/* 
+/*
 * g ads function
 */
 
@@ -19595,7 +19774,7 @@ tmpGSopts["ptImg"] = "64d8786c6f0cf0da8";
 // cx=06e4737e0b0074ff0
 // gl=pt
 // num=10
-// q=pe�a
+// q=peï¿½a
 // searchType=image
 
 
@@ -19625,7 +19804,7 @@ atmpNqval = currUrlArr.q;
 tmpNqval = JSSHOP.ads.getPrtsPrfStr("thin");
 tDocHref = document.location.href;
 
-    if(tDocHref.indexOf("q=") != -1) { 
+    if(tDocHref.indexOf("q=") != -1) {
 if(Math.random() < 0.5) {
 
      //    JSSHOP.loadScript("https://cse.google.com/cse.js?cx=" + tGSPLGcx, doGsearchOnPart,"js");
@@ -19648,7 +19827,7 @@ if(Math.random() < 0.5) {
 
 
 
-/* 
+/*
 * e ad functions
 */
 function setEbayPTES(tEPSobj) {
@@ -19659,7 +19838,7 @@ tHHObj = tHHstr.split(":");
 console.log("setEbayPTES: " + tResObj[0].p_spa_spa);
 JSSHOP.ads.setPrtsPrefCC("partES", tResObj[0].p_spa_spa);
 currCstmQry = currUrlArr.make;
-if((currUrlArr.series) && (currUrlArr.series != "null")) {  
+if((currUrlArr.series) && (currUrlArr.series != "null")) {
 currCstmQry  += " " + currUrlArr.series;
  }
  currCstmQry  += " " + tResObj[0].p_spa_spa;
@@ -19677,14 +19856,14 @@ console.log("setEbayTrPTES: " + tSpStr);
 JSSHOP.ads.setPrtsPrefCC("partES", tSpStr);
  tmpQArrQ = JSSHOP.ajax.doNuAjaxPipe("includedContent", "_p/rss/etest.php?nr=100&qv=" + removeDiacritics(tSpStr), JSSHOP.ads.doEAdsOnPart);
 }
- 
+
 JSSHOP.ads.initEAds = function(tIEAQstr, tIEAelem, tIEAres) {
 console.log("initEAds : " + tIEAQstr);
 if(tIEAQstr.length < 2) {
 return;
 }
 tPrti = "007";
-if(JSSHOP.ads.getPrtsPrefCC("prti") == "noQvalue") {  
+if(JSSHOP.ads.getPrtsPrefCC("prti") == "noQvalue") {
 tPrti = "007";
 } else {
 tPrti = JSSHOP.ads.getPrtsPrefCC("prti");
@@ -19702,7 +19881,7 @@ if(tPrti == "007") {
     // JSSHOP.ads.setPrtsPrefCC("part", tIEAQstr);
     } else {
 
-     
+
 
    //  if((JSSHOP.ads.getPrtsPrefCC("partES") == "noQvalue") || (JSSHOP.ads.getPrtsPrefCC("partES") == "noQvalue")) {
 // use google translate api to translate currUrlArr.part from pt to es and return the translated string
@@ -19747,7 +19926,7 @@ console.log("JSSHOP.ads.initEAds.ERROR: " + e);
 };
 
 
- 
+
 JSSHOP.ads.sortEAdsFullStr = function(thePGIdx){
      document.getElementById("includedContent").innerHTML = "";
 console.log("sortEAdsFullStr: " + thePGIdx);
@@ -19762,7 +19941,7 @@ console.log("sortEAdsFullStr:raresp " + raresp);
  document.getElementById("includedContent").appendChild(trrDiv);
 };
 
-     
+
 
 JSSHOP.ads.getEAdsFullStr = function(thePrdsArr, thePrdsCls, thePrdsCB){
 console.log("getEAdsFullStr: " + JSON.stringify(thePrdsArr));
@@ -19791,13 +19970,13 @@ strMLinks = "";
 strImgDsct = "";
 
 var len = thePrdsArr.length;
- 
+
 tstr = "";
 iint = 0;
 
 // product-grid
 strHtml += "<div>";
- 
+
 
 tHdrArr = null;
 tHdrArr = "";
@@ -19806,8 +19985,8 @@ tAHdFObj = {};
 tAHdFObj["fld"] = "title";
 tAHdFObj["nm"] = "Title";
 tHdrArr.push(tAHdFObj);
- 
- 
+
+
 tAHdFObj = {};
 tAHdFObj["fld"] = "sellingStatus";
 tAHdFObj["nm"] = "Price";
@@ -19836,21 +20015,21 @@ tShipToLocs = "";
 tShipPrice = "";
 
 while(iint < len) {
- 
+
 ts = thePrdsArr[iint];
 console.log("getEAdsFullStr.title: " + ts.title);
 tmptsprd = {}
- 
+
 atstr = "";
 // atstr += "<tr>";
- 
+
 currFTclr = "menu-material-icons collection-item txtClrTtl";
 if(currRcntFavsStr.indexOf(ts.title) != -1) {
 currFTclr = "menu-material-icons collection-item txtClrRed";
 }
 
 tCResShpStr = "<div tid=\"dvCoFavBtn\">";
-tCResShpStr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + ts.viewItemURL + "','" +  ts.title + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i id=\"btnFavs" + iint + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>"; 
+tCResShpStr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + ts.viewItemURL + "','" +  ts.title + "','noQvalue','" + quid + "','btnFavs" + iint + "');\"><i id=\"btnFavs" + iint + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i></span>";
 tCResShpStr += "</div>";
 
 
@@ -19858,7 +20037,7 @@ tCResShpStr += "</div>";
 
 
 if(usrlang == "pt_pt") {
- 
+
     ptTmpTttl = ts.title;
     pttLwrTtl = ptTmpTttl.toLowerCase();
     pttlwrES = JSSHOP.ads.getPrtsPrefCC("partES");
@@ -19897,7 +20076,7 @@ if((pid == "aa-show-msearch") || (pid == "aa-show-psearch") || (pid == "aa-show-
 // atstr += "</tr>";
 tstr += atstr;
 }
- 
+
     iint++;
 }
 // tstr += "</div>";
@@ -19913,7 +20092,7 @@ newStr = "";
 
 if((pid == "aa-show-msearch") || (pid == "aa-show-psearch") || (pid == "aa-show-place")) { // do the swiper
 
-   
+
     tmpFFstr = "<div  style=\"max-width:300px;margin: 0 auto;\"><div class=\"swiper\"><div class=\"swiper-wrapper\">" + tstr + "</div>";
     /*
     <div class="swiper-pagination"></div>
@@ -19921,7 +20100,7 @@ if((pid == "aa-show-msearch") || (pid == "aa-show-psearch") || (pid == "aa-show-
     <!-- If we need navigation buttons -->
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
-  
+
     <!-- If we need scrollbar -->
     <div class="swiper-scrollbar"></div>
     */
@@ -19932,10 +20111,10 @@ if((pid == "aa-show-msearch") || (pid == "aa-show-psearch") || (pid == "aa-show-
 
     // clearfix
 
-    
+
     tmpFFstr += "</div>";
     tmpFFstr += "<div class=\"clearfix\"></div>";
- 
+
     tmpFFstr += "<div class=\"slmtable txtClrHdr crsrPointer\" onclick=\"javascript:eindex('aa-show-esearch','pid=aa-show-esearch&eatype=ebay');\" style=\"text-align:center\">" + stxt[557] + "</div>";
 
 newStr = tmpFFstr;
@@ -19944,9 +20123,9 @@ newStr = tmpFFstr;
         strTHhtml = JSSHOP.shared.getNurTblHdrs(tHdrArr, "JSSHOP.ads.sortEAdsFullStr");
         }
         tmpFstr = JSSHOP.shared.getNuTblSortStr(strTHhtml, tstr,"txtBold txtClrBlack");
-    
+
         tmpFFstr = "<div style=\"margin: 0 auto;max-width:600px;padding: 2px;margin-left: 2px;margin-right: 2px;\">" + tmpFstr + "</div>";
-   
+
     fraresp = "<div class=\"brdrClrDlg\"><div style=\"padding:8px;margin:0 auto;text-align: left;float:left\"><a href=\"" + thePrdsCls + "\" class=\"txtClrHdr\">" + stxt[62] + " " + currCstmQstr + "...</a></div>";
 fraresp += "<div style=\"width: 90%;margin:0 auto;text-align: right\"><a href=\"https://www.ebay.com\"><img  src=\"images/misc/ebay_logo_rgb.png\" width=\"108\"></a></div></div>";
 
@@ -19954,7 +20133,7 @@ tmpDrpMdlDv =  "<div class=\"rtable txtSmall brdrClrDlg\" style=\"margin:7px;\">
 
     tmpPGstr = " ";
     tmpPtotal = Math.round(currEbyPrdsArr.length / currProdsPPg);
-    
+
 if(currEbyPrdsArr.length > (tmpPtotal * currProdsPPg)) { tmpPtotal = tmpPtotal + 1; }
 tmpPGstr = JSSHOP.shop.getDefaultPageNav(currPgIndex, tmpPtotal);
 newStr += fraresp;
@@ -19965,7 +20144,7 @@ newStr += "<div class=\"rtable pagination\" style=\"min-height:50px;\">" + tmpPG
 console.log("getEAdsFullStr.newStr: " + newStr);
 return newStr;
 
- 
+
 };
 
 
@@ -20032,7 +20211,7 @@ console.log("JSSHOP.ads.doLEAdsOnPart.error: " + e);
 // tmpArrQ = JSSHOP.ajax.doNuAjaxPipe(theVElem, "_p/rss/snpp.php?qv=" + tQPlnTstr, doVidsOnPart);
 // doGsearchOnPart();
 }
-}; 
+};
 
 JSSHOP.ads.doEAdsOnPart = function(tVElem, tVresp, tVua) {
     incIntEA = 0;
@@ -20042,16 +20221,16 @@ incIntEA = 0;
 try {
 } catch(e) {
     // ttCstmQstr = JSSHOP.ads.getPrtsPrfStr("thin");
- 
+
     // ttAcstmQry = ttCstmQstr.replace("noQvalue","");
     // console.log("JSSHOP.ads.doEAdsOnPart.error: " + currCstmQstr + " :: " +  e);
    //  console.log("JSSHOP.ads.doEAdsOnPart.errorNewTry: " + ttAcstmQry);
 
     // tmpQArrQ = JSSHOP.ajax.doNuAjaxPipe(tVElem, "_p/rss/etest.php?nr=100    &qv=" + ttAcstmQry, JSSHOP.ads.doLEAdsOnPart);
-    }   
+    }
 jresp = JSON.parse(aresp);
 jrresp = JSSHOP.ads.ebayFormat( jresp );
- 
+
 console.log("ads.doEAdsOnPart: "  + JSON.stringify(jrresp) );
 console.log("ads.doEAdsOnPart: "  + jrresp.findItemsAdvancedResponse[0].ack );
 // console.log("ebayFormat.count: "  + jrresp.findItemsAdvancedResponse[0].searchResult[0].count );
@@ -20087,7 +20266,7 @@ trrDiv = document.createElement("div");
 // console.log("doEAdsOnPart: " + inpMakes.value + " " + inpModels.value + " " + inpParts.value);
  // document.getElementById("includedContent").innerHTML = tBoxStr;
  //document.getElementById("includedContent").appendChild(trrDiv);
- // 
+ //
  if(tmpVitemArr != null){
     console.log("ebayFormat.itemid: "  + jrresp.findItemsAdvancedResponse[0].searchResult[0].item[0].itemId );
 
@@ -20120,9 +20299,9 @@ JSSHOP.shop.loadCatChunk(1);
     console.log("doEAdsOnPart no : tmpVitemArr: " + tmpVitemArr + " :: " + ttAcstmQry);
 
     tmpQArrQ = JSSHOP.ajax.doNuAjaxPipe(tVElem, "_p/rss/etest.php?nr=100    &qv=" + ttAcstmQry, JSSHOP.ads.doLEAdsOnPart);
-    
+
     // JSSHOP.ads.setGboxUp("doGGAdsFill");
- }    
+ }
 // theVElem = "dvVidsOnPart";
 // tQPlnTstr = inpMakes.value + " " + inpModels.value + " " + inpParts.value;
 // doGsearchOnPart();
@@ -20159,7 +20338,7 @@ try {
     } else {
     return "noQvalue";
     }
-}   catch(e) {  
+}   catch(e) {
 alert("getPrtsPrefCC: " + e);
 }
 };
@@ -20167,7 +20346,7 @@ alert("getPrtsPrefCC: " + e);
 JSSHOP.ads.clearPrtsPrefCC = function(ppType) {
 try {
     if(arrUprefs["prfsSHOPuser"][0][ppType]) {
-    JSSHOP.user.setCkiePrfKV('prfsSHOPuser',ppType,"noQvalue"); 
+    JSSHOP.user.setCkiePrfKV('prfsSHOPuser',ppType,"noQvalue");
     }
 }   catch(e) {
 alert("clearPrtsPrefCC: " + e);
@@ -20183,7 +20362,7 @@ try {
     // JSSHOP.user.setCkiePrfKV('prfsSHOPuser',"part","noQvalue");
     // JSSHOP.user.setCkiePrfKV('prfsSHOPuser',"prti","noQvalue");
 }
-catch(e) {  
+catch(e) {
 alert("clearAllPrtsPrefCC: " + e);
 }
 };
@@ -20225,7 +20404,7 @@ tMkNme = objAllMakes[tMkPrfx].n;
            //  if((arrUprefs["prfsSHOPuser"][0].partES) && (currPLMtype == "ebay")) {
             if((JSSHOP.ads.getPrtsPrefCC("partES") !== "noQvalue") && (currPLMtype == "ebay")) {
     tmpFullPstr += JSSHOP.ads.getPrtsPrefCC("partES") + " ";
-            
+
     // tmpFullPstr += arrUprefs["prfsSHOPuser"][0].partES + " ";
             } else  {
                  tmpFullPstr += JSSHOP.ads.getPrtsPrefCC("part") + " ";
@@ -20301,11 +20480,11 @@ alert("File Chooser only works with our android app and: " + e);
 
 JSSHOP.jndroid.doPagePopUp = function(theUrl, theHTML) {
 	try {
- 
+
 tOldHref = document.location.href;
         if(tOldHref.indexOf("recamby.com") != -1) {
             tnewHref = "https://recamby.com/clean.html";
-     
+
         } else {
             tnewHref = "https://titan/recamby/clean.html";
         }
@@ -20363,14 +20542,14 @@ alert("Camera functions only work with our android app and: " + e);
 
 var loadCssScript = function(path, callback) {
 		// alert(loaded_scripts.length);
-        n = path.lastIndexOf("/"); 
+        n = path.lastIndexOf("/");
         q = path.lastIndexOf("?");
- 
+
             var scr = document.createElement("link")
             scr.setAttribute("rel", "stylesheet")
             scr.setAttribute("type", "text/css")
             scr.href = path;
- 
+
         var done = false;
         scr.onload = handleCssLoad;
         scr.onreadystatechange = handleCssReadyStateChange;
@@ -20384,7 +20563,7 @@ var loadCssScript = function(path, callback) {
             scr.id = tid;
         }
         document.getElementsByTagName("head")[0].appendChild(scr);
- 
+
         function handleCssLoad() {
             if (!done) {
                 done = true;
@@ -20408,14 +20587,14 @@ var loadCssScript = function(path, callback) {
                 callback(path, "error");
             }
         }
- 
+
 };
 
 var checkCssLoader = function(thePath, theMessage) {
  ncc = "aa";
 };
 
- 
+
 
 function shuffle(array) {
     for (var i = array.length - 1; i > 0; i--) {
@@ -20444,7 +20623,7 @@ function checkForDuplicateIds() {
 
 
 
- 
+
 
 function doFnshGIErr(dfgA, dfgB, dfgC) {
     console.log("doFnshGIErr: " + dfgA + " :: " + dfgB + " :: " + JSON.stringify(dfgC));
@@ -20486,7 +20665,7 @@ var getNuIItmsLst = function(tPrpIarr) {
         }
     });
     var html = "";
-   
+
     Object.keys(countryMap).forEach(function(country) {
         html += '<div class="country-block" style="margin-bottom:24px;">';
         html += '<h3 class="txtBold txtCLrHdr">' + country + ' - Fake Demo Users</h3>';
@@ -20539,19 +20718,19 @@ tuhtml += tFllUIstr;
 // tDVtestUsers = document.createElement("div");
 // tDVtestUsers.innerHTML = tFllUIstr;
 // document.getElementById("includedContent").insertBefore(tDVtestUsers, document.getElementById("includedContent").firstChild);
-document.getElementById(atudiv).innerHTML = tuhtml; 
+document.getElementById(atudiv).innerHTML = tuhtml;
 } else {
         alert("doAUsersList: " + rfb);
         // document.getElementById("divQitems").innerHTML = stxt[508];
     }
- 
+
   };
 
 function getTestUsers(tTUelem) {
    tmpDOs = {};
  tmpDOs["ws"] = "where _id > ? and u_rtype=?";
  tmpDOs["wa"] = [0, 5];
- 
+
  oi = getNuDBFnvp("quser",5,null,tmpDOs);
  currRQtable = "quser";
  currRQstr = oi["rq"];
@@ -20564,15 +20743,167 @@ function getTestUsers(tTUelem) {
 
 
 
- 
- 
+    // video recording stuff to be incorporated n JSShop.ads for map recording and also for general recording of fly to animations and other things on the site.
+
+
+
+    async function toggleMapRecording(options = {}) {
+        // Support both btnAEPRecord and the new map record button
+        var btn = document.getElementById("btnAEPRecord");
+        var recordBtn = document.querySelector('.incasa-map-record-toggle-btn');
+        var elementToRecord = document.getElementById("dvDemoView");
+
+        // Determine which button is used for toggling
+        var isRecording = false;
+        if (btn && btn.value) {
+            isRecording = btn.value !== "Record Video";
+        } else if (recordBtn) {
+            isRecording = recordBtn.classList.contains('recording');
+        }
+
+        // Extract options
+        const { onPermissionGranted, onError, stop, mapDivId, onComplete, restoreAllControls } = options;
+
+        // Utility to enable/disable all inline map property tabs (Preview, Markers, Settings)
+        function setInlineMapTabsEnabled(enabled) {
+            var tabLinks = document.querySelectorAll('#dvInlinePTypeTabs .nav-link');
+            for (var i = 0; i < tabLinks.length; i++) {
+                if (enabled) {
+                    tabLinks[i].style.pointerEvents = '';
+                    tabLinks[i].style.opacity = '';
+                } else {
+                    tabLinks[i].style.pointerEvents = 'none';
+                    tabLinks[i].style.opacity = '0.65';
+                }
+            }
+        }
+
+        // Toggle recording state
+        if (!isRecording && !stop) {
+            setInlineMapTabsEnabled(false); // Disable tabs when recording starts
+            try {
+                console.log('[RECORD] Requesting recording permission...');
+                const stream = await navigator.mediaDevices.getDisplayMedia({
+                    video: { displaySurface: "browser" },
+                    audio: false,
+                    selfBrowserSurface: "include",
+                    preferCurrentTab: true
+                });
+                console.log('[RECORD] Permission granted, starting recording...');
+                // Attempt to crop to the specific element using Region Capture API
+                const [track] = stream.getVideoTracks();
+                if (window.CropTarget && track.cropTo && elementToRecord) {
+                    try {
+                        const cropTarget = await CropTarget.fromElement(elementToRecord);
+                        await track.cropTo(cropTarget);
+                    } catch (err) {
+                        console.warn("Region Capture failed, recording full tab/screen: ", err);
+                    }
+                }
+                nuRecordedChunks = [];
+                nuMediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp9' });
+                nuMediaRecorder.ondataavailable = function(e) {
+                    if (e.data.size > 0) {
+                        nuRecordedChunks.push(e.data);
+                    }
+                };
+                nuMediaRecorder.onstop = function() {
+                    setInlineMapTabsEnabled(true); // Enable tabs when recording stops
+                    console.log('[RECORD] Recording stopped.');
+                    const blob = new Blob(nuRecordedChunks, {
+                        type: "video/webm"
+                    });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    document.body.appendChild(a);
+                    a.style = "display: none";
+                    a.href = url;
+                    a.download = "property-3d-view.webm";
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    // Reset button state if stopped externally (e.g. via browser UI)
+                    if(btn) {
+                        btn.value = "Record Video";
+                        btn.style.backgroundColor = "";
+                    }
+                    if(recordBtn) {
+                        recordBtn.classList.remove('recording');
+                        recordBtn.innerHTML = '<i class="material-icons txtClrHdr" style="font-size:21px;line-height:34px;">&#xe061;</i>';
+                        recordBtn.title = 'Record Fly To Animation';
+                    }
+                    // Call onComplete or restoreAllControls if provided
+                    if (typeof onComplete === 'function') onComplete();
+                    if (typeof restoreAllControls === 'function') restoreAllControls();
+                };
+                // Handle case where user stops sharing via browser UI
+                stream.getVideoTracks()[0].onended = function() {
+                    if(nuMediaRecorder.state !== 'inactive') {
+                        nuMediaRecorder.stop();
+                    }
+                };
+                nuMediaRecorder.start();
+                //
+                console.log('[RECORD] MediaRecorder started.');
+                if(btn) {
+                    btn.value = "Stop Recording";
+                    btn.style.backgroundColor = "#ff0000";
+                }
+                if(recordBtn) {
+                    recordBtn.classList.add('recording');
+                    recordBtn.innerHTML = '<i class="material-icons txtClrRed" style="font-size:21px;line-height:34px;">&#xe047;</i>';
+                    recordBtn.title = 'Stop Recording';
+                }
+                // If onPermissionGranted callback is provided, call it (for map animation)
+                if (typeof onPermissionGranted === 'function') {
+                    onPermissionGranted();
+                } else if (typeof JSSHOP !== 'undefined' && JSSHOP.ads && typeof JSSHOP.ads.recordNuMapEffect === 'function' && mapDivId) {
+                    // Fallback: call recordNuMapEffect directly if mapDivId is provided
+                    JSSHOP.ads.recordNuMapEffect(mapDivId, function() {
+                        // Stop recording after animation ends
+                        window.toggleMapRecording({ stop: true, restoreAllControls });
+                    });
+                }
+            } catch (err) {
+                setInlineMapTabsEnabled(true); // Enable tabs if error starting recording
+                console.error("[RECORD] Error starting recording: " + err);
+                alert("Could not start recording: " + err.message);
+                // Restore all controls if available
+                if (typeof onError === 'function') onError();
+                if (typeof restoreAllControls === 'function') restoreAllControls();
+                if (typeof window.restoreAllMapControls === 'function') window.restoreAllMapControls();
+            }
+        } else if (isRecording || stop) {
+            setInlineMapTabsEnabled(true); // Enable tabs when recording stops
+            // Stop recording
+            if(nuMediaRecorder && nuMediaRecorder.state !== "inactive") {
+                nuMediaRecorder.stop();
+                // Stop all tracks
+                nuMediaRecorder.stream.getTracks().forEach(track => track.stop());
+            }
+            if(btn) {
+                btn.value = "Record Video";
+                btn.style.backgroundColor = "";
+            }
+            if(recordBtn) {
+                recordBtn.classList.remove('recording');
+                recordBtn.innerHTML = '<i class="material-icons txtClrHdr" style="font-size:21px;line-height:34px;">&#xe061;</i>';
+                recordBtn.title = 'Record Fly To Animation';
+            }
+            // Call onComplete or restoreAllControls if provided
+            if (typeof onComplete === 'function') onComplete();
+            if (typeof restoreAllControls === 'function') restoreAllControls();
+        }
+    }
 
 
 
 
 
 
-/* 
+
+
+
+/*
 // stuff to delete
 
 
@@ -20602,7 +20933,7 @@ for (i = 0; i < 5; i++) {
     tLpdID = tLpdSplit[0];
     tLpdName = tLpdSplit[1];
     tLpdmgMStr = imgPLicon.src = "images/mlogos/" + tLpdName.toLowerCase().replace(" ", "-") + "-logo.png";
- tPYS += "<img src=\"" + tLpdmgMStr + "\" style=\"max-width:30px;max-height:30px;\"></img>";   
+ tPYS += "<img src=\"" + tLpdmgMStr + "\" style=\"max-width:30px;max-height:30px;\"></img>";
 trArr.push();
 }
 tPYS += "</div>";
@@ -20679,7 +21010,7 @@ tMdlName = tSSv.substring(tSSv.indexOf(" "), tSSv.length);
 // replace all special chars except . and -  and space in tMdlName
 tMdlName = tMdlName.replace(/[^a-zA-Z0-9-.\s]/g, "");
 
- 
+
 } else {
 tTName = tSSv;
 tMdlName = TMPnOBJ.yf + " " + TMPnOBJ.yt;
@@ -20696,7 +21027,7 @@ if(tprtyN.indexOf(")") != -1) {
 tprtyN = tprtyN.replace(")","&nbsp;]</span>");
 }
 tInpStr = TMPnOBJ.id + "::" + TMPnOBJ.n;
-// tJSMstr = "inpImpModels.value = '" +  tInpStr + "';inpModels.value='" + tsiN + "';inpModels.focus();JSSHOP.ui.closeLbox();";	  
+// tJSMstr = "inpImpModels.value = '" +  tInpStr + "';inpModels.value='" + tsiN + "';inpModels.focus();JSSHOP.ui.closeLbox();";
 tJSMstr = "currPUrlObj.si = '" +  tSSI + "';currPUrlObj.series='" + tTName + "';";
 tJSMstr += "currPUrlObj.md = '" +  tSSI + "';currPUrlObj.model='" + tMdlName + "';";
 tJSMstr += "JSSHOP.ui.closeLbox();";
@@ -20709,7 +21040,7 @@ tJSMstr += "JSSHOP.ads.setPrtsPrefCC('series','" + tTName + "');";
 tJSMstr += "JSSHOP.ads.setPrtsPrefCC('md','" + tSSI + "');";
 tJSMstr += "JSSHOP.ads.setPrtsPrefCC('model','" + tMdlName + "');";
 tJSMstr += "JSSHOP.ads.setPrtsPrefCC('si','" + tSSI + "');";
- 
+
 
 if(tTName == tLastN) {
     currtMSstrS += "<div onclick=\"javascript:" + tJSMstr + "\" class=\"collection-item crsrPointer\">" + tprtyN + "<br> <span class=\"txtSmall txtBold txtClrDlg\">" + TMPnOBJ.yf + "  -&gt; ";
@@ -20719,81 +21050,81 @@ if(tTName == tLastN) {
     currtMSstrS += " " + TMPnOBJ.yt;
     }
     currtMSstrS += "</span></div>"
-    
-    
+
+
     } else {
     currtMSstrS += "</div>"
-     
+
     tJSstr = "JSSHOP.ui.tglPrefModule('dvTglMD" + gkey + "','dvMD" + gkey + "','tglMD" + gkey + "');";
     currtMSstrS += "<div class=\"crsrPointer\" onclick=\"javascript:" + tJSstr + "\"><table style=\"width: 95%\" class=\"collection\">";
     currtMSstrS += "<tr><td><strong>&nbsp;" + tTName + "</strong></td>";
     currtMSstrS += "<td><div id=\"dvTglMD" + gkey + "\" class=\"icnbtn crsrPointer\" nowrap=\"nowrap\" style=\"float:right\">";
     currtMSstrS += "<i class=\"small-material-icons\" title=\"expand_more\">&#xe5cf;</i></div></td></tr></table></div>";
-    
-    
+
+
     if(currPUrlObj.part) {
     tJSMstr += "JSSHOP.shared.doPartsSearch('inpTParts');";
-    } 
+    }
     currtMSstrS += "<div style=\"display:none;visibility:hidden\" class=\"collection\" id=\'dvMD" + gkey + "'\">";
     currtMSstrS += "<div onclick=\"javascript:" + tJSMstr + "\" class=\"collection-item crsrPointer\">" + tprtyN + "<br> <span class=\"txtSmall txtBold txtClrDlg\">" + TMPnOBJ.yf + "  -&gt; ";
     if(TMPnOBJ.yt == "0") {
     } else {
     currtMSstrS += " " + TMPnOBJ.yt;
     }
-    
+
     currtMSstrS += "</span></div>";
-    
+
     }
     tLastN = tTName;
     }
     }
-   
-    
+
+
     tPYS = "<br><div class=\"bkgdClrNrml\"  style=\"text-align:center;margin:6px;\">";
     // create a div string with the current make name
     tPYS += "<div class=\"txtSMall txtBold txtClrTtl\">" + currPUrlObj.make + "</div>";
     tPYS += "<div style=\"float:left\"><img src=\"images/mlogos/" + currPUrlObj.make.toLowerCase().replace(" ", "-") + "-logo.png\" style=\"max-width:30px;max-height:30px;\"></img></div>";
-    
+
     tPYS += "<div class=\"txtBold txtClrHdr\">" + stxt[82] + " " + stxt[103] + ":</div>";
-    
+
     for (i = 0; i < 3; i++) {
         tLpdIDstr = currSeriesArr[Math.floor(Math.random() * currSeriesArr.length)];
-    
-      tPYS += " <span class=\"txtSmall txtClrTtl\">" + tLpdIDstr + "</span> ";   
-     
+
+      tPYS += " <span class=\"txtSmall txtClrTtl\">" + tLpdIDstr + "</span> ";
+
     }
     tPYS += "...";
-    
+
     // create a div string with style float right with the curren make image logo
-    
-    // 
+
+    //
     tPYS += "</div>";
     JSSHOP.ui.popAndFillLbox(tPYS + currtMSstrS);
-    
+
     // alert(currtMSstrS);
     };
-    
+
     function doNill() {
         tNill = "nill";
     // alert("doNill");
     }
-    
+
     JSSHOP.shared.doPartsPop = function() {
     tCatArrStr = "";
-    
+
     tCatArrStr += "<div class=\"crsrPointer\"><table style=\"width: 100%\" class=\"bigtable bkgdClrNrml brdrClrHdr txtBold txtBig\">";
     tCatArrStr += "<tr><td><strong>&nbsp;" + stxt[512] + "</strong></td></tr></table></div>";
-    
-    
-     
-    
+
+
+
+
     tEPobj = currPartsObj;
     tPPobj = tEPobj.pcats;
-    
-     
-    
-    
-    
+
+
+
+
+
     for(var gkey in tPPobj) {
     // tCatArrStr +=  "<br>";
     tDynMunuObj = null;
@@ -20812,32 +21143,32 @@ if(tTName == tLastN) {
     currDynMenuArr.push(tDynMunuObj);
     currPPrtCatArr.push(gkey + ":" + tPPobj[gkey]);
     tJSstr = "JSSHOP.ui.tglPrefModule('dvTglPC" + gkey + "','dvPC" + gkey + "','tglPrts" + gkey + "');";
-    
+
     tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\" class=\"crsrPointer\" onclick=\"javascript:" + tJSstr + "\"><table  class=\"collection\"  cellpadding=\"0px\" cellspacing=\"0px\">";
     tCatArrStr += "<tr><td><img src=\"images/misc/" + gkey + ".gif\" class=\"icnsmlbtn\"></td>";
     tCatArrStr += "<td class=\"txtBold\" style=\"word-wrap:break-word;word-break: break-word;text-align: left;width:100%\">&nbsp;" + tPPobj[gkey] + "</td>";
-    
+
     tCatArrStr += "<td><div id=\"dvTglPC" + gkey + "\" class=\"icnbtn crsrPointer\"  style=\"float:right\">";
     tCatArrStr += "<i class=\"small-material-icons\" title=\"expand_more \">&#xe5cf;</i></div></td></tr></table></div>";
-    
+
     // javascript:JSSHOP.ui.tglPrefModule('dvTglPCpc1','dvPCpc1','tglPrtspc1')
-    
-    
-    
-    
-    
+
+
+
+
+
     if(tEPobj.pprts[gkey].pts){
     tCatArrStr += "<div style=\"display:none;visibility:hidden;word-wrap:break-word;word-break: break-word;\" class=\"collection\" id=\"dvPC" + gkey + "\">";
-    
-    
-    
-    
+
+
+
+
     tCatPtsobj = tEPobj.pprts[gkey].pts;
     for(var pcgkey in tCatPtsobj) {
-    
+
     // currCstmQstr += " " + tCatPtsobj[pcgkey].n;
     tmpFPSstr = "&part=" + tCatPtsobj[pcgkey].n + "&prti=" + tCatPtsobj[pcgkey].pi + "&q=" + encodeURIComponent(currCstmQstr + " " + tCatPtsobj[pcgkey].n);
-     
+
     // tUtoL = tCatUStr + "&part=" + tCatPtsobj[pcgkey].n + "&prti=" + tCatPtsobj[pcgkey].pi + "&pid=aa-show-part&q=" + currCstmQstr + " " + encodeURIComponent(tCatPtsobj[pcgkey].n);
     tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\"><a  class=\"collection-item\" href=\"javascript:document.location.href=JSSHOP.shared.doPartDynL('" + tCatPtsobj[pcgkey].id + "','" + tCatPtsobj[pcgkey].n + "');\" class=\"collection-item crsrPointer\">" + tCatPtsobj[pcgkey].id + " : " + tCatPtsobj[pcgkey].n + "</a></div>";
     // tCatArrStr += "<div  style=\"word-wrap:break-word;word-break: break-word;\" onclick=\"javascript:eindex('aa-show-part','" + tUtoL + "');\" class=\"collection-item crsrPointer\">" + tCatPtsobj[pcgkey].id + " : " + tCatPtsobj[pcgkey].n + "</div>";
@@ -20845,13 +21176,13 @@ if(tTName == tLastN) {
     }
     tCatArrStr += "</div>";
     }
-    
-    
-    
+
+
+
     JSSHOP.ui.popAndFillLbox(tCatArrStr);
     };
-    
-    
+
+
 
 
     JSSHOP.ui.getBSdropDstr = function(tBBSSObj) {
@@ -20882,17 +21213,17 @@ if(tTName == tLastN) {
   JSSHOP.ui.getBSdropDstr = function(theElid, theDDlabel, theDDobj, theDDcb) {
     tDDelem = document.getElementById(theElid);
 
-  
-  
+
+
     tBSDDLayStr = "<div class=\"form-group row\">";
-    tBSDDLayStr += "<ul class=\"nav nav-pills\">";   
+    tBSDDLayStr += "<ul class=\"nav nav-pills\">";
     tBSDDLayStr += "<li class=\"nav-item dropdown\">";
     tBSDDLayStr += "<table><tr><td><a class=\"nav-link dropdown-toggle txtSmall txtClrDlg\" data-bs-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-expanded=\"false\">" + theDDlabel + "</a>";
     tBSDDLayStr += "<ul class=\"dropdown-menu brdrClrHdr\">";
     for (var key in theDDobj) {
         tBSDDLayStr += "<li><a class=\"dropdown-item\"   href=\"javascript:" + theDDcb + "('" + theElid + "', '" + key + "','" + theDDobj[key] +  "');\">" + theDDobj[key] + "</a></li>";
     }
- 
+
     tBSDDLayStr += "</ul></td></tr>";
     tBSDDLayStr += "<tr><td><div id=\"tdDD" + theElid + "\" class=\"slmtable bkgdClrNrml txtBold txtClrNrml\">";
     tBSDDLayStr += theDDobj[tDDelem.value];
@@ -20911,7 +21242,7 @@ function handleContactMethodChange(checkbox) {
     if(telInput && contactDiv) {
         // Get all checkboxes in the contact methods div
         var checkboxes = contactDiv.querySelectorAll('input[type="checkbox"][name="contact_method"]');
-        
+
         // If this checkbox is being checked, uncheck others (radio button behavior)
         if(checkbox.checked) {
             checkboxes.forEach(function(cb) {
@@ -20920,14 +21251,14 @@ function handleContactMethodChange(checkbox) {
                 }
             });
         }
-        
+
         // Store selected method (you can modify this to suit your needs)
         var selectedMethod = checkbox.checked ? checkbox.value : '';
         telInput.setAttribute('data-contact-method', selectedMethod);
-        
+
         // You can add additional logic here based on the selected method
         console.log('Selected contact method: ' + selectedMethod + ' for phone: ' + telInput.value);
-        
+
         // For example, you could trigger different actions:
         if(selectedMethod) {
             switch(selectedMethod) {

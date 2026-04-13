@@ -16,7 +16,7 @@ CREATE TABLE `propdescs` (
   `pd_prpdesc` text NOT NULL,
   `pd_dadded` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
- 
+
 */
 
 
@@ -50,9 +50,9 @@ var htmlRegex = /<(.*)>.*?|<(.*)\/>/;
 
 function doTransPost() {
     // BaseUrl = "https://api.cognitiveservices.azure.com/translator/text/v3.0";
- 
+
         var request = new XMLHttpRequest();
- 
+
         var data = new FormData();
         data.append("q", self.inputText);
         data.append("source", self.sourceLang);
@@ -66,9 +66,9 @@ function doTransPost() {
 
         request.onload = function() {
             try{
-                
- 
-                
+
+
+
 
                 var res = JSON.parse(request.response);
                 // Success!
@@ -77,7 +77,7 @@ function doTransPost() {
                     loadingTranslation = false;
                     output = JSON.stringify(res, null, 4);
                     console.log(output);
-             
+
                 } else{
                     throw new Error(res.error || "Unknown error");
                 }
@@ -94,7 +94,7 @@ function doTransPost() {
 
         request.send(data);
     }
- 
+
 
 
 

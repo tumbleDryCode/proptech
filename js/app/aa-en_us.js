@@ -19,7 +19,7 @@ stxt[18] = "Price";
 stxt[19] = "Item";
 stxt[20] = "Edit Item";
 stxt[21] = "Save";
-stxt[22] = "Shop Title"; 
+stxt[22] = "Shop Title";
 stxt[23] = "Headline";
 stxt[24] = "Tel";
 stxt[25] = "Web";
@@ -28,7 +28,7 @@ stxt[27] = "Edit your Shops";
 stxt[28] = "adminApp Query";
 stxt[29] = "Login";
 stxt[30] = "About";
-stxt[31] = "Edit"; 
+stxt[31] = "Edit";
 stxt[32] = "Categories";
 stxt[33] = "Items coming soon";
 stxt[34] = "Cart is empty";
@@ -120,7 +120,7 @@ stxt[119] = "Update";
 stxt[120] = "Saved";
 
 
-// user strings 
+// user strings
 stxt[201] = "First Name";
 stxt[202] = "Last Name";
 stxt[203] = "Location";
@@ -128,7 +128,7 @@ stxt[204] = "Region";
 stxt[205] = "Country";
 stxt[206] = "Phone";
 stxt[207] = "Mobile";
-stxt[208] = "Fax";	
+stxt[208] = "Fax";
 stxt[209] = "Address";
 stxt[210] = "City";
 stxt[211] = "State";
@@ -144,11 +144,11 @@ stxt[220] = "Driver License Expiration Date";
 stxt[221] = "CAM Expiration Date";
 stxt[222] = "";
 stxt[223] = "";
- 
 
 
 
-// admin strings 
+
+// admin strings
 svtxt[300] = "cliente";
 svtxt[301] = "other";
 svtxt[302] = "opera";
@@ -169,7 +169,7 @@ svtxt[311] = "1";
 svtxt[312] = "2";
 svtxt[313] = "3";
 svtxt[314] = "4";
- 
+
 
 
 stxt[311] = "Main";
@@ -177,7 +177,7 @@ stxt[312] = "Billing";
 stxt[313] = "Shipping";
 stxt[314] = "Receiving";
 stxt[315] = "Delete this Property Listing?";
- 
+
 // Posts
 stxt[400] = "Edit Post";
 stxt[401] = "Add Post";
@@ -339,7 +339,7 @@ stxt[663] = "Colors";
 stxt[664] = "Images";
 stxt[665] = "Background";
 stxt[666] = "Layout";
- 
+
 // messaging strings
 stxt[700] = "Have a Question?";
 stxt[702] = " Optional for location based services ";
@@ -355,7 +355,7 @@ stxt[711] = "ShoutOuts";
 stxt[712] = "Is this your shop?";
 stxt[713] = "Please confirm email address";
 stxt[714] = "Thank you for registering. Please confirm your email address by clicking the link in the email we just sent you. If you do not see the email, please check your spam folder.";
-stxt[715] = "Please confirm your email address by clicking this link"; 
+stxt[715] = "Please confirm your email address by clicking this link";
 stxt[716] = "Thank you from the team at Recamby.com";
 stxt[717] = "A link will sent to";
 stxt[718] = "to confirm your email address.";
@@ -419,15 +419,15 @@ stxt[902] = "Contacts";
 stxt[903] = "Profile";
 stxt[905] = "Your Properties";
 stxt[906] = "Add Property";
- 
+
 stxt[907] = "Forum";
 stxt[908] = "Statistics";
 stxt[909] = "Terms and Conditions";
 stxt[910] = "Get Support";
 stxt[911] = "Freequenly Ask Questions";
 stxt[912] = "Contact Us";
- 
- 
+
+
 stxt[913] = "About Us";
 stxt[914] = "Featured Property";
 stxt[915] = "Become A Member";
@@ -488,31 +488,31 @@ stxt[969] = "Subject";
 stxt[970] = "Message";
 stxt[971] = "Find";
 stxt[972] = " Your Home";
-stxt[973] = "Report Issue"; // Livro de reclamações
+stxt[973] = "Report Issue"; // Livro de reclamaÃ§Ãµes
 stxt[974] = "Login to Access our DashBoard"; // Login para aceder ao nosso painel de controlo
-stxt[975] = "Dont have an Account?"; // Não tem uma conta?
-stxt[976] = "Login was not successful. Please try again."; // O login não foi bem sucedido. Por favor tente novamente.
+stxt[975] = "Dont have an Account?"; // NÃ£o tem uma conta?
+stxt[976] = "Login was not successful. Please try again."; // O login nÃ£o foi bem sucedido. Por favor tente novamente.
 stxt[977] = "*Your Email"; // *O seu email
-stxt[978] = "*Your Password"; // *A sua password 
-stxt[979] = "Title and Description"; // Título e Descrição
+stxt[978] = "*Your Password"; // *A sua password
+stxt[979] = "Title and Description"; // TÃ­tulo e DescriÃ§Ã£o
 stxt[980] = "Images - Media"; // Imagens - Media
-stxt[981] = "Property Details"; // Características do imóvel
-stxt[982] = "Number of bedrooms, kitchens..."; // Número de quartos, cozinhas...
-stxt[983] = "Description of the property"; // Descrição do imóvel
-stxt[984] = "add more images-media";  // adicionar mais imagens-media 
-stxt[985] = "Edit Property";  // editar imóvel
+stxt[981] = "Property Details"; // CaracterÃ­sticas do imÃ³vel
+stxt[982] = "Number of bedrooms, kitchens..."; // NÃºmero de quartos, cozinhas...
+stxt[983] = "Description of the property"; // DescriÃ§Ã£o do imÃ³vel
+stxt[984] = "add more images-media";  // adicionar mais imagens-media
+stxt[985] = "Edit Property";  // editar imÃ³vel
 stxt[986] = "Upload";  // Carregar
 stxt[987] = "For Sale";  // Para venda
 stxt[988] = "For Rent";  // Para alugar
 stxt[989] = "For Lease";  // Para arrendar
-stxt[990] = "For Auction";  // Para leilão
-stxt[991] = "For Foreclosure";  // Para execução
+stxt[990] = "For Auction";  // Para leilÃ£o
+stxt[991] = "For Foreclosure";  // Para execuÃ§Ã£o
 stxt[992] = "Type";  // Tipo
-stxt[993] = "Title and Description"; 
+stxt[993] = "Title and Description";
 stxt[994] = "title, description of property";
-stxt[995] = "Image Type"; 
-stxt[996] = "Image Title"; 
-stxt[997] = "Save Title"; 
+stxt[995] = "Image Type";
+stxt[996] = "Image Title";
+stxt[997] = "Save Title";
 stxt[998] = "Open current property";
 stxt[999] = "Download";
 
@@ -529,7 +529,7 @@ stxt[1008] = "Please fill in all fields";
 stxt[1009] = "Registration failed. Please try again.";
 stxt[1010] = "Registration successful. Please <a href=\"login.php\">login</a>.";
 stxt[1011] = "Enter  your name and password to log into admin"; // Introduza seu nome e password para entrar no painel de admin
-stxt[1012] = "Fill in all fields to register as admin. Your name and password will be used for login."; // Preencha todos os campos para se registar como administrador. O seu nome e password serão usados para login.
+stxt[1012] = "Fill in all fields to register as admin. Your name and password will be used for login."; // Preencha todos os campos para se registar como administrador. O seu nome e password serÃ£o usados para login.
 stxt[1013] = "Registration successful. Please <a href=\"index.php\">login</a>.";
 stxt[1014] = "About Us";
 stxt[1015] = "New Story";
@@ -555,7 +555,7 @@ stxt[2001] = "Setting up is easy. Enter your shops title, add some item categori
 
 // misc
 stxt[3001] = "Item title here";
- 
+
 
 // android java app
 stxt[4001] = "Art Pad";
@@ -581,7 +581,7 @@ svftObj["u_jtype"] = tsvftxt;
 tmmftxt = null;
 tmmftxt = "";
 tmmftxt = {};
-tmmftxt["guest"] = "Guest"; 
+tmmftxt["guest"] = "Guest";
 tmmftxt["driver"] = "Driver";
 tmmftxt["admin"] = "Admin";
 tmmftxt["fleet"] = "Fleet";
@@ -591,7 +591,7 @@ tmmftxt["super"] = "Super";
 tmmftxt["opera"] = "Operations";
 tmmftxt["user"] = "User";
 svftObj["mmenu"] = tmmftxt;
- 
+
 tDBcritObj = null;
 tDBcritObj = "";
 tDBcritObj = {};
@@ -676,7 +676,7 @@ tDPStatObj["expired"] = "Expired";
 tDPStatObj["withdrawn"] = "Withdrawn";
 tDPStatObj["other"] = "Other";
 svftObj["propstat"] = tDPStatObj;
- 
+
 tUCatObj = null;
 tUCatObj = "";
 tUCatObj = {};
@@ -761,5 +761,5 @@ var cstmStr = "";
 cstmStr = {};
 cstmStr["prop1"] = "proptech - property technology";
 cstmStr["prop2"] = "proptech - your onestop property technology";
-cstmStr["prop3"] = "proptech - buy, sell, rent...";   
+cstmStr["prop3"] = "proptech - buy, sell, rent...";
 

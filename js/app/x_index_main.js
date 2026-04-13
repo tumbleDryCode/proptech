@@ -8,7 +8,7 @@ var isThreeDrun = "no";
 async function initGMap() {
     tLocLat = ploclat.value;
 tLocLng = ploclng.value;
- 
+
     if(currGglSVloaded == "no") {
         currGglSVloaded = "yes";
 (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
@@ -20,18 +20,18 @@ tLocLng = ploclng.value;
     }
 
       var { Map3DElement, MapMode, Marker3DElement, Marker3DInteractiveElement } = await google.maps.importLibrary("maps3d");
- 
+
     var { LatLng } = await google.maps.importLibrary("geometry");
      var { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
      var { PinElement } = await google.maps.importLibrary("marker");
     var { DrawingLibrary } = await google.maps.importLibrary("drawing");
- 
+
   }
     async function doNuThreeDAnim(tNTDAurl) {
         // remove the event gmp-animationend event listener
         // threedmap.removeEventListener('gmp-animationend', () => {
         //    donada = "yes";});
-     
+
         console.log("doNuThreeDAnim: " + tNTDAurl);
         tNTDAobj = JSSHOP.shared.urlToArray(tNTDAurl);
         tNTDAlat = tNTDAobj["center"].split(",")[0];
@@ -79,9 +79,9 @@ tLocLng = ploclng.value;
     async function initNwstIMThreeDView(tTDdivID, tThreedPurl, tMdiaID) {
       console.log("initNwstThreeDView: " + tTDdivID + " :: " + tThreedPurl + " :: " + tMdiaID);
         advThreeView = document.getElementById(tTDdivID);
-         
+
         // document.getElementById("dvPropFooter").innerHTML = "3D View - Click to Play/Stop";
-        
+
        //  doNuSpinSet(advThreeView, "big", null, "...");
 
         // Get property data
@@ -238,9 +238,9 @@ tLocLng = ploclng.value;
                     ctx.shadowBlur = 4;
                     ctx.shadowOffsetX = 2;
                     ctx.shadowOffsetY = 2;
-                    
+
                     let nextY = wrapText(ctx, title, canvas.width / 2, 30, canvas.width - 40, 24);
-                    
+
                     ctx.font = 'bold 24px Arial';
                     ctx.fillStyle = '#c3a1f5ff';
                     ctx.textAlign = 'center';
@@ -254,13 +254,13 @@ tLocLng = ploclng.value;
                     const balloonHeight = 60;
                     const balloonX = (canvas.width - balloonWidth) / 2;
                     const balloonY = canvas.height - balloonHeight;
-                    
-                    
+
+
                     // Icon inside balloon
                     const imgSize = 45;
                     const imgX = balloonX;
                     const imgY = balloonY + 15;
-                    
+
                     ctx.save();
                     ctx.beginPath();
                     ctx.arc(imgX + imgSize/2, imgY + imgSize/2, imgSize/2, 0, Math.PI * 2, true);
@@ -268,7 +268,7 @@ tLocLng = ploclng.value;
                     ctx.clip();
                     ctx.drawImage(img, imgX, imgY, imgSize, imgSize);
                     ctx.restore();
-                    
+
                     ctx.beginPath();
                     ctx.arc(imgX + imgSize/2, imgY + imgSize/2, imgSize/2, 0, Math.PI * 2, true);
                     ctx.lineWidth = 1;
@@ -292,13 +292,13 @@ tLocLng = ploclng.value;
                     ctx.shadowBlur = 4;
                     ctx.shadowOffsetX = 2;
                     ctx.shadowOffsetY = 2;
-                    
+
                     let nextY = wrapText(ctx, title, canvas.width / 2, 30, canvas.width - 20, 24);
-                    
+
                     ctx.font = '16px Arial';
                     ctx.fillStyle = '#ffff00';
                     ctx.fillText(price, canvas.width / 2, nextY + 25);
-                    
+
                     ctx.font = '12px Arial';
                     ctx.fillStyle = 'white';
                     ctx.fillText(name, canvas.width / 2, nextY + 55);
@@ -326,7 +326,7 @@ tLocLng = ploclng.value;
                 console.log("threedmap: " + JSON.stringify(event.position));
                 strtStpNuTDAnm(tThreedPurl);
             });
-            
+
             threedmap.addEventListener('gmp-camera-changed', (event) => {
                 console.log("threedmap: camera changed: " + JSON.stringify(event.camera));
             });
@@ -352,7 +352,7 @@ tLocLng = ploclng.value;
         tFNTrange = parseFloat(tNTrange);
         tNTDtilt = parseFloat(tNTtilt);
         tNTDheading = parseFloat(tNTDheading);
-        // set camera to 
+        // set camera to
         console.log("doNuThreeDAnim: " + tNTDAlat + " " + tNTDAlng + " " + tNTDAalt);
         threedmap.flyCameraTo({
             endCamera: {
@@ -465,7 +465,7 @@ function getCountryFlagIcon(acountryName) {
 
 function doMPropsList(aaw,aww,cww) {
     console.log('doMPropsList - aww: ' + aww);
-     
+
 istrt = 0;
 iprplen = 0;
 currShopsArr = null;
@@ -544,7 +544,7 @@ if(aprpCountry.length > 0) {
 
 retPLstSTr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;\">";
 
- 
+
 tPrpMMListObj = null;
 tPrpMMListObj = "";
 tPrpMMListObj = {};
@@ -681,7 +681,7 @@ retPLstSTr += "<ul>";
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpSize + " </b>  <span class=\"txtSmall\">" + stxt[953] + "</span></div></li>";
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpBedroom + " </b>  <span class=\"txtSmall\">" + stxt[922] + "</span></div></li>";
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpBathroom + " </b>  <span class=\"txtSmall\">" + stxt[923] + "</span></div></li>"
-retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpKitchen + " </b>  <span class=\"txtSmall\">" + stxt[926] + "</span></div></li>"; 
+retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpKitchen + " </b>  <span class=\"txtSmall\">" + stxt[926] + "</span></div></li>";
 retPLstSTr += "</ul>";
 */
 retPLstSTr += "</div>"; // end bg-gray quantity px-4 pt-4
@@ -718,7 +718,7 @@ retPLstSTr += "</td></tr></table>";
 tSrvLLstr = aprploclat + "," + aprploclng;
 // retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\"><a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr + "\"><i class=\"material-icons txtClrTtl\" alt=\"streetview\" title=\"streetview\" value=\"streetview\">&#xe56e;</i> Street View</a></span>";
 
- 
+
 
 retPLstSTr += "</div>"; // end bkgdClrWhite
 
@@ -740,9 +740,9 @@ retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
 
 
 retPLstSTr += "</div>";  // end col-md-6
- 
+
  // add clearfix div
- 
+
 
 
 
@@ -829,7 +829,7 @@ retPLstSTr += "<div  onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-pro
 retPLstSTr += "</td><td>";
 retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
  retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpLocation + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
- 
+
 retPLstSTr += "</td></tr></table>";
 
  retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\">";
@@ -854,7 +854,7 @@ retPLstSTr += "<ul>";
 retPLstSTr += "<li><b>" + aprpSize + "</b> Area m2</li>";
 retPLstSTr += "<li><b>" + aprpBedroom + "</b>" + stxt[922] + "</li>";
 retPLstSTr += "<li><b>" + aprpBathroom + "</b>" + stxt[923] + "</li>"
-retPLstSTr += "<li><b>" + aprpKitchen + "</b>" + stxt[926] + "</li>"; 
+retPLstSTr += "<li><b>" + aprpKitchen + "</b>" + stxt[926] + "</li>";
 retPLstSTr += "</ul>";
 
 
@@ -869,7 +869,7 @@ retPLstSTr += "<span tid=\"dvCoFavBtn txtSmall\" class=\"crsrPointer\" onclick=\
 tSrvLLstr = aprploclat + "," + aprploclng;
 retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\"><a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr + "\"><i class=\"material-icons txtClrTtl\" alt=\"streetview\" title=\"streetview\" value=\"streetview\">&#xe56e;</i> Street View</a></span>";
 
- 
+
 
 retPLstSTr += "</div>"; // end bkgdClrWhite
 
@@ -908,14 +908,14 @@ aTPrpOstr = getPrpObjSTr(aTPrpObj);
 
  }
 
- 
+
 
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
 // JSSHOP.ads.doGenericPlug("main", "index_main", "dvPartLinks");
 document.title = shopTitle;
  //  alert('fnishCntLoad');
- // 
+ //
  tmpDOqs = null;
 tmpDOqs = {};
 tmpDOqs["ws"] = "where _id>?";
@@ -966,18 +966,18 @@ to delete
     fullurpstr = "";
     while(iupint < aulen) {
         tsuar = tPrpIarr[iupint];
-        
-        
+
+
         atstr = "";
         atstr += "<tr>";
-        
-       //  tSTstr =  ts.u_name + ts.u_fullname + ts.u_cat;
- 
-        
-        tsUT = tsuar.u_cat;
-        tsrtUT = tsuar.u_cat; 
 
- 
+       //  tSTstr =  ts.u_name + ts.u_fullname + ts.u_cat;
+
+
+        tsUT = tsuar.u_cat;
+        tsrtUT = tsuar.u_cat;
+
+
         atstr += "<td style=\"text-align: left\"  nowrap=\"nowrap\">";
         // atstr += "<div  onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\" class=\"crsrPointer\"><img alt=\"Profile\" src=\"images/user/" + aprpObj.u_icon + "\"  class=\"icnRndSmUser\" align=\"absmiddle\"><br><span class=\"txtSmall txtClrGrey\">Edit</span></div>";
         atstr += "<div onclick=\"javascript:eindex('aa-show-user','pid=aa-show-user&tuid=" + tsuar._id + "')\" class=\"crsrPointer\"><img alt=\"Profile\" src=\"images/user/" + tsuar.u_icon + "\"  class=\"icnRndDSmUser\" align=\"absmiddle\">&nbsp;";
@@ -986,11 +986,11 @@ to delete
 
         atstr += "</tr>";
         autstr += atstr;
- 
+
     iupint++;
     }
     autstr += "</table>";
- 
+
     return autstr;
     };
 */

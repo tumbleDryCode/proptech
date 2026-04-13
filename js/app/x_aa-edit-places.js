@@ -1,6 +1,6 @@
 currPgTitle = "Edit Places";
 currPgIcon = "xe0af";
-currIContent = "y"; // ajax request to include the tplates/... file or not  
+currIContent = "y"; // ajax request to include the tplates/... file or not
 var euiFFObjArr = null;
 var euiFFObjArr = [];
 var currSPRArr = [];
@@ -24,11 +24,11 @@ try {
 	}
     tmpDOs["l"] = "120";
     oi = getNuDBFnvp("qlogiplaces", 5, null, tmpDOs);
-	
+
 	    currRQtable = "qlogiplaces";
     currRQstr = oi["rq"];
-	
-	
+
+
     doQComm(oi["rq"], null, "doPlacesList");
 } catch(e) {
 alert("runPlacesList: " + e);
@@ -71,9 +71,9 @@ tDPRObj = JSON.parse(theDPAesp);
 
 
 console.log("getDPRespStr: " + tDPRObj["address"].road  + " :: " + JSON.stringify(tDPRObj));
- 
 
- 
+
+
 
 if(tDPRObj.address) {
 tAOBjVobj = tDPRObj.address;
@@ -112,7 +112,7 @@ qlogp_name.value = tAOBjVobj["shop"] + " " + qlogp_location.value;
 qlogp_name.value = tmp_qv.value;
 }
 }
- 
+
 if(tDPRObj.lat) {
 qlogp_loc_lat.value = tDPRObj.lat;
 }
@@ -122,10 +122,10 @@ qlogp_loc_lng.value = tDPRObj.lon;
 if(tDPRObj.place_id) {
 qlogp_placeid.value = tDPRObj.place_id;
 }
- 
+
 qlogp_dadded.value = JSSHOP.getUnixTimeStamp();
 qlogp_desc.value = tmp_qv.value;
- 
+
 
 taDastr = "<input  name=\"inpClnPN\" id=\"inpClnPN\" value=\"" + qlogp_name.value + "\" class=\"cls_input_text\">";
 tstr += "<b>" + taDastr + "</b><br>-" + qlogp_zipcode.value;
@@ -144,7 +144,7 @@ alert("getDPRespStr: " + e);
   _id  integer primary key auto_increment,
   qlogp_rtype int(4),
   qlogp_coid int(12),
-  qlogp_category varchar(128),	
+  qlogp_category varchar(128),
   qlogp_uid int(11),
   qlogp_internal varchar(128),
   qlogp_name varchar(128),
@@ -195,7 +195,7 @@ doSpinSet("dvSearchList", "small", null);
 	currSPRIdx = tPlaceIDXstr;
 	tPlaceIDstr = currSPRArr[tPlaceIDXstr].place_id;
 
-if((isJApp !== "no") && (isPhP == "no")) { 
+if((isJApp !== "no") && (isPhP == "no")) {
 twuStr = "https://maps.googleapis.com/maps/api/place/details/json?fields=formatted_address,formatted_phone_number,website,icon,address_components,vicinity,url,name,geometry,opening_hours&key=AIzaSyBpMAowLSBf-e_GAykNSdODo0Lap9WmLtE&place_id=" + tPlaceIDstr;
 tRespStr = app.getUrlRespString(twuStr);
 document.getElementById("fldChallArray").value = tRespStr;
@@ -218,7 +218,7 @@ try {
 doSpinSet("dvSearchList", "small", null);
     btnEUsave.disabled = true;
 
-if((isJApp !== "no") && (isPhP == "no")) { 
+if((isJApp !== "no") && (isPhP == "no")) {
 trstr = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=place_id,formatted_address%2Cname%2Crating%2Copening_hours%2Cgeometry&inputtype=textquery&key=AIzaSyBpMAowLSBf-e_GAykNSdODo0Lap9WmLtE&input=" + encodeURIComponent(tmp_qv.value);
 tRespStr = app.getUrlRespString(trstr);
 document.getElementById("fldChallArray").value = tRespStr;
@@ -238,7 +238,7 @@ try {
 doSpinSet("dvSearchList", "small", null);
     btnEUsave.disabled = true;
 
-if((isJApp !== "no") && (isPhP == "no")) { 
+if((isJApp !== "no") && (isPhP == "no")) {
 trstr = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=place_id,formatted_address%2Cname%2Crating%2Copening_hours%2Cgeometry&inputtype=textquery&key=AIzaSyBpMAowLSBf-e_GAykNSdODo0Lap9WmLtE&input=" + encodeURIComponent(tmp_qv.value);
 tRespStr = app.getUrlRespString(trstr);
 document.getElementById("fldChallArray").value = tRespStr;
@@ -277,7 +277,7 @@ fullstr += thePSResp;
 dvSearchList.innerHTML = fullstr;
 
 };
- 
+
 
 
 var runPlacesSearch = function(thePSa,thePSResp,thePSc) {
@@ -304,7 +304,7 @@ fullstr += thePSResp;
 dvSearchList.innerHTML = fullstr;
 
 };
- 
+
 var doPlacesList = function(a,theResp,c) {
     currPlcsArr = JSON.parse(theResp);
     rnderFItems("_id");
@@ -321,7 +321,7 @@ var rnderFItems = function(tSrtIdx) {
 
 // alert(JSON.parse(theResp));
 
- 
+
 
 
 fullstr = "";
@@ -329,30 +329,30 @@ fullstr = "";
 tHdrArr = null;
 tHdrArr = "";
 tHdrArr = [];
-tHdFObj = {};	
+tHdFObj = {};
 tHdFObj["fld"] = "_id";
 tHdFObj["nm"] = "ID";
 tHdrArr.push(tHdFObj);
- tHdFObj = {};	
+ tHdFObj = {};
 tHdFObj["fld"] = "qlogp_logo";
 tHdFObj.ulnk = "noQvalue";
 tHdFObj["nm"] = "<span style=\"margin-right: 10px; margin-top: 10px\" class=\"nav-material-icons txtBold\"><i class=\"nav-material-icons\">&#xe0cd</i></span>";
 tHdrArr.push(tHdFObj);
-tBHdFObj = {};	
+tBHdFObj = {};
 tBHdFObj["fld"] = "qlogp_name";
 tBHdFObj["nm"] = "Name";
 tHdrArr.push(tBHdFObj);
-tBHdFObj = {};	
+tBHdFObj = {};
 tBHdFObj["fld"] = "qlogp_tel";
 tBHdFObj.ulnk = "noQvalue";
 tBHdFObj["nm"] = "<span style=\"margin-right: 10px; margin-top: 10px\" class=\"nav-material-icons txtBold\"><i class=\"nav-material-icons\">&#xe0cd</i></span>";
 tHdrArr.push(tBHdFObj);
-tBHdFObj = {};	
+tBHdFObj = {};
 tBHdFObj["fld"] = "u_msg";
 tBHdFObj.ulnk = "noQvalue";
 tBHdFObj["nm"] = "<span style=\"margin-right: 10px; margin-top: 10px\" class=\"nav-material-icons txtBold\"><i class=\"nav-material-icons\">&#xe0b7</i></span>";
 tHdrArr.push(tBHdFObj);
-tBAHdFObj = {};	
+tBAHdFObj = {};
 tBAHdFObj["fld"] = "u_location";
 tBAHdFObj.ulnk = "noQvalue";
 tBAHdFObj["nm"] = "<span style=\"margin-right: 10px; margin-top: 10px\" class=\"nav-material-icons txtBold\"><i class=\"nav-material-icons\">&#xe0c8</i></span>";
@@ -369,13 +369,13 @@ currGSarr = [];
 tmpACarr = null;
 tmpACarr = "";
 tmpACarr = [];
- 
+
 currGSarr = JSSHOP.shared.getSrtdArr(currPlcsArr, tSrtIdx, "sortAsc");
 var len = currGSarr.length;
 
 
 
- 
+
 var iint = 0;
 var pcid = 0;
 tstr = "";
@@ -422,7 +422,7 @@ newel = document.createElement('div');
     document.getElementById("dvSearchList").innerHTML = tmpFFstr;
     JSSHOP.ui.doAutoComp(document.getElementById("inpACSearch"), tmpACarr);
 };
- 
+
 
 
 var dmyFnishCntLoad = fnishCntLoad;

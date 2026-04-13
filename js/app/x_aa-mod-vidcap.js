@@ -163,7 +163,7 @@ function createVideoAutomatically() {
 
 // Example: Animate property images on canvas
 function runVidFrames(isRecording = "no") {
-   
+
     vdCanvas = document.getElementById("vidFramesCanvas");
     if (!vdCanvas) return;
     vdCtx = vdCanvas.getContext("2d");
@@ -185,7 +185,7 @@ function runVidFrames(isRecording = "no") {
            const mImgThmbSrc = m.m_file_thumb;
             switch(mcat) {
                 case "5": // regular
- 
+
                 tmfile = mImgSrc;
                 if(tmfile.indexOf("updt_") != -1) {
                     tmfile = tmfile.replace("updt_", "");
@@ -209,7 +209,7 @@ function runVidFrames(isRecording = "no") {
 
                 case "30": // 3D
                 tHmbImg = mImgThmbSrc;
- 
+
                 tLZuncompD = LZString.decompressFromEncodedURIComponent(tHmbImg);
                 vdImgs.push(tLZuncompD);
                     break;
@@ -284,7 +284,7 @@ function animate(currentTime) {
 }
 
 function drawFrame(img) {
- 
+
     console.log(new Date().toISOString() + " - Drawing frame. Index: " + vdIncr + ", Recording: " + isRecordingVid);
     vdCtx.clearRect(0, 0, vdCanvas.width, vdCanvas.height);
     // Draw image centered
@@ -388,15 +388,15 @@ function drawSpeechBubble(ctx, x, y, text, tailX, tailY) {
     ctx.lineTo(x, y + radius);
     ctx.quadraticCurveTo(x, y, x + radius, y);
     ctx.closePath();
-    
+
     ctx.fillStyle = "rgba(255,255,255,0.9)";
     ctx.fill();
     ctx.strokeStyle = "#000";
     ctx.lineWidth = 2;
     ctx.stroke();
-    
+
     // Add Text
-    
+
     // Add Text
     ctx.fillStyle = "#000";
     ctx.font = "16px Arial";
@@ -519,18 +519,18 @@ function drawSpeechBubble(ctx, x, y, width, height, radius, text) {
   ctx.lineTo(x + radius + 20, y + height);
   ctx.lineTo(x + 10, y + height + 20);
   ctx.lineTo(x + radius, y + height);
-  
+
   ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
   ctx.lineTo(x, y + radius);
   ctx.quadraticCurveTo(x, y, x + radius, y);
   ctx.closePath();
-  
+
   ctx.fillStyle = "white";
   ctx.fill();
   ctx.strokeStyle = "black";
   ctx.lineWidth = 2;
   ctx.stroke();
-  
+
   // Add Text
   ctx.fillStyle = "black";
   ctx.font = "16px Arial";

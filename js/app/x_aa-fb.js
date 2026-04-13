@@ -1,4 +1,4 @@
-currIContent = "y"; // ajax request to include the tplates/... file or not 
+currIContent = "y"; // ajax request to include the tplates/... file or not
 currCartTShow = "y";
 
 var tmpSQBArr = null;
@@ -207,7 +207,7 @@ r.i.p. dude.",
     },
     {
       "id": "641473646442871",
-      "name": "qiando há sobras de bolonhesa e falta de pão, apresento o taco-bolonhesa...",
+      "name": "qiando hÃ¡ sobras de bolonhesa e falta de pÃ£o, apresento o taco-bolonhesa...",
       "icon": "https://static.xx.fbcdn.net/rsrc.php/v4/yz/r/StEh3RhPvjk.gif",
       "webp_images": [
         {
@@ -555,7 +555,7 @@ r.i.p. dude.",
     },
     {
       "id": "245434412713465",
-      "name": "agora isto é que é cognac...",
+      "name": "agora isto Ã© que Ã© cognac...",
       "icon": "https://static.xx.fbcdn.net/rsrc.php/v4/yz/r/StEh3RhPvjk.gif",
       "webp_images": [
         {
@@ -660,7 +660,7 @@ r.i.p. dude.",
     },
     {
       "id": "116706185586289",
-      "name": "bifana, road side, em Tábua.  5?.",
+      "name": "bifana, road side, em TÃ¡bua.  5?.",
       "icon": "https://static.xx.fbcdn.net/rsrc.php/v4/yz/r/StEh3RhPvjk.gif",
       "webp_images": [
         {
@@ -850,12 +850,12 @@ function getFBalbums() {
     });
 }
 
- 
+
 function getUFBPosts() {
     // FB.api('/me/feed', function(response) {
-    // get all fields in posts 
+    // get all fields in posts
     // what are all fields in posts
-     
+
      FB.api('/me/posts?fields=privacy,description,child_attachments,created_time,link,permalink_url,icon,status_type,type,id,message,picture,from,caption,name,source,full_picture', function(response) {
         console.log(JSON.stringify(response));
         var dvFBContent = document.getElementById("dvFBContent");
@@ -948,7 +948,7 @@ function getUFBPosts() {
         "friends": "",
         "value": "ALL_FRIENDS"
       },
-      "description": "Provided to YouTube by Atlantic RecordsIn My Time of Dying (1990 Remaster) · Led ZeppelinPhysical Graffiti? 1975, 1990 Atlantic Recording CorporationRemaster...",
+      "description": "Provided to YouTube by Atlantic RecordsIn My Time of Dying (1990 Remaster) Â· Led ZeppelinPhysical Graffiti? 1975, 1990 Atlantic Recording CorporationRemaster...",
       "created_time": "2025-01-05T14:28:24+0000",
       "link": "https://youtu.be/scpqae3P7Dg",
       "permalink_url": "https://www.facebook.com/1708921679698057/posts/1656926651564227",
@@ -1041,7 +1041,7 @@ on a side,  ZRX is under the radar.",
         "friends": "",
         "value": "ALL_FRIENDS"
       },
-      "description": "Provided to YouTube by The Orchard EnterprisesKindred Friend · The Black Crowes · Rich Robinson · Chris RobinsonHappiness Bastards? 2024 Silver Arrow Records...",
+      "description": "Provided to YouTube by The Orchard EnterprisesKindred Friend Â· The Black Crowes Â· Rich Robinson Â· Chris RobinsonHappiness Bastards? 2024 Silver Arrow Records...",
       "created_time": "2024-11-28T20:58:57+0000",
       "link": "https://youtu.be/UO_uwXr3AQ4",
       "permalink_url": "https://www.facebook.com/1708921679698057/posts/1632067660716793",
@@ -1296,7 +1296,7 @@ i wish they knew we love ajax to.",
       "status_type": "mobile_status_update",
       "type": "status",
       "id": "1708921679698057_1571949410061952",
-      "message": "so, forgot i had a hotmail account for the laptop i bought, ms requires one or something to the effect. forgot about this account, but came across it today and logged in. had a bunch of messages from fb, and didn't remember ever opening an fb account with this email. though it was fishing, but confirmed the links were legit. followed a link, and tried a password for login. had a new password sent and was logged in to this kid from brazil account who had 7 friends and last post was in 2012. 
+      "message": "so, forgot i had a hotmail account for the laptop i bought, ms requires one or something to the effect. forgot about this account, but came across it today and logged in. had a bunch of messages from fb, and didn't remember ever opening an fb account with this email. though it was fishing, but confirmed the links were legit. followed a link, and tried a password for login. had a new password sent and was logged in to this kid from brazil account who had 7 friends and last post was in 2012.
 wtf do i do. delete the account?  no rest at all. on a fkn Monday. waiting for the fb police to show up.",
       "from": {
         "name": "Joao Brs",
@@ -1335,7 +1335,7 @@ wtf do i do. delete the account?  no rest at all. on a fkn Monday. waiting for t
       "status_type": "mobile_status_update",
       "type": "status",
       "id": "1708921679698057_1570548983535328",
-      "message": "NY Fed judge threw out the DOGE investors losses based on Elon Musk tweets and such of DOGE coin. 
+      "message": "NY Fed judge threw out the DOGE investors losses based on Elon Musk tweets and such of DOGE coin.
 \"DOGE to the moon!\", seems like a legit prospectus to me.",
       "from": {
         "name": "Joao Brs",
@@ -1439,7 +1439,7 @@ https://www.youtube.com/watch?v=ItLFpYha6Wc",
             tPostCrtTime = "";
             tPostPermLnk = "";
             tPostFullPic = "";
-           
+
             tMainPTttl = "";
             tMainPTcntnt = "";
             tMainPMsg = "";
@@ -1468,7 +1468,7 @@ https://www.youtube.com/watch?v=ItLFpYha6Wc",
                         tPostMsg = response.data[i].description;
                     }
                 }
-               
+
                 if(response.data[i].picture) {
                     tPostImg = response.data[i].picture;
                 } else if(response.data[i].full_picture) {
@@ -1479,7 +1479,7 @@ https://www.youtube.com/watch?v=ItLFpYha6Wc",
                     tPostImg = "";
                 }
 
-                 
+
                 if(response.data[i].type) {
                     tPostType = response.data[i].type;
                 }
@@ -1495,7 +1495,7 @@ https://www.youtube.com/watch?v=ItLFpYha6Wc",
                 if(response.data[i].permalink_url) {
                     tPostPermLnk = response.data[i].permalink_url;
                 }
- 
+
                 tMainPTttl += tPostTtle;
                 tMainPTcntnt += tPostCntnt;
                 tMainPMsg += tPostMsg;
@@ -1524,7 +1524,7 @@ https://www.youtube.com/watch?v=ItLFpYha6Wc",
                 dvFBContentStr += "</div>";
             }
             document.getElementById("dvFBContent").innerHTML = dvFBContentStr;
-              
+
     });
 }
 function doFBLogout() {
@@ -1536,8 +1536,8 @@ function doFBLogout() {
 function doFBLogin() {
   // add the pages_read_engagement permission to the list of permissions
   // you want to ask from the user
- 
-     // If you are logged in, automatically get your name and email adress, your public profile information  
+
+     // If you are logged in, automatically get your name and email adress, your public profile information
      FB.login(function(response) {
       if (response.authResponse) {
        console.log('Welcome!  Fetching your information.... ');
@@ -1545,19 +1545,19 @@ function doFBLogin() {
            document.getElementById("dvFBContent").innerHTML = "Good to see you, " + response.name + ". i see your email address is " + response.email;
            getUFBPosts();
        }, {scope: 'pages_read_engagement'});
-      
-      } else { 
+
+      } else {
       //  If you are not logged in, the login dialog will open for you to login asking for permission to get your public profile and email
-       console.log('User cancelled login or did not fully authorize.'); 
+       console.log('User cancelled login or did not fully authorize.');
       JSSHOP.ui.doAlertBox("error", "Alert", "User cancelled login or popup blocker is enabled.", "noQvalue");
       }
       });
 }
 
 function foFBpopnotblkd() {
-    
- 
-    // Initialize the SDK with your app and the Graph API version for your app 
+
+
+    // Initialize the SDK with your app and the Graph API version for your app
     FB.init({
     appId            : '1814864155722452',
     xfbml            : true,
@@ -1566,7 +1566,7 @@ function foFBpopnotblkd() {
     // you can add more permissions if you want
      scope: 'pages_read_engagement'
 
-            
+
     });
     // first check if user is already logged in, if not, login
     FB.getLoginStatus(function(response) {
@@ -1578,12 +1578,12 @@ function foFBpopnotblkd() {
       getUFBPosts();
       } else {
         doFBLogin();
-   
+
     }
     }
     );
 
-    
+
 }
 
 var dmyFnishCntLoad = fnishCntLoad;
@@ -1598,8 +1598,8 @@ fnishCntLoad = function() {
       }(document, 'script', 'facebook-jssdk')
     );
     setTimeout(function() {foFBpopnotblkd();}, 1000);
- 
+
 };
 
- 
-  
+
+

@@ -1,5 +1,5 @@
 // currPgTitle = stxt[31] + " " + stxt[56];
-// document.title = currPgTitle; 
+// document.title = currPgTitle;
 var euiFFObjArr = null;
 var euiFFObjArr = [];
 
@@ -84,7 +84,7 @@ JSSHOP.cookies.setCookie("cuid",tFullTknCoSTr,"90","","","");
 }
 
 };
- 
+
 
 
 
@@ -111,7 +111,7 @@ document.getElementById("btnEUsave").disabled=true;
 // smlspinner.spin(dvSpinner);
 doNUserEdit();
 }
-// var cars = ["tmp_u_name","tmp_u_pass"]; 
+// var cars = ["tmp_u_name","tmp_u_pass"];
 // if(JSSHOP.shared.valFieldVals(cars)) {doNUserEdit();}
 };
 
@@ -137,7 +137,7 @@ return aCurrFFieldOb;
 
 
 
- 
+
 var fnishDlayCntLoad = function() {
 };
 
@@ -175,14 +175,14 @@ var removeAccount = function() {
     JSSHOP.ui.popAndFillLbox(tFillstr);
 }
 
-var fnshUImgPDel = function(aa,bb,cc) { 
- 
+var fnshUImgPDel = function(aa,bb,cc) {
+
     getUiconImgs();
     JSSHOP.ui.closeLbox();
-    
+
     };
 
-var fnshUImgMDel = function(aa,bb,cc) { 
+var fnshUImgMDel = function(aa,bb,cc) {
     // alert(bb);
     if(JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", "default_user.png") == u_icon.value) {
         u_icon.value = "default_user.png";
@@ -192,27 +192,27 @@ var fnshUImgMDel = function(aa,bb,cc) {
         JSSHOP.ui.closeLbox();
     }
 
-    
+
     };
 
-var doUMIDelete = function() { 
+var doUMIDelete = function() {
     if(confirm(stxt[42] + " " + stxt[19] + "?")) {
     procNuUIitem("qmedia","m_rtype",JSSHOP.shared.getFrmFieldVal("qmedia", "_id", 0),"0","fnshUImgMDel");
     }
 };
 
 
-var fnshUimgMain = function(aa,bb,cc) { 
+var fnshUimgMain = function(aa,bb,cc) {
     // alert(bb);
     document.getElementById("u_icon").value = JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0);
     imgIedit.src = "images/user/" + JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0);
     // getUiconImgs();
     JSSHOP.ui.closeLbox();
-    
+
     };
-    
-    
-    var doUimgMain = function() { 
+
+
+    var doUimgMain = function() {
     if(confirm("Set as main picture?" + JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0))) {
     procNuUIitem("quser","u_icon",quid,JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0),"fnshUimgMain");
         }
@@ -223,7 +223,7 @@ var getUIEditDv = function(tpIncrNPI, tpFImg) {
 tpPIEDv = document.createElement('div');
 JSSHOP.shared.setFrmFieldVal("qmedia", "_id", tpIncrNPI);
 JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tpFImg);
- 
+
 tmpRetStr = "<img src=\"images/user/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
  try {
 tmpRetStr += "<div class=\"\"><input type=\"button\" class=\"form-control\" value=\"" + stxt[521] + "\" onclick=\"javascript:doUimgMain();\">";
@@ -231,7 +231,7 @@ if(tpFImg != "default_user.png") {
 tmpRetStr += "   |  <input type=\"button\" class=\"form-control\" value=\"" + stxt[42] + "\" onclick=\"javascript:doUMIDelete();\"></div>";
 }
 tmpRetStr += "<br><br>";
- 
+
 return tmpRetStr;
 } catch(e) {
 alert("getUIEditDv " + e);
@@ -260,7 +260,7 @@ var setUiconImgs = function(theAIa, theAIb, theAIc) {
             }
  			tstr += "<img src=\"images/user/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getUIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
 			tstr += "</div>";
- 
+
 			iint++;
 		}
         if(u_icon.value == "default_user.png") {
@@ -286,7 +286,7 @@ var getUiconImgs = function() {
     doQComm(oi["rq"], null, "setUiconImgs");
 };
 
-var fnshUIcnLoad = function(aa,bb,cc) { 
+var fnshUIcnLoad = function(aa,bb,cc) {
     scrollToElement("dvUImgs");
     JSSHOP.ui.setCBBClickClr(document.getElementById("dvProdImgs"),'cls_button cls_button-medium brdrClrDlg txtClrHdr',document.getElementById("dvUImgs").className, function(){void(0)});
 
@@ -295,14 +295,14 @@ var fnshUIcnLoad = function(aa,bb,cc) {
 
 var finishUPupload = function(theMMum) {
     try {
-    
+
 
         image = null;
         image = new Image();
         image.src = "images/user/" + theMMum;
         document.getElementById("dvProdImgs").appendChild(image);
 
-        // document.getElementById('dvUImgs').style.backgroundImage="url(images/users/s_thumb" + theMMum + ")";    
+        // document.getElementById('dvUImgs').style.backgroundImage="url(images/users/s_thumb" + theMMum + ")";
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_file_thumb", "s_thumb" + theMMum);
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", theMMum);
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_coid", tuid);
@@ -333,7 +333,7 @@ function aFillUsrFrm(a,b,c) {
     if(quid != fuArr[0]._id) {
     document.getElementById("dvSndMsgBtn").innerHTML = "<button id=\"btnSndMsg\" class=\"cls_button cls_button-medium bkgdClrHdr txtClrWhite\" onclick=\"javascript:JSSHOP.ui.prepMsgBox('" + fuArr[0]._id + "','" + fuArr[0].u_fullname + "','" + fuArr[0].u_icon + "','showMsgSave');\"><ti data-ison=\"stxt[42]\" data-desc=\"btn_del\">" + stxt[935] + "</ti></button>";
 
-}  
+}
 
     tUcat = document.getElementById("tmp_u_cat");
     tUcat = currQUsrObj.u_cat;
@@ -342,11 +342,11 @@ function aFillUsrFrm(a,b,c) {
         document.getElementById("dvUsrEditLnk").innerHTML = "<a href=\"javascript:eindex('aa-edit-user', 'pid=aa-edit-user&tuid=" + tuid + "');\" class=\"txtBold txctClrHdr bkgdClrNrml\">" + stxt[31] + "</a>";
         // document.getElementById("dvUsrEditLnk").innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"javascript:removeAccount();\" class=\"txtBold txctClrRed bkgdClrWhite\">" + stxt[815] + "</a>";
     }
- 
+
     tmpDOs = null;
 tmpDOs = {};
 tmpDOs["ws"] = "where k_userid=? and k_coid=? and k_rtype=?";
-tmpDOs["wa"] = [tuid,tuid,5]; 
+tmpDOs["wa"] = [tuid,tuid,5];
 oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
 doQComm(oi["rq"], "y", "setCurrCoLinks");
 getUiconImgs();
@@ -376,9 +376,9 @@ if(currUrlArr.tuid) {
     doQComm(oi["rq"], "y", "aFillUsrFrm");
 
 // JSSHOP.shared.addCurrSlctObj(svftObj["usercat"], tUcat, u_cat.value, "noQvalue", "noQvalue");
- 
 
-  
+
+
 
 // disable user name password and email fields
 // document.getElementById("tmp_u_name").disabled=true;
@@ -388,11 +388,11 @@ if(currUrlArr.umsg && currUrlArr.umsg == "remove") {
     dvPartLinks.innerHTML = "<div class=\"txtBold txtClrRed\">" + stxt[824] + "</div>";
 }
 
- 
- 
+
+
 }
 
- 
+
 return dmyFnishCntLoad;
 };
 
@@ -400,8 +400,8 @@ var aEditUser = function() {
  fnishDlayCntLoad(); // was not working with fnishCntLoad function
 };
 
- 
- 
+
+
 
 function rndrUProps(aaw,aww,cww) {
 console.log('doMPropsList - aww: ' + aww);
@@ -465,7 +465,7 @@ if(aprpPimage == "default.jpg") {
 
     allprpPimage = LZString.decompressFromEncodedURIComponent(tprpPimage);
     tPrpImgsFldr = "";
- 
+
    } else {
 
     tprpPimage = aprpPimage;
@@ -493,9 +493,9 @@ retPLstSTr += "</td>";
 retPLstSTr += "<td>";
 retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
  retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpState + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
- 
+
 retPLstSTr += "</td></tr></table>";
- 
+
 retPLstSTr += "</div>";  // end col-md-6 col-lg-4
 
 
@@ -595,28 +595,28 @@ if(tKcategory == "telephone") {
     tKfnlMatter = tKshrtMatter;
     }
 
-    // else if 
+    // else if
 
     // tKfnlMatter = tKshrtMatter;
- 
 
-// rcnsDv.className = "collection-item txtDecorNone margleft"; 
+
+// rcnsDv.className = "collection-item txtDecorNone margleft";
 rcL += "<div style=\"margin:10px;\" nowrap=\"nowrap\"><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span>";
 rcL +=    "<span class=\"txtSmall txtClrGrey\">" + rcts.k_title + "</span><br>" + tKfnlMatter + "</div>";
 
 //rcL += "<tr><td><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span></td><td><span class=\"txtSmall txtClrGrey\">" + rcts.k_title + "</span></td><td>" + unescape(decodeURIComponent(rcts.k_matter));
- 
+
 // rcnsDv.innerHTML = "<span class=\"txtBold\">" + rcts.k_category + "</span><br>" + rcts.k_matter;
 rciint++;
 }
- 
+
 // rcnsDv.innerHTML = rcL;
 dvCoLinks.innerHTML = rcL;
 if(za == "ya") {
     setTimeout("JSSHOP.ui.setCBBClickClr(dvCoLinks,'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr bkgdClrWhite', function(){JSSHOP.ui.closeLbox()})", 1000);
 }
 
- 
+
 // dvCoLinks.innerHTML = JSON.stringify(currCoLinksArr);
 };
 
@@ -626,7 +626,7 @@ var finishCOLupload = function(theMMum) {
 alert("finishCOLupload: " + theMMum);
 
 };
- 
+
     var setCurrCoLinks = function(tCCLA, tCCLB, tCCLC) {
         if(tCCLB.indexOf("_id") != -1) {
             currCoLinksArr = null;

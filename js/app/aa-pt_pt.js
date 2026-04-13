@@ -20,7 +20,7 @@ stxt[19] = "Item";
 stxt[20] = "Editar Item";
 stxt[21] = "Guardar";
 stxt[22] = "Titulo do Shop";
-stxt[23] = "Descri\u00e7ao"; 
+stxt[23] = "Descri\u00e7ao";
 stxt[24] = "Numero Telefone";
 stxt[25] = "Web";
 stxt[26] = "Email";
@@ -86,11 +86,11 @@ stxt[85] = "Aviso Legal";
 stxt[86] = "Contactos";
 stxt[87] = "Favoritos";
 stxt[88] = "Como instalar, desmontar, trocar ";
-stxt[89] = "Aqui voc� pode encontrar os pre�os mais baratos em ";
+stxt[89] = "Aqui vocï¿½ pode encontrar os preï¿½os mais baratos em ";
 stxt[90] = "recambios de coche nuevos y de origen al mejor precio ";
-stxt[91] = "Tudo para o seu ve�culo, a pre�os lowcost. ";
+stxt[91] = "Tudo para o seu veï¿½culo, a preï¿½os lowcost. ";
 stxt[92] = "Local";
-stxt[93] = "Sugerido"; 
+stxt[93] = "Sugerido";
 stxt[94] = "Sector";
 stxt[95] = "Dept";
 stxt[96] = "All Users";
@@ -121,7 +121,7 @@ stxt[118] = "Ver esta Listagem Magnifica";
 stxt[119] = "Update";
 stxt[120] = "Guardado";
 
-// user strings 
+// user strings
 stxt[201] = "First Name";
 stxt[202] = "Last Name";
 stxt[203] = "Morada";
@@ -129,7 +129,7 @@ stxt[204] = "Distrito";
 stxt[205] = "Pais";
 stxt[206] = "Phone";
 stxt[207] = "Mobile";
-stxt[208] = "Fax";	
+stxt[208] = "Fax";
 stxt[209] = "Fregeusia";
 stxt[210] = "Concelho";
 stxt[211] = "Distrito";
@@ -148,11 +148,11 @@ stxt[223] = "";
 stxt[234] = "Cidade";
 stxt[235] = "Titulo";
 stxt[236] = "Intrudu\u00e7ao";
- 
 
 
 
-// admin strings 
+
+// admin strings
 svtxt[300] = "cliente";
 svtxt[301] = "other";
 svtxt[302] = "opera";
@@ -173,26 +173,26 @@ svtxt[311] = "1";
 svtxt[312] = "2";
 svtxt[313] = "3";
 svtxt[314] = "4";
- 
+
 
 
 stxt[311] = "Main";
 stxt[312] = "Billing";
 stxt[313] = "Shipping";
 stxt[314] = "Receiving";
- 
+
 // stxt[315] = "Delete this Property Listing?";
 stxt[315] = "Eliminar esta Listagem de Propriedade?";
 
-// Actualiza�oes
+// Actualizaçoes
 stxt[400] = "Editar Update";
 stxt[401] = "Adicionar Update";
 stxt[402] = "Editar Updates";
- 
+
 
 
 // items and categories
-stxt[513] = "Editar sua loja, descria�a�o e logo..";
+stxt[513] = "Editar sua loja, descria§a£o e logo..";
 stxt[514] = "Horario";
 stxt[515] = "Morada";
 stxt[516] = "cidade, estado...";
@@ -234,13 +234,13 @@ stxt[551] = "Feriado Semanal";
 stxt[552] = "Nota";
 stxt[553] = "Resultado";
 stxt[554] = "Ver no Mapa";
-stxt[555] = "Estamos a trabalhar constantemente para melhorar os nossos servia�os. Se deseja editar-remover a informaa�a�o da sua loja, por favor contacte-nos.";
-stxt[556] = "* Estas localizaaa�es sa�o aproximadas e podem na�o representar a localiza\u00e7\u00e3o real da loja.";
+stxt[555] = "Estamos a trabalhar constantemente para melhorar os nossos servia§os. Se deseja editar-remover a informaa§a£o da sua loja, por favor contacte-nos.";
+stxt[556] = "* Estas localizaaaµes sa£o aproximadas e podem na£o representar a localiza\u00e7\u00e3o real da loja.";
 stxt[557] = "Mostrar Todos";
 stxt[558] = "Aberto";
 stxt[559] = "e uma empresa localizada em";
 stxt[560] = "Somos uma empresa localizada em";
-stxt[561] = "Selecione a marca e modelo, depois insira o prea�o ao lado da pea�a na lista abaixo.";
+stxt[561] = "Selecione a marca e modelo, depois insira o prea§o ao lado da pea§a na lista abaixo.";
 stxt[562] = "Quando terminar, clique no botao Guardar abaixo.";
 stxt[563] = "imagens dos items";
 stxt[564] = "Adicionar Imagem do Item";
@@ -276,7 +276,7 @@ stxt[616] = "Edit Drivers";
 stxt[617] = "Utilizadores";
 stxt[618] = "Favorites";
 stxt[619] = "List Trips";
- 
+
 stxt[620] = "Tipo, Pre\u00e7o...";
 stxt[621] = "Social";
 stxt[622] = "adicionar Conteudo Social";
@@ -300,7 +300,7 @@ stxt[636] = "Imagens da Propriedade";
 stxt[637] = "Suas Imagens";
 stxt[638] = "DEMO";
 stxt[639] = "Definir como Fundo";
-stxt[640] = "Cantos Arredondados";  
+stxt[640] = "Cantos Arredondados";
 stxt[641] = "Preenchimento em Gradiente";
 stxt[642] = "Cor Solida";
 stxt[643] = "Aplicar Gradiente";
@@ -308,7 +308,7 @@ stxt[644] = "Aplicar Cor Solida";
 stxt[645] = "Sombra";
 stxt[646] = "Aplicar";
 stxt[647] = "Remover Sombra do Elemento";
-stxt[648] = "Deslocamento Horizontal (px):";    
+stxt[648] = "Deslocamento Horizontal (px):";
 stxt[649] = "Deslocamento Vertical (px):";
 stxt[650] = "Raio de Desfoque (px):";
 stxt[651] = "Cor:";
@@ -316,7 +316,7 @@ stxt[652] = "Aplicar na Borda";
 stxt[653] = "Sombra do Elemento";
 stxt[654] = "Selecione imagens da propriedade para definir como fundo ou inserir no editor.";
 stxt[655] = "Escolha das suas imagens carregadas para definir como fundo ou inserir.";
-stxt[656] = "Conteudo de demonstra��o para fins de teste.";
+stxt[656] = "Conteudo de demonstração para fins de teste.";
 stxt[657] = "Aplicar preenchimentos em gradiente a fundos ou bordas.";
 stxt[658] = "Aplicar cores solidas a fundos ou bordas.";
 stxt[659] = "Selecionar imagens da propriedade para fundos.";
@@ -363,7 +363,7 @@ stxt[729] = "Entre em contato conosco sobre esta propriedade:";
 stxt[730] = "Por favor, forne\u00e7a seu email e/ou n\u00famero de telefone para que possamos retornar a voc\u00ea.";
 stxt[731] = "Convidado";
 stxt[732] = "Mensagem do Usu\u00e1rio Convidado";
-stxt[733] = "Por favor, selecione um endere�o primeiro ou insira coordenadas.";
+stxt[733] = "Por favor, selecione um endereço primeiro ou insira coordenadas.";
 
 // coookie consent strings
 stxt[800] = "Nos usamos cookies";
@@ -416,15 +416,15 @@ stxt[902] = "Contactos";
 stxt[903] = "Perfil";
 stxt[905] = "Suas Propriedades";
 stxt[906] = "Adicionar Propriedade";
- 
+
 stxt[907] = "Forum";
 stxt[908] = "Statisticas";
 stxt[909] = "Termos and Condicoes";
 stxt[910] = "Apoio";
 stxt[911] = "Perguntas Frequentes";
 stxt[912] = "Contacte-nos";
- 
- 
+
+
 stxt[913] = "Sobre Nos";
 stxt[914] = "Em Destaque";
 stxt[915] = "Seja Membro";
@@ -445,7 +445,7 @@ stxt[929] = "Andares Totais";
 stxt[930] = "Destaques";
 stxt[931] = "Floor Plans";
 stxt[932] = "Cave";
-stxt[933] = "1º Andar";
+stxt[933] = "1Âº Andar";
 stxt[934] = "Contactar Agente";
 stxt[935] = "Enviar Mensagem";
 stxt[936] = "Procurar Propriedade";
@@ -472,7 +472,7 @@ stxt[956] = "Status";
 stxt[957] = "Escolha Status";
 stxt[958] = "Imagen Plano de Cave";
 stxt[959] = "Imagen Plano de Res do Chao";
-stxt[960] = "Imagen Plano de 1º Andar";
+stxt[960] = "Imagen Plano de 1Âº Andar";
 stxt[961] = "Registe-se";
 stxt[962] = "Todos Utilizadores";
 stxt[963] = "Propriedades";
@@ -485,30 +485,30 @@ stxt[969] = "Assunto";
 stxt[970] = "Mensagem";
 stxt[971] = "Emcontre";
 stxt[972] = "sua Casa de Sonho";
-stxt[973] = "Livro de Reclamacoes"; // Livro de reclamações
-stxt[974] = "Login para aceder ao nosso painel de controlo"; // 
-stxt[975] = "Nao tem uma conta?"; // 
-stxt[976] = "O login nao foi bem sucedido. Por favor tente novamente."; // 
-stxt[977] = "*O seu email"; // 
-stxt[978] = "*A sua password "; // 
+stxt[973] = "Livro de Reclamacoes"; // Livro de reclamaÃ§Ãµes
+stxt[974] = "Login para aceder ao nosso painel de controlo"; //
+stxt[975] = "Nao tem uma conta?"; //
+stxt[976] = "O login nao foi bem sucedido. Por favor tente novamente."; //
+stxt[977] = "*O seu email"; //
+stxt[978] = "*A sua password "; //
 stxt[979] = "Titulo e Descricao"; // Titulo e Descricao
 stxt[980] = "Imagens - Media"; // Imagens - Media
 stxt[981] = "Caracteristicas do imovel"; // Caracteristicas do imovel
 stxt[982] = "Numero de quartos, cozinhas..."; // Numero de quartos, cozinhas...
 stxt[983] = "Descricao do imovel"; // Descricao do imovel
-stxt[984] = "adicionar mais imagens-media";  // adicionar mais imagens-media 
+stxt[984] = "adicionar mais imagens-media";  // adicionar mais imagens-media
 stxt[985] = "Editar Propriedade";
 stxt[986] = "Carregar";  // Carregar
 stxt[987] = "Para venda";  // Para venda
 stxt[988] = "Para alugar";  // Para alugar
 stxt[989] = "Para arrendar";  // Para arrendar
-stxt[990] = "Para leilao";  // Para leilão
-stxt[991] = "Para execução";  // Para execução
+stxt[990] = "Para leilao";  // Para leilÃ£o
+stxt[991] = "Para execuÃ§Ã£o";  // Para execuÃ§Ã£o
 stxt[992] = "Tipo";  // Tipo
 stxt[993] = "Titulo e Descri\u00e7\u00e3o";  // Titulo e Descricao
 stxt[994] = "titulo e descricao";  // titulo e descricao
 stxt[995] = "Tipo de Imagem";  // Tipo de Imagem
-stxt[996] = "Titulo de Imagem"; 
+stxt[996] = "Titulo de Imagem";
 stxt[997] = "Guardar Titulo";
 stxt[998] = "Abrir imovel atual";
 stxt[999] = "Descarregar";
@@ -530,7 +530,7 @@ stxt[1008] = "Por favor preencha todos os campos";
 stxt[1009] = "Registo falhou. Por favor tente novamente.";  // Registo falhou. Por favor tente novamente.
 stxt[1010] = "Registado com sucesso. Por favor <a href=\"login.php\">login</a>";  // Registado com sucesso. Por favor entre.
 stxt[1011] = "Introduza seu nome e password para entrar no painel de admin"; // Introduza seu nome e password para entrar no painel de admin
-stxt[1012] = "Preencha todos os campos para se registar como administrador. O seu nome e password serão usados para login"; // Preencha todos os campos para se registar como administrador. O seu nome e password serão usados para login.
+stxt[1012] = "Preencha todos os campos para se registar como administrador. O seu nome e password serÃ£o usados para login"; // Preencha todos os campos para se registar como administrador. O seu nome e password serÃ£o usados para login.
 stxt[1013] = "Registado com sucesso. Por favor <a href=\"index.php\">login</a>";  // Registado com sucesso. Por favor entre.
 stxt[1014] = "Sobre nos"; // Sobre nos
 stxt[1015] = "Nova Historia"; // Nova Historia
@@ -554,7 +554,7 @@ stxt[2001] = "Setting up is easy. Enter your shops title, add some item categori
 
 // misc
 stxt[3001] = "Item title here";
- 
+
 
 // android java app
 stxt[4001] = "Art Pad";
@@ -587,7 +587,7 @@ svftObj["u_jtype"] = tsvftxt;
 tmmftxt = null;
 tmmftxt = "";
 tmmftxt = {};
-tmmftxt["guest"] = "Guest"; 
+tmmftxt["guest"] = "Guest";
 tmmftxt["driver"] = "Driver";
 tmmftxt["admin"] = "Admin";
 tmmftxt["fleet"] = "Fleet";
@@ -684,7 +684,7 @@ tmpContType["sell"] = "Venda";
 tmpContType["rent"] = "Alugar";
 tmpContType["lease"] = "Arrendar";
 tmpContType["auction"] = "Leilao";
-tmpContType["foreclosure"] = "Liquidaçao";
+tmpContType["foreclosure"] = "LiquidaÃ§ao";
 tmpContType["buy"] = "Comprar";
 tmpContType["other"] = "OOutrother";
 svftObj["contract"] = tmpContType;
@@ -700,7 +700,7 @@ tDPStatObj["withdrawn"] = "Retirado";
 tDPStatObj["other"] = "Outro";
 svftObj["propstat"] = tDPStatObj;
 
- 
+
 
 tUCatObj = null;
 tUCatObj = "";
@@ -782,7 +782,7 @@ tMsgSbjObj["other"] = "Outro";
 svftObj["msgsubject"] = tMsgSbjObj;
 
 // custom strings
- 
+
 var cstmStr = "";
 cstmStr = {};
 cstmStr["prop1"] = "proptech - tecnologia imobiliaria";

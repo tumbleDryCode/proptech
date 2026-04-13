@@ -11,7 +11,7 @@ var currStartLng = "";
 
 
 if(currUrlArr.tpid) {
- 
+
 currPgTitle = "Edit Place";
 currPgIcon = "xe3c9";
 } else {
@@ -32,16 +32,16 @@ ck_username = /^[A-Za-z0-9_]{3,20}$/;
 ck_password =  /^[A-Za-z0-9!@#$%^&*()_]{6,20}$/;
 
 var tpid = 0;
- 
+
 var LeafIcon = L.Icon.extend({
     options: {
-       
+
         iconSize:     [66, 66],
 
         iconAnchor:   [-1, -1],
 
         popupAnchor:  [-3, -16]
- 
+
     }
 });
 
@@ -54,20 +54,20 @@ try {
     tHdrArr = null;
 tHdrArr = "";
 tHdrArr = [];
-tHdFObj = {};	
+tHdFObj = {};
 tHdFObj["fld"] = "_id";
 tHdFObj["nm"] = "ID";
 tHdrArr.push(tHdFObj);
- 
-tBHdFObj = {};	
+
+tBHdFObj = {};
 tBHdFObj["fld"] = "qloga_name";
 tBHdFObj["nm"] = "Name";
 tHdrArr.push(tBHdFObj);
-tBHdFObj = {};	
+tBHdFObj = {};
 tBHdFObj["fld"] = "qloga_type";
 tBHdFObj["nm"] = "Type";
 tHdrArr.push(tBHdFObj);
-tBHdFObj = {};	
+tBHdFObj = {};
 tBHdFObj["fld"] = "_id";
 tBHdFObj["nm"] = "<span style=\"margin-right: 10px; margin-top: 10px\" class=\"nav-material-icons txtBold\"><i class=\"nav-material-icons\">&#xe3c9</i></span>";
 tHdrArr.push(tBHdFObj);
@@ -81,7 +81,7 @@ tfPobj = [];
 tfPobj = JSON.parse(tFPFb);
 iifal = 0;
 iiflen = tfPobj.length;
- 
+
 while(iifal < iiflen) {
     tFPFbstr += "<tr>";
     tFPFbstr += "<td>" + tfPobj[iifal]._id + "</td>";
@@ -91,7 +91,7 @@ while(iifal < iiflen) {
     tFPFbstr += "</tr>";
 iifal++;
 }
- 
+
 
 
 if(tfPobj[0]) {
@@ -99,7 +99,7 @@ if(tfPobj[0]) {
     } else {
     strTHhtml = "<th>...</th>";
     }
- 
+
     tmpFstr = getTblSortStr(strTHhtml, tFPFbstr);
     tmpFFstr = "<div style=\"margin: 0 auto;max-width:600px;padding: 10px;margin-left: 15px;margin-right: 15px;\">" + tmpFstr + "</div>";
 
@@ -108,7 +108,7 @@ if(tfPobj[0]) {
     document.getElementById("dvAddrssLst").innerHTML = tmpFFstr;
 
 
- 
+
 } catch(e) {
 alert("fillPAddrssLst: " + e);
 }
@@ -147,12 +147,12 @@ console.log("tfPobj: " + JSON.stringify(tfPobj));
  JSSHOP.shared.setFrmVals("qco",tfPobj[0],function() {rndrWorkHObj()});
  tCdescStr = c_desc.value;
  if((tCdescStr == "ns") || (tCdescStr == "5")){
- 
+
      tCdescStr = c_name.value;
      c_desc.value = tCdescStr;
      tmp_c_desc.innerText = tCdescStr;
 
-     
+
  }
 // getPAddrssLst();
 tQlogoVA = c_logoimg.value;
@@ -190,7 +190,7 @@ document.getElementById("lnkGWSearch").href = "https://www.google.com/search?q="
 tmpDOs = null;
 tmpDOs = {};
 tmpDOs["ws"] = "where k_coid=? and k_rtype=?";
-tmpDOs["wa"] = [currUrlArr.tpid,5]; 
+tmpDOs["wa"] = [currUrlArr.tpid,5];
 oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
 doQComm(oi["rq"], "y", "setCurrCoLinks");
 // setTimeout("rndrWorkHObj()", 600);
@@ -242,7 +242,7 @@ alert("finishPIcn: " + e);
 
 
 
- 
+
 
 
 var testFFieldOb = function() {
@@ -266,7 +266,7 @@ return aCurrFFieldOb;
 
 
 
- 
+
 var fnishDlayCntLoad = function() {
 };
 
@@ -308,17 +308,17 @@ iint++;
 }
 
 pint++;
-} 
+}
 } catch(e) {
 alert("setDefWorkH: " + e);
 }
 };
 
- 
+
 
 
 var rndrWorkHObj = function() {
- 
+
 tmpWorkStr = "";
 tmpWorkStr = LZString.decompressFromEncodedURIComponent(c_whours.value);
 if(tmpWorkStr) {
@@ -459,9 +459,9 @@ eindex("pid=aa-edit-place", "pid=aa-edit-place&tpid=" + tncobj[0]._id);
 
 
 var cbFedit = function(a,b,c) {
- 
- 
-    
+
+
+
 
 
 	if(currUrlArr.tpid) {
@@ -475,7 +475,7 @@ JSSHOP.ui.setCBBClickClr(btnEUsave,'cls_button cls_button-medium  bkgdClrDGreen 
         tmpDOs["wa"] = [quid,tDadded];
         oi = getNuDBFnvp("qco", 5, null, tmpDOs);
         doQComm(oi["rq"],"noQvalue","fnshCoPgAdd");
-    
+
  // doMLinkM('aa-edit-places', 'pid=aa-edit-places');
  }
 };
@@ -487,8 +487,8 @@ var doNPlaceEdit = function() {
 	c_whours.value = setWorkHObj("ha");
 	// alert("c_whours.value: " + c_whours.value);
     tmpFobj["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qco"], "tmp_"));
- 
-    
+
+
 if(currUrlArr.tpid) {
 	    tmpFobj["ws"] = "where _id=?";
     tmpFobj["wa"] = [tpid];
@@ -551,7 +551,7 @@ function doPrvwPopFnsh() {
     }
     iouy++;
     }
-    
+
      JSSHOP.shared.doNuDwEL();
      fillPrvwPopForm();
 
@@ -575,7 +575,7 @@ if((quid == 0) || (quid == 5) || (quid == "noQvalue")) {
 document.location.href = "index.html?pid=login";
 return;
 }
- 
+
 
 
 
@@ -591,9 +591,9 @@ isslen = tSARR.length;
 rweint = 0;
 while(rweint < tSARR.length) {
 	tsasa = null;
- 
+
 tsasa = tSARR[rweint];
- 
+
 if(tVSARR[rweint] == c_category.value) {
     console.log("tVSARR[rweint]: " + tVSARR[rweint] + " : " + tSARR[rweint] + " : " +  c_category.value);
 
@@ -603,15 +603,15 @@ if(tVSARR[rweint] == c_category.value) {
 
 JSSHOP.shared.addCurrSelectOpt(tmp_c_category, tVSARR[rweint], tSARR[rweint], "");
 }
-rweint++; 
+rweint++;
 }
 
 
 trifo = nCurrFFieldOb();
 trifo.fid = "tmp_c_category";
 // trifo.fdv = "Category";
-trifo.lid = "lbl_c_category"; 
-trifo.ltxt = stxt[16]; 
+trifo.lid = "lbl_c_category";
+trifo.ltxt = stxt[16];
 euiFFObjArr.push(trifo);
 
 */
@@ -620,8 +620,8 @@ euiFFObjArr.push(trifo);
 taifo = nCurrFFieldOb();
 taifo.fid = "tmp_c_internal";
 taifo.fdv = "Internal ID";
-taifo.lid = "lbl_c_internal"; 
-taifo.ltxt = "Internal ID"; 
+taifo.lid = "lbl_c_internal";
+taifo.ltxt = "Internal ID";
 euiFFObjArr.push(taifo);
 
 
@@ -629,7 +629,7 @@ euiFFObjArr.push(taifo);
 tbifo = nCurrFFieldOb();
 tbifo.fid = "tmp_c_name";
 tbifo.fdv = stxt[22];
-tbifo.lid = "lbl_c_name"; 
+tbifo.lid = "lbl_c_name";
 // stxt title
 tbifo.ltxt = stxt[22]; // Name
 euiFFObjArr.push(tbifo);
@@ -638,7 +638,7 @@ euiFFObjArr.push(tbifo);
 twifwo = nCurrFFieldOb();
 twifwo.fid = "tmp_c_desc";
 twifwo.fdv = stxt[40];
-twifwo.lid = "lbl_c_desc"; 
+twifwo.lid = "lbl_c_desc";
 twifwo.ltxt = stxt[40]; // Description
 euiFFObjArr.push(twifwo);
 
@@ -647,8 +647,8 @@ euiFFObjArr.push(twifwo);
 tyifo = nCurrFFieldOb();
 tyifo.fid = "tmp_c_tel";
 tyifo.fdv = "Tel";
-tyifo.lid = "lbl_c_tel"; 
-tyifo.ltxt = "Tel"; 
+tyifo.lid = "lbl_c_tel";
+tyifo.ltxt = "Tel";
 euiFFObjArr.push(tyifo);
 
 
@@ -657,7 +657,7 @@ euiFFObjArr.push(tyifo);
 tfui = nCurrFFieldOb();
 tfui.fid = "tmp_c_contact";
 tfui.fdv = stxt[517];
-tfui.lid = "lbl_c_contact"; 
+tfui.lid = "lbl_c_contact";
 tfui.ltxt = stxt[517]; // Contact
 euiFFObjArr.push(tfui);
 
@@ -666,90 +666,90 @@ euiFFObjArr.push(tfui);
 tfue = nCurrFFieldOb();
 tfue.fid = "tmp_c_web";
 tfue.fdv = "http....";
-tfue.lid = "lbl_c_web"; 
-tfue.ltxt = "Website"; 
+tfue.lid = "lbl_c_web";
+tfue.ltxt = "Website";
 euiFFObjArr.push(tfue);
 
 tfuew = nCurrFFieldOb();
 tfuew.fid = "tmp_c_email";
 tfuew.fdv = "";
-tfuew.lid = "lbl_c_email"; 
-tfuew.ltxt = "Email"; 
+tfuew.lid = "lbl_c_email";
+tfuew.ltxt = "Email";
 euiFFObjArr.push(tfuew);
 /*
 tfuew = nCurrFFieldOb();
 tfuew.fid = "tmp_c_logoimg";
 tfuew.fdv = "";
-tfuew.lid = "lbl_c_logoimg"; 
-tfuew.ltxt = "Logo"; 
+tfuew.lid = "lbl_c_logoimg";
+tfuew.ltxt = "Logo";
 euiFFObjArr.push(tfuew);
  */
 tfdxa = null;
 tfdxa = nCurrFFieldOb();
 tfdxa.fid = "tmp_c_door";
-tfdxa.lid = "lbl_c_door"; 
+tfdxa.lid = "lbl_c_door";
 tfdxa.ltxt = stxt[94]; // Zip Code
 euiFFObjArr.push(tfdxa);
 
 tfxa = null;
 tfxa = nCurrFFieldOb();
 tfxa.fid = "tmp_c_zipcode";
-tfxa.lid = "lbl_c_zipcode"; 
+tfxa.lid = "lbl_c_zipcode";
 tfxa.ltxt = stxt[80]; // Zip Code
 euiFFObjArr.push(tfxa);
 
 tfxca = null;
 tfxca = nCurrFFieldOb();
 tfxca.fid = "tmp_c_loc_lat";
-tfxca.lid = "lbl_c_loc_lat"; 
-tfxca.ltxt = "Latitude"; 
+tfxca.lid = "lbl_c_loc_lat";
+tfxca.ltxt = "Latitude";
 euiFFObjArr.push(tfxca);
 
 tfxac = null;
 tfxac = nCurrFFieldOb();
 tfxac.fid = "tmp_c_loc_lng";
-tfxac.lid = "lbl_c_loc_lng"; 
-tfxac.ltxt = "Longitude"; 
+tfxac.lid = "lbl_c_loc_lng";
+tfxac.ltxt = "Longitude";
 euiFFObjArr.push(tfxac);
 
 
 
 tfuh = nCurrFFieldOb();
 tfuh.fid = "tmp_c_street";
-tfuh.lid = "lbl_c_street"; 
+tfuh.lid = "lbl_c_street";
 tfuh.ltxt = stxt[518]; // Street Name or Address
 euiFFObjArr.push(tfuh);
 
 /*
 tfuh = nCurrFFieldOb();
 tfuh.fid = "tmp_c_location";
-tfuh.lid = "lbl_c_location"; 
+tfuh.lid = "lbl_c_location";
 tfuh.ltxt = stxt[526]; // Location
 euiFFObjArr.push(tfuh);
 
 tfuq = nCurrFFieldOb();
 tfuq.fid = "tmp_c_region";
-tfuq.lid = "lbl_c_region"; 
-tfuq.ltxt = stxt[527]; // Region 
+tfuq.lid = "lbl_c_region";
+tfuq.ltxt = stxt[527]; // Region
 euiFFObjArr.push(tfuq);
 
 
 tfuaa = nCurrFFieldOb();
 tfuaa.fid = "tmp_c_country";
-tfuaa.lid = "lbl_c_country"; 
+tfuaa.lid = "lbl_c_country";
 tfuaa.ltxt = stxt[528]; // Country
 euiFFObjArr.push(tfuaa);
 
 tfuaza = nCurrFFieldOb();
 tfuaza.fid = "tmp_c_placeid";
-tfuaza.lid = "lbl_c_placeid"; 
-tfuaza.ltxt = "Place ID"; 
+tfuaza.lid = "lbl_c_placeid";
+tfuaza.ltxt = "Place ID";
 euiFFObjArr.push(tfuaza);
 */
 
 tifuaza = nCurrFFieldOb();
 tifuaza.fid = "tmp_c_msg";
-tifuaza.lid = "lbl_c_msg"; 
+tifuaza.lid = "lbl_c_msg";
 tifuaza.ltxt = stxt[552]; // Notes
 euiFFObjArr.push(tifuaza);
 
@@ -776,11 +776,11 @@ tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){doPlaceEdit()
 
 euiFFObjArr.push(tfsb);
 
- 
+
 JSSHOP.shared.initFrmComps(euiFFObjArr);
 
- 
- 
+
+
 JSSHOP.shared.setFrmFieldVal("qlinks", "k_rtype", "5");
 
 JSSHOP.shared.setFrmFieldVal("qlinks", "k_category", "social");
@@ -808,7 +808,7 @@ if(currUrlArr.tpid) {
 getPropImgs();
 
 
-if((isJApp !== "no") && (isPhP == "no")) { 
+if((isJApp !== "no") && (isPhP == "no")) {
     JSSHOP.ui.addEvent(ttbtn, "click", function() { JSSHOP.jndroid.doPagePopUp("logipal/media_chooser.html", "noQvalue");return false; });
     // app.setQIMeta(doQIMeta());
     } else {
@@ -819,7 +819,7 @@ if((isJApp !== "no") && (isPhP == "no")) {
     doMediaBtnSetup('uploadBtn', '', 'finishMPupload', 'images/slogos');
     }
 
- 
+
 return dmyFnishCntLoad;
 
 
@@ -830,7 +830,7 @@ alert("dmyFnishCntLoad: " + e);
 
 function loadTimeScript() {
     // document.getElementById(lta).innerHTML = ltb;
- 
+
     }
 
 var doAddrEdit = function(ttatype) {
@@ -849,13 +849,13 @@ var doAddrEdit = function(ttatype) {
 var doCoLinkDelete = function(tmpCLindex, tmpQlid) {
     //carr = currCoLinksArr[tmpVindex];
     cnnarr = removeArrElement(currCoLinksArr, tmpCLindex);
- 
+
     currCoLinksArr = null;
     currCoLinksArr = cnnarr;
     JSSHOP.ui.setCBBClickClr(dvCoLinks,'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr bkgdClrWhite', function(){JSSHOP.ui.closeLbox()});
 
     procNuUIitem("qlinks","k_rtype",tmpQlid,"0","rndrCoLnks");
- 
+
 };
 
 
@@ -891,7 +891,7 @@ if(tKmatter.indexOf("http") != -1) {
     tKfnlMatter = tKshrtMatter;
 }
 
-// rcnsDv.className = "collection-item txtDecorNone margleft"; 
+// rcnsDv.className = "collection-item txtDecorNone margleft";
 rcL += "<tr><td><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span></td>";
 rcL += "<td>" + tKfnlMatter;
 
@@ -931,7 +931,7 @@ if(quid == c_uid.value) {
 }
 if((isOwnCo == "n") && (currUrlArr.tpid)) {
       alert("nogo:" + c_uid.value + " : " + quid);
-   //  eindex("pid=aa-add-new-shop", "pid=aa-add-new-shop&cid=" + currUrlArr.tpid); 
+   //  eindex("pid=aa-add-new-shop", "pid=aa-add-new-shop&cid=" + currUrlArr.tpid);
     // document.location.href = "index.html?pid=aa-add-new-shop&cid=" + currUrlArr.tpid;
     return;
 }
@@ -958,14 +958,14 @@ var fnshCoLinkAdd = function(tCCLA, tCCLB, tCCLC) {
         tmpDOs = null;
         tmpDOs = {};
         tmpDOs["ws"] = "where k_coid=? and k_rtype=?";
-        tmpDOs["wa"] = [currUrlArr.tpid,5]; 
+        tmpDOs["wa"] = [currUrlArr.tpid,5];
         oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
         doQComm(oi["rq"], "y", "setCurrCoLinks");
-    }; 
-    
-    
- 
-    
+    };
+
+
+
+
     var doCoLinkAdd = function() {
         JSSHOP.shared.setFrmFieldVal("qlinks", "k_userid", quid);
         JSSHOP.shared.setFrmFieldVal("qlinks", "k_coid", JSSHOP.shared.getFrmFieldVal("qco", "_id", 0));
@@ -982,7 +982,7 @@ var fnshCoLinkAdd = function(tCCLA, tCCLB, tCCLC) {
             stopSpin("btnAddSoLink");
             btnAddSoLink.innerHTML = "";
             JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDYellow txtClrWhite','cls_button cls_button-medium bkgdBBlue txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
-        
+
             return;
         }
         if((JSSHOP.shared.getFrmFieldVal("qlinks", "k_title", 0) == "") || (JSSHOP.shared.getFrmFieldVal("qlinks", "k_title", 0) == "noQvalue")){
@@ -990,7 +990,7 @@ var fnshCoLinkAdd = function(tCCLA, tCCLB, tCCLC) {
             stopSpin("btnAddSoLink");
             btnAddSoLink.innerHTML = "";
             JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDYellow txtClrWhite','cls_button cls_button-medium bkgdBBlue txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
-        
+
             return;
         }
         if(tmpKmatter.indexOf("facebook.com") != -1) {
@@ -1029,9 +1029,9 @@ var fnshCoLinkAdd = function(tCCLA, tCCLB, tCCLC) {
 
 
         // startSpin("btnAddSoLink");
-        // check if the 
+        // check if the
         // alert("doCoLinkAdd: " + oi["rq"]);
-        
+
         oi = getNuDBFnvp("qlinks", 6, null, tmpFobj);
         doQComm(oi["rq"], null, "fnshCoLinkAdd");
     };
@@ -1048,7 +1048,7 @@ var doCoWLinkAdd = function(twCat, twTtl, twMat) {
     tmpFobj = {};
     // tmpFobj["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qlinks"], "tmp_"));
 tmpFobj["knvp"] = JSSHOP.shared.getFrmVals(document["qlinks"], "nada");
-  
+
   oi = getNuDBFnvp("qlinks", 6, null, tmpFobj);
     console.log("doWash(doCoLinkAdd): " + oi["rq"]);
     doQComm(oi["rq"], twCat, "doWSfnsh");
@@ -1088,9 +1088,9 @@ function doULfnsh(aaw, aawb, aawc) {
         image = new Image();
         tustr = "images/slogos/s_thumb" + aaw;
         image.src = tustr;
-    // document.getElementById('dvPLogoImg').style.backgroundImage="url(" + tustr + ")"; 
-     document.getElementById('dvPLogoImg').src = tustr; 
- 
+    // document.getElementById('dvPLogoImg').style.backgroundImage="url(" + tustr + ")";
+     document.getElementById('dvPLogoImg').src = tustr;
+
     } catch(e) {
     alert(e);
     }
@@ -1141,7 +1141,7 @@ break;
 console.log("doWash(procDBWfArr): " + tmpWfArr[iWari].wshtype + " :: " + tmpWfArr[iWari].mtr)
 iWari++;
 }
- 
+
 }
 
 
@@ -1172,7 +1172,7 @@ function walkTheDOM(node, func) {
         tNNtype =  "";
         tHref =  "";
         tIsrc =  "";
-       tNNtype =  currentNode.nodeType; 
+       tNNtype =  currentNode.nodeType;
 		tNNid = currentNode.id;
 		tNName = currentNode.name;
 		if(currentNode.src) {
@@ -1200,7 +1200,7 @@ function walkTheDOM(node, func) {
     walkTheDOM(node, pushVal);
     // return tmpUstring;
 };
- 
+
 
 
 function doSply(tSplyI) {
@@ -1213,7 +1213,7 @@ tmpWfArr = tmpQWfArr;
 showWfArr();
 }
 
- 
+
 function showWfArr() {
 tSWFAstr = "";
 iWari = 0;
@@ -1282,7 +1282,7 @@ tWfObj["mtr"] = tWUAT;
 console.log("doWash(match-tel): " + tWUAT);
 tHasL = "y";
 // procNuUIitem("qco","c_tel",cid,tWUAT,"doNada");
-} 
+}
 if(tWThref.indexOf("whatsapp") != -1) {
 // tWUAR = JSSHOP.shared.urlToArray(tWThref);
 tWUAT = tpWThref.replace(/\D/g, "");
@@ -1376,25 +1376,25 @@ function clearDGView() {
 
 // media button functions for the shop logo
 
-function fnishMMadd(aa,bb,cc) { 
+function fnishMMadd(aa,bb,cc) {
     getPropImgs();
     JSSHOP.ui.closeLbox();
     };
 
 var finishMPupload = function(theMMum) {
     try {
-    
+
 
         image = null;
         image = new Image();
         image.src = "images/slogos/s_thumb" + theMMum;
-                // document.getElementById('dvPLogoImg').style.backgroundImage="url(images/slogos/s_thumb" + theMMum + ")"; 
+                // document.getElementById('dvPLogoImg').style.backgroundImage="url(images/slogos/s_thumb" + theMMum + ")";
                 if(document.getElementById('dvProdImgs').innerText == "dvProdImgs") {
                 document.getElementById('dvPLogoImg').src = "images/slogos/s_thumb" + theMMum;
                 JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", theMMum);
                 doPrdMMain();
                 }
-        // document.getElementById('dvPLogoImg').style.backgroundImage="url(images/slogos/s_thumb" + theMMum + ")";    
+        // document.getElementById('dvPLogoImg').style.backgroundImage="url(images/slogos/s_thumb" + theMMum + ")";
         document.getElementById("progressBar").appendChild(image);
          JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", theMMum);
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_file_thumb", "s_thumb" + theMMum);
@@ -1412,13 +1412,13 @@ var finishMPupload = function(theMMum) {
         alert("finishMPupload:" + e);
         }
     };
-    
-var fnshProdMDel = function(aa,bb,cc) { 
+
+var fnshProdMDel = function(aa,bb,cc) {
 	getPropImgs();
 JSSHOP.ui.closeLbox();
 };
 
-var doPrdMDelete = function() { 
+var doPrdMDelete = function() {
     if(confirm(stxt[42] + " " + stxt[19] + "?")) {
     procNuUIitem("qmedia","m_rtype",JSSHOP.shared.getFrmFieldVal("qmedia", "_id", 0),"0","fnshProdMDel");
     }
@@ -1426,7 +1426,7 @@ var doPrdMDelete = function() {
 
 
 
-var fnshProdMMain = function(aa,bb,cc) { 
+var fnshProdMMain = function(aa,bb,cc) {
 // alert(bb);
 getPropImgs();
 JSSHOP.ui.closeLbox();
@@ -1434,25 +1434,25 @@ JSSHOP.ui.closeLbox();
 };
 
 
-var doPrdMMain = function() { 
+var doPrdMMain = function() {
 if(confirm(stxt[521] +   "?: " + JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0))) {
     procNuUIitem("qco","c_logoimg",JSSHOP.shared.getFrmFieldVal('qco','_id',0), JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0), "donePIcnMn");
 
     }
 };
- 
+
 
 var getPropIEditDv = function(tpIncrNPI, tpFImg) {
 	console.log("getPrdImgEditDv " + tpIncrNPI + " " + tpFImg);
 tpPIEDv = document.createElement('div');
 JSSHOP.shared.setFrmFieldVal("qmedia", "_id", tpIncrNPI);
 JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tpFImg);
- 
+
 tmpRetStr = "<img src=\"images/slogos/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
  try {
 tmpRetStr += "<div class=\"dvTxtBtns\"><input type=\"button\" class=\"btnTxtLabel\" value=\"" + stxt[521] + "\" onclick=\"javascript:doPrdMMain();\">   |   <input type=\"button\" class=\"btnTxtLabel\" value=\"" + stxt[42] + "\" onclick=\"javascript:doPrdMDelete();\"></div>";
 tmpRetStr += "<br><br>";
- 
+
 return tmpRetStr;
 } catch(e) {
 alert("getPrdImgEditDv " + e);
@@ -1479,7 +1479,7 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
             }
  			tstr += "<img src=\"images/slogos/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
 			tstr += "</div>";
- 
+
 			iint++;
 		}
 		document.getElementById("dvProdImgs").innerHTML = tstr;
@@ -1536,45 +1536,45 @@ function doZoneDD(thePrx, theSTat) {
         tPRvBSDDstr = getPrvcyBSDDstr();
         dvUsrPrivacy = document.getElementById("dvUsrPrivacy");
         dvUsrPrivacy.innerHTML = tPRvBSDDstr;
-       
+
         // doCountryPckChg("dvCountryDD", u_country.value, u_country.value);
         getRegionDropStr(u_country.value, "c_region", "setUregionDD");
         */
-    
+
 }
 
 
 
 var LeafIcon = L.Icon.extend({
     options: {
-       
+
         iconSize:     [66, 66],
 
         iconAnchor:   [-1, -1],
 
         popupAnchor:  [-3, -16]
- 
+
     }
 });
 var qlXDoPDetails = function(theDPResp) {
 	try {
-	
+
 	theDPAesp = removeDiacritics(theDPResp);
 	// alert("getDPRespStr: " + theDPResp);
 	tDPRObj = JSON.parse(theDPAesp);
- 
+
 	console.log("getDPRespStr: " + JSON.stringify(tDPRObj));
-	 
-	
-	 
-	
+
+
+
+
 	if(tDPRObj.address) {
 	tAOBjVobj = tDPRObj.address;
 	// qloga_name.value = tDPRObj.address;
 	if(tAOBjVobj["amenity"]) {
 	tName = tAOBjVobj["amenity"];
 	}
-	
+
 	if(tAOBjVobj["postcode"]) {
 	tzip = tAOBjVobj["postcode"];
 	}
@@ -1593,15 +1593,15 @@ var qlXDoPDetails = function(theDPResp) {
 	if(tAOBjVobj["country"]) {
 	tcountry = tAOBjVobj["country"];
 	}
-	 
+
 	if(tAOBjVobj["shop"]) {
 	tname = tAOBjVobj["shop"] + " " + qlogp_location.value;
 	} else if(tAOBjVobj["namedetails"]){
 		if(tAOBjVobj["namedetails"]["name"]) {
 		tname = ttAOBjVobj["namedetails"]["name"] + " " + qlogp_location.value;
-	
-		}  
-	}  
+
+		}
+	}
 	}
 	if(tDPRObj.lat) {
 		tlat  = tDPRObj.lat;
@@ -1609,14 +1609,14 @@ var qlXDoPDetails = function(theDPResp) {
 	if(tDPRObj.lon) {
 		tlng = tDPRObj.lon;
 	}
- 
- 
+
+
 	console.log("qlDoPDetails: " + JSON.stringify(tAOBjVobj));
 
 	} catch(e) {
 	alert("qlDoPDetails: " + e);
 	}
-	
+
 	};
 
 
@@ -1642,7 +1642,7 @@ var qlXShowPDetails = function(tPlaceIDXstr) {
 	qlXRunPDetails(null, JSON.stringify(currSPRArr[tPlaceIDXstr]), null);
    };
 
- 
+
    function getCPlcesLRes(thePSa,thePSResp,thePSc) {
 	// alert("runPlacesSearch: " + thePSa + " " + thePSResp + " " + thePSc);
 	// btnEUsave.disabled = false;
@@ -1653,7 +1653,7 @@ var qlXShowPDetails = function(tPlaceIDXstr) {
 	currMapMrkrArr = "";
 	currMapMrkrArr = [];
 
-	 
+
 	hasr = "n";
 	fullstr = "";
 	// alert("runPlacesSearch: " + thePSResp);
@@ -1667,7 +1667,7 @@ var qlXShowPDetails = function(tPlaceIDXstr) {
 	var pcid = 0;
 	tstr = "";
 
-	
+
 	while(iint < len) {
 	fcts = farrToFC[iint];
 
@@ -1676,7 +1676,7 @@ var qlXShowPDetails = function(tPlaceIDXstr) {
 tMrkr = "";
 tMrkr  = L.marker([fcts.lat, fcts.lon], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:map.closePopup();">' + stxt[531] + '</a></span>');
 currMapMrkrArr.push(tMrkr);
- 
+
 	iint++;
 	}
     if(currMapMrkrArr.length > 0) {
@@ -1684,9 +1684,9 @@ currMapMrkrArr.push(tMrkr);
     } else {
         tSrchIval = document.getElementById("c_location").value;
     alert("No results found for: " + tSrchIval);
-    }                                              
+    }
     // alert("runPlacesSearch: " + JSON.stringify(currMapMrkrArr));
-    
+
 	}
 
    function getPlcesLRes(thePSa,thePSResp,thePSc) {
@@ -1699,7 +1699,7 @@ currMapMrkrArr.push(tMrkr);
 	currMapMrkrArr = "";
 	currMapMrkrArr = [];
 
-	 
+
 	hasr = "n";
 	fullstr = "";
 	// alert("runPlacesSearch: " + thePSResp);
@@ -1713,7 +1713,7 @@ currMapMrkrArr.push(tMrkr);
 	var pcid = 0;
 	tstr = "";
 
-	
+
 	while(iint < len) {
 	fcts = farrToFC[iint];
 
@@ -1722,36 +1722,36 @@ currMapMrkrArr.push(tMrkr);
 tMrkr = "";
 tMrkr  = L.marker([fcts.lat, fcts.lon], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:map.closePopup();">' + stxt[531] + '</a></span>');
 currMapMrkrArr.push(tMrkr);
- 
+
 	iint++;
 	}
     if(currMapMrkrArr.length > 0) {
 	 popPlacesMap();
     } else {
 
-        
+
 
         tSrchIval = document.getElementById("c_zipcode").value;
 
         tSrchIval += " " + document.getElementById("c_location").value;
         JSSHOP.ajax.doNuAjaxPipe("dvPSearch", "_p/osmgeo.php?qv=" + encodeURI(tSrchIval), getCPlcesLRes);
 
-    }                                              
+    }
     // alert("runPlacesSearch: " + JSON.stringify(currMapMrkrArr));
-    
+
 	}
 
 
 
 
-    
+
 function doGenPEMap() {
     try {
-iti = 0; 
+iti = 0;
 
 xaCstr = document.getElementById('map').innerHTML;
   if(xaCstr.length > 4){
-     
+
  console.log("Map Already Exists");
  // map.setView(new L.LatLng( ttLatStr,  ttLngStr),14);
 return "OK";
@@ -1768,13 +1768,13 @@ var tDestLng = tRAObj.lng;
 
     var LeafIcon = L.Icon.extend({
         options: {
-           
+
             iconSize:     [26, 26],
- 
+
             iconAnchor:   [-1, -1],
- 
+
             popupAnchor:  [-3, -16]
-     
+
         }
     });
 
@@ -1788,7 +1788,7 @@ var tDestLng = tRAObj.lng;
         maxZoom: 18,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
- 
+
 /* not includinf these for now
 
 
@@ -1840,10 +1840,10 @@ map = L.map('map', {
 
 
     var baseMaps = {
-            'OpenStreetMap': osm 
+            'OpenStreetMap': osm
 
 
-/*		
+/*
         'Goodle Streets': googleStreets,
         'Goodle Satellite': mqi,
         'Goodle Hybrid': googleHybrid,
@@ -1882,8 +1882,8 @@ var popup = L.popup({closeOnClick: false, autoClose: false, closeButton: true, a
 popup.className = "brdrClrHdr";
 
 
- 
- 
+
+
 
 //   var routeArray = new Array();
 //   routeArray = routeControl.getWaypoints();
@@ -1904,17 +1904,17 @@ popup.className = "brdrClrHdr";
             JSSHOP.ui.closePopMenus();
             scrollToElement("tmp_c_loc_lat");
             JSSHOP.ui.setCBBClickClr(document.getElementById("tmp_c_loc_lat"),'cls_button cls_button-medium brdrClrDlg txtClrHdr',document.getElementById("tmp_c_loc_lat").className, function(){void(0)});
-        }); 
+        });
 /**/
 map.on('contextmenu', function(e) {
         currStartLat = e.latlng.lat;
         currStartLng = e.latlng.lng;
         startBtn.innerHTML = "";
         tmpSSpn = document.createElement('span');
-        tTextNd = document.createTextNode("Set "  + e.latlng.lat + ", " + e.latlng.lng + "<br> as start point?"); 
-        
+        tTextNd = document.createTextNode("Set "  + e.latlng.lat + ", " + e.latlng.lng + "<br> as start point?");
+
         tmpSSpn.innerHTML = stxt[529] + ":<br>"  + e.latlng.lat + "<br>" + e.latlng.lng + "<br>" + stxt[530];
-        startBtn.appendChild(tmpSSpn); 
+        startBtn.appendChild(tmpSSpn);
         // console.log(getTileURL(e.latlng.lat, e.latlng.lng, map.getZoom()))
          // alert('f: ' + e.latlng.lat + ", " + e.latlng.lng);
     L.popup()
@@ -1922,7 +1922,7 @@ map.on('contextmenu', function(e) {
         .setLatLng(e.latlng)
         .openOn(map);
 });
- 
+
 
 
 
@@ -1938,7 +1938,7 @@ map.on('contextmenu', function(e) {
 var mtImDSStr = "leaflet/images/tr6.gif";
 var mredIcon = new LeafIcon({iconUrl: mtImDSStr});
 
- 
+
 
 var options = {
                         icon: mredIcon
@@ -1947,8 +1947,8 @@ var options = {
 JSSHOP.ui.setMapMrkrs(currMapMrkrArr);
                     // JSSHOP.ui.setMapMrkrs(currMapMrkrArr);
                 // 	currNavIcon = L.marker([qlogc_lat.value, qlogc_lng.value], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:dropMrkr(o);">DROP</a></span>').addTo(map);
-             
- 
+
+
                     return "OK";
 // currNavIcon = L.marker([qlogc_lat.value, qlogc_lng.value]).addTo(map);
    //    setTimeout("dupe()", 1000);
@@ -1959,7 +1959,7 @@ JSSHOP.ui.setMapMrkrs(currMapMrkrArr);
         return "ERR" + e
 }
 }
- 
+
 function popPlacesMap() {
 // spinner.stop();
 try {
@@ -1970,8 +1970,8 @@ try {
 
 
 
-  
-  
+
+
 tmpLbox = document.getElementById('lightbox');
 tmpLCbox = document.getElementById('dvSandMap');
 tmpLbox.style.display="inline";
@@ -1986,7 +1986,7 @@ tmpLCbox.appendChild(newel);
 tmpLbox.style.height = tmpLCbox.clientHeight + 180;
 }
 tmpLCbox.style.display='block';
- 
+
 
 stop = getScrollTop() + 10;
 tmpLCbox.style.top=stop+"px";
@@ -2018,7 +2018,7 @@ alert("popLboxMap: " + e);
 
 
 function getPlaceCrdsM() {
-    
+
 
 
 
@@ -2030,36 +2030,36 @@ function getPlaceCrdsM() {
         currMapMrkrArr = [];
         var LeafIcon = L.Icon.extend({
             options: {
-               
+
                 iconSize:     [34, 34],
-        
+
                 iconAnchor:   [-1, -1],
-        
+
                 popupAnchor:  [-3, -16]
-         
+
             }
         });
         // mtImDSStr = "js/leaflet/images/marker-icon.png";
         mtImDSStr = dvPLogoImg.src;
         mredIcon = new LeafIcon({iconUrl: mtImDSStr});
            var options = { icon: mredIcon, closeOnClick: true };
-   
+
         tMrkr = null;
         tMrkr = "";
         tMrkr  = L.marker([tCllLatVal, tCllLngVal], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:map.closePopup();">' + stxt[531] + '</a></span>');
         currMapMrkrArr.push(tMrkr);
         popPlacesMap();
     } else {
-        
+
 var LeafIcon = L.Icon.extend({
     options: {
-       
+
         iconSize:     [24, 24],
 
         iconAnchor:   [-1, -1],
 
         popupAnchor:  [-3, -16]
- 
+
     }
 });
 

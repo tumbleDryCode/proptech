@@ -6,23 +6,23 @@ var tmpOldFFvals = {};
 var currPgTitle = stxt[906];
 document.title = currPgTitle;
 
-var fnshProdMDel = function(aa,bb,cc) { 
+var fnshProdMDel = function(aa,bb,cc) {
     // alert(bb);
     getPropImgs();
     JSSHOP.ui.closeLbox();
-    
+
     };
 
 
-    var fnshProdMDel = function(aa,bb,cc) { 
+    var fnshProdMDel = function(aa,bb,cc) {
         // alert(bb);
         getPropImgs();
         JSSHOP.ui.closeLbox();
-        
+
         };
 
 
-var doPrdMDelete = function() { 
+var doPrdMDelete = function() {
     if(confirm(stxt[42] + " " + stxt[19] + "?")) {
     procNuUIitem("qmedia","m_rtype",JSSHOP.shared.getFrmFieldVal("qmedia", "_id", 0),"0","fnshProdMDel");
     }
@@ -30,7 +30,7 @@ var doPrdMDelete = function() {
 
 
 
-var fnshProdMMain = function(aa,bb,cc) { 
+var fnshProdMMain = function(aa,bb,cc) {
 // alert(bb);
 getPropImgs();
 JSSHOP.ui.closeLbox();
@@ -38,23 +38,23 @@ JSSHOP.ui.closeLbox();
 };
 
 
-var doPrdMMain = function() { 
+var doPrdMMain = function() {
 if(confirm("Set as main product picture?" + JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0))) {
 procNuUIitem("property","pimage",prpid,JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0),"fnshProdMMain");
     }
 };
- 
+
 
 var getPrdImgEditDv = function(tpIncrNPI, tpFImg) {
 tpPIEDv = document.createElement('div');
 JSSHOP.shared.setFrmFieldVal("qmedia", "_id", tpIncrNPI);
 JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tpFImg);
- 
+
 tmpRetStr = "<img src=\"admin/property/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
  try {
 tmpRetStr += "<div class=\"dvTxtBtns\"><input type=\"button\" class=\"btnTxtLabel\" value=\"Set as Main\" onclick=\"javascript:doPrdMMain();\">   |   <input type=\"button\" class=\"btnTxtLabel\" value=\"Delete\" onclick=\"javascript:doPrdMDelete();\"></div>";
 tmpRetStr += "<br><br>";
- 
+
 return tmpRetStr;
 } catch(e) {
 alert("getPrdImgEditDv " + e);
@@ -73,8 +73,8 @@ var setSliderPropImgs = function(theAIa, theAIb, theAIc) {
         iint = 0;
         while (iint < len) {
             tstr += "<div class=\"ls-slide\" data-ls=\"duration:7500; transition2d:5; kenburnszoom:in; kenburnsscale:1.2;\"> <img width=\"1920\" height=\"1080\"    src=\"admin/property/" + tAiretArr[iint]["m_file"] + "\" class=\"ls-bg\" alt=\"\" /> </div>";
- 
- 
+
+
 			iint++;
 		}
         tmpItDiv = document.createElement('span');
@@ -83,7 +83,7 @@ var setSliderPropImgs = function(theAIa, theAIb, theAIc) {
         document.getElementById("single-property").appendChild(tmpItDiv);
 	}
 	// alert(inpPropCtrct.value);
-	
+
 };
 
 var doSwipe = function() {
@@ -110,12 +110,12 @@ var getPropIEditDv = function(tpIncrNPI, tpFImg) {
 tpPIEDv = document.createElement('div');
 JSSHOP.shared.setFrmFieldVal("qmedia", "_id", tpIncrNPI);
 JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tpFImg);
- 
+
 tmpRetStr = "<img src=\"admin/property/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
  try {
 tmpRetStr += "<div class=\"dvTxtBtns\"><input type=\"button\" class=\"btnTxtLabel\" value=\"" + stxt[521] + "\" onclick=\"javascript:doPrdMMain();\">   |   <input type=\"button\" class=\"btnTxtLabel\" value=\"" + stxt[42] + "\" onclick=\"javascript:doPrdMDelete();\"></div>";
 tmpRetStr += "<br><br>";
- 
+
 return tmpRetStr;
 } catch(e) {
 alert("getPrdImgEditDv " + e);
@@ -143,7 +143,7 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
             }
  			tstr += "<img src=\"admin/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
 			tstr += "</div>";
- 
+
 			iint++;
 		}
 		document.getElementById("dvProdImgs").innerHTML = tstr;
@@ -153,25 +153,25 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
 	}
 };
 
-function fnishMMadd(aa,bb,cc) { 
+function fnishMMadd(aa,bb,cc) {
     getPropImgs();
     JSSHOP.ui.closeLbox();
     };
 
 var finishMPupload = function(theMMum) {
     try {
-    
+
 
         image = null;
         image = new Image();
         image.src = "admin/property/s_thumb" + theMMum;
-                // document.getElementById('dvPLogoImg').style.backgroundImage="url(images/slogos/s_thumb" + theMMum + ")"; 
+                // document.getElementById('dvPLogoImg').style.backgroundImage="url(images/slogos/s_thumb" + theMMum + ")";
                 if(document.getElementById('dvProdImgs').innerText == "dvProdImgs") {
                 // document.getElementById('dvPLogoImg').src = "admin/propert/s_thumb" + theMMum;
                 JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", theMMum);
                 doPrdMMain();
                 }
-        // document.getElementById('dvPLogoImg').style.backgroundImage="url(images/slogos/s_thumb" + theMMum + ")";    
+        // document.getElementById('dvPLogoImg').style.backgroundImage="url(images/slogos/s_thumb" + theMMum + ")";
         document.getElementById("dvProdImgs").appendChild(image);
          JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", theMMum);
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_file_thumb", "s_thumb" + theMMum);
@@ -200,16 +200,16 @@ var getPropImgs = function() {
     doQComm(oi["rq"], null, "setPropImgs");
 };
 
- 
+
  function fnshPrpImgLd(theIMgNum)   {
     console.log("fnshPrpImgLd: " + theIMgNum);
-  
+
 }
 function fillPpropFields() {
     JSSHOP.shared.setDynFrmVals(document["property"], "tmp_");
     istype = document.getElementById("tmp_stype");
 iptype = document.getElementById("tmp_ptype");
-iselPropStat = document.getElementById("tmp_pstatus"); 
+iselPropStat = document.getElementById("tmp_pstatus");
 JSSHOP.shared.addCurrSlctObj(svftObj["contract"], istype, stype.value, "noQvalue", "noQvalue");
 JSSHOP.shared.addCurrSlctObj(svftObj["propstat"], iselPropStat, pstatus.value, "noQvalue", "noQvalue");
 JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue", "noQvalue");
@@ -229,17 +229,17 @@ function doMPropForm(aaw,aww,cww) {
 // tmp_ptitle.value = thePRetObj.ptitle;
     //  JSSHOP.shared.setFrmVals("property",theRetPArr[0], fillPpropFields);
      for(var gkey in thePRetObj) {
-      
+
         document["property"][gkey].value = thePRetObj[gkey];
         tmpOldFFvals[gkey] = thePRetObj[gkey];
- 
-        } 
+
+        }
 setTimeout(function(){ fillPpropFields(); }, 300);
- 
+
 }
 
 
-  function fnishPDescAdd(aa,bb,cc) { 
+  function fnishPDescAdd(aa,bb,cc) {
     // alert("fnishPDescAdd: " + bb);
     eindex("pid=aa-edit-prop", "pid=aa-edit-prop&prpid=" + document.getElementById("pd_prpid").value);
     }
@@ -307,16 +307,16 @@ doNurQComm(doCFrmQ);
 
 
 var cbPrpedit = function(a,b,c) {
- 
- 
-    
+
+
+
 
 
 	if(currUrlArr.prpid) {
 
 JSSHOP.ui.setCBBClickClr(btnEUsave,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium', function(){document.getElementById("btnEUsave").innerHTML=stxt[21];document.getElementById("btnEUsave").disabled=false;});
 } else {
- 
+
         tDadded = JSSHOP.shared.getFrmFieldVal("property", "pdadded", 0);
         tmpDOs = {};
         tmpDOs["ws"] = "where uid=? and pdadded=?";
@@ -324,7 +324,7 @@ JSSHOP.ui.setCBBClickClr(btnEUsave,'cls_button cls_button-medium  bkgdClrDGreen 
         oi = getNuDBFnvp("property", 5, null, tmpDOs);
         doQComm(oi["rq"],"noQvalue","fnshPrpAdd");
 
- 
+
  // doMLinkM('aa-edit-places', 'pid=aa-edit-places');
  }
 };
@@ -341,14 +341,14 @@ var doNPropEdit = function() {
     // alert("tmp_pcontent.value: " + tmp_pcontent.value);
        // alert("c_whours.value: " + c_whours.value);
     tmpFobj["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["property"], "tmp_"));
- 
-    
-    
+
+
+
 if(currUrlArr.prpid) {
 	    tmpFobj["ws"] = "where _id=?";
     tmpFobj["wa"] = [currUrlArr.prpid];
     oi = getNuDBFnvp("property", 7, null, tmpFobj);
-    
+
 } else {
 
 	    oi = getNuDBFnvp("property", 6, null, tmpFobj);
@@ -407,26 +407,26 @@ tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){doPropEdit()}
 euiFFObjArr.push(tfsb);
 tfok = nCurrFFieldOb();
 tfok.fid = "tmp_bhk";
-tfok.lid = "lbl_tmp_bhk"; 
-tfok.ltxt = "Featured"; 
+tfok.lid = "lbl_tmp_bhk";
+tfok.ltxt = "Featured";
 tfok.fcl = function() { procPrpType(document.getElementById("tmp_bhk")); };
-euiFFObjArr.push(tfok); 
+euiFFObjArr.push(tfok);
 
- 
+
 JSSHOP.shared.initFrmComps(euiFFObjArr);
 
- 
+
        //  JSSHOP.shared.setDynFrmVals(document["property"], "tmp_");
 /**/
         istype = document.getElementById("stype");
         iptype = document.getElementById("ptype");
-        // iselPropStat = document.getElementById("tmp_pstatus"); 
+        // iselPropStat = document.getElementById("tmp_pstatus");
         // JSSHOP.shared.addCurrSlctObj(svftObj["contract"], istype, stype.value, "noQvalue", "noQvalue");
         // JSSHOP.shared.addCurrSlctObj(svftObj["propstat"], iselPropStat, pstatus.value, "noQvalue", "noQvalue");
         // JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue", "noQvalue");
         /*
-        
-        
+
+
         */
 
         tDDPaddStr = "";
@@ -467,7 +467,7 @@ JSSHOP.shared.initFrmComps(euiFFObjArr);
 
         document.getElementById("dvAddPrpDrpDwns").innerHTML = tDDPaddStr;
 
- 
+
 
         JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')
 
@@ -484,34 +484,34 @@ function loadTnyI() {
 
 var LeafIcon = L.Icon.extend({
     options: {
-       
+
         iconSize:     [66, 66],
 
         iconAnchor:   [-1, -1],
 
         popupAnchor:  [-3, -16]
- 
+
     }
 });
 var qlXDoPDetails = function(theDPResp) {
 	try {
-	
+
 	theDPAesp = removeDiacritics(theDPResp);
 	// alert("getDPRespStr: " + theDPResp);
 	tDPRObj = JSON.parse(theDPAesp);
- 
+
 	console.log("getDPRespStr: " + JSON.stringify(tDPRObj));
-	 
-	
-	 
-	
+
+
+
+
 	if(tDPRObj.address) {
 	tAOBjVobj = tDPRObj.address;
 	// qloga_name.value = tDPRObj.address;
 	if(tAOBjVobj["amenity"]) {
 	tName = tAOBjVobj["amenity"];
 	}
-	
+
 	if(tAOBjVobj["postcode"]) {
 	tzip = tAOBjVobj["postcode"];
 	}
@@ -530,15 +530,15 @@ var qlXDoPDetails = function(theDPResp) {
 	if(tAOBjVobj["country"]) {
 	tcountry = tAOBjVobj["country"];
 	}
-	 
+
 	if(tAOBjVobj["shop"]) {
 	tname = tAOBjVobj["shop"] + " " + qlogp_location.value;
 	} else if(tAOBjVobj["namedetails"]){
 		if(tAOBjVobj["namedetails"]["name"]) {
 		tname = ttAOBjVobj["namedetails"]["name"] + " " + qlogp_location.value;
-	
-		}  
-	}  
+
+		}
+	}
 	}
 	if(tDPRObj.lat) {
 		tlat  = tDPRObj.lat;
@@ -546,14 +546,14 @@ var qlXDoPDetails = function(theDPResp) {
 	if(tDPRObj.lon) {
 		tlng = tDPRObj.lon;
 	}
- 
- 
+
+
 	console.log("qlDoPDetails: " + JSON.stringify(tAOBjVobj));
 
 	} catch(e) {
 	alert("qlDoPDetails: " + e);
 	}
-	
+
 	};
 
 
@@ -579,7 +579,7 @@ var qlXShowPDetails = function(tPlaceIDXstr) {
 	qlXRunPDetails(null, JSON.stringify(currSPRArr[tPlaceIDXstr]), null);
    };
 
- 
+
    function getCPlcesLRes(thePSa,thePSResp,thePSc) {
 	// alert("runPlacesSearch: " + thePSa + " " + thePSResp + " " + thePSc);
 	// btnEUsave.disabled = false;
@@ -590,7 +590,7 @@ var qlXShowPDetails = function(tPlaceIDXstr) {
 	currMapMrkrArr = "";
 	currMapMrkrArr = [];
 
-	 
+
 	hasr = "n";
 	fullstr = "";
 	// alert("runPlacesSearch: " + thePSResp);
@@ -604,7 +604,7 @@ var qlXShowPDetails = function(tPlaceIDXstr) {
 	var pcid = 0;
 	tstr = "";
 
-	
+
 	while(iint < len) {
 	fcts = farrToFC[iint];
 
@@ -613,7 +613,7 @@ var qlXShowPDetails = function(tPlaceIDXstr) {
 tMrkr = "";
 tMrkr  = L.marker([fcts.lat, fcts.lon], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:map.closePopup();">' + stxt[531] + '</a></span>');
 currMapMrkrArr.push(tMrkr);
- 
+
 	iint++;
 	}
     if(currMapMrkrArr.length > 0) {
@@ -621,9 +621,9 @@ currMapMrkrArr.push(tMrkr);
     } else {
         tSrchIval = document.getElementById("c_location").value;
     alert("No results found for: " + tSrchIval);
-    }                                              
+    }
     // alert("runPlacesSearch: " + JSON.stringify(currMapMrkrArr));
-    
+
 	}
 
    function getPlcesLRes(thePSa,thePSResp,thePSc) {
@@ -636,7 +636,7 @@ currMapMrkrArr.push(tMrkr);
 	currMapMrkrArr = "";
 	currMapMrkrArr = [];
 
-	 
+
 	hasr = "n";
 	fullstr = "";
 	// alert("runPlacesSearch: " + thePSResp);
@@ -650,7 +650,7 @@ currMapMrkrArr.push(tMrkr);
 	var pcid = 0;
 	tstr = "";
 
-	
+
 	while(iint < len) {
 	fcts = farrToFC[iint];
 
@@ -659,36 +659,36 @@ currMapMrkrArr.push(tMrkr);
 tMrkr = "";
 tMrkr  = L.marker([fcts.lat, fcts.lon], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:map.closePopup();">' + stxt[531] + '</a></span>');
 currMapMrkrArr.push(tMrkr);
- 
+
 	iint++;
 	}
     if(currMapMrkrArr.length > 0) {
 	 popPlacesMap();
     } else {
 
-        
+
 
         tSrchIval = document.getElementById("c_zipcode").value;
 
         tSrchIval += " " + document.getElementById("c_location").value;
         JSSHOP.ajax.doNuAjaxPipe("dvPSearch", "_p/osmgeo.php?qv=" + encodeURI(tSrchIval), getCPlcesLRes);
 
-    }                                              
+    }
     // alert("runPlacesSearch: " + JSON.stringify(currMapMrkrArr));
-    
+
 	}
 
 
 
 
-    
+
 function doGenPEMap() {
     try {
-iti = 0; 
+iti = 0;
 
 xaCstr = document.getElementById('map').innerHTML;
   if(xaCstr.length > 4){
-     
+
  console.log("Map Already Exists");
  // map.setView(new L.LatLng( ttLatStr,  ttLngStr),14);
 return "OK";
@@ -705,13 +705,13 @@ var tDestLng = tRAObj.lng;
 
     var LeafIcon = L.Icon.extend({
         options: {
-           
+
             iconSize:     [26, 26],
- 
+
             iconAnchor:   [-1, -1],
- 
+
             popupAnchor:  [-3, -16]
-     
+
         }
     });
 
@@ -725,7 +725,7 @@ var tDestLng = tRAObj.lng;
         maxZoom: 18,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
- 
+
 /* not includinf these for now
 
 
@@ -777,10 +777,10 @@ map = L.map('map', {
 
 
     var baseMaps = {
-            'OpenStreetMap': osm 
+            'OpenStreetMap': osm
 
 
-/*		
+/*
         'Goodle Streets': googleStreets,
         'Goodle Satellite': mqi,
         'Goodle Hybrid': googleHybrid,
@@ -819,8 +819,8 @@ var popup = L.popup({closeOnClick: false, autoClose: false, closeButton: true, a
 popup.className = "brdrClrHdr";
 
 
- 
- 
+
+
 
 //   var routeArray = new Array();
 //   routeArray = routeControl.getWaypoints();
@@ -843,17 +843,17 @@ popup.className = "brdrClrHdr";
             JSSHOP.ui.closePopMenus();
             scrollToElement("tmp_ploclat");
             JSSHOP.ui.setCBBClickClr(document.getElementById("tmp_ploclat"),'cls_button cls_button-medium brdrClrDlg txtClrHdr',document.getElementById("tmp_ploclat").className, function(){void(0)});
-        }); 
+        });
 /**/
 map.on('contextmenu', function(e) {
         currStartLat = e.latlng.lat;
         currStartLng = e.latlng.lng;
         startBtn.innerHTML = "";
         tmpSSpn = document.createElement('span');
-        tTextNd = document.createTextNode("Set "  + e.latlng.lat + ", " + e.latlng.lng + "<br> as start point?"); 
-        
+        tTextNd = document.createTextNode("Set "  + e.latlng.lat + ", " + e.latlng.lng + "<br> as start point?");
+
         tmpSSpn.innerHTML = stxt[529] + ":<br>"  + e.latlng.lat + "<br>" + e.latlng.lng + "<br>" + stxt[530];
-        startBtn.appendChild(tmpSSpn); 
+        startBtn.appendChild(tmpSSpn);
         // console.log(getTileURL(e.latlng.lat, e.latlng.lng, map.getZoom()))
          // alert('f: ' + e.latlng.lat + ", " + e.latlng.lng);
     L.popup()
@@ -861,7 +861,7 @@ map.on('contextmenu', function(e) {
         .setLatLng(e.latlng)
         .openOn(map);
 });
- 
+
 
 
 
@@ -877,7 +877,7 @@ map.on('contextmenu', function(e) {
 var mtImDSStr = "leaflet/images/tr6.gif";
 var mredIcon = new LeafIcon({iconUrl: mtImDSStr});
 
- 
+
 
 var options = {
                         icon: mredIcon
@@ -886,8 +886,8 @@ var options = {
 JSSHOP.ui.setMapMrkrs(currMapMrkrArr);
                     // JSSHOP.ui.setMapMrkrs(currMapMrkrArr);
                 // 	currNavIcon = L.marker([qlogc_lat.value, qlogc_lng.value], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:dropMrkr(o);">DROP</a></span>').addTo(map);
-             
- 
+
+
                     return "OK";
 // currNavIcon = L.marker([qlogc_lat.value, qlogc_lng.value]).addTo(map);
    //    setTimeout("dupe()", 1000);
@@ -898,7 +898,7 @@ JSSHOP.ui.setMapMrkrs(currMapMrkrArr);
         return "ERR" + e
 }
 }
- 
+
 function popPlacesMap() {
 // spinner.stop();
 try {
@@ -909,8 +909,8 @@ try {
 
 
 
-  
-  
+
+
 tmpLbox = document.getElementById('lightbox');
 tmpLCbox = document.getElementById('dvSandMap');
 tmpLbox.style.display="inline";
@@ -925,7 +925,7 @@ tmpLCbox.appendChild(newel);
 tmpLbox.style.height = tmpLCbox.clientHeight + 180;
 }
 tmpLCbox.style.display='block';
- 
+
 
 stop = getScrollTop() + 10;
 tmpLCbox.style.top=stop+"px";
@@ -957,7 +957,7 @@ alert("popLboxMap: " + e);
 
 
 function getPlaceCrdsM() {
-    
+
 
 
 
@@ -969,36 +969,36 @@ function getPlaceCrdsM() {
         currMapMrkrArr = [];
         var LeafIcon = L.Icon.extend({
             options: {
-               
+
                 iconSize:     [34, 34],
-        
+
                 iconAnchor:   [-1, -1],
-        
+
                 popupAnchor:  [-3, -16]
-         
+
             }
         });
         mtImDSStr = "js/leaflet/images/marker-icon.png";
         // mtImDSStr = dvPLogoImg.src;
         mredIcon = new LeafIcon({iconUrl: mtImDSStr});
            var options = { icon: mredIcon, closeOnClick: true };
-   
+
         tMrkr = null;
         tMrkr = "";
         tMrkr  = L.marker([tCllLatVal, tCllLngVal], options).bindPopup('<span class="txtBold txtClrRed"><a href="javascript:map.closePopup();">' + stxt[531] + '</a></span>');
         currMapMrkrArr.push(tMrkr);
         popPlacesMap();
     } else {
-        
+
 var LeafIcon = L.Icon.extend({
     options: {
-       
+
         iconSize:     [24, 24],
 
         iconAnchor:   [-1, -1],
 
         popupAnchor:  [-3, -16]
- 
+
     }
 });
 

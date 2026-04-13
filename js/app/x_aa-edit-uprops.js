@@ -7,16 +7,16 @@ var setUEdtPrpList = function(a,rfb,c) {
   tmpUPropsArr = "";
   tmpUPropsArr = [];
   tmpUPropsArr = JSON.parse(rfb);
- 
+
   rnderPrpTbl("_id");
     } else {
         document.getElementById("divQitems").innerHTML = stxt[508];
     }
   };
 
- 
 
- 
+
+
 
  var getPrpItmsLst = function(tPrpIarr) {
 
@@ -103,55 +103,55 @@ aprpTitle = LZString.decompressFromEncodedURIComponent(nprpTitle);
     };
 
     var rnderFItems = function(trSrtIdx) {
-      
+
         rnderPrpTbl(trSrtIdx);
     }
 
  var rnderPrpTbl = function(tSrtIdx) {
- 
+
     hasr = "n";
     fullupstr = "";
-    
+
     tHdrArr = null;
     tHdrArr = "";
     tHdrArr = [];
-    tHdFObj = {};	
+    tHdFObj = {};
     tHdFObj["fld"] = "_id";
     tHdFObj["nm"] = "ID";
     tHdrArr.push(tHdFObj);
-     tQCHdFObj = {};	
+     tQCHdFObj = {};
         tQCHdFObj["fld"] = "_id";
     tQCHdFObj.ulnk = "noQvalue";
     tQCHdFObj["nm"] = "<span style=\"margin-right: 10px; margin-top: 10px\" class=\"nav-material-icons txtBold\"><i class=\"nav-material-icons\" alt=\"delete\" title=\"delete\">&#xe3c9</i></span>";
         tHdrArr.push(tQCHdFObj);
 
-    tAHdFObj = {};	
+    tAHdFObj = {};
     tAHdFObj["fld"] = "ptitle";
     tAHdFObj["nm"] = stxt[10];
     tHdrArr.push(tAHdFObj);
-    tAHdFaObj = {};	
+    tAHdFaObj = {};
     tAHdFaObj["fld"] = "price";
     tAHdFaObj["nm"] = stxt[18];
     tHdrArr.push(tAHdFaObj);
-    tAHdFObj = {};	
+    tAHdFObj = {};
     tAHdFObj["fld"] = "ptype";
     tAHdFObj["nm"] = stxt[992];
     tHdrArr.push(tAHdFObj);
-    tAHdFObj = {};	
+    tAHdFObj = {};
     tAHdFObj["fld"] = "location";
     tAHdFObj["nm"] = stxt[203];
     tHdrArr.push(tAHdFObj);
-    tAHdFObj = {};	
+    tAHdFObj = {};
     tAHdFObj["fld"] = "pstatus";
     tAHdFObj["nm"] = stxt[77];
     tHdrArr.push(tAHdFObj);
-    tBHdFObj = {};	
+    tBHdFObj = {};
     tBHdFObj["fld"] = "_id";
     tBHdFObj.ulnk = "noQvalue";
     tBHdFObj["nm"] = "<span style=\"margin-right: 10px; margin-top: 10px\" class=\"nav-material-icons txtBold\"><i class=\"nav-material-icons\" alt=\"edit\" title=\"edit\">&#xe3c9</i></span>";
     tHdrArr.push(tBHdFObj);
-   
-     
+
+
     currACTblCnt = tHdrArr.length;
     tmpACarr = null;
     tmpACarr = "";
@@ -160,9 +160,9 @@ aprpTitle = LZString.decompressFromEncodedURIComponent(nprpTitle);
     tmpGUPropsArr = "";
     tmpGUPropsArr = [];
     // currGSarr = currUzsarr;
- 
-    
-    
+
+
+
     // tSrtIdx = "p_dadded";
     tmpGUPropsArr = JSSHOP.shared.getSrtdArr(tmpUPropsArr, tSrtIdx);
     tRndrINGARr = tmpGUPropsArr;
@@ -177,16 +177,16 @@ aprpTitle = LZString.decompressFromEncodedURIComponent(nprpTitle);
     }
     tmpFstr = getTblSortStr(strTHhtml, tRndrStr);
 
-    // 
+    //
       //  <div class="tableFixHead"></div>
     tmpFFstr = "<div class=\"dtable_wrapper\"><div class=\"dtableFixHead\"><div id=\"dvPrpsTbl\">" + tmpFstr + "</div></div></div>";
     document.getElementById("dvUprosList").innerHTML = tmpFFstr;
     JSSHOP.ui.doAutoComp(document.getElementById("inpACSearch"), tmpACarr);
     // alert('rndrUEdtPrpItms - tSrtIdx: ' + tSrtIdx);
-    
+
  };
-    
-    
+
+
     var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
  //  alert('fnishCntLoad');

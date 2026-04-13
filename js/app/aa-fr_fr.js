@@ -119,7 +119,7 @@ stxt[118] = "Voir cette annonce magnifique";
 stxt[119] = "Mettre \u00e0 jour";
 stxt[120] = "Enregistr\u00e9";
 
-// user strings 
+// user strings
 stxt[201] = "Pr\u00e9nom";
 stxt[202] = "Nom de famille";
 stxt[203] = "Emplacement";
@@ -290,34 +290,34 @@ stxt[635] = "S\u00e9lectionner les propri\u00e9t\u00e9s pour";
 
 stxt[636] = "Images de la propri\u00e9t\u00e9";
 stxt[637] = "Vos images";
-stxt[638] = "D\u00c9MO";    
+stxt[638] = "D\u00c9MO";
 stxt[639] = "D\u00e9finir comme fond";
 stxt[640] = "Coins arrondis";
 stxt[641] = "Remplissage en d\u00e9grad\u00e9";
 stxt[642] = "Couleur unie";
 stxt[643] = "Appliquer le d\u00e9grad\u00e9";
-stxt[644] = "Appliquer la couleur unie";        
+stxt[644] = "Appliquer la couleur unie";
 stxt[645] = "Ombre";
 stxt[646] = "Appliquer";
-stxt[647] = "Supprimer l'ombre du El\u00e9ment";   
+stxt[647] = "Supprimer l'ombre du El\u00e9ment";
 stxt[648] = "D\u00e9calage horizontal (px) :";
 stxt[649] = "D\u00e9calage vertical (px) :";
 stxt[650] = "Rayon de flou (px) :";
 stxt[651] = "Couleur :";
 stxt[652] = "Appliquer \u00e0 la bordure";
 stxt[653] = "Ombre du El\u00e9ment";
- 
+
 
 // Tab descriptions
-stxt[654] = "S\u00e9lectionnez parmi les images de la propri\u00e9t\u00e9 pour d\u00e9finir comme fond ou ins\u00e9rer dans l'éditeur.";    
+stxt[654] = "S\u00e9lectionnez parmi les images de la propri\u00e9t\u00e9 pour d\u00e9finir comme fond ou ins\u00e9rer dans l'Ã©diteur.";
 stxt[655] = "Choisissez parmi vos images t\u00e9l\u00e9charg\u00e9es pour d\u00e9finir comme fond ou ins\u00e9rer.";
 stxt[656] = "Contenu de d\u00e9monstration \u00e0 des fins de test.";
 stxt[657] = "Appliquer des remplissages en d\u00e9grad\u00e9 aux fonds ou aux bordures.";
-stxt[658] = "Appliquer des couleurs unies aux fonds ou aux bordures.";  
+stxt[658] = "Appliquer des couleurs unies aux fonds ou aux bordures.";
 stxt[659] = "S\u00e9lectionnez des images de propri\u00e9t\u00e9 pour les fonds.";
 stxt[660] = "Configurer les effets d'ombre de el\u00e9ments.";
 stxt[661] = "Appliquer des effets de d\u00e9grad\u00e9 aux \u00e9l\u00e9ments.";
-stxt[662] = "Appliquer des effets de couleur unie aux \u00e9l\u00e9ments."; 
+stxt[662] = "Appliquer des effets de couleur unie aux \u00e9l\u00e9ments.";
 stxt[663] = "Couleurs";
 stxt[664] = "Images";
 stxt[665] = "Arri\u00e8re-plan";
@@ -399,7 +399,7 @@ stxt[827] = "You can use the following test users-admin to explore the latest-gr
 stxt[828] = "Click on a user to login as that user-admin.";
 */
 stxt[826] = "Ce logiciel est en version beta-d\u00e9mo. Pour explorer le site, vous pouvez utiliser l'un des utilisateurs de test ci-dessous pour vous connecter.";
-stxt[827] = "Vous pouvez utiliser les utilisateurs de test-admin suivants pour explorer les derni\u00e8res fonctionnalit\u00e9s. Vous pouvez modifier ces utilisateurs, propri\u00e9t\u00e9s, mises \u00e0 jour. N'hésitez pas \u00e0 exp\u00e9rimenter. casser des choses. Nous r\u00e9initialisons la base de donn\u00e9es toutes les heures.";
+stxt[827] = "Vous pouvez utiliser les utilisateurs de test-admin suivants pour explorer les derni\u00e8res fonctionnalit\u00e9s. Vous pouvez modifier ces utilisateurs, propri\u00e9t\u00e9s, mises \u00e0 jour. N'hÃ©sitez pas \u00e0 exp\u00e9rimenter. casser des choses. Nous r\u00e9initialisons la base de donn\u00e9es toutes les heures.";
 stxt[828] = "Cliquez sur un utilisateur pour vous connecter en tant qu'utilisateur-admin.";
 
 
@@ -539,7 +539,7 @@ stxt[1028] = "Titre";
 stxt[2001] = "La configuration est facile. Entrez le titre de votre magasin, ajoutez quelques cat\u00e9gories d'articles et cliquez sur Enregistrer.";
 // stxt[3001] = "Item title here";
 stxt[3001] = "Titre de l'article ici";
- 
+
 stxt[4001] = "Art Pad";
 stxt[4002] = "Remarque : Pour interagir avec la base de donn\u00e9es/feuille de calcul<br>Ce titre doit correspondre au titre personnalis\u00e9 donn\u00e9 \u00e0 votre base de donn\u00e9es dans la zone DBQuery.";
 stxt[4003] = "Voir Utiliser adminApp";
@@ -723,7 +723,7 @@ tPostsStatObj["pin"] = "\u00c9pingler";
 tPostsStatObj["pinhlight"] = "\u00c9pingler & Surligner";
 svftObj["poststat"] = tPostsStatObj;
 
- 
+
 tMsgSbjObj = null;
 tMsgSbjObj = "";
 tMsgSbjObj = {};
@@ -732,7 +732,7 @@ tMsgSbjObj["price"] = "Demande de prix";
 tMsgSbjObj["financing"] = "Financement";
 tMsgSbjObj["other"] = "Autre";
 svftObj["msgsubject"] = tMsgSbjObj;
- 
+
 
 
 // cha\u00eene personnalis\u00e9e modifiable

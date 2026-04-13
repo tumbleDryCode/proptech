@@ -21,9 +21,9 @@ var doPostsList = function(a,rfb,c) {
     }
   };
 
- 
 
- 
+
+
 
  var getPostsLst = function(tPrpIarr) {
 
@@ -35,17 +35,17 @@ var doPostsList = function(a,rfb,c) {
     fullurpstr = "";
     while(iupint < aulen) {
         tsuar = tPrpIarr[iupint];
-        
-        
+
+
         atstr = "";
         atstr += "<tr>";
-        
+
        //  tSTstr =  ts.u_name + ts.u_fullname + ts.u_cat;
- 
-        
+
+
         tsUT = tsuar.p_cat;
-        tsrtUT = tsuar.p_cat; 
-          
+        tsrtUT = tsuar.p_cat;
+
          tUrlDecTitle = " ";
         atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-post','pid=aa-edit-post&tpstid=" + tsuar._id + "');\">" + tsuar._id + "</a></td>";
         atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-post','pid=aa-edit-post&tpstid=" + tsuar._id + "');\">" + svftObj["posttype"][tsuar.p_ptype] + "</a></td>";
@@ -64,53 +64,53 @@ var doPostsList = function(a,rfb,c) {
         atstr +=  "<span class=\"txtBold txtCLrHdr\">" +  tUrlDecTitle +  "</span></div></td>";
        atstr += "<td style=\"text-align: left\"><a href=\"javascript:eindex('aa-edit-post','pid=aa-edit-post&tpstid=" + tsuar._id + "');\"><i class=\"menu-material-icons\" alt=\"edit\">&#xe3c9;</i></a></td>";
 
- 
+
           atstr += "</td>";
         atstr += "</tr>";
         autstr += atstr;
         tmpULTarr.push(atstr);
     iupint++;
     }
- 
+
     return autstr;
     };
 
     var rnderFItems = function(trSrtIdx) {
-      
+
       rnderPostsTbl(trSrtIdx);
     }
 
  var rnderPostsTbl = function(tSrtIdx) {
- 
+
     hasr = "n";
     fullupstr = "";
-    
+
 tHdrArr = null;
 tHdrArr = "";
 tHdrArr = [];
-tHdFObj = {};	
+tHdFObj = {};
 tHdFObj["fld"] = "_id";
 tHdFObj["nm"] = "ID";
 tHdrArr.push(tHdFObj);
- 
-tAHdFObj = {};	
+
+tAHdFObj = {};
 tAHdFObj["fld"] = "p_ptype";
 tAHdFObj["nm"] = "Tipo";
 tHdrArr.push(tAHdFObj);
 
-tBHdFObj = {};	
+tBHdFObj = {};
 tBHdFObj["fld"] = "p_title";
 tBHdFObj["nm"] = stxt[97]; // Name
 tHdrArr.push(tBHdFObj);
-tBHdFObj = {};	
- 
-tBHdFObj = {};	
+tBHdFObj = {};
+
+tBHdFObj = {};
 tBHdFObj["fld"] = "_id";
 tBHdFObj["nm"] = "<span style=\"margin-right: 10px; margin-top: 10px\" class=\"nav-material-icons txtBold\"><i class=\"nav-material-icons\">&#xe3c9</i></span>";
 tHdrArr.push(tBHdFObj);
- 
+
 currACTblCnt = tHdrArr.length;
- 
+
     tmpULTarr = null;
     tmpULTarr = "";
     tmpULTarr = [];
@@ -118,15 +118,15 @@ currACTblCnt = tHdrArr.length;
     tmpGPostsLArr = "";
     tmpGPostsLArr = [];
     // currGSarr = currUzsarr;
- 
-    
+
+
     tSrtIdx = "_id";
     // tSrtIdx = "p_dadded";
     // currSortIdx[tSrtIdx] = "sortDesc";
    //  tmpGPostsLArr = JSSHOP.shared.sort(tmpPostsArr, tSrtIdx, "sortDesc");
     tmpGPostsLArr = JSSHOP.shared.getSrtdArr(tmpPostsArr, tSrtIdx);
     tRndrINGARr = tmpGPostsLArr;
-    
+
     tRndrStr = getPostsLst(tRndrINGARr);
     // alert('rnderUEdtPrpItms - tSrtIdx: ' + tSrtIdx);
 
@@ -138,15 +138,15 @@ currACTblCnt = tHdrArr.length;
     }
     tmpFstr = getTblSortStr(strTHhtml, tRndrStr);
 
-    // 
+    //
       //  <div class="tableFixHead"></div>
     tmpFFstr = "<div class=\"dtable_wrapper\"><div class=\"dtableFixHead\"><div id=\"dvPrpsTbl\">" + tmpFstr + "</div></div></div>";
     document.getElementById("dvPostsList").innerHTML = tmpFFstr;
     JSSHOP.ui.doAutoComp(document.getElementById("inpACSearch"), tmpULTarr);
     // alert('rndrUEdtPrpItms - tSrtIdx: ' + tSrtIdx);
-    
+
  };
-    
+
 
 
 /*
@@ -160,7 +160,7 @@ CREATE TABLE `qposts` (
   `p_added` varchar(12) NOT NULL,
   PRIMARY KEY (`_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_c
- 
+
 <form name="qposts">
 <input type="hidden" name="_id" value="" data-prval="disnull">
 <input type="hidden" name="p_rtype" id="p_rtype" value="5" data-prval="disnull">
@@ -176,7 +176,7 @@ CREATE TABLE `qposts` (
 
 
 
-    
+
     var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
  //  alert('fnishCntLoad');
@@ -187,7 +187,7 @@ fnishCntLoad = function() {
  tmpDOs["ws"] = "where p_uid = ? and p_rtype = ?";
  tmpDOs["wa"] = [quid, 5];
  tmpDOs["o"] = "_id desc";
- 
+
  oi = getNuDBFnvp("qposts",5,null,tmpDOs);
  currRQtable = "qposts";
  currRQstr = oi["rq"];

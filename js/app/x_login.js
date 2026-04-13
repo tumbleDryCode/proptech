@@ -1,13 +1,14 @@
-currPgTitle = stxt[31] + " " + stxt[56];
-document.title = currPgTitle; 
+var currPgTitle = stxt[31] + " " + stxt[56];
+document.title = currPgTitle;
 var cueiiilobarr = null;
 var cueiiilobarr = [];
 var tUAdCstr = "";
-ck_name = /^[A-Za-z0-9 ]{3,20}$/;
-ck_email = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-ck_username = /^[A-Za-z0-9_]{3,20}$/;
-ck_password =  /^[A-Za-z0-9!@#$%^&*()_]{6,20}$/;
- 
+var ck_name = /^[A-Za-z0-9 ]{3,20}$/;
+var ck_email = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+var ck_username = /^[A-Za-z0-9_]{3,20}$/;
+var ck_password =  /^[A-Za-z0-9!@#$%^&*()_]{6,20}$/;
+var MIN_LOGIN_PASSWORD_LENGTH = 4;
+
 
 
 
@@ -21,7 +22,7 @@ console.log("doLoginResp: " + b)
 
 if(b.indexOf("u_email") != -1) {
 var arrToFill = JSON.parse(b);
-ts = arrToFill[0];
+var ts = arrToFill[0];
 if(ts._id) {
 // JSSHOP.cookies.setCookie("cuid",ts._id,"90","","","");
 JSSHOP.cookies.setCookie("quid",ts._id,"90","","","");
@@ -48,7 +49,7 @@ document.location.href = "./index.html?isr=y";
 } else {
 alert("Something wrong: " + b);
 }
-} else { 
+} else {
     JSSHOP.ui.doAlertBox("error", stxt[1008], stxt[1009], "noQvalue");
 }
 } catch(e) {
@@ -58,21 +59,21 @@ alert(e);
 
 
 var getCoID = function(a,b,c) {
-tmpUDaArr = JSON.parse(b);
-tspa = tmpUDaArr[0];
+var tmpUDaArr = JSON.parse(b);
+var tspa = tmpUDaArr[0];
 doLoginResp("noQvalue", tUAdCstr, tspa._id);
 };
 
 
 var fnishCoAD = function(a,b,c) {
 
-    tmpDOs = null;
+    var tmpDOs = null;
     tmpDOs = {};
     tmpDOs["c"] = ["_id", "c_title"];
     tmpDOs["l"] = 1;
     tmpDOs["ws"] = "where c_uid=?";
     tmpDOs["wa"] = [document.getElementById("c_uid").value];
-    oi = getNuDBFnvp("qco", 5, null, tmpDOs);
+    var oi = getNuDBFnvp("qco", 5, null, tmpDOs);
     doQComm(oi["rq"], null, "getCoID");
 
 };
@@ -81,28 +82,28 @@ var doCoAd = function(a,b,c) {
 console.log("doCoAd: " + b)
 try {
 tUAdCstr = b;
-tmpUDArr = JSON.parse(b);
-tsp = tmpUDArr[0];
+var tmpUDArr = JSON.parse(b);
+var tsp = tmpUDArr[0];
 if(tsp._id) {
 
     JSSHOP.shared.setFrmFieldVal("qco", "c_desc", "");
     JSSHOP.shared.setFrmFieldVal("qco", "c_email", "");
     JSSHOP.shared.setFrmFieldVal("qco", "c_tel", "");
     JSSHOP.shared.setFrmFieldVal("qco", "c_web", "");
- 
+
     JSSHOP.shared.setFrmFieldVal("qco", "c_dadded", JSSHOP.getUnixTimeStamp());
- 
+
 JSSHOP.shared.setFrmFieldVal("qco", "c_email", tsp.u_email);
 JSSHOP.shared.setFrmFieldVal("qco", "c_title", tsp.u_name);
 JSSHOP.shared.setFrmFieldVal("qco", "c_header", tsp.u_name);
 
 JSSHOP.shared.setFrmFieldVal("qco", "c_uid", tsp._id);
- 
+
 // JSSHOP.shared.setFrmFieldVal("qco", "c_title", tc_title);
-tmpFobj = null;
+var tmpFobj = null;
 tmpFobj = {};
 tmpFobj["knvp"] = JSSHOP.shared.getFrmVals(document["qco"], "nada");
-oi = getNuDBFnvp("qco", 6, null, tmpFobj);
+var oi = getNuDBFnvp("qco", 6, null, tmpFobj);
 doQComm(oi["rq"], null, "fnishCoAD");
 } else {
 alert("doCoAd: no id");
@@ -115,15 +116,29 @@ alert("doCoAd: " + e);
 }
 };
 
+var mkUserLookup = function(uEmail, uPass) {
+var tmpDOs = {};
+tmpDOs["ws"] = "where u_email=? and u_pass=? and u_rtype=?";
+tmpDOs["wa"] = [uEmail, uPass, 5];
+return tmpDOs;
+};
+
+var setSignUpFields = function(uEmail, uPass) {
+var ttime = JSSHOP.getUnixTimeStamp();
+var tUMSpl = uEmail.split("@");
+JSSHOP.shared.setFieldVal("u_email", uEmail);
+JSSHOP.shared.setFieldVal("u_pass", uPass);
+JSSHOP.shared.setFieldVal("u_name", tUMSpl[0]);
+JSSHOP.shared.setFieldVal("u_header", tUMSpl[0]);
+JSSHOP.shared.setFieldVal("u_dadded", ttime);
+};
+
 var doSULIn = function(a,b,c) {
 // alert("doSULIn: " + b);
-tmpUstr = document.getElementById("u_email").value;
-tmpPstr = document.getElementById("u_pass").value;
-tmpDOs = null;
-tmpDOs = {};
-tmpDOs["ws"] = "where u_email=? and u_pass=? and u_rtype=?";
-tmpDOs["wa"] = [tmpUstr,tmpPstr,5];
-oi = getNuDBFnvp("quser",5,null,tmpDOs);
+var tmpUstr = document.getElementById("u_email").value;
+var tmpPstr = document.getElementById("u_pass").value;
+var tmpDOs = mkUserLookup(tmpUstr, tmpPstr);
+var oi = getNuDBFnvp("quser",5,null,tmpDOs);
 // alert("doSULIn: " + oi["rq"]);
 doQComm(oi["rq"], null, "doLoginResp");
 // doQComm(oi["rq"], null, "doCoAd");
@@ -136,36 +151,28 @@ if(b.indexOf("u_email") != -1) {
 
 // alert("Sorry thhis email already exists. Click login link to login or contact us if you lost you password.");
 } else {
-tmpFobj = null;
+var tmpFobj = null;
 tmpFobj = {};
 tmpFobj["knvp"] = JSSHOP.shared.getFrmVals(document["quser"], "nada");
-oi = getNuDBFnvp("quser",6,null,tmpFobj);
+var oi = getNuDBFnvp("quser",6,null,tmpFobj);
 doQComm(oi["rq"], null, "doSULIn");
 }
 };
 
 
 var checkLin = function(theSUtype) {
-tmpUstr = document.getElementById("tmpUemail").value;
-tmpPstr = document.getElementById("tmpUpass").value;
+var tmpUstr = document.getElementById("tmpUemail").value;
+var tmpPstr = document.getElementById("tmpUpass").value;
 
 
-if((tmpUstr.length < 1) || (tmpPstr.length < 1) || (tmpUstr.indexOf("@") == -1) || (tmpPstr.length < 4) || (tmpPstr.indexOf(" ") != -1) || (tmpPstr.indexOf("@") != -1) || (tmpPstr.indexOf(".") != -1)) {
+if((tmpUstr.length < 1) || (tmpPstr.length < 1) || (tmpUstr.indexOf("@") == -1) || (tmpPstr.length < MIN_LOGIN_PASSWORD_LENGTH) || (tmpPstr.indexOf(" ") != -1) || (tmpPstr.indexOf("@") != -1) || (tmpPstr.indexOf(".") != -1)) {
 // alert("You must enter a valid email address and password");
 JSSHOP.ui.doAlertBox("error", stxt[1008], stxt[1013] + "<br>" + stxt[1014] + "<br>" + stxt[1015], "noQvalue");
 
 } else {
-ttime = JSSHOP.getUnixTimeStamp();
-tUMSpl = tmpUstr.split("@");
-JSSHOP.shared.setFieldVal("u_email", tmpUstr);
-JSSHOP.shared.setFieldVal("u_pass", tmpPstr);
-JSSHOP.shared.setFieldVal("u_name", tUMSpl[0]); 
-JSSHOP.shared.setFieldVal("u_header", tUMSpl[0]);
-JSSHOP.shared.setFieldVal("u_dadded", ttime);
-tmpDOs = {};
-tmpDOs["ws"] = "where u_email=? and u_pass=? and u_rtype=?";
-tmpDOs["wa"] = [tmpUstr,tmpPstr,5];
-oi = getNuDBFnvp("quser",5,null,tmpDOs);
+setSignUpFields(tmpUstr, tmpPstr);
+var tmpDOs = mkUserLookup(tmpUstr, tmpPstr);
+var oi = getNuDBFnvp("quser",5,null,tmpDOs);
 if(theSUtype == "register") {
 console.log("is register");
 doQComm(oi["rq"], null, "doSignUpResp");
@@ -193,28 +200,28 @@ JSSHOP.ui.setNuCBBClickClr(document.getElementById('tblLRmain'),'txtBig txtBold'
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
   // alert("fnishCntLoad.login");
-   
- tEUhdrStr = stxt[37] + " " + stxt[56];
+
+ var tEUhdrStr = stxt[37] + " " + stxt[56];
  document.getElementById("dvPartLinks").innerHTML = tEUhdrStr;
 
-tflue = nCurrFFieldOb();
+var tflue = nCurrFFieldOb();
 tflue.fid = "tmpUemail";
 tflue.fdv = stxt[50];
-tflue.lid = "lbl_u_email"; 
-tflue.ltxt = stxt[50]; 
+tflue.lid = "lbl_u_email";
+tflue.ltxt = stxt[50];
 tflue.fvr = ck_email;
 tflue.fve = stxt[1000];
 cueiiilobarr.push(tflue);
 
-tflui = nCurrFFieldOb();
+var tflui = nCurrFFieldOb();
 tflui.fid = "tmpUpass";
 tflui.fdv = stxt[49];
-tflui.lid = "lbl_u_pass"; 
-tflui.ltxt = stxt[49]; 
+tflui.lid = "lbl_u_pass";
+tflui.ltxt = stxt[49];
 tflui.fvr = ck_password;
 tflui.fve = stxt[1001];
 cueiiilobarr.push(tflui);
- 
+
 if(currUrlArr.ltype) {
 alert("currUrlArr: " + currUrlArr.ltype);
 }

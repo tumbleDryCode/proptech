@@ -1,6 +1,6 @@
 currPgTitle = stxt[86];
-document.title = currPgTitle; 
-currIContent = "y"; // ajax request to include the tplates/... file or not 
+document.title = currPgTitle;
+currIContent = "y"; // ajax request to include the tplates/... file or not
 
 var getMsgThread = function(a,theResp,c) {
 JSSHOP.ui.doMsgThread(a,theResp,c);
@@ -26,7 +26,7 @@ doQComm(oiaqZa, null, "getMsgThread");
 
 function fnishcu(tamsg, tbmsg, tcmsg){
 tqqQI = document.getElementById("dvContactUs");
-JSSHOP.ui.setNuCBBClickClr(tqqQI, "bkgdClrWhite brdrNone", "bkgdClrWhite brdrNone", function() { dvContactUs.innerHTML=stxt[709];scrollToElement('dvHdr');window.scrollTo(0, 0);}, 580); 
+JSSHOP.ui.setNuCBBClickClr(tqqQI, "bkgdClrWhite brdrNone", "bkgdClrWhite brdrNone", function() { dvContactUs.innerHTML=stxt[709];scrollToElement('dvHdr');window.scrollTo(0, 0);}, 580);
 
 // document.location.href="index.html?pid=aa-show-messages&isr=y";
 }
@@ -82,12 +82,12 @@ ttstr += stxt[707] + "<br>" + msgFObj.rndrStr + "<div>";
 // ataqkk = tatmpTDQI.appendChild(annewel);
 alert("dvContactUs: " + ttstr);
 document.getElementById("dvContactUsFrm").innerHTML = ttstr;
- 
+
 if(currUrlArr.cid){
     // tmp_msg_subject.value = "Re: " + currUrlArr.cid;
     setTimeout("document.getElementById('tmp_msg_subject').value = 'Re: " + currUrlArr.cid + "'", 800);
 }
- 
+
 setTimeout("JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')", 1500);
 return dmyFnishCntLoad;
 // setTimeout("runTNDW()", 1000);

@@ -3,7 +3,7 @@ if((currUrlArr.tuid == 0) || (currUrlArr.tuid == "noQvalue")) {
 }
 
 currPgTitle = stxt[31] + " " + stxt[56];
-document.title = currPgTitle; 
+document.title = currPgTitle;
 var euiFFObjArr = null;
 var euiFFObjArr = [];
 
@@ -88,7 +88,7 @@ JSSHOP.cookies.setCookie("cuid",tFullTknCoSTr,"90","","","");
 }
 
 };
- 
+
 
 
 
@@ -115,7 +115,7 @@ document.getElementById("btnEUsave").disabled=true;
 // smlspinner.spin(dvSpinner);
 doNUserEdit();
 }
-// var cars = ["tmp_u_name","tmp_u_pass"]; 
+// var cars = ["tmp_u_name","tmp_u_pass"];
 // if(JSSHOP.shared.valFieldVals(cars)) {doNUserEdit();}
 };
 
@@ -141,7 +141,7 @@ return aCurrFFieldOb;
 
 
 
- 
+
 var fnishDlayCntLoad = function() {
 };
 
@@ -180,14 +180,14 @@ var removeAccount = function() {
     JSSHOP.ui.popAndFillLbox(tFillstr);
 }
 
-var fnshUImgPDel = function(aa,bb,cc) { 
- 
+var fnshUImgPDel = function(aa,bb,cc) {
+
     getUiconImgs();
     JSSHOP.ui.closeLbox();
-    
+
     };
 
-var fnshUImgMDel = function(aa,bb,cc) { 
+var fnshUImgMDel = function(aa,bb,cc) {
     // alert(bb);
     if(JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", "default_user.png") == u_icon.value) {
         u_icon.value = "default_user.png";
@@ -197,27 +197,27 @@ var fnshUImgMDel = function(aa,bb,cc) {
         JSSHOP.ui.closeLbox();
     }
 
-    
+
     };
 
-var doUMIDelete = function() { 
+var doUMIDelete = function() {
     if(confirm(stxt[42] + " " + stxt[19] + "?")) {
     procNuUIitem("qmedia","m_rtype",JSSHOP.shared.getFrmFieldVal("qmedia", "_id", 0),"0","fnshUImgMDel");
     }
 };
 
 
-var fnshUimgMain = function(aa,bb,cc) { 
+var fnshUimgMain = function(aa,bb,cc) {
     // alert(bb);
     document.getElementById("u_icon").value = JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0);
     imgIedit.src = "images/user/" + JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0);
     // getUiconImgs();
     JSSHOP.ui.closeLbox();
-    
+
     };
-    
-    
-    var doUimgMain = function() { 
+
+
+    var doUimgMain = function() {
     if(confirm("Set as main picture?" + JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0))) {
     procNuUIitem("quser","u_icon",currUrlArr.tuid,JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0),"fnshUimgMain");
         }
@@ -228,7 +228,7 @@ var getUIEditDv = function(tpIncrNPI, tpFImg) {
 tpPIEDv = document.createElement('div');
 JSSHOP.shared.setFrmFieldVal("qmedia", "_id", tpIncrNPI);
 JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tpFImg);
- 
+
 tmpRetStr = "<img src=\"images/user/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
  try {
 tmpRetStr += "<div class=\"\"><input type=\"button\" class=\"form-control\" value=\"" + stxt[521] + "\" onclick=\"javascript:doUimgMain();\">";
@@ -236,7 +236,7 @@ if(tpFImg != "default_user.png") {
 tmpRetStr += "   |  <input type=\"button\" class=\"form-control\" value=\"" + stxt[42] + "\" onclick=\"javascript:doUMIDelete();\"></div>";
 }
 tmpRetStr += "<br><br>";
- 
+
 return tmpRetStr;
 } catch(e) {
 alert("getUIEditDv " + e);
@@ -270,7 +270,7 @@ function getPrvcyBSDDstr() {
     tGUPDDstr += JSSHOP.ui.getNuBSdropDstr(tDDBPrvojA);
     return tGUPDDstr;
 }
- 
+
 function doKLksPckChg(tZPCel, tZPVal, tZPtxt) {
     console.log("doKLksPckChg: " + tZPCel + " " + tZPVal + " " + tZPtxt);
     try {
@@ -291,7 +291,7 @@ function doKLksPckChg(tZPCel, tZPVal, tZPtxt) {
         tKMtrStrObj["kother"]["en_us"] = "Please enter your " + tZPtxt + " information";
         tKMtrStrObj["kother"]["pt_pt"] = "Por favor, insira a sua informacao " + tZPtxt;
         tKMtrStrObj["kother"]["spa_spa"] = "Por favor, ingrese su informacion " + tZPtxt;
-         
+
         switch(tZPVal) {
                 case "facebook":
                 case "linkedin":
@@ -327,11 +327,11 @@ function doKLksPckChg(tZPCel, tZPVal, tZPtxt) {
 }
 
 
-    
+
 
 
 function getKLinksBSDDstr() {
-    
+
 
     var tStr = "";
     tmpKLnksSlctObj = {};
@@ -363,7 +363,7 @@ function getKLinksBSDDstr() {
     return tStr;
 }
 function doAZoneDD(thePrx, theSTat) {
-    try {   
+    try {
 
         // alert("doZoneDD: " + thePrx + " " + theSTat);
         if(theSTat == "ok") {
@@ -402,7 +402,7 @@ var setUiconImgs = function(theAIa, theAIb, theAIc) {
             }
  			tstr += "<img src=\"images/user/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getUIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
 			tstr += "</div>";
- 
+
 			iint++;
 		}
         if(u_icon.value == "default_user.png") {
@@ -432,7 +432,7 @@ var getUiconImgs = function() {
     }
 };
 
-var fnshUIcnLoad = function(aa,bb,cc) { 
+var fnshUIcnLoad = function(aa,bb,cc) {
     scrollToElement("dvUImgs");
     JSSHOP.ui.setCBBClickClr(document.getElementById("dvProdImgs"),'cls_button cls_button-medium brdrClrDlg txtClrHdr',document.getElementById("dvUImgs").className, function(){void(0)});
 
@@ -441,14 +441,14 @@ var fnshUIcnLoad = function(aa,bb,cc) {
 
 var finishUPupload = function(theMMum) {
     try {
-    
+
 
         image = null;
         image = new Image();
         image.src = "images/user/" + theMMum;
         document.getElementById("dvProdImgs").appendChild(image);
 
-        // document.getElementById('dvUImgs').style.backgroundImage="url(images/users/s_thumb" + theMMum + ")";    
+        // document.getElementById('dvUImgs').style.backgroundImage="url(images/users/s_thumb" + theMMum + ")";
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_file_thumb", "s_thumb" + theMMum);
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", theMMum);
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_coid", currUrlArr.tuid);
@@ -481,7 +481,7 @@ var finishUPupload = function(theMMum) {
             image = new Image();
             rst = "images/user_icons/s_thumb" + tfPobj[0].u_icon;
             if(rst.indexOf(".") != -1) {
-            image.src = rst;	   
+            image.src = rst;
               //  document.getElementById("mmprogressBar").appendChild(image);
             }
 
@@ -489,11 +489,11 @@ var finishUPupload = function(theMMum) {
             currMediaID = currUrlArr.tuid;
             doMediaBtnSetup('uploadBtn', '', 'finishUPupload', '../images/user');
 
- 
+
 tUcat = document.getElementById("tmp_u_cat");
- 
+
 JSSHOP.shared.addCurrSlctObj(svftObj["usercat"], tUcat, tFUFMO.u_cat, "noQvalue", "noQvalue");
- 
+
         };
 
 
@@ -503,7 +503,7 @@ var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
     if((currUrlArr.tuid == 0) || (currUrlArr.tuid == "noQvalue")) {
          document.location.href = "index.html?pid=login";
-    }  else { 
+    }  else {
         // tEUhdrStr = "Edit User - more options coming soon.";
         // document.getElementById("dvPartLinks").innerHTML = tEUhdrStr;
 
@@ -512,8 +512,8 @@ fnishCntLoad = function() {
 tifo = nCurrFFieldOb();
 tifo.fid = "tmp_u_name";
 tifo.fdv = stxt[48];
-tifo.lid = "lbl_u_name"; 
-tifo.ltxt = stxt[48]; 
+tifo.lid = "lbl_u_name";
+tifo.ltxt = stxt[48];
 // tifo.fvr = ck_username;
 tifo.fve = stxt[1001];
 euiFFObjArr.push(tifo);
@@ -521,8 +521,8 @@ euiFFObjArr.push(tifo);
 tfui = nCurrFFieldOb();
 tfui.fid = "tmp_u_pass";
 tfui.fdv = stxt[49];
-tfui.lid = "lbl_u_pass"; 
-tfui.ltxt = stxt[49]; 
+tfui.lid = "lbl_u_pass";
+tfui.ltxt = stxt[49];
 // tfui.fvr = ck_password;
 tfui.fve = stxt[1001];
 euiFFObjArr.push(tfui);
@@ -532,8 +532,8 @@ euiFFObjArr.push(tfui);
 tfue = nCurrFFieldOb();
 tfue.fid = "tmp_u_email";
 tfue.fdv = stxt[50];
-tfue.lid = "lbl_u_email"; 
-tfue.ltxt = stxt[50]; 
+tfue.lid = "lbl_u_email";
+tfue.ltxt = stxt[50];
 tfue.fve = stxt[1001];
 euiFFObjArr.push(tfue);
 */
@@ -548,8 +548,8 @@ euiFFObjArr.push(tfsb);
 tfuh = nCurrFFieldOb();
 tfuh.fid = "tmp_u_header";
 tfuh.fdv = stxt[51];
-tfuh.lid = "lbl_u_header"; 
-tfuh.ltxt = stxt[51]; 
+tfuh.lid = "lbl_u_header";
+tfuh.ltxt = stxt[51];
 euiFFObjArr.push(tfuh);
 
 tfsb = nCurrFFieldOb();
@@ -572,7 +572,7 @@ if(currUrlArr.tuid) {
     tmpDOs = null;
     tmpDOs = {};
     tmpDOs["ws"] = "where k_userid=? and k_coid=? and k_rtype=?";
-    tmpDOs["wa"] = [currUrlArr.tuid,currUrlArr.tuid,5]; 
+    tmpDOs["wa"] = [currUrlArr.tuid,currUrlArr.tuid,5];
     oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
     doQComm(oi["rq"], "y", "setCurrCoLinks");
 
@@ -585,7 +585,7 @@ JSSHOP.shared.setDynFieldVals(arrAllForms.quser.v[0],"tmp_");
     tmp_u_name.value = u_name.value;
     tmp_u_pass.value = u_pass.value;
     tmp_u_email.value = u_email.value;
-   
+
 
 // JSSHOP.shared.setDynFieldVals(JSSHOP.shared.getDynFrmVals(document["quser"], ""),"tmp_");
 }
@@ -593,10 +593,10 @@ JSSHOP.shared.setDynFieldVals(arrAllForms.quser.v[0],"tmp_");
 
 
 
- 
- /* admin stuff 
+
+ /* admin stuff
 tUcat = document.getElementById("tmp_u_cat");
- 
+
 // alert("u_cat.value: " + u_cat.value);
 if((u_cat.value == "5") || (currUrlArr.da)) {
 svftObj["usercat"]["5"] = "Admin";
@@ -623,20 +623,20 @@ var aEditUser = function() {
  fnishDlayCntLoad(); // was not working with fnishCntLoad function
 };
 
- 
+
 // Link adding functions
 
 
 var doCoLinkDelete = function(tmpCLindex, tmpQlid) {
     //carr = currCoLinksArr[tmpVindex];
     cnnarr = removeArrElement(currCoLinksArr, tmpCLindex);
- 
+
     currCoLinksArr = null;
     currCoLinksArr = cnnarr;
     JSSHOP.ui.setCBBClickClr(dvCoLinks,'cls_button cls_button-medium brdrClrDlg txtClrHdr','txtClrHdr bkgdClrWhite', function(){JSSHOP.ui.closeLbox()});
 
     procNuUIitem("qlinks","k_rtype",tmpQlid,"0","rndrCoLnks");
- 
+
 };
 
 
@@ -707,12 +707,12 @@ if(tKcategory == "telephone") {
     tKfnlMatter = tKshrtMatter;
     }
 
-    // else if 
+    // else if
 
     // tKfnlMatter = tKshrtMatter;
- 
 
-// rcnsDv.className = "collection-item txtDecorNone margleft"; 
+
+// rcnsDv.className = "collection-item txtDecorNone margleft";
 rcL += "<tr><td><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span></td>";
 rcL += "<td>" + tKfnlMatter;
 
@@ -749,11 +749,11 @@ var fnshCoLinkAdd = function(tCCLA, tCCLB, tCCLC) {
         tmpDOs = null;
         tmpDOs = {};
         tmpDOs["ws"] = "where k_userid=? and  k_coid=? and k_rtype=?";
-        tmpDOs["wa"] = [currUrlArr.tuid,currUrlArr.tuid,5]; 
+        tmpDOs["wa"] = [currUrlArr.tuid,currUrlArr.tuid,5];
         oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
         doQComm(oi["rq"], "y", "setCurrCoLinks");
-    }; 
-    
+    };
+
     var setCurrCoLinks = function(tCCLA, tCCLB, tCCLC) {
         if(tCCLB.indexOf("_id") != -1) {
             currCoLinksArr = null;
@@ -763,7 +763,7 @@ var fnshCoLinkAdd = function(tCCLA, tCCLB, tCCLC) {
         rndrCoLnks(tCCLA, tCCLB, tCCLC);
         }
         }
-    
+
 var doCoLinkAdd = function() {
     JSSHOP.shared.setFrmFieldVal("qlinks", "k_userid", currUrlArr.tuid);
     JSSHOP.shared.setFrmFieldVal("qlinks", "k_coid", currUrlArr.tuid);
@@ -780,7 +780,7 @@ var doCoLinkAdd = function() {
         stopSpin("btnAddSoLink");
         btnAddSoLink.innerHTML = "";
         JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDYellow txtClrWhite','cls_button cls_button-medium bkgdBBlue txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
-    
+
         return;
     }
     if((JSSHOP.shared.getFrmFieldVal("qlinks", "k_title", 0) == "") || (JSSHOP.shared.getFrmFieldVal("qlinks", "k_title", 0) == "noQvalue")){
@@ -788,7 +788,7 @@ var doCoLinkAdd = function() {
         stopSpin("btnAddSoLink");
         btnAddSoLink.innerHTML = "";
         JSSHOP.ui.setCBBClickClr(btnAddSoLink,'cls_button cls_button-medium  bkgdClrDYellow txtClrWhite','cls_button cls_button-medium bkgdBBlue txtSmall', function(){document.getElementById("btnAddSoLink").innerHTML=stxt[70];document.getElementById("btnAddSoLink").disabled=false;});
-    
+
         return;
     }
     if((JSSHOP.shared.getFrmFieldVal("qlinks", "k_category", 0) == "") || (JSSHOP.shared.getFrmFieldVal("qlinks", "k_category", 0) == "noQvalue")){
@@ -836,9 +836,9 @@ var doCoLinkAdd = function() {
 
 
     // startSpin("btnAddSoLink");
-    // check if the 
+    // check if the
     // alert("doCoLinkAdd: " + oi["rq"]);
-    
+
     oi = getNuDBFnvp("qlinks", 6, null, tmpFobj);
     doQComm(oi["rq"], null, "fnshCoLinkAdd");
 };

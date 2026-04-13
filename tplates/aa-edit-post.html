@@ -29,7 +29,10 @@
 												<!-- Tip Text DIv -->
 												<div id="dvTipTxt" class="bkgdClrWhite brdrClrNrml" style="min-height:60px;max-width:99%;margin: 0 auto;padding:4px;"></div>
 
+												<div id="dvInlineTabsHost" class="bkgdClrWhite" style="display:none;max-width:99%;margin:5px auto 0 auto;"></div>
+
  			<!-- map or scrooler view div -->
+			<div class="txtSmall txtCLrHdr bkgdClrWhite" id="dvCanvasView" class="" style="min-height:10px;max-width:99%;margin: 5px auto;"></div>
  			<div class="txtSmall txtCLrHdr bkgdClrWhite" id="dvDemoView" class="" style="min-height:60px;max-width:99%;margin: 5px auto;"></div>
  			<div class="clearfix clear-fix"></div>
  		
@@ -113,7 +116,12 @@
 
 <!-- ,ap post stuff -->
 <input type="hidden" id="inpMapPstCntnt" name="inpMapPstCntnt" value="props">
+<input type="hidden" id="inpMapPstCaptureFps" name="inpMapPstCaptureFps" value="2">
+<input type="hidden" id="inpMapPstCaptureIntervalMs" name="inpMapPstCaptureIntervalMs" value="500">
 <input type="hidden" id="inpMapPstForceCanvasRenderer" name="inpMapPstForceCanvasRenderer" value="yes">
+
+<!-- video stuff -->
+<input type="hidden" id="inpVidPstCntnt" name="inpVidPstCntnt" value="props">
  
 
 <!-- image post stuff -->

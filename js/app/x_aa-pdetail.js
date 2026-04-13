@@ -3,7 +3,7 @@ var tmpSocLinksArr = null;
 tmpSocLinksArr = "";
 tmpSocLinksArr = [];
 
-var doPrdMDelete = function() { 
+var doPrdMDelete = function() {
     if(confirm(stxt[42] + " " + stxt[19] + "?")) {
     procNuUIitem("qmedia","m_rtype",JSSHOP.shared.getFrmFieldVal("qmedia", "_id", 0),"0","fnshProdMDel");
     }
@@ -11,7 +11,7 @@ var doPrdMDelete = function() {
 
 
 
-var fnshProdMMain = function(aa,bb,cc) { 
+var fnshProdMMain = function(aa,bb,cc) {
 // alert(bb);
 getPropImgs();
 JSSHOP.ui.closeLbox();
@@ -19,23 +19,23 @@ JSSHOP.ui.closeLbox();
 };
 
 
-var doPrdMMain = function() { 
+var doPrdMMain = function() {
 if(confirm("Set as main product picture?" + JSSHOP.shared.getFrmFieldVal("qmedia", "m_file", 0))) {
 procNuUIitem("qmedia","m_vala",JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0"),JSSHOP.getUnixTimeStamp(),"fnshProdMMain");
     }
 };
- 
+
 
 var getPrdImgEditDv = function(tpIncrNPI, tpFImg) {
 tpPIEDv = document.createElement('div');
 JSSHOP.shared.setFrmFieldVal("qmedia", "_id", tpIncrNPI);
 JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", tpFImg);
- 
+
 tmpRetStr = "<img src=\"admin/property/" + tpFImg +  "\" style=\"width: 100%\"  class=\"\" onclick=\"alert('" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id", "0") + "');\">"
  try {
 tmpRetStr += "<div class=\"dvTxtBtns\"><input type=\"button\" class=\"btnTxtLabel\" value=\"Set as Main\" onclick=\"javascript:doPrdMMain();\">   |   <input type=\"button\" class=\"btnTxtLabel\" value=\"Delete\" onclick=\"javascript:doPrdMDelete();\"></div>";
 tmpRetStr += "<br><br>";
- 
+
 return tmpRetStr;
 } catch(e) {
 alert("getPrdImgEditDv " + e);
@@ -55,8 +55,8 @@ var setSliderPropImgs = function(theAIa, theAIb, theAIc) {
         iint = 0;
         while (iint < len) {
             tstr += "<div class=\"ls-slide\" data-ls=\"duration:7500; transition2d:5; kenburnszoom:in; kenburnsscale:1.2;\"> <img width=\"1920\" height=\"1080\"    src=\"admin/property/" + tAiretArr[iint]["m_file"] + "\" class=\"ls-bg\" alt=\"\" /> </div>";
- 
- 
+
+
 			iint++;
 		}
         tmpItDiv = document.createElement('span');
@@ -65,7 +65,7 @@ var setSliderPropImgs = function(theAIa, theAIb, theAIc) {
         document.getElementById("single-property").appendChild(tmpItDiv);
 	}
 	// alert(inpPropCtrct.value);
-	
+
 };
 
 var doSwipe = function() {
@@ -85,7 +85,7 @@ var doSwipe = function() {
 };
 
 var getSocLinksStr = function() {
-    tRestSLStr = "<br>"; 
+    tRestSLStr = "<br>";
     for (var i = 0; i < tmpSocLinksArr.length; i++) {
         tSLurl = tmpSocLinksArr[i];
         if((tSLurl.indexOf("video") != -1) || (tSLurl.indexOf("reels") != -1)) {
@@ -122,7 +122,7 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
                 intIFrmHght += 1000;
          tmpSocLinksArr.push(tIRFname);
              }
-             
+
 			iirnt++;
 		}
         tstr += "</div><div class=\"swiper-pagination\"></div><div class=\"swiper-button-prev\"></div><div class=\"swiper-button-next\"></div></div>";
@@ -165,7 +165,7 @@ var getPropImgs = function() {
     doQComm(oi["rq"], null, "setPropImgs");
 };
 
- 
+
 	window.onload = function() {
         getPropImgs();
  doWinLoad();
@@ -215,7 +215,7 @@ CREATE TABLE `property` (
 
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="singlerproperty" style="margin: 12px;"> 
+                                <div id="singlerproperty" style="margin: 12px;">
                                 </div>
                             </div>
                         </div>
@@ -246,7 +246,7 @@ CREATE TABLE `property` (
                             </div>
                             <h4 class="text-secondary my-4"><ti data-ison="stxt[40]" data-desc="btn_desc">Description</ti></h4>
                             <p><?php echo $row['2'];?></p>
-                            
+
                             <!-- <h5 class="mt-5 mb-4 text-secondary">Property Summary</h5>
                             <div  class="table-striped font-14 pb-2">
                                 <table class="w-100">
@@ -269,7 +269,7 @@ CREATE TABLE `property` (
                                             <td><ti data-ison="stxt[211]" data-desc="btn_desc">State</ti></td>
                                             <td class="text-capitalize"><?php echo $row['16'];?></td>
                                         </tr>
-                                        
+
                                     </tbody>
                                 </table>
                             </div> -->
@@ -277,9 +277,9 @@ CREATE TABLE `property` (
                             <h5 class="mt-5 mb-4 text-secondary"><ti data-ison="stxt[930]" data-desc="btn_features">Features</ti></h5>
                             <div class="row">
 								<?php // echo $row['17'];?>
-								
-                            </div> 
-                            -->  
+
+                            </div>
+                            -->
 							<!-- start of floor plans
                             <h5 class="mt-5 mb-4 text-secondary">Floor Plans</h5>
                             <div class="accordion" id="accordionExample">
@@ -294,7 +294,7 @@ CREATE TABLE `property` (
                                     <img src="admin/property/<?php echo $row['27'];?>" alt="Not Available"> </div>
                             </div>
 							 end of floor plans -->
-                            <!-- start agente data  
+                            <!-- start agente data
                               <h5 class="mt-5 mb-4 text-secondary double-down-line-left position-relative"><ti data-ison="stxt[934]" data-desc="btn_contact_agent">Contact Agent</ti></h5>
                             <div class="agent-contact pt-60">
                                 <div class="row">
@@ -306,7 +306,7 @@ CREATE TABLE `property` (
                                                 <li><?php echo $row['uphone'];?></li>
                                                 <li><?php echo $row['uemail'];?></li>
                                             </ul>
-                                            
+
                                             <div class="mt-3 text-secondary hover-text-primary">
                                                 <ul>
                                                     <li class="float-left mr-3"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
@@ -354,7 +354,7 @@ CREATE TABLE `property` (
                                                 </div>
                                             </div>
                                         </form>
-                                    </div>  
+                                    </div>
                                      end agente data -->
                                 </div>
                             </div>
@@ -374,7 +374,7 @@ aprpStype = "";
 aprpBedroom = "";
 
 aprpBathroom = "";
- 
+
 if(aww.indexOf("_id") != -1) {
     iprpdetaArr = JSON.parse(aww);
     aprpObj = iprpdetaArr[0];
@@ -416,7 +416,7 @@ if(aww.indexOf("_id") != -1) {
     retAetStr += "</td><td>";
     retAetStr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-pdetail','pid=aa-pdetail&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
     retAetStr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpLocation + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
-     
+
     retAetStr += "</td></tr></table>";
     retPDetStr += "<div class=\"col-lg-8\">";
     retPDetStr += "<div class=\"row\">";
@@ -424,7 +424,7 @@ if(aww.indexOf("_id") != -1) {
     // retPDetStr += "<h5 class=\"mt-2 text-secondary text-capitalize\">" + aprpTitle + "</h5>";
     // retPDetStr += "<span class=\"mb-sm-20 d-block text-capitalize\"><i class=\"fas fa-map-marker-alt text-primary font-12\"></i> &nbsp;" + aprpLocation + "</span>";
 
-   
+
 
     retPDetStr += "<div class=\"col-md-12\">";
     retPDetStr += "<div id=\"singlerproperty\" style=\"margin: 12px;\"> </div>";
@@ -478,7 +478,7 @@ retPDetStr += "</div>"; // end bkgdClrWhite
     retPDetStr += "</div>";
     retPDetStr += "</div>";
 
- 
+
 
     // alert(retPDetStr);
     JSSHOP.ui.setTinnerHTML("dvTop", retAetStr);
@@ -486,8 +486,8 @@ retPDetStr += "</div>"; // end bkgdClrWhite
 
 /*
        // create an iframe that expands to the content of the page
-       
-   
+
+
 */
     tmpFobj = null;
     tmpFobj = {};
@@ -503,7 +503,7 @@ retPDetStr += "</div>"; // end bkgdClrWhite
 
 function getFBUPostCntnt(tCntntStr) {
 /*
-        <div class="fb-post" 
+        <div class="fb-post"
             data-href="https://www.facebook.com/416576078105629/posts/416576594772244/"
             data-width="500"></div>
 
@@ -544,7 +544,7 @@ if(tCntntStr.indexOf("page.php?href=") != -1) {
     tNuUserFstr = tNuUserFstr.replace("%2F", "");
     tNuUserFstr = tNuUserFstr.replace("%2F", "");
 }
- 
+
     tCntntStr = "<div class=\"fb-post\" data-href=\"" + tCntntStr + "\" data-width=\"500\"></div>";
 
     return tCntntStr;

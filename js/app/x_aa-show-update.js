@@ -4,7 +4,7 @@ var euiFFObjArr = [];
 var tmpOldFFvals = null;
 var tmpOldFFvals = {};
 var currPgTitle = stxt[100];
-  
+
 
     function showMoreUpdtCntnt(tMCDiv,tMCbtn) {
         console.log("showMoreUpdtCntnt: " + tMCDiv + " " + tMCbtn);
@@ -22,9 +22,9 @@ fnishCntLoad = function() {
     document.title = currPgTitle;
     JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks');
 
-   
-   
-   
+
+
+
 if(currUrlArr.tupid) {
     frupid = currUrlArr.tupid;
     if(frupid.indexOf("-") != -1) {

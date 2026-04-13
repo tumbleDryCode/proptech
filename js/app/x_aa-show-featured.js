@@ -4,7 +4,7 @@ function doUMsglinks(tULUID, tdivMID) {
   tmpDOs = null;
   tmpDOs = {};
   tmpDOs["ws"] = "where k_userid=? and k_rtype=?";
-  tmpDOs["wa"] = [tULUID,5]; 
+  tmpDOs["wa"] = [tULUID,5];
   oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
   doQComm(oi["rq"], tdivMID, "getUMsgLnkStr");
    //  JSSHOP.ui.showMsgBox(tPPrpTy,tPPrpI,tTPcb);
@@ -13,16 +13,16 @@ function doUMsglinks(tULUID, tdivMID) {
 var rndrUMsgLnks = function(za,zb,zc) {
 
   // dvCoLinks.innerHTML = "";
-  
+
   theArr = JSON.parse(zb);
-  
+
   // alert("rndrCoLnks: " + theArr);
   var rclen = theArr.length;
   var rciint = 0;
   var rcsblen = 0;
   var lastcatID = "";
   rcts = null;
-  
+
   var tmpScatA = {};
   rcnsDv = document.createElement('div');
   rcL = "<table style=\"width:100%;\">";
@@ -33,18 +33,18 @@ var rndrUMsgLnks = function(za,zb,zc) {
   tKfnlMatter = "";
   if(tKmatter.length > 20) {
       tKshrtMatter = tKmatter.substring(0,20) + "...";
-  
+
   }
   if(tKmatter.indexOf("http") != -1) {
       tKfnlMatter = "<a href=\"" + tKmatter + "\" target=\"_blank\">" + tKshrtMatter + "</a>";
   } else {
       tKfnlMatter = tKshrtMatter;
   }
-  
-  // rcnsDv.className = "collection-item txtDecorNone margleft"; 
+
+  // rcnsDv.className = "collection-item txtDecorNone margleft";
   rcL += "<tr><td><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span></td>";
   rcL += "<td>" + tKfnlMatter;
-  
+
   //rcL += "<tr><td><span class=\"txtBold\"><img src=\"images/misc/ts-icon-" + rcts.k_category + ".png\" class=\"icnsmlbtn\"></span></td><td><span class=\"txtSmall txtClrGrey\">" + rcts.k_title + "</span></td><td>" + unescape(decodeURIComponent(rcts.k_matter));
   rcL += "</td><td><button  onclick=\"javascript:doCoLinkDelete(" + rciint + "," + rcts._id + ");\" class=\"crsrPointer txtXLrg txtBold slmtable bkgdClrWhite brdrNone txtClrDrkGrn\"><i class=\"txtClrRed brdrClrWhite bkgdClrWhite menu-material-icons\" alt=\"delete\" title=\"delete\">&#xe92b;</i></button>";
   rcL += "</td></tr>";
@@ -60,14 +60,14 @@ var getUMsgLnkStr = function(tCCLA, tCCLB, tCCLC) {
       currCoLinksArr = null;
       currCoLinksArr = [];
   // alert("setCurrCoLinks: " + tCCLB);
-  
+
   rndrUMsgLnks(tCCLA, tCCLB, tCCLC);
   }
   }
 
   function doMPropsList(aaw,aww,cww) {
     console.log('doMPropsList - aww: ' + aww);
-     
+
 istrt = 0;
 iprplen = 0;
 currShopsArr = null;
@@ -146,7 +146,7 @@ if(aprpCountry.length > 0) {
 
 retPLstSTr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;max-width: 600px;\">";
 
- 
+
 tPrpMMListObj = null;
 tPrpMMListObj = "";
 tPrpMMListObj = {};
@@ -283,7 +283,7 @@ retPLstSTr += "<ul>";
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpSize + " </b>  <span class=\"txtSmall\">" + stxt[953] + "</span></div></li>";
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpBedroom + " </b>  <span class=\"txtSmall\">" + stxt[922] + "</span></div></li>";
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpBathroom + " </b>  <span class=\"txtSmall\">" + stxt[923] + "</span></div></li>"
-retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpKitchen + " </b>  <span class=\"txtSmall\">" + stxt[926] + "</span></div></li>"; 
+retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpKitchen + " </b>  <span class=\"txtSmall\">" + stxt[926] + "</span></div></li>";
 retPLstSTr += "</ul>";
 */
 retPLstSTr += "</div>"; // end bg-gray quantity px-4 pt-4
@@ -320,7 +320,7 @@ retPLstSTr += "</td></tr></table>";
 tSrvLLstr = aprploclat + "," + aprploclng;
 // retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\"><a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr + "\"><i class=\"material-icons txtClrTtl\" alt=\"streetview\" title=\"streetview\" value=\"streetview\">&#xe56e;</i> Street View</a></span>";
 
- 
+
 
 retPLstSTr += "</div>"; // end bkgdClrWhite
 
@@ -342,9 +342,9 @@ retPLstSTr += "</div>"; // end overlay-black overflow-hidden position-relative
 
 
 retPLstSTr += "</div>";  // end col-md-6
- 
+
  // add clearfix div
- 
+
 
 
 
@@ -356,12 +356,12 @@ JSSHOP.ui.setTinnerHTML("dvMainPrpsLst",retPLstSTr);
 // JSSHOP.ads.doGenMapShow();
 
  JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks');
- 
+
  }
- 
+
 function XOLDdoMPropsList(aaw,aww,cww) {
     console.log('doMPropsList - aww: ' + aww);
-     
+
 istrt = 0;
 iprplen = 0;
 fullPrpLstA = JSON.parse(aww);
@@ -432,7 +432,7 @@ if(aprpLocation.length < 3) {
 // start the main div
 retPLstSTr += "<div class=\"slmtable bkgdClrWhite bottom-shadow\" style=\"margin-top:18px;padding:0px;\">";
 
- 
+
 tPrpMMListObj = null;
 tPrpMMListObj = "";
 tPrpMMListObj = {};
@@ -532,7 +532,7 @@ retPLstSTr += "<ul>";
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpSize + " </b>  <span class=\"txtSmall\">" + stxt[953] + "</span></div></li>";
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpBedroom + " </b>  <span class=\"txtSmall\">" + stxt[922] + "</span></div></li>";
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpBathroom + " </b>  <span class=\"txtSmall\">" + stxt[923] + "</span></div></li>"
-retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpKitchen + " </b>  <span class=\"txtSmall\">" + stxt[926] + "</span></div></li>"; 
+retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpKitchen + " </b>  <span class=\"txtSmall\">" + stxt[926] + "</span></div></li>";
 retPLstSTr += "</ul>";
 */
 retPLstSTr += "</div>"; // end bg-gray quantity px-4 pt-4
@@ -561,7 +561,7 @@ retPLstSTr += "</td></tr></table>";
 tSrvLLstr = aprploclat + "," + aprploclng;
 // retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\"><a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr + "\"><i class=\"material-icons txtClrTtl\" alt=\"streetview\" title=\"streetview\" value=\"streetview\">&#xe56e;</i> Street View</a></span>";
 
- 
+
 
 retPLstSTr += "</div>"; // end bkgdClrWhite
 
@@ -576,9 +576,9 @@ retPLstSTr += "</div>"; // end featured-thumb hover-zoomer mb-4
 
 
 retPLstSTr += "</div>";  // end col-md-6
- 
+
  // add clearfix div
- 
+
 
 
 
@@ -587,13 +587,13 @@ istrt++;
 
 // return retPLstSTr;
 JSSHOP.ui.setTinnerHTML("dvMainPrpsLst",retPLstSTr);
- 
+
  JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')
  }
 
   function doOLdMPropsList(aaw,aww,cww) {
     console.log('doMPropsList - aww: ' + aww);
-     
+
 istrt = 0;
 iprplen = 0;
 fullPrpLstA = JSON.parse(aww);
@@ -643,7 +643,7 @@ aprploclat = aprpObj["ploclat"];
 aprploclng = aprpObj["ploclng"];
 retPLstSTr += "<div class=\"col-md-6 slmtable bkgdClrWhite bottom-shadow\" style=\"float:left;margin-top:18px;padding:0px;\">";
 
- 
+
 tPrpMMListObj = null;
 tPrpMMListObj = "";
 tPrpMMListObj = {};
@@ -705,7 +705,7 @@ retPLstSTr += "<div><img alt=\"Profile\" src=\"images/user/" + aprpObj.u_icon + 
 retPLstSTr += "</td><td>";
 retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
  retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpLocation + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
- 
+
 retPLstSTr += "</td><td style=\"vertical-align:top\">" + tDDPrpStr + "</td></tr></table>";
 
  retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\">";
@@ -730,7 +730,7 @@ retPLstSTr += "<ul>";
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpSize + " </b>  <span class=\"txtSmall\">" + stxt[953] + "</span></div></li>";
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpBedroom + " </b>  <span class=\"txtSmall\">" + stxt[922] + "</span></div></li>";
 retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpBathroom + " </b>  <span class=\"txtSmall\">" + stxt[923] + "</span></div></li>"
-retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpKitchen + " </b>  <span class=\"txtSmall\">" + stxt[926] + "</span></div></li>"; 
+retPLstSTr += "<li><div style=\"float:left;\"><b>" + aprpKitchen + " </b>  <span class=\"txtSmall\">" + stxt[926] + "</span></div></li>";
 retPLstSTr += "</ul>";
 
 
@@ -745,7 +745,7 @@ retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bk
 tSrvLLstr = aprploclat + "," + aprploclng;
 retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\"><a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr + "\"><i class=\"material-icons txtClrTtl\" alt=\"streetview\" title=\"streetview\" value=\"streetview\">&#xe56e;</i> Street View</a></span>";
 
- 
+
 
 retPLstSTr += "</div>"; // end bkgdClrWhite
 
@@ -760,9 +760,9 @@ retPLstSTr += "</div>"; // end featured-thumb hover-zoomer mb-4
 
 
 retPLstSTr += "</div>";  // end col-md-6
- 
+
  // add clearfix div
- 
+
 
 
 
@@ -770,7 +770,7 @@ istrt++;
 }
 // return retPLstSTr;
 JSSHOP.ui.setTinnerHTML("dvMainPrpsLst",retPLstSTr);
- 
+
  // JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks')
  }
 
@@ -778,7 +778,7 @@ JSSHOP.ui.setTinnerHTML("dvMainPrpsLst",retPLstSTr);
 
 function XXXdoOldMPropsList(aaw,aww,cww) {
     console.log('doMPropsList - aww: ' + aww);
-     
+
 istrt = 0;
 iprplen = 0;
 fullPrpLstA = JSON.parse(aww);
@@ -839,7 +839,7 @@ retPLstSTr += "<div><img alt=\"Profile\" src=\"images/user/" + aprpObj.u_icon + 
 retPLstSTr += "</td><td>";
 retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
  retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpLocation + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
- 
+
 retPLstSTr += "</td></tr></table>";
 
  retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\">";
@@ -864,7 +864,7 @@ retPLstSTr += "<ul>";
 retPLstSTr += "<li><b>" + aprpSize + "</b> Area m2</li>";
 retPLstSTr += "<li><b>" + aprpBedroom + "</b>" + stxt[922] + "</li>";
 retPLstSTr += "<li><b>" + aprpBathroom + "</b>" + stxt[923] + "</li>"
-retPLstSTr += "<li><b>" + aprpKitchen + "</b>" + stxt[926] + "</li>"; 
+retPLstSTr += "<li><b>" + aprpKitchen + "</b>" + stxt[926] + "</li>";
 retPLstSTr += "</ul>";
 
 
@@ -879,7 +879,7 @@ retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bk
 tSrvLLstr = aprploclat + "," + aprploclng;
 retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\"><a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr + "\"><i class=\"material-icons txtClrTtl\" alt=\"streetview\" title=\"streetview\" value=\"streetview\">&#xe56e;</i> Street View</a></span>";
 
- 
+
 
 retPLstSTr += "</div>"; // end bkgdClrWhite
 
@@ -896,7 +896,7 @@ retPLstSTr += "</div>"; // end featured-thumb hover-zoomer mb-4
 retPLstSTr += "</div>";  // end col-md-6
  // retPLstSTr += "<hr>";
  // add clearfix div
- 
+
 
 
 
@@ -961,7 +961,7 @@ retPLstSTr += "<div  onclick=\"javascript:eindex('aa-show-prop','pid=aa-show-pro
 retPLstSTr += "</td><td>";
 retPLstSTr += "<h5 class=\"text-secondary hover-text-primary text-capitalize\" style=\"margin-bottom:0px;\"><a href=\"javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + aprpObj._id + "')\">" + aprpTitle + "</a></h5>";
  retPLstSTr += "<table style=\"width:100%;\"><tbody><tr><td><i class=\"small-material-icons coll-menu-item txtClrHdr txtBold\" alt=\"location_on\" title=\"Location\" style=\"verticle-align:middle;color:#dbddd9;\">&#xe55c;</i></td><td><span class=\"txtSmall txtBold txtClrHdr\">" + aprpLocation + "</span></td><td style=\"text-align:right;\" nowrap=\"nowrap\"><div class=\"price text-primo\" style=\"margin-right:10px;\"><span class=\"text-primary txtSmall\">&euro;</span>&nbsp;&nbsp;<b>" + aprpPrice + "</b></div></td></tr></tbody></table>";
- 
+
 retPLstSTr += "</td></tr></table>";
 
  retPLstSTr += "<div class=\"featured-thumb hover-zoomer mb-4\">";
@@ -986,7 +986,7 @@ retPLstSTr += "<ul>";
 retPLstSTr += "<li><b>" + aprpSize + "</b> Area m2</li>";
 retPLstSTr += "<li><b>" + aprpBedroom + "</b>" + stxt[922] + "</li>";
 retPLstSTr += "<li><b>" + aprpBathroom + "</b>" + stxt[923] + "</li>"
-retPLstSTr += "<li><b>" + aprpKitchen + "</b>" + stxt[926] + "</li>"; 
+retPLstSTr += "<li><b>" + aprpKitchen + "</b>" + stxt[926] + "</li>";
 retPLstSTr += "</ul>";
 
 
@@ -1001,7 +1001,7 @@ retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"cls_button cls_button-xxsmall bk
 tSrvLLstr = aprploclat + "," + aprploclng;
 retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\"><a href=\"http://maps.google.com/maps?q=&layer=c&cbll=" + tSrvLLstr + "\"><i class=\"material-icons txtClrTtl\" alt=\"streetview\" title=\"streetview\" value=\"streetview\">&#xe56e;</i> Street View</a></span>";
 
- 
+
 
 retPLstSTr += "</div>"; // end bkgdClrWhite
 
@@ -1040,7 +1040,7 @@ aTPrpOstr = getPrpObjSTr(aTPrpObj);
 
  }
 
- 
+
 
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {

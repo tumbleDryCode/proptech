@@ -4,7 +4,7 @@ var euiFFObjArr = [];
 var tmpOldFFvals = null;
 var tmpOldFFvals = {};
 var currPgTitle = stxt[100];
-  
+
 
     function showMoreUpdtCntnt(tMCDiv,tMCbtn) {
         console.log("showMoreUpdtCntnt: " + tMCDiv + " " + tMCbtn);
@@ -22,15 +22,15 @@ fnishCntLoad = function() {
     document.title = currPgTitle;
     JSSHOP.ads.doGenericPlug('mpmenu',3,'dvPartLinks');
 
-   
-   
-   
+
+
+
     tUFObj = {};
 tUFObj["uplmt"] = 10;
 tUFObj["upppage"] = "about";
 tUFObj["upcb"] = "jshp_ads_showUpdtsFeed";
  JSSHOP.ads.doNurUpdatesFeed(tUFObj);
- 
+
 
 
  };

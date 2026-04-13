@@ -9,9 +9,9 @@ currSortObj["msearch"] = {};
 currSortObj["msearch"]["sindex"] = "c_location";
 currSortObj["msearch"]["sorder"] = "asc";
 var currPLMtype = "ebay";
-path = shopDir;
-n = path.lastIndexOf("/");
-q = path.lastIndexOf("?");
+var path = shopDir;
+var n = path.lastIndexOf("/");
+var q = path.lastIndexOf("?");
 if (n >= 0) {
 shopDir = path.substring(0, n+ 1);
 } else {
@@ -22,7 +22,7 @@ shopDir += "/";
 var doNadaAlert = function(tmpa, tmpb, tmpc) {
 alert("doNadaAlert: " + tmpb);
 };
- 
+
 var doNada = function(tmpa, tmpb, tmpc) {
     console.log("doNada: " + tmpb);
 };
@@ -36,6 +36,9 @@ setTimeout("chkbxDummy.focus()", 500);
 if(!window.JSSHOP){
 var JSSHOP = new Object();
 }
+if (!window.JSSHOP.core) {
+JSSHOP.core = new Object();
+}
 
 var getFrcCacheRLoad = function(tmpDRV) {
 if(currUrlArr.fc){
@@ -46,22 +49,22 @@ return tmpDRV;
 };
 
 try {
-tmpNvstr = navigator.userAgent;
+var tmpNvstr = navigator.userAgent;
 if(tmpNvstr.indexOf("JavaFX") != -1) {
 isJavaFx = "yes";
 }
 } catch(e) {
 }
 
-tDLhr = document.location.href;
+var tDLhr = document.location.href;
 if(tDLhr.indexOf("recamby.com") != -1) {
  jscssprefix = "";
 }
 
 // creates a form component object for uniform
 // events and validation
-var nCurrFFieldOb = function() {
-aCurrFFieldOb = null;
+var nCurrFFieldOb = JSSHOP.core.nCurrFFieldOb || function() {
+var aCurrFFieldOb = null;
 aCurrFFieldOb= {};
 aCurrFFieldOb["fid"] = "noQvalue"; // field id
 aCurrFFieldOb["fty"] = "noQvalue"; // field type - for future use
@@ -80,11 +83,12 @@ aCurrFFieldOb["lid"] = "noQvalue"; // labelid
 aCurrFFieldOb["ltxt"] = "noQvalue"; // label text
 return aCurrFFieldOb;
 };
+JSSHOP.core.nCurrFFieldOb = nCurrFFieldOb;
 
 
 
-var nCurrCnxOb = function() {
-acurrCnxOb = null;
+var nCurrCnxOb = JSSHOP.core.nCurrCnxOb || function() {
+var acurrCnxOb = null;
 acurrCnxOb = {};
 acurrCnxOb["st"] = "noQvalue"; // status
 acurrCnxOb["fn"] = "noQvalue"; // file name
@@ -101,6 +105,7 @@ acurrCnxOb["er"] = "noQvalue"; // error string
 acurrCnxOb["ui"] = "noQvalue"; // current user interface
 return acurrCnxOb;
 };
+JSSHOP.core.nCurrCnxOb = nCurrCnxOb;
 
 currCnxOb = nCurrCnxOb();
 currFFielOb = nCurrFFieldOb();
@@ -109,7 +114,7 @@ currFFielOb = nCurrFFieldOb();
 */
 
 
-function getNuLclStrg(lsObj, lsKey, lsDefVal) {
+var getNuLclStrg = JSSHOP.core.getNuLclStrg || function(lsObj, lsKey, lsDefVal) {
 	try {
         if (localStorage[lsKey]) {
            return localStorage[lsKey];
@@ -121,8 +126,9 @@ function getNuLclStrg(lsObj, lsKey, lsDefVal) {
 	// alert("getNuLclStrg: " + e);
            return lsDefVal;
 	}
-}
-function clearNuLclStrg(lsObj, lsKey) {
+};
+JSSHOP.core.getNuLclStrg = getNuLclStrg;
+var clearNuLclStrg = JSSHOP.core.clearNuLclStrg || function(lsObj, lsKey) {
 	try {
     if(typeof(Storage) !== "undefined") {
 		localStorage.removeItem(lsKey);
@@ -130,8 +136,9 @@ function clearNuLclStrg(lsObj, lsKey) {
 	} catch(e) {
            alert("clearNuLclStrg: " + e);
 	}
-}
-function setNuLclStrg(lsObj, lsKey, lsVal) {
+};
+JSSHOP.core.clearNuLclStrg = clearNuLclStrg;
+var setNuLclStrg = JSSHOP.core.setNuLclStrg || function(lsObj, lsKey, lsVal) {
 	try {
 	// alert("setNuLclStrg: " + " : " + lsKey + " : " + lsVal);
     if(typeof(Storage) !== "undefined") {
@@ -140,7 +147,8 @@ function setNuLclStrg(lsObj, lsKey, lsVal) {
 	} catch(e) {
          //   alert("setNuLclStrg: " + e);
 	}
-}
+};
+JSSHOP.core.setNuLclStrg = setNuLclStrg;
 
 
 
@@ -185,7 +193,7 @@ currUrlArr["i_img"] = i_img.value;
 tmpCUAstr = JSON.stringify(currUrlArr);
 if(currRcntActStr.indexOf(tmpCUAstr) != -1) {
 // alert("currRcntActStr.doRecentActivity.yes: " + currRcntActStr + " :: currUrlArr: " + tmpCUAstr)
-} else { 
+} else {
 currRcntActArr.push(currUrlArr);
 // alert("currRcntActStr.doRecentActivity.no: " + currRcntActStr + " :: currUrlArr:  " + tmpCUAstr)
 JSSHOP.cookies.setCookie("recentActivity",LZString.compressToEncodedURIComponent(JSON.stringify(currRcntActArr)),"30","","","");
@@ -228,20 +236,20 @@ if(theITimgVal == "noQvalue") {
 } else {
 theIimgVal = theITimgVal;
 }
-} 
+}
 
 tmpImfstr = "<img class=\"icnsmlbtn\" src=\"" + theIimgVal + "\" align=\"absmiddle\" style=\"padding:6px;\">";
 
-// strRFHtml += theTfavId + " :: " + theTfavUrl + " :: " + theTfavTtl + " :: " + theIimgVal + "<br>"; 
+// strRFHtml += theTfavId + " :: " + theTfavUrl + " :: " + theTfavTtl + " :: " + theIimgVal + "<br>";
 strRFHtml += "<tr><td>" + tmpImfstr + "</td><td><a class=\"txtDecorNone txtSmall txtClrHdr\" href=\"" + theTfavUrl + "\"><span class=\"txtClrHdr\">" + theTfavTtl + "</span></a></td>";
 if(favToggle == "y") {
 currFTclr = "small-material-icons txtClrRed";
 // strRFHtml += "<td><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + theTfavUrl + "','" +  theTfavTtl + "','" + theITimgVal + "','" + theTfavId + "','btnDynFavs" + theTfavId + "');\"><i id=\"btnDynFavs" + theTfavId + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"recent_actors\" value=\"recent_actors\" style=\"font-size:12px;\">&#xe03f;</i></span></td></tr>";
 // make it also remove table row
 strRFHtml += "<td><span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg\" onclick=\"javascript:doRecentFavorite('" + theTfavUrl + "','" +  theTfavTtl + "','" + theITimgVal + "','" + theTfavId + "','btnDynFavs" + theTfavId + "');this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);\"><i id=\"btnDynFavs" + theTfavId + "\" class=\"menu-material-icons txtBold txtClrRed\" alt=\"close\" title=\"btnClose\" value=\"btnCLose\" style=\"font-size:12px;\">&#xe5cd;</i></span></td></tr>";
- 
+
 }
- 
+
 tfi++;
 }
 strRFHtml += "</table>";
@@ -250,7 +258,7 @@ strRFHtml += "</table>";
 } else {
 strRFHtml += "No Favorites";
 
- 
+
 }
 return strRFHtml;
 }
@@ -305,7 +313,7 @@ JSSHOP.ui.setNuCBBClickClr(document.getElementById(theTfavEl),'menu-material-ico
 // alert("doRF: " + currRcntFavsStr);
 JSSHOP.cookies.setCookie("recentFavs",LZString.compressToEncodedURIComponent(currRcntFavsStr),"30","","","");
 }
- 
+
 
 
 
@@ -354,7 +362,7 @@ currInfoStr += "Prefs: <br>";
 currInfoStr += "Prd Layout: " + currPrefPrdV + "<br>";
 currInfoStr += "Price: Order: " + currPrefPrdP + "<br>";
 currInfoStr += "Shop Owner:  " + arrAllForms.qco.v[0].c_uid  + "<br>";
- 
+
 
 return currInfoStr;
 };
@@ -407,7 +415,7 @@ return strTurl;
 };
 
 
- 
+
 try {
 pointP = app.doWVScrollY();
 isJApp = "ayes";
@@ -416,9 +424,9 @@ JSSHOP.loadScript("css/" + jscssprefix + "x_japp.css", JSSHOP.checkLoader,'css')
 } catch(e) {
     console.log("isDaJApp: " + e);
 }
- 
 
- 
+
+
 
 var pfRet = function(theElem, theResp, marble) {
 document.getElementById(theElem).innerHTML = theResp;
@@ -432,13 +440,13 @@ setTimeout("JSSHOP.shared.doNuDwEL()", 1000);
 };
 
 var loadNurJSModal = function (theMinc, theClass, theMbLCB) {
-  
+
    if(isJApp == "ayes") {
    } else {
  	 JSSHOP.ui.popAndFillLbox(theClass);
    }
  	JSSHOP.ajax.doNuAjaxPipe("lightbox_content", theMinc, theMbLCB);
- 
+
 };
 
 var loadNuJSModal = function (theMinc, theClass) {
@@ -448,7 +456,7 @@ var loadNuJSModal = function (theMinc, theClass) {
 var loadJSModal = function (theMinc) {
     loadNuJSModal(theMinc, "noQvalue");
 };
- 
+
 
 
 
@@ -527,11 +535,11 @@ console.log("JSSHOP.logJSerror" + fullSError + " :: " + fullArgs + " :: " +  the
         throw new Error(ermsg);
     }, 0);
     } catch (e) {
- 
+
        alert("JSSHOP.logJSerror.Error: " + e);
     }
 };
- 
+
 
 /* simple search function
 */
@@ -547,7 +555,7 @@ document.location.href= "index.html?pid=aa-show-search&cid=" + cid + "&sw=" + th
 JSSHOP.startNuIntrvlEvnt = function(theObjTag, theFunction, theInterval) {
 try {
 eval(theObjTag + " = " + window.setInterval(theFunction,theInterval));
-// theObjTag = window.setInterval(theFunction,theInterval); 
+// theObjTag = window.setInterval(theFunction,theInterval);
 } catch(e) {
 JSSHOP.logJSerror(e, arguments, "JSSHOP.startNuIntrvlEvnt");
 }
@@ -566,7 +574,7 @@ JSSHOP.logJSerror(e, arguments, "JSSHOP.stopNuIntrvlEvnt");
 
 JSSHOP.startIntervalEvent = function(theObjTag, theFunction, theInterval) {
 try {
-timeout_handles[theObjTag] = window.setInterval(theFunction,theInterval); 
+timeout_handles[theObjTag] = window.setInterval(theFunction,theInterval);
 } catch(e) {
 JSSHOP.logJSerror(e, arguments, "JSSHOP.startIntervalEvent");
 }
@@ -598,7 +606,7 @@ return ts;
 JSSHOP.logJSerror(e, arguments, "JSSHOP.getUnixTimeStamp");
 }
 };
- 
+
 
 
 
@@ -716,7 +724,7 @@ JSSHOP.cookies.getAllCookies = function(){
         ccstra += pair[0] + "<br>";
     }
     JSSHOP.ui.popAndFillLbox(JSON.stringify(ccstra));
- 
+
   };
 
 JSSHOP.cookies.getCookie = function(check_name) {
@@ -733,7 +741,7 @@ tval = app.fetchConfValString(check_name);
 cretval = tval;
 // default null string for android preferences
 
-if(cretval == "noQvalue")  { 
+if(cretval == "noQvalue")  {
 return null;
 } else {
 return cretval;
@@ -759,7 +767,7 @@ return null;
 		a_temp_cookie = a_all_cookies[i].split( '=' );
 		// and trim left/right whitespace while we're at it
 		cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, '');
-	
+
 		// if the extracted name matches passed check_name
 		if ( cookie_name == check_name )
 		{
@@ -785,7 +793,7 @@ return null;
 };
 
 
-JSSHOP.cookies.setCookie = function(name,value,expires,path,domain,secure) 
+JSSHOP.cookies.setCookie = function(name,value,expires,path,domain,secure)
 {
 
 // if(isPhP == "no") {
@@ -796,7 +804,7 @@ try {
 if(name == "quid") {
 app.setConfValInt(name,value);
 } else {
-app.setConfValString(name,value); 
+app.setConfValString(name,value);
 }
 } catch(e) {
 alert("setCookie.E: " + e)
@@ -807,9 +815,9 @@ alert("setCookie.E: " + e)
 var today = new Date();
 today.setTime( today.getTime() );
 /*
-if the expires variable is set, make the correct 
-expires time, the current script below will set 
-it for x number of days, to make it for hours, 
+if the expires variable is set, make the correct
+expires time, the current script below will set
+it for x number of days, to make it for hours,
 delete * 24, for minutes, delete * 60 * 24
 */
 if ( expires )
@@ -818,8 +826,8 @@ expires = expires * 1000 * 60 * 60 * 24;
 }
 var expires_date = new Date( today.getTime() + (expires) );
 document.cookie = name + "=" +escape( value ) +
-( ( expires ) ? ";expires=" + expires_date.toGMTString() : "" ) + 
-( ( path ) ? ";path=" + path : "" ) + 
+( ( expires ) ? ";expires=" + expires_date.toGMTString() : "" ) +
+( ( path ) ? ";path=" + path : "" ) +
 ( ( domain ) ? ";domain=" + domain : "" ) +
 ( ( secure ) ? ";secure" : "" );
 
@@ -834,7 +842,7 @@ try {
 if(name == "quid") {
 app.setConfValInt(name,0);
 } else {
-app.setConfValString(name,"noQvalue"); 
+app.setConfValString(name,"noQvalue");
 }
 } catch(e) {
 alert("setCookie.E: " + e)
@@ -856,7 +864,7 @@ JSSHOP.cookies.deleteAllCookies = function() {
         document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
 };
- 
+
 if (!window.JSSHOP.shared) {
     JSSHOP.shared = new Object();
 }
@@ -897,7 +905,7 @@ JSSHOP.shared.urlToArray = function(url) {
           //check we have an array here - add array numeric indexes so the key elem[] is not identical.
           if(JSSHOP.shared.endsWith(pair[0], '[]') ) {
              var arrName = pair[0].substring(0, pair[0].length - 2);
- 
+
              if(!(arrName in arr)) {
                   arr.push(arrName);
                   arr[arrName] = [];
@@ -935,7 +943,7 @@ JSSHOP.shared.urlToNuArray = function(url) {
           //check we have an array here - add array numeric indexes so the key elem[] is not identical.
           if(JSSHOP.shared.endsWith(decodeURIComponent(JSSHOP.shared.encode_utf8(pair[0])), '[]') ) {
              var arrName = decodeURIComponent(pair[0]).substring(0, decodeURIComponent(pair[0]).length - 2);
- 
+
              if(!(arrName in arr)) {
                   arr.push(arrName);
                   arr[arrName] = [];
@@ -990,7 +998,7 @@ JSSHOP.user.decPrefCky = function(cString) {
 };
 
 JSSHOP.user.encPrefCky = function(cString) {
- 
+
 	try {
         strPa = cString.split("[{\"").join("x1");
         strPb = strPa.split("\":\"").join("x2");
@@ -1004,11 +1012,11 @@ JSSHOP.user.encPrefCky = function(cString) {
 	JSSHOP.logJSerror(e, arguments, "JSSHOP.user.encPrefCky");
 	  return "noQvalue";
 	}
- 
+
 };
 
 
-JSSHOP.user.setCkieUprefs = function(ckyP) {  
+JSSHOP.user.setCkieUprefs = function(ckyP) {
 try {
 // alert("setCkieUprefs: " + JSON.stringify(arrUprefs[ckyP]));
 if(JSSHOP.cookies.getCookie(ckyP)) {
@@ -1022,7 +1030,7 @@ JSSHOP.logJSerror(e, arguments, "JSSHOP.user.setCkieUprefs");
 };
 
 
-JSSHOP.user.setCkiePrfKV = function(dCky,key,val) {  
+JSSHOP.user.setCkiePrfKV = function(dCky,key,val) {
 try {
 arrUprefs[dCky][0][key] = val;
 JSSHOP.user.setCkieUprefs(dCky);
@@ -1031,7 +1039,7 @@ JSSHOP.logJSerror(e, arguments, "JSSHOP.user.setCkiePrfKV");
 }
 };
 
-JSSHOP.user.setCkiePrfDispVal = function(ckyName,key,rowname) {  
+JSSHOP.user.setCkiePrfDispVal = function(ckyName,key,rowname) {
 /*
 * swithced true to false since being called before click event
 */
@@ -1040,7 +1048,7 @@ JSSHOP.user.setCkiePrfDispVal = function(ckyName,key,rowname) {
     	theRow = document.getElementById(rowname);
     	if (theRow.style.display=="none") {
       val = true;
-    	} 
+    	}
 	arrUprefs[ckyName][0][key] = val;
 	JSSHOP.user.setCkieUprefs(ckyName);
 	}catch(e) {
@@ -1052,7 +1060,7 @@ JSSHOP.user.setCkiePrfDispVal = function(ckyName,key,rowname) {
 
 JSSHOP.user.doCkieUprefs = function(daCky) {
 	try {
-if(JSSHOP.cookies.getCookie(daCky)) { 
+if(JSSHOP.cookies.getCookie(daCky)) {
 fldChallArray.value = JSSHOP.cookies.getCookie(daCky);
 tval = fldChallArray.value;
 arrUprefs[daCky] = JSON.parse(JSSHOP.user.decPrefCky(tval));
@@ -1071,21 +1079,21 @@ JSSHOP.user.setCkieUprefs(daCky);
 // cleans the sql statement
 
 var clnDBvp = function(tmpCCKw) {
- 
+
          if (typeof tmpCCKw === 'string' || tmpCCKw instanceof String) {
 		if((tmpCCKw.indexOf("'") != -1) || (tmpCCKw.indexOf("=") != -1)  || (tmpCCKw.indexOf("(") != -1)) {
 		console.log("clnDBvp: You dog!: " + tmpCCKw);
 		} else {
 		}
 		}
- 
- 
- 
+
+
+
 /*
 ntCCWrdA = tmpCCKw.replace("'","");
 ntCCWrdB = ntCCWrdA.replace("(","");
 ntCCWrdC = ntCCWrdB.replace("=","");
-*/ 
+*/
 return tmpCCKw;
 };
 
@@ -1104,34 +1112,34 @@ xol["m"] = m; // mode
 xol["t"] = t; // table
 xol["c"] = null; // columns
 xol["gb"] = null; // group by
-xol["o"] = "_id Desc"; 
+xol["o"] = "_id Desc";
 xol["l"] =  100; // limit
 xol["knvp"] = null;
 if(de != null) {
 if(de["ws"] != null) {
-xol["ws"] = de["ws"]; 
+xol["ws"] = de["ws"];
 }
 if(de["wa"] != null) {
 // console.log("clnURDBvp: " + JSON.stringify(de["wa"]));
 xol["wa"] = de["wa"];
 }
 if(de["gb"] != null) {
-xol["gb"] = de["gb"]; 
+xol["gb"] = de["gb"];
 }
 if(de["o"] != null) {
-xol["o"] = de["o"]; 
+xol["o"] = de["o"];
 }
 if(de["l"] != null) {
-xol["l"] = de["l"]; 
+xol["l"] = de["l"];
 }
 if(de["c"] != null) {
-xol["c"] = de["c"]; 
+xol["c"] = de["c"];
 }
 if(de["knvp"] != null) {
-xol["knvp"] = de["knvp"]; 
+xol["knvp"] = de["knvp"];
 }
 } else {
-xol["ws"] = "where _id=?"; 
+xol["ws"] = "where _id=?";
 xol["wa"] = [ppid];
 
 }
@@ -1215,7 +1223,7 @@ if(xol["knvp"][iint].t == "_id") { // dont include it
 } else {
 ts += xol["knvp"][iint].t + ",";
 // theVstrClean = xol["knvp"][iint].v;
-// theVstrClean = removeDiacritics(xol["knvp"][iint].v); 
+// theVstrClean = removeDiacritics(xol["knvp"][iint].v);
 theVstrClean = encodeURIComponent(removeDiacritics(xol["knvp"][iint].v));
 tv += "'" + theVstrClean + "',";
 }
@@ -1246,13 +1254,13 @@ break;
 // trying the replace into function
 case 9:
 
- 
+
 var iint = 0;
 ts = "";
 tv = "";
 ark = [];
 while(iint < len) {
- 
+
 ts += xol["knvp"][iint].t + ",";
 theVstrClean = xol["knvp"][iint].v;
 // theVstrClean = decodeURIComponent(removeDiacritics(xol["knvp"][iint].v));
@@ -1303,7 +1311,7 @@ var addNuFrmQArr = function(theForm, theTmpFld, theTmpId, theTmpCB) {
 };
 
 var doDynQArrComm = function(theTarr, strQ, theElem, theCB) {
- 
+
 nnvo = null;
 nnvo = {};
 nnvo["f"] = theCB;
@@ -1316,7 +1324,7 @@ theTarr.push(nnvo);
 
 
 var doQArrComm = function(strQ, theElem, theCB) {
- 
+
 nnvo = null;
 nnvo = {};
 nnvo["f"] = theCB;
@@ -1338,7 +1346,7 @@ var addQArrComm = function(theForm, theTmpId, theTmpCB) {
 
 
 
-  
+
 
 var getCleanAppStr = function(theDASStr) {
 document.getElementById("fldChallArray").value = theDASStr;
@@ -1357,7 +1365,7 @@ aresp = document.getElementById("fldChallArray").value;
 
 /*
 navigator.sayswho= (function(){
-    var ua= navigator.userAgent, tem, 
+    var ua= navigator.userAgent, tem,
     M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
     if(/trident/i.test(M[1])){
         tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
@@ -1457,7 +1465,7 @@ var loadJCccjs = function(tPath, tCB) {
 
 
 var mfnishCntLoad = function() {
-  
+
 xae = document.getElementsByTagName("ti");
 var iint = 0;
 while(iint < xae.length) {
@@ -1469,7 +1477,7 @@ if(u_cat.value == "5") {
    JSSHOP.ui.showHideElement("dvAMnuLnks", "show");
 }
 
- 
+
 fnishCntLoad();
 
 };
@@ -1511,13 +1519,13 @@ pushActbArr(tmpActArr);
 
 var mclearActbArr = function() {
 clearActbArr();
-}; 
+};
 
 
 
 
 
-var doNurQComm = function(tComObj) { 
+var doNurQComm = function(tComObj) {
 try {
 strQ = tComObj.q;
 if(pipeDir == "noQvalue") {
@@ -1690,7 +1698,7 @@ switch(mType) {
 	default:
 	}
 getQArr(mType, q);
-}; 
+};
 
 
 
@@ -1702,7 +1710,7 @@ var  getPVname = function(name){
       return decodeURIComponent(name[1]);
 };
 
- 
+
 
 
 var loadLmenu = function() {
@@ -1712,18 +1720,18 @@ var loadLmenu = function() {
 
       var tmpmainUL = document.createElement("ul");
 	tmpmainUL.className="animenu__nav";
- 
+
 
 
       tmpLI = document.createElement("li");
-	tmpLI.className="omenuartigo";	
+	tmpLI.className="omenuartigo";
 	tmpA = document.createElement('a');
 	linkText = document.createTextNode("Recent");
 	tmpA.appendChild(linkText);
 	tmpA.title = "Recent";
 	tmpLI.appendChild(tmpA);
 	tmpRPUL = document.createElement("ul");
- 
+
 	// tmpRPUL.className="animenu__nav__child";
 	tmpLI.appendChild(tmpRPUL);
 	tmpmainUL.appendChild(tmpLI);
@@ -1731,7 +1739,7 @@ var loadLmenu = function() {
 
 
       tmpLI = document.createElement("li");
-	tmpLI.className="omenuartigo";	
+	tmpLI.className="omenuartigo";
 	tmpA = document.createElement('a');
 	linkText = document.createTextNode("Searches");
 	// tmpA.appendChild(linkText);
@@ -1757,7 +1765,7 @@ fullIDttl = "";
 
 
 if(arrAllForms.qextras) {
-theLMarr = arrAllForms.qextras; 
+theLMarr = arrAllForms.qextras;
 len = theLMarr.length;
 tstr = "";
 iint = 0;
@@ -1790,7 +1798,7 @@ strLMTtl = ts.e_vald;
       if(inop < 12) {
       tmpLI = document.createElement("li");
 	tmpLI.className="omenuartigo";
- 	
+
 	tmpA = document.createElement('a');
 
 
@@ -1799,7 +1807,7 @@ strLMTtl = ts.e_vald;
 	tmpA.title = strLMTtl + "&nbsp;&nbsp;&nbsp;&nbsp;";
 	tmpA.href = strLML;
 
-	tmpLI.appendChild(tmpA); 
+	tmpLI.appendChild(tmpA);
 	tmpRPUL.appendChild(tmpLI);
 	}
 	inop++;
@@ -1812,7 +1820,7 @@ strLMTtl = ts.e_vala;
 
       tmpLI = document.createElement("li");
 	tmpLI.className="omenuartigo";
- 	
+
 	tmpA = document.createElement('a');
 
 
@@ -1821,7 +1829,7 @@ strLMTtl = ts.e_vala;
 	tmpA.title = strLMTtl + "&nbsp;&nbsp;&nbsp;&nbsp;";
 	tmpA.href = strLML;
 
-	tmpLI.appendChild(tmpA); 
+	tmpLI.appendChild(tmpA);
 	tmpRSUL.appendChild(tmpLI);
 	inos++;
 break;
@@ -1836,7 +1844,7 @@ iint++;
 }
 
 } // end of if arrAllForms.qextras
- 
+
 
 /*
 
@@ -1866,7 +1874,7 @@ document.getElementById('tdLMenu').appendChild(tmpDV);
 // document.getElementById('dvMnuT').appendChild(tmpDV);
 }
 
-spinTextDiv.innerHTML = " ..... "; 
+spinTextDiv.innerHTML = " ..... ";
 if(content == "noQvalue") {
     itDitemiD = 0;
 
@@ -1901,7 +1909,7 @@ pid = "aa-show-update";
 if(frupid.indexOf("-") != -1) {
 frupidParts = frupid.split("-");
 tupid = frupidParts[0];
-usrlang = frupidParts[1];   
+usrlang = frupidParts[1];
 } else {
 tupid = frupid;
 }
@@ -1942,7 +1950,7 @@ doMainContent(null, null);
 
 
 
- 
+
 
 
 
@@ -1977,7 +1985,7 @@ if(currAdmnMode == "y") {
 tmpSTrSorE = "edit";
 }
 
- 
+
 
 len = arrToFill.length;
 if(len > 0) {
@@ -2007,24 +2015,24 @@ tmpIimg = "images/pimgs/s_thumb" + ts.i_img;
 }
 }
 currRcntActHstr += "<img class=\"icnsmlbtn\" src=\"" + tmpIimg + "\" align=\"absmiddle\"> <a class=\"txtDecorNone\" href=\"" + tULPID + "\">" + tmpRAITitle + "</a>::";
-} 
+}
 }
 
 iint++;
 }
 
- 
- 
+
+
 fullIDstr = strULSID + ":ea:" + strULPID;
 fullIDttl = strULSTtl + ":ea:" + strULPTtl;
 }
 strCatID += fullIDstr + ":ea:";
 strCatName += fullIDttl + ":ea:";
 
- 
 
 
-  
+
+
 strCatID +=  "tip:ep:Suggestions|";
 strCatName +=  "Suggestionsss are gathered from existing page arrays.|";
 
@@ -2033,7 +2041,7 @@ strCatName +=  "Suggestionsss are gathered from existing page arrays.|";
 currACTBstr = strCatID + "::" + strCatName;
 
 if(pid == "aa-show-category") {
- 
+
 } else {
 // alert("strFArr: " + strFArr)
 try {
@@ -2069,7 +2077,7 @@ var arrToFill = null;
 arrToFill = JSON.parse(theACb.rs);
 // alert("setLoadACTB: " + JSON.stringify(theACb.rs));
 arrAllForms["qextras"] = arrToFill;
- 
+
 
 if(currAdmnMode == "y") {
 tmpSTrSorE = "edit";
@@ -2112,18 +2120,18 @@ break;
 iint++;
 }
 
- 
- 
+
+
 fullIDstr = strULSID + ":ea:" + strULPID;
 fullIDttl = strULSTtl + ":ea:" + strULPTtl;
 }
 strCatID += fullIDstr + ":ea:";
 strCatName += fullIDttl + ":ea:";
 
- 
 
 
-  
+
+
 strCatID +=  "tip:ep:Suggestions|";
 strCatName +=  "Suggestionsss are gathered from existing page arrays.|";
 
@@ -2132,7 +2140,7 @@ strCatName +=  "Suggestionsss are gathered from existing page arrays.|";
 currACTBstr = strCatID + "::" + strCatName;
 
 if(pid == "aa-show-category") {
- 
+
 } else {
 // alert("strFArr: " + strFArr)
 try {
@@ -2152,9 +2160,9 @@ var doLoadACTB = function() {
 // doNuMMenuLd("doMnuFnsh");
     tmpDOs = null;
     tmpDOs = {};
-    tmpDOs["l"] = "30"; 
+    tmpDOs["l"] = "30";
     tmpDOs["ws"] = "where e_uid=?";
-    tmpDOs["wa"] = [quid]; 
+    tmpDOs["wa"] = [quid];
     oi = getNuDBFnvp("qextras",5,null,tmpDOs);
 	// alert("doLoadACTB: " + oi["rq"]);
 atac = null;
@@ -2167,7 +2175,7 @@ atac["ls"] = "localStorage";
 doNurQComm(atac);
 };
 
- 
+
 
 
 
@@ -2200,7 +2208,7 @@ for(var gkey in accA) {
 try {
 // alert(gkey);
  mf = window[accA[gkey].f];
- 
+
  mf(accA[gkey].e, JSON.stringify(accA[gkey].v), null);
 } catch(e) {
 alert("fnish; " + e);
@@ -2211,7 +2219,7 @@ alert("fnish; " + e);
 
 
 };
- 
+
 
 
 var doWinResizeE = function() {
@@ -2230,15 +2238,15 @@ document.getElementById("dvSearchBoxSlim").className = "txtSmall";
 // doLoadACTB();
 };
 
- 
- 
+
+
 var finishCntLoad = function(a,b,c) {
 try {
- 
+
 document.getElementById(a).innerHTML = b;
 // doWinResizeE(); // all things changed on window resize
 setTimeout("mfnishCntLoad()", 500);
- 
+
 } catch(e) {
     console.log("finishCntLoad.error: " + e);
     setTimeout("mfnishCntLoad()", 500);
@@ -2246,7 +2254,7 @@ setTimeout("mfnishCntLoad()", 500);
 }
 };
 
- 
+
 
 
 var doMainContent = function(a,b) {
@@ -2254,7 +2262,7 @@ try {
 console.log("doMainContent.pid: " + pid);
 if(content == "noQvalue") {
 
-spinTextDiv.innerHTML = " ... "; 
+spinTextDiv.innerHTML = " ... ";
 fCa = getFArr();
 // this should be fixed. authentication.
 if((pid.indexOf("edit-") != -1)  && ((quid == 0) || (quid == "noQvalue"))) {
@@ -2294,7 +2302,7 @@ alert("setCoLogo: " + e);
 };
 
 var fillDynFrmArr = function(theRobj) {
-    
+
     // console.log("fillDynFrmArr: " + JSON.stringify(theRobj));
     fillMFormArr(theRobj);
     // setTimeout("JSSHOP.ajax.doDynMainContent()", 500);
@@ -2317,7 +2325,7 @@ if(arrAllForms.quser) {
     tFerr = "quser";
 JSSHOP.shared.setFrmVals("quser",arrAllForms.quser.v[0],function() { void(0) });
 currQUsrObj = arrAllForms.quser.v[0];
-// set div dvUMicn innerHTML to rounded s_thumb + quser.v[0].u_icon 
+// set div dvUMicn innerHTML to rounded s_thumb + quser.v[0].u_icon
 document.getElementById("dvUMicn").innerHTML = "<img src=\"images/user/s_thumb" + arrAllForms.quser.v[0].u_icon + "\" class=\"icnRnd26 crsrPointer\" alt=\"User Icon\" style=\"margin-left:4px;margin-right:4px;margin-top:4px;\" title=\"" + arrAllForms.quser.v[0].u_fullname + "\">";
 }
 if(arrAllForms.qcat) {
@@ -2351,7 +2359,7 @@ JSSHOP.shared.setFrmVals("qcartitem",arrAllForms.qcartitem.v[0],);
 
 
 
-// 
+//
  // doLoadACTB();
 
 } catch(e) {
@@ -2366,17 +2374,17 @@ JSSHOP.shared.setFrmVals("qcartitem",arrAllForms.qcartitem.v[0],);
     }
 };
 
- 
 
 
- 
+
+
 
 
 
 
 
 var doFrmQLoad = function(thePath, theMessage) {
- 
+
 try {
 
 doCFrmQ = nCurrCnxOb();
@@ -2386,10 +2394,10 @@ doCFrmQ["cb"] = "fillMFormArr";
 doNurQComm(doCFrmQ);
 } catch(e) {
  alert("doFrmQLoad; " + e + " " + doCFrmQ["q"]);
-}	
+}
 };
 
- 
+
 function getCurrITEMID(tmpPIDUrl) {
 tmpiid = "0";
 tmpcurrUrlArr = null;
@@ -2397,7 +2405,7 @@ tmpcurrUrlArr = {};
 try {
 if(tmpPIDUrl == "noQvalue") {
 } else {
-tmpcurrUrlArr = JSSHOP.shared.urlToArray(tmpPIDUrl); 
+tmpcurrUrlArr = JSSHOP.shared.urlToArray(tmpPIDUrl);
 if(tmpcurrUrlArr.itemid){
 tmpiid = tmpcurrUrlArr.itemid;
 }
@@ -2407,7 +2415,7 @@ alert("getCurrITEMID: " + e);
 return tmpiid;
 }
 return tmpiid;
-} 
+}
 
 
 function getCurrPID() {
@@ -2418,7 +2426,7 @@ try {
 tmpPIDUrl = getCurrUrl();
 if(tmpPIDUrl == "noQvalue") {
 } else {
-tmpcurrUrlArr = JSSHOP.shared.urlToArray(tmpPIDUrl); 
+tmpcurrUrlArr = JSSHOP.shared.urlToArray(tmpPIDUrl);
 if(tmpcurrUrlArr.pid){
 tmppid = tmpcurrUrlArr.pid;
 }
@@ -2458,18 +2466,18 @@ intTiv++;
 
 var setMsgsIArr = function(a,b,c) {
 try {
- 
+
 currMsgsIArr = JSON.parse(b);
 } catch(e) {
 alert("currMsgsIArr: " + e);
-} 
+}
 };
 
 
 
 var setCartIArr = function(a,b,c) {
 try {
- 
+
 currCartIArr = JSON.parse(b);
 tmpCIttls = JSSHOP.shop.renderNuCartItems("y", "n", 60);
 if(tmpCIttls.indexOf("::") != -1) {
@@ -2492,34 +2500,34 @@ JSSHOP.cookies.setCookie("cCartStr",LZString.compressToEncodedURIComponent(b),"3
 } catch(e) {
 console.log("setCartIArr.error: " + e);
 //alert("setCartIArr: " + e);
-} 
+}
 };
 
 
 
 
 var doBootLoad = function() {
-   
+
 try {
 
 JSSHOP.user.doCkieUprefs('prfsSHOPuser');
- 
+
 nShopDir = shopDir.replace("admin/", "");
 shopDir = nShopDir;
 
- 
 
- 
+
+
 if(arrUprefs["prfsSHOPuser"][0].tglSearchType) {
 currSearchType = arrUprefs["prfsSHOPuser"][0].tglSearchType;
 }
- 
- 
+
+
 tmpUrl = getCurrUrl();
 if(tmpUrl == "noQvalue") {
 } else {
 currUrlArr = JSSHOP.shared.urlToNuArray(tmpUrl);
- 
+
 
 
 if(currCoDcidId > 0) {
@@ -2531,7 +2539,7 @@ if(currUrlArr.prpid) {
     // addFrmQArr("property", currUrlArr.prpid, "fnishPropForm");
 
 }
- 
+
 // adding variable fc [index.html?...&fc=y] to end of url
 // forces refreshing cache and using non compressed .js files.
 if(currUrlArr.fc){
@@ -2539,14 +2547,14 @@ forceCache = currUrlArr.fc;
 jscssprefix = ""; // null the .js file prefix. use normal js files.
 }
 if(currUrlArr.pid){ // page in tplates/folder
-pid = currUrlArr.pid; 
+pid = currUrlArr.pid;
 }
 
 console.log("currPurlObj.last: " + JSON.stringify(currPUrlObj));
 currPUrlObj = null;
 currPUrlObj = {};
 
- 
+
 if((currUrlArr.cid) && (currUrlArr.cid !== "0")){ // company ID
 
 cid = currUrlArr.cid;
@@ -2560,9 +2568,9 @@ if((currUrlArr.tpid) && (currUrlArr.tpid !== "0")){ // contact user ID
      cid = currUrlArr.tpid;
     addFrmQArr("qco", currUrlArr.tpid, "fnishCoForm");
     }
- 
-   
- 
+
+
+
 
 }
 
@@ -2598,18 +2606,18 @@ addFrmQArr("qitem", itemid, "fnishItemForm");
 
 if(currUrlArr.ocartid){ // ...
 ocrtid = currUrlArr.ocartid;
- 
+
     tmpDOs = null;
     tmpDOs = {};
     tmpDOs["ws"] = "where msg_cartid=?";
-    tmpDOs["wa"] = [ocrtid]; 
+    tmpDOs["wa"] = [ocrtid];
     oi = getNuDBFnvp("qmsgs",5,null,tmpDOs);
     doQComm(oi["rq"], "y", "setMsgsIArr");
 
 // oiaqB = "select * from qitem, qmsgs, qco where qitem._id = " + itemid + " and qmsgs.msg_prodid = '" + itemid + "' and qco._id = " + cid + " group by qmsgs.msg_prodid order by qitem._id desc limit 50;";
 // doQComm(oiaqB, null, "doNadaAlert");
 
- 
+
 }
 
 }
@@ -2632,7 +2640,7 @@ cuid = JSSHOP.cookies.getCookie("cuid");
 
 }
 
- 
+
 if(JSSHOP.cookies.getCookie("cartID") == null) {
 tmpcid = Math.random().toString(36).slice(2);
 JSSHOP.cookies.setCookie("cartID",tmpcid,"30","","","");
@@ -2656,7 +2664,7 @@ if(currCartStr.length > 5) {
     tmpDOs = null;
     tmpDOs = {};
     tmpDOs["ws"] = "where ci_uid=? and ci_coid=? and ci_cartqty >? and ci_rtype=? and ci_cartid=?";
-    tmpDOs["wa"] = [quid,cid,0,5,cartID]; 
+    tmpDOs["wa"] = [quid,cid,0,5,cartID];
     oi = getNuDBFnvp("qcartitem",5,null,tmpDOs);
     doQComm(oi["rq"], "y", "setCartIArr");
 }
@@ -2664,14 +2672,14 @@ if(currCartStr.length > 5) {
     //  doFrmQArr(oi["rq"], "qcartitem","fnishCartForm");
 }
 }
- 
+
 
 
 
     tmpEDOs = null;
     tmpEDOs = {};
     tmpEDOs["ws"] = "where e_uid=? and e_vala=?";
-    tmpEDOs["wa"] = [cid,"arrSprefs"]; 
+    tmpEDOs["wa"] = [cid,"arrSprefs"];
     oi = getNuDBFnvp("qextras",5,null,tmpEDOs);
     doFrmQArr(oi["rq"], "qextras","fnishExtrasForm");
 
@@ -2725,7 +2733,7 @@ tii++;
 
 if(JSSHOP.cookies.getCookie("currSortObj") != null) {
       currSortObj = JSON.parse(LZString.decompressFromEncodedURIComponent(JSSHOP.cookies.getCookie("currSortObj")));
-   } 
+   }
 // alert("tufilepath: " + (newError).fileName);
 
 
@@ -2744,7 +2752,7 @@ if(JSSHOP.cookies.getCookie("currSortObj") != null) {
     prpid = currUrlArr.ditemid;
     currUrlArr.prpid = currUrlArr.ditemid;
     pid = "aa-show-prop";
-    // set a 
+    // set a
     // addFrmQArr("qitem", itemid, "fnishItemForm");
    }
    if(currUrlArr.tupid) {
@@ -2773,7 +2781,7 @@ alert("doBootLoad error: " + e)
 // JSSHOP.logJSerror(e, arguments, "doBootLoad");
 // JSSHOP.loadScript("js/" + jscssprefix + "aa-" + usrlang + ".js", doFrmQLoad,"js");
 
-} 
+}
 };
 
 JSSHOP.ajax.doAjaxGVals = function(tDlMStr, tDlMUstr) {
@@ -2800,11 +2808,11 @@ try {
 
 
 if((tDlMStr == pid) && (pid !== "index_main")) {
-tDlMObj = JSSHOP.shared.urlToArray(document.location.href); 
+tDlMObj = JSSHOP.shared.urlToArray(document.location.href);
 } else if(tDlMStr == "noQvalue") {
-tDlMObj = JSSHOP.shared.urlToArray(document.location.href); 
+tDlMObj = JSSHOP.shared.urlToArray(document.location.href);
 } else {
-tDlMObj = JSSHOP.shared.strToObj(tDlMUstr); 
+tDlMObj = JSSHOP.shared.strToObj(tDlMUstr);
 
 }
 for(var aRsRgkey in tDlMObj) {
@@ -2814,7 +2822,7 @@ window[aRsRgkey] = dcdedRk;
 currUrlArr[aRsRgkey] = dcdedRk;
 // currUrlArr[aRsRgkey] = decodeURIComponent(JSSHOP.shared.encode_utf8(tDlMObj[aRsRgkey]));
 }
- 
+
 if(tDlMObj.pid) {
 pid = tDlMObj.pid;
 }
@@ -2845,10 +2853,10 @@ break;
 }
 // end to delete
 */
- 
+
  doFrMBoolStr = "no";
 
-    
+
 
 if((currUrlArr.cuid) && (currUrlArr.cuid !== "0")){ // contact user ID
     cuid = currUrlArr.cuid;
@@ -2859,7 +2867,7 @@ if((currUrlArr.cuid) && (currUrlArr.cuid !== "0")){ // contact user ID
         cid = currUrlArr.tpid;
         doFrMBoolStr = "yes";
         // addFrmQArr("qco", currUrlArr.tpid, "fnishCoForm");
-     
+
     } else if((currUrlArr.cid) && (currUrlArr.cid !== "0")){ // contact user ID
         cid = currUrlArr.cid;
         doFrMBoolStr = "yes";
@@ -2867,15 +2875,15 @@ if((currUrlArr.cuid) && (currUrlArr.cuid !== "0")){ // contact user ID
     }
     // if cid > 0 and if qco _id does not equal cid, then add qco to currFrmQArr
     tCidChckId = JSSHOP.shared.getFrmFieldVal("qco", "_id", 0);
- 
+
     if((cid > 0) && (tCidChckId !== cid)){
        //  alert("cid: " + cid + " tCidChckId: " + tCidChckId);
         doFrMBoolStr = "yes";
              addFrmQArr("qco", cid, "fnishCoForm");
- 
-    }  
 
- 
+    }
+
+
     if(currUrlArr.catid){ // category ID
     catid = currUrlArr.catid;
     doFrMBoolStr = "yes";
@@ -2890,7 +2898,7 @@ if((currUrlArr.cuid) && (currUrlArr.cuid !== "0")){ // contact user ID
     itemid = currUrlArr.itemid;
     doFrMBoolStr = "yes";
     addFrmQArr("qitem", itemid, "fnishItemForm");
- 
+
     }
     if(doFrMBoolStr == "yes") {
         console.log("doFrMBoolStr: " + doFrMBoolStr);

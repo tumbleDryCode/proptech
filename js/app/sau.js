@@ -1980,9 +1980,9 @@ ss.extendObj( ss.SimpleUpload.prototype, {
 
             // Submit if autoSubmit option is true
             if ( self._opts.autoSubmit ) {
-	
+
                 self.submit();
-		  
+
             }
         });
 
@@ -2085,7 +2085,7 @@ ss.extendObj( ss.SimpleUpload.prototype, {
         "use strict";
 
         //  alert( 'Server response: ' + response );
-          
+
         if ( this._opts.responseType.toLowerCase() == 'json' ) {
             response = ss.parseJSON( response );
 
@@ -2229,7 +2229,7 @@ try {
       progressOuter = document.getElementById(cmpPfix + 'progressOuter'),
       msgBox = document.getElementById(cmpPfix + 'msgBox'),
 	tmpDAIurl = '_p/file_upload.php?in=' + tmpItemID + '&ud=' + tmpMfldr;
-  
+
 	var uploader = null;
   	uploader = new ss.SimpleUpload({
         button: btn,
@@ -2253,7 +2253,7 @@ try {
 
             btn.innerHTML = '<i class="small-material-icons">mode_edit</i>';
             progressOuter.style.display = 'none'; // hide progress bar when upload is completed
-            
+
             if ( !response ) {
                 msgBox.innerHTML = 'Unable to upload file';
                 return;
@@ -2264,7 +2264,7 @@ try {
                 msgBox.innerHTML = '<i>' + escapeTags( filename ) + '</strong>' + ' successfully uploaded.';
 
             } else {
-                if ( response.msg )  {// 
+                if ( response.msg )  {//
 			            alert(JSON.stringify(response));
                    msgBox.innerHTML = "response message: " + escapeTags( response.msg );
 				window[tmpBcb](response.msg);

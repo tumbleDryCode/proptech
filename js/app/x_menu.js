@@ -7,7 +7,7 @@ tmpSTrSorE = "edit";
 
 var doMainTreeLoad = function() {
 taqstr = "";
- 
+
 // taqstr += "<a class=\"txtDecorNone txtClrHdr txtBold\" href=\"index.html\">" + stxt[204] + "</a> | </span>";
 // taqstr += "<a class=\"txtDecorNone txtClrHdr txtBold\" href=\"index.html?pid=" + stxt[209] + "\">" + stxt[208] + "</a> | </span>";
 // taqstr += "<a class=\"txtDecorNone txtClrHdr txtBold\" href=\"javascript:JSSHOP.ajax.doAjaxGVals('index_main', 'pid=index_main');\">" + stxt[204] + "</a><span class=\"txtSmall txtClrGrey\"> | </span>";
@@ -18,7 +18,7 @@ taqstr += "<a class=\"txtDecorNone txtClrHdr txtBold\" href=\"index.html?pid=aa-
 
  taqstr += "<a class=\"txtDecorNone txtClrHdr txtBold\" href=\"index.html?content=" + stxt[201] + "\">" + stxt[200] + "</a> | </span>";
  taqstr += "<a class=\"txtDecorNone txtClrHdr txtBold\" href=\"index.html?content=" + stxt[203] + "\">" + stxt[202] + "</a> | </span>";
-// return taqstr; 
+// return taqstr;
 JSSHOP.ui.setTinnerHTML("dvMCatTree", taqstr);
 };
 
@@ -43,7 +43,7 @@ tmpRdiv.innerHTML = doCollsLoad();
 // doProdCatTreeLoad();
 } catch(e) {
 alert("doRecambyMenuLoad: " + e);
-} 
+}
 };
 
 
@@ -85,7 +85,7 @@ if(ts.cat_pid == catid) {
 // tstr += "";
 break;
 }
- 
+
 iint++;
 }
 
@@ -94,12 +94,12 @@ iint++;
 // in main category
 // in sub category
 
- 
+
 JSSHOP.ui.setTinnerHTML("dvMCatTree", tstr);
 // doMainTreeLoad();
 } catch(e) {
 alert("doCatTreeLoad: " + e);
-} 
+}
 };
 var doSubMenuLoad = function() {
 	console.log("doSubMenuLoad.try doGOldSubMenuLoad");
@@ -155,25 +155,25 @@ a.href = "javascript:eindex('aa-" + tmpSTrSorE + "-parts-category','pid=aa-" + t
 
 }
 
- 
+
 currCoCatsStr += ts._id + ":";
 iint++;
 }
- 
 
- 
+
+
  // doCatTreeLoad();
 } catch(e) {
- 
+
 alert("doSubMenuLoad: " + e);
-}  
+}
 };
 
 var getMMenu = function() {
       var tmpmainUL = document.createElement("ul");
 	tmpmainUL.className="animenu__nav";
       tmpLI = document.createElement("li");
-	tmpLI.className="omenuartigo";	
+	tmpLI.className="omenuartigo";
 	tmpA = document.createElement('a');
 
 
@@ -218,29 +218,29 @@ var getMMenu = function() {
 		tmpLI.appendChild(tmpTbl);
 
 
-		tmpLI.appendChild(tmpUL);	
+		tmpLI.appendChild(tmpUL);
 	tmpmainUL.appendChild(tmpLI);
 	if(JSSHOP.shared.isMobile()) {
 	 tmpUL.style.display = "none";
-	   tmpUL.style.visibility = "hidden";			
+	   tmpUL.style.visibility = "hidden";
 
    }  else {
 		tmpTglDiv.style.display = "none";
 		tmpTglDiv.style.visibility = "hidden";
-		
-	 
-	   
+
+
+
    }
 
 	return tmpmainUL;
-}; 
+};
 
 
 var doAdmnMnuLd = function() {
       var admenu = document.getElementById("mnuT");
 	var mainUL = getMMenu();
       tmpLI = document.createElement("li");
-	tmpLI.className="omenuartigo";	
+	tmpLI.className="omenuartigo";
 	tmpA = document.createElement('a');
 	linkText = document.createTextNode("Companies");
 	tmpA.appendChild(linkText);
@@ -278,10 +278,10 @@ var doDefMnuLd = function() {
 hasr = "n";
 fullstr = "";
 mnotAppended = "n";
-     // var mainUL = document.getElementById("mnuULmain");// 
+     // var mainUL = document.getElementById("mnuULmain");//
 
 strMLink = "index.html?";
- 
+
 var mainUL = getMMenu();
 
 try {
@@ -292,7 +292,7 @@ try {
 
      tmpLI = document.createElement("li");
 	tmpLI.className="omenuartigo";
- 	
+
 	tmpA = document.createElement('a');
 
 	linkText = document.createTextNode(stxt[206]);
@@ -300,17 +300,17 @@ try {
 	tmpA.title = stxt[206] + "&nbsp;&nbsp;&nbsp;&nbsp;";
 	tmpA.href = strMLink + "pid=aa-show-makes";
 
-	tmpLI.appendChild(tmpA); 
+	tmpLI.appendChild(tmpA);
 	tmpUL = document.createElement("ul");
 	tmpUL.className="animenu__nav__child";
 	tmpUL.id = "mnuIshowMakes";
 	tmpLI.appendChild(tmpUL);
 	// mainUL.appendChild(tmpLI);
- 
+
 
  tmpLI = document.createElement("li");
 	tmpLI.className="omenuartigo";
- 	
+
 	tmpA = document.createElement('a');
 
 	linkText = document.createTextNode(stxt[204]);
@@ -318,7 +318,7 @@ try {
 	tmpA.title = stxt[204] + "&nbsp;&nbsp;&nbsp;&nbsp;";
 	tmpA.href = strMLink + "nt=y";
 
-	tmpLI.appendChild(tmpA); 
+	tmpLI.appendChild(tmpA);
 	tmpUL = document.createElement("ul");
 	tmpUL.className="animenu__nav__child";
 	tmpUL.id = "mnuIshowMakesA";
@@ -328,26 +328,26 @@ try {
 /*
  tmpLI = document.createElement("li");
 	tmpLI.className="omenuartigo";
- 	
+
 	tmpA = document.createElement('a');
 	linkText = document.createTextNode(stxt[208]);
 	tmpA.appendChild(linkText);
 	tmpA.title = stxt[208] + "&nbsp;&nbsp;&nbsp;&nbsp;";
 	tmpA.href = strMLink + "pid=" + stxt[209];
 
-	tmpLI.appendChild(tmpA); 
+	tmpLI.appendChild(tmpA);
 	tmpUL = document.createElement("ul");
 	tmpUL.className="animenu__nav__child";
 	tmpUL.id = "mnuIshowMakesB";
 	tmpLI.appendChild(tmpUL);
 	mainUL.appendChild(tmpLI);
 */
- 
+
 
 
  tmpLI = document.createElement("li");
 	tmpLI.className="omenuartigo";
- 	
+
 	tmpA = document.createElement('a');
 
 	linkText = document.createTextNode(stxt[200]);
@@ -355,7 +355,7 @@ try {
 	tmpA.title = stxt[200] + "&nbsp;&nbsp;&nbsp;&nbsp;";
 	tmpA.href = strMLink + "content=" + stxt[201];
 
-	tmpLI.appendChild(tmpA); 
+	tmpLI.appendChild(tmpA);
 	tmpUL = document.createElement("ul");
 	tmpUL.className="animenu__nav__child";
 	tmpUL.id = "mnuIshowMakesD";
@@ -365,7 +365,7 @@ document.getElementById("mnuT").appendChild(mainUL);
 
 
 doMainTreeLoad();
- 
+
 
 
 };
@@ -383,14 +383,14 @@ console.log("doNuShopMnuLd" + JSON.stringify(theResp));
 hasr = "n";
 fullstr = "";
 mnotAppended = "n";
-     // var mainUL = document.getElementById("mnuULmain");// 
+     // var mainUL = document.getElementById("mnuULmain");//
 	 if(pid.indexOf("edit-") != -1){
 		tmpSTrSorE = "edit";
 		} else {
 		tmpSTrSorE = "show";
 		}
 		strMLink = "javascript:eindex('aa-" + tmpSTrSorE + "-parts-category','pid=aa-" + tmpSTrSorE + "-parts-category');";
-		
+
 // strMLink = "index.html?pid=aa-show-category";
 // strMLink = "javascript:eindex('aa-show-category','pid=aa-show-category');";
 var mainUL = getMMenu();
@@ -406,19 +406,19 @@ while(iint < len) {
 ts = arrToFill[iint];
 currMenuArr.push(ts);
 
- 
+
  // if(ts.cat_pid == "0") { // add only main categories to list
  if(ts.cat_pid == ts.cat_id) { // add only main categories to list
 
       tmpLI = document.createElement("li");
 	tmpLI.className="omenuartigo";
- 	
+
 	tmpA = document.createElement('a');
 	console.log("doNuShopMnuLd.currPartsObj: " +  JSON.stringify(currPartsObj));
 	tmpATitleStr  = currPartsObj["pcats"]["pc" + ts.cat_pid];
 	linkText = document.createTextNode(tmpATitleStr);
 	tmpA.appendChild(linkText);
- 
+
 	// tmpA.title = ts.cat_title + "&nbsp;&nbsp;&nbsp;&nbsp;";
 	// get the translated category title from ts.cat_pid and cross
 	if(JSSHOP.shared.isMobile()) {
@@ -455,10 +455,10 @@ currMenuArr.push(ts);
 		// tmpA.href = "javascript:eindex('aa-show-parts-category','pid=aa-show-parts-category&ppid="+ts._id+"&cid="+ts.cat_coid+"&catid="+ts.cat_id + "');";
 
 		// tmpA.href = strMLink + "&ppid="+ts._id+"&cid="+ts.cat_coid+"&catid="+ts.cat_id;
- 
+
 	}
 	tmpTglDiv = document.createElement("div");
- 
+
 	tmpTglDiv.id = "tglDiv" + ts.cat_pid;
 	tmpTglDiv.innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" alt=\"btn_show_more\">&#xe5cf;</i>";
 	// tmpTglDiv float = "right";
@@ -475,7 +475,7 @@ currMenuArr.push(ts);
 	tmpTglSpan.id = "tglSpan" + ts.cat_pid;
 	tmpTglSpan.style.float = "right";
 	tmpTglSpan.innerHTML = "<i class=\"small-material-icons\" style=\"font-size:24px\" alt=\"btn_show_more\">&#xe5cf;</i>";
-	// tmpLI.appendChild(tmpA); 
+	// tmpLI.appendChild(tmpA);
 	// tmpLI.appendChild(tmpTglDiv);
 	// create a new table row with 2 cells and add the cells to the row
 	tmpTR = document.createElement("tr");
@@ -502,23 +502,23 @@ currMenuArr.push(ts);
 	if(JSSHOP.shared.isMobile()) {
 		 tmpUL.style.display = "none";
 		 tmpUL.style.visibility = "hidden";
- 
- 
+
+
 	}  else {
 		tmpTglDiv.style.display = "none";
 		tmpTglDiv.style.visibility = "hidden";
-		
+
 	}
 
 
 	tmpLI.appendChild(tmpUL);
 	mainUL.appendChild(tmpLI);
- 
+
   }
   currCoCatsStr += ts.cat_id + ":";
 iint++;
 }
- 
+
 currMenuTStr = mainUL.innerHTML;
 if(pid.indexOf("edit-") != -1){
 // doAdmnMnuLd();
@@ -528,7 +528,7 @@ if(isMnuLDd == "haha") {
 hoho = true;
 } else {
   setTimeout(function() { doSubMenuLoad()  }, 1000);
-}	
+}
 }
  /*
 // document.getElementById("mnuT").appendChild(imgplay);
@@ -555,7 +555,7 @@ var doNuMMenuLd = function(tmpMLcb) {
 console.log("doNuMMenuLd: " + tmpMLcb);
 
 if(cid == 0) {
- 
+
 doDefMnuLd();
 
 } else {
@@ -573,7 +573,7 @@ tmpDOs["o"] = "cat_valb Desc";
 tmpDOs["ws"] = "where cat_coid=? and cat_rtype=?";
 tmpDOs["wa"] = [cid,5];
 oi = getNuDBFnvp("qcat",5,null,tmpDOs);
-ctac = nCurrCnxOb(); 
+ctac = nCurrCnxOb();
 ctac["q"] = oi["rq"];
 ctac["cb"] = "doNuShopMnuLd";
 ctac["ts"] = "123";
@@ -660,12 +660,12 @@ tmpMCollItem = {};
 // tmpMCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-edit-item&cid=" + cid + "&catid=" + catid + "&itemid=" + itemid + "'";
 tmpMCollItem["u"] = "javascript:eindex('aa-edit-prop', 'pid=aa-edit-prop&prpid=" + currUrlArr.prpid + "');";
 tmpMCollItem["mi"] = "&#xe3c9;"; // edit
-tmpMCollItem["ti"] = stxt[985]; 
+tmpMCollItem["ti"] = stxt[985];
 tmpMCollItem["c"] = "coll-menu-item";
 tmpMCollItem["nm"] = "aa-edit-prop";
 currMCollItems["aa-edit-prop"] = tmpMCollItem;
 
-    
+
 
 tmpWCollItem = null;
 tmpWCollItem = {};
@@ -675,7 +675,7 @@ tmpWCollItem["mi"] = "images/misc/parts_w.gif"; // zoom_in
 tmpWCollItem["ti"] = stxt[108];
 tmpWCollItem["c"] = "collection-item";
 currMCollItems["aa-show-search"] = tmpWCollItem;
- 
+
 /* toggle-buttons  for the products grid-row  layout and price asc-desc order */
 
 
@@ -751,7 +751,7 @@ tmpQCollItem["mi"] = "&#xe3c9;"; // edit
 tmpQCollItem["ti"] = "Properties";
 tmpQCollItem["c"] = "coll-menu-item";
 currMCollItems["aa-show-props"] = tmpQCollItem;
- 
+
 tmpQCollItem = null;
 tmpQCollItem = {};
 tmpQCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-edit-shop&cid=" + cid + "&catid=" + catid + "'";
@@ -759,7 +759,7 @@ tmpQCollItem["mi"] = "&#xe3c9;"; // edit
 tmpQCollItem["ti"] = stxt[68];
 tmpQCollItem["c"] = "coll-menu-item";
 currMCollItems["aa-edit-shop"] = tmpQCollItem;
- 
+
 tmpQCollItem = null;
 tmpQCollItem = {};
 tmpQCollItem["u"] = "javascript:JSSHOP.shop.doCartAddPop();";
@@ -789,7 +789,7 @@ tmpQCollItem["ti"] = stxt[63];
 tmpQCollItem["c"] = "collection-item";
 currMCollItems["aa-edit-user"] = tmpQCollItem;
 
- 
+
 
 
 tmpQCollItem = null;
@@ -815,7 +815,7 @@ tmpQCollItem["mi"] = "&#xe3b3;"; // edit
 tmpQCollItem["ti"] = "CutOuts Cam";
 tmpQCollItem["c"] = "coll-menu-item";
 currMCollItems["aa-docutouts"] = tmpQCollItem;
- 
+
 tmpQCollItem = null;
 tmpQCollItem = {};
 tmpQCollItem["u"] = "javascript:document.location.href='index.html?pid=aa-sqldump'";
@@ -878,7 +878,7 @@ tmpMCollItem["ti"] = stxt[86];
 tmpMCollItem["c"] = "coll-menu-item";
 currMCollItems["aa-contactus"] = tmpMCollItem;
 
-  
+
 
 currMCollArr = [];
 tmpPrfSAL = "y";
@@ -895,7 +895,7 @@ tmpPrfSAL = "y";
 switch(pid) {
 
 
- 
+
 case "aa-add-prop":
 currMCollArr.push("aa-show-prop");
 currMCollArr.push("aa-edit-prop");
@@ -922,10 +922,10 @@ if((quid == 0) || (quid == "noQvalue")){
 
 currMCollArr.push("recent");
 currMCollArr.push("aa-show-favorites");
- 
+
 break;
 }
- 
+
 if(isJApp == "y") {
 currMCollArr.push("aa-show-app-tools");
 }
@@ -935,10 +935,10 @@ if((quid == 0) || (quid == "noQvalue")){
 } else {
 // currMCollArr.push("aa-logout");
 }
- 
-tmpStrbla = ""; 
+
+tmpStrbla = "";
 tmpStrAdmnM = "";
-iti = 0; 
+iti = 0;
 
 
 tmpClsNoClctn ="txtSmall txtDecorNone";
@@ -958,7 +958,7 @@ if(currMCollItems[currMCollArr[iti]].c == "collection-item") {
 // tmpStrAdmnM += "<a href=\"javascript:void(0);\" onclick=\"javascript:JSSHOP.ui.setNuCBBClickClr(this,'kcoll-menu-item','" + currMCollItems[currMCollArr[iti]].c + "', function(){"  + currMCollItems[currMCollArr[iti]].u + ";JSSHOP.ui.showHideElement('mmDdown','hide')}, 20);\" class=\"" + currMCollItems[currMCollArr[iti]].c + "\"><span><i class=\"menu-material-icons "  + currMCollItems[currMCollArr[iti]].c + "\">" + currMCollItems[currMCollArr[iti]].mi + "</i></span><span style=\"vertical-align:super;padding-left:12px;\">" + currMCollItems[currMCollArr[iti]].ti + "</span></a>";
 }
 
- 
+
 if(currMCollItems[currMCollArr[iti]].nm) {
 mlinkNm = currMCollItems[currMCollArr[iti]].nm;
 } else {
@@ -1027,22 +1027,22 @@ tmpStrAdmnM += currMCollItems[currMCollArr[iti]].f;
 		tmpStrAdmnM += currMCollItems[currMCollArr[iti]].i;
 		}
 		// tmpStrAdmnM += "</span>";
-		
+
 		if(currMCollItems[currMCollArr[iti]].f) {
 		tmpStrAdmnM += currMCollItems[currMCollArr[iti]].f;
 		}
-} 
+}
 
 
 
 // tmpStrbla += "<a href=\"" + currMCollItems[currMCollArr[iti]].u + "\" class=\"" + currMCollItems[currMCollArr[iti]].c + "\"><span><i class=\"menu-material-icons\">" + currMCollItems[currMCollArr[iti]].mi + "</i></span><span style=\"vertical-align:super;padding-left:12px;\"><ti data-ison=\"" + currMCollItems[currMCollArr[iti]].ti + "\" data-desc=\"view\">" + currMCollItems[currMCollArr[iti]].ti + "</ti></span></a>";
-iti++; 
+iti++;
 
 
 }
 console.log("tmpStrAdmnM: " + tmpStrAdmnM);
 return tmpStrAdmnM;
-}; 
+};
 
 
 
@@ -1055,10 +1055,10 @@ console.log("doShopMnuLd: " + theResp);
 hasr = "n";
 fullstr = "";
 mnotAppended = "n";
-     // var mainUL = document.getElementById("mnuULmain");// 
+     // var mainUL = document.getElementById("mnuULmain");//
 
 strMLink = "index.html?pid=aa-show-category";
- 
+
 var mainUL = getMMenu();
 
 try {
@@ -1073,13 +1073,13 @@ while(iint < len) {
 ts = arrToFill[iint];
 currMenuArr.push(ts);
 
- 
+
  if(ts.cat_pid == "0") { // add only main categories to list
 
 
       tmpLI = document.createElement("li");
 	tmpLI.className="omenuartigo";
- 	
+
 	tmpA = document.createElement('a');
 
 	linkText = document.createTextNode(ts.cat_title);
@@ -1087,17 +1087,17 @@ currMenuArr.push(ts);
 	tmpA.title = ts.cat_title + "&nbsp;&nbsp;&nbsp;&nbsp;";
 	tmpA.href = strMLink + "&ppid="+ts._id+"&cid="+ts.cat_coid+"&catid="+ts._id;
 
-	tmpLI.appendChild(tmpA); 
+	tmpLI.appendChild(tmpA);
 	tmpUL = document.createElement("ul");
 	tmpUL.className="animenu__nav__child";
 	tmpUL.id = "mnuI" + ts._id;
 	tmpLI.appendChild(tmpUL);
 	mainUL.appendChild(tmpLI);
- 
+
 }
 iint++;
 }
- 
+
 document.getElementById("mnuT").appendChild(mainUL);
 
             imgplay = null;

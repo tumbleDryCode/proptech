@@ -1,6 +1,13 @@
 // Various Scripts pertaining to the pages.
+if (!window.JSSHOP) {
+    var JSSHOP = new Object();
+}
+if (!window.JSSHOP.core) {
+    JSSHOP.core = new Object();
+}
+
 var jscssprefix = "";
-var onlyNums = new RegExp(/^\d{10}$/); // allow only numbers 
+var onlyNums = new RegExp(/^\d{10}$/); // allow only numbers
 var pipeDir = "noQvalue";
 var forceCache = "no";
 var currCacheVer = "1";
@@ -24,12 +31,12 @@ var catid = 0;
 var itemid = 0;
 var threadid = 0;
 var pgpq = "noQvalue";
-var arrDBnDocFNames = []; 
+var arrDBnDocFNames = [];
 var arrDBnDocFNVpar = [];
 var arrDBFNames = [];
 var arrAllForms = [];
 var tmpSQBArr = [];
-var tmpVindex = 0; 
+var tmpVindex = 0;
 var ntImgCtr = []; // array counter for images
 var currMresp = "";
 var quid = 0;
@@ -54,7 +61,7 @@ var currPrpImgsFldr = "images/property";
 var currCartStr = "";
 var currCartIttl = 0;
 var currCartTtl = 0;
-var currCartTShow = "no"; 
+var currCartTShow = "no";
 var currMItemsArr = [];
 var currProdsArr = [];
 var currQcommsArr = [];
@@ -95,12 +102,12 @@ var currSpinText = "noQvalue";
 var currSpinType = "small";
 var currSpinHtml = "noQvalue";
 var currSpinTarget = "noQvalue";
-var currIContent = "y"; // ajax request to include the tplates/... file or not 
+var currIContent = "y"; // ajax request to include the tplates/... file or not
 var svftObj = {};
 
 
-var currRcntActStr = ""; // recent activity set as cookie string ie., seen products or searches 
-var currRcntActArr = []; // recent activity parsed as array of objects from cookie string 
+var currRcntActStr = ""; // recent activity set as cookie string ie., seen products or searches
+var currRcntActArr = []; // recent activity parsed as array of objects from cookie string
 var currRcntActHstr = "";
 var currRcntFavsStr = "";
 var currRcntFavsArr = [];
@@ -132,9 +139,9 @@ var xarrAllYears = ["2022","2021","2020","2019","2018","2017","2016","2015","201
 // create a new array with the years in reverse order
 var arrAllYears = xarrAllYears.slice().reverse();
 
- 
 
- 
+
+
 var currRegionsObj = {};
 var currRegionsArr = [];
 var currShopsArr = [];
@@ -144,7 +151,7 @@ var currGImgEint = 0;
 var currPlaceObj = {};
 // select Distinct c_location, c_zp, c_loc_lat, c_loc_lng from qco where c_ccode = 351 and c_loc_lat != 'Error'  group by c_location order by c_location asc;
 var isPhP = "y";
-var isJApp = "no"; 
+var isJApp = "no";
 var isJavaFx = "no";
 var currDocHref = document.location.href;
 var currBtnSort; // the current button sort
@@ -177,7 +184,7 @@ if((currDocHref.indexOf("nls=y") != -1) || (currDocHref.indexOf("isr=y") != -1))
     document.location.href = "./";
 }
 
-var nuDW = function(theElem) { 
+var nuDW = function(theElem) {
 if(theElem.getAttribute("data-isscript") != null) {
 try {
 tDison = theElem.getAttribute("data-isscript");
@@ -209,7 +216,7 @@ isPhP = "y";
 var getCurrUrl = function() {
     var strTurl = "noQvalue";
     strCurl = document.location.href;
-    
+
     if(strCurl.indexOf("?") != -1) {
     strTurl = strCurl.substring(strCurl.indexOf('?') + 1);
     }
@@ -229,14 +236,14 @@ var getCurrUrl = function() {
     // if(strTurl == "noQvalue") {} else {}
     // newArr = JSSHOP.shared.urlToArray(strTurl);
     };
-    
-    
+
+
     if(!window.JSSHOP){
     var JSSHOP = new Object();
     }
-    
+
     JSSHOP.loadScript = function(path, callback, filetype) {
-        try { 
+        try {
             // alert(loaded_scripts.length);
             n = path.lastIndexOf("/");
             q = path.lastIndexOf("?");
@@ -274,7 +281,7 @@ var getCurrUrl = function() {
                     callback(path, "ok");
                 }
             }
-    
+
             function handleReadyStateChange() {
                 var state;
                 if (!done) {
@@ -284,7 +291,7 @@ var getCurrUrl = function() {
                     }
                 }
             }
-    
+
             function handleError() {
                 if (!done) {
                     done = true;
@@ -296,7 +303,7 @@ var getCurrUrl = function() {
             JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.loadScript");
         }
     };
-    
+
     JSSHOP.checkLoader = function(thePath, theMessage) {
         try {
             ttlLoaded = loaded_scripts.length;
@@ -306,32 +313,32 @@ var getCurrUrl = function() {
             JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.checkLoader");
         }
     };
-    
-     
+
+
     /* ajax
     */
-    
+
     if (!window.JSSHOP.ajax) {
         JSSHOP.ajax = new Object();
     }
-    
-    
+
+
         JSSHOP.ajax.doNuAjaxPipe = function(theElem,apUrl,tmpCB) {
             try {
-                
+
                 var oReq = new XMLHttpRequest();
                // var oReq = JSSHOP.ajax.createXMLHTTPObject();
              //  oReq.setRequestHeader("connection", "close");
              tUTA = JSSHOP.shared.urlToArray(apUrl);
                if(oReq == false) {
                        tmpCB(theElem,"Error",tUTA);
-    
+
               } else {
                 oReq.onreadystatechange = function() {
                     if (oReq.readyState == 4) {
-    
+
                     //  return oReq.responseText;
-                  if(theElem == "give") {  } 
+                  if(theElem == "give") {  }
                   tCleanForJSON = oReq.responseText.replace(/[\n\r]+/g, " ");
                   tCleanForJSON = tCleanForJSON.replace(/\t+/g, " ");
                   tCleanForJSON = tCleanForJSON.replace(/ +/g, " ");
@@ -346,20 +353,20 @@ var getCurrUrl = function() {
                   //  alert("doNuAjaxPipe: " + tCleanForJSON);
                   //  alert("doNuAjaxPipe: " + oReq.responseText);
                        tmpCB(theElem,tCleanForJSON,tUTA);
-                    }  
+                    }
                 }
                 oReq.onerror = function() {
                                        tmpCB(theElem,oReq.responseText,tUTA);
                                        console.log("oReq.error: " + oReq.responseText);
                       // alert("yikes, we have a connection problem..." + oReq.responseText);
-         
+
                 }
                 rpUrl = apUrl;
                 console.log("doNuAjaxPipe.apUrl: " + apUrl);
                 rpUrl = apUrl.replace("index.php", "");
                 if(apUrl.indexOf("admin/tplates") != -1) {
                     isGdAdmn = "y";
-                    
+
                     console.log("doNuAjaxPipe:isGdAdmn " + isGdAdmn);
                 } else {
                  rpUrl = rpUrl.replace("admin/", "");
@@ -369,40 +376,40 @@ var getCurrUrl = function() {
                 oReq.open("GET", shopDir + aapUrl, true);
                 picr = oReq.send(null);
                }
-                } catch (e) { 
+                } catch (e) {
                 alert("doNuAjaxPipe: " + e);
                        tmpCB(theElem,"Error: " + e,tUTA);
                   }
         };
-        
-        
+
+
     /* cookies
     */
-    
+
     if (!window.JSSHOP.cookies) {
         JSSHOP.cookies = new Object();
     }
-    
+
     JSSHOP.cookies.getCookie = function(check_name) {
     var cretval;
     var tval;
     // if(isPhP == "no") {
     if((isJApp == "yes") || (isJavaFx == "yes")) {
-    
+
     try {
     if(check_name == "quid") {
     tval = app.fetchConfValInt(check_name);
     } else {
     tval = app.fetchConfValString(check_name);
     }
-    
+
     fldChallArray.value = tval;
     cretval = fldChallArray.value;
     // alert("getCookie.isJavaFx: " + cretval + tval);
         // alert("getCookie.isJavaFx: " + check_name + cretval);
     // default null string for android preferences
-    
-    if(cretval == "noQvalue")  { 
+
+    if(cretval == "noQvalue")  {
     return null;
     } else {
     return cretval;
@@ -411,10 +418,10 @@ var getCurrUrl = function() {
     alert("getCookie: " + e);
     return null;
     }
-    
+
     } else {
-    
-    
+
+
         // first we'll split this cookie up into name/value pairs
         // note: document.cookie only returns name=value, not the other components
         var a_all_cookies = document.cookie.split( ';' );
@@ -428,7 +435,7 @@ var getCurrUrl = function() {
             a_temp_cookie = a_all_cookies[i].split( '=' );
             // and trim left/right whitespace while we're at it
             cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, '');
-        
+
             // if the extracted name matches passed check_name
             if ( cookie_name == check_name )
             {
@@ -449,36 +456,36 @@ var getCurrUrl = function() {
         {
             return null;
         }
-    
+
     }
     };
-    
-    
-    JSSHOP.cookies.setCookie = function(name,value,expires,path,domain,secure) 
+
+
+    JSSHOP.cookies.setCookie = function(name,value,expires,path,domain,secure)
     {
-    
+
     // if(isPhP == "no") {
-    
+
     if((isJApp == "yes") || (isJavaFx == "yes")) {
     try {
-    
+
     if(name == "quid") {
     app.setConfValInt(name,value);
     } else {
-    app.setConfValString(name,value); 
+    app.setConfValString(name,value);
     }
     } catch(e) {
     alert("setCookie.E: " + e)
     }
-    
+
     } else {
     // set time, it's in milliseconds
     var today = new Date();
     today.setTime( today.getTime() );
     /*
-    if the expires variable is set, make the correct 
-    expires time, the current script below will set 
-    it for x number of days, to make it for hours, 
+    if the expires variable is set, make the correct
+    expires time, the current script below will set
+    it for x number of days, to make it for hours,
     delete * 24, for minutes, delete * 60 * 24
     */
     if ( expires )
@@ -487,45 +494,45 @@ var getCurrUrl = function() {
     }
     var expires_date = new Date( today.getTime() + (expires) );
     document.cookie = name + "=" +escape( value ) +
-    ( ( expires ) ? ";expires=" + expires_date.toGMTString() : "" ) + 
-    ( ( path ) ? ";path=" + path : "" ) + 
+    ( ( expires ) ? ";expires=" + expires_date.toGMTString() : "" ) +
+    ( ( path ) ? ";path=" + path : "" ) +
     ( ( domain ) ? ";domain=" + domain : "" ) +
     ( ( secure ) ? ";secure" : "" );
-    
+
     }
     };
-    
+
     JSSHOP.cookies.deleteCookie = function(name,path,domain) {
     // if(isPhP == "no") {
         if((isJApp == "yes") || (isJavaFx == "yes")) {
     try {
-    
+
     if(name == "quid") {
     app.setConfValInt(name,0);
     } else {
-    app.setConfValString(name,"noQvalue"); 
+    app.setConfValString(name,"noQvalue");
     }
     } catch(e) {
     alert("setCookie.E: " + e)
     }
-    
+
     } else {
     if(JSSHOP.cookies.getCookie(name)) document.cookie = name + "=" + ( ( path ) ? ";path=" + path : "") + ( ( domain ) ? ";domain=" + domain : "" ) + ";expires=Thu, 01-Jan-1970 00:00:01 GMT";
     }
     };
-    
-    
-     
+
+
+
     if (!window.JSSHOP.shared) {
         JSSHOP.shared = new Object();
     }
-    
+
     JSSHOP.shared.endsWith = function(str,suffix) {
         return str.indexOf(suffix, str.length - suffix.length) !== -1;
     };
-    
-    
-    
+
+
+
     JSSHOP.shared.urlToArray = function(urla) {
     // alert(url);
         try {
@@ -537,7 +544,7 @@ var getCurrUrl = function() {
             var pairs = url.substring(url.indexOf('?') + 1).split('&');
             for (var i = 0; i < pairs.length; i++) {
               var pair = pairs[i].split('=');
-    
+
               //check we have an array here - add array numeric indexes so the key elem[] is not identical.
               if(JSSHOP.shared.endsWith(decodeURIComponent(pair[0]), '[]') ) {
                   var arrName = decodeURIComponent(pair[0]).substring(0, decodeURIComponent(pair[0]).length - 2);
@@ -545,7 +552,7 @@ var getCurrUrl = function() {
                       arr.push(arrName);
                       arr[arrName] = [];
                   }
-    
+
                   arr[arrName].push(decodeURIComponent(pair[1]));
                   request[arrName] = arr[arrName];
               } else {
@@ -558,14 +565,14 @@ var getCurrUrl = function() {
            //  JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.urlToArray");
             return "noQvalue";
         }
-    
+
         };
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
     JSSHOP.shared.strToObj = function(url) {
     // alert(url);
         try {
@@ -574,7 +581,7 @@ var getCurrUrl = function() {
             var pairs = url.split('&');
             for (var i = 0; i < pairs.length; i++) {
               var pair = pairs[i].split('=');
-    
+
               //check we have an array here - add array numeric indexes so the key elem[] is not identical.
               if(JSSHOP.shared.endsWith(decodeURIComponent(pair[0]), '[]') ) {
                   var arrName = decodeURIComponent(pair[0]).substring(0, decodeURIComponent(pair[0]).length - 2);
@@ -582,7 +589,7 @@ var getCurrUrl = function() {
                       arr.push(arrName);
                       arr[arrName] = [];
                   }
-    
+
                   arr[arrName].push(decodeURIComponent(pair[1]));
                   request[arrName] = arr[arrName];
               } else {
@@ -595,28 +602,28 @@ var getCurrUrl = function() {
             JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.urlToArray");
             return "noQvalue";
         }
-    
+
         };
-     
-    
-     
-    
-    
-    
-   
-    
+
+
+
+
+
+
+
+
     try {
     tmpNvstr = navigator.userAgent;
     if(tmpNvstr.indexOf("JavaFX") != -1) {
     isJavaFx = "yes";
     JSSHOP.loadScript("css/x_japp.css", JSSHOP.checkLoader,"css");
-    
+
     }
     } catch(e) {
     alert("x_japp.css faied: "+ e);
     }
-    
-    
+
+
     function urlToArray(urla) {
     // alert(url);
         try {
@@ -628,7 +635,7 @@ var getCurrUrl = function() {
             var pairs = url.substring(url.indexOf('?') + 1).split('&');
             for (var i = 0; i < pairs.length; i++) {
               var pair = pairs[i].split('=');
-    
+
               //check we have an array here - add array numeric indexes so the key elem[] is not identical.
               if(JSSHOP.shared.endsWith(decodeURIComponent(pair[0]), '[]') ) {
                   var arrName = decodeURIComponent(pair[0]).substring(0, decodeURIComponent(pair[0]).length - 2);
@@ -636,7 +643,7 @@ var getCurrUrl = function() {
                       arr.push(arrName);
                       arr[arrName] = [];
                   }
-    
+
                   arr[arrName].push(decodeURIComponent(pair[1]));
                   request[arrName] = arr[arrName];
               } else {
@@ -649,15 +656,15 @@ var getCurrUrl = function() {
             JSSHOP.logJSerror(e, arguments, "JSSHOP.shared.urlToArray");
             return "noQvalue";
         }
-    
+
         }
-        
- currUrlArr = JSSHOP.shared.urlToArray(getCurrUrl()); 
+
+ currUrlArr = JSSHOP.shared.urlToArray(getCurrUrl());
 
     if(currUrlArr.demouser) {
     JSSHOP.cookies.setCookie("demouser", "yes", "30", "", "", "");
     }
-    
+
 var pfBoot = function(theElem, theResp, marble) {
     console.log("seq.pfBoot");
     document.getElementById(theElem).innerHTML = theResp;

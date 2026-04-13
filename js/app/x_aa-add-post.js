@@ -1,6 +1,4 @@
-// Add this import at the top if using modules, otherwise the function is already inlined in toggleMapRecording
-// import { setInlineMapTabsEnabled } from './inline-map-tab-utils.js';
-
+// Cache selected properties to avoid repeated shared-state reads.
 var cachedSlctdPrpsArr = null;
 var isCCapModLoaded = "no";
 var euiFFObjArr = null;
@@ -17,7 +15,7 @@ var tmpPstPrpsArr = [];
 var tmpSwiperObj = null;
 var tmpSwiperObj = {};
 var tmpInsrtdPstId = 0;
- var nuMediaRecorder = null;
+var nuMediaRecorder = null;
 var nuRecordedChunks = [];
 
 function getCachedSlctdPrpsArr() {
@@ -30,49 +28,17 @@ function getCachedSlctdPrpsArr() {
 function clearCachedSlctdPrpsArr() {
     cachedSlctdPrpsArr = null;
 }
-
-
-/*
-CREATE TABLE `qposts` (
-  `_id` int(10) NOT NULL AUTO_INCREMENT,
-  `p_title` varchar(100) NOT NULL,
-  `p_content` longtext NOT NULL,
-  `p_image` varchar(300) NOT NULL,
-  `p_privacy` varchar(12) NOT NULL,
-  `p_vala` varchar(64) NOT NULL,
-  `p_added` varchar(12) NOT NULL,
-  PRIMARY KEY (`_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_c
- 
-<form name="qposts">
-<input type="hidden" name="_id" value="" data-prval="disnull">
-<input type="hidden" name="p_rtype" id="p_rtype" value="5" data-prval="disnull">
-<input type="hidden" name="p_uid" id="p_uid" value="5" data-prval="disnull">
-<input type="hidden" name="p_title" id="p_title" value="" data-prval="disnull">
-<input type="hidden" name="p_content" id="p_content" value="" data-prval="disnull">
-<input type="hidden" name="p_image" id="p_image" value="default.jpg" data-prval="disnull">
-<input type="hidden" name="p_privacy" id="p_privacy" value="0" data-prval="disnull">
-<input type="hidden" name="p_vala" id="p_vala" value="" data-prval="disnull">
-<input type="hidden" name="p_added" id="p_added" value="" data-prval="disnull">
-</form>
-
-
-
- 
-
-*/
-
-
+// Render current user's image posts as selectable thumbnails.
 function rndrUsrPImgList(theRDa, theRDb, theRDc) {
     console.log("rndrPImgThmbs: " + theRDa + " " + theRDb + " " + theRDc);
-    tThmbStr = "<div style=\"width:100%; overflow:hidden;\">"; // Container for floated divs
+    tThmbStr = "<div style=\"width:100%; overflow:hidden;\">";
     currUsrUpdtsObj["pimage"] = null;
     currUsrUpdtsArr = "";
 
-    if(theRDb.indexOf("_id") != -1) {
+    if (theRDb.indexOf("_id") != -1) {
         tAiretArr = JSON.parse(theRDb);
-            currUsrUpdtsObj["pimage"] = [];
-            currUsrUpdtsObj["pimage"] = tAiretArr;
+        currUsrUpdtsObj["pimage"] = [];
+        currUsrUpdtsObj["pimage"] = tAiretArr;
         var len = tAiretArr.length;
         iint = 0;
         while (iint < len) {
@@ -80,7 +46,7 @@ function rndrUsrPImgList(theRDa, theRDb, theRDc) {
             tUrlDecd = decodeURIComponent(tChTstr);
             tChoppedTstr = tUrlDecd;
             aChoppedTstr = tChoppedTstr;
-            if(tChoppedTstr.length > 45) {
+            if (tChoppedTstr.length > 45) {
                 aChoppedTstr = tChoppedTstr.substring(0, 45) + "...";
             }
             tThmbStr += "<div style=\"float:left; width:150px; height:200px; margin:5px; border:1px solid #ccc; text-align:center; cursor:pointer; background-color:#f9f9f9;\" ";
@@ -97,88 +63,76 @@ function rndrUsrPImgList(theRDa, theRDb, theRDc) {
     JSSHOP.ui.popAndFillLbox(tThmbStr);
 }
 
+// Use cached pimage posts when available; otherwise fetch from qposts.
 function getUsrPImgList() {
-    if(currUsrUpdtsObj["pimage"] && currUsrUpdtsObj["pimage"].length > 0) {
+    if (currUsrUpdtsObj["pimage"] && currUsrUpdtsObj["pimage"].length > 0) {
         rndrUsrPImgList(null, JSON.stringify(currUsrUpdtsObj["pimage"]), null);
         return;
     } else {
         console.log("getUsrPImgList: no cached pimage posts, fetching from db");
-    tmpDOs = {};
-    tmpDOs["ws"] = "where p_uid = ? and p_rtype = ? and p_ptype = ?";
-    tmpDOs["wa"] = [quid, 5, "pimage"];
-    tmpDOs["l"] = 80;
-    oi = getNuDBFnvp("qposts",5,null,tmpDOs);
-    currRQtable = "qposts";
-    currRQstr = oi["rq"];
-    // alert("getUsrPImgList currRQstr: " + currRQstr);
-    doQComm(oi["rq"], null, "rndrUsrPImgList");
+        tmpDOs = {};
+        tmpDOs["ws"] = "where p_uid = ? and p_rtype = ? and p_ptype = ?";
+        tmpDOs["wa"] = [quid, 5, "pimage"];
+        tmpDOs["l"] = 80;
+        oi = getNuDBFnvp("qposts", 5, null, tmpDOs);
+        currRQtable = "qposts";
+        currRQstr = oi["rq"];
+        doQComm(oi["rq"], null, "rndrUsrPImgList");
     }
-}       
+}
 
-
-
-var fnshPTypeChange = function() {
+var fnshPTypeChange = function () {
     document.getElementById("dvDemoView").innerHTML = "...../.....";
-    document.getElementById("tmp_p_ptype").disabled=false;
-    JSSHOP.ui.setCBBClickClr(tmp_p_ptype,'bkgdClrDlg',tmp_p_ptype.className, function(){void(0)});
-    };
+    document.getElementById("tmp_p_ptype").disabled = false;
+    JSSHOP.ui.setCBBClickClr(tmp_p_ptype, "bkgdClrDlg", tmp_p_ptype.className, function () {
+        void(0);
+    });
+};
 
+// Load data source options used by the post-type picker.
+var doPstTypOpts = function (tPTval) {
+    objVal = tPTval;
 
-var doPstTypOpts = function(tPTval) {
-     objVal = tPTval;
-   
     tTChngStr = "";
-    switch(objVal) {
+    switch (objVal) {
         case "users":
-        tTChngStr += "Layout type changed to users.";
-        if(tmpPstUsrArr[0]) {
-        // has postUsrs array
-            setTPstUsrsArr(null,JSON.stringify(tmpPstUsrArr),null);
-        } else {
-            tmpDOs = {};
-            tmpDOs["ws"] = "where _id > ?";
-            tmpDOs["wa"] = [0];
-            tmpDOs["l"] = 12;
-            
-            oi = getNuDBFnvp("quser",5,null,tmpDOs);
-            currRQtable = "quser";
-            currRQstr = oi["rq"];
+            tTChngStr += "Layout type changed to users.";
+            if (tmpPstUsrArr[0]) {
+                setTPstUsrsArr(null, JSON.stringify(tmpPstUsrArr), null);
+            } else {
+                tmpDOs = {};
+                tmpDOs["ws"] = "where _id > ?";
+                tmpDOs["wa"] = [0];
+                tmpDOs["l"] = 12;
 
-            // alert("edit users currRQstr: " + currRQstr);
-            doQComm(oi["rq"], null, "setTPstUsrsArr");
-        }
-    
-    break;
-    case "props":
-        if(tmpPstPrpsArr[0]) {
-        // has postPrps array
-            setTPstPrpsArr(null,JSON.stringify(tmpPstPrpsArr),null);
-        } else {
-            tmpDOys = {};
-            tmpDOys["ws"] = "where _id > ?";
-            tmpDOys["wa"] = [0];
-            tmpDOys["l"] = 12;
-            oiy = getNuDBFnvp("property",5,null,tmpDOys);
-            currRQtable = "property";
-            currRQstr = oi["rq"];
-            // alert("edit users currRQstr: " + currRQstr);
-            doQComm(oiy["rq"], null, "setTPstPrpsArr");
-        }
-
- 
-    break;
-    default:
-    tTChngStr += "Layout type changed to props.";
-    break;
+                oi = getNuDBFnvp("quser", 5, null, tmpDOs);
+                currRQtable = "quser";
+                currRQstr = oi["rq"];
+                doQComm(oi["rq"], null, "setTPstUsrsArr");
+            }
+            break;
+        case "props":
+            if (tmpPstPrpsArr[0]) {
+                setTPstPrpsArr(null, JSON.stringify(tmpPstPrpsArr), null);
+            } else {
+                tmpDOys = {};
+                tmpDOys["ws"] = "where _id > ?";
+                tmpDOys["wa"] = [0];
+                tmpDOys["l"] = 12;
+                oiy = getNuDBFnvp("property", 5, null, tmpDOys);
+                currRQtable = "property";
+                currRQstr = oi["rq"];
+                doQComm(oiy["rq"], null, "setTPstPrpsArr");
+            }
+            break;
+        default:
+            tTChngStr += "Layout type changed to props.";
+            break;
     }
- 
-
-    // JSSHOP.ui.popAndFillLbox(tTChngStr);
-  
-    // procNuUIitem("qposts","p_ptype",currUrlArr.tpstid,objVal,"fnshPTypeChange");
-    };
+};
 
 function getInlineSwprSettingsHtml() {
+    // Build dropdown-based Swiper settings UI for inline post configuration.
     var settingsStr = "";
     try {
         var ddCntObj = {};
@@ -261,16 +215,17 @@ function getInlineSwprSettingsHtml() {
         ddLoopObj["kvIcnsObj"] = {"true": "&#xe5cd;", "false": "&#xe5cd;"};
         settingsStr += JSSHOP.ui.getNuBSdropDstr(ddLoopObj);
 
-    } catch(e) {
+    } catch (e) {
         settingsStr = "<div class=\"txtSmall txtClrRed\">Swiper settings error: " + e + "</div>";
     }
     return settingsStr;
 }
 
 function getInlineMapSettingsHtml() {
+    // Build map post settings and ensure required hidden config fields exist.
     var settingsStr = "";
     try {
-        var ensureInlineMapCaptureMoveendGateField = function() {
+        var ensureInlineMapCaptureMoveendGateField = function () {
             try {
                 if (typeof ensureMapPstCaptureMoveendGateField == "function") {
                     return ensureMapPstCaptureMoveendGateField();
@@ -291,7 +246,7 @@ function getInlineMapSettingsHtml() {
             return localGateEl;
         };
 
-        var getInlineMapCaptureMoveendGateValue = function() {
+        var getInlineMapCaptureMoveendGateValue = function () {
             try {
                 if (typeof getMapPstCaptureMoveendGateValue == "function") {
                     return getMapPstCaptureMoveendGateValue();
@@ -310,7 +265,7 @@ function getInlineMapSettingsHtml() {
             return localVal;
         };
 
-        var ensureInlineMapForceCanvasRendererField = function() {
+        var ensureInlineMapForceCanvasRendererField = function () {
             try {
                 if (typeof ensureMapPstForceCanvasRendererField == "function") {
                     return ensureMapPstForceCanvasRendererField();
@@ -331,7 +286,7 @@ function getInlineMapSettingsHtml() {
             return localForceEl;
         };
 
-        var getInlineMapForceCanvasRendererValue = function() {
+        var getInlineMapForceCanvasRendererValue = function () {
             try {
                 if (typeof getMapPstForceCanvasRendererValue == "function") {
                     return getMapPstForceCanvasRendererValue();
@@ -577,7 +532,7 @@ function getInlineMapSettingsHtml() {
         ddMapForceRendererObj["icn"] = "noQvalue";
         ddMapForceRendererObj["kvIcnsObj"] = {"yes": "&#xe5ca;", "no": "&#xe14c;"};
         settingsStr += JSSHOP.ui.getNuBSdropDstr(ddMapForceRendererObj);
-    } catch(e) {
+    } catch (e) {
         settingsStr = "<div class=\"txtSmall txtClrRed\">Map settings error: " + e + "</div>";
     }
     return settingsStr;
@@ -631,7 +586,17 @@ function getInlineMapMarkerDisplayTitle(markerObj, markerType, markerIdx) {
         } else {
             if (markerObj.ptitle && String(markerObj.ptitle).trim() !== "") {
                 try {
-                    return LZString.decompressFromEncodedURIComponent(String(markerObj.ptitle));
+                    var rawPtitle = String(markerObj.ptitle);
+                    var decPtitle = LZString.decompressFromEncodedURIComponent(rawPtitle);
+                    if (
+                        typeof decPtitle === "string" &&
+                        decPtitle !== "" &&
+                        typeof LZString.compressToEncodedURIComponent === "function" &&
+                        LZString.compressToEncodedURIComponent(decPtitle) === rawPtitle
+                    ) {
+                        return decPtitle;
+                    }
+                    return rawPtitle;
                 } catch (ePttl) {
                     return String(markerObj.ptitle);
                 }
@@ -1145,7 +1110,7 @@ function openInlineMapMarkerOptions(markerType, markerKey) {
         popStr += '</div>';
 
         JSSHOP.ui.popAndFillLbox(popStr);
-        setTimeout(function() {
+        setTimeout(function () {
             var txtEl = document.getElementById(prefix + "_title_text");
             var txtClrEl = document.getElementById(prefix + "_title_text_color");
             var bgClrEl = document.getElementById(prefix + "_title_bg_color");
@@ -1157,44 +1122,44 @@ function openInlineMapMarkerOptions(markerType, markerKey) {
             var modeEl = document.getElementById(prefix + "_title_container_mode");
             var bgOpacityEl = document.getElementById(prefix + "_title_bg_opacity");
             if (txtEl) {
-                txtEl.addEventListener("input", function() { renderInlineMapMarkerOptionsPreview(prefix); });
-                txtEl.addEventListener("change", function() { renderInlineMapMarkerOptionsPreview(prefix); });
+                txtEl.addEventListener("input", function () { renderInlineMapMarkerOptionsPreview(prefix); });
+                txtEl.addEventListener("change", function () { renderInlineMapMarkerOptionsPreview(prefix); });
             }
             if (modeEl) {
-                modeEl.addEventListener("input", function() { renderInlineMapMarkerOptionsPreview(prefix); });
-                modeEl.addEventListener("change", function() { renderInlineMapMarkerOptionsPreview(prefix); });
+                modeEl.addEventListener("input", function () { renderInlineMapMarkerOptionsPreview(prefix); });
+                modeEl.addEventListener("change", function () { renderInlineMapMarkerOptionsPreview(prefix); });
             }
             if (txtClrEl) {
-                txtClrEl.addEventListener("input", function() { renderInlineMapMarkerOptionsPreview(prefix); });
-                txtClrEl.addEventListener("change", function() { renderInlineMapMarkerOptionsPreview(prefix); });
+                txtClrEl.addEventListener("input", function () { renderInlineMapMarkerOptionsPreview(prefix); });
+                txtClrEl.addEventListener("change", function () { renderInlineMapMarkerOptionsPreview(prefix); });
             }
             if (bgClrEl) {
-                bgClrEl.addEventListener("input", function() { renderInlineMapMarkerOptionsPreview(prefix); });
-                bgClrEl.addEventListener("change", function() { renderInlineMapMarkerOptionsPreview(prefix); });
+                bgClrEl.addEventListener("input", function () { renderInlineMapMarkerOptionsPreview(prefix); });
+                bgClrEl.addEventListener("change", function () { renderInlineMapMarkerOptionsPreview(prefix); });
             }
             if (brdClrEl) {
-                brdClrEl.addEventListener("input", function() { renderInlineMapMarkerOptionsPreview(prefix); });
-                brdClrEl.addEventListener("change", function() { renderInlineMapMarkerOptionsPreview(prefix); });
+                brdClrEl.addEventListener("input", function () { renderInlineMapMarkerOptionsPreview(prefix); });
+                brdClrEl.addEventListener("change", function () { renderInlineMapMarkerOptionsPreview(prefix); });
             }
             if (fontSizeEl) {
-                fontSizeEl.addEventListener("input", function() { renderInlineMapMarkerOptionsPreview(prefix); });
-                fontSizeEl.addEventListener("change", function() { renderInlineMapMarkerOptionsPreview(prefix); });
+                fontSizeEl.addEventListener("input", function () { renderInlineMapMarkerOptionsPreview(prefix); });
+                fontSizeEl.addEventListener("change", function () { renderInlineMapMarkerOptionsPreview(prefix); });
             }
             if (fontFamilyEl) {
-                fontFamilyEl.addEventListener("input", function() { renderInlineMapMarkerOptionsPreview(prefix); });
-                fontFamilyEl.addEventListener("change", function() { renderInlineMapMarkerOptionsPreview(prefix); });
+                fontFamilyEl.addEventListener("input", function () { renderInlineMapMarkerOptionsPreview(prefix); });
+                fontFamilyEl.addEventListener("change", function () { renderInlineMapMarkerOptionsPreview(prefix); });
             }
             if (boldEl) {
-                boldEl.addEventListener("input", function() { renderInlineMapMarkerOptionsPreview(prefix); });
-                boldEl.addEventListener("change", function() { renderInlineMapMarkerOptionsPreview(prefix); });
+                boldEl.addEventListener("input", function () { renderInlineMapMarkerOptionsPreview(prefix); });
+                boldEl.addEventListener("change", function () { renderInlineMapMarkerOptionsPreview(prefix); });
             }
             if (italicEl) {
-                italicEl.addEventListener("input", function() { renderInlineMapMarkerOptionsPreview(prefix); });
-                italicEl.addEventListener("change", function() { renderInlineMapMarkerOptionsPreview(prefix); });
+                italicEl.addEventListener("input", function () { renderInlineMapMarkerOptionsPreview(prefix); });
+                italicEl.addEventListener("change", function () { renderInlineMapMarkerOptionsPreview(prefix); });
             }
             if (bgOpacityEl) {
-                bgOpacityEl.addEventListener("input", function() { renderInlineMapMarkerOptionsPreview(prefix); });
-                bgOpacityEl.addEventListener("change", function() { renderInlineMapMarkerOptionsPreview(prefix); });
+                bgOpacityEl.addEventListener("input", function () { renderInlineMapMarkerOptionsPreview(prefix); });
+                bgOpacityEl.addEventListener("change", function () { renderInlineMapMarkerOptionsPreview(prefix); });
             }
             initInlineMapMarkerColorPickers(prefix);
             refreshInlineMapMarkerNuDropdowns(prefix);
@@ -1283,7 +1248,7 @@ function saveInlineMapMarkerOptions(prefix) {
             if (settingsPane) settingsPane.style.display = 'none';
         }
         if (typeof JSSHOP !== "undefined" && JSSHOP.ads && typeof JSSHOP.ads.trnsltMapPstObj == "function") {
-            setTimeout(function(){ JSSHOP.ads.trnsltMapPstObj(); }, 80);
+            setTimeout(function () { JSSHOP.ads.trnsltMapPstObj(); }, 80);
         }
         delete inlineMapMarkerOptionsCtx[prefix];
         JSSHOP.ui.closeLbox();
@@ -1349,7 +1314,7 @@ function getInlineMapMarkersHtml() {
             markersStr += "<span title=\"Options\" onclick=\"javascript:openInlineMapMarkerOptions('" + selectedType + "','" + mKey + "');\" style=\"position:absolute;right:-8px;top:-8px;cursor:pointer;background:rgba(255,255,255,0.95);border:1px solid #d7d7d7;border-radius:50%;width:22px;height:22px;line-height:20px;text-align:center;font-size:14px;\">&#9881;</span>";
             markersStr += "</div>";
             markersStr += "<div style=\"min-width:0;flex:1;\">";
-            markersStr += "<div class=\"txtClrHdr txtBold\" style=\"font-size:12px;\">" + (mi + 1) + ". " + mTitle + "</div>";
+            markersStr += "<div class=\"txtClrHdr txtBold\" style=\"font-size:12px;\"><a href=\"javascript:void(0);\" onclick=\"javascript:openInlineMapMarkerOptions('" + selectedType + "','" + mKey + "');\" style=\"color:inherit;text-decoration:underline;\">" + (mi + 1) + ". " + mTitle + "</a></div>";
             markersStr += "<div class=\"txtSmall txtClrGrey\" style=\"font-size:11px;\">Marker " + (mi + 1) + " <a href=\"javascript:void(0);\" onclick=\"javascript:openInlineMapMarkerOptions('" + selectedType + "','" + mKey + "');\" style=\"margin-left:6px;color:#0d6efd;text-decoration:underline;\">Options</a></div>";
             markersStr += "</div>";
             markersStr += "</div>";
@@ -1416,7 +1381,7 @@ function renderInlineTabsForMapOrSwiper(postType) {
 
     var tabs = dvTabsHost.querySelectorAll('#dvInlinePTypeTabs a');
     for (var i = 0; i < tabs.length; i++) {
-        tabs[i].addEventListener('click', function(e) {
+        tabs[i].addEventListener('click', function (e) {
             e.preventDefault();
             var target = this.getAttribute('href');
             var links = dvTabsHost.querySelectorAll('#dvInlinePTypeTabs .nav-link');
@@ -1433,9 +1398,9 @@ function renderInlineTabsForMapOrSwiper(postType) {
                     dvSettingsPane.style.display = "none";
                 }
                 if (postType == "pcarousel" && typeof JSSHOP !== "undefined" && JSSHOP.ads && typeof JSSHOP.ads.trnsltSwiperObj == "function") {
-                    setTimeout(function(){ JSSHOP.ads.trnsltSwiperObj(); }, 120);
+                    setTimeout(function () { JSSHOP.ads.trnsltSwiperObj(); }, 120);
                 } else if (postType == "pmap" && typeof JSSHOP !== "undefined" && JSSHOP.ads && typeof JSSHOP.ads.trnsltMapPstObj == "function") {
-                    setTimeout(function(){ JSSHOP.ads.trnsltMapPstObj(); }, 120);
+                    setTimeout(function () { JSSHOP.ads.trnsltMapPstObj(); }, 120);
                 }
             } else if (target == "#inlineMarkersTab") {
                 dvPrev.style.display = "none";
@@ -1459,22 +1424,22 @@ function renderInlineTabsForMapOrSwiper(postType) {
     }
 
     if (postType == "pcarousel") {
-        setTimeout(function() { doSwpCntntPick("inpSwprCntnt", inpSwprCntnt.value, "Properties"); }, 120);
+        setTimeout(function () { doSwpCntntPick("inpSwprCntnt", inpSwprCntnt.value, "Properties"); }, 120);
     } else if (postType == "pmap") {
-        setTimeout(function() { doMapPstCntntPk("inpMapPstCntnt", inpMapPstCntnt.value, "Properties"); }, 120);
+        setTimeout(function () { doMapPstCntntPk("inpMapPstCntnt", inpMapPstCntnt.value, "Properties"); }, 120);
     }
     return true;
 }
 
 
-    var doPTypeTip = function(tMainEl, tMELVal, tMELTxt) {
+    var doPTypeTip = function (tMainEl, tMELVal, tMELTxt) {
         document.getElementById("dvDemoView").innerHTML = "  ";
         document.getElementById("dvDemoView").style.display = "block";
-        if(document.getElementById("dvInlineTabsHost")) {
+        if (document.getElementById("dvInlineTabsHost")) {
             document.getElementById("dvInlineTabsHost").style.display = "none";
             document.getElementById("dvInlineTabsHost").innerHTML = "";
         }
-        if(document.getElementById("dvTipTxt")) {
+        if (document.getElementById("dvTipTxt")) {
             document.getElementById("dvTipTxt").style.display = "block";
         }
     // use \u to escape the unicode characters for the special characters in the strings
@@ -1487,7 +1452,7 @@ function renderInlineTabsForMapOrSwiper(postType) {
     tTChngStrObj["spa_spa"] = "";
     tTChngStrObj["fr_fr"] = "";
     hasSlect = "no";
-    switch(objVal) {
+    switch (objVal) {
         case "ppost":
             // creta 3 slmtable divs floating left with eacho of the updates_map_thumb, updates_swiper_thumb, updates_flyer_thumb images and a short description of each type linked to the doPTypeChange function with the appropriate value
 
@@ -1548,7 +1513,7 @@ function renderInlineTabsForMapOrSwiper(postType) {
         tTChngStrObj["fr_fr"] += "Type de mise \u00e0 jour chang\u00e9 en publication.";
         break;
         }
-        if(hasSlect == "ayes") {
+        if (hasSlect == "ayes") {
             tTChngStrObj["en_us"] += "Plase select layout type: ";
             tTChngStrObj["en_us"] += "<select id=\"inpPTselect\" name=\"inpPTselect\" >";
             tTChngStrObj["en_us"] += "<option value=\"props\">Properties</option>";
@@ -1561,7 +1526,7 @@ function renderInlineTabsForMapOrSwiper(postType) {
             tTChngStrObj["pt_pt"] += "<option value=\"users\">Usuarios</option>";
             tTChngStrObj["pt_pt"] += "</select>";
             tTChngStrObj["pt_pt"] += "<input type=\"button\" value=\"Salvar\" onclick=\"javascript:doPstTypOpts(document.getElementById('inpPTselect'));\">";
-            tTChngStrObj["spa_spa"] += "Seleccione el tipo de diseño: ";
+            tTChngStrObj["spa_spa"] += "Seleccione el tipo de diseÃ±o: ";
             tTChngStrObj["spa_spa"] += "<select id=\"inpPTselect\" name=\"inpPTselect\" >";
             tTChngStrObj["spa_spa"] += "<option value=\"props\">Propiedades</option>";
             tTChngStrObj["spa_spa"] += "<option value=\"users\">Usuarios</option>";
@@ -1581,10 +1546,10 @@ function renderInlineTabsForMapOrSwiper(postType) {
             */
 
          tFullTTTtxt = tTChngStrObj[usrlang];
-            if(objVal == "ppost") {
+            if (objVal == "ppost") {
                 dumiu = "yes";
                             tPtypPkStr = "";
-              tPtypPkStr += "<table style=\"margin: 0 auto;cellspacing:3px;cellpadding:3px;\">";              
+              tPtypPkStr += "<table style=\"margin: 0 auto;cellspacing:3px;cellpadding:3px;\">";
             tPtypPkStr += "<tr>";
             tPtypPkStr += "<td class=\"slmtable txtClrHdr txtBold brdrClrHdr crsrPointer\" onclick=\"javascript:JSSHOP.ui.doGenBSDDcb('noQvalue','p_ptype', 'pmap','Map','doPTypeTip');\">";
             tPtypPkStr += "<div style=\"text-align:center;margin:6px;padding:6px;\"><img src=\"images/misc/updates_map_thumb.jpeg\" alt=\"Map\" title=\"Map\" class=\"icnRndnUser\">";
@@ -1608,139 +1573,38 @@ function renderInlineTabsForMapOrSwiper(postType) {
             } else {
 
                  tSelPropStr = "<div style=\"margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:8px;max-width:340px;\">";
-                 tSelPropStr += "<button type=\"button\" class=\"btn btn-primary btn-sm d-inline-flex align-items-center\" style=\"padding:4px; background:#4267b2; color:white; border:none; border-radius:4px; cursor:pointer;\" onclick=\"javascript:if(event){event.stopPropagation();}JSSHOP.ui.getPickerDiv('props');\">";
+                 tSelPropStr += "<button type=\"button\" class=\"btn btn-primary btn-sm d-inline-flex align-items-center\" style=\"padding:4px; background:#4267b2; color:white; border:none; border-radius:4px; cursor:pointer;\" onclick=\"javascript:if (event) {event.stopPropagation();}JSSHOP.ui.getPickerDiv('props');\">";
                  tSelPropStr += "<img src=\"images/misc/updates_swiper_thumb.jpeg\" alt=\"icon\" title=\"icon\" style=\"width:22px;height:22px;border-radius:50%;margin-right:8px;\">";
                  tSelPropStr += stxt[635] + " " + tPostsTypeObj[objVal] + "</button>";
-                 if(objVal == "pimage") {
-                 tSelPropStr += "<button type=\"button\" class=\"btn btn-outline-primary btn-sm d-inline-flex align-items-center\" style=\"padding:4px; background:#4267b2; color:white; border:none; border-radius:4px; cursor:pointer;\" onclick=\"javascript:if(event){event.stopPropagation();}openFlyersModalDialog();\">";
+                 if (objVal == "pimage") {
+                 tSelPropStr += "<button type=\"button\" class=\"btn btn-outline-primary btn-sm d-inline-flex align-items-center\" style=\"padding:4px; background:#4267b2; color:white; border:none; border-radius:4px; cursor:pointer;\" onclick=\"javascript:if (event) {event.stopPropagation();}openFlyersModalDialog();\">";
                  tSelPropStr += "<img src=\"images/misc/updates_swiper_thumb.jpeg\" alt=\"icon\" title=\"icon\" style=\"width:22px;height:22px;border-radius:50%;margin-right:8px;\">Recent</button>";
                  }
                  tSelPropStr += "</div>";
 
-             
+
                 tFullTTTtxt += tSelPropStr;
 
-   
+
              // getPTypeChange();
             }
-                 
+
                    dvTipTxt.innerHTML = tFullTTTtxt;
                    dvTipTxt.style.cursor = "default";
                    dvTipTxt.onclick = null;
-        // JSSHOP.ui.popAndFillLbox(tTChngStrObj[usrlang]);
-    // procNuUIitem("qposts","p_ptype",currUrlArr.tpstid,objVal,"fnshPTypeChange");
     };
 
 
-var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
-    // doPTypeTip("p_ptype", "ppost", "ppost");
+var doPTypeChange = function (tMainEl, tMELVal, tMELTxt) {
     doPTypeTip(tMainEl, tMELVal, tMELTxt);
     console.log("doPTypeChange: " + tMainEl + " " + tMELVal + " " + tMELTxt);
-    // use \u to escape the unicode characters for the special characters in the strings
-    /* document.getElementById("tmp_p_ptype").disabled=true;
-    objVal = tMELVal;
-    tTChngStrObj = {};
-    tTChngStrObj["en_us"] = "";
-    tTChngStrObj["pt_pt"] = "";
-    tTChngStrObj["spa_spa"] = "";
-    tTChngStrObj["fr_fr"] = "";
-    hasSlect = "no";
-    switch(objVal) {
-        case "ppost":
-        tTChngStrObj["en_us"] += "Update type changed to post.";
-        tTChngStrObj["pt_pt"] += "Tipo de Update alterado para post.";
-        tTChngStrObj["spa_spa"] += "Tipo de Update cambiado a publicacion.";
-        tTChngStrObj["fr_fr"] += "Type de mise \u00e0 jour chang\u00e9 en publication.";
-        break;
-        case "pcontent":
-        tTChngStrObj["en_us"] += "Update type changed to content. A content post is more of a blog post.";
-        tTChngStrObj["pt_pt"] += "Tipo de Update alterado para conteudo. Um post de conteudo \u00e9 mais um post de blog.";
-        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a contenido. Una publicacion de contenido es mas un blog.";
-        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en contenu. Une publication de contenu est similaire \u00e0 un article de blog.";
-        break;
-        case "pimage":
-            // JSSHOP.ads.doImgPostCnfgPop();
-            return;
-        tTChngStrObj["en_us"] += "Post type changed to Flyer. The Flyer is created from the properties you selected.";
-        tTChngStrObj["en_us"] += "You can edit the Flyer and then will be converted into an image you can share.";
-        tTChngStrObj["pt_pt"] += "Tipo de post alterado para Flyer. O Flyer \u00e9 criado a partir das propriedades que voc\u00ea selecionou.";
-        tTChngStrObj["pt_pt"] += "Voc\u00ea pode editar o Flyer e depois ele ser\u00e1 convertido em uma imagem que voc\u00ea pode compartilhar.";
-        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a Flyer. El Flyer se crea a partir de las propiedades que seleccionaste.";
-        tTChngStrObj["spa_spa"] += "Puedes editar el Flyer y luego se convertira en una imagen que puedes compartir.";
-        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en Flyer. Le Flyer est cr\u00e9\u00e9 \u00e0 partir des propri\u00e9t\u00e9s que vous avez s\u00e9lectionn\u00e9es.";
-        tTChngStrObj["fr_fr"] += "Vous pouvez \u00e9diter le Flyer et ensuite il sera converti en une image que vous pourrez partager.";
-        hasSlect = "yes";
-        break;
-        case "pcarousel":
-            // JSSHOP.ads.doSwprConfigPop();
-            return;
-        tTChngStrObj["en_us"] += "Post type changed to carousel. A sliding image gallery is created from user or property listings.";
-        tTChngStrObj["pt_pt"] += "Tipo de post alterado para carrossel. Uma galeria de imagens deslizantes \u00e9 criada a partir de listagens de usuarios ou propriedades.";
-        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a carrusel. Se crea una galería de imagenes deslizantes a partir de listados de usuarios o propiedades.";
-        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en carrousel. Une galerie d'images d\u00e9filantes est cr\u00e9\u00e9e \u00e0 partir des utilisateurs ou des propri\u00e9t\u00e9s.";
-        hasSlect = "yes";
-        break;
-        case "pmap":
-        // JSSHOP.ads.doMapPostCnfgPop();
-        return;
-        tTChngStrObj["en_us"] += "Post type changed to map. A map is created from user or property listings.";
-        tTChngStrObj["pt_pt"] += "Tipo de post alterado para mapa. Um mapa  criado a partir de listagens de usuarios ou propriedades.";
-        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a mapa. Se crea un mapa a partir de listados de usuarios o propiedades.";
-        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en carte. Une carte est cr\u00e9\u00e9e \u00e0 partir des utilisateurs ou des propri\u00e9t\u00e9s.";
-        // use \unicode characters for quotes and accents on all translation strings for eterninty
-        hasSlect = "yes";
-        break;
-        default:
-        tTChngStrObj["en_us"] += "Post type changed to post.";
-        tTChngStrObj["pt_pt"] += "Tipo de post alterado para post.";
-        tTChngStrObj["spa_spa"] += "Tipo de publicacion cambiado a publicacion.";
-        tTChngStrObj["fr_fr"] += "Type de publication chang\u00e9 en publication.";
-        break;
-        }
-        if(hasSlect == "ayes") {
-            tTChngStrObj["en_us"] += "Plase select layout type: ";
-            tTChngStrObj["en_us"] += "<select id=\"inpPTselect\" name=\"inpPTselect\" >";
-            tTChngStrObj["en_us"] += "<option value=\"props\">Properties</option>";
-            tTChngStrObj["en_us"] += "<option value=\"users\">Users</option>";
-            tTChngStrObj["en_us"] += "</select>";
-            tTChngStrObj["en_us"] += "<input type=\"button\" value=\"Save\" onclick=\"javascript:doPstTypOpts(document.getElementById('inpPTselect'));\">";
-            tTChngStrObj["pt_pt"] += "Selecione o tipo de layout: ";
-            tTChngStrObj["pt_pt"] += "<select id=\"inpPTselect\" name=\"inpPTselect\" >";
-            tTChngStrObj["pt_pt"] += "<option value=\"props\">Propriedades</option>";
-            tTChngStrObj["pt_pt"] += "<option value=\"users\">Usuarios</option>";
-            tTChngStrObj["pt_pt"] += "</select>";
-            tTChngStrObj["pt_pt"] += "<input type=\"button\" value=\"Salvar\" onclick=\"javascript:doPstTypOpts(document.getElementById('inpPTselect'));\">";
-            tTChngStrObj["spa_spa"] += "Seleccione el tipo de diseño: ";
-            tTChngStrObj["spa_spa"] += "<select id=\"inpPTselect\" name=\"inpPTselect\" >";
-            tTChngStrObj["spa_spa"] += "<option value=\"props\">Propiedades</option>";
-            tTChngStrObj["spa_spa"] += "<option value=\"users\">Usuarios</option>";
-            tTChngStrObj["spa_spa"] += "</select>";
-            tTChngStrObj["spa_spa"] += "<input type=\"button\" value=\"Salvar\" onclick=\"javascript:doPstTypOpts(document.getElementById('inpPTselect'));\">";
-            tTChngStrObj["fr_fr"] += "Veuillez sélectionner le type de mise en page : ";
-            tTChngStrObj["fr_fr"] += "<select id=\"inpPTselect\" name=\"inpPTselect\" >";
-            tTChngStrObj["fr_fr"] += "<option value=\"props\">Propriétés</option>";
-            tTChngStrObj["fr_fr"] += "<option value=\"users\">Utilisateurs</option>";
-            tTChngStrObj["fr_fr"] += "</select>";
-            tTChngStrObj["fr_fr"] += "<input type=\"button\" value=\"Enregistrer\" onclick=\"javascript:doPstTypOpts(document.getElementById('inpPTselect'));\">";
-         }
-             tTChngStrObj["en_us"] += "<br><input type=\"button\" value=\"Close\" onclick=\"javascript:JSSHOP.ui.closeLbox();\" class=\"cls_button cls_button-small bkgdClrDlg txtClrHdr txtSmall\">";
-            tTChngStrObj["pt_pt"] += "<br><input type=\"button\" value=\"Fechar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\" class=\"cls_button cls_button-small bkgdClrDlg txtClrHdr txtSmall\">";
-            tTChngStrObj["spa_spa"] += "<br><input type=\"button\" value=\"Cerrar\" onclick=\"javascript:JSSHOP.ui.closeLbox();\" class=\"cls_button cls_button-small bkgdClrDlg txtClrHdr txtSmall\">";
-            tTChngStrObj["fr_fr"] += "<br><input type=\"button\" value=\"Fermer\" onclick=\"javascript:JSSHOP.ui.closeLbox();\" class=\"cls_button cls_button-small bkgdClrDlg txtClrHdr txtSmall\">";
-            // dvDemoView.innerHTML = tTChngStrObj[usrlang];
-            if(tMELVal == "ppost" || tMELVal == "pcontent") {
-                  JSSHOP.ui.popAndFillLbox(tTChngStrObj[usrlang]);
-
-            }
-*/
-    // procNuUIitem("qposts","p_ptype",currUrlArr.tpstid,objVal,"fnshPTypeChange");
     };
 
-    var getPtypeCngPop = function() {
+    var getPtypeCngPop = function () {
         tDPTCel = document.getElementById("p_ptype");
-        switch(tDPTCel.value) {
+        switch (tDPTCel.value) {
             case "ppost":
-            case "pcontent":    
+            case "pcontent":
             doPTypeChange("p_ptype", tDPTCel.value, "nep");
             break;
             case "pimage":
@@ -1748,7 +1612,7 @@ var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
             break;
             case "pcarousel":
             tSwprSettingsTab = document.querySelector('#dvInlinePTypeTabs a[href="#inlineSettingsTab"]');
-            if(tSwprSettingsTab) {
+            if (tSwprSettingsTab) {
                 tSwprSettingsTab.click();
             } else {
                 JSSHOP.ads.doSwprConfigPop();
@@ -1756,7 +1620,7 @@ var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
             break;
             case "pmap":
             tMapSettingsTab = document.querySelector('#dvInlinePTypeTabs a[href="#inlineSettingsTab"]');
-            if(tMapSettingsTab) {
+            if (tMapSettingsTab) {
                 tMapSettingsTab.click();
             } else {
                 JSSHOP.ads.doMapPostCnfgPop();
@@ -1768,21 +1632,21 @@ var doPTypeChange = function(tMainEl, tMELVal, tMELTxt) {
             }
 
     }
-    var getPTypeChange = function() {
+    var getPTypeChange = function () {
         // doPTypeChange
         tDPTCel = document.getElementById("p_ptype");
         doPTypeChange("p_ptype", tDPTCel.value, "nep");
     };
 
 
-var fnshPrivChange = function() { 
+var fnshPrivChange = function () {
     document.getElementById("tmp_p_privacy").disabled=false;
-     JSSHOP.ui.setCBBClickClr(tmp_p_privacy,'bkgdClrDlg','clsDummy', function(){void(0)});
+     JSSHOP.ui.setCBBClickClr(tmp_p_privacy,'bkgdClrDlg','clsDummy', function () {void(0)});
     };
-    
-    
-    
-    var doPrivacyChange = function(theObj) { 
+
+
+
+    var doPrivacyChange = function (theObj) {
     document.getElementById("tmp_p_privacy").disabled=true;
     objVal = JSSHOP.shared.getCurrSelectOpt(theObj);
     procNuUIitem("qposts","p_privacy",currUrlArr.tpstid,objVal,"fnshPrivChange");
@@ -1790,39 +1654,39 @@ var fnshPrivChange = function() {
 
 function setPostImgs(a,theAIb,c) {
     console.log("setPostImgs: " + a + " " + theAIb + " " + c);
- 
+
     try {
         tmpPrpLinksArr = null;
         tmpPrpLinksArr = [];
-    
-    if(theAIb.indexOf("_id") != -1) {
+
+    if (theAIb.indexOf("_id") != -1) {
 
 		tAiretArr = JSON.parse(theAIb);
 		var len = tAiretArr.length;
         tstr = "";
-        
+
         iint = 0;
         while (iint < len) {
- 
+
              tBsj = tAiretArr[iint];
-             if(tAiretArr[iint]["m_file"] == p_image.value) {
+             if (tAiretArr[iint]["m_file"] == p_image.value) {
               tstr += "<div style=\"float:left\" class=\"crsrPointer brdrClrRed\">";
-              
+
             } else {
 			tstr += "<div style=\"float:left\" class=\"crsrPointer\">";
             }
  			tstr += "<img src=\"images/ucontent/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
 			tstr += "</div>";
-         
+
 			iint++;
 		} // end while
-        
+
         tstr += "<div style=\"clear:both\"></div>";
 		document.getElementById("dvPostImgs").innerHTML = tstr;
-         
+
 	} // end if _id
- 
-	} catch(e) {
+
+	} catch (e) {
 		alert("setPostImgs: " + e);
 	}
 }
@@ -1835,24 +1699,24 @@ function getPostImgs() {
     oi = getNuDBFnvp("qmedia", 5, null, tmpFobj);
     doQComm(oi["rq"], null, "setPostImgs");
 }
- 
 
-function fnishMPstAdd(aa,bb,cc) { 
+
+function fnishMPstAdd(aa,bb,cc) {
     getPostImgs();
     JSSHOP.ui.closeLbox();
     };
 
-var finishMPstUld = function(theMMum) {
+var finishMPstUld = function (theMMum) {
     try {
-    
+
 
         image = null;
         image = new Image();
         image.src = "images/ucontent/s_thumb" + theMMum;
-                // document.getElementById('dvPLogoImg').style.backgroundImage="url(images/slogos/s_thumb" + theMMum + ")"; 
+                // document.getElementById('dvPLogoImg').style.backgroundImage="url(images/slogos/s_thumb" + theMMum + ")";
          JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", theMMum);
-           
-        // document.getElementById('dvPLogoImg').style.backgroundImage="url(images/slogos/s_thumb" + theMMum + ")";    
+
+        // document.getElementById('dvPLogoImg').style.backgroundImage="url(images/slogos/s_thumb" + theMMum + ")";
         document.getElementById("dvPostImgs").appendChild(image);
          JSSHOP.shared.setFrmFieldVal("qmedia", "m_file", theMMum);
         JSSHOP.shared.setFrmFieldVal("qmedia", "m_file_thumb", "s_thumb" + theMMum);
@@ -1866,7 +1730,7 @@ var finishMPstUld = function(theMMum) {
         tmpDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qmedia"], "nada");
         oi = getNuDBFnvp("qmedia", 6, null, tmpDOs);
         doQComm(oi["rq"], null, "fnishMPstAdd");
-    } catch(e) {
+    } catch (e) {
         alert("finishMPstUld:" + e);
         }
     };
@@ -1880,7 +1744,7 @@ var finishMPstUld = function(theMMum) {
     try {
         currQUsrLnksArr = JSON.parse(b);
         console.log("getQULnksArr: links arr: " + JSON.stringify(currQUsrLnksArr));
-    } catch(e) {
+    } catch (e) {
         alert("getQULnksArr: " + e);
     }
          //    JSSHOP.loadScript("js/app/x_aqr.js", fnshAQRload, "js");
@@ -1895,24 +1759,24 @@ function setTnDPlachldrs(theTLSpath, theTLSstat) {
     console.log("setTnDPlachldrs");
     tpttxtinp = document.getElementById("tmp_p_title");
     tpttxtinp.placeholder = "Post title here...";
-    tpcntinp = document.getElementById("tmp_p_content");    
+    tpcntinp = document.getElementById("tmp_p_content");
     //set focus to content
     tpcntinp.focus();
     tpcntinp.placeholder = "Post content here...";
-    if(tinyMCE.activeEditor) {
-       setTimeout(function() {
+    if (tinyMCE.activeEditor) {
+       setTimeout(function () {
            tinyMCE.activeEditor.setContent("<p>Post content here...</p>");
        }, 1500);
     }
     console.log("setTnDPlachldrs: " + theTLSpath + " :: " + theTLSstat);
-    if(currQUsrLnksArr[0]) {
+    if (currQUsrLnksArr[0]) {
        console.log("setTnDPlachldrs: already have links: " + JSON.stringify(currQUsrLnksArr));
 
     } else {
     tmpDOs = null;
     tmpDOs = {};
     tmpDOs["ws"] = "where k_userid=? and k_rtype=?";
-    tmpDOs["wa"] = [quid,5]; 
+    tmpDOs["wa"] = [quid,5];
     oi = getNuDBFnvp("qlinks",5,null,tmpDOs);
     doQComm(oi["rq"], "nada", "getQULnksArr");
     }
@@ -1920,7 +1784,7 @@ function setTnDPlachldrs(theTLSpath, theTLSstat) {
         // load the coloris js and css with loadScript function
         JSSHOP.loadScript("js/coloris/coloris.js", loadColorisCss, "js");
 
-    
+
 }
 
 function loadTnyI(theTLSpath, theTLSstat) {
@@ -1934,7 +1798,7 @@ function setUPostAddSave(tSUPAresp) {
         var insertedPostId = responseObj.data;
         tmpInsrtdPstId = insertedPostId;
             tSlctdPstType = document.getElementById("p_ptype").value;
-                if(tSlctdPstType == "pvideo") {
+                if (tSlctdPstType == "pvideo") {
                     var hasQueuedAudio = (typeof hasPendingAudioClipSrcForPost === "function") && hasPendingAudioClipSrcForPost();
                     if (hasQueuedAudio && typeof createVideoWithAudioStandalone === "function" && typeof consumePendingAudioClipSrcForPost === "function") {
                         var queuedAudioSrc = consumePendingAudioClipSrcForPost();
@@ -1945,16 +1809,16 @@ function setUPostAddSave(tSUPAresp) {
                 } else {
         eindex("aa-edit-post", "pid=aa-edit-post&tpstid=" + insertedPostId);
         }
-    } catch(e) {
+    } catch (e) {
         console.error("Error parsing response: " + e);
         alert("Error saving post: " + e);
     }
-    // JSSHOP.ui.setCBBClickClr(tmpSvBtnObj,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium  bkgdClrHdr txtClrWhite', function(){tmpSvBtnObj.innerHTML=stxt[21];tmpSvBtnObj.disabled=false;});
+    // JSSHOP.ui.setCBBClickClr(tmpSvBtnObj,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium  bkgdClrHdr txtClrWhite', function () {tmpSvBtnObj.innerHTML=stxt[21];tmpSvBtnObj.disabled=false;});
 }
 function fnishSvCnvsImg(tFnishResp) {
     console.log("fnishSvCnvsImg: " + tFnishResp);
     try   {
-        if(tFnishResp.indexOf("Error") != -1) {
+        if (tFnishResp.indexOf("Error") != -1) {
             alert("fnishSvCnvsImg: " + tFnishResp);
         } else {
             tFRespObj = JSON.parse(tFnishResp);
@@ -1962,9 +1826,9 @@ function fnishSvCnvsImg(tFnishResp) {
            //  doQComm(oi["rq"], null, "setUPostAddSave");
            setPostAdd();
         }
-    } catch(e) {
+    } catch (e) {
         alert("fnishSvCnvsImg: " + e);
-    }   
+    }
 }
 
 function savePstCanvasImg(canvas) {
@@ -1976,7 +1840,7 @@ function savePstCanvasImg(canvas) {
         encdLZdDataUrl = LZString.compressToEncodedURIComponent(decDdataURL);
         console.log("savePstCanvasImg: compressed dataURL length: " + encdLZdDataUrl.length);
         // log first 100 chars of dataURL
-        console.log("savePstCanvasImg: dataURL: " + decDdataURL.substring(0,100));  
+        console.log("savePstCanvasImg: dataURL: " + decDdataURL.substring(0,100));
         inpCnvsImg.value = encdLZdDataUrl;
         tNGPObj = null;
         tNGPObj = {};
@@ -1985,11 +1849,10 @@ function savePstCanvasImg(canvas) {
         tNGPArr = [];
         tNGPArr.push(tNGPObj);
        JSSHOP.ajax.doNwstGenAjaxPost(tNGPArr, "_p/fileCnvsImg.php", "POST", fnishSvCnvsImg, 30000);
-       //   document.forms["qposts"].submit();
-    } catch(e) {
+    } catch (e) {
         alert("savePstCanvasImg: " + e);
     }
-} 
+}
 
 function loadRecentFlyer(flyerId) {
     // Placeholder for loading a recent flyer by ID
@@ -2015,7 +1878,7 @@ function setPostAdd() {
      // if p_ptype is pimage, save the demo editor content as LZString compressed string in p_vars
     tSlctdPstType = document.getElementById("p_ptype").value;
     console.log("setPostAdd: " + tSlctdPstType);
-    if(tSlctdPstType == "pimage") {
+    if (tSlctdPstType == "pimage") {
          daTAbod = taDemoEdtr_ifr.contentWindow.document.body;
         daDiv = daTAbod.querySelector("#dvTMCdemo");
         if (daDiv) {
@@ -2072,7 +1935,7 @@ function setPostAdd() {
      tmpFobj["knvp"] = JSSHOP.shared.getFrmVals(document["qposts"], "nada");
  // tmpFobj["knvp"] = JSSHOP.shared.getKNVParr(JSSHOP.shared.getDynFrmVals(document["qposts"], "tmp_"));
         oi = getNuDBFnvp("qposts", 6, null, tmpFobj);
-    
+
      // doQComm(oi["rq"], null, "setUPostAddSave");
      JSSHOP.ajax.doNurAjaxPost(oi["rq"], setUPostAddSave);
 }
@@ -2083,14 +1946,14 @@ async function doPostAdd() {
      tSlctdPstType = document.getElementById("p_ptype").value;
      console.log("add-pos:doPostAdd: " + tSlctdPstType);
 
-    var ensureHtml2CanvasLoaded = function() {
-        return new Promise(function(resolve) {
+    var ensureHtml2CanvasLoaded = function () {
+        return new Promise(function (resolve) {
             if (typeof html2canvas != "undefined" && typeof html2canvas == "function") {
                 resolve(true);
                 return;
             }
             if (typeof JSSHOP != "undefined" && JSSHOP && typeof JSSHOP.loadScript == "function") {
-                JSSHOP.loadScript("js/thirdp/html2canvas.js", function() {
+                JSSHOP.loadScript("js/thirdp/html2canvas.js", function () {
                     resolve(typeof html2canvas != "undefined" && typeof html2canvas == "function");
                 }, "js");
                 return;
@@ -2099,7 +1962,7 @@ async function doPostAdd() {
         });
     };
 
-    var saveWithCaptureFallback = async function(targetEl, targetLabel) {
+    var saveWithCaptureFallback = async function (targetEl, targetLabel) {
         if (!targetEl) {
             console.error("Capture target not found: " + targetLabel);
             return false;
@@ -2141,7 +2004,7 @@ async function doPostAdd() {
     };
     // JSSHOP.ajax.doNuAjaxPost(oi["rq"], setUPostAddSave);
 
-     switch(tSlctdPstType) {
+     switch (tSlctdPstType) {
         case "pimage":
             // dvTDiv is a div in taDemoEdtr_ifr.contentWindow.document.body
             daTAbod = taDemoEdtr_ifr.contentWindow.document.body;
@@ -2154,25 +2017,24 @@ async function doPostAdd() {
             break;
         case "pcarousel":
             tZpd = LZString.compressToEncodedURIComponent(JSON.stringify(JSSHOP.ads.getUpdatePVrs("pcarousel")));
-            p_vars.value = tZpd;   
+            p_vars.value = tZpd;
               daMdiv = document.getElementById("dvDemoView");
                 await saveWithCaptureFallback(daMdiv, "pcarousel:dvDemoView");
             break;
         case "pmap":
             tZpd = LZString.compressToEncodedURIComponent(JSON.stringify(JSSHOP.ads.getUpdatePVrs("pmap")));
             console.log("doPostAdd.pmap: " + tZpd);
-                        p_vars.value = tZpd; 
+                        p_vars.value = tZpd;
             daMdiv = document.getElementById("dvDemoView");
                        await saveWithCaptureFallback(daMdiv, "pmap:dvDemoView");
-  
-            // setPostAdd();
+
             break;
             case "pvideo":
                 /* old code for pvideo post type - now using createVideoWithAudioStandalone function to create video with audio if there is a queued audio clip src for post
 
             tZpd = LZString.compressToEncodedURIComponent(JSON.stringify(JSSHOP.ads.getUpdatePVrs("pvideo")));
             console.log("doPostAdd.pvideo: " + tZpd);
-                        p_vars.value = tZpd; 
+                        p_vars.value = tZpd;
          savePstCanvasImg(getTmpPstImgCnvs());
             */
             doCreateVid();
@@ -2181,7 +2043,7 @@ async function doPostAdd() {
             setPostAdd();
              break;
         }
-}     
+}
 
 
 
@@ -2190,13 +2052,13 @@ function fillUPostFlds() {
     /*
     istype = document.getElementById("tmp_stype");
 iptype = document.getElementById("tmp_ptype");
-iselPropStat = document.getElementById("tmp_pstatus"); 
+iselPropStat = document.getElementById("tmp_pstatus");
 JSSHOP.shared.addCurrSlctObj(svftObj["contract"], istype, stype.value, "noQvalue", "noQvalue");
 JSSHOP.shared.addCurrSlctObj(svftObj["propstat"], iselPropStat, pstatus.value, "noQvalue", "noQvalue");
 JSSHOP.shared.addCurrSlctObj(svftObj["proptype"], iptype, ptype.value, "noQvalue", "noQvalue");
 
     */
-// svftObj["userpriv"] 
+// svftObj["userpriv"]
     JSSHOP.shared.addCurrSlctObj(svftObj["userpriv"], tmp_p_privacy, p_privacy.value, "noQvalue", "noQvalue");
     JSSHOP.shared.addCurrSlctObj(svftObj["postpages"], tmp_p_ppage, p_ppage.value, "noQvalue", "noQvalue");
     JSSHOP.shared.addCurrSlctObj(svftObj["posttype"], tmp_p_ptype, p_ptype.value, "noQvalue", "noQvalue");
@@ -2212,26 +2074,24 @@ JSSHOP.loadScript("js/tinymce/tinymce.min.js", loadTnyI, "js");
 function doMPostForm(aaw,aww,cww) {
   try {
     console.log("doMPostForm: " + aaw + " " + aww + " " + cww);
-    // JSSHOP.ui.popAndFillLbox("Facebook post added. " + aaw + " " + aww + " " + cww);
     console.log('doMPropForm - aww: ' + aww);
     theRetPArr = JSON.parse(aww);
     thePRetObj = theRetPArr[0];
-    // alert("doMPropForm: " + thePRetObj);
 // tmp_ptitle.value = thePRetObj.ptitle;
     //  JSSHOP.shared.setFrmVals("property",theRetPArr[0], fillPpropFields);
-     for(var gkey in thePRetObj) {
+     for (var gkey in thePRetObj) {
         console.log("doMPostForm: " + gkey + " " + thePRetObj[gkey]);
         document["qposts"][gkey].value = thePRetObj[gkey];
         tmpOldFFvals[gkey] = thePRetObj[gkey];
-        
-        } 
-setTimeout(function(){ fillUPostFlds(); }, 300);
-} catch(e) {
+
+        }
+setTimeout(function () { fillUPostFlds(); }, 300);
+} catch (e) {
     alert("doMPostForm: " + e);
 }
 }
 var dmyFnishCntLoad = fnishCntLoad;
-fnishCntLoad = function() {
+fnishCntLoad = function () {
  JSSHOP.ads.doGenericPlug("posts", "add-post", "dvPartLinks");
 document.getElementById("p_ptype").value = "ppost";
 document.getElementById("p_lang").value = usrlang;
@@ -2239,11 +2099,11 @@ document.getElementById("p_lang").value = usrlang;
 tfsb = nCurrFFieldOb();
 tfsb.fid = "btnEUsave";
 tfsb.fty = "button";
-tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){doPostAdd()}) };
+tfsb.fcl = function () { JSSHOP.ui.setSaveBtnClick(this, function () {doPostAdd()}) };
 euiFFObjArr.push(tfsb);
 JSSHOP.shared.initFrmComps(euiFFObjArr);
 currMediaID = prpid;
- 
+
          tDDPTyObj = {};
          tDDPTyObj["ddtype"] = "noQvalue";
             tDDPTyObj["fld"] = "p_ptype";
@@ -2287,7 +2147,7 @@ currMediaID = prpid;
             tDDPrvObj["kvIcnsObj"]["visibility"] = "&#xe5cd;";
             tDDPrvStr = JSSHOP.ui.getNuBSdropDstr(tDDPrvObj);
             document.getElementById("tdMorePost").innerHTML = tDDPrvStr;
- 
+
             // div dvDDxcntnt
             // dvDDxcntnt = array drowpdown content i.e. Images, Templates, etc.
             tDDXtraCntObj = {};
@@ -2307,15 +2167,14 @@ currMediaID = prpid;
             tDDXtraCntObj["kvIcnsObj"]["images"] = "&#xe5cd;";
             tDDXtraCntObj["kvIcnsObj"]["templates"] = "&#xe5cd;";
             tDDXtraCntObj["kvIcnsObj"]["snippets"] = "&#xe5cd;";
- 
+
             tDDXtraCntStr = JSSHOP.ui.getNuBSdropDstr(tDDXtraCntObj);
            //  document.getElementById("dvDDxcntnt").innerHTML = tDDXtraCntStr;
 
- 
+
 
             doPTypeTip("p_ptype", "pimage", "pimage");
-//     eindex("aa-add-post", "pid=aa-add-post&pstprpid=" + prpid + "&quid=" + quid + "&pptype=pimage");
-        if(currUrlArr.pstprpid && currUrlArr.pstprpid != "null") {
+        if (currUrlArr.pstprpid && currUrlArr.pstprpid != "null") {
             tprpid = currUrlArr.pstprpid;
             doPTypeTip("p_ptype", "pimage", "pimage");
             document.getElementById("p_ptype").value = "pimage";
@@ -2339,12 +2198,12 @@ return dmyFnishCntLoad;
 
 function doPrivVizPop(tPVel, tPVval, tPVtxt) {
 console.log("doPrivVizPop: " + tPVel + " " + tPVval + " " + tPVtxt);
-     
 
 
-tDDPStr = "";   
+
+tDDPStr = "";
 document.getElementById("lightbox_content").innerHTML = "";
-if(tPVtxt == "privacy") {
+if (tPVtxt == "privacy") {
 tDDBojA = {};
     tDDBojA = JSSHOP.ui.getBSDDOptsO();
     tDDBojA["ddtype"] = "noQvalue";
@@ -2365,9 +2224,9 @@ tDDBojA = {};
     tDDBojA["kvIcnsObj"]["members"] = "&#xe5cd;";
     //  {"public":"e5cd;","private":"e5cd;","members":"noQvalue"};
     tDDPStr += JSSHOP.ui.getNuBSdropDstr(tDDBojA);
- 
- 
-     
+
+
+
      // tDDPStr += JSSHOP.ui.getBSdropDstr('p_author', stxt[105], svftObj["postauth"], "doGenDDcb");
      tDDBAuthObj = JSSHOP.ui.getBSDDOptsO();
         tDDBAuthObj["ddtype"] = "noQvalue";
@@ -2415,8 +2274,8 @@ tDDBojA = {};
 
         tDDPPgStr = JSSHOP.ui.getNuBSdropDstr(tDDPPgObj);
         tDDPStr += tDDPPgStr;
-       
-       
+
+
          tDDPPosObj = JSSHOP.ui.getBSDDOptsO();
         tDDPPosObj["ddtype"] = "noQvalue";
         tDDPPosObj["fld"] = "p_pos";
@@ -2458,10 +2317,9 @@ tDDBojA = {};
         tDDPStatStr = JSSHOP.ui.getNuBSdropDstr(tDDPStatObj);
         tDDPStr += tDDPStatStr;
     }
-   
+
      tDvpadStr = "<div  style=\"margin:10px\">" + tDDPStr + "</div>";
-    // JSSHOP.ui.popAndFillLbox(tDvpadStr);
-    // JSSHOP.ui.popFillObox = function(theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUseClosBtn) {
+    // JSSHOP.ui.popFillObox = function (theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUseClosBtn) {
 
     JSSHOP.ui.popFillObox(tDvpadStr, "&#xe5cd", stxt[100], "yes", "yes");
     }
@@ -2472,31 +2330,30 @@ function doGenDDcb(tDDCBel, tDDCBval, tDDCBtxt) {
     tTDHstr = "tdDD" + tDDCBel;
     tdHel = document.getElementById(tTDHstr);
     tMainEL = document.getElementById(tDDCBel);
-    if(tdHel) {
-        if(tdHel.innerHTML == tDDCBtxt) {
+    if (tdHel) {
+        if (tdHel.innerHTML == tDDCBtxt) {
         } else {
             /*        */
             tOldVal = tMainEL.value;
             tdOLdStr = "liDD" + tDDCBel +  tOldVal;
             tdOldEl = document.getElementById(tdOLdStr);
-            if(tdOldEl) {
+            if (tdOldEl) {
                 tdOldEl.className = "bkgdClrWhite";
             }
             tdCurrEl = document.getElementById("liDD" + tDDCBel + tDDCBval);
-        tdCurrEl.className = "bkgdClrNrml";    
+        tdCurrEl.className = "bkgdClrNrml";
 
         tdHel.innerHTML = tDDCBtxt;
         tMainEL.value = tDDCBval;
-        JSSHOP.ui.setCBBClickClr(tdHel,tdHel.className + " bkgdClrDlg txtWhite",tdHel.className, function(){void(0)});
+        JSSHOP.ui.setCBBClickClr(tdHel,tdHel.className + " bkgdClrDlg txtWhite",tdHel.className, function () {void(0)});
         }
     }
     document.getElementById(tDDCBel).value = tDDCBval;
-   //  alert("doGenDDcb: " + tDDCBel + " " + tDDCBval + " " + tDDCBtxt);
      }
 
 
 
-var getLayoutsPop = function() {
+var getLayoutsPop = function () {
     tLayStr = "";
     tLayStr += "<div class=\"edtr-container\">";
     tLayStr += "<div>";
@@ -2539,13 +2396,13 @@ var getLayoutsPop = function() {
     tLayStr += "</li>";
 
 
-    
+
     tLayStr += "<li class=\"nav-item\">";
     tLayStr += "<a class=\"nav-link disabled\" href=\"#\" tabindex=\"-1\" aria-disabled=\"true\">Disabled</a>";
     tLayStr += "</li>";
     tLayStr += "</ul>";
     tLayStr += "</nav>";
- 
+
 
 
 
@@ -2570,9 +2427,8 @@ function setTPstUsrsArr(a,b,c) {
         tmpPstUsrArr = [];
         tmpPstUsrArr = JSON.parse(b);
         console.log("setTPstUsrsArr: " + tmpPstUsrArr);
-        // tPostTypIs = JSSHOP.shared.getCurrSelectOpt(tmp_p_ptype);
         tPostTypIs = p_ptype.value;
-        switch(tPostTypIs) {
+        switch (tPostTypIs) {
             case "pcarousel":
             tCaroStr = JSSHOP.ads.getSwiperUStr(tmpPstUsrArr);
             document.getElementById("dvDemoView").innerHTML = tCaroStr;
@@ -2582,8 +2438,8 @@ function setTPstUsrsArr(a,b,c) {
             tSwpObj["spaceBetween"] = 10;
             tSwpObj["loop"] = false;
             tSwpObj["createElements"] = true;
-           tSwpObj["autoplay"] = 2500;
-           tSwpObj["height"] = 0;
+            tSwpObj["autoplay"] = 2500;
+            tSwpObj["height"] = 0;
             tSwpObj["autoplayDisableOnInteraction"] = false;
             tSwpObj["pagination"] = ".swiper-pagination";
             tSwpObj["paginationClickable"] = true;
@@ -2591,7 +2447,7 @@ function setTPstUsrsArr(a,b,c) {
             tSwpObj["prevButton"] = ".swiper-button-prev";
             tSwpObj["grabCursor"] = true;
             JSSHOP.ads.loadSwiperObj(tSwpObj);
-            setTimeout(function(){ syncInlinePreviewTab(); }, 120);
+            setTimeout(function () { syncInlinePreviewTab(); }, 120);
             break;
             case "pimage":
             tImgHTML = JSSHOP.ads.getEditorUStr(tmpPstUsrArr);
@@ -2602,8 +2458,7 @@ function setTPstUsrsArr(a,b,c) {
             }
 
 
-        // alert("setTPstUsrsArr: " + tmpPstUsrArr);
-        } catch(e) {
+        } catch (e) {
             alert("setTPstUsrsArr: " + e);
         }
     }
@@ -2615,13 +2470,13 @@ function doVideoDiv(propsArr) {
     console.log("doVideoDiv: video HTML generated, length:", tVideoHTML.length);
     document.getElementById("dvDemoView").innerHTML = tVideoHTML;
     console.log("doVideoDiv: dvDemoView updated with video interface");
-    setTimeout(function() {
+    setTimeout(function () {
         console.log("doVideoDiv: setTimeout executing, adding tab event listeners");
         // add tab event listeners
         var tabs = document.querySelectorAll('#dvDemoView .nav-tabs a');
         console.log("doVideoDiv: found", tabs.length, "tabs");
         for (var i = 0; i < tabs.length; i++) {
-            tabs[i].addEventListener('click', function(e) {
+            tabs[i].addEventListener('click', function (e) {
                 e.preventDefault();
                 var target = this.getAttribute('href');
                 console.log("doVideoDiv: tab clicked, target:", target);
@@ -2639,7 +2494,7 @@ function doVideoDiv(propsArr) {
                 if (target === '#imagesTab') {
                     console.log("doVideoDiv: setting images tab content");
                     document.getElementById("divImgsContent").innerHTML = getImgTabContent();
-                    setTimeout(function() {
+                    setTimeout(function () {
                         var sortableEl = document.getElementById('sortableImages');
                         if (typeof initFramesSortable === 'function') {
                             initFramesSortable(sortableEl, 'x_aa-add-post-imagesTab');
@@ -2657,7 +2512,7 @@ function doVideoDiv(propsArr) {
                         new Sortable(sortableEl, {
                             animation: 150,
                             handle: '.drag-handle',
-                            onEnd: function(evt) {
+                            onEnd: function (evt) {
                                 console.log('[FRAMES][SORTABLE][END_FALLBACK]', {
                                     source: 'x_aa-add-post-imagesTab',
                                     oldIndex: evt.oldIndex,
@@ -2667,7 +2522,7 @@ function doVideoDiv(propsArr) {
                                 var items = document.querySelectorAll('#sortableImages .sortable-item');
                                 for (var j = 0; j < items.length; j++) {
                                     var dataIndex = parseInt(items[j].getAttribute('data-index'), 10);
-                                    var obj = selectedImages.find(function(s) { return s.index === dataIndex; });
+                                    var obj = selectedImages.find(function (s) { return s.index === dataIndex; });
                                     if (obj) {
                                         newOrder.push(obj);
                                     }
@@ -2704,16 +2559,15 @@ function doVideoDiv(propsArr) {
     tmpPstPrpsArr = [];
     tmpPstPrpsArr = JSON.parse(b);
     currSlctdPrpsObj = {};
-    for(var i=0; i<tmpPstPrpsArr.length; i++) {
+    for (var i=0; i<tmpPstPrpsArr.length; i++) {
         currSlctdPrpsObj["prp" + tmpPstPrpsArr[i]._id] = tmpPstPrpsArr[i];
     }
     console.log("setTPstPrpsArr: " + tmpPstPrpsArr);
     JSSHOP.ui.closeLbox();
 
     try {
-        // tPostTypIs = JSSHOP.shared.getCurrSelectOpt(tmp_p_ptype);
     tPostTypIs = p_ptype.value;
-        switch(tPostTypIs) {
+        switch (tPostTypIs) {
             case "pcarousel":
                 tPrpsSwpStr = JSSHOP.ads.getSwprPrpStr(tmpPstPrpsArr);
                 document.getElementById("dvDemoView").innerHTML = tPrpsSwpStr;
@@ -2728,182 +2582,30 @@ function doVideoDiv(propsArr) {
                 tSwpObj["nextButton"] = ".swiper-button-next";
                 tSwpObj["prevButton"] = ".swiper-button-prev";
                 tSwpObj["grabCursor"] = true;
-                setTimeout(function(){ JSSHOP.ads.loadSwiperObj(tSwpObj); }, 1000);
-                     setTimeout(function(){ syncInlinePreviewTab(); }, 1200);
+                setTimeout(function () { JSSHOP.ads.loadSwiperObj(tSwpObj); }, 1000);
+                     setTimeout(function () { syncInlinePreviewTab(); }, 1200);
              break;
              case "pimage":
- 
+
                 tImgHTML = JSSHOP.ads.getEditorPrpStr(tmpPstPrpsArr);
                 tinyMCE.activeEditor.setContent(tImgHTML);
              break;
              case "pvideo":
-                if (typeof getVideoInterfaceHTML === 'function') {       
+                if (typeof getVideoInterfaceHTML === 'function') {
                     console.log("getVideoInterfaceHTML function exists, called doVideoDiv");
                     doVideoDiv(tmpPstPrpsArr);
                 } else {
                     console.log("getVideoInterfaceHTML function does not exist, loading CCapture_mod.js");
-                    JSSHOP.loadScript("js/thirdp/CCapture_mod.js", function() { console.log("CCapture_mod.js loaded in setTPstPrpsArr"); doVideoDiv(tmpPstPrpsArr); }, "js");
+                    JSSHOP.loadScript("js/thirdp/CCapture_mod.js", function () { console.log("CCapture_mod.js loaded in setTPstPrpsArr"); doVideoDiv(tmpPstPrpsArr); }, "js");
                 }
              break;
             default:
             }
 
 
-        // alert("setTPstPrpsArr: " + tmpPstPrpsArr);
-        } catch(e) {
+        } catch (e) {
             alert("setTPstPrpsArr: " + e);
         }
     }
 
 
-    // video recording stuff
-
-    
-
-    async function toggleMapRecording(options = {}) {
-        // Support both btnAEPRecord and the new map record button
-        var btn = document.getElementById("btnAEPRecord");
-        var recordBtn = document.querySelector('.incasa-map-record-toggle-btn');
-        var elementToRecord = document.getElementById("dvDemoView");
-
-        // Determine which button is used for toggling
-        var isRecording = false;
-        if (btn && btn.value) {
-            isRecording = btn.value !== "Record Video";
-        } else if (recordBtn) {
-            isRecording = recordBtn.classList.contains('recording');
-        }
-
-        // Extract options
-        const { onPermissionGranted, onError, stop, mapDivId, onComplete, restoreAllControls } = options;
-
-        // Utility to enable/disable all inline map property tabs (Preview, Markers, Settings)
-        function setInlineMapTabsEnabled(enabled) {
-            var tabLinks = document.querySelectorAll('#dvInlinePTypeTabs .nav-link');
-            for (var i = 0; i < tabLinks.length; i++) {
-                if (enabled) {
-                    tabLinks[i].style.pointerEvents = '';
-                    tabLinks[i].style.opacity = '';
-                } else {
-                    tabLinks[i].style.pointerEvents = 'none';
-                    tabLinks[i].style.opacity = '0.65';
-                }
-            }
-        }
-
-        // Toggle recording state
-        if (!isRecording && !stop) {
-            setInlineMapTabsEnabled(false); // Disable tabs when recording starts
-            try {
-                console.log('[RECORD] Requesting recording permission...');
-                const stream = await navigator.mediaDevices.getDisplayMedia({
-                    video: { displaySurface: "browser" },
-                    audio: false,
-                    selfBrowserSurface: "include",
-                    preferCurrentTab: true
-                });
-                console.log('[RECORD] Permission granted, starting recording...');
-                // Attempt to crop to the specific element using Region Capture API
-                const [track] = stream.getVideoTracks();
-                if (window.CropTarget && track.cropTo && elementToRecord) {
-                    try {
-                        const cropTarget = await CropTarget.fromElement(elementToRecord);
-                        await track.cropTo(cropTarget);
-                    } catch (err) {
-                        console.warn("Region Capture failed, recording full tab/screen: ", err);
-                    }
-                }
-                nuRecordedChunks = [];
-                nuMediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp9' });
-                nuMediaRecorder.ondataavailable = function(e) {
-                    if (e.data.size > 0) {
-                        nuRecordedChunks.push(e.data);
-                    }
-                };
-                nuMediaRecorder.onstop = function() {
-                    setInlineMapTabsEnabled(true); // Enable tabs when recording stops
-                    console.log('[RECORD] Recording stopped.');
-                    const blob = new Blob(nuRecordedChunks, {
-                        type: "video/webm"
-                    });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement("a");
-                    document.body.appendChild(a);
-                    a.style = "display: none";
-                    a.href = url;
-                    a.download = "property-3d-view.webm";
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-                    // Reset button state if stopped externally (e.g. via browser UI)
-                    if(btn) {
-                        btn.value = "Record Video";
-                        btn.style.backgroundColor = "";
-                    }
-                    if(recordBtn) {
-                        recordBtn.classList.remove('recording');
-                        recordBtn.innerHTML = '<i class="material-icons txtClrHdr" style="font-size:21px;line-height:34px;">&#xe061;</i>';
-                        recordBtn.title = 'Record Fly To Animation';
-                    }
-                    // Call onComplete or restoreAllControls if provided
-                    if (typeof onComplete === 'function') onComplete();
-                    if (typeof restoreAllControls === 'function') restoreAllControls();
-                };
-                // Handle case where user stops sharing via browser UI
-                stream.getVideoTracks()[0].onended = function() {
-                    if(nuMediaRecorder.state !== 'inactive') {
-                        nuMediaRecorder.stop();
-                    }
-                };
-                nuMediaRecorder.start();
-                // 
-                console.log('[RECORD] MediaRecorder started.');
-                if(btn) {
-                    btn.value = "Stop Recording";
-                    btn.style.backgroundColor = "#ff0000";
-                }
-                if(recordBtn) {
-                    recordBtn.classList.add('recording');
-                    recordBtn.innerHTML = '<i class="material-icons txtClrRed" style="font-size:21px;line-height:34px;">&#xe047;</i>';
-                    recordBtn.title = 'Stop Recording';
-                }
-                // If onPermissionGranted callback is provided, call it (for map animation)
-                if (typeof onPermissionGranted === 'function') {
-                    onPermissionGranted();
-                } else if (typeof JSSHOP !== 'undefined' && JSSHOP.ads && typeof JSSHOP.ads.recordNuMapEffect === 'function' && mapDivId) {
-                    // Fallback: call recordNuMapEffect directly if mapDivId is provided
-                    JSSHOP.ads.recordNuMapEffect(mapDivId, function() {
-                        // Stop recording after animation ends
-                        window.toggleMapRecording({ stop: true, restoreAllControls });
-                    });
-                }
-            } catch (err) {
-                setInlineMapTabsEnabled(true); // Enable tabs if error starting recording
-                console.error("[RECORD] Error starting recording: " + err);
-                alert("Could not start recording: " + err.message);
-                // Restore all controls if available
-                if (typeof onError === 'function') onError();
-                if (typeof restoreAllControls === 'function') restoreAllControls();
-                if (typeof window.restoreAllMapControls === 'function') window.restoreAllMapControls();
-            }
-        } else if (isRecording || stop) {
-            setInlineMapTabsEnabled(true); // Enable tabs when recording stops
-            // Stop recording
-            if(nuMediaRecorder && nuMediaRecorder.state !== "inactive") {
-                nuMediaRecorder.stop();
-                // Stop all tracks
-                nuMediaRecorder.stream.getTracks().forEach(track => track.stop());
-            }
-            if(btn) {
-                btn.value = "Record Video";
-                btn.style.backgroundColor = "";
-            }
-            if(recordBtn) {
-                recordBtn.classList.remove('recording');
-                recordBtn.innerHTML = '<i class="material-icons txtClrHdr" style="font-size:21px;line-height:34px;">&#xe061;</i>';
-                recordBtn.title = 'Record Fly To Animation';
-            }
-            // Call onComplete or restoreAllControls if provided
-            if (typeof onComplete === 'function') onComplete();
-            if (typeof restoreAllControls === 'function') restoreAllControls();
-        }
-    }

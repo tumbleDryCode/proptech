@@ -19,7 +19,7 @@ stxt[18] = "Price";
 stxt[19] = "Item";
 stxt[20] = "Edit Item";
 stxt[21] = "Save";
-stxt[22] = "Shop Title"; 
+stxt[22] = "Shop Title";
 stxt[23] = "Headline";
 stxt[24] = "Tel";
 stxt[25] = "Web";
@@ -28,7 +28,7 @@ stxt[27] = "Edit your Shops";
 stxt[28] = "adminApp Query";
 stxt[29] = "Login";
 stxt[30] = "About";
-stxt[31] = "Edit"; 
+stxt[31] = "Edit";
 stxt[32] = "Categories";
 stxt[33] = "Items coming soon";
 stxt[34] = "Cart is empty";
@@ -99,7 +99,7 @@ stxt[97] = "Name";
 stxt[102] = "Make";
 stxt[104] = "Year";
 
-// user strings 
+// user strings
 stxt[201] = "First Name";
 stxt[202] = "Last Name";
 stxt[203] = "Location";
@@ -107,13 +107,13 @@ stxt[204] = "Region";
 stxt[205] = "Country";
 stxt[206] = "Phone";
 stxt[207] = "Mobile";
-stxt[208] = "Fax";	
+stxt[208] = "Fax";
 stxt[209] = "Address";
 stxt[210] = "City";
 stxt[211] = "State";
 stxt[212] = "Zip Code";
 stxt[213] = "Street";
-stxt[214] = "Door Nº";
+stxt[214] = "Door NÂº";
 stxt[215] = "Date of Birth";
 stxt[216] = "Social Security Number";
 stxt[217] = "SS Expiration Date";
@@ -123,11 +123,11 @@ stxt[220] = "Driver License Expiration Date";
 stxt[221] = "CAM Expiration Date";
 stxt[222] = "";
 stxt[223] = "";
- 
 
 
 
-// admin strings 
+
+// admin strings
 svtxt[300] = "cliente";
 svtxt[301] = "other";
 svtxt[302] = "opera";
@@ -148,14 +148,14 @@ svtxt[311] = "1";
 svtxt[312] = "2";
 svtxt[313] = "3";
 svtxt[314] = "4";
- 
+
 
 
 stxt[311] = "Main";
 stxt[312] = "Billing";
 stxt[313] = "Shipping";
 stxt[314] = "Receiving";
- 
+
 // fleet
 stxt[400] = "Fleet";
 stxt[401] = "Truck";
@@ -232,15 +232,15 @@ stxt[902] = "Contactos";
 stxt[903] = "Perfil";
 stxt[905] = "Suas Propriedades";
 stxt[906] = "Adicionar Propriedade";
- 
+
 stxt[907] = "Forum";
 stxt[908] = "Statisticas";
 stxt[909] = "Termos and Condicoes";
 stxt[910] = "Apoio";
 stxt[911] = "Perguntas Frequentes";
 stxt[912] = "Contacte-nos";
- 
- 
+
+
 stxt[913] = "Sobre Nos";
 stxt[914] = "Em Destaque";
 stxt[915] = "Seja Membro";
@@ -261,7 +261,7 @@ stxt[929] = "Andares Totais";
 stxt[930] = "Destaques";
 stxt[931] = "Floor Plans";
 stxt[932] = "Cave";
-stxt[933] = "1º Andar";
+stxt[933] = "1Âº Andar";
 stxt[934] = "Contactar Agente";
 stxt[935] = "Enviar Mensagem";
 stxt[936] = "Procurar Propriedade";
@@ -288,7 +288,7 @@ stxt[956] = "Status";
 stxt[957] = "Escolha Status";
 stxt[958] = "Imagen Plano de Cave";
 stxt[959] = "Imagen Plano de Res do Chao";
-stxt[960] = "Imagen Plano de 1º Andar";
+stxt[960] = "Imagen Plano de 1Âº Andar";
 stxt[961] = "Registe-se";
 stxt[962] = "Todos Utilizadores";
 stxt[963] = "PrPropriedades";
@@ -301,7 +301,7 @@ stxt[969] = "Assunto";
 stxt[970] = "Mensagem";
 stxt[971] = "Emcontre";
 stxt[972] = "sua Casa de Sonho";
-stxt[973] = "Livro de Reclamações"; // Livro de reclamações
+stxt[973] = "Livro de ReclamaÃ§Ãµes"; // Livro de reclamaÃ§Ãµes
 
 
 
@@ -327,7 +327,7 @@ stxt[2001] = "Setting up is easy. Enter your shops title, add some item categori
 
 // misc
 stxt[3001] = "Item title here";
- 
+
 
 // android java app
 stxt[4001] = "Art Pad";
@@ -360,7 +360,7 @@ svftObj["u_jtype"] = tsvftxt;
 tmmftxt = null;
 tmmftxt = "";
 tmmftxt = {};
-tmmftxt["guest"] = "Guest"; 
+tmmftxt["guest"] = "Guest";
 tmmftxt["driver"] = "Driver";
 tmmftxt["admin"] = "Admin";
 tmmftxt["fleet"] = "Fleet";
@@ -429,7 +429,7 @@ tmpContType["sell"] = "Vender";
 tmpContType["rent"] = "Aluguer";
 tmpContType["lease"] = "Lease";
 tmpContType["auction"] = "Leilao";
-tmpContType["foreclosure"] = "Liquidaçao";
+tmpContType["foreclosure"] = "LiquidaÃ§ao";
 tmpContType["buy"] = "Comprar";
 tmpContType["other"] = "OOutrother";
 svftObj["contract"] = tmpContType;

@@ -451,7 +451,7 @@ spinner.spin(starget);
 }
 
 function stopNuSpin(theObjId) {
-try { 
+try {
 spinner.stop();
 smlspinner.stop();
 if(currSHTMLObj[theObjId]) {
@@ -463,14 +463,14 @@ tSpnHTMLt = "";
 // alert("stopNuSpin: " + theObjId + "  :: " + "tSpnHTMLt: " + tSpnHTMLt);
 }
 }
-} catch(e) { 
-alert("stopNuSpin: " + e); 
+} catch(e) {
+alert("stopNuSpin: " + e);
 }
 }
 
 
 function stopSpin(theObjId) {
-try { 
+try {
 spinner.stop();
 smlspinner.stop();
 document.getElementById(theObjId).innerHTML = currSpinHtml;
@@ -478,8 +478,8 @@ document.getElementById(theObjId).innerHTML = currSpinHtml;
 
 currSpinHtml = "noQvalue";
 currSpinTarget = "noQvalue";
-} catch(e) { 
-alert(e); 
+} catch(e) {
+alert(e);
 }
 }
 

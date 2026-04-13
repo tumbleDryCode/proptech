@@ -1,6 +1,6 @@
 currPgTitle = stxt[710];
-document.title = currPgTitle; 
-currIContent = "y"; // ajax request to include the tplates/... file or not 
+document.title = currPgTitle;
+currIContent = "y"; // ajax request to include the tplates/... file or not
 
 var getMsgThread = function(a,theResp,c) {
 JSSHOP.ui.doNuMsgThread(a,theResp,"donada");
@@ -14,8 +14,8 @@ bnewel = document.createElement('div');
 bnewel.innerHTML = tMstr;
 tmpTDQI.appendChild(bnewel);
 
- 
- 
+
+
 if(currUrlArr.threadid){
 tmpDOs = null;
 tmpDOs = {};
@@ -25,7 +25,7 @@ tthreadid = currUrlArr.threadid;
 opiaqZa = getNuDBFnvp("qmsg",5,null,tmpDOs);
 oiaqZa = opiaqZa["rq"];
 } else {
-// the following query does not work because of the group by and gives this error: select * from qmsg GROUP BY ms_threadid where ms_to=66 or ms_from=66 order by ms_dadded desc limit 100mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near \'where ms_to=66 or ms_from=66 order by ms_dadded desc limit 100\' at line 1 in 
+// the following query does not work because of the group by and gives this error: select * from qmsg GROUP BY ms_threadid where ms_to=66 or ms_from=66 order by ms_dadded desc limit 100mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near \'where ms_to=66 or ms_from=66 order by ms_dadded desc limit 100\' at line 1 in
 // fix it now
 
  // oiaqZa = "select * from qmsg where ms_threadid in (select distinct ms_threadid from qmsg where ms_to='" + quid + "' or ms_from='" + quid + "') order by ms_dadded desc limit 100";
@@ -79,7 +79,7 @@ oiaqZa = "select * from qmsg where _id in (select max(_id) from qmsg where ms_to
 console.log("show-messages:oiaqZa: " + oiaqZa);
 doQComm(oiaqZa, null, "getMsgThread");
 
- 
+
 };
 
 
@@ -118,12 +118,12 @@ doQComm(oi["rq"], null, "getMsgHdr");
 
 }
 if(currUrlArr.isr){
- 
+
 JSSHOP.ui.setNuCBBClickClr(document.getElementById("ahMsgsIcon"),'txtClrHdr rtable bkgdClrRed brdrClrRed','clsDummy', function() { void(0); }, 1800);
 
 }
 } else {
-// document.getElementById("includedContent").innerHTML = "<div class=\"txtBig txtBold txtCenter\" style=\"margin-top:20px;\">Please <a href=\"javascript:eindex('login','pid=login');\" class=\"txtClrBlue\">login</a> to view your messages.</div>";   
+// document.getElementById("includedContent").innerHTML = "<div class=\"txtBig txtBold txtCenter\" style=\"margin-top:20px;\">Please <a href=\"javascript:eindex('login','pid=login');\" class=\"txtClrBlue\">login</a> to view your messages.</div>";
 getTestUsers("includedContent");
 }
 

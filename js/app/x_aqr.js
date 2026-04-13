@@ -107,7 +107,7 @@ gexp = [
 
 // Working buffers:
 // data input and ecc append, image working buffer, fixed part of image, run lengths for badness
-var strinbuf=[], eccbuf=[], qrframe=[], framask=[], rlens=[]; 
+var strinbuf=[], eccbuf=[], qrframe=[], framask=[], rlens=[];
 // Control values - width is based on version, last 4 are from table.
 var version, width, neccblk1, neccblk2, datablkw, eccblkwid;
 var ecclevel = 1;
@@ -327,7 +327,7 @@ function  applymask(m)
 // Badness coefficients.
 var N1 = 3, N2 = 3, N3 = 40, N4 = 10;
 
-// Using the table of the length of each run, calculate the amount of bad image 
+// Using the table of the length of each run, calculate the amount of bad image
 // - long runs or those that look like finders; called twice, once each for X and Y
 function badruns(length)
 {
@@ -830,7 +830,7 @@ function doNuqr(qStr, qSize) {
     // qf = JSON.parse(qqfa);
     qf = qfw;
     // alert(qf.length + " : " + JSON.stringify(qqfa));
-    
+
 
 
     var i,j;
@@ -840,7 +840,7 @@ function doNuqr(qStr, qSize) {
     px /= width+10;
     px=Math.round(px - 0.5);
     qrc.clearRect(0,0,wd,ht);
- 
+
 
      qrc.fillStyle = '#000000';
      qrc.fillRect(0,0,px*(width+8),px*(width+8));
@@ -848,27 +848,27 @@ function doNuqr(qStr, qSize) {
      qrc.fillRect(4,4,px*(width+8)-8,px*(width+8)-8);
      qrc.fillStyle = '#FFFFFF';
      qrc.fillRect(8,8,px*(width+8)-16,px*(width+8)-16);
- 
- 
+
+
 
 destinationCanvas = document.createElement("canvas");
 destinationCanvas.width  = wd;
-destinationCanvas.height = ht; 
- 
+destinationCanvas.height = ht;
+
 destCtx = destinationCanvas.getContext('2d');
 
 
 clipCanvas = document.createElement("canvas");
 clipCanvas.width  = wd;
-clipCanvas.height = ht; 
- 
+clipCanvas.height = ht;
+
 clipCtx = clipCanvas.getContext('2d');
 
 
 pclipCanvas = document.createElement("canvas");
 pclipCanvas.width  = wd;
-pclipCanvas.height = ht; 
- 
+pclipCanvas.height = ht;
+
 pclipCtx = pclipCanvas.getContext('2d');
 
     for( i = 0; i < width; i++ ) {
@@ -901,14 +901,14 @@ pclipCtx = pclipCanvas.getContext('2d');
             qrc.fillRect(px*(4+i),px*(4+j),px,px);
 		break;
 		default:
-		
+
 		}
 	   }
     }
 
 
 
- 
+
 
 
 // create a rectangle with the desired color
@@ -921,10 +921,10 @@ pclipCtx = pclipCanvas.getContext('2d');
     clipCtx.lineTo(150, 50);
     clipCtx.lineTo(150, 150);
     clipCtx.lineTo(50, 150);
-    // 
+    //
 */
- 
- 
+
+
 
    clipCtx.fillStyle = "#000099";
   clipCtx.font = "bold 18px Arial";
@@ -939,7 +939,7 @@ pclipCtx = pclipCanvas.getContext('2d');
  //    clipCtx.lineWidth=6;
 // alert(document.getElementById("c_title").value);
 clipCtx.fillText("Q", 29, 102);
- 
+
  // clipCtx.drawImage(theImg, 0, 0);
 // clipCtx.stroke();
     // Clip to the current path
@@ -952,7 +952,7 @@ pclipCtx.drawImage(destinationCanvas, 0, 0);
 
 
 // pclipCtx.drawImage(elem, 0, 0);
- 
+
 qrc.drawImage(pclipCanvas, 0, 0);
 
 // return qfw;
@@ -960,16 +960,16 @@ return elem;
 }
 
 
- 
+
 
 var showNuQRcanvas = function(theTQRstr) {
  tcnvs = doNuqr(theTQRstr, 200);
- 
+
     return tcnvs;
 };
 
 var preAQR = function() {
- 
+
             base_image = new Image();
             base_image.src = "images/transparent.gif";
             base_image.onload = function () {
