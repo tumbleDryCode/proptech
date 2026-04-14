@@ -3,7 +3,21 @@ global $jscssprefix, $isBareTest, $usrlang;
 ini_set('session.cache_limiter','public');
 session_cache_limiter(false);
 session_start();
-include("config.php");	
+global $jscssprefix, $isBareTest, $usrlang;
+$jscssprefix = "";
+$isBareTest = "no";	
+
+require_once __DIR__ . "/include/db_config.php";
+ 
+if(isset($_COOKIE['usrlang'])) {
+	$usrlang = $_COOKIE['usrlang'];
+} else {
+	$usrlang = "pt_pt";
+	// set userlang cookie
+	setcookie("usrlang", $usrlang, time() + (86400 * 30), "/");
+}
+$con = db_get_mysqli_connection();
+include("include/functions.php");	
 ?>
 <html>
 <head>

@@ -1,5 +1,7 @@
 <?php
 
+require_once dirname(__DIR__) . "/include/db_config.php";
+
 
 class DumDatabase {
   
@@ -10,20 +12,12 @@ class DumDatabase {
     public function __construct()
     {
 	global $docroot,$dumdb,$dumhost,$con;
-    // $con = mysqli_connect("localhost","incasa","casain","developers");
-    $con = mysqli_connect("titan","developers","casain","developers");
+        $con = db_get_mysqli_connection();
 
         try
         {
 
-             //   $this->pdo = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-
-          // $this->pdo = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'ascii';"));
-           // $this->pdo->exec("SET CHARACTER SET default");
-            // $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            // $this->pdo->query("set names 'latin1_swedish_ci'");
-		// $this->pdo->exec("");
-
+ 
         } catch (Exception $e)
         {
             echo "error " . $e->getMessage();
@@ -40,7 +34,7 @@ class DumDatabase {
 
     public function fetch_custom( $sql,$data=null) {
         global $con;
-		$dumhost = "localhost";
+		$dumhost = DB_HOST;
 $tvalues = array();
 $data = "";
 $dbpropsString = "";
@@ -105,7 +99,7 @@ $data .= "]";
 
 
     public function fetch_cstmArr( $sql,$data=null) {
-        $dumhost = "localhost";
+        $dumhost = DB_HOST;
         $tvalues = array();
         $data = "";
         $dbpropsString = "";
@@ -125,7 +119,7 @@ $data .= "]";
 
 
     public function edit_custom( $sql,$data=null) {
-	$dumhost = "localhost";
+    $dumhost = DB_HOST;
 $tvalues = array();
 $data = "";
 $dbpropsString = "";

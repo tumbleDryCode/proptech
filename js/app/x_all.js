@@ -8622,9 +8622,9 @@ setTimeout(
     }  // end of for ided
     tDVufeeds = document.createElement("div");
     tDVufeeds.innerHTML = tUdtsStr;
-    // document.getElementById("dvMainUdtsLst").innerHTML = tUdtsStr;
-
-        document.getElementById("includedContent").appendChild(tDVufeeds);
+   //  document.getElementById("dvMainUdtsLst").innerHTML = tUdtsStr;
+ 
+    document.getElementById("includedContent").appendChild(tDVufeeds);
 
     console.log("jshp_ads_showUpdtsFeed: " + tUdtsStr);
 
@@ -8647,7 +8647,7 @@ JSSHOP.ads.doNurUpdatesFeed = function(tUFCnfObj) {
     let tQstr = "";
     let langWhere = "(psts.p_lang = '" + usrlang + "' or psts.p_lang = '" + deflang + "')";
     let includeOtherLang = true;
-    let quidVal = (typeof quid !== 'undefined' && quid) ? quid : (getCookie && getCookie('quid')) ? getCookie('quid') : 0;
+    let quidVal = quid || 0;
     let privacyWhere = "";
     if (quidVal && quidVal != 0) {
         privacyWhere = "((psts.p_privacy = 'public' or psts.p_privacy = 'members') or (psts.p_privacy = 'private' and psts.p_uid = " + quidVal + "))";
