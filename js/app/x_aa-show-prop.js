@@ -1044,7 +1044,7 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
             // tLZuncomp = LZString.decompressFromEncodedURIComponent(tThumbImg);
             //  			tstr += "<img src=\"images/property/" + tAiretArr[iint]["m_file_thumb"] + "\" class=\"icnmedbtn slmtable\" onclick=\"javascript:JSSHOP.ui.popAndFillLbox(getPropIEditDv('" + tAiretArr[iint]["_id"] + "','" + tAiretArr[iint]["m_file"] + "'));\">";
              // tAVImgUstr = "https://maps.googleapis.com/maps/api/staticmap?key=" + gglSKey + "&size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng + "&zoom=" + tZmLvl + "&maptype=" + tMpType;
-tAVImgUstr = tUnZpd;
+            tAVImgUstr = tUnZpd;
             t3DImgStr = "<img src=\"" + tAVImgUstr + "\" class=\"rtable crsrPointer\" onclick=\"javascript:initNwstThreeDView('" + tAVImgUstr + "','" + tAiretArr[iint]["_id"] + "');\" style=\"width: 100%;min-height:125px;\" alt=\"3D Image\">";
             // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initThreeDView(" + theTmnbLat + "," + theTmnbLng + "," + theTmnbAlt + ");\"><img class=\"rtable\" style=\"width: 100%;min-height:125px;\"  src=\"" + tAVImgUstr + "\"  alt=\"image\"></a> </div>";
             // tstr += "<div class=\"swiper-slide\"> <a href=\"javascript:initNuThreeDView('"  + tAVImgUstr + "');\">" + t3DImgStr + "</a> </div>";

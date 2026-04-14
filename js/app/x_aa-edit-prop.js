@@ -896,8 +896,7 @@ function getCurr3DImgUrl(tIUwidth, tIUheight) {
     tCntrMapAlt = tCntrArr[2];
     tZmLvl = threedmap.getAttribute("range");
     tMpType = threedmap.getAttribute("mode");
- // m/maps/api/streetview?size=100x80&location=41.231464093444536,-8.527187370531351&heading=107.1386319707464&pitch=-2.544154706896819&zoom=&key=AIzaSyAiBR8BEPj2YCepKplisQKK709r1TI48Vo&iid=34
-   t3DImgUstr = "https://maps.googleapis.com/maps/api/staticmap?size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng +  "&key=" + gglSKey + "&heading=" + threedmap.getAttribute("heading") + "&tilt=" + threedmap.getAttribute("tilt") + "&iid=" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id") + "&altitude=" + tCntrMapAlt + "&zoom=16&maptype=satellite&range=" + tZmLvl;
+    t3DImgUstr = "https://maps.googleapis.com/maps/api/staticmap?size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng +  "&key=" + gglSKey + "&heading=" + threedmap.getAttribute("heading") + "&tilt=" + threedmap.getAttribute("tilt") + "&iid=" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id") + "&altitude=" + tCntrMapAlt + "&zoom=16&maptype=satellite&range=" + tZmLvl;
     // t3DImgUstr = "https://maps.googleapis.com/maps/api/staticmap?size=" + tIUwidth + "x" + tIUheight + "&center=" + tCntrMapLat + "," + tCntrMapLng +  "&key=" + gglSKey + "&heading=" + threedmap.getAttribute("heading") + "&tilt=" + threedmap.getAttribute("tilt") + "&iid=" + JSSHOP.shared.getFrmFieldVal("qmedia", "_id") + "&altitude=" + tCntrMapAlt + "&zoom=16&maptype=satellite&key=" + gglSKey;
 
     console.log("getCurr3DImgUrl: " + t3DImgUstr);
@@ -1200,7 +1199,7 @@ var doThreeDPop = function() {
 
         } else {
             // example 3d pop url:
-            // https://maps.googleapis.com/maps/api/staticmap?size=240x180&center=41.23088623703162,-8.536864106855056&key=AIzaSyAiBR8BEPj2YCepKplisQKK709r1TI48Vo&heading=0.00033512782688252757&tilt=67.49679872048947&iid=471&altitude=103.28568490813657&zoom=16&maptype=satellite
+            // https://maps.googleapis.com/maps/api/staticmap?size=240x180&center=41.23088623703162,-8.536864106855056&key=ABCDEFGR8BEPj2YCepKplisQKK709r1TI48Vo&heading=0.00033512782688252757&tilt=67.49679872048947&iid=471&altitude=103.28568490813657&zoom=16&maptype=satellite
             console.log("showNuThreeDPop: " + tThreedPurl);
             tTDpopObj = JSSHOP.shared.urlToArray(tThreedPurl);
             tLocLat = tTDpopObj["center"].split(",")[0];
@@ -2063,7 +2062,7 @@ var doThreeDPop = function() {
             tFldRange = 500;
             tFldAlt = 10;
             tFldZoom = 16;
-            // https://maps.googleapis.com/maps/api/staticmap?size=240x180&center=-4.38181,-79.9437&key=AIzaSyAiBR8BEPj2YCepKplisQKK709r1TI48Vo&heading=0&tilt=67.5&altitude=10&zoom=16&maptype=SATELLITE
+            // https://maps.googleapis.com/maps/api/staticmap?size=240x180&center=-4.38181,-79.9437&key=ABCDEFGR8BEPj2YCepKplisQKK709r1TI48Vo&heading=0&tilt=67.5&altitude=10&zoom=16&maptype=SATELLITE
             tFAVPurl = "https://maps.googleapis.com/maps/api/staticmap?size=240x180&center=" + tAVLat + "," + tAVLng + "&key=" + gglSKey + "&maptype=SATELLITE&zoom=16";
            //  tFAVPurl = getCurrAVImgUrl("240", "180");
             tNPurl = LZString.compressToEncodedURIComponent(tFAVPurl);

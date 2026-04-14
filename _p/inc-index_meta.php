@@ -47,7 +47,7 @@ if(isset($_GET["ditemid"])) {
    // anewQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id = " + prpid + " and p.prtype = '5' and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = '" +  usrlang + "' or pd.pd_prptlng = '" + deflang + "')";
    $q = "SELECT p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc FROM property p, quser u, propdescs pd WHERE p._id = $itemid AND p.prtype = '5' AND p.uid = u._id AND pd.pd_prpid = p._id AND (pd.pd_prptlng = '$usrlang' OR pd.pd_prptlng = '$deflang')";
 
-    // send query to do.php
+ 
             $cdbf = new DumDatabase();
             $fJSonFldQs = $cdbf->fetch_cstmArr($q);
             // $fJSonFldQs is a mysql result array
@@ -221,9 +221,6 @@ if(isset($_GET["tupid"])) {
                 
 
  
- // encode the description
-
-
 } catch(Exception $ex) {
     echo "/* exception: " . $ex . "*/";
 }
