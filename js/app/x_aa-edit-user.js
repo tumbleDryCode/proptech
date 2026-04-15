@@ -132,6 +132,15 @@ JSSHOP.cookies.setCookie("cuid",tFullTknCoSTr,"90","","","");
 
 var cbFedit = function(a,b,c) {
 JSSHOP.ui.setCBBClickClr(btnEUsave,'cls_button cls_button-medium  bkgdClrDGreen txtClrWhite','cls_button cls_button-medium', function(){document.getElementById("btnEUsave").innerHTML=stxt[21];document.getElementById("btnEUsave").disabled=false;});
+if((typeof arrAllForms == "undefined") || (arrAllForms === null)) {
+arrAllForms = {};
+}
+if((typeof arrAllForms.quser == "undefined") || (arrAllForms.quser === null)) {
+arrAllForms.quser = {};
+}
+if((typeof arrAllForms.quser.v == "undefined") || (arrAllForms.quser.v === null)) {
+arrAllForms.quser.v = [];
+}
 arrAllForms.quser.v[0] = JSSHOP.shared.getFrmObj(document["quser"]);
 };
 

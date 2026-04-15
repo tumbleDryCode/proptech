@@ -763,6 +763,8 @@ tUCatObj["2"] = "Agente";
 tUCatObj["3"] = "Constructor";
 tUCatObj["4"] = "Consultor";
 // tUCatObj["5"] = "Admin";
+tUCatObj["6"] = "Financiacion";
+
 svftObj["usercat"] = tUCatObj;
 
 tUSPrivObj = null;

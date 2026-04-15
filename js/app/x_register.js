@@ -123,13 +123,25 @@ tmpDOs["wa"] = [uEmail, uPass, 5];
 return tmpDOs;
 };
 
-var setSignUpFields = function(uEmail, uPass) {
+var getSelectedUserCat = function() {
+var tUcatFld = document.getElementById("tmp_u_cat");
+if((tUcatFld) && (tUcatFld.value) && (tUcatFld.value != "noQvalue")) {
+return tUcatFld.value;
+}
+if((typeof u_cat != "undefined") && (u_cat.value)) {
+return u_cat.value;
+}
+return "1";
+};
+
+var setSignUpFields = function(uEmail, uPass, uCat) {
 var ttime = JSSHOP.getUnixTimeStamp();
 var tUMSpl = uEmail.split("@");
 JSSHOP.shared.setFieldVal("u_email", uEmail);
 JSSHOP.shared.setFieldVal("u_pass", uPass);
 JSSHOP.shared.setFieldVal("u_name", tUMSpl[0]);
 JSSHOP.shared.setFieldVal("u_header", tUMSpl[0]);
+JSSHOP.shared.setFieldVal("u_cat", uCat);
 JSSHOP.shared.setFieldVal("u_dadded", ttime);
 };
 
@@ -170,7 +182,8 @@ if((tmpUstr.length < 1) || (tmpPstr.length < 1) || (tmpUstr.indexOf("@") == -1) 
 JSSHOP.ui.doAlertBox("error", stxt[1008], stxt[1013] + "<br>" + stxt[1014] + "<br>" + stxt[1015], "noQvalue");
 
 } else {
-setSignUpFields(tmpUstr, tmpPstr);
+var tmpUcat = getSelectedUserCat();
+setSignUpFields(tmpUstr, tmpPstr, tmpUcat);
 var tmpDOs = mkUserLookup(tmpUstr, tmpPstr);
 var oi = getNuDBFnvp("quser",5,null,tmpDOs);
 if(theSUtype == "register") {
@@ -220,10 +233,27 @@ tflui.fvr = ck_password;
 tflui.fve = stxt[1001];
 cueiiilobarr.push(tflui);
 
+var tfluc = nCurrFFieldOb();
+tfluc.fid = "tmp_u_cat";
+tfluc.fdv = stxt[992];
+tfluc.lid = "lbl_u_cat";
+tfluc.ltxt = stxt[992];
+tfluc.fve = stxt[1001];
+cueiiilobarr.push(tfluc);
+
 if(currUrlArr.ltype) {
 alert("currUrlArr: " + currUrlArr.ltype);
 }
 JSSHOP.shared.initFrmComps(cueiiilobarr);
+
+var tUcat = document.getElementById("tmp_u_cat");
+if(tUcat) {
+if((typeof u_cat != "undefined") && (u_cat.value == "5")) {
+svftObj["usercat"]["5"] = "Admin";
+}
+JSSHOP.shared.addCurrSlctObj(svftObj["usercat"], tUcat, getSelectedUserCat(), "noQvalue", "noQvalue");
+}
+
 doLRpnl("reg");
 // return dmyFnishCntLoad;
 };
