@@ -12,13 +12,13 @@ Scripted for small to medium size real estate agencies.
     Import the dev/db.sql database file to your databse.
     Modify include/config.php file with database settings.
 
-# Links
-    Demo: https://dev.propsgo.com
-    Discussion: https://github.com/tumbleDryCode/proptech/discussions
-    Issues: https://github.com/tumbleDryCode/proptech/issues
+Links:<br>
+    Demo: https://dev.propsgo.com<br>
+    Discussion: https://github.com/tumbleDryCode/proptech/discussions<br>
+    Issues: https://github.com/tumbleDryCode/proptech/issues<br>
 
-# Credits
-    forked from: https://github.com/suraj25809/Real-Estate-Php than converted mostly to javascript with some added features.
+Credits:<br>
+    forked from: https://github.com/suraj25809/Real-Estate-Php than converted mostly to javascript with some added features.<br>
     This project also uses some open source projects including CCapture, jquery and leaflet to name a few.
 
 
