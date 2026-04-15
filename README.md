@@ -1,40 +1,27 @@
 # proptech
-
-
 Scripted for small to medium size real estate agencies.
+<img alt="" src="img1A7.jpg" style="max-width: 380px;"> 
+<br>
 
-forked from:
-https://github.com/suraj25809/Real-Estate-Php
-
-changes made include:
-- added Portuguese and Spanish language strings
-- using later version of bootstrap and added primer
-- modified property adding and editing
-
-general script purging and cleanup on todo list.
-......
-
-screen-shots:
-<img src="img6.jpg" style="max-width:150px;padding:5px">
-admin section:
-<img src="img4.jpg" style="max-width:150px;padding:5px">
-
-
-
-
-<br><img alt="" src="img13.jpg" style="height: 514px; width: 600px"><p>&nbsp;</p>
-<img alt="" src="img15.jpg" style="height: 461px; width: 500px"># Requi<br>rements
-
+# Requirements
     PHP >= 5;
-    PDO PHP Extension;
-    GD PHP extension
     MySQL >= 5.7;
 
-
 # Installation
+    Upload project to your web folder.
+    Import the dev/db.sql database file to your databse.
+    Modify include/config.php file with database settings.
 
-    Modify config.php file
-    $con = mysqli_connect("server_name","user_name","password","Database_name");
-    Import the Database in Your Server like Xampp, Wamp
-    Database Name -: developer
+# Links - Credits
+Links:
+Demo: https://dev.propsgo.com
+Discussion: https://github.com/tumbleDryCode/proptech/discussions
+Issues: https://github.com/tumbleDryCode/proptech/issues
+
+Credits:
+forked from: https://github.com/suraj25809/Real-Estate-Php than converted mostly to javascript with some added features.
+This project also uses some open source projects including CCapture, jquery and leaflet to name a few.
+
+
+
 
