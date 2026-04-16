@@ -8,13 +8,13 @@ Scripted for small to medium size real estate agencies.
     MySQL >= 5.7;
 
 # Installation
- This is not a release version.
- It is still a bit cluttered with unused files.
- Upload project to your web folder.
+ This is not a release version.<br>
+ It is still a bit cluttered with unused files.<br>
+ Upload project to your web folder.<br>
  Import the dev/db.sql database file to your database.
- Modify include/config.php file with your database settings.
- The main page is /index.html and php settings must be set to include the .html extension.
- Go to https://.....myweb.com/index.html and use one of the Demo users to get aquainted with the script features.
+ Modify include/config.php file with your database settings.<br>
+ The main page is /index.html and php settings must be set to include the .html extension.<br>
+ Go to https://.....myweb.com/index.html and use one of the Demo users to get aquainted with the script features.<br>
 
 Links:<br>
     Demo: https://dev.propsgo.com<br>
