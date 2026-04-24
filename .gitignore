@@ -13,3 +13,10 @@ trash/
 /remote/
 /remote/**
 
+
+# Node.js
+node_modules/
+npm-debug.log
+
+# PHPUnit
+.phpunit.result.cache
