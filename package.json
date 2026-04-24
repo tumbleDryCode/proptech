@@ -1,0 +1,23 @@
+{
+  "name": "proptech",
+  "version": "1.0.0",
+  "description": "PropTech real-estate web application",
+  "scripts": {
+    "test": "jest",
+    "test:js": "jest"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/js/**/*.test.js"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/js/st/"
+    ]
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}
