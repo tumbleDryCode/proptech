@@ -13566,7 +13566,18 @@ break;
 case "index_main":
 // imgPLicon.src = "logoicon.png";
 dvPartLicon.innerHTML =  "<img src=\"images/logo/logo-small.png\" style=\"margin-top: 5px;max-height:30px;max-width:27px;\" alt=\"account\" title=\"account\" class=\"account\">";
-fretPlugStr = "<div class=\"txtSmall\">" + shopTitle + "</div>";
+// fretPlugStr = "<div class=\"txtSmall\">" + shopTitle + "</div>";
+
+// Need a this is demo page for the software at github.com
+/*
+This is a demo site for the PropTech software available at:
+Project: PropTech
+Code: https://github.com/tumbleDryCode/proptech
+Discussion: https://github.com/tumbleDryCode/proptech/discussions
+Issues: https://github.com/tumbleDryCode/proptech/issues
+*/
+fretPlugStr = "<div class=\"txtSmall\">This is a demo site for the PropTech software available at:<br><a href=\"https://github.com/tumbleDryCode/proptech\" target=\"_blank\">https://github.com/tumbleDryCode/proptech</a></div>"; 
+
 // fretPlugStr = doNuCollsLoad("links");
 document.title = shopTitle;
 break;

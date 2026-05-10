@@ -191,6 +191,8 @@
     </ul>
 </div> <!-- end of dvAMnuLnks -->  
 
+
+
 <div style="padding:8px;margin:8px;border-top:1px solid #cccccc;">
             <a class="txtSmall  txtDecorNone" href="javascript:JSSHOP.cookies.setCookie('usrlang','en_us','130','','','');document.location.href='index.html?nls=y';">
 			English</a>&nbsp; |&nbsp;<a class="txtSmall  txtDecorNone" href="javascript:JSSHOP.cookies.setCookie('usrlang','spa_spa','130','','','');document.location.href='index.html?nls=y';">
@@ -198,7 +200,10 @@
 			Portuguese</a>&nbsp; |&nbsp;<a class="txtSmall txtDecorNone" href="javascript:JSSHOP.cookies.setCookie('usrlang','fr_fr','130','','','');document.location.href='index.html?nls=y';">
 			French</a>
             </div>
-
+<div style="padding:8px;margin:8px;border-top:1px solid #cccccc;">
+            <!-- This is a demo site to the code at fretPlugStr = "<div class=\"txtSmall\">This is a demo site for the PropTech software available at:<br><a href=\"https://github.com/tumbleDryCode/proptech\" target=\"_blank\">https://github.com/tumbleDryCode/proptech</a></div>"; 
+ --> 
+            <div class="txtBold txtClrHdr">** This is a demo site for the open source proptech project available at:<br><a href="https://github.com/tumbleDryCode/proptech" target="_blank" class="txtDecorUline">github.com</a></div>
 </div> <!-- end of navbar-collapse -->
                                 </td></tr></table>
         </div>

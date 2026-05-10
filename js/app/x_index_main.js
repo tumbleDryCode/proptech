@@ -912,10 +912,8 @@ aTPrpOstr = getPrpObjSTr(aTPrpObj);
 
 var dmyFnishCntLoad = fnishCntLoad;
 fnishCntLoad = function() {
-// JSSHOP.ads.doGenericPlug("main", "index_main", "dvPartLinks");
+JSSHOP.ads.doGenericPlug("main", "index_main", "dvPartLinks");
 document.title = shopTitle;
- //  alert('fnishCntLoad');
- //
  tmpDOqs = null;
 tmpDOqs = {};
 tmpDOqs["ws"] = "where _id>?";
@@ -923,32 +921,7 @@ tmpDOqs["wa"] = [0];
 tmpDOqs["l"] = 4;
 tmpDOqs["o"] = " order by rand()";
 oia = getNuDBFnvp("property",5,null,tmpDOqs);
-newQstr = "select * from property where _id > 0 limit 45";
-// newQstr also grabs user icon from quser  u_icon field
-// newQstr = "select p.*, u.u_icon, u.u_fullname from property p, quser u where p._id > 0 and p.uid = u._id  order by rand() limit 20";
-
-//   newQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.uid = u._id and pd.pd_prpid = p._id and pd.pd_prptlng = '" +  usrlang + "' order by rand() limit 20";
-// also get property title and description from propdescs where propdescs.pd_prpid = p._id and propdescs.pd_lang = userLang or propdescs.pd_lang = deflang
-newerQstr = "select p.*, u.u_icon, u.u_fullname, pd.pd_prptitle, pd.pd_prpdesc from property p, quser u, propdescs pd where p._id > 0 and p.prtype = '5' and p.uid = u._id and pd.pd_prpid = p._id and (pd.pd_prptlng = '" +  usrlang + "' or pd.pd_prptlng = '" + deflang + "') order by p._id desc limit 20";
-// test  ..newerQstr = "FROM property p JOIN quser u ON u._id = p.uid LEFT JOIN propdescs pd_user ON pd_user.pd_prpid = p._id AND pd_user.pd_prptlng = ? -- '" +  usrlang + "' LEFT JOIN propdescs pd_def ON pd_def.pd_prpid = p._id AND pd_def.pd_prptlng = ? -- '" + deflang + "' WHERE p._id > 0 AND p.prtype = '5' ORDER BY RAND() LIMIT 20";
-/*
-SELECT p.*, u.u_icon, u.u_fullname,
-       COALESCE(pd_user.pd_prptitle, pd_def.pd_prptitle) AS pd_prptitle,
-       COALESCE(pd_user.pd_prpdesc,  pd_def.pd_prpdesc)  AS pd_prpdesc
-FROM property p
-JOIN quser u ON p.uid = u._id
-LEFT JOIN propdescs pd_user ON pd_user.pd_prpid = p._id AND pd_user.pd_prptlng = 'YOUR_USER_LANG'
-LEFT JOIN propdescs pd_def  ON pd_def.pd_prpid  = p._id AND pd_def.pd_prptlng  = 'YOUR_DEF_LANG'
-WHERE p._id > 0
-  AND p.prtype = '5'
-ORDER BY RAND()
-LIMIT 20
-
-// return the above as one line string for newerQstr
-
-*/
 newerQstr = "SELECT p.*, u.u_icon, u.u_fullname, COALESCE(pd_user.pd_prptitle, pd_def.pd_prptitle) AS pd_prptitle, COALESCE(pd_user.pd_prpdesc,  pd_def.pd_prpdesc)  AS pd_prpdesc FROM property p JOIN quser u ON p.uid = u._id LEFT JOIN propdescs pd_user ON pd_user.pd_prpid = p._id AND pd_user.pd_prptlng = '" +  usrlang + "' LEFT JOIN propdescs pd_def ON pd_def.pd_prpid = p._id AND pd_def.pd_prptlng = '" + deflang + "' WHERE p._id > 0 AND p.prtype = '5' ORDER BY _id desc LIMIT 20";
-
 doQComm(newerQstr, null, "doMPropsList");
 return dmyFnishCntLoad;
 };

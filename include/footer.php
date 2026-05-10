@@ -112,6 +112,12 @@
 			French</a>
             </div>
 
+            <div style="padding:8px;margin:8px;border-top:1px solid #cccccc;">
+            <!-- This is a demo site to the code at fretPlugStr = "<div class=\"txtSmall\">This is a demo site for the PropTech software available at:<br><a href=\"https://github.com/tumbleDryCode/proptech\" target=\"_blank\">https://github.com/tumbleDryCode/proptech</a></div>"; 
+ --> 
+            <div class="txtBold txtClrWhite">** This is a demo site for the open source proptech project available at:<br><a href="https://github.com/tumbleDryCode/proptech" target="_blank" style="text-decoration:underline;">github.com</a></div>
+</div>
+
             
             </div>
            
