@@ -547,6 +547,21 @@ stxt[1025] = "Lista de Agentes"; // Lista de Agentes
 stxt[1026] = "Lista de Construtores"; // Lista de Construtores
 stxt[1027] = "Lista de Utilizadores"; // Lista de Utilizadores
 stxt[1028] = "Titulo"; // Titulo
+
+// comments system
+stxt[1029] = "Comentários";
+stxt[1030] = "Responder";
+stxt[1031] = "Publicar Comentário";
+stxt[1032] = "Público";
+stxt[1033] = "Privado";
+stxt[1034] = "Ainda não há comentários. Seja o primeiro a comentar.";
+stxt[1035] = "Por favor introduza um comentário.";
+stxt[1036] = "Por favor introduza o seu nome ou email.";
+stxt[1037] = "Por favor introduza uma resposta.";
+stxt[1038] = "O seu nome";
+stxt[1039] = "Curtir";
+stxt[1040] = "Curtido";
+
 // tips
 stxt[2001] = "Setting up is easy. Enter your shops title, add some item categories and click Save.";
 

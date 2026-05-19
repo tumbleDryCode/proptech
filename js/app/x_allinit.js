@@ -177,7 +177,7 @@ var currGglSVloaded = "no";
 var currUpdateArr = [];
 var currUsrUpdtsObj = {};
 var currPrpMediaArr = [];
-var gglSKey = "AIzaSyAiBR8BEPj2YCepKplisQKK709r1TI48Vo55";
+var gglSKey = "AIzaSyAiBR8BEPj2YCepKplisQKK709r1TI48Vo";
  
 if((currDocHref.indexOf("nls=y") != -1) || (currDocHref.indexOf("isr=y") != -1)) {
     document.location.href = "./";

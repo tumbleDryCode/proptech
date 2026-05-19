@@ -1,5 +1,4 @@
 
-
 if (!window.JSSHOP) {
     var JSSHOP = new Object();
 }
@@ -21287,4 +21286,444 @@ function handleContactMethodChange(checkbox) {
     }
 }
 
+
+
    */
+
+// ── Shared Comments System ────────────────────────────────────────────────────
+
+var _cmtProdId   = null;
+var _cmtProdType = "prod";
+var _cmtOwnerUid = null;
+
+var setCmtsDiv = function(a, theResp, c) {
+    var tCmtsDv = document.getElementById("dvComments");
+    if(!tCmtsDv) { return; }
+
+    var tCmtListDv = document.getElementById("dvCmtList");
+    if(!tCmtListDv) { return; }
+
+    var tCmtArr = null;
+    try { tCmtArr = JSON.parse(theResp); } catch(e) { tCmtArr = []; }
+
+    var tCmtLen = tCmtArr.length;
+    var tCmtStr = "";
+
+    if(tCmtLen === 0) {
+        tCmtStr = "<div class=\"txtSmall txtClrGrey\" style=\"padding:10px;\">" + stxt[1034] + "</div>";
+    } else {
+        var iCmt = 0;
+        while(iCmt < tCmtLen) {
+            var tCmt = tCmtArr[iCmt];
+            var tCmtDate = new Date(tCmt.cmts_dadded * 1000);
+            var tCmtDStr = ("0" + tCmtDate.getDate()).slice(-2) + "/" +
+                           ("0" + (tCmtDate.getMonth() + 1)).slice(-2) + " " +
+                           ("0" + tCmtDate.getHours()).slice(-2) + ":" +
+                           ("0" + tCmtDate.getMinutes()).slice(-2);
+            var tCmtFromNm = tCmt.cmts_from || "Anonymous";
+            var tCmtIcon = tCmt.cmts_from_icon;
+            var tCmtPriv = (tCmt.cmts_privacy === "prv") ? "<span class=\"txtSmall txtClrRed\" style=\"margin-left:6px;\">&#xe897; " + stxt[1033] + "</span>" : "";
+            var tCmtMatter = "";
+            try { tCmtMatter = decodeURIComponent(tCmt.cmts_matter); } catch(e) { tCmtMatter = tCmt.cmts_matter; }
+
+            tCmtStr += "<div id=\"dvCmt" + tCmt._id + "\" style=\"margin:8px 0;padding:10px;border-radius:8px;\" class=\"bkgdClrNrml\">";
+            tCmtStr += "<div style=\"display:flex;align-items:center;margin-bottom:6px;\">";
+            var tCmtUsrLink = (tCmt.cmts_userid && tCmt.cmts_userid != "0") ?
+                "javascript:eindex('aa-show-user','pid=aa-show-user&tuid=" + tCmt.cmts_userid + "')" : null;
+            var tCmtAvatarOpen  = tCmtUsrLink ? "<a href=\"" + tCmtUsrLink + "\">" : "<span>";
+            var tCmtAvatarClose = tCmtUsrLink ? "</a>" : "</span>";
+            if(tCmtIcon && tCmtIcon !== "") {
+                tCmtStr += tCmtAvatarOpen + "<img src=\"images/user/s_thumb" + tCmtIcon + "\" style=\"width:30px;height:30px;border-radius:50%;margin-right:8px;\">" + tCmtAvatarClose;
+            } else {
+                tCmtStr += tCmtAvatarOpen + "<div style=\"width:30px;height:30px;border-radius:50%;background:#ccc;margin-right:8px;display:flex;align-items:center;justify-content:center;font-weight:bold;\">" + tCmtFromNm.charAt(0).toUpperCase() + "</div>" + tCmtAvatarClose;
+            }
+            var tCmtNameEl = tCmtUsrLink ?
+                "<a href=\"" + tCmtUsrLink + "\" class=\"txtBold txtClrHdr\">" + tCmtFromNm + "</a>" :
+                "<span class=\"txtBold txtClrHdr\">" + tCmtFromNm + "</span>";
+            tCmtStr += tCmtNameEl;
+            tCmtStr += "<span class=\"txtSmall\" style=\"margin-left:8px;color:#888;\">" + tCmtDStr + "</span>";
+            tCmtStr += tCmtPriv;
+            tCmtStr += "</div>";
+            tCmtStr += "<div class=\"txtClrHdr\" style=\"margin-left:38px;white-space:pre-wrap;\">" + tCmtMatter + "</div>";
+            tCmtStr += "<div style=\"margin-left:38px;margin-top:6px;\">";
+            var tCmtIsGuest = (typeof quid === "undefined" || quid === "0" || quid === 0 || quid === "noQvalue");
+            var tCmtReplyHref = tCmtIsGuest ?
+                "javascript:JSSHOP.shared.showUserProfile(0);" :
+                "javascript:doShowCmtReply('" + tCmt._id + "');";
+            var tCmtLikeHref  = tCmtIsGuest ?
+                "javascript:JSSHOP.shared.showUserProfile(0);" :
+                "javascript:doCommentLike('" + tCmt._id + "',0);";
+            tCmtStr += "<a href=\"" + tCmtReplyHref + "\" class=\"txtSmall txtClrLtBlue\">" + stxt[1030] + "</a>";
+            tCmtStr += "&nbsp;&nbsp;<a id=\"dvLike_c" + tCmt._id + "\" href=\"" + tCmtLikeHref + "\" class=\"txtSmall\" style=\"color:#aaa;\">&#x1F44D; " + stxt[1039] + "</a>";
+            tCmtStr += "&nbsp;<span id=\"dvLikeCount_c" + tCmt._id + "\" class=\"txtSmall\" style=\"color:#aaa;\"></span>";
+            tCmtStr += "</div>";
+            tCmtStr += "<div id=\"dvCmtReplies_" + tCmt._id + "\" style=\"margin-left:38px;margin-top:6px;\"></div>";
+            if(!tCmtIsGuest) {
+            tCmtStr += "<div id=\"dvCmtReplyBox_" + tCmt._id + "\" style=\"display:none;margin-left:38px;margin-top:6px;\">";
+            tCmtStr += "<div id=\"dvCmtReplyInput" + tCmt._id + "\" contenteditable=\"true\" class=\"form-control\" style=\"min-height:40px;padding:4px;margin-bottom:4px;\"></div>";
+            tCmtStr += "<button class=\"cls_button cls_button-small\" onclick=\"doCommentReply('" + tCmt._id + "','" + tCmt.cmts_threadid + "','" + tCmtFromNm + "');\">" + stxt[1030] + "</button>";
+            tCmtStr += "</div>";
+            }
+            tCmtStr += "</div>";
+            iCmt++;
+        }
+    }
+
+    tCmtListDv.innerHTML = tCmtStr;
+
+    if(tCmtLen > 0) {
+        var iR = 0;
+        while(iR < tCmtLen) {
+            var tRCmt = tCmtArr[iR];
+            var tRepFobj = {};
+            tRepFobj["ws"] = "where cm_threadid=? and cm_rtype=?";
+            tRepFobj["wa"] = [tRCmt.cmts_threadid, 5];
+            tRepFobj["o"] = "cm_dadded asc";
+            var oRep = getNuDBFnvp("qcmnt", 5, null, tRepFobj);
+            doQComm(oRep["rq"], "dvCmtReplies_" + tRCmt._id, "setCmtReplies");
+            // Load like count for this comment
+            var tLkQstr = "SELECT COUNT(*) AS cnt FROM qlikes WHERE ql_cmntId=" + tRCmt._id + " AND ql_isreply=0 AND ql_rtype=5";
+            doQComm(tLkQstr, "dvLikeCount_c" + tRCmt._id, "setCmtLikeCount");
+            iR++;
+        }
+    }
+
+    tCmtListDv.scrollTop = tCmtListDv.scrollHeight;
+};
+
+var setCmtReplies = function(a, theResp, c) {
+    var tRepDv = (typeof a === "string") ? document.getElementById(a) : a;
+    if(!tRepDv) { return; }
+
+    var tRepArr = null;
+    try { tRepArr = JSON.parse(theResp); } catch(e) { tRepArr = []; }
+    if(!tRepArr || tRepArr.length === 0) { return; }
+
+    var tRepStr = "";
+    var iRep = 0;
+    while(iRep < tRepArr.length) {
+        var tRep = tRepArr[iRep];
+        var tRepDate = new Date(tRep.cm_dadded * 1000);
+        var tRepDStr = ("0" + tRepDate.getDate()).slice(-2) + "/" +
+                       ("0" + (tRepDate.getMonth() + 1)).slice(-2) + " " +
+                       ("0" + tRepDate.getHours()).slice(-2) + ":" +
+                       ("0" + tRepDate.getMinutes()).slice(-2);
+        var tRepFrom   = tRep.cm_from || "Anonymous";
+        var tRepIcon   = tRep.cm_from_icon;
+        var tRepMatter = "";
+        try { tRepMatter = decodeURIComponent(tRep.cm_matter); } catch(e) { tRepMatter = tRep.cm_matter; }
+
+        tRepStr += "<div style=\"margin:4px 0;padding:6px 8px;border-left:3px solid #ccc;border-radius:4px;\" class=\"bkgdClrNrml\">";
+        tRepStr += "<div style=\"display:flex;align-items:center;margin-bottom:4px;\">";
+        var tRepUsrLink    = (tRep.cm_userid && tRep.cm_userid != "0") ?
+            "javascript:eindex('aa-show-user','pid=aa-show-user&tuid=" + tRep.cm_userid + "')" : null;
+        var tRepAvatarOpen  = tRepUsrLink ? "<a href=\"" + tRepUsrLink + "\">" : "<span>";
+        var tRepAvatarClose = tRepUsrLink ? "</a>" : "</span>";
+        if(tRepIcon && tRepIcon !== "") {
+            tRepStr += tRepAvatarOpen + "<img src=\"images/user/s_thumb" + tRepIcon + "\" style=\"width:22px;height:22px;border-radius:50%;margin-right:6px;\">" + tRepAvatarClose;
+        } else {
+            tRepStr += tRepAvatarOpen + "<div style=\"width:22px;height:22px;border-radius:50%;background:#ccc;margin-right:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;\">" + tRepFrom.charAt(0).toUpperCase() + "</div>" + tRepAvatarClose;
+        }
+        var tRepNameEl = tRepUsrLink ?
+            "<a href=\"" + tRepUsrLink + "\" class=\"txtBold txtClrHdr txtSmall\">" + tRepFrom + "</a>" :
+            "<span class=\"txtBold txtClrHdr txtSmall\">" + tRepFrom + "</span>";
+        tRepStr += tRepNameEl;
+        tRepStr += "<span class=\"txtSmall\" style=\"margin-left:6px;color:#888;\">" + tRepDStr + "</span>";
+        tRepStr += "</div>";
+        tRepStr += "<div class=\"txtClrHdr txtSmall\" style=\"margin-left:28px;white-space:pre-wrap;\">" + tRepMatter + "</div>";
+        tRepStr += "<div style=\"margin-left:28px;margin-top:4px;\">";
+        var tRepIsGuest = (typeof quid === "undefined" || quid === "0" || quid === 0 || quid === "noQvalue");
+        var tRepLikeHref = tRepIsGuest ?
+            "javascript:JSSHOP.shared.showUserProfile(0);" :
+            "javascript:doCommentLike('" + tRep._id + "',1);";
+        tRepStr += "<a id=\"dvLike_r" + tRep._id + "\" href=\"" + tRepLikeHref + "\" class=\"txtSmall\" style=\"color:#aaa;\">&#x1F44D; " + stxt[1039] + "</a>";
+        tRepStr += "&nbsp;<span id=\"dvLikeCount_r" + tRep._id + "\" class=\"txtSmall\" style=\"color:#aaa;\"></span>";
+        tRepStr += "</div>";
+        tRepStr += "</div>";
+        iRep++;
+    }
+
+    tRepDv.innerHTML = tRepStr;
+
+    // Load like counts for each reply
+    var iLk = 0;
+    while(iLk < tRepArr.length) {
+        var tLkRep = tRepArr[iLk];
+        var tLkRepQstr = "SELECT COUNT(*) AS cnt FROM qlikes WHERE ql_cmntId=" + tLkRep._id + " AND ql_isreply=1 AND ql_rtype=5";
+        doQComm(tLkRepQstr, "dvLikeCount_r" + tLkRep._id, "setCmtLikeCount");
+        iLk++;
+    }
+};
+
+var getCommentsDiv = function(tProdId, tProdType, tOwnerUid) {
+    _cmtProdId   = tProdId   || null;
+    _cmtProdType = tProdType || "prod";
+    _cmtOwnerUid = tOwnerUid || null;
+
+    var tCmtsDv = document.getElementById("dvComments");
+    if(!tCmtsDv) { return; }
+
+    var tCmtPrivOpts = "";
+    if((typeof quid !== "undefined") && quid !== "0" && quid !== 0 && quid !== "noQvalue") {
+        tCmtPrivOpts = "<div style=\"display:flex;align-items:center;gap:10px;margin-top:6px;\">" +
+            "<label class=\"txtSmall\"><input type=\"radio\" name=\"cmtPrivacy\" id=\"cmtPrivPub\" value=\"pub\" checked> " + stxt[1032] + "</label>" +
+            "<label class=\"txtSmall\"><input type=\"radio\" name=\"cmtPrivacy\" id=\"cmtPrivPrv\" value=\"prv\"> " + stxt[1033] + "</label>" +
+            "</div>";
+    }
+
+    var tGuestFields = "";
+    if((typeof quid === "undefined") || quid === "0" || quid === 0 || quid === "noQvalue") {
+        tGuestFields = "<input type=\"text\" id=\"dvCmtFromName\" placeholder=\"" + stxt[1038] + "\" class=\"form-control\" style=\"margin-bottom:5px;\">" +
+            "<input type=\"text\" id=\"dvCmtFromEmail\" placeholder=\"" + stxt[50] + "\" class=\"form-control\" style=\"margin-bottom:5px;\">";
+    }
+
+    var tCmtBoxStr =
+        "<div class=\"fb-chat-box\" style=\"width:100%;border:1px solid #ccc;border-radius:8px;overflow:hidden;margin:10px 0;background:#fff;\">" +
+        "<div class=\"chat-header bkgdClrNrml txtClrHdr\" style=\"padding:8px 12px;font-weight:bold;\">" + stxt[1029] + "</div>" +
+        "<div id=\"dvCmtList\" style=\"padding:10px;max-height:400px;overflow-y:auto;background:#fff;\"></div>" +
+        "<div style=\"padding:10px;border-top:1px solid #eee;background:#fff;\">" +
+        tGuestFields +
+        "<div id=\"dvCmtInput\" contenteditable=\"true\" class=\"form-control\" style=\"min-height:50px;padding:6px;\"></div>" +
+        tCmtPrivOpts +
+        "<div style=\"margin-top:8px;\">" +
+        "<button class=\"cls_button cls_button-small\" onclick=\"doCommentSave();\">" + stxt[1031] + "</button>" +
+        "</div>" +
+        "</div>" +
+        "</div>";
+
+    tCmtsDv.innerHTML = tCmtBoxStr;
+
+    var tCmtFobj = {};
+    if(_cmtOwnerUid && (typeof quid !== "undefined") && _cmtOwnerUid == quid) {
+        tCmtFobj["ws"] = "where cmts_prodid=? and cmts_prodtype=?";
+        tCmtFobj["wa"] = [_cmtProdId, _cmtProdType];
+    } else {
+        tCmtFobj["ws"] = "where cmts_prodid=? and cmts_prodtype=? and cmts_privacy=? and cmts_rtype=?";
+        tCmtFobj["wa"] = [_cmtProdId, _cmtProdType, "pub", 5];
+    }
+    tCmtFobj["o"] = "cmts_dadded desc";
+    tCmtFobj["l"] = "50";
+    var oCmt = getNuDBFnvp("qcmnts", 5, null, tCmtFobj);
+    doQComm(oCmt["rq"], null, "setCmtsDiv");
+};
+
+var doCommentSave = function() {
+    var tCmtMatter = document.getElementById("dvCmtInput").innerHTML;
+    if(!tCmtMatter || tCmtMatter.trim() === "" || tCmtMatter === "<br>") {
+        alert(stxt[1035]);
+        return;
+    }
+
+    var tCmtPriv = "pub";
+    var tPrivPrv = document.getElementById("cmtPrivPrv");
+    if(tPrivPrv && tPrivPrv.checked) { tCmtPriv = "prv"; }
+
+    var tCmtThreadId = Math.random().toString(36).slice(2);
+    var tCmtRtype = ((typeof quid === "undefined") || quid === "0" || quid === 0 || quid === "noQvalue") ? "0" : "5";
+    JSSHOP.shared.setFrmFieldVal("qcmnts", "cmts_rtype",     tCmtRtype);
+    JSSHOP.shared.setFrmFieldVal("qcmnts", "cmts_threadid",  tCmtThreadId);
+    JSSHOP.shared.setFrmFieldVal("qcmnts", "cmts_prodid",    _cmtProdId);
+    JSSHOP.shared.setFrmFieldVal("qcmnts", "cmts_prodtype",  _cmtProdType);
+    JSSHOP.shared.setFrmFieldVal("qcmnts", "cmts_userid",    quid);
+    JSSHOP.shared.setFrmFieldVal("qcmnts", "cmts_privacy",   tCmtPriv);
+    JSSHOP.shared.setFrmFieldVal("qcmnts", "cmts_dadded",    JSSHOP.getUnixTimeStamp());
+    JSSHOP.shared.setFrmFieldVal("qcmnts", "cmts_dmodified", JSSHOP.getUnixTimeStamp());
+    JSSHOP.shared.setFrmFieldVal("qcmnts", "cmts_matter",    encodeURIComponent(tCmtMatter));
+
+    if((typeof quid === "undefined") || quid === "0" || quid === 0 || quid === "noQvalue") {
+        var tGuestName  = document.getElementById("dvCmtFromName");
+        var tGuestEmail = document.getElementById("dvCmtFromEmail");
+        if((!tGuestName || tGuestName.value === "") && (!tGuestEmail || tGuestEmail.value === "")) {
+            alert(stxt[1036]);
+            return;
+        }
+        if(tGuestName)  { JSSHOP.shared.setFrmFieldVal("qcmnts", "cmts_from",         tGuestName.value); }
+        if(tGuestEmail) { JSSHOP.shared.setFrmFieldVal("qcmnts", "cmts_fromsg_email", tGuestEmail.value); }
+    } else {
+        if(typeof currQUsrObj !== "undefined" && currQUsrObj) {
+            JSSHOP.shared.setFrmFieldVal("qcmnts", "cmts_from",      currQUsrObj.u_fullname);
+            JSSHOP.shared.setFrmFieldVal("qcmnts", "cmts_from_icon", currQUsrObj.u_icon);
+        }
+    }
+
+    var tCmtDOs = {};
+    tCmtDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qcmnts"], "nada");
+    var oiCmt = getNuDBFnvp("qcmnts", 6, null, tCmtDOs);
+    doQComm(oiCmt["rq"], null, "afterCommentSave");
+};
+
+var afterCommentSave = function(a, theResp, c) {
+    getCommentsDiv(_cmtProdId, _cmtProdType, _cmtOwnerUid);
+    var tCmtsDv = document.getElementById("dvComments");
+    if(tCmtsDv) { tCmtsDv.scrollTop = tCmtsDv.scrollHeight; }
+};
+
+var doShowCmtReply = function(tCmtId) {
+    var tRplyDv = document.getElementById("dvCmtReplyBox_" + tCmtId);
+    if(!tRplyDv) { return; }
+    tRplyDv.style.display = (tRplyDv.style.display !== "none") ? "none" : "block";
+};
+
+var doCommentReply = function(tCmtId, tCmtThreadId, tCmtTo) {
+    var tRepInp = document.getElementById("dvCmtReplyInput" + tCmtId);
+    if(!tRepInp) { return; }
+    var tRepMatter = tRepInp.innerHTML;
+    if(!tRepMatter || tRepMatter.trim() === "" || tRepMatter === "<br>") {
+        alert(stxt[1037]);
+        return;
+    }
+
+    JSSHOP.shared.setFrmFieldVal("qcmnt", "cm_threadid", tCmtThreadId);
+    JSSHOP.shared.setFrmFieldVal("qcmnt", "cm_to",       tCmtTo);
+    JSSHOP.shared.setFrmFieldVal("qcmnt", "cm_matter",   encodeURIComponent(tRepMatter));
+    JSSHOP.shared.setFrmFieldVal("qcmnt", "cm_dadded",   JSSHOP.getUnixTimeStamp());
+    if(typeof currQUsrObj !== "undefined" && currQUsrObj) {
+        JSSHOP.shared.setFrmFieldVal("qcmnt", "cm_from",      currQUsrObj.u_fullname);
+        JSSHOP.shared.setFrmFieldVal("qcmnt", "cm_from_icon", currQUsrObj.u_icon);
+        JSSHOP.shared.setFrmFieldVal("qcmnt", "cm_userid",    quid);
+    }
+
+    var tRepDOs = {};
+    tRepDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qcmnt"], "nada");
+    var oiRep = getNuDBFnvp("qcmnt", 6, null, tRepDOs);
+    doQComm(oiRep["rq"], null, "afterCommentSave");
+};
+
+var doCommentLike = function(tCmtId, tIsReply) {
+    var tLikeElId = "dvLike_" + (tIsReply ? "r" : "c") + tCmtId;
+    // Fetch any existing record regardless of rtype so we can branch on state
+    var tChkQstr = "SELECT _id, ql_rtype FROM qlikes WHERE ql_userid=" + quid +
+        " AND ql_cmntId=" + tCmtId + " AND ql_isreply=" + (tIsReply ? 1 : 0) + " LIMIT 1";
+    doQComm(tChkQstr, tLikeElId, "afterLikeCheck");
+};
+
+// Three-state: no record → INSERT liked; rtype=5 → UPDATE to 0 (unliked); rtype=0 → UPDATE to 5 (re-liked)
+var afterLikeCheck = function(tLikeElId, theResp, c) {
+    var tIsReply = tLikeElId.indexOf("dvLike_r") === 0 ? 1 : 0;
+    var tCmtId   = tLikeElId.replace("dvLike_c", "").replace("dvLike_r", "");
+
+    var tExisting = null;
+    try { tExisting = JSON.parse(theResp); } catch(e) { tExisting = []; }
+
+    if(tExisting && tExisting.length > 0) {
+        if(tExisting[0].ql_rtype == 5) {
+            // Currently liked → toggle off (UPDATE rtype=0)
+            var tUnlikeQstr = "UPDATE qlikes SET ql_rtype=0 WHERE ql_userid=" + quid +
+                " AND ql_cmntId=" + tCmtId + " AND ql_isreply=" + tIsReply;
+            doQComm(tUnlikeQstr, tLikeElId, "setLikeElemUnlikedClassCallBack");
+        } else {
+            // Record exists but was unliked (rtype=0) → re-like (UPDATE rtype=5)
+            var tReLikeQstr = "UPDATE qlikes SET ql_rtype=5, ql_dadded=" + JSSHOP.getUnixTimeStamp() +
+                " WHERE ql_userid=" + quid +
+                " AND ql_cmntId=" + tCmtId + " AND ql_isreply=" + tIsReply;
+            doQComm(tReLikeQstr, tLikeElId, "afterLikeSave");
+        }
+    } else {
+        // No record yet — INSERT new liked row
+        JSSHOP.shared.setFrmFieldVal("qlikes", "ql_cmntId",   tCmtId);
+        JSSHOP.shared.setFrmFieldVal("qlikes", "ql_isreply",  tIsReply ? "1" : "0");
+        JSSHOP.shared.setFrmFieldVal("qlikes", "ql_dadded",   JSSHOP.getUnixTimeStamp());
+        JSSHOP.shared.setFrmFieldVal("qlikes", "ql_rtype",    "5");
+        if(typeof currQUsrObj !== "undefined" && currQUsrObj) {
+            JSSHOP.shared.setFrmFieldVal("qlikes", "ql_userid",    quid);
+            JSSHOP.shared.setFrmFieldVal("qlikes", "ql_uicon",     currQUsrObj.u_icon);
+            JSSHOP.shared.setFrmFieldVal("qlikes", "ql_ufullname", currQUsrObj.u_fullname);
+        }
+        var tLkDOs = {};
+        tLkDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qlikes"], "nada");
+        var oiLk = getNuDBFnvp("qlikes", 6, null, tLkDOs);
+        doQComm(oiLk["rq"], tLikeElId, "afterLikeSave");
+    }
+};
+
+var afterLikeSave = function(tLikeElId, theResp, c) {
+    var tEl = (typeof tLikeElId === "string") ? document.getElementById(tLikeElId) : tLikeElId;
+    if(tEl) {
+        tEl.style.color = "#1877f2";
+        tEl.innerHTML = "&#x1F44D; " + stxt[1040];
+    }
+    var tIsReply = tLikeElId.indexOf("dvLike_r") === 0 ? 1 : 0;
+    var tCmtId   = tLikeElId.replace("dvLike_c", "").replace("dvLike_r", "");
+    var tCntElId = "dvLikeCount_" + (tIsReply ? "r" : "c") + tCmtId;
+    var tLkCntQstr = "SELECT COUNT(*) AS cnt FROM qlikes WHERE ql_cmntId=" + tCmtId +
+        " AND ql_isreply=" + tIsReply + " AND ql_rtype=5";
+    doQComm(tLkCntQstr, tCntElId, "setCmtLikeCount");
+};
+
+// Sets the "unliked" visual state (record exists with rtype=0 — clicking will re-like via UPDATE)
+var setLikeElemUnlikedClassCallBack = function(tLikeElId, theResp, c) {
+    var tEl = (typeof tLikeElId === "string") ? document.getElementById(tLikeElId) : tLikeElId;
+    if(tEl) {
+        tEl.style.color = "#aaa";
+        tEl.innerHTML = "&#x1F44D; " + stxt[1039];
+    }
+    var tIsReply = tLikeElId.indexOf("dvLike_r") === 0 ? 1 : 0;
+    var tCmtId   = tLikeElId.replace("dvLike_c", "").replace("dvLike_r", "");
+    var tCntElId = "dvLikeCount_" + (tIsReply ? "r" : "c") + tCmtId;
+    var tLkCntQstr = "SELECT COUNT(*) AS cnt FROM qlikes WHERE ql_cmntId=" + tCmtId +
+        " AND ql_isreply=" + tIsReply + " AND ql_rtype=5";
+    doQComm(tLkCntQstr, tCntElId, "setCmtLikeCount");
+};
+
+var setCmtLikeCount = function(tElemId, theResp, c) {
+    var tEl = (typeof tElemId === "string") ? document.getElementById(tElemId) : tElemId;
+    if(!tEl) { return; }
+    var tRes = null;
+    try { tRes = JSON.parse(theResp); } catch(e) { tRes = null; }
+    var tCnt = 0;
+    if(tRes && tRes.length > 0 && tRes[0].cnt) { tCnt = parseInt(tRes[0].cnt, 10); }
+    if(tCnt > 0) {
+        var tIsLoggedIn = (typeof quid !== "undefined" && quid !== "0" && quid !== 0 && quid !== "noQvalue");
+        var tIsReply = tElemId.indexOf("dvLikeCount_r") === 0 ? 1 : 0;
+        var tCmtId   = tElemId.replace("dvLikeCount_c", "").replace("dvLikeCount_r", "");
+        if(tIsLoggedIn) {
+            tEl.innerHTML = "<a href=\"javascript:showLikedList('" + tCmtId + "'," + tIsReply + ");\" class=\"txtSmall\" style=\"color:#1877f2;\">" + tCnt + "</a>";
+        } else {
+            tEl.innerHTML = "<span style=\"color:#1877f2;\">" + tCnt + "</span>";
+        }
+    } else {
+        tEl.innerHTML = "";
+    }
+};
+
+var showLikedList = function(tCmtId, tIsReply) {
+    var tLkListQstr = "SELECT ql_userid, ql_uicon, ql_ufullname FROM qlikes WHERE ql_cmntId=" + tCmtId +
+        " AND ql_isreply=" + tIsReply + " AND ql_rtype=5 ORDER BY _id desc LIMIT 50";
+    doQComm(tLkListQstr, tCmtId + "|" + tIsReply, "showLikedListCB");
+};
+
+var showLikedListCB = function(tParam, theResp, c) {
+    var tLkArr = null;
+    try { tLkArr = JSON.parse(theResp); } catch(e) { tLkArr = []; }
+    if(!tLkArr || tLkArr.length === 0) { return; }
+
+    var tLkStr = "<div style=\"padding:6px 0;\">";
+    var iLk = 0;
+    while(iLk < tLkArr.length) {
+        var tLkr     = tLkArr[iLk];
+        var tLkrName = tLkr.ql_ufullname || "Anonymous";
+        var tLkrIcon = tLkr.ql_uicon;
+        var tLkrUsrLink = (tLkr.ql_userid && tLkr.ql_userid != "0") ?
+            "javascript:eindex('aa-show-user','pid=aa-show-user&tuid=" + tLkr.ql_userid + "')" : null;
+        var tLkrAvatarOpen  = tLkrUsrLink ? "<a href=\"" + tLkrUsrLink + "\">" : "<span>";
+        var tLkrAvatarClose = tLkrUsrLink ? "</a>" : "</span>";
+
+        tLkStr += "<div style=\"display:flex;align-items:center;padding:6px 10px;\">";
+        if(tLkrIcon && tLkrIcon !== "") {
+            tLkStr += tLkrAvatarOpen + "<img src=\"images/user/s_thumb" + tLkrIcon + "\" style=\"width:30px;height:30px;border-radius:50%;margin-right:8px;\">" + tLkrAvatarClose;
+        } else {
+            tLkStr += tLkrAvatarOpen + "<div style=\"width:30px;height:30px;border-radius:50%;background:#ccc;margin-right:8px;display:flex;align-items:center;justify-content:center;font-weight:bold;\">" + tLkrName.charAt(0).toUpperCase() + "</div>" + tLkrAvatarClose;
+        }
+        var tLkrNameEl = tLkrUsrLink ?
+            "<a href=\"" + tLkrUsrLink + "\" class=\"txtBold txtClrHdr\">" + tLkrName + "</a>" :
+            "<span class=\"txtBold txtClrHdr\">" + tLkrName + "</span>";
+        tLkStr += tLkrNameEl;
+        tLkStr += "</div>";
+        iLk++;
+    }
+    tLkStr += "</div>";
+
+    JSSHOP.ui.popNurFillLbox(tLkStr, "&#xe5cd;", stxt[1039]);
+};
+
+

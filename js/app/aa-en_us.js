@@ -547,6 +547,20 @@ stxt[1026] = "Builder List";
 stxt[1027] = "User List";
 stxt[1028] = "Title";
 
+// comments system
+stxt[1029] = "Comments";
+stxt[1030] = "Reply";
+stxt[1031] = "Post Comment";
+stxt[1032] = "Public";
+stxt[1033] = "Private";
+stxt[1034] = "No comments yet. Be the first to comment.";
+stxt[1035] = "Please enter a comment.";
+stxt[1036] = "Please enter your name or email.";
+stxt[1037] = "Please enter a reply.";
+stxt[1038] = "Your name";
+stxt[1039] = "Like";
+stxt[1040] = "Liked";
+
 
 // tips
 stxt[2001] = "Setting up is easy. Enter your shops title, add some item categories and click Save.";

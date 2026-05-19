@@ -534,6 +534,20 @@ stxt[1026] = "Liste des constructeurs";
 stxt[1027] = "Liste des utilisateurs";
 stxt[1028] = "Titre";
 
+// comments system
+stxt[1029] = "Commentaires";
+stxt[1030] = "R\u00e9pondre";
+stxt[1031] = "Publier un commentaire";
+stxt[1032] = "Public";
+stxt[1033] = "Priv\u00e9";
+stxt[1034] = "Pas encore de commentaires. Soyez le premier \u00e0 commenter.";
+stxt[1035] = "Veuillez saisir un commentaire.";
+stxt[1036] = "Veuillez saisir votre nom ou email.";
+stxt[1037] = "Veuillez saisir une r\u00e9ponse.";
+stxt[1038] = "Votre nom";
+stxt[1039] = "J'aime";
+stxt[1040] = "Aimé";
+
 // tips
 // stxt[2001] = "Setting up is easy. Enter your shops title, add some item categories and click Save.";
 stxt[2001] = "La configuration est facile. Entrez le titre de votre magasin, ajoutez quelques cat\u00e9gories d'articles et cliquez sur Enregistrer.";

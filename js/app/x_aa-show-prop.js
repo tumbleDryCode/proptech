@@ -1129,6 +1129,7 @@ var setPropImgs = function(theAIa, theAIb, theAIc) {
 	// alert(inpPropCtrct.value);
 	// https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2
    //  JSSHOP.loadScript("https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&ttime=" + JSSHOP.getUnixTimeStamp(), doFBFLoad,"js");
+    getCommentsDiv(currUrlArr.prpid, "prod", (typeof aprpObj !== "undefined" && aprpObj) ? aprpObj.uid : null);
 };
 
 function doFBFLoad(aee, bee) {
@@ -1144,6 +1145,9 @@ var getPropImgs = function() {
     oi = getNuDBFnvp("qmedia", 5, null, tmpFobj);
     doQComm(oi["rq"], null, "setPropImgs");
 };
+
+
+
 
 
 

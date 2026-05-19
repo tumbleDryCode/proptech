@@ -39,6 +39,7 @@ tUFObj["uplmt"] = 1;
 tUFObj["uppstid"] = tupid;
 tUFObj["upcb"] = "jshp_ads_showUpdtsFeed";
  JSSHOP.ads.doUpdatesFeed(tUFObj);
+ getCommentsDiv(currUrlArr.tupid, "post", null);
 } else {
 }
 

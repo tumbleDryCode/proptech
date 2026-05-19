@@ -188,6 +188,62 @@
 <input type="hidden" name="ms_dadded" id="ms_dadded" value="" data-prval="disnull">
 </form>
 
+
+<form name="qcmnts">
+<input type="hidden" name="_id" value="" data-prval="disnull">
+<input type="hidden" name="cmts_rtype" id="cmts_rtype" value="5" data-prval="disnull">
+<input type="hidden" name="cmts_threadid" id="cmts_threadid" value="0" data-prval="disnull">
+<input type="hidden" name="cmts_prodid" id="cmts_prodid" value="noQvalue" data-prval="disnull">
+<input type="hidden" name="cmts_prodtype" id="cmts_prodtype" value="prod" data-prval="disnull">
+<input type="hidden" name="cmts_userid" id="cmts_userid" value="noQvalue" data-prval="disnull">
+<input type="hidden" name="cmts_viewed" id="cmts_viewed" value="-" data-prval="disnull">
+<input type="hidden" name="cmts_from" id="cmts_from" value="" data-prval="disnull" data-flbl="stxt[703]" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="cmts_from_icon" id="cmts_from_icon" value="" data-prval="disnull">
+<input type="hidden" name="cmts_fromsg_email" id="cmts_fromsg_email" value="" data-prval="disnull" data-flbl="stxt[704]" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="cmts_fromsg_tel" id="cmts_fromsg_tel" value="" data-prval="disnull" data-flbl="Tel" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="cmts_fromsg_ip" id="cmts_fromsg_ip" value="" data-prval="disnull">
+<input type="hidden" name="cmts_subject" id="cmts_subject" value="" data-prval="disnull" data-flbl="Subject" data-ftype="tdiv" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="cmts_matter" id="cmts_matter" value="" data-prval="disnull" data-flbl="Comment" data-ftype="tdivarea" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="cmts_media" id="cmts_media" value="" data-prval="disnull">
+<input type="hidden" name="cmts_privacy" id="cmts_privacy" value="pub" data-prval="disnull">
+<input type="hidden" name="cmts_status" id="cmts_status" value="open" data-prval="disnull">
+<input type="hidden" name="cmts_dadded" id="cmts_dadded" value="" data-prval="disnull">
+<input type="hidden" name="cmts_dmodified" id="cmts_dmodified" value="" data-prval="disnull">
+<input type="hidden" name="cmts_modifiedby" id="cmts_modifiedby" value="" data-prval="disnull">
+</form>
+
+
+<form name="qcmnt">
+<input type="hidden" name="_id" value="" data-prval="disnull">
+<input type="hidden" name="cm_rtype" id="cm_rtype" value="5" data-prval="disnull">
+<input type="hidden" name="cm_threadid" id="cm_threadid" value="0" data-prval="disnull">
+<input type="hidden" name="cm_from" id="cm_from" value="" data-prval="disnull">
+<input type="hidden" name="cm_from_icon" id="cm_from_icon" value="" data-prval="disnull">
+<input type="hidden" name="cm_userid" id="cm_userid" value="" data-prval="disnull">
+<input type="hidden" name="cm_to" id="cm_to" value="" data-prval="disnull">
+<input type="hidden" name="cm_viewed" id="cm_viewed" value="-" data-prval="disnull">
+<input type="hidden" name="cm_matter" id="cm_matter" value="" data-prval="disnull" data-flbl="Reply" data-ftype="tdivarea" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="cm_media" id="cm_media" value="" data-prval="disnull">
+<input type="hidden" name="cm_wildkey" id="cm_wildkey" value="" data-prval="disnull">
+<input type="hidden" name="cm_rating" id="cm_rating" value="5" data-prval="disnull">
+<input type="hidden" name="cm_vala" id="cm_vala" value="" data-prval="disnull">
+<input type="hidden" name="cm_valb" id="cm_valb" value="" data-prval="disnull">
+<input type="hidden" name="cm_dadded" id="cm_dadded" value="" data-prval="disnull">
+</form>
+
+
+<form name="qlikes">
+<input type="hidden" name="_id" value="" data-prval="disnull">
+<input type="hidden" name="ql_rtype" id="ql_rtype" value="5" data-prval="disnull">
+<input type="hidden" name="ql_cmntId" id="ql_cmntId" value="" data-prval="disnull">
+<input type="hidden" name="ql_isreply" id="ql_isreply" value="0" data-prval="disnull">
+<input type="hidden" name="ql_userid" id="ql_userid" value="" data-prval="disnull">
+<input type="hidden" name="ql_uicon" id="ql_uicon" value="" data-prval="disnull">
+<input type="hidden" name="ql_ufullname" id="ql_ufullname" value="" data-prval="disnull">
+<input type="hidden" name="ql_dadded" id="ql_dadded" value="" data-prval="disnull">
+</form>
+
+
  
 <form name="qposts">
 <input type="hidden" name="_id" value="" data-prval="disnull">
@@ -217,7 +273,7 @@
 <input type="hidden" name="prtype" id="prtype" value="5" data-prval="disnull">
 <input type="hidden" name="pcoid" id="pcoid" value="5" data-prval="disnull">
 <input type="hidden" name="ptitle" id="ptitle" value="Titulo.. Moradia... " data-prval="disnull">
-<input type="hidden" name="pcontent" id="pcontent" value="Descriçao.. Moradia... Descriçao.. " data-prval="disnull">
+<input type="hidden" name="pcontent" id="pcontent" value="Descriï¿½ao.. Moradia... Descriï¿½ao.. " data-prval="disnull">
 <input type="hidden" name="ptype" id="ptype" value="house" data-prval="disnull">
 <input type="hidden" name="bhk" id="bhk" value="1" data-prval="disnull">
 <input type="hidden" name="stype" id="stype" value="sell" data-prval="disnull">
