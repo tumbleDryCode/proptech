@@ -21703,10 +21703,10 @@ var showLikedListCB = function(tParam, theResp, c) {
         var tLkr     = tLkArr[iLk];
         var tLkrName = tLkr.ql_ufullname || "Anonymous";
         var tLkrIcon = tLkr.ql_uicon;
-        var tLkrUsrLink = (tLkr.ql_userid && tLkr.ql_userid != "0") ?
-            "javascript:eindex('aa-show-user','pid=aa-show-user&tuid=" + tLkr.ql_userid + "')" : null;
-        var tLkrAvatarOpen  = tLkrUsrLink ? "<a href=\"" + tLkrUsrLink + "\">" : "<span>";
-        var tLkrAvatarClose = tLkrUsrLink ? "</a>" : "</span>";
+        var tLkrUsrOnClick = (tLkr.ql_userid && tLkr.ql_userid != "0") ?
+            "JSSHOP.ui.closeLbox();eindex('aa-show-user','pid=aa-show-user&tuid=" + tLkr.ql_userid + "');" : null;
+        var tLkrAvatarOpen  = tLkrUsrOnClick ? "<a href=\"javascript:void(0)\" onclick=\"" + tLkrUsrOnClick + "\">" : "<span>";
+        var tLkrAvatarClose = tLkrUsrOnClick ? "</a>" : "</span>";
 
         tLkStr += "<div style=\"display:flex;align-items:center;padding:6px 10px;\">";
         if(tLkrIcon && tLkrIcon !== "") {
@@ -21714,8 +21714,8 @@ var showLikedListCB = function(tParam, theResp, c) {
         } else {
             tLkStr += tLkrAvatarOpen + "<div style=\"width:30px;height:30px;border-radius:50%;background:#ccc;margin-right:8px;display:flex;align-items:center;justify-content:center;font-weight:bold;\">" + tLkrName.charAt(0).toUpperCase() + "</div>" + tLkrAvatarClose;
         }
-        var tLkrNameEl = tLkrUsrLink ?
-            "<a href=\"" + tLkrUsrLink + "\" class=\"txtBold txtClrHdr\">" + tLkrName + "</a>" :
+        var tLkrNameEl = tLkrUsrOnClick ?
+            "<a href=\"javascript:void(0)\" onclick=\"" + tLkrUsrOnClick + "\" class=\"txtBold txtClrHdr\">" + tLkrName + "</a>" :
             "<span class=\"txtBold txtClrHdr\">" + tLkrName + "</span>";
         tLkStr += tLkrNameEl;
         tLkStr += "</div>";

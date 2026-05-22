@@ -597,6 +597,11 @@ stxt[1037] = "Por favor ingrese una respuesta.";
 stxt[1038] = "Tu nombre";
 stxt[1039] = "Me gusta";
 stxt[1040] = "Te gustó";
+stxt[1041] = "software inmobiliario de código abierto.";
+stxt[1042] = "Desarrollado por la comunidad para plataformas inmobiliarias modernas.";
+stxt[1043] = "Proyecto";
+stxt[1044] = "Discusión";
+stxt[1045] = "Contacto";
 
 // tips
 stxt[2001] = "Setting up is easy. Enter your shops title, add some item categories and click Save.";

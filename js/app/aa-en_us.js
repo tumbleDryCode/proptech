@@ -560,6 +560,11 @@ stxt[1037] = "Please enter a reply.";
 stxt[1038] = "Your name";
 stxt[1039] = "Like";
 stxt[1040] = "Liked";
+stxt[1041] = "open source real estate software.";
+stxt[1042] = "Built by the community for modern property platforms.";
+stxt[1043] = "Project";
+stxt[1044] = "Discussion";
+stxt[1045] = "Contact";
 
 
 // tips
