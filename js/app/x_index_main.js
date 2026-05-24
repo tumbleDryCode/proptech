@@ -690,6 +690,7 @@ retPLstSTr += "</div>"; // end bg-gray quantity px-4 pt-4
 
 retPLstSTr += "<div class=\"bkgdClrWhite\" style=\"padding:2px;\">";
 // table
+
 retPLstSTr += "<table style=\"width:100%;margin:0 auto;\"><tr><td style=\"vertical-align:center;\">";
   currFTclr = "menu-material-icons txtClrTtl";
  if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {
@@ -722,6 +723,8 @@ tSrvLLstr = aprploclat + "," + aprploclng;
 
 retPLstSTr += "</div>"; // end bkgdClrWhite
 
+retPLstSTr += "<div class=\"bkgdClrWhite\" style=\"padding:2px;\">" + getComntLikeDiv(aprpObj._id, 3) + "</div>";
+
 
 
 
@@ -750,6 +753,9 @@ istrt++;
 }
 // return retPLstSTr;
 JSSHOP.ui.setTinnerHTML("dvMainPrpsLst",retPLstSTr);
+for(var iPlCnt = 0; iPlCnt < iprplen; iPlCnt++) {
+    loadComntLikeCounts(fullPrpLstA[iPlCnt]._id, 3);
+}
 // alert('doMPropsList - aaw: ' + aaw);
 // JSSHOP.ads.doGenMapShow();
 

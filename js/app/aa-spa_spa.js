@@ -602,6 +602,7 @@ stxt[1042] = "Desarrollado por la comunidad para plataformas inmobiliarias moder
 stxt[1043] = "Proyecto";
 stxt[1044] = "Discusión";
 stxt[1045] = "Contacto";
+stxt[1046] = "Eliminar";
 
 // tips
 stxt[2001] = "Setting up is easy. Enter your shops title, add some item categories and click Save.";

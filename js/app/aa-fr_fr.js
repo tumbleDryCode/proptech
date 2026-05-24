@@ -552,6 +552,7 @@ stxt[1042] = "Construit par la communauté pour les plateformes immobilières mo
 stxt[1043] = "Projet";
 stxt[1044] = "Discussion";
 stxt[1045] = "Contact";
+stxt[1046] = "Supprimer";
 
 // tips
 // stxt[2001] = "Setting up is easy. Enter your shops title, add some item categories and click Save.";

@@ -8287,38 +8287,36 @@ svftObj["postauth"] = tPostsAuthObj;
         // tUpPcontent = tHtmlStrpd.substring(0, 100) + "...";
 
         // modify returned string to add buttons and icons div here
-tUdtLnkStr = "<div class=\"bkdgClrWhite brdrClrHdr txtSmall txtBold\" style=\"padding:4px;margin:2px;\">";
-tUdtLnkStr += "<table style=\"margin:0 auto;width:100%;\"><tr><td>";
+tUdtLnkStr = "<div class=\"bkdgClrWhite brdrClrHdr txtSmall txtBold\" style=\"padding:4px;margin:2px;overflow:hidden;\">";
+
+// icon and label button links float left in a div
+tUdtLnkStr += "<div style=\"display:flex;align-items:center;flex-wrap:wrap;gap:8px;\">";
 // check if already a favorite and make it red if so
 currFTclr = "menu-material-icons txtClrTtl";
  if(currFavsIdstr.indexOf(tUdtsObj._id + "::") != -1) {
 currFTclr = "menu-material-icons txtClrRed";
 }
 tUdtLnkStr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-update&tupid=" + tUdtsObj._id + "','" + tUdtsObj.p_title + "','images/ucontent/m_thumb" + tUdtsObj.p_image + "','" + tUdtsObj._id + "','btnFavs" + tUdtsObj._id + "');\"><i id=\"btnFavs" + tUdtsObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
-tUdtLnkStr += "</td>";
-tUdtLnkStr += "<td>";
 if(quid == tUdtsObj.p_uid) {
 tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"eindex('aa-edit-post', 'pid=aa-edit-post&tpstid=" + tUdtsObj._id + "');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"edit\" title=\"edit\" value=\"edit\">&#xe3c9;</i>" + " " + stxt[31] + "</span>";
 } else {
 tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.prepMsgBox(" + tUdtsObj.p_uid + ",'" + tUdtsObj.u_fullname + "','" + tUdtsObj.u_icon + "','noQvalue','showMsgSave');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
 }
-tUdtLnkStr += "</td>";
-tUdtLnkStr += "<td>";
-
-tUdtLnkStr += "</td>";
-tUdtLnkStr += "<td>";
 tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('update'," + ided + ");\"><i class=\"menu-material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
-tUdtLnkStr += "</td>";
 if(tUpType == "pvideo") {
     // add the download icon and link here
-tUdtLnkStr += "<td>";
 var downloadLbl = (typeof stxt !== "undefined" && stxt[999]) ? stxt[999] : "Download";
-
 tUdtLnkStr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\">";
 tUdtLnkStr += "<a href=\"images/ucontent/" + tUdtsObj.p_vala + "\" download class=\"txtClrHdr\"><i class=\"menu-material-icons txtClrTtl\" alt=\"download\" title=\"download\" value=\"download\">&#xe2c4;</i>" + " " + downloadLbl + "</a></span>";
-tUdtLnkStr += "</td>";
 }
-tUdtLnkStr += "</tr></table>";
+tUdtLnkStr += getComntLikeDiv(tUdtsObj._id, 4);
+tUdtLnkStr += "</div>";
+// end of icons labels buttons div.
+
+
+
+
+
 tUdtLnkStr += "</div>"; // end bkdgClrWhite brdrClrHdr txtSmall txtBold
 console.log("jshp_ads_showUpdtsFeed.tUdtLnkStr: " + tUdtLnkStr);
 
@@ -8619,11 +8617,35 @@ setTimeout(
         tUdtsStr += "</div>"; // end featured-thumb hover-zoomer mb-4
         tUdtsStr += "</div>";  // end col-md-6
     }  // end of for ided
+
+    var _tuppstid = (typeof tuppstid !== "undefined" && tuppstid) ? tuppstid : (currUrlArr && currUrlArr.tupid ? currUrlArr.tupid : 0);
+    if(pid === "aa-show-update" && _tuppstid && tUdtsArr.length > 0) {
+        var tCmtPost = tUdtsArr[0];
+        var tPostPrivacy = tCmtPost.p_privacy || "public";
+        var tPostOwner  = String(tCmtPost.p_uid || "");
+        var tViewerUid  = String(quid || "0");
+        if(tPostPrivacy !== "private" || tPostOwner === tViewerUid) {
+            tUdtsStr += "<div id=\"dvComments\"></div>";
+        }
+    }
+
     tDVufeeds = document.createElement("div");
     tDVufeeds.innerHTML = tUdtsStr;
-   //  document.getElementById("dvMainUdtsLst").innerHTML = tUdtsStr;
- 
     document.getElementById("includedContent").appendChild(tDVufeeds);
+
+    for(var iUdtLk = 0; iUdtLk < tUdtsArr.length; iUdtLk++) {
+        loadComntLikeCounts(tUdtsArr[iUdtLk]._id, 4);
+    }
+
+    if(pid === "aa-show-update"&& _tuppstid && tUdtsArr.length > 0) {
+        var tCmtPost = tUdtsArr[0];
+        var tPostPrivacy = tCmtPost.p_privacy || "public";
+        var tPostOwner  = String(tCmtPost.p_uid || "");
+        var tViewerUid  = String(quid || "0");
+        if(tPostPrivacy !== "private" || tPostOwner === tViewerUid) {
+            getCommentsDiv(_tuppstid, "post", tCmtPost.p_uid);
+        }
+    }
 
     console.log("jshp_ads_showUpdtsFeed: " + tUdtsStr);
 
@@ -21356,6 +21378,9 @@ var setCmtsDiv = function(a, theResp, c) {
             tCmtStr += "<a href=\"" + tCmtReplyHref + "\" class=\"txtSmall txtClrLtBlue\">" + stxt[1030] + "</a>";
             tCmtStr += "&nbsp;&nbsp;<a id=\"dvLike_c" + tCmt._id + "\" href=\"" + tCmtLikeHref + "\" class=\"txtSmall\" style=\"color:#aaa;\">&#x1F44D; " + stxt[1039] + "</a>";
             tCmtStr += "&nbsp;<span id=\"dvLikeCount_c" + tCmt._id + "\" class=\"txtSmall\" style=\"color:#aaa;\"></span>";
+            if(!tCmtIsGuest && String(tCmt.cmts_userid) === String(quid)) {
+                tCmtStr += "&nbsp;&nbsp;<a href=\"javascript:doCommentRemove('" + tCmt._id + "',0);\" class=\"txtSmall\" style=\"color:#c00;\">" + stxt[1046] + "</a>";
+            }
             tCmtStr += "</div>";
             tCmtStr += "<div id=\"dvCmtReplies_" + tCmt._id + "\" style=\"margin-left:38px;margin-top:6px;\"></div>";
             if(!tCmtIsGuest) {
@@ -21413,7 +21438,7 @@ var setCmtReplies = function(a, theResp, c) {
         var tRepMatter = "";
         try { tRepMatter = decodeURIComponent(tRep.cm_matter); } catch(e) { tRepMatter = tRep.cm_matter; }
 
-        tRepStr += "<div style=\"margin:4px 0;padding:6px 8px;border-left:3px solid #ccc;border-radius:4px;\" class=\"bkgdClrNrml\">";
+        tRepStr += "<div id=\"dvCmtRep_" + tRep._id + "\" style=\"margin:4px 0;padding:6px 8px;border-left:3px solid #ccc;border-radius:4px;\" class=\"bkgdClrNrml\">";
         tRepStr += "<div style=\"display:flex;align-items:center;margin-bottom:4px;\">";
         var tRepUsrLink    = (tRep.cm_userid && tRep.cm_userid != "0") ?
             "javascript:eindex('aa-show-user','pid=aa-show-user&tuid=" + tRep.cm_userid + "')" : null;
@@ -21438,6 +21463,9 @@ var setCmtReplies = function(a, theResp, c) {
             "javascript:doCommentLike('" + tRep._id + "',1);";
         tRepStr += "<a id=\"dvLike_r" + tRep._id + "\" href=\"" + tRepLikeHref + "\" class=\"txtSmall\" style=\"color:#aaa;\">&#x1F44D; " + stxt[1039] + "</a>";
         tRepStr += "&nbsp;<span id=\"dvLikeCount_r" + tRep._id + "\" class=\"txtSmall\" style=\"color:#aaa;\"></span>";
+        if(!tRepIsGuest && String(tRep.cm_userid) === String(quid)) {
+            tRepStr += "&nbsp;&nbsp;<a href=\"javascript:doCommentRemove('" + tRep._id + "',1);\" class=\"txtSmall\" style=\"color:#c00;\">" + stxt[1046] + "</a>";
+        }
         tRepStr += "</div>";
         tRepStr += "</div>";
         iRep++;
@@ -21589,6 +21617,24 @@ var doCommentReply = function(tCmtId, tCmtThreadId, tCmtTo) {
     doQComm(oiRep["rq"], null, "afterCommentSave");
 };
 
+var doCommentRemove = function(tId, tIsReply) {
+    if(!confirm(stxt[1046] + "?")) { return; }
+    var tElemId, tQstr;
+    if(tIsReply) {
+        tQstr  = "UPDATE qcmnt SET cm_rtype=0 WHERE _id=" + tId + " AND cm_userid=" + quid;
+        tElemId = "dvCmtRep_" + tId;
+    } else {
+        tQstr  = "UPDATE qcmnts SET cmts_rtype=0 WHERE _id=" + tId + " AND cmts_userid=" + quid;
+        tElemId = "dvCmt" + tId;
+    }
+    doQComm(tQstr, tElemId, "afterCommentRemove");
+};
+
+var afterCommentRemove = function(tElemId, theResp, c) {
+    var tEl = (typeof tElemId === "string") ? document.getElementById(tElemId) : tElemId;
+    if(tEl) { tEl.remove(); }
+};
+
 var doCommentLike = function(tCmtId, tIsReply) {
     var tLikeElId = "dvLike_" + (tIsReply ? "r" : "c") + tCmtId;
     // Fetch any existing record regardless of rtype so we can branch on state
@@ -21726,4 +21772,121 @@ var showLikedListCB = function(tParam, theResp, c) {
     JSSHOP.ui.popNurFillLbox(tLkStr, "&#xe5cd;", stxt[1039]);
 };
 
+// ── Property / Update comment+like bar ──────────────────────────────────────
+
+// Returns an HTML string with comment count (links to item page) + like toggle.
+// ql_isreply: 3 = property, 4 = update
+var getComntLikeDiv = function(_id, ql_isreply) {
+    var tNavLink = (ql_isreply == 3)
+        ? "javascript:eindex('aa-show-prop','pid=aa-show-prop&prpid=" + _id + "')"
+        : "javascript:eindex('aa-show-update','pid=aa-show-update&tupid=" + _id + "')";
+    var tIsLoggedIn = (typeof quid !== "undefined" && quid !== "0" && quid !== 0 && quid !== "noQvalue");
+    var tLikeHref = tIsLoggedIn
+        ? "javascript:doProdLike('" + _id + "'," + ql_isreply + ");"
+        : "javascript:JSSHOP.shared.showUserProfile(0);";
+    var tCmntLbl = (typeof stxt !== "undefined" && stxt[1029]) ? stxt[1029] : "Comments";
+    var tLikeLbl = (typeof stxt !== "undefined" && stxt[1039]) ? stxt[1039] : "Like";
+    var s = "<div style=\"display:flex;align-items:center;gap:4px;\">";
+    s += "<span class=\"crsrPointer\" onclick=\"" + tNavLink.replace("javascript:", "") + "\">";
+    s += "<i class=\"menu-material-icons txtClrTtl\" alt=\"comment\" title=\"" + tCmntLbl + "\">&#xe0bf;</i>";
+    s += " <span id=\"dvCmntCount_" + ql_isreply + "_" + _id + "\" class=\"txtSmall\"></span> " + tCmntLbl;
+    s += "</span>";
+    s += "&nbsp;&nbsp;";
+    s += "<span id=\"dvLikePrd_" + ql_isreply + "_" + _id + "\" class=\"crsrPointer\" onclick=\"" + tLikeHref.replace(/^javascript:/, "") + "\">";
+    s += "<i class=\"menu-material-icons txtClrTtl\" alt=\"like\" title=\"" + tLikeLbl + "\">&#xe87d;</i>";
+    s += " <span id=\"dvLikeCountPrd_" + ql_isreply + "_" + _id + "\" class=\"txtSmall\"></span> " + tLikeLbl;
+    s += "</span>";
+    s += "</div>";
+    return s;
+};
+
+// Call after the HTML from getComntLikeDiv has been inserted into the DOM.
+var loadComntLikeCounts = function(_id, ql_isreply) {
+    var tProdType = (ql_isreply == 3) ? "prod" : "post";
+    doQComm(
+        "SELECT COUNT(*) AS cnt FROM qcmnts WHERE cmts_prodid=" + _id + " AND cmts_prodtype='" + tProdType + "' AND cmts_rtype=5",
+        ql_isreply + "_" + _id, "setCmntCountCB"
+    );
+    doQComm(
+        "SELECT COUNT(*) AS cnt FROM qlikes WHERE ql_cmntId=" + _id + " AND ql_isreply=" + ql_isreply + " AND ql_rtype=5",
+        ql_isreply + "_" + _id, "setPrdLikeCountCB"
+    );
+    var tIsLoggedIn = (typeof quid !== "undefined" && quid !== "0" && quid !== 0 && quid !== "noQvalue");
+    if(tIsLoggedIn) {
+        doQComm(
+            "SELECT _id, ql_rtype FROM qlikes WHERE ql_userid=" + quid + " AND ql_cmntId=" + _id + " AND ql_isreply=" + ql_isreply + " LIMIT 1",
+            ql_isreply + "_" + _id, "setPrdLikeStateCB"
+        );
+    }
+};
+
+var setCmntCountCB = function(tParam, theResp, c) {
+    var tEl = document.getElementById("dvCmntCount_" + tParam);
+    if(!tEl) { return; }
+    var tRes = null;
+    try { tRes = JSON.parse(theResp); } catch(e) { tRes = null; }
+    tEl.innerHTML = (tRes && tRes.length > 0 && tRes[0].cnt) ? parseInt(tRes[0].cnt, 10) : 0;
+};
+
+var setPrdLikeCountCB = function(tParam, theResp, c) {
+    var tEl = document.getElementById("dvLikeCountPrd_" + tParam);
+    if(!tEl) { return; }
+    var tRes = null;
+    try { tRes = JSON.parse(theResp); } catch(e) { tRes = null; }
+    var tCnt = (tRes && tRes.length > 0 && tRes[0].cnt) ? parseInt(tRes[0].cnt, 10) : 0;
+    tEl.innerHTML = tCnt > 0 ? tCnt : "";
+};
+
+var setPrdLikeStateCB = function(tParam, theResp, c) {
+    var tSpan = document.getElementById("dvLikePrd_" + tParam);
+    if(!tSpan) { return; }
+    var tRes = null;
+    try { tRes = JSON.parse(theResp); } catch(e) { tRes = null; }
+    var tLiked = (tRes && tRes.length > 0 && tRes[0].ql_rtype == 5);
+    var tIcon = tSpan.querySelector("i");
+    if(tIcon) { tIcon.style.color = tLiked ? "#1877f2" : ""; }
+};
+
+var doProdLike = function(tId, tIsReply) {
+    doQComm(
+        "SELECT _id, ql_rtype FROM qlikes WHERE ql_userid=" + quid + " AND ql_cmntId=" + tId + " AND ql_isreply=" + tIsReply + " LIMIT 1",
+        "dvLikePrd_" + tIsReply + "_" + tId, "afterProdLikeCheck"
+    );
+};
+
+var afterProdLikeCheck = function(tElemId, theResp, c) {
+    var tRaw     = tElemId.replace("dvLikePrd_", "");
+    var tSepIdx  = tRaw.indexOf("_");
+    var tIsReply = parseInt(tRaw.substring(0, tSepIdx), 10);
+    var tId      = tRaw.substring(tSepIdx + 1);
+    var tExisting = null;
+    try { tExisting = JSON.parse(theResp); } catch(e) { tExisting = []; }
+    if(tExisting && tExisting.length > 0) {
+        var tNewRtype = (tExisting[0].ql_rtype == 5) ? 0 : 5;
+        var tUpdQstr = "UPDATE qlikes SET ql_rtype=" + tNewRtype;
+        if(tNewRtype === 5) { tUpdQstr += ", ql_dadded=" + JSSHOP.getUnixTimeStamp(); }
+        tUpdQstr += " WHERE ql_userid=" + quid + " AND ql_cmntId=" + tId + " AND ql_isreply=" + tIsReply;
+        doQComm(tUpdQstr, tElemId, "afterProdLikeSave");
+    } else {
+        JSSHOP.shared.setFrmFieldVal("qlikes", "ql_cmntId",   tId);
+        JSSHOP.shared.setFrmFieldVal("qlikes", "ql_isreply",  String(tIsReply));
+        JSSHOP.shared.setFrmFieldVal("qlikes", "ql_dadded",   JSSHOP.getUnixTimeStamp());
+        JSSHOP.shared.setFrmFieldVal("qlikes", "ql_rtype",    "5");
+        if(typeof currQUsrObj !== "undefined" && currQUsrObj) {
+            JSSHOP.shared.setFrmFieldVal("qlikes", "ql_userid",    quid);
+            JSSHOP.shared.setFrmFieldVal("qlikes", "ql_uicon",     currQUsrObj.u_icon);
+            JSSHOP.shared.setFrmFieldVal("qlikes", "ql_ufullname", currQUsrObj.u_fullname);
+        }
+        var tLkDOs = {};
+        tLkDOs["knvp"] = JSSHOP.shared.getFrmVals(document["qlikes"], "nada");
+        var oiLk = getNuDBFnvp("qlikes", 6, null, tLkDOs);
+        doQComm(oiLk["rq"], tElemId, "afterProdLikeSave");
+    }
+};
+
+var afterProdLikeSave = function(tElemId, theResp, c) {
+    var tRaw    = tElemId.replace("dvLikePrd_", "");
+    var tSepIdx = tRaw.indexOf("_");
+    loadComntLikeCounts(tRaw.substring(tSepIdx + 1), parseInt(tRaw.substring(0, tSepIdx), 10));
+};
 

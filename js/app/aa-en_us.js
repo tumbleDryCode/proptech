@@ -565,6 +565,7 @@ stxt[1042] = "Built by the community for modern property platforms.";
 stxt[1043] = "Project";
 stxt[1044] = "Discussion";
 stxt[1045] = "Contact";
+stxt[1046] = "Remove";
 
 
 // tips

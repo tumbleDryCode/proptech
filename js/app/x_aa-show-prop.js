@@ -1405,15 +1405,15 @@ if(aprpPimage.indexOf("updt3d_") != -1) {
 
     retPLstSTr += "<div class=\"bkgdClrWhite\">";
 
-retPLstSTr += "<div class=\"slmtable bkgdClrWhite brdrClrHdr\" style=\"padding:4px;margin:2px;\">";
-    retPLstSTr += "<table style=\"margin:0 auto;width:100%;\"><tr><td>";
+retPLstSTr += "<div class=\"slmtable bkgdClrWhite brdrClrHdr\" style=\"padding:4px;margin:2px;overflow:hidden;\">";
+    
+
+retPLstSTr += "<div style=\"display:flex;align-items:center;flex-wrap:wrap;gap:8px;\">";
 currFTclr = "menu-material-icons txtClrTtl";
  if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {
 currFTclr = "menu-material-icons txtClrRed";
 }
 retPLstSTr += "<span tid=\"dvCoFavBtn\" class=\"crsrPointer\" onclick=\"javascript:doRecentFavorite('index.html?pid=aa-show-prop&prpid=" + aprpObj._id + "','" + aprpTitle + "','" + currPrpImgsFldr + "/s_thumb" + aprpPimage + "','" + aprpObj._id + "','btnFavs" + aprpObj._id + "');\"><i id=\"btnFavs" + aprpObj._id + "\" class=\"" + currFTclr + "\" alt=\"favorite\" title=\"favorite\" value=\"favorite\">&#xe87d;</i>" + " " + stxt[618] + "</span>";
-retPLstSTr += "</td>";
-retPLstSTr += "<td>";
 // retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showMsgBox('uproperty'," + istrt + ",'showMsgSave');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
 // JSSHOP.ui.prepMsgBox(" + aprpUid + ",'" + aprpUFlName + "','" + aprpObj.u_icon + "','" + istrt + "','showMsgSave');
 if(quid == aprpUid) {
@@ -1422,11 +1422,11 @@ if(quid == aprpUid) {
         // show message button
 retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.prepMsgBox(" + aprpUid + ",'" + aprpUFlName + "','" + aprpObj.u_icon + "','" + istrt + "','showMsgSave');\"><i class=\"menu-material-icons txtClrTtl\" alt=\"chat\" title=\"messages\" value=\"messages\">&#xe0b7;</i>" + " " + stxt[98] + "</span>";
     }
-retPLstSTr += "</td>";
-retPLstSTr += "<td>";
- retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"menu-material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
+retPLstSTr += "<span class=\"crsrPointer\" style=\"margin-right:12px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"menu-material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i>" + " " + stxt[72] + "</span>";
+retPLstSTr += getComntLikeDiv(aprpObj._id, 3);
 
-retPLstSTr += "</td></tr></table>";
+retPLstSTr += "</div>";
+
 retPLstSTr += "</div>"; // end slmtable bkgdClrWhite brdrClrHdr
 
     // retPLstSTr += "<span class=\"cls_button cls_button-xxsmall bkgdClrWhite brdrNone txtClrDlg\" style=\"margin:2px;\" onclick=\"JSSHOP.ui.showShareBox('property'," + istrt + ");\"><i class=\"material-icons txtClrTtl\" alt=\"share\" title=\"share\" value=\"share\">&#xe80d;</i></span>";
