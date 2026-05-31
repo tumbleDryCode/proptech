@@ -140,32 +140,32 @@
             <table style="width:100%;"><tr><td style="width:90%"> </td><td style="min-width:300px;">
         <div class="slmtable txtClrHdr bkgdClrWhite" id="navbarSupportedContent" style="visibility:hidden;display:none;min-width:300px;max-width:350px;float:right;position:fixed;z-index: 2147483649;max-height:90%;overflow:auto;">
                                     <ul>
-                                        <li class="nav-item"> <a class="nav-link" href="./" role="button" aria-haspopup="true" aria-expanded="false"><i class="menu-material-icons txtClrLtBlue" style="vertical-align:middle;padding-right:5px;" alt="home" title="home">&#xe88a;</i><ti data-ison="stxt[1052]" data-desc="btn_home">Home</ti></a></li>
-                                        <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-featured','pid=aa-show-featured');"><i class="menu-material-icons txtClrLtBlue" style="vertical-align:middle;padding-right:5px;" alt="properties" title="properties">&#xe8f1;</i><ti data-ison="stxt[940]" data-desc="btn_properties">Properties</ti></a> </li>	
-                                        <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-blog','pid=aa-show-blog');"><i class="menu-material-icons txtClrLtBlue" style="vertical-align:middle;padding-right:5px;" alt="blog" title="blog">&#xe0e5;</i><ti data-ison="stxt[1053]" data-desc="btn_blog">Blog</ti></a> </li>	
+                                        <li class="nav-item"> <a class="nav-link" href="./" role="button" aria-haspopup="true" aria-expanded="false">Home</a></li>
+										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-featured','pid=aa-show-featured');"><ti data-ison="stxt[940]" data-desc="btn_properties">Properties</ti></a> </li>	
+                                        <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-blog','pid=aa-show-blog');">Blog</a> </li>	
 			 
 										<!-- <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-show-search','pid=aa-show-search&cit=y');"><ti data-ison="stxt[936]" data-desc="btn_searchprops">Search Properties</ti></a> </li>
 										<li class="nav-item"> <a class="nav-link" href="agent.php"><ti data-ison="stxt[900]" data-desc="btn_agentes">Agentes</ti></a> </li> -->
-                                        <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-contact-us','pid=aa-contact-us');"><i class="menu-material-icons txtClrLtBlue" style="vertical-align:middle;padding-right:5px;" alt="contacts" title="contacts">&#xe0b0;</i><ti data-ison="stxt[902]" data-desc="btn_contacts">Contacts</ti></a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-contact-us','pid=aa-contact-us');"><ti data-ison="stxt[902]" data-desc="btn_contacts">Contacts</ti></a> </li>
 										
 									 
                                     <?php if(isset($_COOKIE['quid'])) { ?>
 										<li class="" style="margin-top:10px;padding-left:8px;">
-                                             <i class="menu-material-icons txtClrLtBlue" style="vertical-align:middle;padding-right:5px;" alt="account" title="account">&#xe7fd;</i><ti data-ison="stxt[56]" data-desc="btn_account">Account</ti>
+											 <ti data-ison="stxt[56]" data-desc="btn_account">Account</ti>
 											<ul class="">
 												<!-- <li class="nav-item"> <a class="nav-link" href="profile.php"><ti data-ison="stxt[903]" data-desc="btn_profile">Profile</ti></a> </li> -->
-                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-add-prop','pid=aa-add-prop');"><i class="menu-material-icons txtClrLtBlue" style="vertical-align:middle;padding-right:5px;" alt="add_property" title="add_property">&#xe145;</i><ti data-ison="stxt[916]" data-desc="btn_addprop">Subit Property</ti></a> </li>
-                                                 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-uprops', 'pid=aa-edit-uprops');"><i class="menu-material-icons txtClrLtBlue" style="vertical-align:middle;padding-right:5px;" alt="your_properties" title="your_properties">&#xe8f1;</i><ti data-ison="stxt[905]" data-desc="btn_yourprops">Your Properties</ti></a> </li>
-                                                    <li class="nav-item"> <table><tr><td><a class="nav-link" href="javascript:eindex('aa-edit-posts', 'pid=aa-edit-posts');"><i class="menu-material-icons txtClrLtBlue" style="vertical-align:middle;padding-right:5px;" alt="update" title="update">&#xe923;</i><ti data-ison="stxt[100]" data-desc="btn_yourinfo">Update</ti></a></td><td><a class="nav-link" href="javascript:eindex('aa-add-post', 'pid=aa-add-post');"><i class="menu-material-icons txtClrLtBlue" style="vertical-align:middle;padding-right:5px;" alt="create" title="create">&#xe145;</i><ti data-ison="stxt[107]" data-desc="btn_create">Create</ti></a></td></tr></table></li>
-                                                <li class="nav-item"> <a class="nav-link" href="javascript:JSSHOP.shared.doLogout();"><i class="menu-material-icons txtClrLtBlue" style="vertical-align:middle;padding-right:5px;" alt="logout" title="logout">&#xe879;</i><ti data-ison="stxt[1055]" data-desc="btn_logout">Logout</ti></a> </li>	
+                                                <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-add-prop','pid=aa-add-prop');"><ti data-ison="stxt[916]" data-desc="btn_addprop">Subit Property</ti></a> </li>
+												 <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-uprops', 'pid=aa-edit-uprops');"><ti data-ison="stxt[905]" data-desc="btn_yourprops">Your Properties</ti></a> </li>
+                                                    <li class="nav-item"> <table><tr><td><a class="nav-link" href="javascript:eindex('aa-edit-posts', 'pid=aa-edit-posts');"><ti data-ison="stxt[100]" data-desc="btn_yourinfo">Update</ti></a></td><td><a class="nav-link" href="javascript:eindex('aa-add-post', 'pid=aa-add-post');"><ti data-ison="stxt[107]" data-desc="btn_create">Create</ti></a></td></tr></table></li>
+												<li class="nav-item"> <a class="nav-link" href="javascript:JSSHOP.shared.doLogout();">Logout</a> </li>	
 											</ul>
                                         </li>
                                          
                                       
 
-                                        <?php } else { ?>
-                                        <li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-user','pid=aa-edit-user');"><i class="menu-material-icons txtClrLtBlue" style="vertical-align:middle;padding-right:5px;" alt="login" title="login">&#xe7ff;</i><ti data-ison="stxt[1054]" data-desc="btn_login">Login</ti></a> </li>
-                                        <li class="nav-item"> <a class="nav-link"  href="javascript:eindex('register','pid=register');"><i class="menu-material-icons txtClrLtBlue" style="vertical-align:middle;padding-right:5px;" alt="register" title="register">&#xe7fe;</i><ti data-ison="stxt[961]" data-desc="btn_register">Register</ti></a></li>
+										<?php } else { ?>
+										<li class="nav-item"> <a class="nav-link" href="javascript:eindex('aa-edit-user','pid=aa-edit-user');">Login</a> </li>
+                                        <li class="nav-item"> <a class="nav-link"  href="javascript:eindex('register','pid=register');"><ti data-ison="stxt[961]" data-desc="btn_register">Register</ti></a></li>
 										<?php } ?>
 
 
@@ -208,4 +208,4 @@
                                 </td></tr></table>
         </div>
 
-<div id="dvTopWdNavBar" class="txtSmall txtClrWhite">.</div>
+<div class="txtSmall txtClrWhite">.</div>

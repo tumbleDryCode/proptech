@@ -603,6 +603,13 @@ stxt[1043] = "Proyecto";
 stxt[1044] = "Discusión";
 stxt[1045] = "Contacto";
 stxt[1046] = "Eliminar";
+stxt[1051] = "Inicia sesion para comentar";
+stxt[1052] = "Inicio";
+stxt[1053] = "Blog";
+stxt[1054] = "Iniciar sesion";
+stxt[1055] = "Salir";
+stxt[1056] = "Tus actualizaciones";
+stxt[1057] = "Agregar actualizacion";
 
 // tips
 stxt[2001] = "Setting up is easy. Enter your shops title, add some item categories and click Save.";

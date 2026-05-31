@@ -597,309 +597,10 @@ doNuMMenuLd("doMnuFnsh");
 
 
 function doCollsLoad() {
-try {
-if((typeof window.currMLinksObj === "undefined") || (!window.currMLinksObj)) {
-window.currMLinksObj = {};
-}
-window.currMLinksObj = {};
-currMLinksObj = window.currMLinksObj;
-currMCollItems = {};
-
-var tIsGuest = ((typeof quid === "undefined") || (quid == 0) || (quid == "0") || (quid == "noQvalue"));
-var tLoginLogoutLbl = tIsGuest ? ((stxt[1054]) ? stxt[1054] : "Login") : ((stxt[1055]) ? stxt[1055] : "Logout");
-var tLoginLogoutUrl = tIsGuest ? "javascript:eindex('aa-edit-user', 'pid=aa-edit-user');" : "javascript:JSSHOP.shared.doLogout();";
-
-currMLinksObj["nav"] = {};
-currMLinksObj["nav"]["lks"] = [];
-
-var addNavLink = function(tItemObj) {
-currMLinksObj[tItemObj["lki"]] = tItemObj;
-currMLinksObj[tItemObj["uty"]]["lks"].push(tItemObj["lki"]);
-currMCollItems[tItemObj["nm"]] = tItemObj;
-};
-
-addNavLink({"lki":"n01","uty":"nav","wt":1,"u":"javascript:goHome();","mi":"&#xe88a;","ti":(stxt[1052] ? stxt[1052] : "Home"),"c":"coll-menu-item","nm":"nav-home","pa":"n01"});
-
-addNavLink({"lki":"n10","uty":"nav","wt":2,"u":"javascript:eindex('aa-show-featured', 'pid=aa-show-featured');","mi":"&#xe8f1;","ti":(stxt[940] ? stxt[940] : "Properties"),"c":"coll-menu-item","nm":"nav-properties","pa":"n10"});
-addNavLink({"lki":"n11","uty":"nav","wt":3,"u":"javascript:eindex('aa-edit-uprops', 'pid=aa-edit-uprops');","mi":"&#xe8f1;","ti":(stxt[905] ? stxt[905] : "Your Properties"),"c":"collection-item","nm":"nav-your-properties","pa":"n10"});
-addNavLink({"lki":"n12","uty":"nav","wt":4,"u":"javascript:eindex('aa-add-prop','pid=aa-add-prop');","mi":"&#xe145;","ti":(stxt[916] ? stxt[916] : "Add Property"),"c":"collection-item","nm":"nav-add-property","pa":"n10"});
-
-addNavLink({"lki":"n20","uty":"nav","wt":5,"u":"javascript:eindex('aa-edit-posts', 'pid=aa-edit-posts');","mi":"&#xe923;","ti":(stxt[100] ? stxt[100] : "Updates"),"c":"coll-menu-item","nm":"nav-updates","pa":"n20"});
-addNavLink({"lki":"n21","uty":"nav","wt":6,"u":"javascript:eindex('aa-edit-posts', 'pid=aa-edit-posts');","mi":"&#xe923;","ti":((stxt[1056]) ? stxt[1056] : "Your Updates"),"c":"collection-item","nm":"nav-your-updates","pa":"n20"});
-addNavLink({"lki":"n22","uty":"nav","wt":7,"u":"javascript:eindex('aa-add-post', 'pid=aa-add-post');","mi":"&#xe145;","ti":((stxt[1057]) ? stxt[1057] : "Add Update"),"c":"collection-item","nm":"nav-add-update","pa":"n20"});
-
-addNavLink({"lki":"n30","uty":"nav","wt":8,"u":"javascript:eindex('aa-show-blog', 'pid=aa-show-blog');","mi":"&#xe0e5;","ti":(stxt[1053] ? stxt[1053] : "Blog"),"c":"coll-menu-item","nm":"nav-blog","pa":"n30"});
-
-addNavLink({"lki":"n40","uty":"nav","wt":9,"u":"javascript:JSSHOP.shared.showUserProfile(0);","mi":"&#xe7fd;","ti":(stxt[56] ? stxt[56] : "Account"),"c":"coll-menu-item","nm":"nav-account","pa":"n40"});
-addNavLink({"lki":"n41","uty":"nav","wt":10,"u":"javascript:JSSHOP.shared.showUserProfile(0);","mi":"&#xe7fd;","ti":(stxt[903] ? stxt[903] : "Your Profile"),"c":"collection-item","nm":"nav-your-profile","pa":"n40"});
-addNavLink({"lki":"n42","uty":"nav","wt":11,"u":"javascript:eindex('aa-edit-user', 'pid=aa-edit-user&tuid=57');","mi":"&#xe3c9;","ti":(stxt[825] ? stxt[825] : "Edit Account"),"c":"collection-item","nm":"nav-edit-account","pa":"n40"});
-addNavLink({"lki":"n43","uty":"nav","wt":12,"u":tLoginLogoutUrl,"mi":"&#xe879;","ti":tLoginLogoutLbl,"c":"collection-item","nm":"nav-login-logout","pa":"n40"});
-
-var tMainNavOrder = ["n01", "n10", "n20", "n30", "n40"];
-var tLkArr = currMLinksObj["nav"]["lks"];
-var tTopNavStr = "";
-var tMainInc = 0;
-
-tTopNavStr += "<div class=\"inc-top-wd-nav onlyWideScreen\"><ul class=\"inc-top-wd-nav-list\">";
-while(tMainInc < tMainNavOrder.length) {
-tMkey = tMainNavOrder[tMainInc];
-tMObj = currMLinksObj[tMkey];
-if(tMObj) {
-tTopNavStr += "<li class=\"inc-top-wd-nav-item\">";
-tTopNavStr += "<a class=\"inc-top-wd-nav-link txtClrHdr\" href=\"" + tMObj.u + "\">";
-tTopNavStr += "<i class=\"menu-material-icons txtClrHdr\" style=\"vertical-align:middle;padding-right:5px;\">" + tMObj.mi + "</i>";
-tTopNavStr += "<span>" + tMObj.ti + "</span></a>";
-
-tHasChildren = "n";
-tSubNavStr = "";
-tSubInc = 0;
-while(tSubInc < tLkArr.length) {
-tSkey = tLkArr[tSubInc];
-tSObj = currMLinksObj[tSkey];
-if((tSObj) && (tSObj.pa == tMkey) && (tSObj.lki != tMkey)) {
-if(tHasChildren == "n") {
-tHasChildren = "y";
-tSubNavStr += "<ul class=\"inc-top-wd-nav-sub\">";
-}
-tSubNavStr += "<li class=\"inc-top-wd-nav-sub-item\"><a class=\"inc-top-wd-nav-sub-link txtClrHdr\" href=\"" + tSObj.u + "\">";
-tSubNavStr += "<i class=\"menu-material-icons txtClrHdr\" style=\"vertical-align:middle;padding-right:5px;\">" + tSObj.mi + "</i>" + tSObj.ti + "</a></li>";
-}
-tSubInc++;
-}
-if(tHasChildren == "y") {
-tSubNavStr += "</ul>";
-tTopNavStr += tSubNavStr;
-}
-tTopNavStr += "</li>";
-}
-tMainInc++;
-}
-tTopNavStr += "</ul></div>";
-
-if(document.getElementById("dvTopWdNavBar")) {
-document.getElementById("dvTopWdNavBar").innerHTML = tTopNavStr;
-doTopWdNavMobileBind();
-}
-return tTopNavStr;
-} catch(e) {
-console.log("doCollsLoad.error: " + e);
-return "";
-}
-}
-
-function doTopWdNavMobileBind() {
-try {
-var tRoot = document.getElementById("dvTopWdNavBar");
-if(!tRoot) {
-return;
-}
-var tNavArr = tRoot.getElementsByClassName("inc-top-wd-nav");
-if((!tNavArr) || (!tNavArr[0])) {
-return;
-}
-var tNav = tNavArr[0];
-var tItems = tNav.getElementsByClassName("inc-top-wd-nav-item");
-var tInc = 0;
-while(tInc < tItems.length) {
-var tItem = tItems[tInc];
-var tSub = tItem.getElementsByClassName("inc-top-wd-nav-sub");
-if((tSub) && (tSub[0])) {
-if((" " + tItem.className + " ").indexOf(" inc-top-has-sub ") < 0) {
-tItem.className += " inc-top-has-sub";
-}
-} else {
-tItem.className = tItem.className.replace(" inc-top-has-sub", "");
-tItem.className = tItem.className.replace(" inc-top-open", "");
-}
-tInc++;
-}
-
-if((typeof window.innerWidth !== "undefined") && (window.innerWidth > 500)) {
-tInc = 0;
-while(tInc < tItems.length) {
-tItems[tInc].className = tItems[tInc].className.replace(" inc-top-open", "");
-tInc++;
-}
-}
-
-if(tNav.getAttribute("data-mobile-click-bound") != "y") {
-tNav.setAttribute("data-mobile-click-bound", "y");
-tNav.onclick = function(tEvt) {
-var tE = tEvt || window.event;
-if((typeof window.innerWidth !== "undefined") && (window.innerWidth > 500)) {
-return true;
-}
-var tTarget = tE.target || tE.srcElement;
-while((tTarget) && (tTarget.tagName) && (tTarget.tagName.toLowerCase() != "a")) {
-tTarget = tTarget.parentNode;
-}
-if(!tTarget) {
-return true;
-}
-var tLi = tTarget;
-while((tLi) && (tLi.tagName) && (tLi.tagName.toLowerCase() != "li")) {
-tLi = tLi.parentNode;
-}
-if(!tLi) {
-return true;
-}
-if((" " + tLi.className + " ").indexOf(" inc-top-has-sub ") < 0) {
-return true;
-}
-if((" " + tLi.className + " ").indexOf(" inc-top-open ") < 0) {
-var tAllItems = tNav.getElementsByClassName("inc-top-wd-nav-item");
-var tI = 0;
-while(tI < tAllItems.length) {
-tAllItems[tI].className = tAllItems[tI].className.replace(" inc-top-open", "");
-tI++;
-}
-tLi.className += " inc-top-open";
-if(tE.preventDefault) {
-tE.preventDefault();
-} else {
-tE.returnValue = false;
-}
-return false;
-}
-return true;
-};
-}
-
-if(window.__incTopWdNavResizeBound != "y") {
-window.__incTopWdNavResizeBound = "y";
-if(window.addEventListener) {
-window.addEventListener("resize", doTopWdNavMobileBind, false);
-} else if(window.attachEvent) {
-window.attachEvent("onresize", doTopWdNavMobileBind);
-}
-}
-
-if(window.__incTopWdNavDocBound != "y") {
-window.__incTopWdNavDocBound = "y";
-var tDocCloseFn = function(tEvt) {
-try {
-if((typeof window.innerWidth !== "undefined") && (window.innerWidth > 500)) {
-return true;
-}
-var tRootNode = document.getElementById("dvTopWdNavBar");
-if(!tRootNode) {
-return true;
-}
-var tE = tEvt || window.event;
-var tTarget = tE.target || tE.srcElement;
-var tNode = tTarget;
-var tIsInsideTopNav = "n";
-while(tNode) {
-if(tNode == tRootNode) {
-tIsInsideTopNav = "y";
-break;
-}
-tNode = tNode.parentNode;
-}
-if(tIsInsideTopNav == "y") {
-return true;
-}
-var tAllItems = tRootNode.getElementsByClassName("inc-top-wd-nav-item");
-var tI = 0;
-while(tI < tAllItems.length) {
-tAllItems[tI].className = tAllItems[tI].className.replace(" inc-top-open", "");
-tI++;
-}
-return true;
-} catch(e2) {
-console.log("doTopWdNavMobileBind.docClose.error: " + e2);
-return true;
-}
-};
-if(document.addEventListener) {
-document.addEventListener("click", tDocCloseFn, false);
-document.addEventListener("touchstart", tDocCloseFn, false);
-} else if(document.attachEvent) {
-document.attachEvent("onclick", tDocCloseFn);
-}
-}
-} catch(e) {
-console.log("doTopWdNavMobileBind.error: " + e);
-}
+return	doNuCollsLoad("noQvalue");
 }
 
 
-
-
-
-
-
-
-/*
-var doShopMnuLd = function(a,theResp,c) {
-console.log("doShopMnuLd: " + theResp);
-hasr = "n";
-fullstr = "";
-mnotAppended = "n";
-     // var mainUL = document.getElementById("mnuULmain");//
-
-strMLink = "index.html?pid=aa-show-category";
-
-var mainUL = getMMenu();
-
-try {
-var arrToFill = JSON.parse(theResp);
-
-var len = arrToFill.length;
-var iint = 0;
-var pcid = 0;
-tstr = "";
-while(iint < len) {
-
-ts = arrToFill[iint];
-currMenuArr.push(ts);
-
-
- if(ts.cat_pid == "0") { // add only main categories to list
-
-
-      tmpLI = document.createElement("li");
-	tmpLI.className="omenuartigo";
-
-	tmpA = document.createElement('a');
-
-	linkText = document.createTextNode(ts.cat_title);
-	tmpA.appendChild(linkText);
-	tmpA.title = ts.cat_title + "&nbsp;&nbsp;&nbsp;&nbsp;";
-	tmpA.href = strMLink + "&ppid="+ts._id+"&cid="+ts.cat_coid+"&catid="+ts._id;
-
-	tmpLI.appendChild(tmpA);
-	tmpUL = document.createElement("ul");
-	tmpUL.className="animenu__nav__child";
-	tmpUL.id = "mnuI" + ts._id;
-	tmpLI.appendChild(tmpUL);
-	mainUL.appendChild(tmpLI);
-
-}
-iint++;
-}
-
-document.getElementById("mnuT").appendChild(mainUL);
-
-            imgplay = null;
-            imgplay = new Image();
-            imgplay.onload = function() {
-               doSubMenuLoad()
-            };
-            imgplay.onerror = function() {
-               doSubMenuLoad()
-            };
-            imgplay.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=";
-
-document.getElementById("mnuT").appendChild(imgplay);
-
-} catch(e) {
-alert("doShopMnuLd.error: " + theResp);
-}
-};
-
-
-// to delete after testing
 function doNuCollsLoad(theRetUIT) {
 console.log("doNuCollsLoad: " + theRetUIT)
 tmpMCollItem = null;
@@ -975,7 +676,8 @@ tmpWCollItem["ti"] = stxt[108];
 tmpWCollItem["c"] = "collection-item";
 currMCollItems["aa-show-search"] = tmpWCollItem;
 
- 
+/* toggle-buttons  for the products grid-row  layout and price asc-desc order */
+
 
 tmpMCollItem = null;
 tmpMCollItem = {};
@@ -1340,6 +1042,79 @@ iti++;
 }
 console.log("tmpStrAdmnM: " + tmpStrAdmnM);
 return tmpStrAdmnM;
+};
+
+
+
+
+
+
+/*
+var doShopMnuLd = function(a,theResp,c) {
+console.log("doShopMnuLd: " + theResp);
+hasr = "n";
+fullstr = "";
+mnotAppended = "n";
+     // var mainUL = document.getElementById("mnuULmain");//
+
+strMLink = "index.html?pid=aa-show-category";
+
+var mainUL = getMMenu();
+
+try {
+var arrToFill = JSON.parse(theResp);
+
+var len = arrToFill.length;
+var iint = 0;
+var pcid = 0;
+tstr = "";
+while(iint < len) {
+
+ts = arrToFill[iint];
+currMenuArr.push(ts);
+
+
+ if(ts.cat_pid == "0") { // add only main categories to list
+
+
+      tmpLI = document.createElement("li");
+	tmpLI.className="omenuartigo";
+
+	tmpA = document.createElement('a');
+
+	linkText = document.createTextNode(ts.cat_title);
+	tmpA.appendChild(linkText);
+	tmpA.title = ts.cat_title + "&nbsp;&nbsp;&nbsp;&nbsp;";
+	tmpA.href = strMLink + "&ppid="+ts._id+"&cid="+ts.cat_coid+"&catid="+ts._id;
+
+	tmpLI.appendChild(tmpA);
+	tmpUL = document.createElement("ul");
+	tmpUL.className="animenu__nav__child";
+	tmpUL.id = "mnuI" + ts._id;
+	tmpLI.appendChild(tmpUL);
+	mainUL.appendChild(tmpLI);
+
+}
+iint++;
+}
+
+document.getElementById("mnuT").appendChild(mainUL);
+
+            imgplay = null;
+            imgplay = new Image();
+            imgplay.onload = function() {
+               doSubMenuLoad()
+            };
+            imgplay.onerror = function() {
+               doSubMenuLoad()
+            };
+            imgplay.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=";
+
+document.getElementById("mnuT").appendChild(imgplay);
+
+} catch(e) {
+alert("doShopMnuLd.error: " + theResp);
+}
 };
 
 */

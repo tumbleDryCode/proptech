@@ -1,0 +1,30 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^node --check js/app/aa-en_us\\.js$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "Test-Path": true,
+        "/^node --check js/app/x_interactions\\.js$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^node --check \"c:\\\\xampp\\\\htdocs\\\\incasa\\\\js\\\\app\\\\x_interactions\\.js\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^php -l include/header\\.php$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^node --check js/app/x_menu\\.js$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^node --check \"c:\\\\xampp\\\\htdocs\\\\incasa\\\\js\\\\app\\\\x_interactions\\.js\" 2>&1$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "node.exe": true
+    }
+}

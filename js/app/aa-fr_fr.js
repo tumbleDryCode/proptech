@@ -553,6 +553,13 @@ stxt[1043] = "Projet";
 stxt[1044] = "Discussion";
 stxt[1045] = "Contact";
 stxt[1046] = "Supprimer";
+stxt[1051] = "Connectez-vous pour commenter";
+stxt[1052] = "Accueil";
+stxt[1053] = "Blog";
+stxt[1054] = "Connexion";
+stxt[1055] = "Deconnexion";
+stxt[1056] = "Vos mises a jour";
+stxt[1057] = "Ajouter une mise a jour";
 
 // tips
 // stxt[2001] = "Setting up is easy. Enter your shops title, add some item categories and click Save.";

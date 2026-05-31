@@ -2,9 +2,34 @@
 if (!window.JSSHOP) {
     var JSSHOP = new Object();
 }
+if (!window.JSSHOP.ajax) {
+    JSSHOP.ajax = new Object();
+}
+if (!window.JSSHOP.hookloader) {
+     JSSHOP.hookloader = new Object();
+}
+if (!window.JSSHOP.jndroid) {
+    JSSHOP.jndroid = new Object();
+}
+if (!window.JSSHOP.shared) {
+     JSSHOP.shared = new Object();
+}
+if (!window.JSSHOP.ui) {
+    JSSHOP.ui = new Object();
+}
+if (!window.JSSHOP.ads) {
+    JSSHOP.ads = new Object();
+}
 if (!window.JSSHOP.core) {
     JSSHOP.core = new Object();
 }
+if (!window.JSSHOP.msgs) {
+    JSSHOP.msgs = new Object();
+}
+if (!window.JSSHOP.cmnts) {
+    JSSHOP.cmnts = new Object();
+}
+
 
 var jscssprefix = "";
 var onlyNums = new RegExp(/^\d{10}$/); // allow only numbers
@@ -54,10 +79,6 @@ var currItemArr = [];
 var currItemsArr = [];
 var currCartIArr = [];
 var currMsgsIArr = [];
-var currMediaBtnPrfx = "";
-var currMediaBtnCB = "finishImgUload";
-var currMediaFldr = "images/property";
-var currPrpImgsFldr = "images/property";
 var currCartStr = "";
 var currCartIttl = 0;
 var currCartTtl = 0;
@@ -179,6 +200,32 @@ var currUsrUpdtsObj = {};
 var currPrpMediaArr = [];
 var gglSKey = "AIzaSyAiBR8BEPj2YCepKplisQKK709r1TI48Vo";
  
+
+// -- Per-project quser table config ------------------------------------------
+// Set these to match the actual column names in the project's user table.
+// getCmntUserSelectFrag() uses them to build aliased SELECT fragments so that
+// the rendering code always reads canonical aliases: u_icon, u_fname, u_lname, u_name.
+var currQUserTable       = "quser";      // user table name
+var currQUserIdFld       = "_id";        // primary key field
+var currQUserIconFld     = "u_icon";     // avatar/icon field; "" if none
+var currQUserFullNameFld = "u_fullname"; // combined full-name field (incasa); "" if split into fname+lname
+var currQUserFNameFld    = "";           // first-name field (logisgo: "u_fname"); "" if using fullname
+var currQUserLNameFld    = "";           // last-name field  (logisgo: "u_lname"); "" if using fullname
+var currQUserUNameFld    = "u_name";     // username/handle field; "" if none
+var currMediaBtnPrfx = "";
+var currMediaBtnCB = "finishImgUload";
+var currMediaFldr = "images/property";
+var currPrpImgsFldr = "images/property";
+var currUIconsFlr = "images/user"; // user icons folder
+var currDefLat = "38.7620149";
+var currDefLng = "-9.11485430";
+var currMapMrkrArr = [];
+var currMapMrkrObj = {};
+var currMapMrkrStr = "";
+var currMapLatStr = "";
+var currMapLngStr = "";
+
+
 if((currDocHref.indexOf("nls=y") != -1) || (currDocHref.indexOf("isr=y") != -1)) {
     document.location.href = "./";
 }

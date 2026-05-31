@@ -567,6 +567,13 @@ stxt[1043] = "Projecto";
 stxt[1044] = "Discussão";
 stxt[1045] = "Contacto";
 stxt[1046] = "Remover";
+stxt[1051] = "Inicie sessao para comentar";
+stxt[1052] = "Inicio";
+stxt[1053] = "Blog";
+stxt[1054] = "Iniciar sessao";
+stxt[1055] = "Sair";
+stxt[1056] = "As suas atualizacoes";
+stxt[1057] = "Adicionar atualizacao";
 
 // tips
 stxt[2001] = "Setting up is easy. Enter your shops title, add some item categories and click Save.";

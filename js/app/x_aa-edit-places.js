@@ -398,7 +398,7 @@ atstr += "<td><a href=\"javascript:doMLinkM('aa-edit-place','pid=aa-edit-place&t
 atstr += "<td><a href=\"javascript:doMLinkM('aa-edit-place','pid=aa-edit-place&tpid=" + ts._id + "');\">" + ts.qlogp_name +  "</a></td>";
 
 atstr += "<td style=\"text-align: left\"><a href=\"callto:" + ts.qlogp_tel + "\"><i class=\"menu-material-icons\">&#xe0cd</i></span></a></td>";
-atstr += "<td style=\"text-align: left\"><a href=\"javascript:JSSHOP.ui.showNuMsgBox('" + ts._id + "','priv','dval','doNada');\"><i class=\"menu-material-icons\">&#xe0b7;</i></span></a></td>";
+atstr += "<td style=\"text-align: left\"><a href=\"javascript:JSSHOP.msgs.prepMsgBox('" + ts.qlogp_uid + "','" + ts.qlogp_name + "','" + ts.qlogp_logoimg + "','noQvalue','doNada');\"><i class=\"menu-material-icons\">&#xe0b7;</i></span></a></td>";
 
 atstr += "<td style=\"text-align: left\" class=\"txtClrHdr\"><a href=\"javascript:JSSHOP.ui.popLboxMap('" + ts.qlogp_loc_lat + "','" + ts.qlogp_loc_lng + "','mpfTest');\"><i class=\"menu-material-icons\" alt=\"edit\" title=\"Show Place\">&#xe0c8;</i></a>";
 atstr += "<td style=\"text-align: left\" class=\"txtClrHdr\"><a href=\"javascript:doMLinkM('aa-edit-place','pid=aa-edit-place&tpid=" + ts._id + "');\"><i class=\"menu-material-icons\" alt=\"edit\" title=\"Edit Place\">&#xe3c9;</i></a>";

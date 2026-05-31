@@ -1852,7 +1852,7 @@ iint++;
 */
 
 tmpMColStr = "";
-// tmpMColStr = doCollsLoad();
+tmpMColStr = doCollsLoad();
 
 if(document.getElementById('mmDdown')) {
 tmpMMdownEl = document.getElementById("mmDdown");

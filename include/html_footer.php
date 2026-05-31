@@ -39,11 +39,12 @@
 <input type="hidden" name="m_uid" id="m_uid" value="5" data-prval="disnull">
 <input type="hidden" name="m_coid" id="m_coid" value="5" data-prval="disnull">
 <input type="hidden" name="m_catid" id="m_catid" value="5" data-prval="disnull">
+<input type="hidden" name="m_category" id="m_category" value="5" data-prval="disnull">
 <input type="hidden" name="m_pid" id="m_pid" value="5" data-prval="disnull">
 <input type="hidden" name="m_file" id="m_file" value="5" data-prval="disnull">
 <input type="hidden" name="m_file_thumb" id="m_file_thumb" value="5" data-prval="disnull">
-<input type="hidden" name="m_data" id="m_data" value="5" data-prval="disnull">
 <input type="hidden" name="m_title" id="m_title" value="5" data-prval="disnull">
+<input type="hidden" name="m_data" id="m_data" value="5" data-prval="disnull">
 <input type="hidden" name="m_vala" id="m_vala" value="5" data-prval="disnull">
 <input type="hidden" name="m_valb" id="m_valb" value="5" data-prval="disnull">
 <input type="hidden" name="m_valc" id="m_valc" value="5" data-prval="disnull">
@@ -140,7 +141,9 @@
 <input type="hidden" name="e_valf" id="e_valf" value="" data-prval="disnull">
 <input type="hidden" name="e_dadded" id="e_dadded" value="" data-prval="disnull">
 </form>
- 
+  
+
+
 
 <form name="qmsgs">
 <input type="hidden" name="_id" value="" data-prval="disnull">
@@ -151,42 +154,45 @@
 <input type="hidden" name="msg_userid" id="msg_userid" value="noQvalue" data-prval="disnull" data-flbl="UserID" data-ftype="span" data-fval="thisval">
 <input type="hidden" name="msg_viewed" id="msg_viewed" value="-" data-prval="disnull"  data-flbl="Viewed" data-ftype="span" data-fval="thisval">
 <input type="hidden" name="msg_from" id="msg_from" value="" data-prval="disnull" data-flbl="stxt[703]" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
-<input type="hidden" name="msg_from_icon" id="msg_from_icon" value="" data-prval="disnull" data-flbl="stxt[703]" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
-<input type="hidden" name="msg_fromsg_email" id="msg_fromsg_email" value="" data-prval="disnull" data-flbl="stxt[704]" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
-<input type="hidden" name="msg_fromsg_tel" id="msg_fromsg_tel" value="" data-prval="disnull" data-flbl="Tel" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
-<input type="hidden" name="msg_fromsg_ip" id="msg_fromsg_ip" value="" data-prval="disnull">
-<input type="hidden" name="msg_to_userid" id="msg_to_userid" value="" data-prval="disnull"  data-flbl="stxt[106]" data-ftype="span" data-fval="thisval">
+<input type="hidden" name="msg_from_icon" id="msg_from_icon" value="default_user.jpg" data-prval="disnull" data-flbl="stxt[703]" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="msg_fromsg_email" id="msg_fromsg_email" value="noQvalue" data-prval="disnull" data-flbl="stxt[704]" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="msg_fromsg_tel" id="msg_fromsg_tel" value="noQvalue" data-prval="disnull" data-flbl="Tel" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="msg_fromsg_ip" id="msg_fromsg_ip" value="noQvalue" data-prval="disnull">
+<input type="hidden" name="msg_to_userid" id="msg_to_userid" value="noQvalue" data-prval="disnull"  data-flbl="stxt[106]" data-ftype="span" data-fval="thisval">
 <input type="hidden" name="msg_to" id="msg_to" value="" data-prval="disnull"  data-flbl="stxt[106]" data-ftype="span" data-fval="thisval">
-<input type="hidden" name="msg_to_icon" id="msg_to_icon" value="" data-prval="disnull"  data-flbl="stxt[106]" data-ftype="span" data-fval="thisval">
-<input type="hidden" name="msg_to_email" id="msg_to_email" value="" data-prval="disnull"  data-flbl="stxt[26]" data-ftype="span" data-fval="thisval">
-<input type="hidden" name="msg_subject" id="msg_subject" value="" data-prval="disnull" data-flbl="stxt[705]" data-ftype="tdiv" data-fval="thisval" data-fid="tmp_">
-<input type="hidden" name="msg_matter" id="msg_matter" value="" data-prval="disnull" data-flbl="stxt[706]" data-ftype="tdivarea" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="msg_to_icon" id="msg_to_icon" value="default_user.jpg" data-prval="disnull"  data-flbl="stxt[106]" data-ftype="span" data-fval="thisval">
+<input type="hidden" name="msg_to_email" id="msg_to_email" value="noQvalue" data-prval="disnull"  data-flbl="stxt[26]" data-ftype="span" data-fval="thisval">
+<input type="hidden" name="msg_subject" id="msg_subject" value="Subject" data-prval="disnull" data-flbl="stxt[705]" data-ftype="tdiv" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="msg_matter" id="msg_matter" value="matter" data-prval="disnull" data-flbl="stxt[706]" data-ftype="tdivarea" data-fval="thisval" data-fid="tmp_">
 <input type="hidden" name="msg_media" id="msg_media" value="normal" data-prval="disnull">
-<input type="hidden" name="msg_priority" id="msg_priority" value="" data-prval="disnull">
+<input type="hidden" name="msg_priority" id="msg_priority" value="5" data-prval="disnull">
 <input type="hidden" name="msg_status" id="msg_status" value="open" data-prval="disnull">
 <input type="hidden" name="msg_docomments" id="msg_docomments" value="open" data-prval="disnull">
 <input type="hidden" name="msg_privacy" id="msg_privacy" value="0" data-prval="disnull">
-<input type="hidden" name="msg_dadded" id="msg_dadded" value="" data-prval="disnull">
-<input type="hidden" name="msg_dmodified" id="msg_dmodified" value="" data-prval="disnull">
-<input type="hidden" name="msg_modifiedby" id="msg_modifiedby" value="" data-prval="disnull">
+<input type="hidden" name="msg_dadded" id="msg_dadded" value="5" data-prval="disnull">
+<input type="hidden" name="msg_dmodified" id="msg_dmodified" value="5" data-prval="disnull">
+<input type="hidden" name="msg_modifiedby" id="msg_modifiedby" value="5" data-prval="disnull">
 </form>
 
 
 <form name="qmsg">
 <input type="hidden" name="_id" value="" data-prval="disnull">
-<input type="hidden" name="ms_rtype" id="ms_rtype" value="0" data-prval="disnull" data-flbl="ID" data-ftype="span" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_rtype" id="ms_rtype" value="5" data-prval="disnull" data-flbl="ID" data-ftype="span" data-fval="thisval" data-fid="tmp_">
 <input type="hidden" name="ms_threadid" id="ms_threadid" value="0" data-prval="disnull">
 <input type="hidden" name="ms_viewed" id="ms_viewed" value="-" data-prval="disnull"  data-flbl="Viewed" data-ftype="span" data-fval="thisval">
-<input type="hidden" name="ms_from" id="ms_from" value="" data-prval="disnull" data-flbl="From" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
-<input type="hidden" name="ms_to" id="ms_to" value="" data-prval="disnull" data-flbl="To" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
-<input type="hidden" name="ms_matter" id="ms_matter" value="" data-prval="disnull" data-flbl="stxt[706]" data-ftype="tarea" data-fval="thisval" data-fid="tmp_">
-<input type="hidden" name="ms_media" id="ms_media" value="" data-prval="disnull" data-flbl="Media" data-ftype="hidden" data-fval="thisval" data-fid="tmp_">
-<input type="hidden" name="ms_wildkey" id="ms_wildkey" value="" data-prval="disnull" data-flbl="Wildkey" data-ftype="hidden" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_from" id="ms_from" value="5" data-prval="disnull" data-flbl="From" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_to" id="ms_to" value="5" data-prval="disnull" data-flbl="To" data-ftype="tinput" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_matter" id="ms_matter" value="5" data-prval="disnull" data-flbl="stxt[706]" data-ftype="tarea" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_media" id="ms_media" value="5" data-prval="disnull" data-flbl="Media" data-ftype="hidden" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_wildkey" id="ms_wildkey" value="5" data-prval="disnull" data-flbl="Wildkey" data-ftype="hidden" data-fval="thisval" data-fid="tmp_">
 <input type="hidden" name="ms_rating" id="ms_rating" value="5" data-prval="disnull" data-flbl="Rating" data-ftype="hidden" data-fval="thisval" data-fid="tmp_">
-<input type="hidden" name="ms_vala" id="ms_vala" value="" data-prval="disnull" data-flbl="ms_vala" data-ftype="hidden" data-fval="thisval" data-fid="tmp_">
-<input type="hidden" name="ms_valb" id="ms_valb" value="" data-prval="disnull" data-flbl="ms_vala" data-ftype="hidden" data-fval="thisval" data-fid="tmp_">
-<input type="hidden" name="ms_dadded" id="ms_dadded" value="" data-prval="disnull">
+<input type="hidden" name="ms_vala" id="ms_vala" value="5" data-prval="disnull" data-flbl="ms_vala" data-ftype="hidden" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_valb" id="ms_valb" value="5" data-prval="disnull" data-flbl="ms_vala" data-ftype="hidden" data-fval="thisval" data-fid="tmp_">
+<input type="hidden" name="ms_dadded" id="ms_dadded" value="5" data-prval="disnull">
 </form>
+
+
+
 
 
 <form name="qcmnts">

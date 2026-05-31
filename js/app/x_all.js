@@ -1,25 +1,4 @@
 
-if (!window.JSSHOP) {
-    var JSSHOP = new Object();
-}
-if (!window.JSSHOP.ajax) {
-    JSSHOP.ajax = new Object();
-}
-if (!window.JSSHOP.hookloader) {
-     JSSHOP.hookloader = new Object();
-}
-if (!window.JSSHOP.jndroid) {
-    JSSHOP.jndroid = new Object();
-}
-if (!window.JSSHOP.shared) {
-     JSSHOP.shared = new Object();
-}
-if (!window.JSSHOP.ui) {
-    JSSHOP.ui = new Object();
-}
-if (!window.JSSHOP.core) {
-    JSSHOP.core = new Object();
-}
 
 
 
@@ -4071,6 +4050,7 @@ JSSHOP.ui.insertEmoji = function(editorDivId, emoji) {
         editorDiv.innerHTML += emoji;
     }
 };
+
 JSSHOP.ui.getEmojiPickerHTML = function(theEEditorDiv, theEEmojiDiv) {
     try {
     // Create the HTML structure for the emoji picker
@@ -5861,6 +5841,27 @@ JSSHOP.ui.showMsgBox = function(tmpMsgType, tmpMsgVal,atmpCB){
     }
     };
 
+// Keep legacy UI entry points wired to the upgraded messaging module when available.
+JSSHOP.ui.syncLegacyMsgApi = function() {
+if(!JSSHOP.msgs) {
+return;
+}
+JSSHOP.ui.doMsgThread = JSSHOP.msgs.doMsgThread;
+JSSHOP.ui.doMsgList = JSSHOP.msgs.doMsgList;
+JSSHOP.ui.doNuMsgList = JSSHOP.msgs.doNuMsgList;
+JSSHOP.ui.doNuMsgThread = JSSHOP.msgs.doNuMsgThread;
+JSSHOP.ui.doReplyMsgSave = JSSHOP.msgs.doReplyMsgSave;
+JSSHOP.ui.showReplyMsgBox = JSSHOP.msgs.showReplyMsgBox;
+JSSHOP.ui.doMsgSave = JSSHOP.msgs.doMsgSave;
+JSSHOP.ui.showNuMsgBox = JSSHOP.msgs.showNuMsgBox;
+JSSHOP.ui.popGuestMsgBox = JSSHOP.msgs.popGuestMsgBox;
+JSSHOP.ui.prepMsgBox = JSSHOP.msgs.prepMsgBox;
+JSSHOP.ui.sendChatMessage = JSSHOP.msgs.sendChatMessage;
+JSSHOP.ui.showMsgBox = JSSHOP.msgs.showMsgBox;
+};
+
+JSSHOP.ui.syncLegacyMsgApi();
+
 
 
 JSSHOP.ui.showPopHelp = function(tmpHlpKey){
@@ -6303,9 +6304,7 @@ tIUrlStr = "<img src=\"" + theImgUrl + "\" width=\"100%\">";
 JSSHOP.ui.popAndFillLbox(tIUrlStr);
 };
 
-JSSHOP.ui.popAndFillLbox = function(theFill) {
-JSSHOP.ui.popNurFillLbox(theFill, "&#xe5cd;", "The Title");
-}
+
 
 
 JSSHOP.ui.popFillObox = function(theFill, thHdrIcn, thHdrTxt, thUseClosDv, thUseClosBtn) {
@@ -6441,6 +6440,10 @@ JSSHOP.ui.popNurFillLbox = function(theFill, theNurIcon, theNurTitle) {
     var modal = new bootstrap.Modal(existingModal);
     modal.show();
 };
+
+JSSHOP.ui.popAndFillLbox = function(theFill) {
+JSSHOP.ui.popNurFillLbox(theFill, "&#xe5cd;", "The Title");
+}
 
 JSSHOP.ui.popNuFillLbox = function(theFill, theTofst) {
     tcloseBstr  = "<div onclick=\"JSSHOP.ui.closeLbox();\" class=\"slmtable txtClrLtBlue txtBold txtBig crsrPointer\" style=\"float:right;margin-left:20px;\"><i class=\"menu-material-icons txtBold txtClrLtBlue\" alt=\"close\" title=\"close\" value=\"close\" style=\"font-size:24px;\">&#xe5cd;</i></div>";
@@ -21793,7 +21796,7 @@ var getComntLikeDiv = function(_id, ql_isreply) {
     s += "</span>";
     s += "&nbsp;&nbsp;";
     s += "<span id=\"dvLikePrd_" + ql_isreply + "_" + _id + "\" class=\"crsrPointer\" onclick=\"" + tLikeHref.replace(/^javascript:/, "") + "\">";
-    s += "<i class=\"menu-material-icons txtClrTtl\" alt=\"like\" title=\"" + tLikeLbl + "\">&#xe87d;</i>";
+    s += "<i class=\"menu-material-icons txtClrLtBlue\" alt=\"like\" title=\"" + tLikeLbl + "\">&#xe8dc;</i>";
     s += " <span id=\"dvLikeCountPrd_" + ql_isreply + "_" + _id + "\" class=\"txtSmall\"></span> " + tLikeLbl;
     s += "</span>";
     s += "</div>";
@@ -21844,7 +21847,7 @@ var setPrdLikeStateCB = function(tParam, theResp, c) {
     try { tRes = JSON.parse(theResp); } catch(e) { tRes = null; }
     var tLiked = (tRes && tRes.length > 0 && tRes[0].ql_rtype == 5);
     var tIcon = tSpan.querySelector("i");
-    if(tIcon) { tIcon.style.color = tLiked ? "#1877f2" : ""; }
+    if(tIcon) { tIcon.style.color = tLiked ? "#0b3d91" : ""; }
 };
 
 var doProdLike = function(tId, tIsReply) {
@@ -21890,3 +21893,4 @@ var afterProdLikeSave = function(tElemId, theResp, c) {
     loadComntLikeCounts(tRaw.substring(tSepIdx + 1), parseInt(tRaw.substring(0, tSepIdx), 10));
 };
 
+// end of comment and like bar code

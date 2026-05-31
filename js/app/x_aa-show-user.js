@@ -331,7 +331,7 @@ function aFillUsrFrm(a,b,c) {
     JSSHOP.shared.setDynFieldVals(fuArr[0],"tmp_");
 
     if(quid != fuArr[0]._id) {
-    document.getElementById("dvSndMsgBtn").innerHTML = "<button id=\"btnSndMsg\" class=\"cls_button cls_button-medium bkgdClrHdr txtClrWhite\" onclick=\"javascript:JSSHOP.ui.prepMsgBox('" + fuArr[0]._id + "','" + fuArr[0].u_fullname + "','" + fuArr[0].u_icon + "','showMsgSave');\"><ti data-ison=\"stxt[42]\" data-desc=\"btn_del\">" + stxt[935] + "</ti></button>";
+    document.getElementById("dvSndMsgBtn").innerHTML = "<button id=\"btnSndMsg\" class=\"cls_button cls_button-medium bkgdClrHdr txtClrWhite\" onclick=\"javascript:JSSHOP.msgs.prepMsgBox('" + fuArr[0]._id + "','" + fuArr[0].u_fullname + "','" + fuArr[0].u_icon + "','showMsgSave');\"><ti data-ison=\"stxt[42]\" data-desc=\"btn_del\">" + stxt[935] + "</ti></button>";
 
 }
 
@@ -478,7 +478,7 @@ retPLstSTr += "<div class=\"col-md-6 col-lg-4\">";
 /*
 retPLstSTr += "<div tid=\"dvCoFavBtn\" style=\"float: right\"></div>";
 
-<div style="float: right"><span class="cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg" onclick="javascript:doRecentFavorite('index.html?pid=aa-show-item&amp;itemid=12&amp;cid=15155&amp;catid=5','Apoyobrazos central para un BMW 2.6-','0','12','btnFavs12');"><i id="btnFavs12" class="material-icons txtClrTtl" alt="favorite" title="favorite" value="favorite">?</i></span><span class="cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg" style="margin:2px;" onclick="JSSHOP.ui.showShareBox('product',12);"><i class="material-icons txtClrTtl" alt="share" title="share" value="share">?</i></span><span class="cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg" style="margin:2px;" onclick="JSSHOP.ui.showMsgBox('product', ts._id,'showMsgSave');"><i class="material-icons txtClrTtl" alt="chat" title="messages" value="messages">?</i></span></div>
+<div style="float: right"><span class="cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg" onclick="javascript:doRecentFavorite('index.html?pid=aa-show-item&amp;itemid=12&amp;cid=15155&amp;catid=5','Apoyobrazos central para un BMW 2.6-','0','12','btnFavs12');"><i id="btnFavs12" class="material-icons txtClrTtl" alt="favorite" title="favorite" value="favorite">?</i></span><span class="cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg" style="margin:2px;" onclick="JSSHOP.ui.showShareBox('product',12);"><i class="material-icons txtClrTtl" alt="share" title="share" value="share">?</i></span><span class="cls_button cls_button-xxsmall bkgdClrWhite brdrClrDlg txtClrDlg" style="margin:2px;" onclick="JSSHOP.msgs.showMsgBox('product', ts._id,'showMsgSave');"><i class="material-icons txtClrTtl" alt="chat" title="messages" value="messages">?</i></span></div>
 */
 currFTclr = "material-icons txtClrTtl";
  if(currFavsIdstr.indexOf(aprpObj._id + "::") != -1) {

@@ -3,10 +3,10 @@ document.title = currPgTitle;
 currIContent = "y"; // ajax request to include the tplates/... file or not
 
 var getMsgThread = function(a,theResp,c) {
-JSSHOP.ui.doMsgThread(a,theResp,c);
+JSSHOP.msgs.doMsgThread(a,theResp,c);
 }
 var getMsgHdr = function(a,theResp,c) {
-JSSHOP.ui.doMsgList(a,theResp,c);
+JSSHOP.msgs.doMsgList(a,theResp,c);
 
 tmpDOs = null;
 tmpDOs = {};
@@ -64,7 +64,7 @@ tfsb.fid = "btnMsgsave";
 tfsb.fty = "button";
 tfsb.ltxt = "stxt[708]";
 retRndrObj = {};
-tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){JSSHOP.ui.doMsgSave('contactus', 'nada', "fnishcu")}) };
+tfsb.fcl = function() { JSSHOP.ui.setSaveBtnClick(this, function(){JSSHOP.msgs.doMsgSave('contactus', 'nada', "fnishcu")}) };
 
 tAllowedStr = "msg_subjectmsg_matter";
 if(quid == "0") {

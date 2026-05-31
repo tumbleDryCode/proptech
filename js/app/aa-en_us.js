@@ -566,6 +566,17 @@ stxt[1043] = "Project";
 stxt[1044] = "Discussion";
 stxt[1045] = "Contact";
 stxt[1046] = "Remove";
+stxt[1047] = "Click on map to draw route. Enter your message and save.";
+stxt[1048] = "Upload image and save comment.";
+stxt[1049] = "Upload image";
+stxt[1050] = "Image staged. Send to post.";
+stxt[1051] = "Log in to comment";
+stxt[1052] = "Home";
+stxt[1053] = "Blog";
+stxt[1054] = "Login";
+stxt[1055] = "Logout";
+stxt[1056] = "Your Updates";
+stxt[1057] = "Add Update";
 
 
 // tips

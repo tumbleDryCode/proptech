@@ -2,14 +2,28 @@ currPgTitle = stxt[710];
 document.title = currPgTitle;
 currIContent = "y"; // ajax request to include the tplates/... file or not
 
+// Tiny fallback toggle:
+// false = use latest-per-thread queries (recommended)
+// true  = use legacy query behavior
+var USE_LEGACY_MSG_FEED_QUERIES = false;
+
+var getMsgRenderApi = function() {
+if(JSSHOP.msgs && typeof JSSHOP.msgs.doNuMsgList === "function" && typeof JSSHOP.msgs.doNuMsgThread === "function") {
+return JSSHOP.msgs;
+}
+return JSSHOP.ui;
+};
+
 var getMsgThread = function(a,theResp,c) {
-JSSHOP.ui.doNuMsgThread(a,theResp,"donada");
+var tMsgApi = getMsgRenderApi();
+tMsgApi.doNuMsgThread(a,theResp,"donada");
 }
 var getMsgHdr = function(a,theResp,c) {
 // JSSHOP.ui.doMsgList(a,theResp,c);
 // alert(theResp);
 tmpTDQI = document.getElementById("includedContent");
-tMstr = JSSHOP.ui.doNuMsgList(a, theResp, c);
+var tMsgApi = getMsgRenderApi();
+tMstr = tMsgApi.doNuMsgList(a, theResp, c);
 bnewel = document.createElement('div');
 bnewel.innerHTML = tMstr;
 tmpTDQI.appendChild(bnewel);
@@ -74,7 +88,19 @@ tmpDOs["l"] = "100";
 // oiaqZa = opiaqZa["rq"];
 //  oiaqZa = "select * from qmsg where ms_threadid in (select distinct ms_threadid from qmsg where ms_to='" + quid + "' or ms_from='" + quid + "') order by ms_dadded asc limit 100";
 // limit only the latest message per ms_threadid
+// oiaqZa = "select * from qmsg where _id in (select max(_id) from qmsg where ms_to='" + quid + "' or ms_from='" + quid + "' group by ms_threadid) order by ms_dadded desc";
+if(USE_LEGACY_MSG_FEED_QUERIES === true) {
+// Legacy/fallback query path:
 oiaqZa = "select * from qmsg where _id in (select max(_id) from qmsg where ms_to='" + quid + "' or ms_from='" + quid + "' group by ms_threadid) order by ms_dadded desc";
+} else {
+oiaqZa = "select q1.* from qmsg q1 " +
+"inner join (select ms_threadid, max(cast(ms_dadded as unsigned)) as max_dadded " +
+"from qmsg where ms_to='" + quid + "' or ms_from='" + quid + "' group by ms_threadid) q2 " +
+"on q1.ms_threadid=q2.ms_threadid and cast(q1.ms_dadded as unsigned)=q2.max_dadded " +
+"where (q1.ms_to='" + quid + "' or q1.ms_from='" + quid + "') " +
+"and q1._id=(select max(q3._id) from qmsg q3 where q3.ms_threadid=q1.ms_threadid and cast(q3.ms_dadded as unsigned)=q2.max_dadded and (q3.ms_to='" + quid + "' or q3.ms_from='" + quid + "')) " +
+"order by cast(q1.ms_dadded as unsigned) desc, q1._id desc";
+}
  }
 console.log("show-messages:oiaqZa: " + oiaqZa);
 doQComm(oiaqZa, null, "getMsgThread");
@@ -110,9 +136,24 @@ tmpDOs["ws"] = "where msg_to_userid=? or msg_userid=?";
 tmpDOs["wa"] = [quid,quid];
 tmpDOs["o"] = "msg_dmodified desc";
 // tmpDOs["gb"] = "msg_threadid";
+
+// Latest message header per thread (feed list): keep one qmsgs row per msg_threadid.
+if(USE_LEGACY_MSG_FEED_QUERIES === true) {
+// Legacy/fallback query path:
 oi = getNuDBFnvp("qmsgs",5,null,tmpDOs);
-console.log("show-messages:oi: " + oi);
+console.log("show-messages:oi(legacy): " + oi);
 doQComm(oi["rq"], null, "getMsgHdr");
+} else {
+oiaqZa = "select qh.* from qmsgs qh " +
+"inner join (select msg_threadid, max(cast(msg_dmodified as unsigned)) as max_dmod " +
+"from qmsgs where msg_to_userid='" + quid + "' or msg_userid='" + quid + "' group by msg_threadid) qm " +
+"on qh.msg_threadid=qm.msg_threadid and cast(qh.msg_dmodified as unsigned)=qm.max_dmod " +
+"where (qh.msg_to_userid='" + quid + "' or qh.msg_userid='" + quid + "') " +
+"and qh._id=(select max(qh2._id) from qmsgs qh2 where qh2.msg_threadid=qh.msg_threadid and cast(qh2.msg_dmodified as unsigned)=qm.max_dmod and (qh2.msg_to_userid='" + quid + "' or qh2.msg_userid='" + quid + "')) " +
+"order by cast(qh.msg_dmodified as unsigned) desc, qh._id desc";
+console.log("show-messages:oi(latest-thread): " + oiaqZa);
+doQComm(oiaqZa, null, "getMsgHdr");
+}
 // alert(oi["rq"]);
 // document.getElementById("includedContent").className = "rtable";
 
