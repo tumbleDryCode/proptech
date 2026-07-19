@@ -523,16 +523,22 @@ fullSError += "File: " + theError.fileName + "\r\n";
 if(theError.msg) {
 fullSError += "msg: " + theError.msg  + "\r\n";
 }
+if(theError.message) {
+fullSError += "msg: " + theError.message  + "\r\n";
+}
 if(theError.constructor) {
 fullSError += theError.constructor;
 }
-console.log("JSSHOP.logJSerror" + fullSError + " :: " + fullArgs + " :: " +  theMsg);
+        fullerrmsg = "";
+        // get the full error ouptut
+        fullerrmsg += "Error: " + theError.toString() + "\r\n" + "Message: " + theError.message + "\r\n" + "File: " + theError.fileName + "\r\n" + "Line: " + theError.lineNumber + "\r\n" + "Stack: " + theError.stack + "\r\n" + "Constructor: " + theError.constructor + "\r\n" + "Args: " + fullArgs + "\r\n" + "Msg: " + theMsg;
+        
+console.log("JSSHOP.logJSerror" + fullSError + " :: " + fullArgs + " :: " +  theMsg + " :: " + fullerrmsg);
 
 // if(JSSHOP.cookies.getCookie("dbug")) {}
      setTimeout(function() {
    ermsg = "epconsole.error: " + fullSError + " :: " + fullArgs + " :: " +  theMsg;
-
-        throw new Error(ermsg);
+throw new Error(fullerrmsg);
     }, 0);
     } catch (e) {
 
@@ -2272,7 +2278,9 @@ JSSHOP.ajax.doNuAjaxPipe("includedContent", "tplates/login.html", finishCntLoad)
 return;
 } else {
 if(currIContent == "y") {
+
 JSSHOP.ajax.doNuAjaxPipe("includedContent", "tplates/" + pid + ".html", finishCntLoad);
+ 
 } else {
 // finishCntLoad("lightbox_content","loading...","nada");
 }
@@ -2328,6 +2336,7 @@ currQUsrObj = arrAllForms.quser.v[0];
 // set div dvUMicn innerHTML to rounded s_thumb + quser.v[0].u_icon
 document.getElementById("dvUMicn").innerHTML = "<img src=\"images/user/s_thumb" + arrAllForms.quser.v[0].u_icon + "\" class=\"icnRnd26 crsrPointer\" alt=\"User Icon\" style=\"margin-left:4px;margin-right:4px;margin-top:4px;\" title=\"" + arrAllForms.quser.v[0].u_fullname + "\">";
 }
+
 if(arrAllForms.qcat) {
     tFerr = "qcat";
 JSSHOP.shared.setFrmVals("qcat",arrAllForms.qcat.v[0],function() { void(0) });
@@ -2343,9 +2352,11 @@ JSSHOP.shared.setFrmVals("qmsgs",arrAllForms.gmsgs.v[0],function() {  void(0) })
 
 
 if(arrAllForms.qextras.v[0]) {
+    console.log("fillMFormArr.qextras: " + JSON.stringify(arrAllForms.qextras.v[0]));
     tFerr = "qextras";
 JSSHOP.shared.setFrmVals("qextras",arrAllForms.qextras.v[0],function() { fnishExtrasForm() });
 } else {
+    console.log("fillMFormArr.qextras: noQvalue");
 fnishExtrasForm()
 }
 /*

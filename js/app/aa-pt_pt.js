@@ -577,6 +577,7 @@ stxt[1057] = "Adicionar atualizacao";
 
 // tips
 stxt[2001] = "Setting up is easy. Enter your shops title, add some item categories and click Save.";
+// stxt[2002] = "Under closed development.";
 
 
 

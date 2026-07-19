@@ -3462,7 +3462,7 @@ inp.addEventListener("keydown", function(e) {
       /*and and make the current item more visible:*/
       addActive(x);
     } else if (e.keyCode == 13) {
-        alert("enter pressed");
+        // alert("enter pressed");
       /*If the ENTER key is pressed, prevent the form from being submitted,*/
       e.preventDefault();
       if (currentFocus > -1) {
@@ -3647,7 +3647,7 @@ inp.addEventListener("keydown", function(e) {
       /*and and make the current item more visible:*/
       addActive(x);
     } else if (e.keyCode == 13) {
-        alert("enter pressed");
+        // alert("enter pressed");
       /*If the ENTER key is pressed, prevent the form from being submitted,*/
       e.preventDefault();
       if (currentFocus > -1) {
@@ -9261,17 +9261,10 @@ function openMediaPickerDialog() {
     var dialogHtml = '<div style="min-height:80vh;max-height:90vh;overflow:auto;">' + '<div style="position: sticky; top: 0; background: white; z-index: 1; padding: 5px; border-bottom: 1px solid #ddd;"><input type="checkbox" id="mp_set_bg"> <label for="mp_set_bg">' + stxt[639] + '</label> <input type="checkbox" id="mp_rounded"> <label for="mp_rounded">' + stxt[640] + '</label></div>' + tdialogHtml + '</div>';
     // Add event listeners after rendering
     setTimeout(function() {
-        // Initialize Coloris if available
-        if (window.Coloris) {
-            Coloris({
-                el: '[data-coloris]',
-                parent: '#nurModal',
-                closeButton: true,
-                closeLabel: 'Close',
-                swatches: ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']
-            });
-            ensureColorisManualCloseControl();
-        }
+        ensureColorisForDialog({
+            selector: '#nurModal [data-coloris]',
+            tag: 'mediapop'
+        });
 
         // Load Your Images tab content
         if (window.currQUsrMediaArr && window.currQUsrMediaArr.length > 0) {
@@ -9353,6 +9346,94 @@ function ensureColorisManualCloseControl() {
             }, true);
         }
     } catch (eColorisManual) { }
+}
+
+function hasColorisCssLoaded() {
+    try {
+        return !!document.querySelector('link[href*="js/coloris/coloris.css"]');
+    } catch (eHasColorisCss) {
+        return false;
+    }
+}
+
+function ensureColorisForDialog(tCfgObj) {
+    try {
+        var cfg = tCfgObj || {};
+        var selector = cfg.selector || '[data-coloris]';
+        var dbgTag = cfg.tag || 'coloris-dialog';
+        var retries = (typeof cfg.retries === 'number') ? cfg.retries : 0;
+        var parentSelector = '#nurModal';
+        if (!document.getElementById('nurModal')) {
+            parentSelector = 'body';
+        }
+
+        var tInputs = [];
+        try {
+            tInputs = document.querySelectorAll(selector);
+        } catch (eSel) {
+            tInputs = [];
+        }
+        console.log('ensureColorisForDialog.start[' + dbgTag + ']: selector=' + selector + ', inputs=' + (tInputs ? tInputs.length : 0) + ', hasColoris=' + (typeof window.Coloris) + ', hasCss=' + hasColorisCssLoaded() + ', parent=' + parentSelector + ', retries=' + retries);
+
+        var doInit = function() {
+            try {
+                var colorisOpts = {
+                    el: selector,
+                    parent: parentSelector,
+                    themeMode: 'light',
+                    closeButton: true,
+                    closeLabel: 'Close',
+                    swatches: ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']
+                };
+                if (cfg.options && (typeof cfg.options === 'object')) {
+                    for (var optKey in cfg.options) {
+                        if (Object.prototype.hasOwnProperty.call(cfg.options, optKey)) {
+                            colorisOpts[optKey] = cfg.options[optKey];
+                        }
+                    }
+                }
+                Coloris(colorisOpts);
+                var tWrapped = document.querySelectorAll('.clr-field');
+                console.log('ensureColorisForDialog.init[' + dbgTag + ']: wrapped=' + (tWrapped ? tWrapped.length : 0));
+            } catch (eInit) {
+                console.log('ensureColorisForDialog.init.error[' + dbgTag + ']: ' + eInit);
+            }
+        };
+
+        if (typeof window.Coloris === 'function') {
+            if (!hasColorisCssLoaded()) {
+                JSSHOP.loadScript('js/coloris/coloris.css', function(pth, stat) {
+                    console.log('ensureColorisForDialog.css[' + dbgTag + ']: ' + pth + ' -> ' + stat);
+                    doInit();
+                }, 'css');
+            } else {
+                doInit();
+            }
+            return;
+        }
+
+        JSSHOP.loadScript('js/coloris/coloris.js', function(jsPath, jsStat) {
+            console.log('ensureColorisForDialog.js[' + dbgTag + ']: ' + jsPath + ' -> ' + jsStat);
+            JSSHOP.loadScript('js/coloris/coloris.css', function(cssPath, cssStat) {
+                console.log('ensureColorisForDialog.css[' + dbgTag + ']: ' + cssPath + ' -> ' + cssStat);
+                if (typeof window.Coloris === 'function') {
+                    doInit();
+                } else if (retries < 3) {
+                    setTimeout(function() {
+                        ensureColorisForDialog({
+                            selector: selector,
+                            tag: dbgTag,
+                            retries: retries + 1
+                        });
+                    }, 250);
+                } else {
+                    console.log('ensureColorisForDialog.failed[' + dbgTag + ']: Coloris still unavailable after retries');
+                }
+            }, 'css');
+        }, 'js');
+    } catch (eEnsureColoris) {
+        console.log('ensureColorisForDialog.error: ' + eEnsureColoris);
+    }
 }
 
 function openBgColorPickerDialog() {
@@ -9609,17 +9690,10 @@ function openBgColorPickerDialog() {
             JSSHOP.ui.closeLbox();
         };
 
-        // Initialize Coloris if available
-        if (window.Coloris) {
-            Coloris({
-                el: '[data-coloris]',
-                parent: '#nurModal',
-                closeButton: true,
-                closeLabel: 'Close',
-                swatches: ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']
-            });
-            ensureColorisManualCloseControl();
-        }
+        ensureColorisForDialog({
+            selector: '#bgc_grad1_' + uniqueId + ', #bgc_grad2_' + uniqueId + ', #bgc_solid_' + uniqueId,
+            tag: 'bgcolorpicker-' + uniqueId
+        });
     }, 800);
 
     JSSHOP.ui.popAndFillLbox(dialogHtml);
@@ -10001,17 +10075,10 @@ function openTextShadowDialog() {
             JSSHOP.ui.closeLbox();
         };
 
-        // Initialize Coloris if available
-        if (window.Coloris) {
-            Coloris({
-                el: '[data-coloris]',
-                parent: '#nurModal',
-                closeButton: true,
-                closeLabel: 'Close',
-                swatches: ['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']
-            });
-            ensureColorisManualCloseControl();
-        }
+        ensureColorisForDialog({
+            selector: '#ts_c_' + uniqueId + ', #ts_grad1_' + uniqueId + ', #ts_grad2_' + uniqueId + ', #ts_solid_' + uniqueId,
+            tag: 'textshadow-' + uniqueId
+        });
     }, 100);
 }
 

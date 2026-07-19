@@ -967,22 +967,22 @@ function refreshInlineMapMarkerNuDropdowns(prefix) {
 
 function initInlineMapMarkerColorPickers(prefix) {
     try {
-        if (typeof Coloris !== "function") {
-            return;
-        }
         var p = String(prefix || "").replace(/"/g, "");
         if (!p) {
             return;
         }
-        Coloris({
-            el: 'input[data-inline-map-coloris="' + p + '"]',
-            parent: '#nurModal',
-            themeMode: 'light',
-            alpha: false,
-            clearButton: false,
-            closeButton: true,
-            closeLabel: 'Close'
-        });
+        if (typeof ensureColorisForDialog === "function") {
+            ensureColorisForDialog({
+                selector: 'input[data-inline-map-coloris="' + p + '"]',
+                tag: 'inline-map-marker-' + p,
+                options: {
+                    alpha: false,
+                    clearButton: false
+                }
+            });
+            return;
+        }
+        console.log("initInlineMapMarkerColorPickers: ensureColorisForDialog unavailable");
     } catch (eInitMapColoris) {
         console.log("initInlineMapMarkerColorPickers: " + eInitMapColoris);
     }
